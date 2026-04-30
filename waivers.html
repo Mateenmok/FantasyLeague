@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Waiver Wire</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="page-header waiver-header">
+    <h1>Waiver Wire</h1>
+    <p>View available Pokémon and make roster moves.</p>
+
+    <nav class="site-nav">
+      <a href="index.html">Matchup</a>
+      <a href="pokedex.html">Pokédex</a>
+      <a href="teams.html">Teams</a>
+      <a href="draft.html">Draft Board</a>
+      <a href="waivers.html">Waiver Wire</a>
+    </nav>
+  </header>
+
+  <main class="waiver-page">
+    <section class="waiver-card waiver-control-card">
+      <div>
+        <p class="eyebrow">Roster Move</p>
+        <h2>Add / Drop Pokémon</h2>
+        <p id="waiverStatus" class="small-note">Select a team and choose an available Pokémon.</p>
+      </div>
+
+      <div class="waiver-form-grid">
+        <div>
+          <label for="waiverTeamSelect">Team</label>
+          <select id="waiverTeamSelect"></select>
+        </div>
+
+        <div>
+          <label for="waiverAddInput">Add Pokémon</label>
+          <input id="waiverAddInput" list="availablePokemonOptions" type="text" placeholder="Type Pokémon name">
+          <datalist id="availablePokemonOptions"></datalist>
+        </div>
+
+        <div id="dropPokemonContainer" class="hidden">
+          <label for="waiverDropSelect">Drop Pokémon</label>
+          <select id="waiverDropSelect"></select>
+        </div>
+      </div>
+
+      <div class="waiver-button-row">
+        <button id="submitWaiverButton">Add Pokémon</button>
+      </div>
+    </section>
+
+    <section class="waiver-grid-main">
+      <div class="waiver-card">
+        <h2>Selected Team Roster</h2>
+        <p id="selectedRosterCount" class="small-note">Loading roster...</p>
+        <div id="selectedTeamRoster" class="waiver-roster-grid"></div>
+      </div>
+
+      <div class="waiver-card">
+        <h2>Waiver Summary</h2>
+        <div id="waiverSummary"></div>
+      </div>
+    </section>
+
+    <section class="waiver-card full-width-panel">
+      <div class="waiver-section-header">
+        <div>
+          <h2>Available Pokémon</h2>
+          <p class="small-note">Pokémon Champions legal pool only.</p>
+        </div>
+
+        <input id="availableSearchInput" class="waiver-search" type="text" placeholder="Search available Pokémon...">
+      </div>
+
+      <div id="availablePokemonGrid" class="available-pokemon-grid"></div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/waivers.js"></script>
+</body>
+</html>

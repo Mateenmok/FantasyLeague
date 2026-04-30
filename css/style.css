@@ -796,3 +796,204 @@ body {
   }
 }
 
+
+/* Waiver Wire */
+
+.waiver-page {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 24px 60px;
+}
+
+.waiver-card {
+  background: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 20px;
+  padding: 22px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+.waiver-control-card {
+  margin: 10px 0 24px;
+}
+
+.waiver-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.waiver-card label {
+  display: block;
+  margin: 0 0 8px;
+  color: #d1d5db;
+}
+
+.waiver-card select,
+.waiver-card input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #4b5563;
+  background: #111827;
+  color: white;
+  font-size: 15px;
+}
+
+.waiver-card input::placeholder {
+  color: #9ca3af;
+}
+
+.waiver-button-row {
+  margin-top: 18px;
+}
+
+.waiver-card button {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: none;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.waiver-card button:hover {
+  background: #1d4ed8;
+}
+
+.waiver-grid-main {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 22px;
+  margin-bottom: 24px;
+}
+
+.waiver-roster-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.waiver-roster-card {
+  background: #111827;
+  border: 1px solid #374151;
+  border-radius: 14px;
+  padding: 12px;
+  text-align: center;
+}
+
+.waiver-roster-card img {
+  width: 76px;
+  height: 76px;
+  object-fit: contain;
+}
+
+.waiver-roster-card p {
+  margin: 8px 0 0;
+  font-size: 12px;
+}
+
+.waiver-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.waiver-summary-grid div {
+  background: #111827;
+  border: 1px solid #374151;
+  border-radius: 16px;
+  padding: 18px;
+  text-align: center;
+}
+
+.waiver-summary-grid strong {
+  display: block;
+  font-size: 28px;
+}
+
+.waiver-summary-grid span {
+  display: block;
+  color: #9ca3af;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.waiver-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.waiver-search {
+  max-width: 320px;
+}
+
+.available-pokemon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+  gap: 16px;
+}
+
+.available-pokemon-card {
+  background: #111827;
+  border: 1px solid #374151;
+  border-radius: 16px;
+  padding: 14px;
+  text-align: center;
+}
+
+.available-pokemon-card img {
+  width: 92px;
+  height: 92px;
+  object-fit: contain;
+}
+
+.available-pokemon-card h3 {
+  font-size: 14px;
+  margin: 10px 0 4px;
+}
+
+.available-pokemon-card p {
+  margin: 0 0 10px;
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+.available-pokemon-card button {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 13px;
+  background: #374151;
+}
+
+.available-pokemon-card button:hover {
+  background: #4b5563;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .waiver-form-grid,
+  .waiver-grid-main {
+    grid-template-columns: 1fr;
+  }
+
+  .waiver-section-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .waiver-search {
+    max-width: none;
+  }
+}
+
