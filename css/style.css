@@ -359,3 +359,50 @@ body {
   background: #4b5563;
 }
 
+
+.roster-editor {
+  margin: 18px 0 24px;
+}
+
+.roster-editor label {
+  display: block;
+  margin-bottom: 8px;
+  color: #d1d5db;
+}
+
+.roster-editor input {
+  width: 100%;
+  max-width: 420px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: none;
+  margin-right: 8px;
+  margin-bottom: 10px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+.roster-editor button,
+.remove-pokemon-button {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  background: #374151;
+  color: white;
+  cursor: pointer;
+}
+
+.roster-editor button:hover,
+.remove-pokemon-button:hover {
+  background: #4b5563;
+}
+
+.remove-pokemon-button {
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+.roster-grid-with-buttons .team-pokemon {
+  min-height: 130px;
+}
+
