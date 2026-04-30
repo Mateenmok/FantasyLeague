@@ -1,6 +1,7 @@
 let selectedTeamId = getTeamIdFromUrl() || localStorage.getItem("selected-team-id") || "team-1";
 
 let allPokemon = [];
+let championsPokemon = [];
 let allTeams = [];
 let allMatchups = [];
 let teamProfilesById = {};
@@ -9,12 +10,14 @@ let allRosterRows = [];
 Promise.all([
   fetch("data/pokemon.json").then(response => response.json()),
   fetch("data/teams.json").then(response => response.json()),
-  fetch("data/matchups.json").then(response => response.json())
+  fetch("data/matchups.json").then(response => response.json()),
+  fetch("data/champions-pokemon.json").then(response => response.json())
 ])
-  .then(async ([pokemonData, teamsData, matchupsData]) => {
+  .then(async ([pokemonData, teamsData, matchupsData, championsData]) => {
     allPokemon = pokemonData;
     allTeams = teamsData;
     allMatchups = matchupsData;
+    championsPokemon = championsData;
 
     localStorage.setItem("selected-team-id", selectedTeamId);
 
@@ -248,12 +251,14 @@ function displayMyRoster() {
   const container = document.getElementById("myRosterCard");
   const rosterRows = getRosterForTeam(selectedTeamId);
 
+  const pokemonSource = championsPokemon.length > 0 ? championsPokemon : allPokemon;
+
   const pokemonBySlug = {};
-  allPokemon.forEach(pokemon => {
+  pokemonSource.forEach(pokemon => {
     pokemonBySlug[pokemon.slug] = pokemon;
   });
 
-  const datalistOptions = allPokemon.map(pokemon => {
+  const datalistOptions = pokemonSource.map(pokemon => {
     return `<option value="${escapeHtml(pokemon.name)}"></option>`;
   }).join("");
 
@@ -312,7 +317,9 @@ function displayMyRoster() {
 function findPokemonFromInput(inputValue) {
   const cleaned = inputValue.trim().toLowerCase();
 
-  return allPokemon.find(pokemon =>
+  const pokemonSource = championsPokemon.length > 0 ? championsPokemon : allPokemon;
+
+  return pokemonSource.find(pokemon =>
     pokemon.name.toLowerCase() === cleaned ||
     pokemon.slug.toLowerCase() === cleaned
   );
@@ -325,7 +332,7 @@ async function addPokemonToRoster() {
   const pokemon = findPokemonFromInput(input.value);
 
   if (!pokemon) {
-    status.textContent = "Pokémon not found. Try typing the exact name from the dropdown.";
+    status.textContent = "Pokémon not found in the Pokémon Champions legal pool. Try typing the exact name from the dropdown.";
     return;
   }
 
