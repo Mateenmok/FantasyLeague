@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Create League</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <main class="create-league-page">
+    <section class="create-league-card">
+      <p class="create-league-eyebrow">League Setup</p>
+      <h1>Create League</h1>
+      <p class="create-league-subtitle">
+        Create a new Pokémon Draft League, choose the number of teams, and generate team passcodes.
+      </p>
+
+      <div class="create-league-form">
+        <label for="leagueNameInput">League Name</label>
+        <input id="leagueNameInput" type="text" placeholder="Example: Claremont Champions League">
+
+        <label for="teamCountSelect">Number of Teams</label>
+        <select id="teamCountSelect">
+          <option value="8">8 Teams</option>
+          <option value="9">9 Teams</option>
+          <option value="10">10 Teams</option>
+          <option value="11">11 Teams</option>
+          <option value="12" selected>12 Teams</option>
+          <option value="13">13 Teams</option>
+          <option value="14">14 Teams</option>
+          <option value="15">15 Teams</option>
+          <option value="16">16 Teams</option>
+        </select>
+
+        <div class="admin-team-section">
+          <h2>Admin Teams</h2>
+          <p class="small-note">
+            Admin teams will eventually be able to manage league settings, draft tools, and other teams.
+            Team 1 is selected by default.
+          </p>
+          <div id="adminTeamCheckboxes" class="admin-checkbox-grid"></div>
+        </div>
+
+        <button id="createLeagueButton">Create League</button>
+        <p id="createLeagueStatus" class="small-note"></p>
+      </div>
+    </section>
+
+    <section id="createdLeagueResult" class="create-league-card hidden"></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/create-league.js"></script>
+</body>
+</html>

@@ -997,3 +997,171 @@ body {
   }
 }
 
+
+/* Create League */
+
+.create-league-page {
+  min-height: 100vh;
+  padding: 40px 24px 70px;
+  background:
+    radial-gradient(circle at top, rgba(37, 99, 235, 0.18), transparent 35%),
+    linear-gradient(180deg, #071224 0%, #08111f 45%, #0b1320 100%);
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.create-league-card {
+  max-width: 900px;
+  margin: 0 auto 24px;
+  background: rgba(30, 41, 59, 0.96);
+  border: 1px solid rgba(100, 116, 139, 0.55);
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.create-league-eyebrow {
+  margin: 0 0 10px;
+  color: #93c5fd;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.create-league-card h1 {
+  font-size: 42px;
+  margin: 0 0 10px;
+}
+
+.create-league-card h2 {
+  margin-top: 0;
+}
+
+.create-league-subtitle {
+  color: #cbd5e1;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.create-league-form label {
+  display: block;
+  margin: 16px 0 8px;
+  color: #d1d5db;
+  font-weight: 700;
+}
+
+.create-league-form input,
+.create-league-form select {
+  width: 100%;
+  max-width: 520px;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #4b5563;
+  background: #111827;
+  color: white;
+  font-size: 15px;
+}
+
+.admin-team-section {
+  margin-top: 28px;
+}
+
+.admin-checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+  max-width: 720px;
+}
+
+.admin-checkbox-item {
+  background: #111827;
+  border: 1px solid #374151;
+  border-radius: 12px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.admin-checkbox-item input {
+  width: auto;
+  margin-right: 8px;
+}
+
+#createLeagueButton {
+  margin-top: 24px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: none;
+  background: #2563eb;
+  color: white;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+#createLeagueButton:hover {
+  background: #1d4ed8;
+}
+
+#createLeagueButton:disabled {
+  background: #4b5563;
+  cursor: not-allowed;
+}
+
+.league-code-box {
+  background: #111827;
+  border: 1px solid #475569;
+  border-radius: 16px;
+  padding: 18px;
+  margin: 18px 0;
+  max-width: 320px;
+}
+
+.league-code-box span {
+  display: block;
+  color: #94a3b8;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.league-code-box strong {
+  display: block;
+  font-size: 34px;
+  letter-spacing: 0.12em;
+}
+
+.created-teams-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.created-teams-table th,
+.created-teams-table td {
+  text-align: left;
+  border-bottom: 1px solid #374151;
+  padding: 12px;
+}
+
+.created-teams-table th {
+  color: #94a3b8;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.admin-badge {
+  display: inline-block;
+  background: #2563eb;
+  color: white;
+  padding: 5px 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.hidden {
+  display: none;
+}
+
