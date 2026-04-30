@@ -3,7 +3,7 @@ let selectedTeamId = getTeamIdFromUrl() || localStorage.getItem("selected-team-i
 let allPokemon = [];
 let allTeams = [];
 let allMatchups = [];
-let teamLogosById = {};
+let teamProfilesById = {};
 
 Promise.all([
   fetch("data/pokemon.json").then(response => response.json()),
@@ -17,7 +17,7 @@ Promise.all([
 
     localStorage.setItem("selected-team-id", selectedTeamId);
 
-    await loadTeamLogos();
+    await loadTeamProfiles();
 
     displayTeamSelector();
     displayMyTeam();
@@ -33,29 +33,43 @@ function getTeamIdFromUrl() {
   return params.get("team");
 }
 
-async function loadTeamLogos() {
+async function loadTeamProfiles() {
   const { data, error } = await supabaseClient
-    .from("team_logos")
+    .from("team_profiles")
     .select("*");
 
   if (error) {
-    console.error("Error loading logos from Supabase:", error);
+    console.error("Error loading team profiles from Supabase:", error);
     return;
   }
 
-  teamLogosById = {};
+  teamProfilesById = {};
 
-  data.forEach(row => {
-    teamLogosById[row.team_id] = row.logo_url;
+  data.forEach(profile => {
+    teamProfilesById[profile.team_id] = profile;
   });
+}
+
+function getTeamDisplay(team) {
+  const profile = teamProfilesById[team.id];
+
+  return {
+    id: team.id,
+    name: profile?.team_name || team.name,
+    owner: profile?.owner_name || team.owner,
+    record: profile?.record || team.record,
+    logo: profile?.logo_url || team.logo || "",
+    roster: team.roster || []
+  };
 }
 
 function displayTeamSelector() {
   const container = document.getElementById("teamSelectorContainer");
 
   const optionsHtml = allTeams.map(team => {
+    const display = getTeamDisplay(team);
     const selected = team.id === selectedTeamId ? "selected" : "";
-    return `<option value="${team.id}" ${selected}>${team.name} — ${team.owner}</option>`;
+    return `<option value="${team.id}" ${selected}>${display.name} — ${display.owner}</option>`;
   }).join("");
 
   container.innerHTML = `
@@ -72,6 +86,7 @@ function displayTeamSelector() {
     const newUrl = `myteam.html?team=${selectedTeamId}`;
     window.history.replaceState({}, "", newUrl);
 
+    displayTeamSelector();
     displayMyTeam();
     displayNextMatch();
     displayMyRoster();
@@ -79,18 +94,18 @@ function displayTeamSelector() {
 }
 
 function displayMyTeam() {
-  const team = allTeams.find(team => team.id === selectedTeamId);
+  const baseTeam = allTeams.find(team => team.id === selectedTeamId);
   const container = document.getElementById("myTeamCard");
 
-  if (!team) {
+  if (!baseTeam) {
     container.innerHTML = "<p>Team not found.</p>";
     return;
   }
 
-  const logo = teamLogosById[team.id] || team.logo || "";
+  const team = getTeamDisplay(baseTeam);
 
-  const logoHtml = logo
-    ? `<img class="my-team-logo" src="${logo}" alt="${team.name} logo">`
+  const logoHtml = team.logo
+    ? `<img class="my-team-logo" src="${team.logo}" alt="${team.name} logo">`
     : `<div class="my-team-logo-placeholder">${getInitials(team.name)}</div>`;
 
   container.innerHTML = `
@@ -103,41 +118,68 @@ function displayMyTeam() {
       </div>
     </div>
 
-    <div class="logo-editor">
-      <label for="logoInput">Permanent logo URL:</label>
-      <textarea id="logoInput" rows="3" placeholder="Paste image URL here">${logo}</textarea>
-      <button id="saveLogoButton">Save Logo</button>
-      <p id="logoSaveStatus" class="small-note">This saves to Supabase, so everyone can see it.</p>
+    <div class="team-editor">
+      <label for="teamNameInput">Team Name:</label>
+      <input id="teamNameInput" type="text" value="${escapeHtml(team.name)}">
+
+      <label for="ownerInput">Owner:</label>
+      <input id="ownerInput" type="text" value="${escapeHtml(team.owner)}">
+
+      <label for="recordInput">Record:</label>
+      <input id="recordInput" type="text" value="${escapeHtml(team.record)}">
+
+      <label for="logoInput">Logo URL:</label>
+      <textarea id="logoInput" rows="3" placeholder="Paste image URL here">${escapeHtml(team.logo)}</textarea>
+
+      <button id="saveTeamButton">Save Team Info</button>
+      <p id="teamSaveStatus" class="small-note">This saves to Supabase, so everyone can see it.</p>
     </div>
   `;
 
-  document.getElementById("saveLogoButton").addEventListener("click", saveLogo);
+  document.getElementById("saveTeamButton").addEventListener("click", saveTeamInfo);
 }
 
-async function saveLogo() {
-  const logoInput = document.getElementById("logoInput");
-  const status = document.getElementById("logoSaveStatus");
-  const newLogo = logoInput.value.trim();
+async function saveTeamInfo() {
+  const status = document.getElementById("teamSaveStatus");
 
-  status.textContent = "Saving logo...";
+  const newTeamName = document.getElementById("teamNameInput").value.trim();
+  const newOwnerName = document.getElementById("ownerInput").value.trim();
+  const newRecord = document.getElementById("recordInput").value.trim();
+  const newLogo = document.getElementById("logoInput").value.trim();
+
+  status.textContent = "Saving team info...";
 
   const { error } = await supabaseClient
-    .from("team_logos")
+    .from("team_profiles")
     .update({
+      team_name: newTeamName,
+      owner_name: newOwnerName,
+      record: newRecord,
       logo_url: newLogo,
       updated_at: new Date().toISOString()
     })
     .eq("team_id", selectedTeamId);
 
   if (error) {
-    console.error("Error saving logo:", error);
-    status.textContent = "Error saving logo. Check the console.";
+    console.error("Error saving team info:", error);
+    status.textContent = "Error saving team info. Check the console.";
     return;
   }
 
-  teamLogosById[selectedTeamId] = newLogo;
-  status.textContent = "Logo saved permanently.";
+  teamProfilesById[selectedTeamId] = {
+    team_id: selectedTeamId,
+    team_name: newTeamName,
+    owner_name: newOwnerName,
+    record: newRecord,
+    logo_url: newLogo
+  };
+
+  status.textContent = "Team info saved permanently.";
+
+  displayTeamSelector();
   displayMyTeam();
+  displayNextMatch();
+  displayMyRoster();
 }
 
 function displayNextMatch() {
@@ -157,9 +199,12 @@ function displayNextMatch() {
     return;
   }
 
-  const myTeam = allTeams.find(team => team.id === selectedTeamId);
+  const myBaseTeam = allTeams.find(team => team.id === selectedTeamId);
   const opponentId = nextMatch.teamA === selectedTeamId ? nextMatch.teamB : nextMatch.teamA;
-  const opponent = allTeams.find(team => team.id === opponentId);
+  const opponentBaseTeam = allTeams.find(team => team.id === opponentId);
+
+  const myTeam = getTeamDisplay(myBaseTeam);
+  const opponent = getTeamDisplay(opponentBaseTeam);
 
   container.innerHTML = `
     <h2>Next Match</h2>
@@ -230,4 +275,12 @@ function getInitials(teamName) {
     .join("")
     .toUpperCase()
     .slice(0, 3);
+}
+
+function escapeHtml(value) {
+  return String(value || "")
+    .replaceAll("&", "&amp;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
 }

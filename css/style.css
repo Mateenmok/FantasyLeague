@@ -318,3 +318,44 @@ body {
   resize: vertical;
 }
 
+
+.team-editor {
+  margin-top: 24px;
+}
+
+.team-editor label {
+  display: block;
+  margin: 14px 0 8px;
+  color: #d1d5db;
+}
+
+.team-editor input,
+.team-editor textarea {
+  width: 100%;
+  max-width: 500px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: none;
+  margin-bottom: 4px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+.team-editor textarea {
+  resize: vertical;
+}
+
+.team-editor button {
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: none;
+  background: #374151;
+  color: white;
+  cursor: pointer;
+}
+
+.team-editor button:hover {
+  background: #4b5563;
+}
+
