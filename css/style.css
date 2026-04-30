@@ -54,3 +54,115 @@ body {
   color: #d1d5db;
   font-size: 13px;
 }
+
+.site-nav {
+  margin-top: 18px;
+}
+
+.site-nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 10px;
+  padding: 8px 12px;
+  background: #374151;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.site-nav a:hover {
+  background: #4b5563;
+}
+
+.teams-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+  padding: 30px;
+}
+
+.team-card {
+  background: #1f2937;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.team-card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.team-card-header h2 {
+  margin: 0 0 6px;
+}
+
+.team-card-header p {
+  margin: 4px 0;
+  color: #d1d5db;
+}
+
+.team-logo {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+}
+
+.team-logo-placeholder {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: #374151;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.team-roster {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 14px;
+}
+
+.team-pokemon {
+  background: #111827;
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+}
+
+.team-pokemon img {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+}
+
+.team-pokemon p {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: #e5e7eb;
+}
+
+.empty-roster {
+  color: #9ca3af;
+  font-style: italic;
+}
+
+.missing-pokemon {
+  border: 1px solid #ef4444;
+}
+
+.missing-image {
+  width: 70px;
+  height: 70px;
+  border-radius: 10px;
+  background: #7f1d1d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  font-weight: bold;
+}
+

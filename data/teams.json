@@ -1,0 +1,98 @@
+[
+  {
+    "id": "team-1",
+    "name": "Team 1",
+    "owner": "Owner Name",
+    "record": "0-0",
+    "logo": "",
+    "roster": []
+  },
+  {
+    "id": "team-2",
+    "name": "Team 2",
+    "owner": "Owner Name",
+    "record": "0-0",
+    "logo": "",
+    "roster": []
+  },
+  {
+    "id": "team-3",
+    "name": "Team 3",
+    "owner": "Owner Name",
+    "record": "0-0",
+    "logo": "",
+    "roster": []
+  },
+  {
+    "id": "team-4",
+    "name": "Team 4",
+    "owner": "Owner Name",
+    "record": "0-0",
+    "logo": "",
+    "roster": []
+  },
+  {
+    "id": "team-5",
+    "name": "Team 5",
+    "owner": "Owner Name",
+    "record": "0-0",
+    "logo": "",
+    "roster": []
+  },
+  {
+    "id": "team-6",
+    "name": "Team 6",
+    "owner": "Owner Name",
+    "record": "0-0",
+    "logo": "",
+    "roster": []
+  },
+  {
+    "id": "team-7",
+    "name": "Team 7",
+    "owner": "Owner Name",
+    "record": "0-0",
+    "logo": "",
+    "roster": []
+  },
+  {
+    "id": "team-8",
+    "name": "Team 8",
+    "owner": "Owner Name",
+    "record": "0-0",
+    "logo": "",
+    "roster": []
+  },
+  {
+    "id": "team-9",
+    "name": "Team 9",
+    "owner": "Owner Name",
+    "record": "0-0",
+    "logo": "",
+    "roster": []
+  },
+  {
+    "id": "team-10",
+    "name": "Team 10",
+    "owner": "Owner Name",
+    "record": "0-0",
+    "logo": "",
+    "roster": []
+  },
+  {
+    "id": "team-11",
+    "name": "Team 11",
+    "owner": "Owner Name",
+    "record": "0-0",
+    "logo": "",
+    "roster": []
+  },
+  {
+    "id": "team-12",
+    "name": "Team 12",
+    "owner": "Owner Name",
+    "record": "0-0",
+    "logo": "",
+    "roster": []
+  }
+]
