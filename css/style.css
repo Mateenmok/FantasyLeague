@@ -166,3 +166,155 @@ body {
   font-weight: bold;
 }
 
+
+#teamSelectorContainer label {
+  display: block;
+  margin-bottom: 10px;
+  color: #d1d5db;
+}
+
+#teamSelectorContainer select {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+}
+
+
+/* Clean My Team page layout */
+
+.my-team-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  padding: 20px 30px 50px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.my-team-card {
+  background: #1f2937;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.my-team-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.my-team-logo,
+.my-team-logo-placeholder {
+  width: 110px;
+  height: 110px;
+  border-radius: 18px;
+}
+
+.my-team-logo {
+  object-fit: contain;
+}
+
+.my-team-logo-placeholder {
+  background: #374151;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.logo-editor {
+  margin-top: 24px;
+}
+
+.logo-editor label {
+  display: block;
+  margin-bottom: 8px;
+  color: #d1d5db;
+}
+
+.logo-editor input {
+  width: 100%;
+  max-width: 500px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: none;
+  margin-bottom: 10px;
+}
+
+.logo-editor button {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: none;
+  background: #374151;
+  color: white;
+  cursor: pointer;
+}
+
+.logo-editor button:hover {
+  background: #4b5563;
+}
+
+.small-note {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.next-match-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: #111827;
+  border-radius: 14px;
+  padding: 20px;
+  margin-top: 14px;
+}
+
+.next-match-row h3 {
+  margin: 0 0 6px;
+}
+
+.next-match-row p {
+  margin: 0;
+  color: #d1d5db;
+}
+
+.versus {
+  font-size: 24px;
+  font-weight: bold;
+  color: #9ca3af;
+}
+
+#teamSelectorContainer label {
+  display: block;
+  margin-bottom: 10px;
+  color: #d1d5db;
+}
+
+#teamSelectorContainer select {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+}
+
+
+.logo-editor textarea {
+  width: 100%;
+  max-width: 500px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: none;
+  margin-bottom: 10px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  resize: vertical;
+}
+
