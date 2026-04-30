@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Fantasy League Draft Board</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="page-header">
+    <h1>Draft Board</h1>
+    <p>Draft Pokémon from the Pokémon Champions legal pool.</p>
+
+    <nav class="site-nav">
+      <a href="index.html">Matchup</a>
+      <a href="pokedex.html">Pokédex</a>
+      <a href="teams.html">Teams</a>
+      <a href="draft.html">Draft Board</a>
+    </nav>
+  </header>
+
+  <main class="draft-layout">
+    <section class="draft-panel">
+      <h2>Make Pick</h2>
+
+      <p id="nextPickText" class="small-note">Loading next pick...</p>
+
+      <label for="draftTeamSelect">Team:</label>
+      <select id="draftTeamSelect"></select>
+
+      <label for="draftPokemonInput">Pokémon:</label>
+      <input id="draftPokemonInput" list="draftPokemonOptions" type="text" placeholder="Type Pokémon name">
+      <datalist id="draftPokemonOptions"></datalist>
+
+      <button id="makePickButton">Make Draft Pick</button>
+      <button id="undoPickButton" class="secondary-button">Undo Last Pick</button>
+
+      <p id="draftStatus" class="small-note">Each Pokémon can only be drafted once.</p>
+    </section>
+
+    <section class="draft-panel">
+      <h2>Draft Summary</h2>
+      <div id="draftSummary"></div>
+    </section>
+
+    <section class="draft-panel full-width-panel">
+      <h2>Draft Picks</h2>
+      <div id="draftBoard"></div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/draft.js"></script>
+</body>
+</html>
