@@ -544,3 +544,255 @@ body {
   }
 }
 
+
+/* Clean Draft Board */
+
+.draft-header {
+  padding-bottom: 18px;
+}
+
+.draft-page {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 24px 60px;
+}
+
+.draft-hero-card {
+  background: linear-gradient(135deg, #1f2937, #111827);
+  border: 1px solid #374151;
+  border-radius: 24px;
+  padding: 28px;
+  margin: 10px 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.draft-hero-card h2 {
+  font-size: 34px;
+  margin: 6px 0;
+}
+
+.eyebrow {
+  margin: 0;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 12px;
+}
+
+.draft-pick-badge {
+  background: #0f172a;
+  border: 1px solid #475569;
+  border-radius: 20px;
+  min-width: 150px;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.draft-pick-badge span {
+  font-size: 38px;
+  font-weight: 800;
+}
+
+.draft-pick-badge small {
+  color: #9ca3af;
+  margin-top: 4px;
+}
+
+.draft-grid-main {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 22px;
+  margin-bottom: 24px;
+}
+
+.draft-card {
+  background: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 20px;
+  padding: 22px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+.draft-card h2 {
+  margin-top: 0;
+}
+
+.make-pick-card label,
+.draft-card label {
+  display: block;
+  margin: 14px 0 8px;
+  color: #d1d5db;
+}
+
+.make-pick-card input,
+.draft-card input,
+.draft-card select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #4b5563;
+  background: #111827;
+  color: white;
+  font-size: 15px;
+}
+
+.make-pick-card input::placeholder {
+  color: #9ca3af;
+}
+
+.draft-button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.draft-card button {
+  padding: 11px 15px;
+  border-radius: 10px;
+  border: none;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.draft-card button:hover {
+  background: #1d4ed8;
+}
+
+.draft-card button:disabled {
+  background: #4b5563;
+  cursor: not-allowed;
+}
+
+.secondary-button {
+  background: #374151 !important;
+}
+
+.secondary-button:hover {
+  background: #4b5563 !important;
+}
+
+.clean-summary {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.clean-summary div {
+  background: #111827;
+  border: 1px solid #374151;
+  border-radius: 16px;
+  padding: 18px;
+  text-align: center;
+}
+
+.clean-summary strong {
+  display: block;
+  font-size: 28px;
+}
+
+.clean-summary span {
+  display: block;
+  color: #9ca3af;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.upcoming-pick-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  background: #111827;
+  border: 1px solid #374151;
+  border-radius: 14px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+
+.upcoming-pick-row span {
+  min-width: 44px;
+  font-weight: 800;
+  color: #93c5fd;
+}
+
+.upcoming-pick-row strong {
+  display: block;
+}
+
+.upcoming-pick-row small {
+  display: block;
+  color: #9ca3af;
+  margin-top: 2px;
+}
+
+.draft-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.draft-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.draft-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.draft-table th,
+.draft-table td {
+  text-align: left;
+  border-bottom: 1px solid #374151;
+  padding: 14px 12px;
+}
+
+.draft-table th {
+  color: #9ca3af;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.draft-table tbody tr:hover {
+  background: #111827;
+}
+
+.draft-pokemon-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.draft-pokemon-cell img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+@media (max-width: 950px) {
+  .draft-grid-main {
+    grid-template-columns: 1fr;
+  }
+
+  .draft-hero-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .draft-pick-badge {
+    width: 100%;
+  }
+}
+

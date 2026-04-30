@@ -7,7 +7,7 @@
 </head>
 <body>
 
-  <header class="page-header">
+  <header class="page-header draft-header">
     <h1>Draft Board</h1>
     <p>Draft Pokémon from the Pokémon Champions legal pool.</p>
 
@@ -19,32 +19,55 @@
     </nav>
   </header>
 
-  <main class="draft-layout">
-    <section class="draft-panel">
-      <h2>Make Pick</h2>
+  <main class="draft-page">
+    <section class="draft-hero-card">
+      <div>
+        <p class="eyebrow">On the Clock</p>
+        <h2 id="onClockTeam">Loading...</h2>
+        <p id="nextPickText">Loading next pick...</p>
+      </div>
 
-      <p id="nextPickText" class="small-note">Loading next pick...</p>
-
-      <label for="draftTeamSelect">Team:</label>
-      <select id="draftTeamSelect"></select>
-
-      <label for="draftPokemonInput">Pokémon:</label>
-      <input id="draftPokemonInput" list="draftPokemonOptions" type="text" placeholder="Type Pokémon name">
-      <datalist id="draftPokemonOptions"></datalist>
-
-      <button id="makePickButton">Make Draft Pick</button>
-      <button id="undoPickButton" class="secondary-button">Undo Last Pick</button>
-
-      <p id="draftStatus" class="small-note">Each Pokémon can only be drafted once.</p>
+      <div class="draft-pick-badge">
+        <span id="overallPickNumber">#--</span>
+        <small>Overall Pick</small>
+      </div>
     </section>
 
-    <section class="draft-panel">
-      <h2>Draft Summary</h2>
-      <div id="draftSummary"></div>
+    <section class="draft-grid-main">
+      <div class="draft-card make-pick-card">
+        <h2>Make Pick</h2>
+
+        <label for="draftPokemonInput">Pokémon</label>
+        <input id="draftPokemonInput" list="draftPokemonOptions" type="text" placeholder="Type Pokémon name">
+        <datalist id="draftPokemonOptions"></datalist>
+
+        <div class="draft-button-row">
+          <button id="makePickButton">Make Draft Pick</button>
+          <button id="undoPickButton" class="secondary-button">Undo Last Pick</button>
+        </div>
+
+        <p id="draftStatus" class="small-note">Each Pokémon can only be drafted once.</p>
+      </div>
+
+      <div class="draft-card">
+        <h2>Draft Summary</h2>
+        <div id="draftSummary"></div>
+      </div>
+
+      <div class="draft-card">
+        <h2>Upcoming Picks</h2>
+        <div id="upcomingPicks"></div>
+      </div>
     </section>
 
-    <section class="draft-panel full-width-panel">
-      <h2>Draft Picks</h2>
+    <section class="draft-card full-width-panel">
+      <div class="draft-section-header">
+        <div>
+          <h2>Draft Picks</h2>
+          <p class="small-note">Completed picks in order.</p>
+        </div>
+      </div>
+
       <div id="draftBoard"></div>
     </section>
   </main>

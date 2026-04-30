@@ -1,16 +1,19 @@
 let allTeams = [];
 let championsPokemon = [];
+let draftSettings = {};
 let teamProfilesById = {};
 let allRosterRows = [];
 let allDraftPicks = [];
 
 Promise.all([
   fetch("data/teams.json").then(response => response.json()),
-  fetch("data/champions-pokemon.json").then(response => response.json())
+  fetch("data/champions-pokemon.json").then(response => response.json()),
+  fetch("data/draft-settings.json").then(response => response.json())
 ])
-  .then(async ([teamsData, championsData]) => {
+  .then(async ([teamsData, championsData, settingsData]) => {
     allTeams = teamsData;
     championsPokemon = championsData;
+    draftSettings = settingsData;
 
     await refreshDraftData();
     renderDraftPage();
@@ -73,6 +76,7 @@ async function loadDraftPicks() {
 function renderDraftPage() {
   renderDraftControls();
   renderDraftSummary();
+  renderUpcomingPicks();
   renderDraftBoard();
 }
 
@@ -86,6 +90,22 @@ function getTeamDisplay(team) {
     record: profile?.record || team.record,
     logo: profile?.logo_url || team.logo || ""
   };
+}
+
+function getTeamDisplayById(teamId) {
+  const baseTeam = allTeams.find(team => team.id === teamId);
+
+  if (!baseTeam) {
+    return {
+      id: teamId,
+      name: teamId,
+      owner: "",
+      record: "",
+      logo: ""
+    };
+  }
+
+  return getTeamDisplay(baseTeam);
 }
 
 function getRosterForTeam(teamId) {
@@ -107,40 +127,83 @@ function findPokemonFromInput(inputValue) {
   );
 }
 
+function getTeamIdForPick(overallPick) {
+  const teams = draftSettings.teams || [];
+  const teamsPerRound = teams.length;
+
+  if (teamsPerRound === 0) {
+    return null;
+  }
+
+  const roundNumber = Math.ceil(overallPick / teamsPerRound);
+  const pickIndex = (overallPick - 1) % teamsPerRound;
+
+  if (draftSettings.type === "snake" && roundNumber % 2 === 0) {
+    return teams[teamsPerRound - 1 - pickIndex];
+  }
+
+  return teams[pickIndex];
+}
+
 function getNextPickInfo() {
   const nextOverallPick = allDraftPicks.length > 0
     ? Math.max(...allDraftPicks.map(pick => pick.overall_pick)) + 1
     : 1;
 
-  const roundNumber = Math.ceil(nextOverallPick / 12);
-  const pickInRound = ((nextOverallPick - 1) % 12) + 1;
+  const teamsPerRound = draftSettings.teams.length;
+  const totalPicks = draftSettings.rounds * teamsPerRound;
+
+  if (nextOverallPick > totalPicks) {
+    return {
+      overallPick: nextOverallPick,
+      roundNumber: null,
+      pickInRound: null,
+      teamId: null,
+      draftComplete: true
+    };
+  }
+
+  const roundNumber = Math.ceil(nextOverallPick / teamsPerRound);
+  const pickInRound = ((nextOverallPick - 1) % teamsPerRound) + 1;
+  const teamId = getTeamIdForPick(nextOverallPick);
 
   return {
     overallPick: nextOverallPick,
     roundNumber,
-    pickInRound
+    pickInRound,
+    teamId,
+    draftComplete: false
   };
 }
 
 function renderDraftControls() {
-  const teamSelect = document.getElementById("draftTeamSelect");
   const pokemonOptions = document.getElementById("draftPokemonOptions");
   const nextPickText = document.getElementById("nextPickText");
+  const onClockTeam = document.getElementById("onClockTeam");
+  const overallPickNumber = document.getElementById("overallPickNumber");
 
   const nextPick = getNextPickInfo();
 
-  nextPickText.textContent = `Next Pick: #${nextPick.overallPick} — Round ${nextPick.roundNumber}, Pick ${nextPick.pickInRound}`;
+  if (nextPick.draftComplete) {
+    onClockTeam.textContent = "Draft Complete";
+    nextPickText.textContent = "All roster slots have been filled.";
+    overallPickNumber.textContent = "Done";
+    document.getElementById("makePickButton").disabled = true;
+    return;
+  }
 
-  teamSelect.innerHTML = allTeams.map(team => {
-    const display = getTeamDisplay(team);
-    const rosterCount = getRosterForTeam(team.id).length;
+  const onClock = getTeamDisplayById(nextPick.teamId);
 
-    return `<option value="${team.id}">${escapeHtml(display.name)} — ${escapeHtml(display.owner)} (${rosterCount}/10)</option>`;
-  }).join("");
+  onClockTeam.textContent = onClock.name;
+  nextPickText.textContent = `Round ${nextPick.roundNumber}, Pick ${nextPick.pickInRound}`;
+  overallPickNumber.textContent = `#${nextPick.overallPick}`;
 
-  const draftedSlugs = new Set(allDraftPicks.map(pick => pick.pokemon_slug));
+  const unavailableSlugs = new Set([
+    ...allDraftPicks.map(pick => pick.pokemon_slug),
+    ...allRosterRows.map(row => row.pokemon_slug)
+  ]);
 
-  const availablePokemon = championsPokemon.filter(pokemon => !draftedSlugs.has(pokemon.slug));
+  const availablePokemon = championsPokemon.filter(pokemon => !unavailableSlugs.has(pokemon.slug));
 
   pokemonOptions.innerHTML = availablePokemon.map(pokemon => {
     return `<option value="${escapeHtml(pokemon.name)}"></option>`;
@@ -154,14 +217,22 @@ function renderDraftSummary() {
   const container = document.getElementById("draftSummary");
 
   const draftedCount = allDraftPicks.length;
-  const totalSlots = 12 * 10;
-  const availableCount = championsPokemon.length - draftedCount;
+  const rosteredCount = allRosterRows.length;
+  const totalSlots = draftSettings.rounds * draftSettings.teams.length;
+  const availableCount = championsPokemon.length - new Set([
+    ...allDraftPicks.map(pick => pick.pokemon_slug),
+    ...allRosterRows.map(row => row.pokemon_slug)
+  ]).size;
 
   container.innerHTML = `
-    <div class="draft-summary-grid">
+    <div class="draft-summary-grid clean-summary">
       <div>
         <strong>${draftedCount}</strong>
-        <span>Drafted</span>
+        <span>Draft Picks</span>
+      </div>
+      <div>
+        <strong>${rosteredCount}</strong>
+        <span>Rostered</span>
       </div>
       <div>
         <strong>${availableCount}</strong>
@@ -169,10 +240,48 @@ function renderDraftSummary() {
       </div>
       <div>
         <strong>${totalSlots}</strong>
-        <span>Total Roster Slots</span>
+        <span>Total Slots</span>
       </div>
     </div>
   `;
+}
+
+function renderUpcomingPicks() {
+  const container = document.getElementById("upcomingPicks");
+  const nextPick = getNextPickInfo();
+
+  if (nextPick.draftComplete) {
+    container.innerHTML = `<p class="empty-roster">No upcoming picks.</p>`;
+    return;
+  }
+
+  const upcoming = [];
+
+  for (let pickNumber = nextPick.overallPick; pickNumber < nextPick.overallPick + 6; pickNumber++) {
+    const totalPicks = draftSettings.rounds * draftSettings.teams.length;
+
+    if (pickNumber > totalPicks) {
+      break;
+    }
+
+    const teamsPerRound = draftSettings.teams.length;
+    const roundNumber = Math.ceil(pickNumber / teamsPerRound);
+    const pickInRound = ((pickNumber - 1) % teamsPerRound) + 1;
+    const teamId = getTeamIdForPick(pickNumber);
+    const team = getTeamDisplayById(teamId);
+
+    upcoming.push(`
+      <div class="upcoming-pick-row">
+        <span>#${pickNumber}</span>
+        <div>
+          <strong>${escapeHtml(team.name)}</strong>
+          <small>Round ${roundNumber}, Pick ${pickInRound}</small>
+        </div>
+      </div>
+    `);
+  }
+
+  container.innerHTML = upcoming.join("");
 }
 
 function renderDraftBoard() {
@@ -184,8 +293,7 @@ function renderDraftBoard() {
   }
 
   const rowsHtml = allDraftPicks.map(pick => {
-    const team = allTeams.find(team => team.id === pick.team_id);
-    const display = team ? getTeamDisplay(team) : { name: pick.team_id, owner: "" };
+    const display = getTeamDisplayById(pick.team_id);
     const pokemon = getPokemonBySlug(pick.pokemon_slug);
 
     const pokemonCell = pokemon
@@ -209,31 +317,40 @@ function renderDraftBoard() {
   }).join("");
 
   container.innerHTML = `
-    <table class="draft-table">
-      <thead>
-        <tr>
-          <th>Overall</th>
-          <th>Round</th>
-          <th>Pick</th>
-          <th>Team</th>
-          <th>Pokémon</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${rowsHtml}
-      </tbody>
-    </table>
+    <div class="draft-table-wrapper">
+      <table class="draft-table">
+        <thead>
+          <tr>
+            <th>Overall</th>
+            <th>Round</th>
+            <th>Pick</th>
+            <th>Team</th>
+            <th>Pokémon</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rowsHtml}
+        </tbody>
+      </table>
+    </div>
   `;
 }
 
 async function makeDraftPick() {
   const status = document.getElementById("draftStatus");
-  const teamId = document.getElementById("draftTeamSelect").value;
   const input = document.getElementById("draftPokemonInput");
   const pokemon = findPokemonFromInput(input.value);
+  const nextPick = getNextPickInfo();
+
+  if (nextPick.draftComplete) {
+    status.textContent = "The draft is already complete.";
+    return;
+  }
+
+  const teamId = nextPick.teamId;
 
   if (!teamId) {
-    status.textContent = "Choose a team first.";
+    status.textContent = "Could not find the next team in the draft order.";
     return;
   }
 
@@ -245,7 +362,7 @@ async function makeDraftPick() {
   const teamRoster = getRosterForTeam(teamId);
 
   if (teamRoster.length >= 10) {
-    status.textContent = "That team already has 10 Pokémon.";
+    status.textContent = "The team on the clock already has 10 Pokémon.";
     return;
   }
 
@@ -257,13 +374,13 @@ async function makeDraftPick() {
     return;
   }
 
-  const nextPick = getNextPickInfo();
-
   const nextSlot = teamRoster.length > 0
     ? Math.max(...teamRoster.map(row => row.slot_number)) + 1
     : 1;
 
-  status.textContent = `Drafting ${pokemon.name}...`;
+  const onClock = getTeamDisplayById(teamId);
+
+  status.textContent = `Drafting ${pokemon.name} to ${onClock.name}...`;
 
   const { error: rosterError } = await supabaseClient
     .from("team_rosters")
@@ -303,7 +420,7 @@ async function makeDraftPick() {
   }
 
   input.value = "";
-  status.textContent = `${pokemon.name} drafted successfully.`;
+  status.textContent = `${pokemon.name} drafted to ${onClock.name}.`;
 
   await refreshDraftData();
   renderDraftPage();
