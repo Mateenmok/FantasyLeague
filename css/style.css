@@ -406,3 +406,19 @@ body {
   min-height: 130px;
 }
 
+
+.team-page-link {
+  display: inline-block;
+  margin-top: 18px;
+  color: white;
+  text-decoration: none;
+  background: #374151;
+  padding: 9px 13px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.team-page-link:hover {
+  background: #4b5563;
+}
+
