@@ -25,7 +25,7 @@
       background: rgba(0, 0, 0, 0.45);
       display: flex;
       align-items: flex-start;
-      justify-content: center;
+      justify-content: flex-start;
       text-align: center;
       padding-top: 55px;
       box-sizing: border-box;
@@ -47,9 +47,11 @@
       margin-top: 62px;
       display: flex;
       justify-content: flex-start;
-      gap: 32px;
-      flex-wrap: wrap;
-      padding-left: 11%;
+      align-items: flex-start;
+      gap: 44px;
+      flex-wrap: nowrap;
+      padding-left: 10%;
+      width: 100%;
     }
 
     .pokeball-link {
@@ -66,15 +68,15 @@
     }
 
     .pokeball-button {
-      width: 122px;
-      height: 122px;
+      width: 148px;
+      height: 148px;
       object-fit: contain;
       filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.8));
     }
 
     .button-caption {
       margin-top: -2px;
-      font-size: 18px;
+      font-size: 19px;
       font-weight: 700;
       letter-spacing: 1px;
       text-shadow: 0 3px 10px rgba(0, 0, 0, 0.9);
@@ -87,9 +89,35 @@
       <h1>Pokemon Draft League Hub</h1>
 
       <div class="home-buttons">
+        <a class="pokeball-link" href="create-league.html">
+          <img class="pokeball-button" src="images/buttons/PBall1.png" alt="Create League">
+          <div class="button-caption">Create League</div>
+        </a>
+
         <a class="pokeball-link" href="teams.html">
-          <img class="pokeball-button" src="images/buttons/PokeButton.png" alt="League Teams">
-          <div class="button-caption">League Teams</div>
+          <img class="pokeball-button" src="images/buttons/GBall.png" alt="League Teams">
+          <div class="button-caption">Team Info</div>
+        </a>
+
+      
+        <a class="pokeball-link" href="standings.html">
+          <img class="pokeball-button" src="images/buttons/UBall.png" alt="League Standings">
+          <div class="button-caption">Standings</div>
+        </a>
+      
+        <a class="pokeball-link" href="schedule.html">
+          <img class="pokeball-button" src="images/buttons/FBall.png" alt="Schedule">
+          <div class="button-caption">Schedule</div>
+        </a>
+      
+        <a class="pokeball-link" href="scoreboard.html">
+          <img class="pokeball-button" src="images/buttons/HBall.png" alt="Scoreboard">
+          <div class="button-caption">Scoreboard</div>
+        </a>
+      
+        <a class="pokeball-link" href="draft-room.html">
+          <img class="pokeball-button" src="images/buttons/DreamBall.png" alt="Draft Room">
+          <div class="button-caption">Draft Room</div>
         </a>
       </div>
     </div>
