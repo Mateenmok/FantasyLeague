@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Account</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background-image: url("images/backgrounds/Stadium4.webp");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+      font-family: "Oxanium", Arial, sans-serif;
+    }
+
+    .auth-overlay {
+      min-height: 100vh;
+      background: rgba(0, 0, 0, 0.55);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 32px;
+      box-sizing: border-box;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 520px;
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.45);
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 42px;
+      font-weight: 800;
+    }
+
+    p {
+      color: #cbd5e1;
+      line-height: 1.6;
+    }
+
+    .account-links {
+      display: grid;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .account-links a,
+    button {
+      text-decoration: none;
+      color: white;
+      background: #2563eb;
+      border: none;
+      border-radius: 12px;
+      padding: 13px 16px;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .account-links a:hover,
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    #signOutButton {
+      background: #334155;
+      margin-top: 18px;
+      width: 100%;
+    }
+
+    #signOutButton:hover {
+      background: #475569;
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-overlay">
+    <section class="auth-card">
+      <h1>Account</h1>
+      <p id="accountStatus">Checking account...</p>
+
+      <div class="account-links">
+        <a href="create-league.html">Create League</a>
+        <a href="teams.html">Team Info</a>
+        <a href="draft.html">Draft Board</a>
+        <a href="waivers.html">Waiver Wire</a>
+      </div>
+
+      <button id="signOutButton">Sign Out</button>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/account.js"></script>
+</body>
+</html>

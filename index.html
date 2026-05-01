@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Pokemon Draft League Hub</title>
+  <title>PokeLeague</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,35 +22,34 @@
 
     .home-overlay {
       min-height: 100vh;
-      background: rgba(0, 0, 0, 0.45);
+      background: rgba(0, 0, 0, 0.42);
       display: flex;
+      justify-content: center;
       align-items: flex-start;
-      justify-content: flex-start;
-      text-align: center;
-      padding-top: 55px;
+      padding-top: 40px;
       box-sizing: border-box;
     }
 
     .home-content {
       width: 100%;
+      text-align: center;
     }
 
-    h1 {
-      font-size: 56px;
-      font-weight: 800;
-      letter-spacing: 1.5px;
-      margin: 0;
-      text-shadow: 0 4px 14px rgba(0, 0, 0, 0.8);
+    .title-image {
+      width: min(900px, 88vw);
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.45));
     }
 
     .home-buttons {
-      margin-top: 62px;
+      margin-top: 48px;
       display: flex;
-      justify-content: flex-start;
+      justify-content: center;
       align-items: flex-start;
-      gap: 44px;
+      gap: 52px;
       flex-wrap: nowrap;
-      padding-left: 10%;
       width: 100%;
     }
 
@@ -68,56 +67,60 @@
     }
 
     .pokeball-button {
-      width: 148px;
-      height: 148px;
+      width: 190px;
+      height: 190px;
       object-fit: contain;
       filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.8));
     }
 
+    .character-button {
+      object-fit: contain;
+    }
+
     .button-caption {
       margin-top: -2px;
-      font-size: 19px;
+      font-size: 24px;
       font-weight: 700;
       letter-spacing: 1px;
       text-shadow: 0 3px 10px rgba(0, 0, 0, 0.9);
+    }
+
+    @media (max-width: 900px) {
+      .home-buttons {
+        gap: 28px;
+      }
+
+      .pokeball-button {
+        width: 125px;
+        height: 125px;
+      }
+
+      .button-caption {
+        font-size: 20px;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .home-buttons {
+        flex-wrap: wrap;
+      }
     }
   </style>
 </head>
 <body>
   <div class="home-overlay">
     <div class="home-content">
-      <h1>Pokemon Draft League Hub</h1>
+      <img class="title-image" src="images/ui/PokeLeagues.png" alt="PokeLeague">
 
       <div class="home-buttons">
-        <a class="pokeball-link" href="create-league.html">
-          <img class="pokeball-button" src="images/buttons/PBall1.png" alt="Create League">
-          <div class="button-caption">Create League</div>
+        <a class="pokeball-link" href="sign-in.html">
+          <img class="pokeball-button character-button" src="images/buttons/Jigglypuff12.png" alt="Sign In">
+          <div class="button-caption">Sign In</div>
         </a>
 
-        <a class="pokeball-link" href="teams.html">
-          <img class="pokeball-button" src="images/buttons/GBall.png" alt="League Teams">
-          <div class="button-caption">Team Info</div>
-        </a>
-
-      
-        <a class="pokeball-link" href="standings.html">
-          <img class="pokeball-button" src="images/buttons/UBall.png" alt="League Standings">
-          <div class="button-caption">Standings</div>
-        </a>
-      
-        <a class="pokeball-link" href="schedule.html">
-          <img class="pokeball-button" src="images/buttons/FBall.png" alt="Schedule">
-          <div class="button-caption">Schedule</div>
-        </a>
-      
-        <a class="pokeball-link" href="scoreboard.html">
-          <img class="pokeball-button" src="images/buttons/HBall.png" alt="Scoreboard">
-          <div class="button-caption">Scoreboard</div>
-        </a>
-      
-        <a class="pokeball-link" href="draft-room.html">
-          <img class="pokeball-button" src="images/buttons/DreamBall.png" alt="Draft Room">
-          <div class="button-caption">Draft Room</div>
+        <a class="pokeball-link" href="create-account.html">
+          <img class="pokeball-button character-button" src="images/buttons/PikaPika.png" alt="Create Account">
+          <div class="button-caption">Create Account</div>
         </a>
       </div>
     </div>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Sign In</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background-image: url("images/backgrounds/Stadium4.webp");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+      font-family: "Oxanium", Arial, sans-serif;
+    }
+
+    .auth-overlay {
+      min-height: 100vh;
+      background: rgba(0, 0, 0, 0.55);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 32px;
+      box-sizing: border-box;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 460px;
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.45);
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 40px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #cbd5e1;
+      line-height: 1.5;
+      margin-bottom: 26px;
+    }
+
+    label {
+      display: block;
+      margin: 16px 0 8px;
+      color: #e5e7eb;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 13px 14px;
+      border-radius: 12px;
+      border: 1px solid #475569;
+      background: #0f172a;
+      color: white;
+      font-size: 15px;
+      font-family: "Oxanium", Arial, sans-serif;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 22px;
+      padding: 13px 16px;
+      border: none;
+      border-radius: 12px;
+      background: #2563eb;
+      color: white;
+      font-size: 16px;
+      font-weight: 800;
+      font-family: "Oxanium", Arial, sans-serif;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    button:disabled {
+      background: #475569;
+      cursor: not-allowed;
+    }
+
+    .auth-link {
+      display: block;
+      text-align: center;
+      margin-top: 18px;
+      color: #93c5fd;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .auth-link:hover {
+      color: white;
+    }
+
+    #signInStatus {
+      margin-top: 16px;
+      color: #cbd5e1;
+      line-height: 1.5;
+      text-align: center;
+      min-height: 24px;
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-overlay">
+    <section class="auth-card">
+      <h1>Sign In</h1>
+      <p class="subtitle">Sign in to your PokeLeagues account.</p>
+
+      <label for="emailInput">Email</label>
+      <input id="emailInput" type="email" placeholder="you@example.com" autocomplete="email">
+
+      <label for="passwordInput">Password</label>
+      <input id="passwordInput" type="password" placeholder="Your password" autocomplete="current-password">
+
+      <button id="signInButton">Sign In</button>
+
+      <p id="signInStatus"></p>
+
+      <a class="auth-link" href="create-account.html">Need an account? Create one</a>
+      <a class="auth-link" href="index.html">Back to Home</a>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/sign-in.js"></script>
+</body>
+</html>
