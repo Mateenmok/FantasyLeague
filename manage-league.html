@@ -40,12 +40,27 @@
         <button id="saveManagersButton" class="pkmn-button">Save League Managers</button>
       </div>
 
+
+      <div class="pkmn-panel danger-zone">
+        <p><strong>Delete League</strong></p>
+        <p class="small-note">
+          This permanently deletes the league, teams, memberships, draft picks, draft order, and league roster data.
+        </p>
+
+        <div class="delete-league-row">
+          <input id="deleteLeagueConfirmInput" class="pkmn-input" type="text" placeholder="Type DELETE to confirm">
+          <button id="deleteLeagueButton" class="pkmn-button danger">Delete League</button>
+        </div>
+
+        <p id="deleteLeagueStatus" class="small-note"></p>
+      </div>
+
       <div id="manageLeagueStatus" class="pkmn-footer-note">Loading teams...</div>
     </section>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
-  <script src="js/manage-league.js"></script>
+  <script src="js/manage-league.js?v=2"></script>
 </body>
 </html>

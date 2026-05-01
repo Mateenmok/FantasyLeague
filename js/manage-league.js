@@ -2,12 +2,19 @@ const manageLeagueSubtitle = document.getElementById("manageLeagueSubtitle");
 const manageLeagueStatus = document.getElementById("manageLeagueStatus");
 const teamManagerList = document.getElementById("teamManagerList");
 const saveManagersButton = document.getElementById("saveManagersButton");
+const deleteLeagueButton = document.getElementById("deleteLeagueButton");
+const deleteLeagueConfirmInput = document.getElementById("deleteLeagueConfirmInput");
+const deleteLeagueStatus = document.getElementById("deleteLeagueStatus");
 
 let selectedLeagueId = localStorage.getItem("selected-league-id");
 let currentMembership = null;
 let leagueTeams = [];
 
 saveManagersButton.addEventListener("click", saveLeagueManagers);
+
+if (deleteLeagueButton) {
+  deleteLeagueButton.addEventListener("click", deleteLeague);
+}
 
 loadManageLeaguePage();
 
@@ -179,6 +186,51 @@ async function saveLeagueManagers() {
   renderTeamManagerRows();
 
   saveManagersButton.disabled = false;
+}
+
+
+async function deleteLeague() {
+  if (!currentMembership || currentMembership.role !== "admin") {
+    deleteLeagueStatus.textContent = "Only league admins can delete leagues.";
+    return;
+  }
+
+  const confirmText = deleteLeagueConfirmInput.value.trim();
+
+  if (confirmText !== "DELETE") {
+    deleteLeagueStatus.textContent = "Type DELETE exactly to confirm.";
+    return;
+  }
+
+  const confirmed = window.confirm("This will permanently delete this league. Are you sure?");
+
+  if (!confirmed) {
+    deleteLeagueStatus.textContent = "League deletion cancelled.";
+    return;
+  }
+
+  deleteLeagueButton.disabled = true;
+  deleteLeagueStatus.textContent = "Deleting league...";
+
+  const { error } = await supabaseClient
+    .rpc("delete_league_as_admin", {
+      p_league_id: selectedLeagueId
+    });
+
+  if (error) {
+    console.error("Delete league error:", error);
+    deleteLeagueStatus.textContent = "Error deleting league. Check the console.";
+    deleteLeagueButton.disabled = false;
+    return;
+  }
+
+  localStorage.removeItem("selected-league-id");
+  localStorage.removeItem("selected-league-code");
+  localStorage.removeItem("selected-league-team-id");
+  localStorage.removeItem("selected-league-role");
+
+  deleteLeagueStatus.textContent = "League deleted. Redirecting...";
+  window.location.href = "my-leagues.html";
 }
 
 function escapeHtml(value) {

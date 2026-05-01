@@ -929,3 +929,25 @@ body {
   }
 }
 
+
+/* Delete League */
+
+.danger-zone {
+  margin-top: 18px;
+  background: linear-gradient(to bottom, #f7dede 0%, #d7a8a8 100%);
+}
+
+.delete-league-row {
+  display: grid;
+  grid-template-columns: 1fr 210px;
+  gap: 10px;
+  align-items: center;
+  margin-top: 12px;
+}
+
+@media (max-width: 800px) {
+  .delete-league-row {
+    grid-template-columns: 1fr;
+  }
+}
+
