@@ -20,7 +20,9 @@ const draftSetupSection = document.getElementById("draftSetupSection");
 const draftOrderList = document.getElementById("draftOrderList");
 
 const ROSTER_SIZE = 10;
-const PICK_SECONDS = 120;
+function getPickSeconds() {
+  return Number(currentLeague?.draft_pick_seconds || 120);
+}
 
 let selectedLeagueId = localStorage.getItem("selected-league-id");
 let currentMembership = null;
@@ -472,7 +474,7 @@ function updateDraftClock() {
   const startedAt = new Date(draftState.current_pick_started_at).getTime();
   const now = Date.now();
   const elapsedSeconds = Math.floor((now - startedAt) / 1000);
-  const remainingSeconds = Math.max(PICK_SECONDS - elapsedSeconds, 0);
+  const remainingSeconds = Math.max(getPickSeconds() - elapsedSeconds, 0);
 
   const minutes = Math.floor(remainingSeconds / 60);
   const seconds = String(remainingSeconds % 60).padStart(2, "0");

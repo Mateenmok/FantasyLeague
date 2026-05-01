@@ -107,11 +107,18 @@ function renderStandings(divisions, teams) {
       .map(team => {
         const record = parseRecord(team.record);
 
+        const wins = Number(team.wins ?? record.wins ?? 0);
+        const losses = Number(team.losses ?? record.losses ?? 0);
+        const ties = Number(team.ties ?? record.ties ?? 0);
+        const gamesWon = Number(team.games_won ?? 0);
+
         return {
           ...team,
-          wins: record.wins,
-          losses: record.losses,
-          winningPercentage: getWinningPercentage(record.wins, record.losses)
+          wins,
+          losses,
+          ties,
+          gamesWon,
+          winningPercentage: getWinningPercentage(wins, losses, ties)
         };
       })
       .sort(sortTeams);
@@ -183,30 +190,32 @@ function renderStandings(divisions, teams) {
 }
 
 function parseRecord(recordText) {
-  const cleaned = String(recordText || "0-0").trim();
-  const match = cleaned.match(/^(\d+)\s*-\s*(\d+)$/);
+  const cleaned = String(recordText || "0-0-0").trim();
+  const match = cleaned.match(/^(\d+)\s*-\s*(\d+)(?:\s*-\s*(\d+))?$/);
 
   if (!match) {
     return {
       wins: 0,
-      losses: 0
+      losses: 0,
+      ties: 0
     };
   }
 
   return {
     wins: Number(match[1]),
-    losses: Number(match[2])
+    losses: Number(match[2]),
+    ties: Number(match[3] || 0)
   };
 }
 
-function getWinningPercentage(wins, losses) {
-  const games = wins + losses;
+function getWinningPercentage(wins, losses, ties = 0) {
+  const games = wins + losses + ties;
 
   if (games === 0) {
     return 0;
   }
 
-  return wins / games;
+  return (wins + ties * 0.5) / games;
 }
 
 function sortTeams(a, b) {
@@ -216,6 +225,10 @@ function sortTeams(a, b) {
 
   if (b.wins !== a.wins) {
     return b.wins - a.wins;
+  }
+
+  if ((b.gamesWon || 0) !== (a.gamesWon || 0)) {
+    return (b.gamesWon || 0) - (a.gamesWon || 0);
   }
 
   if (a.losses !== b.losses) {

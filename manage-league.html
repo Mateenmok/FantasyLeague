@@ -36,6 +36,23 @@
         <div id="divisionEditor" class="division-editor"></div>
       </div>
 
+
+      <div class="pkmn-panel">
+        <p class="manage-section-title">Draft Settings</p>
+        <p class="manage-section-note">
+          Set the draft clock and draft order before the draft begins.
+        </p>
+
+        <div class="draft-settings-grid">
+          <label class="draft-clock-setting">
+            <span>Clock Seconds</span>
+            <input id="draftClockSecondsInput" class="pkmn-input" type="number" min="15" max="600" value="120">
+          </label>
+        </div>
+
+        <div id="draftOrderEditor" class="draft-order-editor"></div>
+      </div>
+
       <div class="pkmn-panel">
         <p><strong>Team Manager Emails</strong></p>
         <p class="small-note">
@@ -71,6 +88,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
-  <script src="js/manage-league.js?v=3"></script>
+  <script src="js/manage-league.js?v=4"></script>
 </body>
 </html>

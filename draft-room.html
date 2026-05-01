@@ -38,16 +38,18 @@
 
       <section id="draftSetupSection" class="draft-controls-panel">
         <div class="pkmn-panel">
-          <p><strong>Draft Setup</strong></p>
-          <p class="small-note">Set the draft order before the draft starts. Snake order is applied automatically each round.</p>
-
-          <div id="draftOrderList" class="draft-order-list"></div>
+          <p><strong>Draft Controls</strong></p>
+          <p class="small-note">
+            Draft order and clock settings are managed from Manage League.
+          </p>
 
           <div class="draft-admin-buttons">
-            <button id="saveDraftOrderButton" class="pkmn-button small">Save Draft Order</button>
+            <button id="saveDraftOrderButton" class="pkmn-button small" style="display:none;">Save Draft Order</button>
             <button id="startDraftButton" class="pkmn-button small">Start Draft</button>
             <button id="stopDraftButton" class="pkmn-button small danger">Stop Draft</button>
           </div>
+
+          <div id="draftOrderList" style="display:none;"></div>
         </div>
       </section>
 
@@ -98,6 +100,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
-  <script src="js/draft-room.js?v=3"></script>
+  <script src="js/draft-room.js?v=4"></script>
 </body>
 </html>

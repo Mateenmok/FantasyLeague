@@ -1371,3 +1371,310 @@ body {
   }
 }
 
+
+/* Weekly Matches + My Matchup */
+
+.weekly-admin-controls {
+  margin-top: 16px;
+}
+
+.weekly-control-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.weekly-matches-list {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.weekly-match-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 170px 1fr;
+  gap: 14px;
+  align-items: center;
+  padding: 16px;
+  background: linear-gradient(to bottom, #fefefe 0%, #dcdcdc 100%);
+  border: 4px solid #555;
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 5px #bdbdbd inset;
+}
+
+.weekly-match-status {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+}
+
+.weekly-complete-badge,
+.weekly-open-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border: 2px solid #555;
+  border-radius: 6px;
+  font-size: 18px;
+}
+
+.weekly-complete-badge {
+  background: #d8f7d8;
+}
+
+.weekly-open-badge {
+  background: #fff6cc;
+}
+
+.weekly-team-side {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.weekly-team-side.right {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+.weekly-team-logo,
+.weekly-team-logo-placeholder {
+  width: 64px;
+  height: 64px;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: white;
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bdbdbd inset;
+}
+
+.weekly-team-logo {
+  object-fit: contain;
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+.weekly-team-logo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.weekly-team-text h2 {
+  margin: 0 0 4px;
+  font-size: 32px;
+  line-height: 1;
+}
+
+.weekly-team-text p {
+  margin: 2px 0;
+  font-size: 22px;
+  color: #333;
+}
+
+.weekly-score-center {
+  display: grid;
+  grid-template-columns: 1fr 34px 1fr;
+  gap: 8px;
+  align-items: center;
+  justify-items: center;
+}
+
+.weekly-score-center span {
+  font-size: 26px;
+}
+
+.weekly-score-input,
+.weekly-score-display {
+  width: 58px;
+  height: 50px;
+  text-align: center;
+  font-family: 'VT323', monospace;
+  font-size: 30px;
+  color: #222;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #fff6cc 0%, #eadb95 100%);
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #d6c47d inset;
+}
+
+.weekly-score-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.my-matchup-feature {
+  margin-top: 18px;
+  padding: 18px;
+  background: linear-gradient(to bottom, #fefefe 0%, #dcdcdc 100%);
+  border: 4px solid #555;
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 5px #bdbdbd inset;
+}
+
+.my-matchup-round-label {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 14px;
+}
+
+.my-matchup-teams {
+  display: grid;
+  grid-template-columns: 1fr 210px 1fr;
+  gap: 16px;
+  align-items: center;
+}
+
+.my-matchup-team-card {
+  text-align: center;
+  padding: 16px;
+  border: 3px solid #555;
+  border-radius: 10px;
+  background: linear-gradient(to bottom, #f7f7f7 0%, #d2d2d2 100%);
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bcbcbc inset;
+}
+
+.my-matchup-label {
+  font-size: 24px;
+  color: #444;
+  margin-bottom: 8px;
+}
+
+.my-matchup-logo,
+.my-matchup-logo-placeholder {
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 10px;
+  border: 3px solid #555;
+  border-radius: 10px;
+  background: white;
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bdbdbd inset;
+}
+
+.my-matchup-logo {
+  object-fit: contain;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.my-matchup-logo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34px;
+}
+
+.my-matchup-team-card h2 {
+  margin: 0 0 6px;
+  font-size: 36px;
+}
+
+.my-matchup-team-card p {
+  margin: 3px 0;
+  font-size: 24px;
+}
+
+.my-matchup-score-box {
+  text-align: center;
+  padding: 16px;
+  border: 4px solid #333;
+  border-radius: 10px;
+  background: linear-gradient(to bottom, #111 0%, #000 100%);
+  color: white;
+}
+
+.my-matchup-score {
+  font-size: 42px;
+  color: #ffe96b;
+}
+
+.my-matchup-vs {
+  font-size: 34px;
+  margin: 8px 0;
+}
+
+.my-matchup-status {
+  font-size: 24px;
+  color: #ddd;
+}
+
+@media (max-width: 950px) {
+  .weekly-match-card,
+  .my-matchup-teams,
+  .weekly-control-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .weekly-team-side,
+  .weekly-team-side.right {
+    flex-direction: row;
+    text-align: left;
+  }
+
+  .weekly-score-center {
+    grid-template-columns: 1fr 40px 1fr;
+  }
+}
+
+
+/* Manage League Draft Settings */
+
+.draft-settings-grid {
+  display: grid;
+  grid-template-columns: minmax(180px, 260px);
+  gap: 12px;
+  margin-top: 12px;
+  margin-bottom: 14px;
+}
+
+.draft-clock-setting {
+  display: grid;
+  gap: 6px;
+}
+
+.draft-clock-setting span {
+  font-size: 26px;
+}
+
+.draft-order-editor {
+  margin-top: 12px;
+}
+
+.manage-draft-order-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 10px;
+}
+
+.manage-draft-order-row {
+  display: grid;
+  grid-template-columns: 78px 1fr;
+  gap: 8px;
+  align-items: center;
+}
+
+.manage-draft-order-row span {
+  font-size: 24px;
+}
+
+@media (max-width: 800px) {
+  .manage-draft-order-row {
+    grid-template-columns: 1fr;
+  }
+}
+
