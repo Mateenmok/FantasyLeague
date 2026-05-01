@@ -6,7 +6,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/pokemon-ui.css?v=standings2">
+  <link rel="stylesheet" href="css/pokemon-ui.css?v=playoffs2">
 </head>
 <body>
   <div class="page-overlay top-align">
@@ -28,12 +28,21 @@
 
       <div id="standingsContent" class="standings-content"></div>
 
+
+      <section class="pkmn-panel standings-playoff-panel">
+        <p class="standings-section-title">Projected Playoff Bracket</p>
+        <p class="small-note">
+          Seeded by record, then games won.
+        </p>
+        <div id="playoffBracket" class="playoff-bracket"></div>
+      </section>
+
       <div id="standingsStatus" class="pkmn-footer-note">Loading standings...</div>
     </section>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
-  <script src="js/standings.js"></script>
+  <script src="js/standings.js?v=playoffs2"></script>
 </body>
 </html>

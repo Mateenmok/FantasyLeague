@@ -1,8 +1,13 @@
 const standingsSubtitle = document.getElementById("standingsSubtitle");
 const standingsContent = document.getElementById("standingsContent");
 const standingsStatus = document.getElementById("standingsStatus");
+const playoffBracket = document.getElementById("playoffBracket");
 
 const selectedLeagueId = localStorage.getItem("selected-league-id");
+
+let currentLeague = null;
+let leagueTeams = [];
+let leagueDivisions = [];
 
 loadStandingsPage();
 
@@ -51,6 +56,7 @@ async function loadStandingsPage() {
     return;
   }
 
+  currentLeague = league;
   standingsSubtitle.textContent = league.name;
 
   const { data: divisions, error: divisionsError } = await supabaseClient
@@ -77,11 +83,37 @@ async function loadStandingsPage() {
     return;
   }
 
-  renderStandings(divisions || [], teams || []);
+  leagueDivisions = divisions || [];
+  leagueTeams = normalizeTeams(teams || []);
+
+  renderStandings();
+  renderPlayoffBracket();
 }
 
-function renderStandings(divisions, teams) {
-  if (!teams.length) {
+function normalizeTeams(teams) {
+  return teams.map(team => {
+    const parsedRecord = parseRecord(team.record);
+
+    const wins = Number(team.wins ?? parsedRecord.wins ?? 0);
+    const losses = Number(team.losses ?? parsedRecord.losses ?? 0);
+    const ties = Number(team.ties ?? parsedRecord.ties ?? 0);
+    const gamesWon = Number(team.games_won ?? 0);
+    const gamesLost = Number(team.games_lost ?? 0);
+
+    return {
+      ...team,
+      wins,
+      losses,
+      ties,
+      gamesWon,
+      gamesLost,
+      winningPercentage: getWinningPercentage(wins, losses, ties)
+    };
+  });
+}
+
+function renderStandings() {
+  if (!leagueTeams.length) {
     standingsContent.innerHTML = `
       <div class="empty-state">
         <p>No teams found for this league.</p>
@@ -91,45 +123,22 @@ function renderStandings(divisions, teams) {
     return;
   }
 
-  const divisionsToRender = divisions.length
-    ? divisions
-    : [{ id: "unassigned", name: "League Standings", division_number: 1 }];
+  const divisionsToRender = leagueDivisions.length
+    ? leagueDivisions
+    : [{ id: "all", name: "League Standings", division_number: 1 }];
 
   standingsContent.innerHTML = divisionsToRender.map(division => {
-    const divisionTeams = teams
+    const divisionTeams = leagueTeams
       .filter(team => {
-        if (division.id === "unassigned") {
-          return true;
-        }
-
+        if (division.id === "all") return true;
         return team.division_id === division.id;
       })
-      .map(team => {
-        const record = parseRecord(team.record);
+      .sort(sortTeamsForStandings);
 
-        const wins = Number(team.wins ?? record.wins ?? 0);
-        const losses = Number(team.losses ?? record.losses ?? 0);
-        const ties = Number(team.ties ?? record.ties ?? 0);
-        const gamesWon = Number(team.games_won ?? 0);
-
-        return {
-          ...team,
-          wins,
-          losses,
-          ties,
-          gamesWon,
-          winningPercentage: getWinningPercentage(wins, losses, ties)
-        };
-      })
-      .sort(sortTeams);
-
-    if (divisionTeams.length === 0) {
+    if (!divisionTeams.length) {
       return `
         <section class="standings-board">
-          <div class="standings-division-title">
-            ${escapeHtml(division.name)}
-          </div>
-
+          <div class="standings-division-title">${escapeHtml(division.name)}</div>
           <div class="empty-state">
             <p>No teams assigned to this division.</p>
           </div>
@@ -142,6 +151,7 @@ function renderStandings(divisions, teams) {
     const rows = divisionTeams.map((team, index) => {
       const gamesBack = calculateGamesBack(leader, team);
       const gbText = formatGamesBack(gamesBack);
+
       const logoHtml = team.logo_url
         ? `<img class="standings-logo" src="${escapeHtml(team.logo_url)}" alt="${escapeHtml(team.team_name)} logo">`
         : `<div class="standings-logo-placeholder">T${team.team_number}</div>`;
@@ -160,7 +170,7 @@ function renderStandings(divisions, teams) {
 
           <div class="standings-number">${team.wins}</div>
           <div class="standings-number">${team.losses}</div>
-          <div class="standings-record">${team.wins}-${team.losses}</div>
+          <div class="standings-record">${getRecordString(team)}</div>
           <div class="standings-gb">${gbText}</div>
         </div>
       `;
@@ -168,9 +178,7 @@ function renderStandings(divisions, teams) {
 
     return `
       <section class="standings-board">
-        <div class="standings-division-title">
-          ${escapeHtml(division.name)}
-        </div>
+        <div class="standings-division-title">${escapeHtml(division.name)}</div>
 
         <div class="standings-header-row">
           <div>#</div>
@@ -186,7 +194,186 @@ function renderStandings(divisions, teams) {
     `;
   }).join("");
 
-  standingsStatus.textContent = `${teams.length} teams loaded. Standings sorted by record.`;
+  standingsStatus.textContent = `${leagueTeams.length} teams loaded. Tiebreaker: games won.`;
+}
+
+function renderPlayoffBracket() {
+  if (!playoffBracket || !currentLeague || !leagueTeams.length) {
+    return;
+  }
+
+  const playoffCount = Math.floor(Number(currentLeague.team_count || leagueTeams.length) / 2);
+
+  const seededTeams = [...leagueTeams]
+    .sort(compareTeamsForPlayoffs)
+    .slice(0, playoffCount)
+    .map((team, index) => ({
+      ...team,
+      playoffSeed: index + 1
+    }));
+
+  const rounds = buildPlayoffRounds(seededTeams);
+
+  playoffBracket.innerHTML = rounds.map((round, roundIndex) => {
+    return `
+      <div class="bracket-round">
+        <div class="bracket-round-title">${getRoundLabel(roundIndex, rounds.length)}</div>
+
+        ${round.map(matchup => renderBracketMatchup(matchup)).join("")}
+      </div>
+    `;
+  }).join("");
+}
+
+function renderBracketMatchup(matchup) {
+  if (matchup.bye) {
+    return `
+      <div class="bracket-matchup">
+        ${renderBracketTeam(matchup.team1)}
+        <div class="bracket-bye">BYE</div>
+      </div>
+    `;
+  }
+
+  if (matchup.team1 && matchup.team2) {
+    return `
+      <div class="bracket-matchup">
+        ${renderBracketTeam(matchup.team1)}
+        <div class="bracket-vs">vs</div>
+        ${renderBracketTeam(matchup.team2)}
+      </div>
+    `;
+  }
+
+  return `
+    <div class="bracket-matchup">
+      <div class="bracket-bye">TBD</div>
+    </div>
+  `;
+}
+
+function renderBracketTeam(team) {
+  const logoHtml = team.logo_url
+    ? `<img class="bracket-team-logo" src="${escapeHtml(team.logo_url)}" alt="${escapeHtml(team.team_name)} logo">`
+    : `<div class="bracket-team-logo-placeholder">T${team.team_number}</div>`;
+
+  return `
+    <div class="bracket-team-row">
+      <div class="bracket-seed">#${team.playoffSeed}</div>
+
+      ${logoHtml}
+
+      <div class="bracket-team-info">
+        <div class="bracket-team-name">${escapeHtml(team.team_name)}</div>
+        <div class="bracket-team-meta">
+          ${getRecordString(team)} • GW: ${team.gamesWon}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function buildPlayoffRounds(seededTeams) {
+  const playoffCount = seededTeams.length;
+
+  let bracketSize = 1;
+
+  while (bracketSize < playoffCount) {
+    bracketSize *= 2;
+  }
+
+  const byeCount = bracketSize - playoffCount;
+  const rounds = [];
+
+  const firstRound = [];
+  const byeTeams = seededTeams.slice(0, byeCount);
+  const playInTeams = seededTeams.slice(byeCount);
+
+  byeTeams.forEach(team => {
+    firstRound.push({
+      team1: team,
+      team2: null,
+      bye: true
+    });
+  });
+
+  for (let i = 0; i < Math.floor(playInTeams.length / 2); i++) {
+    firstRound.push({
+      team1: playInTeams[i],
+      team2: playInTeams[playInTeams.length - 1 - i],
+      bye: false
+    });
+  }
+
+  rounds.push(firstRound);
+
+  let teamsRemaining = firstRound.length;
+
+  while (teamsRemaining > 1) {
+    const nextRoundGames = Math.floor(teamsRemaining / 2);
+    const nextRound = [];
+
+    for (let i = 0; i < nextRoundGames; i++) {
+      nextRound.push({
+        team1: null,
+        team2: null,
+        bye: false
+      });
+    }
+
+    rounds.push(nextRound);
+    teamsRemaining = nextRoundGames;
+  }
+
+  return rounds;
+}
+
+function compareTeamsForPlayoffs(a, b) {
+  if (b.winningPercentage !== a.winningPercentage) {
+    return b.winningPercentage - a.winningPercentage;
+  }
+
+  if (b.gamesWon !== a.gamesWon) {
+    return b.gamesWon - a.gamesWon;
+  }
+
+  if (b.wins !== a.wins) {
+    return b.wins - a.wins;
+  }
+
+  if (a.losses !== b.losses) {
+    return a.losses - b.losses;
+  }
+
+  return a.team_number - b.team_number;
+}
+
+function sortTeamsForStandings(a, b) {
+  if (b.winningPercentage !== a.winningPercentage) {
+    return b.winningPercentage - a.winningPercentage;
+  }
+
+  if (b.gamesWon !== a.gamesWon) {
+    return b.gamesWon - a.gamesWon;
+  }
+
+  if (b.wins !== a.wins) {
+    return b.wins - a.wins;
+  }
+
+  if (a.losses !== b.losses) {
+    return a.losses - b.losses;
+  }
+
+  return a.team_number - b.team_number;
+}
+
+function getRoundLabel(roundIndex, totalRounds) {
+  if (totalRounds === 1) return "Final";
+  if (roundIndex === totalRounds - 1) return "Final";
+  if (roundIndex === totalRounds - 2) return "Semifinals";
+  if (roundIndex === totalRounds - 3) return "Quarterfinals";
+  return `Round ${roundIndex + 1}`;
 }
 
 function parseRecord(recordText) {
@@ -218,26 +405,6 @@ function getWinningPercentage(wins, losses, ties = 0) {
   return (wins + ties * 0.5) / games;
 }
 
-function sortTeams(a, b) {
-  if (b.winningPercentage !== a.winningPercentage) {
-    return b.winningPercentage - a.winningPercentage;
-  }
-
-  if (b.wins !== a.wins) {
-    return b.wins - a.wins;
-  }
-
-  if ((b.gamesWon || 0) !== (a.gamesWon || 0)) {
-    return (b.gamesWon || 0) - (a.gamesWon || 0);
-  }
-
-  if (a.losses !== b.losses) {
-    return a.losses - b.losses;
-  }
-
-  return a.team_number - b.team_number;
-}
-
 function calculateGamesBack(leader, team) {
   return ((leader.wins - team.wins) + (team.losses - leader.losses)) / 2;
 }
@@ -252,6 +419,10 @@ function formatGamesBack(gamesBack) {
   }
 
   return String(gamesBack);
+}
+
+function getRecordString(team) {
+  return `${team.wins}-${team.losses}-${team.ties}`;
 }
 
 function escapeHtml(value) {
