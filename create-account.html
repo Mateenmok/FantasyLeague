@@ -3,139 +3,56 @@
 <head>
   <meta charset="UTF-8">
   <title>Create Account</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background-image: url("images/backgrounds/Stadium4.webp");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      color: white;
-      font-family: "Oxanium", Arial, sans-serif;
-    }
-
-    .auth-overlay {
-      min-height: 100vh;
-      background: rgba(0, 0, 0, 0.55);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 32px;
-      box-sizing: border-box;
-    }
-
-    .auth-card {
-      width: 100%;
-      max-width: 460px;
-      background: rgba(15, 23, 42, 0.92);
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      border-radius: 24px;
-      padding: 32px;
-      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.45);
-    }
-
-    h1 {
-      margin: 0 0 10px;
-      font-size: 40px;
-      font-weight: 800;
-      text-align: center;
-    }
-
-    .subtitle {
-      text-align: center;
-      color: #cbd5e1;
-      line-height: 1.5;
-      margin-bottom: 26px;
-    }
-
-    label {
-      display: block;
-      margin: 16px 0 8px;
-      color: #e5e7eb;
-      font-weight: 700;
-    }
-
-    input {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 13px 14px;
-      border-radius: 12px;
-      border: 1px solid #475569;
-      background: #0f172a;
-      color: white;
-      font-size: 15px;
-      font-family: "Oxanium", Arial, sans-serif;
-    }
-
-    button {
-      width: 100%;
-      margin-top: 22px;
-      padding: 13px 16px;
-      border: none;
-      border-radius: 12px;
-      background: #2563eb;
-      color: white;
-      font-size: 16px;
-      font-weight: 800;
-      font-family: "Oxanium", Arial, sans-serif;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #1d4ed8;
-    }
-
-    .auth-link {
-      display: block;
-      text-align: center;
-      margin-top: 18px;
-      color: #93c5fd;
-      text-decoration: none;
-      font-weight: 700;
-    }
-
-    .auth-link:hover {
-      color: white;
-    }
-
-    #createAccountStatus {
-      margin-top: 16px;
-      color: #cbd5e1;
-      line-height: 1.5;
-      text-align: center;
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/pokemon-ui.css">
 </head>
 <body>
-  <div class="auth-overlay">
-    <section class="auth-card">
-      <h1>Create Account</h1>
-      <p class="subtitle">Create your PokeLeagues account.</p>
+  <div class="page-overlay">
+    <section class="pkmn-window">
+      <img class="corner-ball top-left" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball top-right" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball bottom-left" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball bottom-right" src="images/ui/retroball.png" alt="">
 
-      <label for="displayNameInput">Display Name</label>
-      <input id="displayNameInput" type="text" placeholder="Example: Alex">
+      <div class="pkmn-title-box">
+        <h1 class="pkmn-title">CREATE ACCOUNT</h1>
+        <p class="pkmn-subtitle">Create your PokeLeagues account.</p>
+      </div>
 
-      <label for="emailInput">Email</label>
-      <input id="emailInput" type="email" placeholder="you@example.com">
+      <div class="pkmn-form">
+        <div class="pkmn-field">
+          <label class="pkmn-label" for="displayNameInput">Display Name</label>
+          <input class="pkmn-input" id="displayNameInput" type="text" placeholder="Example: Alex">
+        </div>
 
-      <label for="passwordInput">Password</label>
-      <input id="passwordInput" type="password" placeholder="At least 6 characters">
+        <div class="pkmn-field">
+          <label class="pkmn-label" for="emailInput">Email</label>
+          <input class="pkmn-input" id="emailInput" type="email" placeholder="you@example.com">
+        </div>
 
-      <label for="confirmPasswordInput">Confirm Password</label>
-      <input id="confirmPasswordInput" type="password" placeholder="Re-enter password">
+        <div class="pkmn-field">
+          <label class="pkmn-label" for="passwordInput">Password</label>
+          <input class="pkmn-input" id="passwordInput" type="password" placeholder="At least 6 characters">
+        </div>
 
-      <button id="createAccountButton">Create Account</button>
+        <div class="pkmn-field">
+          <label class="pkmn-label" for="confirmPasswordInput">Confirm Password</label>
+          <input class="pkmn-input" id="confirmPasswordInput" type="password" placeholder="Re-enter password">
+        </div>
+      </div>
 
-      <p id="createAccountStatus"></p>
+      <div style="margin-top:16px;">
+        <button id="createAccountButton" class="pkmn-button">Create Account</button>
+      </div>
 
-      <a class="auth-link" href="sign-in.html">Already have an account? Sign in</a>
-      <a class="auth-link" href="index.html">Back to Home</a>
+      <div id="createAccountStatus" class="pkmn-footer-note">Fill out all fields to begin.</div>
+
+      <div class="auth-links">
+        <a href="sign-in.html">Already have an account? Sign in</a>
+        <a href="index.html">Back to Home</a>
+      </div>
     </section>
   </div>
 

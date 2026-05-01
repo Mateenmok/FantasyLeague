@@ -2,43 +2,37 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Account</title>
+  <title>My Leagues</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/pokemon-ui.css">
 </head>
 <body>
-  <div class="page-overlay">
-    <section class="pkmn-window">
+  <div class="page-overlay top-align">
+    <section class="pkmn-window wide">
       <img class="corner-ball top-left" src="images/ui/retroball.png" alt="">
       <img class="corner-ball top-right" src="images/ui/retroball.png" alt="">
       <img class="corner-ball bottom-left" src="images/ui/retroball.png" alt="">
       <img class="corner-ball bottom-right" src="images/ui/retroball.png" alt="">
 
       <div class="pkmn-title-box">
-        <h1 class="pkmn-title">ACCOUNT</h1>
+        <h1 class="pkmn-title">MY LEAGUES</h1>
+        <p class="pkmn-subtitle">View the leagues connected to your account.</p>
       </div>
 
-      <div class="pkmn-status-box">
-        <span id="accountStatus">Checking account...</span>
+      <div class="top-links">
+        <a class="pkmn-button-link small secondary" href="account.html">Back to Account</a>
+        <a class="pkmn-button-link small" href="create-league.html">Create League</a>
       </div>
 
-      <div class="pkmn-menu">
-        <a class="pkmn-button-link" href="create-league.html">Create League</a>
-        <a class="pkmn-button-link" href="my-leagues.html">My Leagues</a>
-      </div>
-
-      <button id="signOutButton" class="pkmn-button danger">Sign Out</button>
-
-      <div class="pkmn-footer-note">
-        Max leagues: 3
-      </div>
+      <div id="myLeaguesList" class="league-list"></div>
+      <div id="myLeaguesStatus" class="pkmn-footer-note">Loading leagues...</div>
     </section>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
-  <script src="js/account.js"></script>
+  <script src="js/my-leagues.js"></script>
 </body>
 </html>

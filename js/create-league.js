@@ -38,15 +38,51 @@ async function createLeague() {
   }
 
   createLeagueButton.disabled = true;
+  createLeagueStatus.textContent = "Checking account...";
+
+  const { data: sessionData, error: sessionError } = await supabaseClient.auth.getSession();
+
+  if (sessionError) {
+    console.error("Session error:", sessionError);
+    createLeagueStatus.textContent = "Could not check account status.";
+    createLeagueButton.disabled = false;
+    return;
+  }
+
+  const session = sessionData.session;
+
+  if (!session) {
+    createLeagueStatus.textContent = "You need to sign in before creating a league.";
+    createLeagueButton.disabled = false;
+    return;
+  }
+
+  const userId = session.user.id;
+
+  const { data: existingMemberships, error: membershipCountError } = await supabaseClient
+    .from("league_memberships")
+    .select("id")
+    .eq("user_id", userId);
+
+  if (membershipCountError) {
+    console.error("Membership count error:", membershipCountError);
+    createLeagueStatus.textContent = "Could not check your current leagues.";
+    createLeagueButton.disabled = false;
+    return;
+  }
+
+  if (existingMemberships.length >= 3) {
+    createLeagueStatus.textContent = "You are already in 3 leagues. That is the current maximum.";
+    createLeagueButton.disabled = false;
+    return;
+  }
+
   createLeagueStatus.textContent = "Creating league...";
 
   const leagueId = makeId();
   const leagueCode = generateLeagueCode();
-
   const adminTeamNumbers = getAdminTeamNumbers();
-
   const usedPasscodes = new Set();
-
   const teams = [];
 
   for (let i = 1; i <= teamCount; i++) {
@@ -92,9 +128,24 @@ async function createLeague() {
     return;
   }
 
+  const { error: membershipError } = await supabaseClient
+    .from("league_memberships")
+    .insert({
+      user_id: userId,
+      league_id: leagueId,
+      league_team_id: null,
+      role: "admin"
+    });
+
+  if (membershipError) {
+    console.error("Error creating league membership:", membershipError);
+    createLeagueStatus.textContent = "League was created, but account linking failed. Check the console.";
+    createLeagueButton.disabled = false;
+    return;
+  }
+
   localStorage.setItem("selected-league-id", leagueId);
   localStorage.setItem("selected-league-code", leagueCode);
-  localStorage.setItem("selected-team-id-v2", teams[0].id);
 
   createLeagueStatus.textContent = "League created.";
   createLeagueButton.disabled = false;
@@ -153,6 +204,10 @@ function renderCreatedLeagueResult({ leagueCode, leagueName, teamCount, teams })
     </table>
 
     <p class="small-note">${teamCount} teams created successfully.</p>
+
+    <div style="margin-top: 18px;">
+      <a href="my-leagues.html" style="color:#93c5fd; font-weight:800;">Go to My Leagues</a>
+    </div>
   `;
 
   window.scrollTo({

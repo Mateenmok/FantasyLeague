@@ -3,51 +3,70 @@
 <head>
   <meta charset="UTF-8">
   <title>Create League</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/pokemon-ui.css">
 </head>
 <body>
+  <div class="page-overlay top-align">
+    <section class="pkmn-window wide">
+      <img class="corner-ball top-left" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball top-right" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball bottom-left" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball bottom-right" src="images/ui/retroball.png" alt="">
 
-  <main class="create-league-page">
-    <section class="create-league-card">
-      <p class="create-league-eyebrow">League Setup</p>
-      <h1>Create League</h1>
-      <p class="create-league-subtitle">
-        Create a new Pokémon Draft League, choose the number of teams, and generate team passcodes.
-      </p>
+      <div class="pkmn-title-box">
+        <h1 class="pkmn-title">CREATE LEAGUE</h1>
+        <p class="pkmn-subtitle">Set up a new Pokémon draft league.</p>
+      </div>
 
-      <div class="create-league-form">
-        <label for="leagueNameInput">League Name</label>
-        <input id="leagueNameInput" type="text" placeholder="Example: Claremont Champions League">
+      <div class="top-links">
+        <a class="pkmn-button-link small secondary" href="account.html">Back to Account</a>
+        <a class="pkmn-button-link small secondary" href="my-leagues.html">My Leagues</a>
+      </div>
 
-        <label for="teamCountSelect">Number of Teams</label>
-        <select id="teamCountSelect">
-          <option value="8">8 Teams</option>
-          <option value="9">9 Teams</option>
-          <option value="10">10 Teams</option>
-          <option value="11">11 Teams</option>
-          <option value="12" selected>12 Teams</option>
-          <option value="13">13 Teams</option>
-          <option value="14">14 Teams</option>
-          <option value="15">15 Teams</option>
-          <option value="16">16 Teams</option>
-        </select>
-
-        <div class="admin-team-section">
-          <h2>Admin Teams</h2>
-          <p class="small-note">
-            Admin teams will eventually be able to manage league settings, draft tools, and other teams.
-            Team 1 is selected by default.
-          </p>
-          <div id="adminTeamCheckboxes" class="admin-checkbox-grid"></div>
+      <div class="pkmn-form two-col">
+        <div class="pkmn-field full">
+          <label class="pkmn-label" for="leagueNameInput">League Name</label>
+          <input class="pkmn-input" id="leagueNameInput" type="text" placeholder="Example: Claremont Champions League">
         </div>
 
-        <button id="createLeagueButton">Create League</button>
-        <p id="createLeagueStatus" class="small-note"></p>
-      </div>
-    </section>
+        <div class="pkmn-field full">
+          <label class="pkmn-label" for="teamCountSelect">Number of Teams</label>
+          <select class="pkmn-select" id="teamCountSelect">
+            <option value="8">8 Teams</option>
+            <option value="9">9 Teams</option>
+            <option value="10">10 Teams</option>
+            <option value="11">11 Teams</option>
+            <option value="12" selected>12 Teams</option>
+            <option value="13">13 Teams</option>
+            <option value="14">14 Teams</option>
+            <option value="15">15 Teams</option>
+            <option value="16">16 Teams</option>
+          </select>
+        </div>
 
-    <section id="createdLeagueResult" class="create-league-card hidden"></section>
-  </main>
+        <div class="pkmn-field full">
+          <div class="pkmn-panel">
+            <p><strong>Admin Teams</strong></p>
+            <p class="small-note">
+              Choose which teams should start with admin permissions. Team 1 is selected by default.
+            </p>
+            <div id="adminTeamCheckboxes" class="pkmn-checkbox-grid"></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <button id="createLeagueButton" class="pkmn-button">Create League</button>
+      </div>
+
+      <div id="createLeagueStatus" class="pkmn-footer-note">Enter your settings, then create the league.</div>
+
+      <section id="createdLeagueResult" class="pkmn-result-box hidden"></section>
+    </section>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
