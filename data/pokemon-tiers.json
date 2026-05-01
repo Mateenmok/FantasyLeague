@@ -1,0 +1,2022 @@
+[
+  {
+    "rank": 1,
+    "name": "Sneasler",
+    "slug": "sneasler",
+    "tier": "Diamond",
+    "points": 8,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 8",
+    "ranked_name": "Sneasler"
+  },
+  {
+    "rank": 2,
+    "name": "Incineroar",
+    "slug": "incineroar",
+    "tier": "Diamond",
+    "points": 8,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 8",
+    "ranked_name": "Incineroar"
+  },
+  {
+    "rank": 3,
+    "name": "Garchomp",
+    "slug": "garchomp",
+    "tier": "Diamond",
+    "points": 8,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 8",
+    "ranked_name": "Garchomp"
+  },
+  {
+    "rank": 4,
+    "name": "Kingambit",
+    "slug": "kingambit",
+    "tier": "Diamond",
+    "points": 8,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 8",
+    "ranked_name": "Kingambit"
+  },
+  {
+    "rank": 5,
+    "name": "Basculegion",
+    "slug": "basculegion",
+    "tier": "Diamond",
+    "points": 8,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 8",
+    "ranked_name": "Basculegion"
+  },
+  {
+    "rank": 6,
+    "name": "Sinistcha",
+    "slug": "sinistcha",
+    "tier": "Diamond",
+    "points": 8,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 8",
+    "ranked_name": "Sinistcha"
+  },
+  {
+    "rank": 7,
+    "name": "Aerodactyl",
+    "slug": "aerodactyl",
+    "tier": "Diamond",
+    "points": 8,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 8",
+    "ranked_name": "Aerodactyl"
+  },
+  {
+    "rank": 8,
+    "name": "Charizard",
+    "slug": "charizard",
+    "tier": "Diamond",
+    "points": 8,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 8",
+    "ranked_name": "Charizard"
+  },
+  {
+    "rank": 9,
+    "name": "Eternal Flower Floette",
+    "slug": "eternal-flower-floette",
+    "tier": "Diamond",
+    "points": 8,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 8",
+    "ranked_name": "Floette-Eternal"
+  },
+  {
+    "rank": 10,
+    "name": "Rotom-Wash",
+    "slug": "rotom-wash",
+    "tier": "Diamond",
+    "points": 8,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 8",
+    "ranked_name": "Rotom-Wash"
+  },
+  {
+    "rank": 11,
+    "name": "Whimsicott",
+    "slug": "whimsicott",
+    "tier": "Diamond",
+    "points": 8,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 8",
+    "ranked_name": "Whimsicott"
+  },
+  {
+    "rank": 12,
+    "name": "Pelipper",
+    "slug": "pelipper",
+    "tier": "Diamond",
+    "points": 8,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 8",
+    "ranked_name": "Pelipper"
+  },
+  {
+    "rank": 13,
+    "name": "Tyranitar",
+    "slug": "tyranitar",
+    "tier": "Diamond",
+    "points": 8,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 8",
+    "ranked_name": "Tyranitar"
+  },
+  {
+    "rank": 14,
+    "name": "Milotic",
+    "slug": "milotic",
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "ranked_name": "Milotic"
+  },
+  {
+    "rank": 15,
+    "name": "Archaludon",
+    "slug": "archaludon",
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "ranked_name": "Archaludon"
+  },
+  {
+    "rank": 16,
+    "name": "Farigiraf",
+    "slug": "farigiraf",
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "ranked_name": "Farigiraf"
+  },
+  {
+    "rank": 17,
+    "name": "Venusaur",
+    "slug": "venusaur",
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "ranked_name": "Venusaur"
+  },
+  {
+    "rank": 18,
+    "name": "Dragonite",
+    "slug": "dragonite",
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "ranked_name": "Dragonite"
+  },
+  {
+    "rank": 19,
+    "name": "Froslass",
+    "slug": "froslass",
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "ranked_name": "Froslass"
+  },
+  {
+    "rank": 20,
+    "name": "Corviknight",
+    "slug": "corviknight",
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "ranked_name": "Corviknight"
+  },
+  {
+    "rank": 21,
+    "name": "Delphox",
+    "slug": "delphox",
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "ranked_name": "Delphox"
+  },
+  {
+    "rank": 22,
+    "name": "Gengar",
+    "slug": "gengar",
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "ranked_name": "Gengar"
+  },
+  {
+    "rank": 23,
+    "name": "Aegislash",
+    "slug": "aegislash",
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "ranked_name": "Aegislash"
+  },
+  {
+    "rank": 24,
+    "name": "Meganium",
+    "slug": "meganium",
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "ranked_name": "Meganium"
+  },
+  {
+    "rank": 25,
+    "name": "Maushold",
+    "slug": "maushold",
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "ranked_name": "Maushold"
+  },
+  {
+    "rank": 26,
+    "name": "Talonflame",
+    "slug": "talonflame",
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "ranked_name": "Talonflame"
+  },
+  {
+    "rank": 27,
+    "name": "Excadrill",
+    "slug": "excadrill",
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "ranked_name": "Excadrill"
+  },
+  {
+    "rank": 28,
+    "name": "Scizor",
+    "slug": "scizor",
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "ranked_name": "Scizor"
+  },
+  {
+    "rank": 29,
+    "name": "Gardevoir",
+    "slug": "gardevoir",
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "ranked_name": "Gardevoir"
+  },
+  {
+    "rank": 30,
+    "name": "Kommo-o",
+    "slug": "kommo-o",
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "ranked_name": "Kommo-o"
+  },
+  {
+    "rank": 31,
+    "name": "Primarina",
+    "slug": "primarina",
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "ranked_name": "Primarina"
+  },
+  {
+    "rank": 32,
+    "name": "Torkoal",
+    "slug": "torkoal",
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "ranked_name": "Torkoal"
+  },
+  {
+    "rank": 33,
+    "name": "Politoed",
+    "slug": "politoed",
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "ranked_name": "Politoed"
+  },
+  {
+    "rank": 34,
+    "name": "Kangaskhan",
+    "slug": "kangaskhan",
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "ranked_name": "Kangaskhan"
+  },
+  {
+    "rank": 35,
+    "name": "Glimmora",
+    "slug": "glimmora",
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "ranked_name": "Glimmora"
+  },
+  {
+    "rank": 36,
+    "name": "Sylveon",
+    "slug": "sylveon",
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "ranked_name": "Sylveon"
+  },
+  {
+    "rank": 37,
+    "name": "Palafin",
+    "slug": "palafin",
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "ranked_name": "Palafin"
+  },
+  {
+    "rank": 38,
+    "name": "Dragapult",
+    "slug": "dragapult",
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "ranked_name": "Dragapult"
+  },
+  {
+    "rank": 39,
+    "name": "Hisuian Arcanine",
+    "slug": "hisuian-arcanine",
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "ranked_name": "Arcanine-Hisui"
+  },
+  {
+    "rank": 40,
+    "name": "Clefable",
+    "slug": "clefable",
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "ranked_name": "Clefable"
+  },
+  {
+    "rank": 41,
+    "name": "Gyarados",
+    "slug": "gyarados",
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "ranked_name": "Gyarados"
+  },
+  {
+    "rank": 42,
+    "name": "Hydreigon",
+    "slug": "hydreigon",
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "ranked_name": "Hydreigon"
+  },
+  {
+    "rank": 43,
+    "name": "Sableye",
+    "slug": "sableye",
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "ranked_name": "Sableye"
+  },
+  {
+    "rank": 44,
+    "name": "Scovillain",
+    "slug": "scovillain",
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "ranked_name": "Scovillain"
+  },
+  {
+    "rank": 45,
+    "name": "Alolan Ninetales",
+    "slug": "alolan-ninetales",
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "ranked_name": "Ninetales-Alola"
+  },
+  {
+    "rank": 46,
+    "name": "Blastoise",
+    "slug": "blastoise",
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "ranked_name": "Blastoise"
+  },
+  {
+    "rank": 47,
+    "name": "Volcarona",
+    "slug": "volcarona",
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "ranked_name": "Volcarona"
+  },
+  {
+    "rank": 48,
+    "name": "Hisuian Typhlosion",
+    "slug": "hisuian-typhlosion",
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "ranked_name": "Typhlosion-Hisui"
+  },
+  {
+    "rank": 49,
+    "name": "Aggron",
+    "slug": "aggron",
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "ranked_name": "Aggron"
+  },
+  {
+    "rank": 50,
+    "name": "Golurk",
+    "slug": "golurk",
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "ranked_name": "Golurk"
+  },
+  {
+    "rank": 51,
+    "name": "Starmie",
+    "slug": "starmie",
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "ranked_name": "Starmie"
+  },
+  {
+    "rank": 52,
+    "name": "Mimikyu",
+    "slug": "mimikyu",
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "ranked_name": "Mimikyu"
+  },
+  {
+    "rank": 53,
+    "name": "Tsareena",
+    "slug": "tsareena",
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "ranked_name": "Tsareena"
+  },
+  {
+    "rank": 54,
+    "name": "Meowscarada",
+    "slug": "meowscarada",
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "ranked_name": "Meowscarada"
+  },
+  {
+    "rank": 55,
+    "name": "Hatterene",
+    "slug": "hatterene",
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "ranked_name": "Hatterene"
+  },
+  {
+    "rank": 56,
+    "name": "Lucario",
+    "slug": "lucario",
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "ranked_name": "Lucario"
+  },
+  {
+    "rank": 57,
+    "name": "Gallade",
+    "slug": "gallade",
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "ranked_name": "Gallade"
+  },
+  {
+    "rank": 58,
+    "name": "Orthworm",
+    "slug": "orthworm",
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "ranked_name": "Orthworm"
+  },
+  {
+    "rank": 59,
+    "name": "Hisuian Zoroark",
+    "slug": "hisuian-zoroark",
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "ranked_name": "Zoroark-Hisui"
+  },
+  {
+    "rank": 60,
+    "name": "Crabominable",
+    "slug": "crabominable",
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "ranked_name": "Crabominable"
+  },
+  {
+    "rank": 61,
+    "name": "Arcanine",
+    "slug": "arcanine",
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "ranked_name": "Arcanine"
+  },
+  {
+    "rank": 62,
+    "name": "Tauros-Aqua",
+    "slug": "tauros-aqua",
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "ranked_name": "Tauros-Aqua"
+  },
+  {
+    "rank": 63,
+    "name": "Drampa",
+    "slug": "drampa",
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "ranked_name": "Drampa"
+  },
+  {
+    "rank": 64,
+    "name": "Tinkaton",
+    "slug": "tinkaton",
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "ranked_name": "Tinkaton"
+  },
+  {
+    "rank": 65,
+    "name": "Rotom-Frost",
+    "slug": "rotom-frost",
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "ranked_name": "Rotom-Frost"
+  },
+  {
+    "rank": 66,
+    "name": "Azumarill",
+    "slug": "azumarill",
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "ranked_name": "Azumarill"
+  },
+  {
+    "rank": 67,
+    "name": "Lopunny",
+    "slug": "lopunny",
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "ranked_name": "Lopunny"
+  },
+  {
+    "rank": 68,
+    "name": "Oranguru",
+    "slug": "oranguru",
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "ranked_name": "Oranguru"
+  },
+  {
+    "rank": 69,
+    "name": "Manectric",
+    "slug": "manectric",
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "ranked_name": "Manectric"
+  },
+  {
+    "rank": 70,
+    "name": "Empoleon",
+    "slug": "empoleon",
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "ranked_name": "Empoleon"
+  },
+  {
+    "rank": 71,
+    "name": "Skarmory",
+    "slug": "skarmory",
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "ranked_name": "Skarmory"
+  },
+  {
+    "rank": 72,
+    "name": "Greninja",
+    "slug": "greninja",
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "ranked_name": "Greninja"
+  },
+  {
+    "rank": 73,
+    "name": "Raichu",
+    "slug": "raichu",
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "ranked_name": "Raichu"
+  },
+  {
+    "rank": 74,
+    "name": "Mamoswine",
+    "slug": "mamoswine",
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "ranked_name": "Mamoswine"
+  },
+  {
+    "rank": 75,
+    "name": "Araquanid",
+    "slug": "araquanid",
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "ranked_name": "Araquanid"
+  },
+  {
+    "rank": 76,
+    "name": "Ceruledge",
+    "slug": "ceruledge",
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "ranked_name": "Ceruledge"
+  },
+  {
+    "rank": 77,
+    "name": "Meowstic",
+    "slug": "meowstic",
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "ranked_name": "Meowstic"
+  },
+  {
+    "rank": 78,
+    "name": "Vivillon",
+    "slug": "vivillon",
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "ranked_name": "Vivillon"
+  },
+  {
+    "rank": 79,
+    "name": "Feraligatr",
+    "slug": "feraligatr",
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "ranked_name": "Feraligatr"
+  },
+  {
+    "rank": 80,
+    "name": "Chandelure",
+    "slug": "chandelure",
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "ranked_name": "Chandelure"
+  },
+  {
+    "rank": 81,
+    "name": "Weavile",
+    "slug": "weavile",
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "ranked_name": "Weavile"
+  },
+  {
+    "rank": 82,
+    "name": "Klefki",
+    "slug": "klefki",
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "ranked_name": "Klefki"
+  },
+  {
+    "rank": 83,
+    "name": "Camerupt",
+    "slug": "camerupt",
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "ranked_name": "Camerupt"
+  },
+  {
+    "rank": 84,
+    "name": "Chesnaught",
+    "slug": "chesnaught",
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "ranked_name": "Chesnaught"
+  },
+  {
+    "rank": 85,
+    "name": "Conkeldurr",
+    "slug": "conkeldurr",
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "ranked_name": "Conkeldurr"
+  },
+  {
+    "rank": 86,
+    "name": "Armarouge",
+    "slug": "armarouge",
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "ranked_name": "Armarouge"
+  },
+  {
+    "rank": 87,
+    "name": "Umbreon",
+    "slug": "umbreon",
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "ranked_name": "Umbreon"
+  },
+  {
+    "rank": 88,
+    "name": "Hawlucha",
+    "slug": "hawlucha",
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "ranked_name": "Hawlucha"
+  },
+  {
+    "rank": 89,
+    "name": "Altaria",
+    "slug": "altaria",
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "ranked_name": "Altaria"
+  },
+  {
+    "rank": 90,
+    "name": "Snorlax",
+    "slug": "snorlax",
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "ranked_name": "Snorlax"
+  },
+  {
+    "rank": 91,
+    "name": "Heliolisk",
+    "slug": "heliolisk",
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "ranked_name": "Heliolisk"
+  },
+  {
+    "rank": 92,
+    "name": "Alakazam",
+    "slug": "alakazam",
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "ranked_name": "Alakazam"
+  },
+  {
+    "rank": 93,
+    "name": "Cofagrigus",
+    "slug": "cofagrigus",
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "ranked_name": "Cofagrigus"
+  },
+  {
+    "rank": 94,
+    "name": "Quaquaval",
+    "slug": "quaquaval",
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "ranked_name": "Quaquaval"
+  },
+  {
+    "rank": 95,
+    "name": "Jolteon",
+    "slug": "jolteon",
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "ranked_name": "Jolteon"
+  },
+  {
+    "rank": 96,
+    "name": "Kleavor",
+    "slug": "kleavor",
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "ranked_name": "Kleavor"
+  },
+  {
+    "rank": 97,
+    "name": "Rotom-Mow",
+    "slug": "rotom-mow",
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "ranked_name": "Rotom-Mow"
+  },
+  {
+    "rank": 98,
+    "name": "Ampharos",
+    "slug": "ampharos",
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "ranked_name": "Ampharos"
+  },
+  {
+    "rank": 99,
+    "name": "Goodra-Hisui",
+    "slug": "goodra-hisui",
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "ranked_name": "Goodra-Hisui"
+  },
+  {
+    "rank": 100,
+    "name": "Espathra",
+    "slug": "espathra",
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "ranked_name": "Espathra"
+  },
+  {
+    "rank": 101,
+    "name": "Hisuian Samurott",
+    "slug": "hisuian-samurott",
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "ranked_name": "Samurott-Hisui"
+  },
+  {
+    "rank": 102,
+    "name": "Rhyperior",
+    "slug": "rhyperior",
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "ranked_name": "Rhyperior"
+  },
+  {
+    "rank": 103,
+    "name": "Galarian Slowking",
+    "slug": "galarian-slowking",
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "ranked_name": "Slowking-Galarian"
+  },
+  {
+    "rank": 104,
+    "name": "Abomasnow",
+    "slug": "abomasnow",
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "ranked_name": "Abomasnow"
+  },
+  {
+    "rank": 105,
+    "name": "Slowbro",
+    "slug": "slowbro",
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "ranked_name": "Slowbro"
+  },
+  {
+    "rank": 106,
+    "name": "Glaceon",
+    "slug": "glaceon",
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "ranked_name": "Glaceon"
+  },
+  {
+    "rank": 107,
+    "name": "Vanilluxe",
+    "slug": "vanilluxe",
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "ranked_name": "Vanilluxe"
+  },
+  {
+    "rank": 108,
+    "name": "Bellibolt",
+    "slug": "bellibolt",
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "ranked_name": "Bellibolt"
+  },
+  {
+    "rank": 109,
+    "name": "Hisuian Decidueye",
+    "slug": "hisuian-decidueye",
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "ranked_name": "Decidueye-Hisui"
+  },
+  {
+    "rank": 110,
+    "name": "Lycanroc",
+    "slug": "lycanroc",
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "ranked_name": "Lycanroc"
+  },
+  {
+    "rank": 111,
+    "name": "Chimecho",
+    "slug": "chimecho",
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "ranked_name": "Chimecho"
+  },
+  {
+    "rank": 112,
+    "name": "Ditto",
+    "slug": "ditto",
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "ranked_name": "Ditto"
+  },
+  {
+    "rank": 113,
+    "name": "Hydrapple",
+    "slug": "hydrapple",
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "ranked_name": "Hydrapple"
+  },
+  {
+    "rank": 114,
+    "name": "Serperior",
+    "slug": "serperior",
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "ranked_name": "Serperior"
+  },
+  {
+    "rank": 115,
+    "name": "Victreebel",
+    "slug": "victreebel",
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "ranked_name": "Victreebel"
+  },
+  {
+    "rank": 116,
+    "name": "Steelix",
+    "slug": "steelix",
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "ranked_name": "Steelix"
+  },
+  {
+    "rank": 117,
+    "name": "Mudsdale",
+    "slug": "mudsdale",
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "ranked_name": "Mudsdale"
+  },
+  {
+    "rank": 118,
+    "name": "Toxicroak",
+    "slug": "toxicroak",
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "ranked_name": "Toxicroak"
+  },
+  {
+    "rank": 119,
+    "name": "Leafeon",
+    "slug": "leafeon",
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "ranked_name": "Leafeon"
+  },
+  {
+    "rank": 120,
+    "name": "Noivern",
+    "slug": "noivern",
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "ranked_name": "Noivern"
+  },
+  {
+    "rank": 121,
+    "name": "Alcremie",
+    "slug": "alcremie",
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "ranked_name": "Alcremie"
+  },
+  {
+    "rank": 122,
+    "name": "Garganacl",
+    "slug": "garganacl",
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "ranked_name": "Garganacl"
+  },
+  {
+    "rank": 123,
+    "name": "Ninetales",
+    "slug": "ninetales",
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "ranked_name": "Ninetales"
+  },
+  {
+    "rank": 124,
+    "name": "Heracross",
+    "slug": "heracross",
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "ranked_name": "Heracross"
+  },
+  {
+    "rank": 125,
+    "name": "Pikachu",
+    "slug": "pikachu",
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "ranked_name": "Pikachu"
+  },
+  {
+    "rank": 126,
+    "name": "Torterra",
+    "slug": "torterra",
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "ranked_name": "Torterra"
+  },
+  {
+    "rank": 127,
+    "name": "Emboar",
+    "slug": "emboar",
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "ranked_name": "Emboar"
+  },
+  {
+    "rank": 128,
+    "name": "Galarian Slowbro",
+    "slug": "galarian-slowbro",
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "ranked_name": "Slowbro-Galarian"
+  },
+  {
+    "rank": 129,
+    "name": "Sharpedo",
+    "slug": "sharpedo",
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "ranked_name": "Sharpedo"
+  },
+  {
+    "rank": 130,
+    "name": "Tyrantrum",
+    "slug": "tyrantrum",
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "ranked_name": "Tyrantrum"
+  },
+  {
+    "rank": 131,
+    "name": "Espeon",
+    "slug": "espeon",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Espeon"
+  },
+  {
+    "rank": 132,
+    "name": "Luxray",
+    "slug": "luxray",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Luxray"
+  },
+  {
+    "rank": 133,
+    "name": "Skeledirge",
+    "slug": "skeledirge",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Skeledirge"
+  },
+  {
+    "rank": 134,
+    "name": "Krookodile",
+    "slug": "krookodile",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Krookodile"
+  },
+  {
+    "rank": 135,
+    "name": "Slowking",
+    "slug": "slowking",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Slowking"
+  },
+  {
+    "rank": 136,
+    "name": "Gliscor",
+    "slug": "gliscor",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Gliscor"
+  },
+  {
+    "rank": 137,
+    "name": "Toxapex",
+    "slug": "toxapex",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Toxapex"
+  },
+  {
+    "rank": 138,
+    "name": "Medicham",
+    "slug": "medicham",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Medicham"
+  },
+  {
+    "rank": 139,
+    "name": "Infernape",
+    "slug": "infernape",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Infernape"
+  },
+  {
+    "rank": 140,
+    "name": "Houndoom",
+    "slug": "houndoom",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Houndoom"
+  },
+  {
+    "rank": 141,
+    "name": "Salazzle",
+    "slug": "salazzle",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Salazzle"
+  },
+  {
+    "rank": 142,
+    "name": "Clawitzer",
+    "slug": "clawitzer",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Clawitzer"
+  },
+  {
+    "rank": 143,
+    "name": "Hippowdon",
+    "slug": "hippowdon",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Hippowdon"
+  },
+  {
+    "rank": 144,
+    "name": "Reuniclus",
+    "slug": "reuniclus",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Reuniclus"
+  },
+  {
+    "rank": 145,
+    "name": "Bastiodon",
+    "slug": "bastiodon",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Bastiodon"
+  },
+  {
+    "rank": 146,
+    "name": "Roserade",
+    "slug": "roserade",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Roserade"
+  },
+  {
+    "rank": 147,
+    "name": "Mr. Rime",
+    "slug": "mr-rime",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Mr. Rime"
+  },
+  {
+    "rank": 148,
+    "name": "Beedrill",
+    "slug": "beedrill",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Beedrill"
+  },
+  {
+    "rank": 149,
+    "name": "Ariados",
+    "slug": "ariados",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Ariados"
+  },
+  {
+    "rank": 150,
+    "name": "Absol",
+    "slug": "absol",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Absol"
+  },
+  {
+    "rank": 151,
+    "name": "Tauros-Blaze",
+    "slug": "tauros-blaze",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Tauros-Blaze"
+  },
+  {
+    "rank": 152,
+    "name": "Aurorus",
+    "slug": "aurorus",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Aurorus"
+  },
+  {
+    "rank": 153,
+    "name": "Tauros",
+    "slug": "tauros",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Tauros"
+  },
+  {
+    "rank": 154,
+    "name": "Zoroark",
+    "slug": "zoroark",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Zoroark"
+  },
+  {
+    "rank": 155,
+    "name": "Spiritomb",
+    "slug": "spiritomb",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Spiritomb"
+  },
+  {
+    "rank": 156,
+    "name": "Typhlosion",
+    "slug": "typhlosion",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Typhlosion"
+  },
+  {
+    "rank": 157,
+    "name": "Wyrdeer",
+    "slug": "wyrdeer",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Wyrdeer"
+  },
+  {
+    "rank": 158,
+    "name": "Trevenant",
+    "slug": "trevenant",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Trevenant"
+  },
+  {
+    "rank": 159,
+    "name": "Morpeko",
+    "slug": "morpeko",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Morpeko"
+  },
+  {
+    "rank": 160,
+    "name": "Pinsir",
+    "slug": "pinsir",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Pinsir"
+  },
+  {
+    "rank": 161,
+    "name": "Pangoro",
+    "slug": "pangoro",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Pangoro"
+  },
+  {
+    "rank": 162,
+    "name": "Runerigus",
+    "slug": "runerigus",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Runerigus"
+  },
+  {
+    "rank": 163,
+    "name": "Diggersby",
+    "slug": "diggersby",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Diggersby"
+  },
+  {
+    "rank": 164,
+    "name": "Audino",
+    "slug": "audino",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Audino"
+  },
+  {
+    "rank": 165,
+    "name": "Simisear",
+    "slug": "simisear",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Simisear"
+  },
+  {
+    "rank": 166,
+    "name": "Simipour",
+    "slug": "simipour",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Simipour"
+  },
+  {
+    "rank": 167,
+    "name": "Aromatisse",
+    "slug": "aromatisse",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Aromatisse"
+  },
+  {
+    "rank": 168,
+    "name": "Rotom",
+    "slug": "rotom",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Rotom"
+  },
+  {
+    "rank": 169,
+    "name": "Banette",
+    "slug": "banette",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Banette"
+  },
+  {
+    "rank": 170,
+    "name": "Gourgeist",
+    "slug": "gourgeist",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Gourgeist"
+  },
+  {
+    "rank": 171,
+    "name": "Machamp",
+    "slug": "machamp",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Machamp"
+  },
+  {
+    "rank": 172,
+    "name": "Rampardos",
+    "slug": "rampardos",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Rampardos"
+  },
+  {
+    "rank": 173,
+    "name": "Glalie",
+    "slug": "glalie",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Glalie"
+  },
+  {
+    "rank": 174,
+    "name": "Arbok",
+    "slug": "arbok",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Arbok"
+  },
+  {
+    "rank": 175,
+    "name": "Hisuian Avalugg",
+    "slug": "hisuian-avalugg",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Avalugg-Hisui"
+  },
+  {
+    "rank": 176,
+    "name": "Toucannon",
+    "slug": "toucannon",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Toucannon"
+  },
+  {
+    "rank": 177,
+    "name": "Beartic",
+    "slug": "beartic",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Beartic"
+  },
+  {
+    "rank": 178,
+    "name": "Sandaconda",
+    "slug": "sandaconda",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Sandaconda"
+  },
+  {
+    "rank": 179,
+    "name": "Alolan Raichu",
+    "slug": "alolan-raichu",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Raichu-Alola"
+  },
+  {
+    "rank": 180,
+    "name": "Liepard",
+    "slug": "liepard",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Liepard"
+  },
+  {
+    "rank": 181,
+    "name": "Pidgeot",
+    "slug": "pidgeot",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Pidgeot"
+  },
+  {
+    "rank": 182,
+    "name": "Slurpuff",
+    "slug": "slurpuff",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Slurpuff"
+  },
+  {
+    "rank": 183,
+    "name": "Simisage",
+    "slug": "simisage",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Simisage"
+  },
+  {
+    "rank": 184,
+    "name": "Avalugg",
+    "slug": "avalugg",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Avalugg"
+  },
+  {
+    "rank": 185,
+    "name": "Flapple",
+    "slug": "flapple",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Flapple"
+  },
+  {
+    "rank": 186,
+    "name": "Dedenne",
+    "slug": "dedenne",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Dedenne"
+  },
+  {
+    "rank": 187,
+    "name": "Florges",
+    "slug": "florges",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Florges"
+  },
+  {
+    "rank": 188,
+    "name": "Stunfisk",
+    "slug": "stunfisk",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Stunfisk"
+  },
+  {
+    "rank": 189,
+    "name": "Flareon",
+    "slug": "flareon",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Flareon"
+  },
+  {
+    "rank": 190,
+    "name": "Rotom-Fan",
+    "slug": "rotom-fan",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Rotom-Fan"
+  },
+  {
+    "rank": 191,
+    "name": "Galarian Stunfisk",
+    "slug": "galarian-stunfisk",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Stunfisk-Galarian"
+  },
+  {
+    "rank": 192,
+    "name": "Samurott",
+    "slug": "samurott",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Samurott"
+  },
+  {
+    "rank": 193,
+    "name": "Emolga",
+    "slug": "emolga",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Emolga"
+  },
+  {
+    "rank": 194,
+    "name": "Decidueye",
+    "slug": "decidueye",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Decidueye"
+  },
+  {
+    "rank": 195,
+    "name": "Appletun",
+    "slug": "appletun",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Appletun"
+  },
+  {
+    "rank": 196,
+    "name": "Passimian",
+    "slug": "passimian",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Passimian"
+  },
+  {
+    "rank": 197,
+    "name": "Castform",
+    "slug": "castform",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Castform"
+  },
+  {
+    "rank": 198,
+    "name": "Forretress",
+    "slug": "forretress",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Forretress"
+  },
+  {
+    "rank": 199,
+    "name": "Polteageist",
+    "slug": "polteageist",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Polteageist"
+  },
+  {
+    "rank": 200,
+    "name": "Furfrou",
+    "slug": "furfrou",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Furfrou"
+  },
+  {
+    "rank": 201,
+    "name": "Garbodor",
+    "slug": "garbodor",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Garbodor"
+  },
+  {
+    "rank": 202,
+    "name": "Watchog",
+    "slug": "watchog",
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "ranked_name": "Watchog"
+  }
+]

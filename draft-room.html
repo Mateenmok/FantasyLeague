@@ -6,7 +6,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/pokemon-ui.css">
+  <link rel="stylesheet" href="css/pokemon-ui.css?v=typebar4">
 </head>
 <body>
   <div class="page-overlay top-align">
@@ -53,6 +53,9 @@
         </div>
       </section>
 
+
+      <div id="draftPointStatus" class="draft-point-status"></div>
+
       <section id="draftControls" class="draft-controls-panel">
         <div class="pkmn-panel">
           <p><strong>Make Pick</strong></p>
@@ -90,7 +93,43 @@
 
       <div class="pkmn-panel">
         <p><strong>Available Pokémon</strong></p>
-        <input id="availablePokemonSearch" class="pkmn-input" type="text" placeholder="Search available Pokémon">
+
+        <div class="draft-filter-menu">
+          <label>
+            <span>Search</span>
+            <input id="availablePokemonSearch" class="pkmn-input" type="text" placeholder="Search Pokémon">
+          </label>
+
+          <label>
+            <span>Mega</span>
+            <select id="megaFilterSelect" class="pkmn-select">
+              <option value="all">All Pokémon</option>
+              <option value="mega">Mega Only</option>
+              <option value="non-mega">Non-Mega Only</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Tier</span>
+            <select id="tierFilterSelect" class="pkmn-select">
+              <option value="all">All Tiers</option>
+              <option value="Diamond">Diamond</option>
+              <option value="Gold">Gold</option>
+              <option value="Silver">Silver</option>
+              <option value="Bronze">Bronze</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Type</span>
+            <select id="typeFilterSelect" class="pkmn-select">
+              <option value="all">All Types</option>
+            </select>
+          </label>
+        </div>
+
+        <p id="availablePokemonCount" class="small-note">Loading available Pokémon...</p>
+
         <div id="availablePokemonGrid" class="draft-available-grid"></div>
       </div>
 
@@ -100,6 +139,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
-  <script src="js/draft-room.js?v=4"></script>
+  <script src="js/draft-room.js?v=typebar2"></script>
 </body>
 </html>

@@ -7,7 +7,13 @@
     "types": [
       "Grass",
       "Poison"
-    ]
+    ],
+    "rank": 17,
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "can_mega_evolve": true
   },
   {
     "id": 6,
@@ -17,7 +23,13 @@
     "types": [
       "Fire",
       "Flying"
-    ]
+    ],
+    "rank": 8,
+    "tier": "Diamond",
+    "points": 8,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 8",
+    "can_mega_evolve": true
   },
   {
     "id": 9,
@@ -26,7 +38,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png",
     "types": [
       "Water"
-    ]
+    ],
+    "rank": 46,
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "can_mega_evolve": true
   },
   {
     "id": 15,
@@ -36,7 +54,13 @@
     "types": [
       "Bug",
       "Poison"
-    ]
+    ],
+    "rank": 148,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": true
   },
   {
     "id": 18,
@@ -46,7 +70,13 @@
     "types": [
       "Normal",
       "Flying"
-    ]
+    ],
+    "rank": 181,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": true
   },
   {
     "id": 24,
@@ -55,7 +85,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/24.png",
     "types": [
       "Poison"
-    ]
+    ],
+    "rank": 174,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 25,
@@ -64,7 +100,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png",
     "types": [
       "Electric"
-    ]
+    ],
+    "rank": 125,
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "can_mega_evolve": false
   },
   {
     "id": 26,
@@ -73,7 +115,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/26.png",
     "types": [
       "Electric"
-    ]
+    ],
+    "rank": 73,
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "can_mega_evolve": true
   },
   {
     "id": 26,
@@ -83,7 +131,13 @@
     "types": [
       "Electric",
       "Psychic"
-    ]
+    ],
+    "rank": 179,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 36,
@@ -92,7 +146,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/36.png",
     "types": [
       "Fairy"
-    ]
+    ],
+    "rank": 40,
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "can_mega_evolve": true
   },
   {
     "id": 38,
@@ -101,7 +161,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/38.png",
     "types": [
       "Fire"
-    ]
+    ],
+    "rank": 123,
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "can_mega_evolve": false
   },
   {
     "id": 38,
@@ -111,7 +177,13 @@
     "types": [
       "Ice",
       "Fairy"
-    ]
+    ],
+    "rank": 45,
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "can_mega_evolve": false
   },
   {
     "id": 59,
@@ -120,7 +192,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/59.png",
     "types": [
       "Fire"
-    ]
+    ],
+    "rank": 61,
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "can_mega_evolve": false
   },
   {
     "id": 59,
@@ -130,7 +208,13 @@
     "types": [
       "Fire",
       "Rock"
-    ]
+    ],
+    "rank": 39,
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "can_mega_evolve": false
   },
   {
     "id": 65,
@@ -139,7 +223,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/65.png",
     "types": [
       "Psychic"
-    ]
+    ],
+    "rank": 92,
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "can_mega_evolve": true
   },
   {
     "id": 68,
@@ -148,7 +238,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/68.png",
     "types": [
       "Fighting"
-    ]
+    ],
+    "rank": 171,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 71,
@@ -158,7 +254,13 @@
     "types": [
       "Grass",
       "Poison"
-    ]
+    ],
+    "rank": 115,
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "can_mega_evolve": true
   },
   {
     "id": 80,
@@ -168,7 +270,13 @@
     "types": [
       "Water",
       "Psychic"
-    ]
+    ],
+    "rank": 105,
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "can_mega_evolve": true
   },
   {
     "id": 80,
@@ -178,7 +286,13 @@
     "types": [
       "Poison",
       "Psychic"
-    ]
+    ],
+    "rank": 128,
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "can_mega_evolve": false
   },
   {
     "id": 94,
@@ -188,7 +302,13 @@
     "types": [
       "Ghost",
       "Poison"
-    ]
+    ],
+    "rank": 22,
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "can_mega_evolve": true
   },
   {
     "id": 115,
@@ -197,7 +317,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/115.png",
     "types": [
       "Normal"
-    ]
+    ],
+    "rank": 34,
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "can_mega_evolve": true
   },
   {
     "id": 121,
@@ -207,7 +333,13 @@
     "types": [
       "Water",
       "Psychic"
-    ]
+    ],
+    "rank": 51,
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "can_mega_evolve": true
   },
   {
     "id": 127,
@@ -216,7 +348,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/127.png",
     "types": [
       "Bug"
-    ]
+    ],
+    "rank": 160,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": true
   },
   {
     "id": 128,
@@ -225,7 +363,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/128.png",
     "types": [
       "Normal"
-    ]
+    ],
+    "rank": 153,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 128,
@@ -234,7 +378,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/128.png",
     "types": [
       "Fighting"
-    ]
+    ],
+    "rank": null,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 128,
@@ -244,7 +394,13 @@
     "types": [
       "Fighting",
       "Fire"
-    ]
+    ],
+    "rank": null,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 128,
@@ -254,7 +410,13 @@
     "types": [
       "Fighting",
       "Water"
-    ]
+    ],
+    "rank": null,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 130,
@@ -264,7 +426,13 @@
     "types": [
       "Water",
       "Flying"
-    ]
+    ],
+    "rank": 41,
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "can_mega_evolve": true
   },
   {
     "id": 132,
@@ -273,7 +441,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/132.png",
     "types": [
       "Normal"
-    ]
+    ],
+    "rank": 112,
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "can_mega_evolve": false
   },
   {
     "id": 134,
@@ -282,7 +456,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/134.png",
     "types": [
       "Water"
-    ]
+    ],
+    "rank": null,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 135,
@@ -291,7 +471,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/135.png",
     "types": [
       "Electric"
-    ]
+    ],
+    "rank": 95,
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "can_mega_evolve": false
   },
   {
     "id": 136,
@@ -300,7 +486,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/136.png",
     "types": [
       "Fire"
-    ]
+    ],
+    "rank": 189,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 142,
@@ -310,7 +502,13 @@
     "types": [
       "Rock",
       "Flying"
-    ]
+    ],
+    "rank": 7,
+    "tier": "Diamond",
+    "points": 8,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 8",
+    "can_mega_evolve": true
   },
   {
     "id": 143,
@@ -319,7 +517,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/143.png",
     "types": [
       "Normal"
-    ]
+    ],
+    "rank": 90,
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "can_mega_evolve": false
   },
   {
     "id": 149,
@@ -329,7 +533,13 @@
     "types": [
       "Dragon",
       "Flying"
-    ]
+    ],
+    "rank": 18,
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "can_mega_evolve": true
   },
   {
     "id": 154,
@@ -338,7 +548,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/154.png",
     "types": [
       "Grass"
-    ]
+    ],
+    "rank": 24,
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "can_mega_evolve": true
   },
   {
     "id": 157,
@@ -347,7 +563,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/157.png",
     "types": [
       "Fire"
-    ]
+    ],
+    "rank": 156,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 157,
@@ -357,7 +579,13 @@
     "types": [
       "Fire",
       "Ghost"
-    ]
+    ],
+    "rank": 48,
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "can_mega_evolve": false
   },
   {
     "id": 160,
@@ -366,7 +594,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/160.png",
     "types": [
       "Water"
-    ]
+    ],
+    "rank": 79,
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "can_mega_evolve": true
   },
   {
     "id": 168,
@@ -376,7 +610,13 @@
     "types": [
       "Bug",
       "Poison"
-    ]
+    ],
+    "rank": 149,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 181,
@@ -385,7 +625,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/181.png",
     "types": [
       "Electric"
-    ]
+    ],
+    "rank": 98,
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "can_mega_evolve": true
   },
   {
     "id": 184,
@@ -395,7 +641,13 @@
     "types": [
       "Water",
       "Fairy"
-    ]
+    ],
+    "rank": 66,
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "can_mega_evolve": false
   },
   {
     "id": 186,
@@ -404,7 +656,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/186.png",
     "types": [
       "Water"
-    ]
+    ],
+    "rank": 33,
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "can_mega_evolve": false
   },
   {
     "id": 196,
@@ -413,7 +671,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/196.png",
     "types": [
       "Psychic"
-    ]
+    ],
+    "rank": 131,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 197,
@@ -422,7 +686,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/197.png",
     "types": [
       "Dark"
-    ]
+    ],
+    "rank": 87,
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "can_mega_evolve": false
   },
   {
     "id": 199,
@@ -432,7 +702,13 @@
     "types": [
       "Water",
       "Psychic"
-    ]
+    ],
+    "rank": 135,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 199,
@@ -442,7 +718,13 @@
     "types": [
       "Psychic",
       "Poison"
-    ]
+    ],
+    "rank": 103,
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "can_mega_evolve": false
   },
   {
     "id": 205,
@@ -452,7 +734,13 @@
     "types": [
       "Bug",
       "Steel"
-    ]
+    ],
+    "rank": 198,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 208,
@@ -462,7 +750,13 @@
     "types": [
       "Steel",
       "Ground"
-    ]
+    ],
+    "rank": 116,
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "can_mega_evolve": true
   },
   {
     "id": 212,
@@ -472,7 +766,13 @@
     "types": [
       "Bug",
       "Steel"
-    ]
+    ],
+    "rank": 28,
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "can_mega_evolve": true
   },
   {
     "id": 214,
@@ -482,7 +782,13 @@
     "types": [
       "Bug",
       "Fighting"
-    ]
+    ],
+    "rank": 124,
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "can_mega_evolve": true
   },
   {
     "id": 227,
@@ -492,7 +798,13 @@
     "types": [
       "Steel",
       "Flying"
-    ]
+    ],
+    "rank": 71,
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "can_mega_evolve": true
   },
   {
     "id": 229,
@@ -502,7 +814,13 @@
     "types": [
       "Dark",
       "Fire"
-    ]
+    ],
+    "rank": 140,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": true
   },
   {
     "id": 248,
@@ -512,7 +830,13 @@
     "types": [
       "Rock",
       "Dark"
-    ]
+    ],
+    "rank": 13,
+    "tier": "Diamond",
+    "points": 8,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 8",
+    "can_mega_evolve": true
   },
   {
     "id": 279,
@@ -522,7 +846,13 @@
     "types": [
       "Water",
       "Flying"
-    ]
+    ],
+    "rank": 12,
+    "tier": "Diamond",
+    "points": 8,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 8",
+    "can_mega_evolve": false
   },
   {
     "id": 282,
@@ -532,7 +862,13 @@
     "types": [
       "Psychic",
       "Fairy"
-    ]
+    ],
+    "rank": 29,
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "can_mega_evolve": true
   },
   {
     "id": 302,
@@ -542,7 +878,13 @@
     "types": [
       "Dark",
       "Ghost"
-    ]
+    ],
+    "rank": 43,
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "can_mega_evolve": true
   },
   {
     "id": 306,
@@ -552,7 +894,13 @@
     "types": [
       "Steel",
       "Rock"
-    ]
+    ],
+    "rank": 49,
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "can_mega_evolve": true
   },
   {
     "id": 308,
@@ -562,7 +910,13 @@
     "types": [
       "Fighting",
       "Psychic"
-    ]
+    ],
+    "rank": 138,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": true
   },
   {
     "id": 310,
@@ -571,7 +925,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/310.png",
     "types": [
       "Electric"
-    ]
+    ],
+    "rank": 69,
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "can_mega_evolve": true
   },
   {
     "id": 319,
@@ -581,7 +941,13 @@
     "types": [
       "Water",
       "Dark"
-    ]
+    ],
+    "rank": 129,
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "can_mega_evolve": true
   },
   {
     "id": 323,
@@ -591,7 +957,13 @@
     "types": [
       "Fire",
       "Ground"
-    ]
+    ],
+    "rank": 83,
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "can_mega_evolve": true
   },
   {
     "id": 324,
@@ -600,7 +972,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/324.png",
     "types": [
       "Fire"
-    ]
+    ],
+    "rank": 32,
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "can_mega_evolve": false
   },
   {
     "id": 334,
@@ -610,7 +988,13 @@
     "types": [
       "Dragon",
       "Flying"
-    ]
+    ],
+    "rank": 89,
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "can_mega_evolve": true
   },
   {
     "id": 350,
@@ -619,7 +1003,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/350.png",
     "types": [
       "Water"
-    ]
+    ],
+    "rank": 14,
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "can_mega_evolve": false
   },
   {
     "id": 351,
@@ -628,7 +1018,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/351.png",
     "types": [
       "Normal"
-    ]
+    ],
+    "rank": 197,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 354,
@@ -637,7 +1033,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/354.png",
     "types": [
       "Ghost"
-    ]
+    ],
+    "rank": 169,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": true
   },
   {
     "id": 358,
@@ -646,7 +1048,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/358.png",
     "types": [
       "Psychic"
-    ]
+    ],
+    "rank": 111,
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "can_mega_evolve": true
   },
   {
     "id": 359,
@@ -655,7 +1063,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/359.png",
     "types": [
       "Dark"
-    ]
+    ],
+    "rank": 150,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": true
   },
   {
     "id": 362,
@@ -664,7 +1078,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/362.png",
     "types": [
       "Ice"
-    ]
+    ],
+    "rank": 173,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": true
   },
   {
     "id": 389,
@@ -674,7 +1094,13 @@
     "types": [
       "Grass",
       "Ground"
-    ]
+    ],
+    "rank": 126,
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "can_mega_evolve": false
   },
   {
     "id": 392,
@@ -684,7 +1110,13 @@
     "types": [
       "Fire",
       "Fighting"
-    ]
+    ],
+    "rank": 139,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 395,
@@ -694,7 +1126,13 @@
     "types": [
       "Water",
       "Steel"
-    ]
+    ],
+    "rank": 70,
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "can_mega_evolve": false
   },
   {
     "id": 405,
@@ -703,7 +1141,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/405.png",
     "types": [
       "Electric"
-    ]
+    ],
+    "rank": 132,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 407,
@@ -713,7 +1157,13 @@
     "types": [
       "Grass",
       "Poison"
-    ]
+    ],
+    "rank": 146,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 409,
@@ -722,7 +1172,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/409.png",
     "types": [
       "Rock"
-    ]
+    ],
+    "rank": 172,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 411,
@@ -732,7 +1188,13 @@
     "types": [
       "Rock",
       "Steel"
-    ]
+    ],
+    "rank": 145,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 428,
@@ -741,7 +1203,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/428.png",
     "types": [
       "Normal"
-    ]
+    ],
+    "rank": 67,
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "can_mega_evolve": true
   },
   {
     "id": 442,
@@ -751,7 +1219,13 @@
     "types": [
       "Ghost",
       "Dark"
-    ]
+    ],
+    "rank": 155,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 445,
@@ -761,7 +1235,13 @@
     "types": [
       "Dragon",
       "Ground"
-    ]
+    ],
+    "rank": 3,
+    "tier": "Diamond",
+    "points": 8,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 8",
+    "can_mega_evolve": true
   },
   {
     "id": 448,
@@ -771,7 +1251,13 @@
     "types": [
       "Fighting",
       "Steel"
-    ]
+    ],
+    "rank": 56,
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "can_mega_evolve": true
   },
   {
     "id": 450,
@@ -780,7 +1266,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/450.png",
     "types": [
       "Ground"
-    ]
+    ],
+    "rank": 143,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 454,
@@ -790,7 +1282,13 @@
     "types": [
       "Poison",
       "Fighting"
-    ]
+    ],
+    "rank": 118,
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "can_mega_evolve": false
   },
   {
     "id": 460,
@@ -800,7 +1298,13 @@
     "types": [
       "Grass",
       "Ice"
-    ]
+    ],
+    "rank": 104,
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "can_mega_evolve": true
   },
   {
     "id": 461,
@@ -810,7 +1314,13 @@
     "types": [
       "Dark",
       "Ice"
-    ]
+    ],
+    "rank": 81,
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "can_mega_evolve": false
   },
   {
     "id": 464,
@@ -820,7 +1330,13 @@
     "types": [
       "Ground",
       "Rock"
-    ]
+    ],
+    "rank": 102,
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "can_mega_evolve": false
   },
   {
     "id": 470,
@@ -829,7 +1345,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/470.png",
     "types": [
       "Grass"
-    ]
+    ],
+    "rank": 119,
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "can_mega_evolve": false
   },
   {
     "id": 471,
@@ -838,7 +1360,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/471.png",
     "types": [
       "Ice"
-    ]
+    ],
+    "rank": 106,
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "can_mega_evolve": false
   },
   {
     "id": 472,
@@ -848,7 +1376,13 @@
     "types": [
       "Ground",
       "Flying"
-    ]
+    ],
+    "rank": 136,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 473,
@@ -858,7 +1392,13 @@
     "types": [
       "Ice",
       "Ground"
-    ]
+    ],
+    "rank": 74,
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "can_mega_evolve": false
   },
   {
     "id": 475,
@@ -868,7 +1408,13 @@
     "types": [
       "Psychic",
       "Fighting"
-    ]
+    ],
+    "rank": 57,
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "can_mega_evolve": true
   },
   {
     "id": 478,
@@ -878,7 +1424,13 @@
     "types": [
       "Ice",
       "Ghost"
-    ]
+    ],
+    "rank": 19,
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "can_mega_evolve": true
   },
   {
     "id": 479,
@@ -888,7 +1440,13 @@
     "types": [
       "Electric",
       "Ghost"
-    ]
+    ],
+    "rank": 168,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 497,
@@ -897,7 +1455,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/497.png",
     "types": [
       "Grass"
-    ]
+    ],
+    "rank": 114,
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "can_mega_evolve": false
   },
   {
     "id": 500,
@@ -907,7 +1471,13 @@
     "types": [
       "Fire",
       "Fighting"
-    ]
+    ],
+    "rank": 127,
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "can_mega_evolve": true
   },
   {
     "id": 503,
@@ -916,7 +1486,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/503.png",
     "types": [
       "Water"
-    ]
+    ],
+    "rank": 192,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 503,
@@ -926,7 +1502,13 @@
     "types": [
       "Water",
       "Dark"
-    ]
+    ],
+    "rank": 101,
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "can_mega_evolve": false
   },
   {
     "id": 505,
@@ -935,7 +1517,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/505.png",
     "types": [
       "Normal"
-    ]
+    ],
+    "rank": 202,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 510,
@@ -944,7 +1532,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/510.png",
     "types": [
       "Dark"
-    ]
+    ],
+    "rank": 180,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 512,
@@ -953,7 +1547,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/512.png",
     "types": [
       "Grass"
-    ]
+    ],
+    "rank": 183,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 514,
@@ -962,7 +1562,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/514.png",
     "types": [
       "Fire"
-    ]
+    ],
+    "rank": 165,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 516,
@@ -971,7 +1577,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/516.png",
     "types": [
       "Water"
-    ]
+    ],
+    "rank": 166,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 530,
@@ -981,7 +1593,13 @@
     "types": [
       "Ground",
       "Steel"
-    ]
+    ],
+    "rank": 27,
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "can_mega_evolve": true
   },
   {
     "id": 531,
@@ -990,7 +1608,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/531.png",
     "types": [
       "Normal"
-    ]
+    ],
+    "rank": 164,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": true
   },
   {
     "id": 534,
@@ -999,7 +1623,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/534.png",
     "types": [
       "Fighting"
-    ]
+    ],
+    "rank": 85,
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "can_mega_evolve": false
   },
   {
     "id": 547,
@@ -1009,7 +1639,13 @@
     "types": [
       "Grass",
       "Fairy"
-    ]
+    ],
+    "rank": 11,
+    "tier": "Diamond",
+    "points": 8,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 8",
+    "can_mega_evolve": false
   },
   {
     "id": 553,
@@ -1019,7 +1655,13 @@
     "types": [
       "Ground",
       "Dark"
-    ]
+    ],
+    "rank": 134,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 563,
@@ -1028,7 +1670,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/563.png",
     "types": [
       "Ghost"
-    ]
+    ],
+    "rank": 93,
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "can_mega_evolve": false
   },
   {
     "id": 569,
@@ -1037,7 +1685,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/569.png",
     "types": [
       "Poison"
-    ]
+    ],
+    "rank": 201,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 571,
@@ -1046,7 +1700,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/571.png",
     "types": [
       "Dark"
-    ]
+    ],
+    "rank": 154,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 571,
@@ -1056,7 +1716,13 @@
     "types": [
       "Normal",
       "Ghost"
-    ]
+    ],
+    "rank": 59,
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "can_mega_evolve": false
   },
   {
     "id": 579,
@@ -1065,7 +1731,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/579.png",
     "types": [
       "Psychic"
-    ]
+    ],
+    "rank": 144,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 584,
@@ -1074,7 +1746,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/584.png",
     "types": [
       "Ice"
-    ]
+    ],
+    "rank": 107,
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "can_mega_evolve": false
   },
   {
     "id": 587,
@@ -1084,7 +1762,13 @@
     "types": [
       "Electric",
       "Flying"
-    ]
+    ],
+    "rank": 193,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 609,
@@ -1094,7 +1778,13 @@
     "types": [
       "Ghost",
       "Fire"
-    ]
+    ],
+    "rank": 80,
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "can_mega_evolve": true
   },
   {
     "id": 614,
@@ -1103,7 +1793,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/614.png",
     "types": [
       "Ice"
-    ]
+    ],
+    "rank": 177,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 618,
@@ -1113,7 +1809,13 @@
     "types": [
       "Ground",
       "Electric"
-    ]
+    ],
+    "rank": 188,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 618,
@@ -1123,7 +1825,13 @@
     "types": [
       "Ground",
       "Steel"
-    ]
+    ],
+    "rank": 191,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 623,
@@ -1133,7 +1841,13 @@
     "types": [
       "Ground",
       "Ghost"
-    ]
+    ],
+    "rank": 50,
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "can_mega_evolve": true
   },
   {
     "id": 635,
@@ -1143,7 +1857,13 @@
     "types": [
       "Dark",
       "Dragon"
-    ]
+    ],
+    "rank": 42,
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "can_mega_evolve": false
   },
   {
     "id": 637,
@@ -1153,7 +1873,13 @@
     "types": [
       "Bug",
       "Fire"
-    ]
+    ],
+    "rank": 47,
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "can_mega_evolve": false
   },
   {
     "id": 652,
@@ -1163,7 +1889,13 @@
     "types": [
       "Grass",
       "Fighting"
-    ]
+    ],
+    "rank": 84,
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "can_mega_evolve": true
   },
   {
     "id": 655,
@@ -1173,7 +1905,13 @@
     "types": [
       "Fire",
       "Psychic"
-    ]
+    ],
+    "rank": 21,
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "can_mega_evolve": true
   },
   {
     "id": 658,
@@ -1183,7 +1921,13 @@
     "types": [
       "Water",
       "Dark"
-    ]
+    ],
+    "rank": 72,
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "can_mega_evolve": true
   },
   {
     "id": 660,
@@ -1193,7 +1937,13 @@
     "types": [
       "Normal",
       "Ground"
-    ]
+    ],
+    "rank": 163,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 663,
@@ -1203,7 +1953,13 @@
     "types": [
       "Fire",
       "Flying"
-    ]
+    ],
+    "rank": 26,
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "can_mega_evolve": false
   },
   {
     "id": 666,
@@ -1213,7 +1969,13 @@
     "types": [
       "Bug",
       "Flying"
-    ]
+    ],
+    "rank": 78,
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "can_mega_evolve": false
   },
   {
     "id": 670,
@@ -1222,7 +1984,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/670.png",
     "types": [
       "Fairy"
-    ]
+    ],
+    "rank": 9,
+    "tier": "Diamond",
+    "points": 8,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 8",
+    "can_mega_evolve": true
   },
   {
     "id": 671,
@@ -1231,7 +1999,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/671.png",
     "types": [
       "Fairy"
-    ]
+    ],
+    "rank": 187,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 675,
@@ -1241,7 +2015,13 @@
     "types": [
       "Fighting",
       "Dark"
-    ]
+    ],
+    "rank": 161,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 676,
@@ -1250,7 +2030,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/676.png",
     "types": [
       "Normal"
-    ]
+    ],
+    "rank": 200,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 678,
@@ -1259,7 +2045,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/678.png",
     "types": [
       "Psychic"
-    ]
+    ],
+    "rank": 77,
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "can_mega_evolve": true
   },
   {
     "id": 681,
@@ -1269,7 +2061,13 @@
     "types": [
       "Steel",
       "Ghost"
-    ]
+    ],
+    "rank": 23,
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "can_mega_evolve": false
   },
   {
     "id": 683,
@@ -1278,7 +2076,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/683.png",
     "types": [
       "Fairy"
-    ]
+    ],
+    "rank": 167,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 685,
@@ -1287,7 +2091,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/685.png",
     "types": [
       "Fairy"
-    ]
+    ],
+    "rank": 182,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 693,
@@ -1296,7 +2106,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/693.png",
     "types": [
       "Water"
-    ]
+    ],
+    "rank": 142,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 695,
@@ -1306,7 +2122,13 @@
     "types": [
       "Electric",
       "Normal"
-    ]
+    ],
+    "rank": 91,
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "can_mega_evolve": false
   },
   {
     "id": 697,
@@ -1316,7 +2138,13 @@
     "types": [
       "Rock",
       "Dragon"
-    ]
+    ],
+    "rank": 130,
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "can_mega_evolve": false
   },
   {
     "id": 699,
@@ -1326,7 +2154,13 @@
     "types": [
       "Rock",
       "Ice"
-    ]
+    ],
+    "rank": 152,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 700,
@@ -1335,7 +2169,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/700.png",
     "types": [
       "Fairy"
-    ]
+    ],
+    "rank": 36,
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "can_mega_evolve": false
   },
   {
     "id": 701,
@@ -1345,7 +2185,13 @@
     "types": [
       "Fighting",
       "Flying"
-    ]
+    ],
+    "rank": 88,
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "can_mega_evolve": true
   },
   {
     "id": 702,
@@ -1355,7 +2201,13 @@
     "types": [
       "Electric",
       "Fairy"
-    ]
+    ],
+    "rank": 186,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 706,
@@ -1364,7 +2216,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/706.png",
     "types": [
       "Dragon"
-    ]
+    ],
+    "rank": null,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 707,
@@ -1374,7 +2232,13 @@
     "types": [
       "Steel",
       "Fairy"
-    ]
+    ],
+    "rank": 82,
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "can_mega_evolve": false
   },
   {
     "id": 709,
@@ -1384,7 +2248,13 @@
     "types": [
       "Ghost",
       "Grass"
-    ]
+    ],
+    "rank": 158,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 711,
@@ -1394,7 +2264,13 @@
     "types": [
       "Ghost",
       "Grass"
-    ]
+    ],
+    "rank": 170,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 713,
@@ -1403,7 +2279,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/713.png",
     "types": [
       "Ice"
-    ]
+    ],
+    "rank": 184,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 713,
@@ -1413,7 +2295,13 @@
     "types": [
       "Ice",
       "Rock"
-    ]
+    ],
+    "rank": 175,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 715,
@@ -1423,7 +2311,13 @@
     "types": [
       "Flying",
       "Dragon"
-    ]
+    ],
+    "rank": 120,
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "can_mega_evolve": false
   },
   {
     "id": 724,
@@ -1433,7 +2327,13 @@
     "types": [
       "Grass",
       "Ghost"
-    ]
+    ],
+    "rank": 194,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 724,
@@ -1443,7 +2343,13 @@
     "types": [
       "Grass",
       "Fighting"
-    ]
+    ],
+    "rank": 109,
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "can_mega_evolve": false
   },
   {
     "id": 727,
@@ -1453,7 +2359,13 @@
     "types": [
       "Fire",
       "Dark"
-    ]
+    ],
+    "rank": 2,
+    "tier": "Diamond",
+    "points": 8,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 8",
+    "can_mega_evolve": false
   },
   {
     "id": 730,
@@ -1463,7 +2375,13 @@
     "types": [
       "Water",
       "Fairy"
-    ]
+    ],
+    "rank": 31,
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "can_mega_evolve": false
   },
   {
     "id": 733,
@@ -1473,7 +2391,13 @@
     "types": [
       "Normal",
       "Flying"
-    ]
+    ],
+    "rank": 176,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 740,
@@ -1483,7 +2407,13 @@
     "types": [
       "Fighting",
       "Ice"
-    ]
+    ],
+    "rank": 60,
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "can_mega_evolve": true
   },
   {
     "id": 745,
@@ -1492,7 +2422,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/745.png",
     "types": [
       "Rock"
-    ]
+    ],
+    "rank": 110,
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "can_mega_evolve": false
   },
   {
     "id": 748,
@@ -1502,7 +2438,13 @@
     "types": [
       "Poison",
       "Water"
-    ]
+    ],
+    "rank": 137,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 750,
@@ -1511,7 +2453,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/750.png",
     "types": [
       "Ground"
-    ]
+    ],
+    "rank": 117,
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "can_mega_evolve": false
   },
   {
     "id": 752,
@@ -1521,7 +2469,13 @@
     "types": [
       "Water",
       "Bug"
-    ]
+    ],
+    "rank": 75,
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "can_mega_evolve": false
   },
   {
     "id": 758,
@@ -1531,7 +2485,13 @@
     "types": [
       "Poison",
       "Fire"
-    ]
+    ],
+    "rank": 141,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 763,
@@ -1540,7 +2500,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/763.png",
     "types": [
       "Grass"
-    ]
+    ],
+    "rank": 53,
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "can_mega_evolve": false
   },
   {
     "id": 765,
@@ -1550,7 +2516,13 @@
     "types": [
       "Normal",
       "Psychic"
-    ]
+    ],
+    "rank": 68,
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "can_mega_evolve": false
   },
   {
     "id": 766,
@@ -1559,7 +2531,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/766.png",
     "types": [
       "Fighting"
-    ]
+    ],
+    "rank": 196,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 778,
@@ -1569,7 +2547,13 @@
     "types": [
       "Ghost",
       "Fairy"
-    ]
+    ],
+    "rank": 52,
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "can_mega_evolve": false
   },
   {
     "id": 780,
@@ -1579,7 +2563,13 @@
     "types": [
       "Normal",
       "Dragon"
-    ]
+    ],
+    "rank": 63,
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "can_mega_evolve": true
   },
   {
     "id": 784,
@@ -1589,7 +2579,13 @@
     "types": [
       "Dragon",
       "Fighting"
-    ]
+    ],
+    "rank": 30,
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "can_mega_evolve": false
   },
   {
     "id": 823,
@@ -1599,7 +2595,13 @@
     "types": [
       "Flying",
       "Steel"
-    ]
+    ],
+    "rank": 20,
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "can_mega_evolve": false
   },
   {
     "id": 841,
@@ -1609,7 +2611,13 @@
     "types": [
       "Grass",
       "Dragon"
-    ]
+    ],
+    "rank": 185,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 842,
@@ -1619,7 +2627,13 @@
     "types": [
       "Grass",
       "Dragon"
-    ]
+    ],
+    "rank": 195,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 844,
@@ -1628,7 +2642,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/844.png",
     "types": [
       "Ground"
-    ]
+    ],
+    "rank": 178,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 855,
@@ -1637,7 +2657,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/855.png",
     "types": [
       "Ghost"
-    ]
+    ],
+    "rank": 199,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 858,
@@ -1647,7 +2673,13 @@
     "types": [
       "Psychic",
       "Fairy"
-    ]
+    ],
+    "rank": 55,
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "can_mega_evolve": false
   },
   {
     "id": 866,
@@ -1657,7 +2689,13 @@
     "types": [
       "Ice",
       "Psychic"
-    ]
+    ],
+    "rank": 147,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 867,
@@ -1667,7 +2705,13 @@
     "types": [
       "Ground",
       "Ghost"
-    ]
+    ],
+    "rank": 162,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 869,
@@ -1676,7 +2720,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/869.png",
     "types": [
       "Fairy"
-    ]
+    ],
+    "rank": 121,
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "can_mega_evolve": false
   },
   {
     "id": 877,
@@ -1686,7 +2736,13 @@
     "types": [
       "Electric",
       "Dark"
-    ]
+    ],
+    "rank": 159,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 887,
@@ -1696,7 +2752,13 @@
     "types": [
       "Dragon",
       "Ghost"
-    ]
+    ],
+    "rank": 38,
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "can_mega_evolve": false
   },
   {
     "id": 899,
@@ -1706,7 +2768,13 @@
     "types": [
       "Normal",
       "Psychic"
-    ]
+    ],
+    "rank": 157,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 900,
@@ -1716,7 +2784,13 @@
     "types": [
       "Bug",
       "Rock"
-    ]
+    ],
+    "rank": 96,
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "can_mega_evolve": false
   },
   {
     "id": 902,
@@ -1726,7 +2800,13 @@
     "types": [
       "Water",
       "Ghost"
-    ]
+    ],
+    "rank": 5,
+    "tier": "Diamond",
+    "points": 8,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 8",
+    "can_mega_evolve": false
   },
   {
     "id": 903,
@@ -1736,7 +2816,13 @@
     "types": [
       "Fighting",
       "Poison"
-    ]
+    ],
+    "rank": 1,
+    "tier": "Diamond",
+    "points": 8,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 8",
+    "can_mega_evolve": false
   },
   {
     "id": 908,
@@ -1746,7 +2832,13 @@
     "types": [
       "Grass",
       "Dark"
-    ]
+    ],
+    "rank": 54,
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "can_mega_evolve": false
   },
   {
     "id": 911,
@@ -1756,7 +2848,13 @@
     "types": [
       "Fire",
       "Ghost"
-    ]
+    ],
+    "rank": 133,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   },
   {
     "id": 914,
@@ -1766,7 +2864,13 @@
     "types": [
       "Water",
       "Fighting"
-    ]
+    ],
+    "rank": 94,
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "can_mega_evolve": false
   },
   {
     "id": 925,
@@ -1775,7 +2879,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/925.png",
     "types": [
       "Normal"
-    ]
+    ],
+    "rank": 25,
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "can_mega_evolve": false
   },
   {
     "id": 934,
@@ -1784,7 +2894,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/934.png",
     "types": [
       "Rock"
-    ]
+    ],
+    "rank": 122,
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "can_mega_evolve": false
   },
   {
     "id": 936,
@@ -1794,7 +2910,13 @@
     "types": [
       "Fire",
       "Psychic"
-    ]
+    ],
+    "rank": 86,
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "can_mega_evolve": false
   },
   {
     "id": 937,
@@ -1804,7 +2926,13 @@
     "types": [
       "Fire",
       "Ghost"
-    ]
+    ],
+    "rank": 76,
+    "tier": "Silver",
+    "points": 4,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 4",
+    "can_mega_evolve": false
   },
   {
     "id": 939,
@@ -1813,7 +2941,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/939.png",
     "types": [
       "Electric"
-    ]
+    ],
+    "rank": 108,
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "can_mega_evolve": false
   },
   {
     "id": 952,
@@ -1823,7 +2957,13 @@
     "types": [
       "Grass",
       "Fire"
-    ]
+    ],
+    "rank": 44,
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "can_mega_evolve": true
   },
   {
     "id": 956,
@@ -1832,7 +2972,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/956.png",
     "types": [
       "Psychic"
-    ]
+    ],
+    "rank": 100,
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "can_mega_evolve": false
   },
   {
     "id": 959,
@@ -1842,7 +2988,13 @@
     "types": [
       "Fairy",
       "Steel"
-    ]
+    ],
+    "rank": 64,
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "can_mega_evolve": false
   },
   {
     "id": 964,
@@ -1851,7 +3003,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/964.png",
     "types": [
       "Water"
-    ]
+    ],
+    "rank": 37,
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "can_mega_evolve": false
   },
   {
     "id": 968,
@@ -1860,7 +3018,13 @@
     "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/968.png",
     "types": [
       "Steel"
-    ]
+    ],
+    "rank": 58,
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "can_mega_evolve": false
   },
   {
     "id": 970,
@@ -1870,7 +3034,13 @@
     "types": [
       "Rock",
       "Poison"
-    ]
+    ],
+    "rank": 35,
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
+    "can_mega_evolve": true
   },
   {
     "id": 981,
@@ -1880,7 +3050,13 @@
     "types": [
       "Normal",
       "Psychic"
-    ]
+    ],
+    "rank": 16,
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "can_mega_evolve": false
   },
   {
     "id": 983,
@@ -1890,7 +3066,13 @@
     "types": [
       "Dark",
       "Steel"
-    ]
+    ],
+    "rank": 4,
+    "tier": "Diamond",
+    "points": 8,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 8",
+    "can_mega_evolve": false
   },
   {
     "id": 1013,
@@ -1900,7 +3082,13 @@
     "types": [
       "Grass",
       "Ghost"
-    ]
+    ],
+    "rank": 6,
+    "tier": "Diamond",
+    "points": 8,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 8",
+    "can_mega_evolve": false
   },
   {
     "id": 1018,
@@ -1910,7 +3098,13 @@
     "types": [
       "Steel",
       "Dragon"
-    ]
+    ],
+    "rank": 15,
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
+    "can_mega_evolve": false
   },
   {
     "id": 1019,
@@ -1920,6 +3114,124 @@
     "types": [
       "Grass",
       "Dragon"
-    ]
+    ],
+    "rank": 113,
+    "tier": "Bronze",
+    "points": 2,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 2",
+    "can_mega_evolve": false
+  },
+  {
+    "id": 479,
+    "name": "Rotom-Wash",
+    "slug": "rotom-wash",
+    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/479.png",
+    "types": [
+      "Electric",
+      "Water"
+    ],
+    "rank": 10,
+    "tier": "Diamond",
+    "points": 8,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 8",
+    "can_mega_evolve": false
+  },
+  {
+    "id": 479,
+    "name": "Rotom-Frost",
+    "slug": "rotom-frost",
+    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/479.png",
+    "types": [
+      "Electric",
+      "Ice"
+    ],
+    "rank": 65,
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "can_mega_evolve": false
+  },
+  {
+    "id": 479,
+    "name": "Rotom-Mow",
+    "slug": "rotom-mow",
+    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/479.png",
+    "types": [
+      "Electric",
+      "Grass"
+    ],
+    "rank": 97,
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "can_mega_evolve": false
+  },
+  {
+    "id": 479,
+    "name": "Rotom-Fan",
+    "slug": "rotom-fan",
+    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/479.png",
+    "types": [
+      "Electric",
+      "Flying"
+    ],
+    "rank": 190,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
+  },
+  {
+    "id": 706,
+    "name": "Goodra-Hisui",
+    "slug": "goodra-hisui",
+    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/706.png",
+    "types": [
+      "Dragon",
+      "Steel"
+    ],
+    "rank": 99,
+    "tier": "Silver",
+    "points": 3,
+    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_label": "Silver 3",
+    "can_mega_evolve": false
+  },
+  {
+    "id": 128,
+    "name": "Tauros-Aqua",
+    "slug": "tauros-aqua",
+    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/128.png",
+    "types": [
+      "Fighting",
+      "Water"
+    ],
+    "rank": 62,
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
+    "can_mega_evolve": false
+  },
+  {
+    "id": 128,
+    "name": "Tauros-Blaze",
+    "slug": "tauros-blaze",
+    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/128.png",
+    "types": [
+      "Fighting",
+      "Fire"
+    ],
+    "rank": 151,
+    "tier": "Bronze",
+    "points": 1,
+    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_label": "Bronze 1",
+    "can_mega_evolve": false
   }
 ]

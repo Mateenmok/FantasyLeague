@@ -1798,3 +1798,484 @@ body {
   }
 }
 
+
+/* Pokémon tier badges */
+
+.pokemon-tier-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 5px;
+  padding: 3px 7px;
+  border: 2px solid #555;
+  border-radius: 999px;
+  background: linear-gradient(to bottom, #fefefe 0%, #dcdcdc 100%);
+  box-shadow:
+    0 0 0 1px #fff inset,
+    0 0 0 3px #c7c7c7 inset;
+  font-size: 18px;
+}
+
+.pokemon-tier-badge img {
+  width: 18px !important;
+  height: 18px !important;
+  object-fit: contain !important;
+}
+
+.draft-pokemon-card .pokemon-tier-badge {
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+/* Draft point cap display */
+
+.draft-point-status {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.draft-point-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.draft-point-card {
+  background: linear-gradient(to bottom, #fefefe 0%, #dcdcdc 100%);
+  border: 3px solid #555;
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bdbdbd inset;
+  padding: 12px;
+}
+
+.draft-point-card p {
+  margin: 4px 0;
+  font-size: 24px;
+}
+
+.draft-point-bar {
+  height: 16px;
+  margin-top: 8px;
+  border: 2px solid #555;
+  border-radius: 999px;
+  background: #f7f7f7;
+  overflow: hidden;
+}
+
+.draft-point-bar div {
+  height: 100%;
+  background: linear-gradient(to bottom, #fff6cc 0%, #f0c400 100%);
+}
+
+@media (max-width: 800px) {
+  .draft-point-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Tier badge alignment fix */
+
+.pokemon-tier-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 6px !important;
+  white-space: nowrap !important;
+  vertical-align: middle !important;
+}
+
+.pokemon-tier-badge img {
+  display: inline-block !important;
+  vertical-align: middle !important;
+  margin: 0 !important;
+}
+
+.pokemon-tier-badge span {
+  display: inline-block !important;
+  vertical-align: middle !important;
+  line-height: 1 !important;
+  position: relative;
+  top: -1px;
+}
+
+
+/* Stronger tier badge vertical alignment fix */
+
+.pokemon-tier-badge {
+  line-height: 18px !important;
+}
+
+.pokemon-tier-badge img {
+  width: 18px !important;
+  height: 18px !important;
+  display: inline-block !important;
+  transform: translateY(2px) !important;
+}
+
+.pokemon-tier-badge span {
+  display: inline-block !important;
+  line-height: 18px !important;
+  transform: translateY(-3px) !important;
+}
+
+
+/* Mega Evolution icon on Pokémon cards */
+
+.draft-pokemon-card {
+  position: relative;
+}
+
+.mega-badge-overlay {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px !important;
+  height: 28px !important;
+  object-fit: contain !important;
+  z-index: 5;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.45));
+}
+
+
+/* Mega Evolution badge overlay */
+
+.draft-pokemon-card {
+  position: relative;
+}
+
+.mega-badge-overlay {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px !important;
+  height: 28px !important;
+  object-fit: contain !important;
+  z-index: 5;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.35));
+}
+
+
+/* Mega Evolution badge overlay */
+
+.draft-pokemon-card {
+  position: relative;
+}
+
+.mega-badge-overlay {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px !important;
+  height: 28px !important;
+  object-fit: contain !important;
+  z-index: 5;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.35));
+}
+
+
+/* Draft Room filters */
+
+.draft-filter-bar {
+  display: grid;
+  grid-template-columns: 1.4fr 0.85fr 0.85fr 0.85fr;
+  gap: 10px;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 8px;
+}
+
+.draft-filter-bar .pkmn-input,
+.draft-filter-bar .pkmn-select {
+  min-height: 52px;
+  font-size: 23px;
+}
+
+@media (max-width: 950px) {
+  .draft-filter-bar {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Draft Room visible filter menu */
+
+.draft-filter-menu {
+  display: grid;
+  grid-template-columns: 1.4fr 0.9fr 0.9fr 0.9fr;
+  gap: 12px;
+  margin-top: 12px;
+  margin-bottom: 10px;
+  padding: 12px;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #fefefe 0%, #dcdcdc 100%);
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bdbdbd inset;
+}
+
+.draft-filter-menu label {
+  display: grid;
+  gap: 6px;
+}
+
+.draft-filter-menu label span {
+  font-size: 24px;
+  color: #222;
+}
+
+.draft-filter-menu .pkmn-input,
+.draft-filter-menu .pkmn-select {
+  min-height: 52px;
+  font-size: 23px;
+}
+
+@media (max-width: 950px) {
+  .draft-filter-menu {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ===== Pokémon type badges ===== */
+
+.pokemon-type-badges {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.pokemon-type-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 58px;
+  padding: 3px 7px;
+  border: 2px solid rgba(0, 0, 0, 0.35);
+  border-radius: 6px;
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  line-height: 1;
+  color: #fff;
+  text-shadow:
+    1px 1px 0 rgba(0, 0, 0, 0.55);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.45) inset,
+    0 2px 0 rgba(0, 0, 0, 0.22);
+}
+
+/* Core 18 types */
+
+.type-normal {
+  background: linear-gradient(to bottom, #c6c6a7 0%, #8a8a68 100%);
+}
+
+.type-fire {
+  background: linear-gradient(to bottom, #ff9c54 0%, #e25822 100%);
+}
+
+.type-water {
+  background: linear-gradient(to bottom, #77b7ff 0%, #2e78d6 100%);
+}
+
+.type-electric {
+  background: linear-gradient(to bottom, #ffe76b 0%, #d9a900 100%);
+  color: #222;
+  text-shadow:
+    1px 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.type-grass {
+  background: linear-gradient(to bottom, #8ee06f 0%, #3f9d3f 100%);
+}
+
+.type-ice {
+  background: linear-gradient(to bottom, #b7f4ff 0%, #62b6c7 100%);
+  color: #123;
+  text-shadow:
+    1px 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+.type-fighting {
+  background: linear-gradient(to bottom, #d96a5f 0%, #9b231f 100%);
+}
+
+.type-poison {
+  background: linear-gradient(to bottom, #c875c9 0%, #843c8c 100%);
+}
+
+.type-ground {
+  background: linear-gradient(to bottom, #ead27a 0%, #b98f36 100%);
+  color: #261a08;
+  text-shadow:
+    1px 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.type-flying {
+  background: linear-gradient(to bottom, #c4b5ff 0%, #7f6edb 100%);
+}
+
+.type-psychic {
+  background: linear-gradient(to bottom, #ff8fbc 0%, #f45b96 100%);
+}
+
+.type-bug {
+  background: linear-gradient(to bottom, #c4d94b 0%, #7c9514 100%);
+}
+
+.type-rock {
+  background: linear-gradient(to bottom, #d0b65d 0%, #8d7729 100%);
+}
+
+.type-ghost {
+  background: linear-gradient(to bottom, #8f7ac8 0%, #4f3b78 100%);
+}
+
+.type-dragon {
+  background: linear-gradient(to bottom, #9a74ff 0%, #4e25d6 100%);
+}
+
+.type-dark {
+  background: linear-gradient(to bottom, #74655c 0%, #3f332f 100%);
+}
+
+.type-steel {
+  background: linear-gradient(to bottom, #d1d1e0 0%, #8f8fa8 100%);
+  color: #202030;
+  text-shadow:
+    1px 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.type-fairy {
+  background: linear-gradient(to bottom, #ffb8dc 0%, #e87ab2 100%);
+}
+
+/* Make type badges sit nicely inside draft cards */
+
+.draft-pokemon-card .pokemon-type-badges {
+  margin-bottom: 2px;
+}
+
+
+/* ===== Clean split type bars v2 ===== */
+
+.draft-pokemon-card .pokemon-type-strip {
+  width: 132px !important;
+  height: 28px !important;
+  margin: 7px auto 3px !important;
+  display: grid !important;
+  overflow: hidden !important;
+  border: 2px solid rgba(0, 0, 0, 0.45) !important;
+  border-radius: 7px !important;
+  background: #ddd !important;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.45) inset,
+    0 2px 0 rgba(0, 0, 0, 0.22) !important;
+}
+
+.draft-pokemon-card .pokemon-type-strip.single {
+  grid-template-columns: 1fr !important;
+}
+
+.draft-pokemon-card .pokemon-type-strip.dual {
+  grid-template-columns: 1fr 1fr !important;
+}
+
+.draft-pokemon-card .pokemon-type-segment {
+  min-width: 0 !important;
+  width: auto !important;
+  height: 100% !important;
+  padding: 0 4px !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  font-family: 'VT323', monospace !important;
+  font-size: 19px !important;
+  line-height: 1 !important;
+  color: white !important;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.55) !important;
+
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: clip !important;
+}
+
+.draft-pokemon-card .pokemon-type-strip.dual .pokemon-type-segment:first-child {
+  border-right: 2px solid rgba(0, 0, 0, 0.35) !important;
+}
+
+/* Preserve readable dark text on light type colors */
+
+.draft-pokemon-card .pokemon-type-segment.type-electric,
+.draft-pokemon-card .pokemon-type-segment.type-ice,
+.draft-pokemon-card .pokemon-type-segment.type-ground,
+.draft-pokemon-card .pokemon-type-segment.type-steel {
+  color: #222 !important;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Prevent old badge styles from affecting the new strip */
+
+.draft-pokemon-card .pokemon-type-strip .pokemon-type-badge,
+.draft-pokemon-card .pokemon-type-strip .pokemon-type-badges {
+  all: unset !important;
+}
+
+
+/* Shorter type bars */
+
+.draft-pokemon-card .pokemon-type-strip {
+  width: 104px !important;
+  height: 24px !important;
+}
+
+.draft-pokemon-card .pokemon-type-segment {
+  font-size: 17px !important;
+  padding: 0 3px !important;
+}
+
+
+/* Better sizing for single vs dual type bars */
+
+.draft-pokemon-card .pokemon-type-strip.single {
+  width: 76px !important;
+  height: 24px !important;
+  border-radius: 8px !important;
+}
+
+.draft-pokemon-card .pokemon-type-strip.dual {
+  width: 112px !important;
+  height: 24px !important;
+  border-radius: 8px !important;
+}
+
+.draft-pokemon-card .pokemon-type-strip.single .pokemon-type-segment {
+  font-size: 17px !important;
+  padding: 0 6px !important;
+}
+
+.draft-pokemon-card .pokemon-type-strip.dual .pokemon-type-segment {
+  font-size: 16px !important;
+  padding: 0 3px !important;
+}
+

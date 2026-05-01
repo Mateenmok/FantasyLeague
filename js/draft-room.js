@@ -14,7 +14,12 @@ const draftPicksList = document.getElementById("draftPicksList");
 const draftTeamRosters = document.getElementById("draftTeamRosters");
 const availablePokemonGrid = document.getElementById("availablePokemonGrid");
 const availablePokemonSearch = document.getElementById("availablePokemonSearch");
+const megaFilterSelect = document.getElementById("megaFilterSelect");
+const tierFilterSelect = document.getElementById("tierFilterSelect");
+const typeFilterSelect = document.getElementById("typeFilterSelect");
+const availablePokemonCount = document.getElementById("availablePokemonCount");
 const draftRoomStatus = document.getElementById("draftRoomStatus");
+const draftPointStatus = document.getElementById("draftPointStatus");
 const draftControls = document.getElementById("draftControls");
 const draftSetupSection = document.getElementById("draftSetupSection");
 const draftOrderList = document.getElementById("draftOrderList");
@@ -48,6 +53,18 @@ saveDraftOrderButton.addEventListener("click", function () {
 startDraftButton.addEventListener("click", startOrResumeDraft);
 stopDraftButton.addEventListener("click", stopDraft);
 availablePokemonSearch.addEventListener("input", renderAvailablePokemonGrid);
+
+if (megaFilterSelect) {
+  megaFilterSelect.addEventListener("change", renderAvailablePokemonGrid);
+}
+
+if (tierFilterSelect) {
+  tierFilterSelect.addEventListener("change", renderAvailablePokemonGrid);
+}
+
+if (typeFilterSelect) {
+  typeFilterSelect.addEventListener("change", renderAvailablePokemonGrid);
+}
 
 loadDraftRoom();
 
@@ -112,7 +129,7 @@ async function loadDraftRoom() {
   draftLeagueSubtitle.textContent = league.name;
 
   try {
-    championsPokemon = await fetch("data/champions-pokemon.json").then(response => response.json());
+    championsPokemon = await fetch("data/champions-pokemon.json?v=tiers2").then(response => response.json());
   } catch (error) {
     console.error("Champions Pokémon load error:", error);
     draftRoomStatus.textContent = "Could not load Pokémon data.";
@@ -121,6 +138,7 @@ async function loadDraftRoom() {
   }
 
   await ensureDraftState();
+  renderAvailablePokemonFilters();
   await refreshDraftData();
 }
 
@@ -246,6 +264,7 @@ function renderDraftRoom() {
   renderPokemonOptions();
   renderDraftPicksList();
   renderTeamRosters();
+  renderDraftPointStatus();
   renderAvailablePokemonGrid();
   renderDraftButtons();
   startDraftTimer();
@@ -586,13 +605,20 @@ function renderDraftPicksList() {
 }
 
 function renderTeamRosters() {
+  const pointCap = Number(currentLeague?.roster_point_cap || 50);
+
   draftTeamRosters.innerHTML = leagueTeams.map(team => {
     const rosterRows = getRosterForTeam(team.id);
+    const pointUsage = getTeamPointUsage(team.id);
 
     return `
       <div class="draft-roster-team">
         <h3>${escapeHtml(team.team_name)}</h3>
-        <p>${rosterRows.length}/${ROSTER_SIZE} Pokémon</p>
+        <p>${rosterRows.length}/${ROSTER_SIZE} Pokémon • ${pointUsage}/${pointCap} points</p>
+
+        <div class="draft-point-bar">
+          <div style="width:${Math.min((pointUsage / pointCap) * 100, 100)}%"></div>
+        </div>
 
         <div class="draft-roster-pills">
           ${
@@ -600,7 +626,7 @@ function renderTeamRosters() {
               ? `<span class="draft-empty-pill">Empty</span>`
               : rosterRows.map(row => {
                   const pokemon = getPokemonBySlug(row.pokemon_slug);
-                  return `<span>${escapeHtml(pokemon ? pokemon.name : row.pokemon_slug)}</span>`;
+                  return `<span>${escapeHtml(pokemon ? `${pokemon.name} (${pokemon.points || 1})` : row.pokemon_slug)}</span>`;
                 }).join("")
           }
         </div>
@@ -609,8 +635,112 @@ function renderTeamRosters() {
   }).join("");
 }
 
-function renderAvailablePokemonGrid() {
+
+function renderDraftPointStatus() {
+  if (!draftPointStatus) {
+    return;
+  }
+
+  const pointCap = Number(currentLeague?.roster_point_cap || 50);
+  const nextPick = getNextPickInfo();
+
+  let myTeamHtml = "";
+
+  if (currentMembership?.league_team_id) {
+    const myTeam = getTeamById(currentMembership.league_team_id);
+    const myUsed = getTeamPointUsage(currentMembership.league_team_id);
+    const myRemaining = pointCap - myUsed;
+
+    if (myTeam) {
+      myTeamHtml = `
+        <div class="draft-point-card">
+          <p><strong>My Team Points</strong></p>
+          <p>${escapeHtml(myTeam.team_name)}: ${myUsed}/${pointCap}</p>
+          <p class="small-note">Remaining: ${myRemaining}</p>
+          <div class="draft-point-bar">
+            <div style="width:${Math.min((myUsed / pointCap) * 100, 100)}%"></div>
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  let onClockHtml = "";
+
+  if (nextPick) {
+    const onClockUsed = getTeamPointUsage(nextPick.team.id);
+    const onClockRemaining = pointCap - onClockUsed;
+
+    onClockHtml = `
+      <div class="draft-point-card">
+        <p><strong>On The Clock</strong></p>
+        <p>${escapeHtml(nextPick.team.team_name)}: ${onClockUsed}/${pointCap}</p>
+        <p class="small-note">Remaining: ${onClockRemaining}</p>
+        <div class="draft-point-bar">
+          <div style="width:${Math.min((onClockUsed / pointCap) * 100, 100)}%"></div>
+        </div>
+      </div>
+    `;
+  }
+
+  draftPointStatus.innerHTML = `
+    <div class="draft-point-grid">
+      ${myTeamHtml || `<div class="draft-point-card"><p><strong>My Team Points</strong></p><p class="small-note">No team assigned.</p></div>`}
+      ${onClockHtml || `<div class="draft-point-card"><p><strong>On The Clock</strong></p><p class="small-note">Draft complete or not started.</p></div>`}
+    </div>
+  `;
+}
+
+function getTeamPointUsage(teamId) {
+  return getRosterForTeam(teamId).reduce((total, row) => {
+    const pokemon = getPokemonBySlug(row.pokemon_slug);
+    return total + getPokemonPoints(pokemon);
+  }, 0);
+}
+
+function getPokemonPoints(pokemon) {
+  return Number(pokemon?.points || 1);
+}
+
+function getPokemonThatFitTeamCap(teamId) {
+  const pointCap = Number(currentLeague?.roster_point_cap || 50);
+  const usedPoints = getTeamPointUsage(teamId);
+  const remainingPoints = pointCap - usedPoints;
+
+  return getAvailablePokemon().filter(pokemon => getPokemonPoints(pokemon) <= remainingPoints);
+}
+
+
+function renderAvailablePokemonFilters() {
+  if (!typeFilterSelect || !championsPokemon.length) {
+    return;
+  }
+
+  const selectedType = typeFilterSelect.value || "all";
+
+  const typeSet = new Set();
+
+  championsPokemon.forEach(pokemon => {
+    (pokemon.types || []).forEach(type => {
+      typeSet.add(type);
+    });
+  });
+
+  const sortedTypes = Array.from(typeSet).sort();
+
+  typeFilterSelect.innerHTML = `
+    <option value="all">All Types</option>
+    ${sortedTypes.map(type => `<option value="${escapeHtml(type)}">${escapeHtml(type)}</option>`).join("")}
+  `;
+
+  typeFilterSelect.value = sortedTypes.includes(selectedType) ? selectedType : "all";
+}
+
+function getFilteredAvailablePokemon() {
   const searchTerm = availablePokemonSearch.value.trim().toLowerCase();
+  const megaFilter = megaFilterSelect ? megaFilterSelect.value : "all";
+  const tierFilter = tierFilterSelect ? tierFilterSelect.value : "all";
+  const typeFilter = typeFilterSelect ? typeFilterSelect.value : "all";
 
   let availablePokemon = getAvailablePokemon();
 
@@ -618,9 +748,38 @@ function renderAvailablePokemonGrid() {
     availablePokemon = availablePokemon.filter(pokemon =>
       pokemon.name.toLowerCase().includes(searchTerm) ||
       pokemon.slug.toLowerCase().includes(searchTerm) ||
-      pokemon.types.join(" ").toLowerCase().includes(searchTerm) ||
+      (pokemon.types || []).join(" ").toLowerCase().includes(searchTerm) ||
       getPokemonLabel(pokemon).toLowerCase().includes(searchTerm)
     );
+  }
+
+  if (megaFilter === "mega") {
+    availablePokemon = availablePokemon.filter(pokemon => pokemon.mega_eligible);
+  }
+
+  if (megaFilter === "non-mega") {
+    availablePokemon = availablePokemon.filter(pokemon => !pokemon.mega_eligible);
+  }
+
+  if (tierFilter !== "all") {
+    availablePokemon = availablePokemon.filter(pokemon => pokemon.tier === tierFilter);
+  }
+
+  if (typeFilter !== "all") {
+    availablePokemon = availablePokemon.filter(pokemon => {
+      return (pokemon.types || []).includes(typeFilter);
+    });
+  }
+
+  return availablePokemon;
+}
+
+function renderAvailablePokemonGrid() {
+  let availablePokemon = getFilteredAvailablePokemon();
+  const totalFilteredCount = availablePokemon.length;
+
+  if (availablePokemonCount) {
+    availablePokemonCount.textContent = `${totalFilteredCount} available Pokémon match current filters. Showing up to 60.`;
   }
 
   availablePokemon = availablePokemon.slice(0, 60);
@@ -634,8 +793,10 @@ function renderAvailablePokemonGrid() {
     return `
       <button class="draft-pokemon-card" data-slug="${pokemon.slug}">
         <img src="${pokemon.image}" alt="${escapeHtml(pokemon.name)}">
+        ${renderMegaBadge(pokemon)}
         <span>${escapeHtml(getPokemonLabel(pokemon))}</span>
-        <small>${escapeHtml(pokemon.types.join(" / "))}</small>
+        ${renderPokemonTierBadge(pokemon)}
+        ${renderPokemonTypeBadges(pokemon)}
       </button>
     `;
   }).join("");
@@ -673,10 +834,10 @@ async function makeDraftPick(randomPick) {
   let pokemon = null;
 
   if (randomPick) {
-    const availablePokemon = getAvailablePokemon();
+    const availablePokemon = getPokemonThatFitTeamCap(nextPick.team.id);
 
     if (availablePokemon.length === 0) {
-      draftActionStatus.textContent = "No Pokémon available.";
+      draftActionStatus.textContent = `${nextPick.team.team_name} has no legal Pokémon available under the point cap.`;
       return;
     }
 
@@ -691,6 +852,16 @@ async function makeDraftPick(randomPick) {
   }
 
   const rosterRows = getRosterForTeam(nextPick.team.id);
+  const pointCap = Number(currentLeague?.roster_point_cap || 50);
+  const usedPoints = getTeamPointUsage(nextPick.team.id);
+  const pokemonPoints = getPokemonPoints(pokemon);
+
+  if (usedPoints + pokemonPoints > pointCap) {
+    draftActionStatus.textContent =
+      `${pokemon.name} costs ${pokemonPoints}. ${nextPick.team.team_name} only has ${pointCap - usedPoints} points remaining.`;
+    makePickButton.disabled = false;
+    return;
+  }
 
   if (rosterRows.length >= ROSTER_SIZE) {
     draftActionStatus.textContent = `${nextPick.team.team_name} already has ${ROSTER_SIZE} Pokémon.`;
@@ -827,6 +998,53 @@ async function undoLastPick() {
 
   await refreshDraftData();
   undoPickButton.disabled = false;
+}
+
+
+function renderMegaBadge(pokemon) {
+  if (!pokemon || !pokemon.can_mega_evolve) {
+    return "";
+  }
+
+  return `<img class="mega-badge-overlay" src="images/MegaEvolution.png" alt="Mega Evolution">`;
+}
+
+
+function getTypeClass(type) {
+  return `type-${String(type || "").toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+}
+
+function renderPokemonTypeBadges(pokemon) {
+  const types = pokemon.types || [];
+
+  if (!types.length) {
+    return "";
+  }
+
+  const typeClass = types.length === 1 ? "single" : "dual";
+
+  return `
+    <div class="pokemon-type-strip ${typeClass}">
+      ${types.map(type => `
+        <span class="pokemon-type-segment ${getTypeClass(type)}">
+          ${escapeHtml(type)}
+        </span>
+      `).join("")}
+    </div>
+  `;
+}
+
+function renderPokemonTierBadge(pokemon) {
+  const tier = pokemon.tier || "Bronze";
+  const points = pokemon.points || 1;
+  const icon = pokemon.tier_icon || "images/tiers/BronzeButton.png";
+
+  return `
+    <div class="pokemon-tier-badge">
+      <img src="${icon}" alt="${tier}">
+      <span>${tier} ${points}</span>
+    </div>
+  `;
 }
 
 function disableDraftControls() {
