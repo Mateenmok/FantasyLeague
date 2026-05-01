@@ -1,24 +1,62 @@
 const teamCountSelect = document.getElementById("teamCountSelect");
+const pointCapInput = document.getElementById("pointCapInput");
+const regularSeasonMatchesSelect = document.getElementById("regularSeasonMatchesSelect");
+const leagueSettingsPreview = document.getElementById("leagueSettingsPreview");
+const teamEmailAssignments = document.getElementById("teamEmailAssignments");
 const adminTeamCheckboxes = document.getElementById("adminTeamCheckboxes");
 const createLeagueButton = document.getElementById("createLeagueButton");
 const createLeagueStatus = document.getElementById("createLeagueStatus");
 const createdLeagueResult = document.getElementById("createdLeagueResult");
 
 renderAdminCheckboxes();
+renderTeamEmailAssignments();
+updateLeagueSettingsPreview();
 
-teamCountSelect.addEventListener("change", renderAdminCheckboxes);
+teamCountSelect.addEventListener("change", function () {
+  renderAdminCheckboxes();
+  renderTeamEmailAssignments();
+  updateLeagueSettingsPreview();
+});
+
+pointCapInput.addEventListener("input", updateLeagueSettingsPreview);
+regularSeasonMatchesSelect.addEventListener("change", updateLeagueSettingsPreview);
 createLeagueButton.addEventListener("click", createLeague);
+
+function updateLeagueSettingsPreview() {
+  const teamCount = Number(teamCountSelect.value);
+  const playoffTeams = teamCount / 2;
+  const pointCap = Number(pointCapInput.value || 50);
+  const regularSeasonMatches = Number(regularSeasonMatchesSelect.value);
+
+  leagueSettingsPreview.textContent =
+    `${teamCount} teams • ${playoffTeams} playoff teams • ${regularSeasonMatches} regular season matches • ${pointCap} roster points`;
+}
+
+function renderTeamEmailAssignments() {
+  const teamCount = Number(teamCountSelect.value);
+  teamEmailAssignments.innerHTML = "";
+
+  for (let i = 1; i <= teamCount; i++) {
+    const row = document.createElement("div");
+    row.className = "team-email-row";
+    row.innerHTML = `
+      <span>Team ${i}</span>
+      <input id="teamEmail-${i}" type="email" placeholder="manager@email.com">
+    `;
+
+    teamEmailAssignments.appendChild(row);
+  }
+}
 
 function renderAdminCheckboxes() {
   const teamCount = Number(teamCountSelect.value);
-
   adminTeamCheckboxes.innerHTML = "";
 
   for (let i = 1; i <= teamCount; i++) {
     const checked = i === 1 ? "checked" : "";
 
     const label = document.createElement("label");
-    label.className = "admin-checkbox-item";
+    label.className = "pkmn-checkbox-item";
     label.innerHTML = `
       <input type="checkbox" value="${i}" ${checked}>
       Team ${i}
@@ -31,9 +69,34 @@ function renderAdminCheckboxes() {
 async function createLeague() {
   const leagueName = document.getElementById("leagueNameInput").value.trim();
   const teamCount = Number(teamCountSelect.value);
+  const rosterPointCap = Number(pointCapInput.value);
+  const regularSeasonMatches = Number(regularSeasonMatchesSelect.value);
+  const teamEmails = getTeamEmailAssignments();
 
   if (!leagueName) {
     createLeagueStatus.textContent = "Enter a league name first.";
+    return;
+  }
+
+  if (![8, 10, 12, 14, 16].includes(teamCount)) {
+    createLeagueStatus.textContent = "League entrants must be 8, 10, 12, 14, or 16.";
+    return;
+  }
+
+  if (!rosterPointCap || rosterPointCap < 1 || rosterPointCap > 999) {
+    createLeagueStatus.textContent = "Roster point cap must be between 1 and 999.";
+    return;
+  }
+
+  if (regularSeasonMatches < 6 || regularSeasonMatches > 12) {
+    createLeagueStatus.textContent = "Matches before playoffs must be between 6 and 12.";
+    return;
+  }
+
+  const duplicateEmail = findDuplicateEmail(teamEmails);
+
+  if (duplicateEmail) {
+    createLeagueStatus.textContent = `The email ${duplicateEmail} is assigned to more than one team.`;
     return;
   }
 
@@ -58,6 +121,8 @@ async function createLeague() {
   }
 
   const userId = session.user.id;
+  const userEmail = session.user.email.toLowerCase();
+  const displayName = session.user.user_metadata?.display_name || session.user.email;
 
   const { data: existingMemberships, error: membershipCountError } = await supabaseClient
     .from("league_memberships")
@@ -87,16 +152,19 @@ async function createLeague() {
 
   for (let i = 1; i <= teamCount; i++) {
     const passcode = generateUniquePasscode(usedPasscodes);
+    const managerEmail = teamEmails.get(i) || (i === 1 ? userEmail : null);
+    const ownerName = managerEmail === userEmail ? displayName : "Unassigned";
 
     teams.push({
       id: makeId(),
       league_id: leagueId,
       team_number: i,
       team_name: `Team ${i}`,
-      owner_name: "Unassigned",
+      owner_name: ownerName,
       record: "0-0",
       logo_url: "",
       team_passcode: passcode,
+      manager_email: managerEmail,
       is_admin: adminTeamNumbers.has(i)
     });
   }
@@ -107,7 +175,9 @@ async function createLeague() {
       id: leagueId,
       league_code: leagueCode,
       name: leagueName,
-      team_count: teamCount
+      team_count: teamCount,
+      roster_point_cap: rosterPointCap,
+      regular_season_matches: regularSeasonMatches
     });
 
   if (leagueError) {
@@ -128,12 +198,14 @@ async function createLeague() {
     return;
   }
 
+  const creatorAssignedTeam = teams.find(team => team.manager_email === userEmail);
+
   const { error: membershipError } = await supabaseClient
     .from("league_memberships")
     .insert({
       user_id: userId,
       league_id: leagueId,
-      league_team_id: null,
+      league_team_id: creatorAssignedTeam ? creatorAssignedTeam.id : null,
       role: "admin"
     });
 
@@ -151,25 +223,36 @@ async function createLeague() {
   createLeagueButton.disabled = false;
 
   renderCreatedLeagueResult({
-    leagueId,
     leagueCode,
     leagueName,
     teamCount,
+    rosterPointCap,
+    regularSeasonMatches,
     teams
   });
 }
 
-function renderCreatedLeagueResult({ leagueCode, leagueName, teamCount, teams }) {
+function renderCreatedLeagueResult({
+  leagueCode,
+  leagueName,
+  teamCount,
+  rosterPointCap,
+  regularSeasonMatches,
+  teams
+}) {
   createdLeagueResult.classList.remove("hidden");
+
+  const playoffTeams = teamCount / 2;
 
   const teamRows = teams.map(team => {
     const adminBadge = team.is_admin ? `<span class="admin-badge">Admin</span>` : "";
+    const email = team.manager_email || "Unassigned";
 
     return `
       <tr>
         <td>${team.team_number}</td>
         <td>${escapeHtml(team.team_name)}</td>
-        <td><strong>${team.team_passcode}</strong></td>
+        <td>${escapeHtml(email)}</td>
         <td>${adminBadge}</td>
       </tr>
     `;
@@ -184,9 +267,16 @@ function renderCreatedLeagueResult({ leagueCode, leagueName, teamCount, teams })
       <strong>${leagueCode}</strong>
     </div>
 
+    <div class="pkmn-panel">
+      <p><strong>League Settings</strong></p>
+      <p>${teamCount} teams</p>
+      <p>${playoffTeams} playoff teams</p>
+      <p>${regularSeasonMatches} matches before playoffs</p>
+      <p>${rosterPointCap} roster points maximum</p>
+    </div>
+
     <p class="small-note">
-      Save these passcodes. Give each participant their team's 4-letter passcode.
-      The join/login page will use the league code plus the team passcode.
+      Participants assigned by email will see this league in My Leagues after they sign in.
     </p>
 
     <table class="created-teams-table">
@@ -194,7 +284,7 @@ function renderCreatedLeagueResult({ leagueCode, leagueName, teamCount, teams })
         <tr>
           <th>#</th>
           <th>Team</th>
-          <th>Passcode</th>
+          <th>Manager Email</th>
           <th>Role</th>
         </tr>
       </thead>
@@ -206,7 +296,7 @@ function renderCreatedLeagueResult({ leagueCode, leagueName, teamCount, teams })
     <p class="small-note">${teamCount} teams created successfully.</p>
 
     <div style="margin-top: 18px;">
-      <a href="my-leagues.html" style="color:#93c5fd; font-weight:800;">Go to My Leagues</a>
+      <a href="my-leagues.html" style="color:#222; font-weight:800;">Go to My Leagues</a>
     </div>
   `;
 
@@ -214,6 +304,36 @@ function renderCreatedLeagueResult({ leagueCode, leagueName, teamCount, teams })
     top: document.body.scrollHeight,
     behavior: "smooth"
   });
+}
+
+function getTeamEmailAssignments() {
+  const teamCount = Number(teamCountSelect.value);
+  const assignments = new Map();
+
+  for (let i = 1; i <= teamCount; i++) {
+    const input = document.getElementById(`teamEmail-${i}`);
+    const value = input.value.trim().toLowerCase();
+
+    if (value) {
+      assignments.set(i, value);
+    }
+  }
+
+  return assignments;
+}
+
+function findDuplicateEmail(teamEmails) {
+  const seen = new Set();
+
+  for (const email of teamEmails.values()) {
+    if (seen.has(email)) {
+      return email;
+    }
+
+    seen.add(email);
+  }
+
+  return null;
 }
 
 function getAdminTeamNumbers() {

@@ -1,146 +1,197 @@
-let allTeams = [];
-let championsPokemon = [];
-let teamProfilesById = {};
-let allRosterRows = [];
+const teamInfoSubtitle = document.getElementById("teamInfoSubtitle");
+const teamInfoGrid = document.getElementById("teamInfoGrid");
+const teamInfoStatus = document.getElementById("teamInfoStatus");
 
-Promise.all([
-  fetch("data/teams.json").then(response => response.json()),
-  fetch("data/champions-pokemon.json").then(response => response.json())
-])
-  .then(async ([teamsData, championsData]) => {
-    allTeams = teamsData;
-    championsPokemon = championsData;
+let selectedLeagueId = localStorage.getItem("selected-league-id");
+let currentMembership = null;
+let currentUserId = null;
+let leagueTeams = [];
 
-    await loadTeamProfiles();
-    await loadTeamRosters();
+loadTeamInfoPage();
 
-    displayTeams();
-  })
-  .catch(error => {
-    console.error("Error loading teams page:", error);
-  });
-
-async function loadTeamProfiles() {
-  const { data, error } = await supabaseClient
-    .from("team_profiles")
-    .select("*");
-
-  if (error) {
-    console.error("Error loading team profiles:", error);
+async function loadTeamInfoPage() {
+  if (!selectedLeagueId) {
+    teamInfoSubtitle.textContent = "No league selected.";
+    teamInfoStatus.textContent = "Go to My Leagues and select a league first.";
+    teamInfoGrid.innerHTML = "";
     return;
   }
 
-  teamProfilesById = {};
+  const { data: sessionData, error: sessionError } = await supabaseClient.auth.getSession();
 
-  data.forEach(profile => {
-    teamProfilesById[profile.team_id] = profile;
-  });
-}
+  if (sessionError || !sessionData.session) {
+    console.error("Session error:", sessionError);
+    teamInfoSubtitle.textContent = "Not signed in.";
+    teamInfoStatus.textContent = "Sign in before viewing team info.";
+    return;
+  }
 
-async function loadTeamRosters() {
-  const { data, error } = await supabaseClient
-    .from("team_rosters")
+  currentUserId = sessionData.session.user.id;
+
+  const { data: membership, error: membershipError } = await supabaseClient
+    .from("league_memberships")
     .select("*")
-    .order("slot_number", { ascending: true });
+    .eq("user_id", currentUserId)
+    .eq("league_id", selectedLeagueId)
+    .single();
 
-  if (error) {
-    console.error("Error loading team rosters:", error);
+  if (membershipError || !membership) {
+    console.error("Membership error:", membershipError);
+    teamInfoSubtitle.textContent = "No access.";
+    teamInfoStatus.textContent = "You are not a member of this league.";
     return;
   }
 
-  allRosterRows = data || [];
+  currentMembership = membership;
+
+  if (currentMembership.role !== "admin") {
+    teamInfoSubtitle.textContent = "Admin only.";
+    teamInfoStatus.textContent = "Redirecting to My Team...";
+    window.location.href = "my-team.html";
+    return;
+  }
+
+  const { data: league, error: leagueError } = await supabaseClient
+    .from("leagues")
+    .select("*")
+    .eq("id", selectedLeagueId)
+    .single();
+
+  if (leagueError || !league) {
+    console.error("League load error:", leagueError);
+    teamInfoSubtitle.textContent = "Could not load league.";
+    teamInfoStatus.textContent = "Try selecting the league again.";
+    return;
+  }
+
+  teamInfoSubtitle.textContent = league.name;
+
+  const { data: teams, error: teamsError } = await supabaseClient
+    .from("league_teams")
+    .select("*")
+    .eq("league_id", selectedLeagueId)
+    .order("team_number", { ascending: true });
+
+  if (teamsError) {
+    console.error("Teams load error:", teamsError);
+    teamInfoStatus.textContent = "Could not load teams.";
+    return;
+  }
+
+  leagueTeams = teams || [];
+
+  renderTeams();
+  teamInfoStatus.textContent = `${leagueTeams.length} teams loaded. Admin record editing enabled.`;
 }
 
-function getTeamDisplay(team) {
-  const profile = teamProfilesById[team.id];
+function renderTeams() {
+  teamInfoGrid.innerHTML = leagueTeams.map(team => {
+    const managerEmail = team.manager_email || "Unassigned";
+    const ownerName = team.owner_name || "Unassigned";
+    const logoUrl = team.logo_url || "";
+    const adminBadge = team.is_admin
+      ? `<span class="admin-badge">Admin</span>`
+      : `<span class="team-role-badge">Manager</span>`;
 
-  return {
-    id: team.id,
-    name: profile?.team_name || team.name,
-    owner: profile?.owner_name || team.owner,
-    record: profile?.record || team.record,
-    logo: profile?.logo_url || team.logo || ""
-  };
-}
+    const logoHtml = logoUrl
+      ? `<img class="team-info-logo" src="${escapeHtml(logoUrl)}" alt="${escapeHtml(team.team_name)} logo">`
+      : `<div class="team-info-logo-placeholder">T${team.team_number}</div>`;
 
-function getRosterForTeam(teamId) {
-  return allRosterRows
-    .filter(row => row.team_id === teamId)
-    .sort((a, b) => a.slot_number - b.slot_number);
-}
-
-function displayTeams() {
-  const teamsGrid = document.getElementById("teamsGrid");
-  teamsGrid.innerHTML = "";
-
-  const pokemonBySlug = {};
-
-  championsPokemon.forEach(pokemon => {
-    pokemonBySlug[pokemon.slug] = pokemon;
-  });
-
-  allTeams.forEach(baseTeam => {
-    const team = getTeamDisplay(baseTeam);
-    const rosterRows = getRosterForTeam(team.id);
-
-    const teamCard = document.createElement("section");
-    teamCard.className = "team-card";
-
-    const logoHtml = team.logo
-      ? `<img class="team-logo" src="${team.logo}" alt="${team.name} logo">`
-      : `<div class="team-logo-placeholder">${getInitials(team.name)}</div>`;
-
-    const rosterHtml = rosterRows.length > 0
-      ? rosterRows.map(row => {
-          const pokemon = pokemonBySlug[row.pokemon_slug];
-
-          if (!pokemon) {
-            return `
-              <div class="team-pokemon missing-pokemon">
-                <div class="missing-image">?</div>
-                <p>${escapeHtml(row.pokemon_slug)}</p>
-              </div>
-            `;
-          }
-
-          return `
-            <div class="team-pokemon">
-              <img src="${pokemon.image}" alt="${pokemon.name}" loading="lazy">
-              <p>${pokemon.name}</p>
-            </div>
-          `;
-        }).join("")
-      : `<p class="empty-roster">No Pokémon drafted yet.</p>`;
-
-    teamCard.innerHTML = `
-      <div class="team-card-header">
-        ${logoHtml}
-        <div>
-          <h2>${escapeHtml(team.name)}</h2>
-          <p>Owner: ${escapeHtml(team.owner)}</p>
-          <p>Record: ${escapeHtml(team.record)}</p>
-          <p class="small-note">${rosterRows.length}/10 Pokémon</p>
+    return `
+      <article class="team-info-card editable-team-card">
+        <div class="team-info-top">
+          <div class="team-number-badge">#${team.team_number}</div>
+          ${logoHtml}
         </div>
-      </div>
 
-      <div class="team-roster">
-        ${rosterHtml}
-      </div>
+        <div class="team-info-main">
+          <h2>${escapeHtml(team.team_name)}</h2>
+          <p><strong>Manager:</strong> ${escapeHtml(managerEmail)}</p>
+          <p><strong>Role:</strong> ${adminBadge}</p>
+          <p class="small-note">Admin editor.</p>
 
-      <a class="team-page-link" href="myteam.html?team=${team.id}">View / Edit Team</a>
+          <div class="team-edit-form">
+            <label>Team Name</label>
+            <input id="teamName-${team.id}" type="text" value="${escapeHtml(team.team_name)}">
+
+            <label>Owner Name</label>
+            <input id="ownerName-${team.id}" type="text" value="${escapeHtml(ownerName)}">
+
+            <label>Logo URL</label>
+            <input id="logoUrl-${team.id}" type="text" value="${escapeHtml(logoUrl)}" placeholder="Paste image URL">
+
+            <label>Record</label>
+            <input id="record-${team.id}" type="text" value="${escapeHtml(team.record || "0-0")}" placeholder="0-0">
+
+            <button class="pkmn-button small save-team-button" data-team-id="${team.id}">
+              Save Team
+            </button>
+          </div>
+        </div>
+      </article>
     `;
+  }).join("");
 
-    teamsGrid.appendChild(teamCard);
+  document.querySelectorAll(".save-team-button").forEach(button => {
+    button.addEventListener("click", function () {
+      saveTeam(this.dataset.teamId);
+    });
   });
 }
 
-function getInitials(teamName) {
-  return teamName
-    .split(" ")
-    .map(word => word[0])
-    .join("")
-    .toUpperCase()
-    .slice(0, 3);
+async function saveTeam(teamId) {
+  if (!currentMembership || currentMembership.role !== "admin") {
+    teamInfoStatus.textContent = "Only admins can edit Team Info.";
+    return;
+  }
+
+  const team = leagueTeams.find(team => team.id === teamId);
+
+  if (!team) {
+    teamInfoStatus.textContent = "Could not find that team.";
+    return;
+  }
+
+  const teamName = document.getElementById(`teamName-${teamId}`).value.trim() || `Team ${team.team_number}`;
+  const ownerName = document.getElementById(`ownerName-${teamId}`).value.trim() || "Unassigned";
+  const logoUrl = document.getElementById(`logoUrl-${teamId}`).value.trim();
+  const record = document.getElementById(`record-${teamId}`).value.trim() || "0-0";
+
+  teamInfoStatus.textContent = "Saving team...";
+
+  const { error } = await supabaseClient
+    .from("league_teams")
+    .update({
+      team_name: teamName,
+      owner_name: ownerName,
+      logo_url: logoUrl,
+      record: record,
+      updated_at: new Date().toISOString()
+    })
+    .eq("id", teamId)
+    .eq("league_id", selectedLeagueId);
+
+  if (error) {
+    console.error("Save team error:", error);
+    teamInfoStatus.textContent = "Error saving team. Check the console.";
+    return;
+  }
+
+  teamInfoStatus.textContent = "Team saved.";
+
+  const { data: teams, error: reloadError } = await supabaseClient
+    .from("league_teams")
+    .select("*")
+    .eq("league_id", selectedLeagueId)
+    .order("team_number", { ascending: true });
+
+  if (reloadError) {
+    console.error("Reload teams error:", reloadError);
+    return;
+  }
+
+  leagueTeams = teams || leagueTeams;
+  renderTeams();
 }
 
 function escapeHtml(value) {

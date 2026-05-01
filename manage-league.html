@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>League Info</title>
+  <title>Manage League</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
@@ -17,23 +17,35 @@
       <img class="corner-ball bottom-right" src="images/ui/retroball.png" alt="">
 
       <div class="pkmn-title-box">
-        <h1 class="pkmn-title">LEAGUE INFO</h1>
-        <p id="teamInfoSubtitle" class="pkmn-subtitle">Loading selected league...</p>
+        <h1 class="pkmn-title">MANAGE LEAGUE</h1>
+        <p id="manageLeagueSubtitle" class="pkmn-subtitle">Loading league...</p>
       </div>
 
       <div class="top-links">
         <a class="pkmn-button-link small secondary" href="league-home.html">Back to League Home</a>
-        <a class="pkmn-button-link small secondary" href="manage-league.html">Manage League</a>
+        <a class="pkmn-button-link small secondary" href="my-leagues.html">My Leagues</a>
       </div>
 
-      <div id="teamInfoGrid" class="team-info-grid"></div>
+      <div class="pkmn-panel">
+        <p><strong>Team Manager Emails</strong></p>
+        <p class="small-note">
+          Add each participant's email to their team. When they create/sign into an account with that same email,
+          this league will appear in their My Leagues page.
+        </p>
+      </div>
 
-      <div id="teamInfoStatus" class="pkmn-footer-note">Loading teams...</div>
+      <div id="teamManagerList" class="team-manager-list"></div>
+
+      <div style="margin-top:16px;">
+        <button id="saveManagersButton" class="pkmn-button">Save League Managers</button>
+      </div>
+
+      <div id="manageLeagueStatus" class="pkmn-footer-note">Loading teams...</div>
     </section>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
-  <script src="js/teams.js?v=4"></script>
+  <script src="js/manage-league.js"></script>
 </body>
 </html>

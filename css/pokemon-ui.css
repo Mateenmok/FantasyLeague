@@ -410,3 +410,522 @@ body {
     font-size: 22px;
   }
 }
+
+/* Make auth page buttons fill the menu width */
+
+#createAccountButton,
+#signInButton {
+  width: 100%;
+  min-height: 78px;
+  font-size: 32px;
+}
+
+.auth-links {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.auth-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 64px;
+  width: 100%;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: #222;
+  font-family: 'VT323', monospace;
+  font-size: 28px;
+  background: linear-gradient(to bottom, #f7f7f7 0%, #d2d2d2 100%);
+  border: 3px solid #555;
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bcbcbc inset;
+}
+
+.auth-links a:hover {
+  text-decoration: none;
+  transform: translateY(-2px);
+  background: linear-gradient(to bottom, #fff6cc 0%, #eadb95 100%);
+}
+
+
+/* Fix full-width Sign Out button on account page */
+
+#signOutButton {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  min-height: 72px !important;
+  margin-top: 14px !important;
+  margin-bottom: 14px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  font-family: 'VT323', monospace !important;
+  font-size: 30px !important;
+  color: #222 !important;
+
+  background: linear-gradient(to bottom, #f7dede 0%, #d7a8a8 100%) !important;
+  border: 3px solid #555 !important;
+  border-radius: 10px !important;
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bcbcbc inset !important;
+
+  appearance: none !important;
+  -webkit-appearance: none !important;
+}
+
+
+/* Team email assignment fields */
+
+.team-email-grid {
+  display: grid;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.team-email-row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 10px;
+  align-items: center;
+}
+
+.team-email-row span {
+  font-size: 24px;
+}
+
+.team-email-row input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  font-family: 'VT323', monospace;
+  font-size: 22px;
+  color: #222;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #fefefe 0%, #e1e1e1 100%);
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #c7c7c7 inset;
+}
+
+
+/* Manage League */
+
+.team-manager-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.team-manager-row {
+  display: grid;
+  grid-template-columns: 95px 1fr 1.5fr 120px;
+  gap: 10px;
+  align-items: center;
+  background: linear-gradient(to bottom, #fefefe 0%, #dcdcdc 100%);
+  border: 3px solid #555;
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bdbdbd inset;
+  padding: 10px;
+}
+
+.team-manager-row span {
+  font-size: 24px;
+}
+
+.team-manager-row input[type="text"],
+.team-manager-row input[type="email"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 9px 11px;
+  font-family: 'VT323', monospace;
+  font-size: 22px;
+  color: #222;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #fefefe 0%, #e1e1e1 100%);
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #c7c7c7 inset;
+}
+
+.team-admin-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 22px;
+}
+
+@media (max-width: 850px) {
+  .team-manager-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Team Info Page */
+
+.team-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.team-info-card {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: 12px;
+  align-items: center;
+  background: linear-gradient(to bottom, #fefefe 0%, #dcdcdc 100%);
+  border: 3px solid #555;
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bdbdbd inset;
+  padding: 12px;
+}
+
+.team-number-badge {
+  width: 56px;
+  height: 56px;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #fff6cc 0%, #eadb95 100%);
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #d6c47d inset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+
+.team-info-main h2 {
+  margin: 0 0 6px;
+  font-size: 30px;
+}
+
+.team-info-main p {
+  margin: 4px 0;
+  font-size: 23px;
+}
+
+.team-role-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border: 2px solid #555;
+  border-radius: 6px;
+  background: #e5e5e5;
+  font-size: 20px;
+}
+
+@media (max-width: 650px) {
+  .team-info-card {
+    grid-template-columns: 1fr;
+  }
+
+  .team-number-badge {
+    width: 100%;
+  }
+}
+
+
+/* Editable Team Info */
+
+.editable-team-card {
+  grid-template-columns: 1fr;
+  align-items: stretch;
+}
+
+.team-info-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.team-info-logo,
+.team-info-logo-placeholder {
+  width: 76px;
+  height: 76px;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #fefefe 0%, #dcdcdc 100%);
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bdbdbd inset;
+}
+
+.team-info-logo {
+  object-fit: contain;
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+.team-info-logo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+}
+
+.team-edit-form {
+  display: grid;
+  gap: 7px;
+  margin-top: 10px;
+}
+
+.team-edit-form label {
+  font-size: 22px;
+}
+
+.team-edit-form input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  font-family: 'VT323', monospace;
+  font-size: 22px;
+  color: #222;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #fefefe 0%, #e1e1e1 100%);
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #c7c7c7 inset;
+}
+
+.team-locked-record {
+  font-size: 22px;
+}
+
+.team-locked-record span {
+  color: #555;
+  font-size: 20px;
+}
+
+.team-readonly-info p {
+  font-size: 23px;
+}
+
+.save-team-button {
+  width: 100%;
+  margin-top: 8px;
+}
+
+
+/* Draft Room */
+
+.draft-controls-panel {
+  margin-top: 16px;
+}
+
+.draft-pick-form {
+  display: grid;
+  grid-template-columns: 1fr 170px 170px;
+  gap: 10px;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.draft-room-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.draft-picks-list {
+  display: grid;
+  gap: 8px;
+  max-height: 360px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.draft-pick-row {
+  display: grid;
+  grid-template-columns: 55px 70px 1fr 1fr;
+  gap: 8px;
+  align-items: center;
+  padding: 8px;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #f7f7f7 0%, #d2d2d2 100%);
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bcbcbc inset;
+  font-size: 22px;
+}
+
+.draft-team-rosters {
+  display: grid;
+  gap: 10px;
+  max-height: 360px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.draft-roster-team {
+  padding: 10px;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #f7f7f7 0%, #d2d2d2 100%);
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bcbcbc inset;
+}
+
+.draft-roster-team h3 {
+  margin: 0 0 4px;
+  font-size: 26px;
+}
+
+.draft-roster-team p {
+  margin: 0 0 8px;
+  font-size: 21px;
+}
+
+.draft-roster-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.draft-roster-pills span,
+.draft-empty-pill {
+  display: inline-block;
+  padding: 3px 8px;
+  border: 2px solid #555;
+  border-radius: 6px;
+  background: #fefefe;
+  font-size: 19px;
+}
+
+.draft-available-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+  max-height: 460px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.draft-pokemon-card {
+  font-family: 'VT323', monospace;
+  color: #222;
+  text-align: center;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #f7f7f7 0%, #d2d2d2 100%);
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bcbcbc inset;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.draft-pokemon-card:hover {
+  background: linear-gradient(to bottom, #fff6cc 0%, #eadb95 100%);
+}
+
+.draft-pokemon-card img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+}
+
+.draft-pokemon-card span {
+  display: block;
+  margin-top: 6px;
+  font-size: 22px;
+}
+
+.draft-pokemon-card small {
+  display: block;
+  margin-top: 2px;
+  font-size: 17px;
+}
+
+@media (max-width: 900px) {
+  .draft-pick-form,
+  .draft-room-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .draft-pick-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Draft order + timer */
+
+.draft-timer-box {
+  background: linear-gradient(to bottom, #fff6cc 0%, #eadb95 100%);
+  border: 3px solid #555;
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #d6c47d inset;
+  padding: 14px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.draft-timer-box p {
+  margin: 4px 0;
+  font-size: 28px;
+}
+
+#draftClockLine {
+  font-size: 36px;
+}
+
+.draft-order-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.draft-order-row {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: 8px;
+  align-items: center;
+}
+
+.draft-order-row span {
+  font-size: 22px;
+}
+
+.draft-order-row select {
+  font-size: 22px;
+  padding: 8px 10px;
+}
+
+.draft-admin-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 14px;
+}
+
+@media (max-width: 850px) {
+  .draft-admin-buttons,
+  .draft-pick-form {
+    grid-template-columns: 1fr;
+  }
+}
+

@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>League Info</title>
+  <title>My Team</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
@@ -17,23 +17,23 @@
       <img class="corner-ball bottom-right" src="images/ui/retroball.png" alt="">
 
       <div class="pkmn-title-box">
-        <h1 class="pkmn-title">LEAGUE INFO</h1>
-        <p id="teamInfoSubtitle" class="pkmn-subtitle">Loading selected league...</p>
+        <h1 class="pkmn-title">MY TEAM</h1>
+        <p id="myTeamSubtitle" class="pkmn-subtitle">Loading selected league...</p>
       </div>
 
       <div class="top-links">
         <a class="pkmn-button-link small secondary" href="league-home.html">Back to League Home</a>
-        <a class="pkmn-button-link small secondary" href="manage-league.html">Manage League</a>
+        <a class="pkmn-button-link small secondary" href="my-leagues.html">My Leagues</a>
       </div>
 
-      <div id="teamInfoGrid" class="team-info-grid"></div>
+      <div id="myTeamContent"></div>
 
-      <div id="teamInfoStatus" class="pkmn-footer-note">Loading teams...</div>
+      <div id="myTeamStatus" class="pkmn-footer-note">Loading team...</div>
     </section>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
-  <script src="js/teams.js?v=4"></script>
+  <script src="js/my-team.js"></script>
 </body>
 </html>

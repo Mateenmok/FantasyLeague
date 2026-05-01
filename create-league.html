@@ -36,15 +36,49 @@
           <label class="pkmn-label" for="teamCountSelect">Number of Teams</label>
           <select class="pkmn-select" id="teamCountSelect">
             <option value="8">8 Teams</option>
-            <option value="9">9 Teams</option>
             <option value="10">10 Teams</option>
-            <option value="11">11 Teams</option>
             <option value="12" selected>12 Teams</option>
-            <option value="13">13 Teams</option>
             <option value="14">14 Teams</option>
-            <option value="15">15 Teams</option>
             <option value="16">16 Teams</option>
           </select>
+        </div>
+
+        <div class="pkmn-field">
+          <label class="pkmn-label" for="pointCapInput">Roster Point Cap</label>
+          <input class="pkmn-input" id="pointCapInput" type="number" min="1" max="999" value="50">
+        </div>
+
+        <div class="pkmn-field">
+          <label class="pkmn-label" for="regularSeasonMatchesSelect">Matches Before Playoffs</label>
+          <select class="pkmn-select" id="regularSeasonMatchesSelect">
+            <option value="6">6 Matches</option>
+            <option value="7">7 Matches</option>
+            <option value="8">8 Matches</option>
+            <option value="9">9 Matches</option>
+            <option value="10" selected>10 Matches</option>
+            <option value="11">11 Matches</option>
+            <option value="12">12 Matches</option>
+          </select>
+        </div>
+
+        <div class="pkmn-field full">
+          <div class="pkmn-panel">
+            <p><strong>League Format</strong></p>
+            <p id="leagueSettingsPreview" class="small-note">
+              12 teams • 6 playoff teams • 10 regular season matches • 50 roster points
+            </p>
+          </div>
+        </div>
+
+        <div class="pkmn-field full">
+          <div class="pkmn-panel">
+            <p><strong>Assign Team Emails</strong></p>
+            <p class="small-note">
+              Optional for now. If a participant signs in with the email assigned to a team,
+              that league will appear in their My Leagues page.
+            </p>
+            <div id="teamEmailAssignments" class="team-email-grid"></div>
+          </div>
         </div>
 
         <div class="pkmn-field full">

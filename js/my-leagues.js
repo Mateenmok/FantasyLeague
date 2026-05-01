@@ -20,7 +20,7 @@ async function loadMyLeagues() {
       <div class="empty-state">
         <p>You are not signed in.</p>
         <div class="league-actions" style="justify-content:center;">
-          <a href="sign-in.html">Sign In</a>
+          <a class="pkmn-button-link small" href="sign-in.html">Sign In</a>
         </div>
       </div>
     `;
@@ -28,6 +28,9 @@ async function loadMyLeagues() {
   }
 
   const userId = session.user.id;
+  const userEmail = session.user.email.toLowerCase();
+
+  await claimEmailAssignedLeagues(userId, userEmail);
 
   const { data: memberships, error: membershipError } = await supabaseClient
     .from("league_memberships")
@@ -47,7 +50,7 @@ async function loadMyLeagues() {
       <div class="empty-state">
         <p>You are not in any leagues yet.</p>
         <div class="league-actions" style="justify-content:center;">
-          <a href="create-league.html">Create Your First League</a>
+          <a class="pkmn-button-link small" href="create-league.html">Create Your First League</a>
         </div>
       </div>
     `;
@@ -55,6 +58,9 @@ async function loadMyLeagues() {
   }
 
   const leagueIds = memberships.map(membership => membership.league_id);
+  const teamIds = memberships
+    .map(membership => membership.league_team_id)
+    .filter(Boolean);
 
   const { data: leagues, error: leaguesError } = await supabaseClient
     .from("leagues")
@@ -67,10 +73,30 @@ async function loadMyLeagues() {
     return;
   }
 
+  let teams = [];
+
+  if (teamIds.length > 0) {
+    const { data: teamData, error: teamError } = await supabaseClient
+      .from("league_teams")
+      .select("*")
+      .in("id", teamIds);
+
+    if (teamError) {
+      console.error("Team details error:", teamError);
+    } else {
+      teams = teamData || [];
+    }
+  }
+
   const leaguesById = {};
+  const teamsById = {};
 
   leagues.forEach(league => {
     leaguesById[league.id] = league;
+  });
+
+  teams.forEach(team => {
+    teamsById[team.id] = team;
   });
 
   myLeaguesList.innerHTML = memberships.map(membership => {
@@ -80,20 +106,30 @@ async function loadMyLeagues() {
       return "";
     }
 
+    const team = membership.league_team_id ? teamsById[membership.league_team_id] : null;
     const roleLabel = membership.role === "admin" ? "League Admin" : "Team Manager";
+    const teamLabel = team ? `${team.team_name} (#${team.team_number})` : "League Admin";
 
     return `
-      <div class="league-card">
+      <div class="pkmn-card">
         <h2>${escapeHtml(league.name)}</h2>
         <p><strong>League Code:</strong> ${escapeHtml(league.league_code)}</p>
         <p><strong>Teams:</strong> ${league.team_count}</p>
+        <p><strong>Playoff Teams:</strong> ${league.team_count / 2}</p>
+        <p><strong>Matches Before Playoffs:</strong> ${league.regular_season_matches || 10}</p>
+        <p><strong>Roster Point Cap:</strong> ${league.roster_point_cap || 50}</p>
+        <p><strong>Your Team:</strong> ${escapeHtml(teamLabel)}</p>
         <p><strong>Role:</strong> ${roleLabel}</p>
 
         <div class="league-actions">
-          <button data-league-id="${league.id}" data-league-code="${league.league_code}" class="select-league-button">
+          <button
+            data-league-id="${league.id}"
+            data-league-code="${league.league_code}"
+            data-league-team-id="${membership.league_team_id || ""}"
+            data-role="${membership.role}"
+            class="pkmn-button small select-league-button">
             Select League
           </button>
-          <a href="create-league.html" class="secondary">Create Another</a>
         </div>
       </div>
     `;
@@ -103,11 +139,74 @@ async function loadMyLeagues() {
     button.addEventListener("click", function () {
       localStorage.setItem("selected-league-id", this.dataset.leagueId);
       localStorage.setItem("selected-league-code", this.dataset.leagueCode);
-      myLeaguesStatus.textContent = "League selected.";
+      localStorage.setItem("selected-league-team-id", this.dataset.leagueTeamId || "");
+      localStorage.setItem("selected-league-role", this.dataset.role || "");
+
+      myLeaguesStatus.textContent = "League selected. Loading...";
+      window.location.href = "league-home.html";
     });
   });
 
   myLeaguesStatus.textContent = `${memberships.length}/3 leagues used.`;
+}
+
+async function claimEmailAssignedLeagues(userId, userEmail) {
+  const { data: existingMemberships, error: existingError } = await supabaseClient
+    .from("league_memberships")
+    .select("league_id")
+    .eq("user_id", userId);
+
+  if (existingError) {
+    console.error("Existing membership check error:", existingError);
+    return;
+  }
+
+  if (existingMemberships.length >= 3) {
+    return;
+  }
+
+  const existingLeagueIds = new Set(existingMemberships.map(membership => membership.league_id));
+
+  const { data: assignedTeams, error: assignedError } = await supabaseClient
+    .from("league_teams")
+    .select("*")
+    .eq("manager_email", userEmail);
+
+  if (assignedError) {
+    console.error("Assigned teams check error:", assignedError);
+    return;
+  }
+
+  const membershipsToCreate = [];
+
+  for (const team of assignedTeams || []) {
+    if (existingLeagueIds.has(team.league_id)) {
+      continue;
+    }
+
+    if (existingMemberships.length + membershipsToCreate.length >= 3) {
+      break;
+    }
+
+    membershipsToCreate.push({
+      user_id: userId,
+      league_id: team.league_id,
+      league_team_id: team.id,
+      role: team.is_admin ? "admin" : "team_manager"
+    });
+  }
+
+  if (membershipsToCreate.length === 0) {
+    return;
+  }
+
+  const { error: insertError } = await supabaseClient
+    .from("league_memberships")
+    .insert(membershipsToCreate);
+
+  if (insertError) {
+    console.error("Claim assigned leagues error:", insertError);
+  }
 }
 
 function escapeHtml(value) {
