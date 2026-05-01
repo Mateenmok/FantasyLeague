@@ -146,6 +146,24 @@ async function createLeague() {
 
   const leagueId = makeId();
   const leagueCode = generateLeagueCode();
+  const divisionOneId = makeId();
+  const divisionTwoId = makeId();
+
+  const divisions = [
+    {
+      id: divisionOneId,
+      league_id: leagueId,
+      division_number: 1,
+      name: "Division A"
+    },
+    {
+      id: divisionTwoId,
+      league_id: leagueId,
+      division_number: 2,
+      name: "Division B"
+    }
+  ];
+
   const adminTeamNumbers = getAdminTeamNumbers();
   const usedPasscodes = new Set();
   const teams = [];
@@ -154,6 +172,7 @@ async function createLeague() {
     const passcode = generateUniquePasscode(usedPasscodes);
     const managerEmail = teamEmails.get(i) || (i === 1 ? userEmail : null);
     const ownerName = managerEmail === userEmail ? displayName : "Unassigned";
+    const divisionId = i <= teamCount / 2 ? divisionOneId : divisionTwoId;
 
     teams.push({
       id: makeId(),
@@ -165,6 +184,7 @@ async function createLeague() {
       logo_url: "",
       team_passcode: passcode,
       manager_email: managerEmail,
+      division_id: divisionId,
       is_admin: adminTeamNumbers.has(i)
     });
   }
@@ -183,6 +203,17 @@ async function createLeague() {
   if (leagueError) {
     console.error("Error creating league:", leagueError);
     createLeagueStatus.textContent = "Error creating league. Check the console.";
+    createLeagueButton.disabled = false;
+    return;
+  }
+
+  const { error: divisionsError } = await supabaseClient
+    .from("league_divisions")
+    .insert(divisions);
+
+  if (divisionsError) {
+    console.error("Error creating divisions:", divisionsError);
+    createLeagueStatus.textContent = "League was created, but divisions failed. Check the console.";
     createLeagueButton.disabled = false;
     return;
   }
@@ -228,6 +259,7 @@ async function createLeague() {
     teamCount,
     rosterPointCap,
     regularSeasonMatches,
+    divisions,
     teams
   });
 }
@@ -238,20 +270,28 @@ function renderCreatedLeagueResult({
   teamCount,
   rosterPointCap,
   regularSeasonMatches,
+  divisions,
   teams
 }) {
   createdLeagueResult.classList.remove("hidden");
 
   const playoffTeams = teamCount / 2;
+  const divisionsById = {};
+
+  divisions.forEach(division => {
+    divisionsById[division.id] = division.name;
+  });
 
   const teamRows = teams.map(team => {
     const adminBadge = team.is_admin ? `<span class="admin-badge">Admin</span>` : "";
     const email = team.manager_email || "Unassigned";
+    const divisionName = divisionsById[team.division_id] || "Unassigned";
 
     return `
       <tr>
         <td>${team.team_number}</td>
         <td>${escapeHtml(team.team_name)}</td>
+        <td>${escapeHtml(divisionName)}</td>
         <td>${escapeHtml(email)}</td>
         <td>${adminBadge}</td>
       </tr>
@@ -273,6 +313,7 @@ function renderCreatedLeagueResult({
       <p>${playoffTeams} playoff teams</p>
       <p>${regularSeasonMatches} matches before playoffs</p>
       <p>${rosterPointCap} roster points maximum</p>
+      <p>${escapeHtml(divisions[0].name)} / ${escapeHtml(divisions[1].name)}</p>
     </div>
 
     <p class="small-note">
@@ -284,6 +325,7 @@ function renderCreatedLeagueResult({
         <tr>
           <th>#</th>
           <th>Team</th>
+          <th>Division</th>
           <th>Manager Email</th>
           <th>Role</th>
         </tr>
