@@ -2534,3 +2534,69 @@ body.waiver-page .page-overlay::before {
   }
 }
 
+
+/* ===== Exact My Team roster fix ===== */
+
+.my-team-roster-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)) !important;
+  gap: 12px !important;
+  align-items: stretch !important;
+}
+
+.my-team-roster-slot {
+  position: relative !important;
+  min-height: 170px !important;
+  padding: 12px !important;
+  text-align: center !important;
+  border: 3px solid #555 !important;
+  border-radius: 10px !important;
+  background: linear-gradient(to bottom, #fefefe 0%, #dcdcdc 100%) !important;
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 5px #bdbdbd inset !important;
+  box-sizing: border-box !important;
+}
+
+.my-team-roster-slot > img {
+  width: 82px !important;
+  height: 82px !important;
+  max-width: 82px !important;
+  max-height: 82px !important;
+  object-fit: contain !important;
+  display: block !important;
+  margin: 0 auto 8px !important;
+}
+
+.my-team-roster-slot p {
+  margin: 4px 0 !important;
+  font-size: 24px !important;
+  line-height: 1.05 !important;
+  overflow-wrap: anywhere !important;
+}
+
+/* Keep team logo separate from roster Pokémon images */
+.my-team-logo {
+  width: 96px !important;
+  height: 96px !important;
+  object-fit: contain !important;
+}
+
+
+/* Trading page background */
+
+body.trading-page,
+body.trading-page .page-overlay {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.28)),
+    url("../images/WifiCenter.webp") !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+}
+
+body.trading-page .page-overlay::before {
+  background: none !important;
+}
+
