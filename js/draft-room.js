@@ -41,6 +41,7 @@ let championsPokemon = [];
 let isAdmin = false;
 let timerInterval = null;
 let autoPickInProgress = false;
+let draftSyncInterval = null;
 
 makePickButton.addEventListener("click", function () {
   makeDraftPick(false);
@@ -107,7 +108,6 @@ async function loadDraftRoom() {
   isAdmin = currentMembership.role === "admin";
 
   if (!isAdmin) {
-    draftControls.style.display = "none";
     draftSetupSection.style.display = "none";
   }
 
@@ -140,6 +140,7 @@ async function loadDraftRoom() {
   await ensureDraftState();
   renderAvailablePokemonFilters();
   await refreshDraftData();
+  startDraftSync();
 }
 
 async function ensureDraftState() {
@@ -172,7 +173,17 @@ async function ensureDraftState() {
   }
 }
 
-async function refreshDraftData() {
+function startDraftSync() {
+  if (draftSyncInterval) {
+    clearInterval(draftSyncInterval);
+  }
+
+  draftSyncInterval = setInterval(async function () {
+    await refreshDraftData(true);
+  }, 5000);
+}
+
+async function refreshDraftData(isBackgroundRefresh = false) {
   const { data: teams, error: teamsError } = await supabaseClient
     .from("league_teams")
     .select("*")
@@ -241,10 +252,10 @@ async function refreshDraftData() {
     allRosterRows = rosterRows || [];
   }
 
-  renderDraftRoom();
+  renderDraftRoom(isBackgroundRefresh);
 }
 
-function renderDraftRoom() {
+function renderDraftRoom(isBackgroundRefresh = false) {
   const totalPicks = leagueTeams.length * ROSTER_SIZE;
   const picksMade = draftPicks.length;
   const availableCount = getAvailablePokemon().length;
@@ -261,17 +272,65 @@ function renderDraftRoom() {
   }
 
   renderDraftOrderControls();
+  const typedPick = pokemonDraftInput ? pokemonDraftInput.value : "";
+
   renderPokemonOptions();
   renderDraftPicksList();
   renderTeamRosters();
   renderDraftPointStatus();
   renderAvailablePokemonGrid();
   renderDraftButtons();
+  updatePickControls();
   startDraftTimer();
+
+  if (isBackgroundRefresh && pokemonDraftInput && document.activeElement === pokemonDraftInput) {
+    pokemonDraftInput.value = typedPick;
+  }
 
   draftRoomStatus.textContent = isAdmin
     ? "Admin draft controls enabled."
-    : "Viewing draft room. Only admins can make picks.";
+    : "Viewing draft room. You can pick when your team is on the clock.";
+}
+
+function updatePickControls() {
+  const nextPick = getNextPickInfo();
+  const draftRunning = Boolean(draftState?.is_started) && !draftState?.is_paused;
+  const isMyTurn = Boolean(
+    currentMembership?.league_team_id &&
+    nextPick?.team?.id === currentMembership.league_team_id
+  );
+
+  if (makePickButton) {
+    makePickButton.disabled = !draftRunning || (!isAdmin && !isMyTurn);
+
+    if (isAdmin) {
+      makePickButton.textContent = "Make Pick";
+    } else if (isMyTurn && draftRunning) {
+      makePickButton.textContent = "Make My Pick";
+    } else {
+      makePickButton.textContent = "Waiting";
+    }
+  }
+
+  if (undoPickButton) {
+    undoPickButton.style.display = isAdmin ? "inline-flex" : "none";
+  }
+
+  if (draftActionStatus) {
+    if (!draftState?.is_started) {
+      draftActionStatus.textContent = "Draft has not started.";
+    } else if (draftState?.is_paused) {
+      draftActionStatus.textContent = "Draft is stopped.";
+    } else if (isAdmin) {
+      draftActionStatus.textContent = "Admin can make or undo picks.";
+    } else if (isMyTurn) {
+      draftActionStatus.textContent = "Your team is on the clock.";
+    } else if (nextPick) {
+      draftActionStatus.textContent = `${nextPick.team.team_name} is on the clock.`;
+    } else {
+      draftActionStatus.textContent = "Draft complete.";
+    }
+  }
 }
 
 function renderDraftButtons() {
@@ -501,7 +560,7 @@ function updateDraftClock() {
   draftClockLine.textContent =
     `${minutes}:${seconds} remaining • On the clock: ${nextPick.team.team_name}`;
 
-  if (remainingSeconds <= 0 && isAdmin && !autoPickInProgress) {
+  if (remainingSeconds <= 0 && !autoPickInProgress) {
     autoPickInProgress = true;
     draftActionStatus.textContent = "Time expired. Random pick incoming...";
     makeDraftPick(true).finally(() => {
@@ -604,6 +663,24 @@ function renderDraftPicksList() {
   }).join("");
 }
 
+
+function getManagerDisplayName(team) {
+  return (
+    team.owner_name ||
+    team.manager_name ||
+    team.display_name ||
+    team.manager_email ||
+    "Unassigned"
+  );
+}
+
+function getDraftRoomTeamLabel(team) {
+  const manager = getManagerDisplayName(team);
+  return manager && manager !== "Unassigned"
+    ? `${team.team_name} (${manager})`
+    : team.team_name;
+}
+
 function renderTeamRosters() {
   const pointCap = Number(currentLeague?.roster_point_cap || 50);
 
@@ -613,7 +690,7 @@ function renderTeamRosters() {
 
     return `
       <div class="draft-roster-team">
-        <h3>${escapeHtml(team.team_name)}</h3>
+        <h3>${escapeHtml(getDraftRoomTeamLabel(team))}</h3>
         <p>${rosterRows.length}/${ROSTER_SIZE} Pokémon • ${pointUsage}/${pointCap} points</p>
 
         <div class="draft-point-bar">
@@ -708,6 +785,70 @@ function getPokemonThatFitTeamCap(teamId) {
   const remainingPoints = pointCap - usedPoints;
 
   return getAvailablePokemon().filter(pokemon => getPokemonPoints(pokemon) <= remainingPoints);
+}
+
+function getSmartAutoPickPokemon(teamId) {
+  const legalPokemon = getPokemonThatFitTeamCap(teamId);
+
+  if (!legalPokemon.length) {
+    return null;
+  }
+
+  const rosterRows = getRosterForTeam(teamId);
+  const openRosterSlots = ROSTER_SIZE - rosterRows.length;
+  const pointCap = Number(currentLeague?.roster_point_cap || 50);
+  const usedPoints = getTeamPointUsage(teamId);
+  const remainingPoints = pointCap - usedPoints;
+
+  return legalPokemon
+    .map(pokemon => {
+      const points = getPokemonPoints(pokemon);
+      const rank = Number(pokemon.rank || 9999);
+
+      /*
+        If a team still has several open roster spots, avoid burning too many points
+        in a way that makes the rest of the roster impossible.
+        Example: 9 slots left and 9 points remaining means only 1-point Pokémon are realistic.
+      */
+      const minimumPointsNeededAfterPick = Math.max(openRosterSlots - 1, 0);
+      const pointsLeftAfterPick = remainingPoints - points;
+      const keepsRosterPossible = pointsLeftAfterPick >= minimumPointsNeededAfterPick;
+
+      return {
+        pokemon,
+        points,
+        rank,
+        keepsRosterPossible
+      };
+    })
+    .filter(candidate => candidate.keepsRosterPossible)
+    .sort((a, b) => {
+      if (b.points !== a.points) {
+        return b.points - a.points;
+      }
+
+      if (a.rank !== b.rank) {
+        return a.rank - b.rank;
+      }
+
+      return a.pokemon.name.localeCompare(b.pokemon.name);
+    })[0]?.pokemon || legalPokemon
+      .sort((a, b) => {
+        const pointDiff = getPokemonPoints(b) - getPokemonPoints(a);
+
+        if (pointDiff !== 0) {
+          return pointDiff;
+        }
+
+        const aRank = Number(a.rank || 9999);
+        const bRank = Number(b.rank || 9999);
+
+        if (aRank !== bRank) {
+          return aRank - bRank;
+        }
+
+        return a.name.localeCompare(b.name);
+      })[0];
 }
 
 
@@ -814,9 +955,20 @@ function renderAvailablePokemonGrid() {
 }
 
 async function makeDraftPick(randomPick) {
-  if (!isAdmin) {
-    draftActionStatus.textContent = "Only admins can make draft picks.";
+  const permissionPickInfo = getNextPickInfo();
+  const isMyTurn = Boolean(
+    currentMembership?.league_team_id &&
+    permissionPickInfo?.team?.id === currentMembership.league_team_id
+  );
+
+  if (!isAdmin && !isMyTurn && !randomPick) {
+    draftActionStatus.textContent = "You can only pick when your team is on the clock.";
     return;
+  }
+
+  if (!isAdmin && randomPick === true) {
+    // Timer auto-pick is allowed from any open league member page.
+    // Database uniqueness rules prevent duplicate successful auto-picks.
   }
 
   if (!draftState?.is_started || draftState?.is_paused) {
@@ -834,14 +986,12 @@ async function makeDraftPick(randomPick) {
   let pokemon = null;
 
   if (randomPick) {
-    const availablePokemon = getPokemonThatFitTeamCap(nextPick.team.id);
+    pokemon = getSmartAutoPickPokemon(nextPick.team.id);
 
-    if (availablePokemon.length === 0) {
+    if (!pokemon) {
       draftActionStatus.textContent = `${nextPick.team.team_name} has no legal Pokémon available under the point cap.`;
       return;
     }
-
-    pokemon = availablePokemon[Math.floor(Math.random() * availablePokemon.length)];
   } else {
     pokemon = findPokemonFromInput(pokemonDraftInput.value);
   }
@@ -884,7 +1034,8 @@ async function makeDraftPick(randomPick) {
 
   if (pickError) {
     console.error("Draft pick error:", pickError);
-    draftActionStatus.textContent = "Error making draft pick. Check the console.";
+    draftActionStatus.textContent = "Pick could not be saved. Refreshing draft state...";
+    await refreshDraftData(true);
     makePickButton.disabled = false;
     return;
   }

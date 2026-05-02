@@ -2279,3 +2279,258 @@ body {
   padding: 0 3px !important;
 }
 
+
+/* Waiver Wire */
+
+.hidden {
+  display: none !important;
+}
+
+.waiver-admin-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.waiver-roster-list {
+  display: grid;
+  gap: 8px;
+}
+
+.waiver-roster-row {
+  display: grid;
+  grid-template-columns: 1fr 90px;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 10px;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #fefefe 0%, #dcdcdc 100%);
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bdbdbd inset;
+  font-size: 24px;
+}
+
+.waiver-pokemon-card {
+  cursor: default;
+}
+
+.waiver-drop-row {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.waiver-drop-select {
+  width: 100%;
+  min-height: 38px;
+  font-size: 18px !important;
+  padding: 5px 7px !important;
+}
+
+.waiver-add-button {
+  width: 100%;
+  margin-top: 8px;
+  min-height: 40px;
+  font-size: 22px;
+}
+
+@media (max-width: 800px) {
+  .waiver-admin-buttons {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Waiver Wire background */
+
+body.waiver-page {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
+    url("../images/PokeMart.webp") !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+}
+
+
+/* Force Waiver Wire PokeMart background */
+
+body.waiver-page,
+body.waiver-page .page-overlay {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.28)),
+    url("../images/PokeMart.webp") !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+}
+
+body.waiver-page .page-overlay::before {
+  background: none !important;
+}
+
+
+/* Trading Page */
+
+.trade-offer-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.trade-offer-form label {
+  display: grid;
+  gap: 6px;
+}
+
+.trade-offer-form label span {
+  font-size: 24px;
+}
+
+.trade-message-input {
+  width: 100%;
+  min-height: 72px;
+  margin-top: 12px;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.trade-preview {
+  margin-top: 10px;
+  padding: 10px;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #fff6cc 0%, #eadb95 100%);
+}
+
+.trade-list {
+  display: grid;
+  gap: 14px;
+}
+
+.trade-card {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 4px solid #555;
+  border-radius: 10px;
+  background: linear-gradient(to bottom, #fefefe 0%, #dcdcdc 100%);
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 5px #bdbdbd inset;
+}
+
+.trade-card-header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  align-items: center;
+  font-size: 24px;
+}
+
+.trade-card-header strong:last-child {
+  text-align: right;
+}
+
+.trade-status-pending,
+.trade-status-accepted,
+.trade-status-declined,
+.trade-status-cancelled {
+  padding: 3px 8px;
+  border: 2px solid #555;
+  border-radius: 999px;
+  font-size: 18px;
+}
+
+.trade-status-pending {
+  background: #fff6cc;
+}
+
+.trade-status-accepted {
+  background: #d8f7d8;
+}
+
+.trade-status-declined,
+.trade-status-cancelled {
+  background: #f7dede;
+}
+
+.trade-pokemon-swap {
+  display: grid;
+  grid-template-columns: 1fr 50px 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.trade-arrow {
+  text-align: center;
+  font-size: 34px;
+}
+
+.trade-pokemon-mini {
+  position: relative;
+  text-align: center;
+  padding: 10px;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #f7f7f7 0%, #d2d2d2 100%);
+}
+
+.trade-pokemon-mini p {
+  margin: 0 0 6px;
+  font-size: 20px;
+  color: #444;
+}
+
+.trade-pokemon-mini img:not(.mega-badge-overlay):not(.pokemon-tier-badge img) {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 6px;
+}
+
+.trade-pokemon-mini strong {
+  display: block;
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+
+.trade-message {
+  margin: 0;
+  font-size: 22px;
+  color: #333;
+}
+
+.trade-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+@media (max-width: 900px) {
+  .trade-offer-form,
+  .trade-pokemon-swap,
+  .trade-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .trade-arrow {
+    transform: rotate(90deg);
+  }
+
+  .trade-card-header {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .trade-card-header strong:last-child {
+    text-align: center;
+  }
+}
+

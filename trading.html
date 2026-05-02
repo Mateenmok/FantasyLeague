@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Trading</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/pokemon-ui.css?v=trades1">
+</head>
+<body>
+  <div class="page-overlay top-align">
+    <section class="pkmn-window wide">
+      <img class="corner-ball top-left" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball top-right" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball bottom-left" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball bottom-right" src="images/ui/retroball.png" alt="">
+
+      <div class="pkmn-title-box">
+        <h1 class="pkmn-title">TRADING</h1>
+        <p id="tradeSubtitle" class="pkmn-subtitle">Loading selected league...</p>
+      </div>
+
+      <div class="top-links">
+        <a class="pkmn-button-link small secondary" href="league-home.html">Back to League Home</a>
+        <a class="pkmn-button-link small secondary" href="my-team.html">My Team</a>
+        <a class="pkmn-button-link small secondary" href="waiver-wire.html">Waiver Wire</a>
+      </div>
+
+      <section id="tradeNoTeamPanel" class="pkmn-panel hidden">
+        <p><strong>No team assigned.</strong></p>
+        <p class="small-note">Ask a league administrator to assign your account to a team before trading.</p>
+      </section>
+
+      <section id="tradeContent" class="hidden">
+        <div id="tradePointStatus" class="draft-point-status"></div>
+
+        <section class="pkmn-panel">
+          <p><strong>Create Trade Offer</strong></p>
+          <p class="small-note">
+            Offer one Pokémon from your roster and request one Pokémon from another manager.
+          </p>
+
+          <div class="trade-offer-form">
+            <label>
+              <span>Your Pokémon</span>
+              <select id="offeredPokemonSelect" class="pkmn-select"></select>
+            </label>
+
+            <label>
+              <span>Trade With</span>
+              <select id="receiverTeamSelect" class="pkmn-select"></select>
+            </label>
+
+            <label>
+              <span>Request Pokémon</span>
+              <select id="requestedPokemonSelect" class="pkmn-select"></select>
+            </label>
+          </div>
+
+          <textarea id="tradeMessageInput" class="pkmn-input trade-message-input" placeholder="Optional message"></textarea>
+
+          <div id="tradePreview" class="trade-preview small-note"></div>
+
+          <button id="sendTradeOfferButton" class="pkmn-button">Send Trade Offer</button>
+        </section>
+
+        <section class="pkmn-panel">
+          <p><strong>Incoming Offers</strong></p>
+          <div id="incomingTradeList" class="trade-list"></div>
+        </section>
+
+        <section class="pkmn-panel">
+          <p><strong>Sent Offers</strong></p>
+          <div id="sentTradeList" class="trade-list"></div>
+        </section>
+
+        <section class="pkmn-panel">
+          <p><strong>Recent Trade History</strong></p>
+          <div id="tradeHistoryList" class="trade-list"></div>
+        </section>
+      </section>
+
+      <div id="tradePageStatus" class="pkmn-footer-note">Loading...</div>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/trading.js?v=trades1"></script>
+</body>
+</html>
