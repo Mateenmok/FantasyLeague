@@ -2601,47 +2601,245 @@ body.trading-page .page-overlay::before {
 }
 
 
-/* Account menu full-width row */
+/* Home guest button */
 
-.pkmn-menu .pkmn-button-link.full-row {
-  grid-column: 1 / -1;
+.guest-home-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
 }
 
-
-/* Join League page */
-
-.join-league-label {
-  display: block;
+.guest-image-link {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  text-decoration: none;
+  color: #222;
+  font-family: 'VT323', monospace;
   font-size: 28px;
-  margin-bottom: 8px;
 }
 
-.join-league-input {
-  width: 100%;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  text-align: center;
-  font-size: 34px;
+.guest-image-link img {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  transition: transform 0.12s ease;
+}
+
+.guest-image-link:hover img {
+  transform: scale(1.06);
+}
+
+.guest-image-link span {
+  margin-top: -8px;
+}
+
+
+/* Guest / Join League home buttons */
+
+.guest-home-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+.guest-image-link {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  text-decoration: none;
+  color: #222;
+  font-family: 'VT323', monospace;
+  font-size: 28px;
+}
+
+.guest-image-link img {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  transition: transform 0.12s ease;
+}
+
+.guest-image-link:hover img {
+  transform: scale(1.06);
+}
+
+.guest-image-link span {
+  margin-top: -8px;
+}
+
+
+/* ===== Clean Home Page Layout ===== */
+
+body.home-page-clean {
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.home-clean-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto auto auto 1fr;
+  justify-items: center;
+  align-content: start;
+  padding-top: 44px;
   box-sizing: border-box;
 }
 
-.join-league-actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-top: 16px;
+.home-clean-logo {
+  width: min(650px, 78vw);
+  max-height: 210px;
+  object-fit: contain;
+  margin-bottom: 22px;
 }
 
-@media (max-width: 700px) {
-  .join-league-actions {
-    grid-template-columns: 1fr;
+.home-clean-button-row {
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  gap: 46px;
+  margin-top: 4px;
+}
+
+.home-clean-button {
+  display: grid;
+  justify-items: center;
+  text-decoration: none;
+  color: #ffffff;
+  font-family: 'VT323', monospace;
+  font-size: 30px;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.75);
+  transition: transform 0.12s ease;
+}
+
+.home-clean-button:hover {
+  transform: scale(1.06);
+}
+
+.home-clean-button img {
+  width: 150px !important;
+  height: 150px !important;
+  max-width: 150px !important;
+  max-height: 150px !important;
+  object-fit: contain !important;
+  display: block !important;
+  margin: 0 !important;
+}
+
+.home-clean-button span {
+  margin-top: -6px;
+  white-space: nowrap;
+}
+
+.home-clean-join-row {
+  margin-top: 28px;
+}
+
+.home-clean-join-button {
+  min-width: 260px;
+  font-size: 30px;
+}
+
+@media (max-width: 850px) {
+  .home-clean-button-row {
+    gap: 22px;
+  }
+
+  .home-clean-button img {
+    width: 118px !important;
+    height: 118px !important;
+  }
+
+  .home-clean-button {
+    font-size: 24px;
   }
 }
 
 
-/* Team access join page */
+/* ===== Final clean home page ===== */
 
-.join-league-second-label {
-  margin-top: 14px;
+body.home-page-final {
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.home-final-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 48px;
+  box-sizing: border-box;
+}
+
+.home-final-logo {
+  width: min(650px, 78vw);
+  max-height: 220px;
+  object-fit: contain;
+  margin-bottom: 26px;
+}
+
+.home-final-button-row {
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  gap: 44px;
+}
+
+.home-final-button {
+  display: grid;
+  justify-items: center;
+  text-decoration: none;
+  color: #ffffff;
+  font-family: 'VT323', monospace;
+  font-size: 30px;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.75);
+  transition: transform 0.12s ease;
+}
+
+.home-final-button:hover {
+  transform: scale(1.06);
+}
+
+.home-final-button img {
+  width: 145px !important;
+  height: 145px !important;
+  max-width: 145px !important;
+  max-height: 145px !important;
+  object-fit: contain !important;
+  display: block !important;
+  margin: 0 !important;
+}
+
+.home-final-button span {
+  margin-top: -6px;
+  white-space: nowrap;
+}
+
+.home-final-join-row {
+  margin-top: 28px;
+}
+
+.home-final-join-button {
+  min-width: 260px;
+  font-size: 30px;
+}
+
+@media (max-width: 850px) {
+  .home-final-button-row {
+    gap: 22px;
+  }
+
+  .home-final-button img {
+    width: 118px !important;
+    height: 118px !important;
+    max-width: 118px !important;
+    max-height: 118px !important;
+  }
+
+  .home-final-button {
+    font-size: 24px;
+  }
 }
 
