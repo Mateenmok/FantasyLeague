@@ -1,0 +1,2647 @@
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-image: url("../images/backgrounds/Stadium4.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-family: 'VT323', monospace;
+  color: #222;
+}
+
+.page-overlay {
+  min-height: 100vh;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.page-overlay.top-align {
+  align-items: flex-start;
+  padding-top: 36px;
+  padding-bottom: 36px;
+}
+
+.pkmn-window {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  background: linear-gradient(to bottom, #f8f8f8 0%, #d8d8d8 100%);
+  border: 4px solid #4a4a4a;
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 3px #ffffff inset,
+    0 0 0 6px #9a9a9a inset,
+    0 12px 30px rgba(0,0,0,0.45);
+  padding: 20px;
+  overflow: visible;
+}
+
+.pkmn-window.wide {
+  max-width: 980px;
+}
+
+.corner-ball {
+  position: absolute;
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.corner-ball.top-left {
+  top: -22px;
+  left: -22px;
+}
+
+.corner-ball.top-right {
+  top: -22px;
+  right: -22px;
+}
+
+.corner-ball.bottom-left {
+  bottom: -22px;
+  left: -22px;
+}
+
+.corner-ball.bottom-right {
+  bottom: -22px;
+  right: -22px;
+}
+
+.pkmn-title-box,
+.pkmn-status-box,
+.pkmn-footer-note,
+.pkmn-panel,
+.pkmn-result-box,
+.pkmn-card,
+.empty-state {
+  background: linear-gradient(to bottom, #fefefe 0%, #dcdcdc 100%);
+  border: 3px solid #555;
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bdbdbd inset;
+}
+
+.pkmn-title-box {
+  text-align: center;
+  padding: 12px;
+  margin-bottom: 18px;
+}
+
+.pkmn-title {
+  margin: 0;
+  font-size: 42px;
+  line-height: 1;
+  letter-spacing: 1px;
+}
+
+.pkmn-subtitle {
+  margin: 8px 0 0;
+  font-size: 22px;
+  color: #333;
+}
+
+.pkmn-status-box {
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 18px;
+  font-size: 24px;
+}
+
+.pkmn-footer-note {
+  text-align: center;
+  font-size: 22px;
+  color: #333;
+  padding: 10px;
+  margin-top: 14px;
+}
+
+.pkmn-form {
+  display: grid;
+  gap: 12px;
+}
+
+.pkmn-form.two-col {
+  grid-template-columns: 1fr 1fr;
+}
+
+.pkmn-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pkmn-field.full {
+  grid-column: 1 / -1;
+}
+
+.pkmn-label {
+  font-size: 24px;
+  color: #222;
+}
+
+.pkmn-input,
+.pkmn-select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  font-family: 'VT323', monospace;
+  font-size: 24px;
+  color: #222;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #fefefe 0%, #e1e1e1 100%);
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #c7c7c7 inset;
+}
+
+.pkmn-menu {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.pkmn-menu.single {
+  grid-template-columns: 1fr;
+}
+
+.pkmn-button,
+.pkmn-button-link {
+  font-family: 'VT323', monospace;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 72px;
+  text-decoration: none;
+  color: #222;
+  font-size: 30px;
+  background: linear-gradient(to bottom, #f7f7f7 0%, #d2d2d2 100%);
+  border: 3px solid #555;
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bcbcbc inset;
+  cursor: pointer;
+  transition: transform 0.08s ease;
+}
+
+.pkmn-button:hover,
+.pkmn-button-link:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(to bottom, #fff6cc 0%, #eadb95 100%);
+}
+
+.pkmn-button.secondary,
+.pkmn-button-link.secondary {
+  background: linear-gradient(to bottom, #ececec 0%, #cecece 100%);
+}
+
+.pkmn-button.danger {
+  background: linear-gradient(to bottom, #f7dede 0%, #d7a8a8 100%);
+}
+
+.pkmn-button.small,
+.pkmn-button-link.small {
+  min-height: 54px;
+  font-size: 24px;
+  padding: 0 12px;
+}
+
+.pkmn-links-inline {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.pkmn-panel {
+  padding: 14px;
+}
+
+.pkmn-panel p {
+  margin: 6px 0;
+  font-size: 24px;
+}
+
+.pkmn-checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.pkmn-checkbox-item {
+  background: linear-gradient(to bottom, #f7f7f7 0%, #d2d2d2 100%);
+  border: 3px solid #555;
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bcbcbc inset;
+  padding: 8px 10px;
+  font-size: 24px;
+}
+
+.pkmn-checkbox-item input {
+  margin-right: 8px;
+  transform: scale(1.1);
+}
+
+.pkmn-result-box {
+  padding: 16px;
+  margin-top: 18px;
+}
+
+.hidden {
+  display: none;
+}
+
+.small-note {
+  font-size: 22px;
+  color: #333;
+  line-height: 1.35;
+}
+
+.create-league-eyebrow {
+  margin: 0 0 8px;
+  font-size: 22px;
+  color: #333;
+  text-align: center;
+}
+
+.league-code-box {
+  margin: 14px 0;
+  padding: 14px;
+  text-align: center;
+  background: linear-gradient(to bottom, #fefefe 0%, #dcdcdc 100%);
+  border: 3px solid #555;
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bdbdbd inset;
+}
+
+.league-code-box span {
+  display: block;
+  font-size: 22px;
+}
+
+.league-code-box strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 34px;
+  letter-spacing: 2px;
+}
+
+.created-teams-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 14px;
+  font-size: 22px;
+}
+
+.created-teams-table th,
+.created-teams-table td {
+  border: 2px solid #666;
+  padding: 8px 10px;
+  text-align: left;
+  background: rgba(255,255,255,0.45);
+}
+
+.admin-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border: 2px solid #555;
+  border-radius: 6px;
+  background: #eadb95;
+  font-size: 20px;
+}
+
+.top-links {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.league-list {
+  display: grid;
+  gap: 16px;
+}
+
+.pkmn-card {
+  padding: 16px;
+}
+
+.pkmn-card h2 {
+  margin: 0 0 8px;
+  font-size: 30px;
+}
+
+.pkmn-card p {
+  margin: 6px 0;
+  font-size: 24px;
+}
+
+.league-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.empty-state {
+  padding: 18px;
+  text-align: center;
+}
+
+.empty-state p {
+  margin: 0 0 12px;
+  font-size: 24px;
+}
+
+.auth-links {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.auth-links a {
+  text-align: center;
+  text-decoration: none;
+  color: #222;
+  font-size: 24px;
+}
+
+.auth-links a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 720px) {
+  .pkmn-menu,
+  .pkmn-form.two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .pkmn-title {
+    font-size: 34px;
+  }
+
+  .pkmn-button,
+  .pkmn-button-link {
+    font-size: 26px;
+  }
+
+  .pkmn-input,
+  .pkmn-select,
+  .pkmn-label,
+  .pkmn-panel p,
+  .pkmn-card p,
+  .small-note,
+  .empty-state p {
+    font-size: 22px;
+  }
+}
+
+/* Make auth page buttons fill the menu width */
+
+#createAccountButton,
+#signInButton {
+  width: 100%;
+  min-height: 78px;
+  font-size: 32px;
+}
+
+.auth-links {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.auth-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 64px;
+  width: 100%;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: #222;
+  font-family: 'VT323', monospace;
+  font-size: 28px;
+  background: linear-gradient(to bottom, #f7f7f7 0%, #d2d2d2 100%);
+  border: 3px solid #555;
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bcbcbc inset;
+}
+
+.auth-links a:hover {
+  text-decoration: none;
+  transform: translateY(-2px);
+  background: linear-gradient(to bottom, #fff6cc 0%, #eadb95 100%);
+}
+
+
+/* Fix full-width Sign Out button on account page */
+
+#signOutButton {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  min-height: 72px !important;
+  margin-top: 14px !important;
+  margin-bottom: 14px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  font-family: 'VT323', monospace !important;
+  font-size: 30px !important;
+  color: #222 !important;
+
+  background: linear-gradient(to bottom, #f7dede 0%, #d7a8a8 100%) !important;
+  border: 3px solid #555 !important;
+  border-radius: 10px !important;
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bcbcbc inset !important;
+
+  appearance: none !important;
+  -webkit-appearance: none !important;
+}
+
+
+/* Team email assignment fields */
+
+.team-email-grid {
+  display: grid;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.team-email-row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 10px;
+  align-items: center;
+}
+
+.team-email-row span {
+  font-size: 24px;
+}
+
+.team-email-row input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  font-family: 'VT323', monospace;
+  font-size: 22px;
+  color: #222;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #fefefe 0%, #e1e1e1 100%);
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #c7c7c7 inset;
+}
+
+
+/* Manage League */
+
+.team-manager-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.team-manager-row {
+  display: grid;
+  grid-template-columns: 95px 1fr 1.5fr 120px;
+  gap: 10px;
+  align-items: center;
+  background: linear-gradient(to bottom, #fefefe 0%, #dcdcdc 100%);
+  border: 3px solid #555;
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bdbdbd inset;
+  padding: 10px;
+}
+
+.team-manager-row span {
+  font-size: 24px;
+}
+
+.team-manager-row input[type="text"],
+.team-manager-row input[type="email"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 9px 11px;
+  font-family: 'VT323', monospace;
+  font-size: 22px;
+  color: #222;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #fefefe 0%, #e1e1e1 100%);
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #c7c7c7 inset;
+}
+
+.team-admin-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 22px;
+}
+
+@media (max-width: 850px) {
+  .team-manager-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Team Info Page */
+
+.team-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.team-info-card {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: 12px;
+  align-items: center;
+  background: linear-gradient(to bottom, #fefefe 0%, #dcdcdc 100%);
+  border: 3px solid #555;
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bdbdbd inset;
+  padding: 12px;
+}
+
+.team-number-badge {
+  width: 56px;
+  height: 56px;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #fff6cc 0%, #eadb95 100%);
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #d6c47d inset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+
+.team-info-main h2 {
+  margin: 0 0 6px;
+  font-size: 30px;
+}
+
+.team-info-main p {
+  margin: 4px 0;
+  font-size: 23px;
+}
+
+.team-role-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border: 2px solid #555;
+  border-radius: 6px;
+  background: #e5e5e5;
+  font-size: 20px;
+}
+
+@media (max-width: 650px) {
+  .team-info-card {
+    grid-template-columns: 1fr;
+  }
+
+  .team-number-badge {
+    width: 100%;
+  }
+}
+
+
+/* Editable Team Info */
+
+.editable-team-card {
+  grid-template-columns: 1fr;
+  align-items: stretch;
+}
+
+.team-info-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.team-info-logo,
+.team-info-logo-placeholder {
+  width: 76px;
+  height: 76px;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #fefefe 0%, #dcdcdc 100%);
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bdbdbd inset;
+}
+
+.team-info-logo {
+  object-fit: contain;
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+.team-info-logo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+}
+
+.team-edit-form {
+  display: grid;
+  gap: 7px;
+  margin-top: 10px;
+}
+
+.team-edit-form label {
+  font-size: 22px;
+}
+
+.team-edit-form input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  font-family: 'VT323', monospace;
+  font-size: 22px;
+  color: #222;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #fefefe 0%, #e1e1e1 100%);
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #c7c7c7 inset;
+}
+
+.team-locked-record {
+  font-size: 22px;
+}
+
+.team-locked-record span {
+  color: #555;
+  font-size: 20px;
+}
+
+.team-readonly-info p {
+  font-size: 23px;
+}
+
+.save-team-button {
+  width: 100%;
+  margin-top: 8px;
+}
+
+
+/* Draft Room */
+
+.draft-controls-panel {
+  margin-top: 16px;
+}
+
+.draft-pick-form {
+  display: grid;
+  grid-template-columns: 1fr 170px 170px;
+  gap: 10px;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.draft-room-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.draft-picks-list {
+  display: grid;
+  gap: 8px;
+  max-height: 360px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.draft-pick-row {
+  display: grid;
+  grid-template-columns: 55px 70px 1fr 1fr;
+  gap: 8px;
+  align-items: center;
+  padding: 8px;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #f7f7f7 0%, #d2d2d2 100%);
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bcbcbc inset;
+  font-size: 22px;
+}
+
+.draft-team-rosters {
+  display: grid;
+  gap: 10px;
+  max-height: 360px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.draft-roster-team {
+  padding: 10px;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #f7f7f7 0%, #d2d2d2 100%);
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bcbcbc inset;
+}
+
+.draft-roster-team h3 {
+  margin: 0 0 4px;
+  font-size: 26px;
+}
+
+.draft-roster-team p {
+  margin: 0 0 8px;
+  font-size: 21px;
+}
+
+.draft-roster-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.draft-roster-pills span,
+.draft-empty-pill {
+  display: inline-block;
+  padding: 3px 8px;
+  border: 2px solid #555;
+  border-radius: 6px;
+  background: #fefefe;
+  font-size: 19px;
+}
+
+.draft-available-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+  max-height: 460px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.draft-pokemon-card {
+  font-family: 'VT323', monospace;
+  color: #222;
+  text-align: center;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #f7f7f7 0%, #d2d2d2 100%);
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bcbcbc inset;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.draft-pokemon-card:hover {
+  background: linear-gradient(to bottom, #fff6cc 0%, #eadb95 100%);
+}
+
+.draft-pokemon-card img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+}
+
+.draft-pokemon-card span {
+  display: block;
+  margin-top: 6px;
+  font-size: 22px;
+}
+
+.draft-pokemon-card small {
+  display: block;
+  margin-top: 2px;
+  font-size: 17px;
+}
+
+@media (max-width: 900px) {
+  .draft-pick-form,
+  .draft-room-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .draft-pick-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Draft order + timer */
+
+.draft-timer-box {
+  background: linear-gradient(to bottom, #fff6cc 0%, #eadb95 100%);
+  border: 3px solid #555;
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #d6c47d inset;
+  padding: 14px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.draft-timer-box p {
+  margin: 4px 0;
+  font-size: 28px;
+}
+
+#draftClockLine {
+  font-size: 36px;
+}
+
+.draft-order-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.draft-order-row {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: 8px;
+  align-items: center;
+}
+
+.draft-order-row span {
+  font-size: 22px;
+}
+
+.draft-order-row select {
+  font-size: 22px;
+  padding: 8px 10px;
+}
+
+.draft-admin-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 14px;
+}
+
+@media (max-width: 850px) {
+  .draft-admin-buttons,
+  .draft-pick-form {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Delete League */
+
+.danger-zone {
+  margin-top: 18px;
+  background: linear-gradient(to bottom, #f7dede 0%, #d7a8a8 100%);
+}
+
+.delete-league-row {
+  display: grid;
+  grid-template-columns: 1fr 210px;
+  gap: 10px;
+  align-items: center;
+  margin-top: 12px;
+}
+
+@media (max-width: 800px) {
+  .delete-league-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Division Management */
+
+.division-editor {
+  display: grid;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.division-name-row {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 10px;
+  align-items: center;
+}
+
+.division-name-row span {
+  font-size: 24px;
+}
+
+.division-name-row input,
+.team-division-select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 9px 11px;
+  font-family: 'VT323', monospace;
+  font-size: 22px;
+  color: #222;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #fefefe 0%, #e1e1e1 100%);
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #c7c7c7 inset;
+}
+
+.team-manager-row {
+  grid-template-columns: 85px 1fr 1.3fr 1fr 110px;
+}
+
+@media (max-width: 900px) {
+  .division-name-row,
+  .team-manager-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ===== Manage League themed form styling ===== */
+
+.manage-section-title {
+  font-size: 34px;
+  margin-bottom: 10px;
+}
+
+.manage-section-note {
+  font-size: 24px;
+  line-height: 1.35;
+  margin-bottom: 14px;
+}
+
+.division-editor {
+  display: grid;
+  gap: 14px;
+  margin-top: 12px;
+}
+
+.division-name-row {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 14px;
+  align-items: center;
+}
+
+.division-name-row span {
+  font-size: 28px;
+}
+
+.pkmn-input,
+.pkmn-select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  font-family: 'VT323', monospace;
+  font-size: 24px;
+  color: #222;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #fefefe 0%, #e6e6e6 100%);
+  box-shadow:
+    0 0 0 2px #ffffff inset,
+    0 0 0 4px #c7c7c7 inset;
+}
+
+.pkmn-input:focus,
+.pkmn-select:focus {
+  outline: none;
+  border-color: #3d6fd6;
+  box-shadow:
+    0 0 0 2px #ffffff inset,
+    0 0 0 4px #c7c7c7 inset,
+    0 0 0 3px rgba(61, 111, 214, 0.25);
+}
+
+.team-manager-row {
+  display: grid;
+  grid-template-columns: 100px 1.2fr 1.5fr 180px 110px;
+  gap: 14px;
+  align-items: center;
+  padding: 16px;
+  margin-top: 14px;
+  border: 4px solid #6b6b6b;
+  border-radius: 10px;
+  background: linear-gradient(to bottom, #efefef 0%, #dcdcdc 100%);
+  box-shadow:
+    0 0 0 2px #ffffff inset,
+    0 0 0 5px #bcbcbc inset;
+}
+
+.team-row-label {
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.team-admin-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 24px;
+}
+
+.team-admin-toggle input {
+  width: 18px;
+  height: 18px;
+}
+
+.small-note {
+  font-size: 22px;
+  line-height: 1.35;
+}
+
+@media (max-width: 1050px) {
+  .team-manager-row {
+    grid-template-columns: 1fr;
+  }
+
+  .division-name-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Standings Page */
+
+.standings-content {
+  display: grid;
+  gap: 22px;
+  margin-top: 18px;
+}
+
+.standings-board {
+  overflow: hidden;
+  border: 4px solid #333;
+  border-radius: 10px;
+  background: linear-gradient(to bottom, #151515 0%, #050505 100%);
+  box-shadow:
+    0 0 0 2px #777 inset,
+    0 0 0 5px #111 inset,
+    0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+.standings-division-title {
+  padding: 14px 18px;
+  color: white;
+  font-size: 40px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: linear-gradient(to bottom, #111 0%, #000 100%);
+  border-bottom: 3px solid #555;
+}
+
+.standings-header-row,
+.standings-row {
+  display: grid;
+  grid-template-columns: 54px 1fr 72px 72px 120px 90px;
+  align-items: center;
+}
+
+.standings-header-row {
+  background: linear-gradient(to bottom, #252525 0%, #050505 100%);
+  color: white;
+  font-size: 25px;
+  border-bottom: 3px solid #666;
+}
+
+.standings-header-row div {
+  padding: 8px 10px;
+}
+
+.standings-row {
+  min-height: 74px;
+  background: linear-gradient(to bottom, #f8f8f8 0%, #d8d8d8 100%);
+  border-bottom: 3px solid #444;
+  color: #111;
+}
+
+.standings-row.division-leader {
+  background: linear-gradient(to bottom, #fff6cc 0%, #eadb95 100%);
+}
+
+.standings-row > div {
+  padding: 8px 10px;
+}
+
+.standings-rank {
+  font-size: 28px;
+  text-align: center;
+  color: #222;
+}
+
+.standings-team-cell {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.standings-logo,
+.standings-logo-placeholder {
+  width: 52px;
+  height: 52px;
+  flex: 0 0 auto;
+  border: 3px solid #333;
+  border-radius: 6px;
+  background: white;
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bdbdbd inset;
+}
+
+.standings-logo {
+  object-fit: contain;
+  padding: 3px;
+  box-sizing: border-box;
+}
+
+.standings-logo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.standings-team-name {
+  font-size: 32px;
+  font-weight: 700;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.standings-owner-name {
+  font-size: 20px;
+  color: #444;
+  margin-top: 2px;
+}
+
+.standings-number,
+.standings-record,
+.standings-gb {
+  height: 100%;
+  min-height: 74px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34px;
+  border-left: 3px solid #777;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.standings-gb {
+  background: linear-gradient(to bottom, #ffe96b 0%, #f0c400 100%);
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .standings-header-row,
+  .standings-row {
+    grid-template-columns: 42px 1fr 52px 52px 82px 62px;
+  }
+
+  .standings-division-title {
+    font-size: 32px;
+  }
+
+  .standings-team-name {
+    font-size: 24px;
+  }
+
+  .standings-owner-name {
+    display: none;
+  }
+
+  .standings-number,
+  .standings-record,
+  .standings-gb {
+    font-size: 24px;
+  }
+
+  .standings-logo,
+  .standings-logo-placeholder {
+    width: 42px;
+    height: 42px;
+  }
+}
+
+
+/* ===== Standings cleanup override ===== */
+
+.standings-board {
+  max-width: 100%;
+}
+
+.standings-header-row,
+.standings-row {
+  grid-template-columns: 48px minmax(260px, 1fr) 80px 80px 110px;
+}
+
+.standings-header-row div:nth-child(5),
+.standings-row .standings-record {
+  display: none;
+}
+
+.standings-header-row {
+  font-size: 32px;
+}
+
+.standings-row {
+  min-height: 72px;
+}
+
+.standings-team-cell {
+  gap: 12px;
+}
+
+.standings-logo,
+.standings-logo-placeholder {
+  width: 44px !important;
+  height: 44px !important;
+  max-width: 44px !important;
+  max-height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  object-fit: contain !important;
+  padding: 3px;
+  box-sizing: border-box;
+}
+
+.standings-logo img,
+.standings-team-cell img {
+  width: 44px !important;
+  height: 44px !important;
+  max-width: 44px !important;
+  max-height: 44px !important;
+  object-fit: contain !important;
+}
+
+.standings-team-name {
+  font-size: 34px !important;
+  line-height: 1;
+  letter-spacing: 1px;
+}
+
+.standings-owner-name {
+  font-size: 22px !important;
+}
+
+.standings-rank {
+  font-size: 30px !important;
+}
+
+.standings-number,
+.standings-gb {
+  min-height: 72px;
+  font-size: 38px !important;
+}
+
+.standings-division-title {
+  font-size: 42px !important;
+  padding: 16px 20px;
+}
+
+@media (max-width: 900px) {
+  .standings-header-row,
+  .standings-row {
+    grid-template-columns: 38px minmax(170px, 1fr) 54px 54px 62px;
+  }
+
+  .standings-team-name {
+    font-size: 25px !important;
+  }
+
+  .standings-number,
+  .standings-gb {
+    font-size: 26px !important;
+  }
+
+  .standings-logo,
+  .standings-logo-placeholder,
+  .standings-team-cell img {
+    width: 36px !important;
+    height: 36px !important;
+    max-width: 36px !important;
+    max-height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+  }
+}
+
+
+/* Weekly Matches + My Matchup */
+
+.weekly-admin-controls {
+  margin-top: 16px;
+}
+
+.weekly-control-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.weekly-matches-list {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.weekly-match-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 170px 1fr;
+  gap: 14px;
+  align-items: center;
+  padding: 16px;
+  background: linear-gradient(to bottom, #fefefe 0%, #dcdcdc 100%);
+  border: 4px solid #555;
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 5px #bdbdbd inset;
+}
+
+.weekly-match-status {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+}
+
+.weekly-complete-badge,
+.weekly-open-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border: 2px solid #555;
+  border-radius: 6px;
+  font-size: 18px;
+}
+
+.weekly-complete-badge {
+  background: #d8f7d8;
+}
+
+.weekly-open-badge {
+  background: #fff6cc;
+}
+
+.weekly-team-side {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.weekly-team-side.right {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+.weekly-team-logo,
+.weekly-team-logo-placeholder {
+  width: 64px;
+  height: 64px;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: white;
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bdbdbd inset;
+}
+
+.weekly-team-logo {
+  object-fit: contain;
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+.weekly-team-logo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.weekly-team-text h2 {
+  margin: 0 0 4px;
+  font-size: 32px;
+  line-height: 1;
+}
+
+.weekly-team-text p {
+  margin: 2px 0;
+  font-size: 22px;
+  color: #333;
+}
+
+.weekly-score-center {
+  display: grid;
+  grid-template-columns: 1fr 34px 1fr;
+  gap: 8px;
+  align-items: center;
+  justify-items: center;
+}
+
+.weekly-score-center span {
+  font-size: 26px;
+}
+
+.weekly-score-input,
+.weekly-score-display {
+  width: 58px;
+  height: 50px;
+  text-align: center;
+  font-family: 'VT323', monospace;
+  font-size: 30px;
+  color: #222;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #fff6cc 0%, #eadb95 100%);
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #d6c47d inset;
+}
+
+.weekly-score-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.my-matchup-feature {
+  margin-top: 18px;
+  padding: 18px;
+  background: linear-gradient(to bottom, #fefefe 0%, #dcdcdc 100%);
+  border: 4px solid #555;
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 5px #bdbdbd inset;
+}
+
+.my-matchup-round-label {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 14px;
+}
+
+.my-matchup-teams {
+  display: grid;
+  grid-template-columns: 1fr 210px 1fr;
+  gap: 16px;
+  align-items: center;
+}
+
+.my-matchup-team-card {
+  text-align: center;
+  padding: 16px;
+  border: 3px solid #555;
+  border-radius: 10px;
+  background: linear-gradient(to bottom, #f7f7f7 0%, #d2d2d2 100%);
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bcbcbc inset;
+}
+
+.my-matchup-label {
+  font-size: 24px;
+  color: #444;
+  margin-bottom: 8px;
+}
+
+.my-matchup-logo,
+.my-matchup-logo-placeholder {
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 10px;
+  border: 3px solid #555;
+  border-radius: 10px;
+  background: white;
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bdbdbd inset;
+}
+
+.my-matchup-logo {
+  object-fit: contain;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.my-matchup-logo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34px;
+}
+
+.my-matchup-team-card h2 {
+  margin: 0 0 6px;
+  font-size: 36px;
+}
+
+.my-matchup-team-card p {
+  margin: 3px 0;
+  font-size: 24px;
+}
+
+.my-matchup-score-box {
+  text-align: center;
+  padding: 16px;
+  border: 4px solid #333;
+  border-radius: 10px;
+  background: linear-gradient(to bottom, #111 0%, #000 100%);
+  color: white;
+}
+
+.my-matchup-score {
+  font-size: 42px;
+  color: #ffe96b;
+}
+
+.my-matchup-vs {
+  font-size: 34px;
+  margin: 8px 0;
+}
+
+.my-matchup-status {
+  font-size: 24px;
+  color: #ddd;
+}
+
+@media (max-width: 950px) {
+  .weekly-match-card,
+  .my-matchup-teams,
+  .weekly-control-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .weekly-team-side,
+  .weekly-team-side.right {
+    flex-direction: row;
+    text-align: left;
+  }
+
+  .weekly-score-center {
+    grid-template-columns: 1fr 40px 1fr;
+  }
+}
+
+
+/* Manage League Draft Settings */
+
+.draft-settings-grid {
+  display: grid;
+  grid-template-columns: minmax(180px, 260px);
+  gap: 12px;
+  margin-top: 12px;
+  margin-bottom: 14px;
+}
+
+.draft-clock-setting {
+  display: grid;
+  gap: 6px;
+}
+
+.draft-clock-setting span {
+  font-size: 26px;
+}
+
+.draft-order-editor {
+  margin-top: 12px;
+}
+
+.manage-draft-order-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 10px;
+}
+
+.manage-draft-order-row {
+  display: grid;
+  grid-template-columns: 78px 1fr;
+  gap: 8px;
+  align-items: center;
+}
+
+.manage-draft-order-row span {
+  font-size: 24px;
+}
+
+@media (max-width: 800px) {
+  .manage-draft-order-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ===== Projected Playoff Bracket ===== */
+
+.standings-playoff-panel {
+  margin-top: 22px;
+}
+
+.standings-section-title {
+  font-size: 36px;
+  margin: 0 0 6px;
+}
+
+.playoff-bracket {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 14px;
+  align-items: start;
+}
+
+.bracket-round {
+  display: grid;
+  gap: 12px;
+}
+
+.bracket-round-title {
+  font-size: 30px;
+  text-align: center;
+  padding: 8px;
+  color: white;
+  border: 3px solid #333;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #111 0%, #000 100%);
+}
+
+.bracket-matchup {
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #f7f7f7 0%, #dfdfdf 100%);
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #c7c7c7 inset;
+  padding: 10px;
+  display: grid;
+  gap: 8px;
+}
+
+.bracket-team-row {
+  display: grid;
+  grid-template-columns: 40px 42px 1fr;
+  gap: 10px;
+  align-items: center;
+  min-height: 44px;
+}
+
+.bracket-seed {
+  font-size: 24px;
+  text-align: center;
+}
+
+.bracket-team-logo,
+.bracket-team-logo-placeholder {
+  width: 38px !important;
+  height: 38px !important;
+  max-width: 38px !important;
+  max-height: 38px !important;
+  border: 2px solid #555;
+  border-radius: 6px;
+  background: white;
+  object-fit: contain;
+  box-sizing: border-box;
+}
+
+.bracket-team-logo {
+  padding: 2px;
+}
+
+.bracket-team-logo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.bracket-team-info {
+  min-width: 0;
+}
+
+.bracket-team-name {
+  font-size: 24px;
+  line-height: 1.05;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bracket-team-meta {
+  font-size: 19px;
+  color: #444;
+}
+
+.bracket-vs {
+  text-align: center;
+  font-size: 20px;
+  color: #555;
+}
+
+.bracket-bye {
+  text-align: center;
+  font-size: 22px;
+  color: #444;
+  padding: 4px 0;
+}
+
+@media (max-width: 900px) {
+  .playoff-bracket {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Pokémon tier badges */
+
+.pokemon-tier-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 5px;
+  padding: 3px 7px;
+  border: 2px solid #555;
+  border-radius: 999px;
+  background: linear-gradient(to bottom, #fefefe 0%, #dcdcdc 100%);
+  box-shadow:
+    0 0 0 1px #fff inset,
+    0 0 0 3px #c7c7c7 inset;
+  font-size: 18px;
+}
+
+.pokemon-tier-badge img {
+  width: 18px !important;
+  height: 18px !important;
+  object-fit: contain !important;
+}
+
+.draft-pokemon-card .pokemon-tier-badge {
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+/* Draft point cap display */
+
+.draft-point-status {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.draft-point-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.draft-point-card {
+  background: linear-gradient(to bottom, #fefefe 0%, #dcdcdc 100%);
+  border: 3px solid #555;
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bdbdbd inset;
+  padding: 12px;
+}
+
+.draft-point-card p {
+  margin: 4px 0;
+  font-size: 24px;
+}
+
+.draft-point-bar {
+  height: 16px;
+  margin-top: 8px;
+  border: 2px solid #555;
+  border-radius: 999px;
+  background: #f7f7f7;
+  overflow: hidden;
+}
+
+.draft-point-bar div {
+  height: 100%;
+  background: linear-gradient(to bottom, #fff6cc 0%, #f0c400 100%);
+}
+
+@media (max-width: 800px) {
+  .draft-point-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Tier badge alignment fix */
+
+.pokemon-tier-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 6px !important;
+  white-space: nowrap !important;
+  vertical-align: middle !important;
+}
+
+.pokemon-tier-badge img {
+  display: inline-block !important;
+  vertical-align: middle !important;
+  margin: 0 !important;
+}
+
+.pokemon-tier-badge span {
+  display: inline-block !important;
+  vertical-align: middle !important;
+  line-height: 1 !important;
+  position: relative;
+  top: -1px;
+}
+
+
+/* Stronger tier badge vertical alignment fix */
+
+.pokemon-tier-badge {
+  line-height: 18px !important;
+}
+
+.pokemon-tier-badge img {
+  width: 18px !important;
+  height: 18px !important;
+  display: inline-block !important;
+  transform: translateY(2px) !important;
+}
+
+.pokemon-tier-badge span {
+  display: inline-block !important;
+  line-height: 18px !important;
+  transform: translateY(-3px) !important;
+}
+
+
+/* Mega Evolution icon on Pokémon cards */
+
+.draft-pokemon-card {
+  position: relative;
+}
+
+.mega-badge-overlay {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px !important;
+  height: 28px !important;
+  object-fit: contain !important;
+  z-index: 5;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.45));
+}
+
+
+/* Mega Evolution badge overlay */
+
+.draft-pokemon-card {
+  position: relative;
+}
+
+.mega-badge-overlay {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px !important;
+  height: 28px !important;
+  object-fit: contain !important;
+  z-index: 5;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.35));
+}
+
+
+/* Mega Evolution badge overlay */
+
+.draft-pokemon-card {
+  position: relative;
+}
+
+.mega-badge-overlay {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px !important;
+  height: 28px !important;
+  object-fit: contain !important;
+  z-index: 5;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.35));
+}
+
+
+/* Draft Room filters */
+
+.draft-filter-bar {
+  display: grid;
+  grid-template-columns: 1.4fr 0.85fr 0.85fr 0.85fr;
+  gap: 10px;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 8px;
+}
+
+.draft-filter-bar .pkmn-input,
+.draft-filter-bar .pkmn-select {
+  min-height: 52px;
+  font-size: 23px;
+}
+
+@media (max-width: 950px) {
+  .draft-filter-bar {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Draft Room visible filter menu */
+
+.draft-filter-menu {
+  display: grid;
+  grid-template-columns: 1.4fr 0.9fr 0.9fr 0.9fr;
+  gap: 12px;
+  margin-top: 12px;
+  margin-bottom: 10px;
+  padding: 12px;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #fefefe 0%, #dcdcdc 100%);
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bdbdbd inset;
+}
+
+.draft-filter-menu label {
+  display: grid;
+  gap: 6px;
+}
+
+.draft-filter-menu label span {
+  font-size: 24px;
+  color: #222;
+}
+
+.draft-filter-menu .pkmn-input,
+.draft-filter-menu .pkmn-select {
+  min-height: 52px;
+  font-size: 23px;
+}
+
+@media (max-width: 950px) {
+  .draft-filter-menu {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ===== Pokémon type badges ===== */
+
+.pokemon-type-badges {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.pokemon-type-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 58px;
+  padding: 3px 7px;
+  border: 2px solid rgba(0, 0, 0, 0.35);
+  border-radius: 6px;
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  line-height: 1;
+  color: #fff;
+  text-shadow:
+    1px 1px 0 rgba(0, 0, 0, 0.55);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.45) inset,
+    0 2px 0 rgba(0, 0, 0, 0.22);
+}
+
+/* Core 18 types */
+
+.type-normal {
+  background: linear-gradient(to bottom, #c6c6a7 0%, #8a8a68 100%);
+}
+
+.type-fire {
+  background: linear-gradient(to bottom, #ff9c54 0%, #e25822 100%);
+}
+
+.type-water {
+  background: linear-gradient(to bottom, #77b7ff 0%, #2e78d6 100%);
+}
+
+.type-electric {
+  background: linear-gradient(to bottom, #ffe76b 0%, #d9a900 100%);
+  color: #222;
+  text-shadow:
+    1px 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.type-grass {
+  background: linear-gradient(to bottom, #8ee06f 0%, #3f9d3f 100%);
+}
+
+.type-ice {
+  background: linear-gradient(to bottom, #b7f4ff 0%, #62b6c7 100%);
+  color: #123;
+  text-shadow:
+    1px 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+.type-fighting {
+  background: linear-gradient(to bottom, #d96a5f 0%, #9b231f 100%);
+}
+
+.type-poison {
+  background: linear-gradient(to bottom, #c875c9 0%, #843c8c 100%);
+}
+
+.type-ground {
+  background: linear-gradient(to bottom, #ead27a 0%, #b98f36 100%);
+  color: #261a08;
+  text-shadow:
+    1px 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.type-flying {
+  background: linear-gradient(to bottom, #c4b5ff 0%, #7f6edb 100%);
+}
+
+.type-psychic {
+  background: linear-gradient(to bottom, #ff8fbc 0%, #f45b96 100%);
+}
+
+.type-bug {
+  background: linear-gradient(to bottom, #c4d94b 0%, #7c9514 100%);
+}
+
+.type-rock {
+  background: linear-gradient(to bottom, #d0b65d 0%, #8d7729 100%);
+}
+
+.type-ghost {
+  background: linear-gradient(to bottom, #8f7ac8 0%, #4f3b78 100%);
+}
+
+.type-dragon {
+  background: linear-gradient(to bottom, #9a74ff 0%, #4e25d6 100%);
+}
+
+.type-dark {
+  background: linear-gradient(to bottom, #74655c 0%, #3f332f 100%);
+}
+
+.type-steel {
+  background: linear-gradient(to bottom, #d1d1e0 0%, #8f8fa8 100%);
+  color: #202030;
+  text-shadow:
+    1px 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.type-fairy {
+  background: linear-gradient(to bottom, #ffb8dc 0%, #e87ab2 100%);
+}
+
+/* Make type badges sit nicely inside draft cards */
+
+.draft-pokemon-card .pokemon-type-badges {
+  margin-bottom: 2px;
+}
+
+
+/* ===== Clean split type bars v2 ===== */
+
+.draft-pokemon-card .pokemon-type-strip {
+  width: 132px !important;
+  height: 28px !important;
+  margin: 7px auto 3px !important;
+  display: grid !important;
+  overflow: hidden !important;
+  border: 2px solid rgba(0, 0, 0, 0.45) !important;
+  border-radius: 7px !important;
+  background: #ddd !important;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.45) inset,
+    0 2px 0 rgba(0, 0, 0, 0.22) !important;
+}
+
+.draft-pokemon-card .pokemon-type-strip.single {
+  grid-template-columns: 1fr !important;
+}
+
+.draft-pokemon-card .pokemon-type-strip.dual {
+  grid-template-columns: 1fr 1fr !important;
+}
+
+.draft-pokemon-card .pokemon-type-segment {
+  min-width: 0 !important;
+  width: auto !important;
+  height: 100% !important;
+  padding: 0 4px !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  font-family: 'VT323', monospace !important;
+  font-size: 19px !important;
+  line-height: 1 !important;
+  color: white !important;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.55) !important;
+
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: clip !important;
+}
+
+.draft-pokemon-card .pokemon-type-strip.dual .pokemon-type-segment:first-child {
+  border-right: 2px solid rgba(0, 0, 0, 0.35) !important;
+}
+
+/* Preserve readable dark text on light type colors */
+
+.draft-pokemon-card .pokemon-type-segment.type-electric,
+.draft-pokemon-card .pokemon-type-segment.type-ice,
+.draft-pokemon-card .pokemon-type-segment.type-ground,
+.draft-pokemon-card .pokemon-type-segment.type-steel {
+  color: #222 !important;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Prevent old badge styles from affecting the new strip */
+
+.draft-pokemon-card .pokemon-type-strip .pokemon-type-badge,
+.draft-pokemon-card .pokemon-type-strip .pokemon-type-badges {
+  all: unset !important;
+}
+
+
+/* Shorter type bars */
+
+.draft-pokemon-card .pokemon-type-strip {
+  width: 104px !important;
+  height: 24px !important;
+}
+
+.draft-pokemon-card .pokemon-type-segment {
+  font-size: 17px !important;
+  padding: 0 3px !important;
+}
+
+
+/* Better sizing for single vs dual type bars */
+
+.draft-pokemon-card .pokemon-type-strip.single {
+  width: 76px !important;
+  height: 24px !important;
+  border-radius: 8px !important;
+}
+
+.draft-pokemon-card .pokemon-type-strip.dual {
+  width: 112px !important;
+  height: 24px !important;
+  border-radius: 8px !important;
+}
+
+.draft-pokemon-card .pokemon-type-strip.single .pokemon-type-segment {
+  font-size: 17px !important;
+  padding: 0 6px !important;
+}
+
+.draft-pokemon-card .pokemon-type-strip.dual .pokemon-type-segment {
+  font-size: 16px !important;
+  padding: 0 3px !important;
+}
+
+
+/* Waiver Wire */
+
+.hidden {
+  display: none !important;
+}
+
+.waiver-admin-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.waiver-roster-list {
+  display: grid;
+  gap: 8px;
+}
+
+.waiver-roster-row {
+  display: grid;
+  grid-template-columns: 1fr 90px;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 10px;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #fefefe 0%, #dcdcdc 100%);
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 4px #bdbdbd inset;
+  font-size: 24px;
+}
+
+.waiver-pokemon-card {
+  cursor: default;
+}
+
+.waiver-drop-row {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.waiver-drop-select {
+  width: 100%;
+  min-height: 38px;
+  font-size: 18px !important;
+  padding: 5px 7px !important;
+}
+
+.waiver-add-button {
+  width: 100%;
+  margin-top: 8px;
+  min-height: 40px;
+  font-size: 22px;
+}
+
+@media (max-width: 800px) {
+  .waiver-admin-buttons {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Waiver Wire background */
+
+body.waiver-page {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
+    url("../images/PokeMart.webp") !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+}
+
+
+/* Force Waiver Wire PokeMart background */
+
+body.waiver-page,
+body.waiver-page .page-overlay {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.28)),
+    url("../images/PokeMart.webp") !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+}
+
+body.waiver-page .page-overlay::before {
+  background: none !important;
+}
+
+
+/* Trading Page */
+
+.trade-offer-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.trade-offer-form label {
+  display: grid;
+  gap: 6px;
+}
+
+.trade-offer-form label span {
+  font-size: 24px;
+}
+
+.trade-message-input {
+  width: 100%;
+  min-height: 72px;
+  margin-top: 12px;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.trade-preview {
+  margin-top: 10px;
+  padding: 10px;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #fff6cc 0%, #eadb95 100%);
+}
+
+.trade-list {
+  display: grid;
+  gap: 14px;
+}
+
+.trade-card {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 4px solid #555;
+  border-radius: 10px;
+  background: linear-gradient(to bottom, #fefefe 0%, #dcdcdc 100%);
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 5px #bdbdbd inset;
+}
+
+.trade-card-header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  align-items: center;
+  font-size: 24px;
+}
+
+.trade-card-header strong:last-child {
+  text-align: right;
+}
+
+.trade-status-pending,
+.trade-status-accepted,
+.trade-status-declined,
+.trade-status-cancelled {
+  padding: 3px 8px;
+  border: 2px solid #555;
+  border-radius: 999px;
+  font-size: 18px;
+}
+
+.trade-status-pending {
+  background: #fff6cc;
+}
+
+.trade-status-accepted {
+  background: #d8f7d8;
+}
+
+.trade-status-declined,
+.trade-status-cancelled {
+  background: #f7dede;
+}
+
+.trade-pokemon-swap {
+  display: grid;
+  grid-template-columns: 1fr 50px 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.trade-arrow {
+  text-align: center;
+  font-size: 34px;
+}
+
+.trade-pokemon-mini {
+  position: relative;
+  text-align: center;
+  padding: 10px;
+  border: 3px solid #555;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #f7f7f7 0%, #d2d2d2 100%);
+}
+
+.trade-pokemon-mini p {
+  margin: 0 0 6px;
+  font-size: 20px;
+  color: #444;
+}
+
+.trade-pokemon-mini img:not(.mega-badge-overlay):not(.pokemon-tier-badge img) {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 6px;
+}
+
+.trade-pokemon-mini strong {
+  display: block;
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+
+.trade-message {
+  margin: 0;
+  font-size: 22px;
+  color: #333;
+}
+
+.trade-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+@media (max-width: 900px) {
+  .trade-offer-form,
+  .trade-pokemon-swap,
+  .trade-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .trade-arrow {
+    transform: rotate(90deg);
+  }
+
+  .trade-card-header {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .trade-card-header strong:last-child {
+    text-align: center;
+  }
+}
+
+
+/* ===== Exact My Team roster fix ===== */
+
+.my-team-roster-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)) !important;
+  gap: 12px !important;
+  align-items: stretch !important;
+}
+
+.my-team-roster-slot {
+  position: relative !important;
+  min-height: 170px !important;
+  padding: 12px !important;
+  text-align: center !important;
+  border: 3px solid #555 !important;
+  border-radius: 10px !important;
+  background: linear-gradient(to bottom, #fefefe 0%, #dcdcdc 100%) !important;
+  box-shadow:
+    0 0 0 2px #fff inset,
+    0 0 0 5px #bdbdbd inset !important;
+  box-sizing: border-box !important;
+}
+
+.my-team-roster-slot > img {
+  width: 82px !important;
+  height: 82px !important;
+  max-width: 82px !important;
+  max-height: 82px !important;
+  object-fit: contain !important;
+  display: block !important;
+  margin: 0 auto 8px !important;
+}
+
+.my-team-roster-slot p {
+  margin: 4px 0 !important;
+  font-size: 24px !important;
+  line-height: 1.05 !important;
+  overflow-wrap: anywhere !important;
+}
+
+/* Keep team logo separate from roster Pokémon images */
+.my-team-logo {
+  width: 96px !important;
+  height: 96px !important;
+  object-fit: contain !important;
+}
+
+
+/* Trading page background */
+
+body.trading-page,
+body.trading-page .page-overlay {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.28)),
+    url("../images/WifiCenter.webp") !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+}
+
+body.trading-page .page-overlay::before {
+  background: none !important;
+}
+
+
+/* Account menu full-width row */
+
+.pkmn-menu .pkmn-button-link.full-row {
+  grid-column: 1 / -1;
+}
+
+
+/* Join League page */
+
+.join-league-label {
+  display: block;
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.join-league-input {
+  width: 100%;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+  font-size: 34px;
+  box-sizing: border-box;
+}
+
+.join-league-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+@media (max-width: 700px) {
+  .join-league-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Team access join page */
+
+.join-league-second-label {
+  margin-top: 14px;
+}
+

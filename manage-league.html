@@ -5,27 +5,372 @@
   <title>Manage League</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/pokemon-ui.css?v=guestjoin2">
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;500;600;700;800&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/pokemon-ui.css?v=manage-theme1">
+
+  <style>
+    body.manage-theme-page {
+      margin: 0;
+      min-height: 100vh;
+      background-image: url("images/backgrounds/VictoryRoad.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+      font-family: "Oxanium", Arial, sans-serif;
+    }
+
+    .manage-theme-overlay {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at center 18%, rgba(36, 151, 255, 0.22), transparent 34%),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.58));
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 30px 20px;
+      box-sizing: border-box;
+    }
+
+    .manage-theme-card {
+      width: min(1120px, 94vw);
+      padding: 24px;
+      border-radius: 28px;
+      background: linear-gradient(
+        to bottom,
+        rgba(4, 18, 48, 0.70),
+        rgba(4, 18, 48, 0.36)
+      );
+      border: 2px solid rgba(255, 255, 255, 0.22);
+      box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.42),
+        0 0 42px rgba(29, 150, 255, 0.18) inset;
+      backdrop-filter: blur(2px);
+      box-sizing: border-box;
+    }
+
+    .manage-theme-title {
+      margin: 0;
+      text-align: center;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-shadow:
+        0 3px 0 rgba(0, 0, 0, 0.70),
+        0 0 12px rgba(30, 160, 255, 0.70);
+    }
+
+    #manageLeagueSubtitle {
+      margin: 8px 0 18px;
+      text-align: center;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.7px;
+      color: rgba(255, 255, 255, 0.90);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.70);
+    }
+
+    .manage-theme-links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .manage-theme-link {
+      min-height: 50px;
+      min-width: 190px;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, #294b77, #102844);
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      color: #ffffff;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95);
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(105, 166, 240, 0.16) inset;
+      transition: transform 0.12s ease, filter 0.12s ease;
+      box-sizing: border-box;
+    }
+
+    .manage-theme-link.light {
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.92), rgba(212, 226, 246, 0.88));
+      color: #102844;
+      text-shadow: none;
+    }
+
+    .manage-theme-link:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
+
+    body.manage-theme-page .manage-panel,
+    body.manage-theme-page .pkmn-panel,
+    body.manage-theme-page .danger-zone {
+      padding: 18px;
+      margin-bottom: 16px;
+      border-radius: 24px;
+      background: rgba(5, 18, 43, 0.58);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(105, 166, 240, 0.10) inset;
+      color: #ffffff;
+      font-family: "Oxanium", Arial, sans-serif;
+      box-sizing: border-box;
+    }
+
+    body.manage-theme-page .danger-zone {
+      border-color: rgba(255, 120, 130, 0.38);
+      background: rgba(52, 12, 25, 0.54);
+      box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(255, 120, 130, 0.10) inset;
+    }
+
+    body.manage-theme-page .pkmn-panel strong,
+    body.manage-theme-page .manage-section-title {
+      display: block;
+      margin: 0 0 6px;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-shadow:
+        0 2px 0 rgba(0, 0, 0, 0.55),
+        0 0 10px rgba(30, 160, 255, 0.48);
+    }
+
+    body.manage-theme-page .small-note,
+    body.manage-theme-page .manage-section-note {
+      margin: 6px 0 12px;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.35;
+      color: rgba(255, 255, 255, 0.76);
+    }
+
+    body.manage-theme-page .division-editor,
+    body.manage-theme-page .draft-order-editor,
+    body.manage-theme-page .team-manager-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    body.manage-theme-page .division-name-row,
+    body.manage-theme-page .manage-draft-order-row,
+    body.manage-theme-page .team-manager-row {
+      display: grid;
+      gap: 10px;
+      align-items: center;
+      padding: 14px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-sizing: border-box;
+    }
+
+    body.manage-theme-page .division-name-row {
+      grid-template-columns: 150px 1fr;
+    }
+
+    body.manage-theme-page .manage-draft-order-row {
+      grid-template-columns: 120px 1fr;
+    }
+
+    body.manage-theme-page .team-manager-row {
+      grid-template-columns: 90px 1.1fr 1.3fr 1fr auto;
+    }
+
+    body.manage-theme-page .division-name-row span,
+    body.manage-theme-page .manage-draft-order-row span,
+    body.manage-theme-page .team-row-label {
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      color: #f5efd8;
+    }
+
+    body.manage-theme-page .pkmn-input,
+    body.manage-theme-page .pkmn-select,
+    body.manage-theme-page input,
+    body.manage-theme-page select {
+      min-height: 46px;
+      padding: 9px 13px;
+      border-radius: 14px;
+      border: 2px solid rgba(255, 255, 255, 0.32);
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.96), rgba(225, 235, 250, 0.94));
+      color: #162642;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      outline: none;
+      box-shadow:
+        0 6px 16px rgba(0, 0, 0, 0.18),
+        0 0 0 3px rgba(24, 83, 150, 0.18) inset;
+      box-sizing: border-box;
+    }
+
+    body.manage-theme-page .draft-settings-grid {
+      display: grid;
+      grid-template-columns: minmax(220px, 320px);
+      gap: 12px;
+      margin-top: 12px;
+      margin-bottom: 14px;
+    }
+
+    body.manage-theme-page .draft-clock-setting {
+      display: grid;
+      gap: 8px;
+    }
+
+    body.manage-theme-page .draft-clock-setting span {
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    body.manage-theme-page .team-admin-toggle {
+      min-height: 46px;
+      padding: 0 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      color: #ffffff;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      box-sizing: border-box;
+    }
+
+    body.manage-theme-page .team-admin-toggle input {
+      width: 18px;
+      height: 18px;
+      min-height: auto;
+      box-shadow: none;
+    }
+
+    #saveManagersButton,
+    #deleteLeagueButton {
+      width: 100% !important;
+      min-height: 60px !important;
+      border-radius: 999px !important;
+      border: 2px solid rgba(255, 255, 255, 0.35) !important;
+      color: #ffffff !important;
+      font-family: "Oxanium", Arial, sans-serif !important;
+      font-size: 18px !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.6px !important;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95) !important;
+      box-shadow:
+        0 10px 22px rgba(0, 0, 0, 0.32),
+        0 0 0 3px rgba(105, 166, 240, 0.16) inset !important;
+      cursor: pointer !important;
+    }
+
+    #saveManagersButton {
+      background: linear-gradient(to bottom, #294b77, #102844) !important;
+      margin: 2px 0 16px !important;
+    }
+
+    #deleteLeagueButton {
+      background: linear-gradient(to bottom, #d86a6a, #8d2e3a) !important;
+      min-width: 190px !important;
+    }
+
+    body.manage-theme-page .delete-league-row {
+      display: grid;
+      grid-template-columns: 1fr 220px;
+      gap: 12px;
+      align-items: center;
+    }
+
+    #deleteLeagueStatus {
+      margin-top: 10px;
+    }
+
+    #manageLeagueStatus {
+      margin-top: 16px;
+      padding: 10px 14px;
+      border-radius: 16px;
+      background: rgba(5, 18, 43, 0.54);
+      border: 1px solid rgba(255, 255, 255, 0.20);
+      text-align: center;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.90);
+      box-shadow: none;
+    }
+
+    @media (max-width: 920px) {
+      body.manage-theme-page .team-manager-row {
+        grid-template-columns: 1fr;
+      }
+
+      body.manage-theme-page .division-name-row,
+      body.manage-theme-page .manage-draft-order-row,
+      body.manage-theme-page .delete-league-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .manage-theme-card {
+        padding: 18px;
+      }
+
+      .manage-theme-title {
+        font-size: 34px;
+      }
+
+      .manage-theme-links {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .manage-theme-link {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
-<body>
-  <div class="page-overlay top-align">
-    <section class="pkmn-window wide">
-      <img class="corner-ball top-left" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball top-right" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball bottom-left" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball bottom-right" src="images/ui/retroball.png" alt="">
+<body class="manage-theme-page">
+  <div class="manage-theme-overlay">
+    <section class="manage-theme-card">
+      <h1 class="manage-theme-title">Manage League</h1>
+      <p id="manageLeagueSubtitle">Loading league...</p>
 
-      <div class="pkmn-title-box">
-        <h1 class="pkmn-title">MANAGE LEAGUE</h1>
-        <p id="manageLeagueSubtitle" class="pkmn-subtitle">Loading league...</p>
+      <div class="manage-theme-links">
+        <a class="manage-theme-link" href="league-home.html?v=leaguehome-icons4">Back to League Home</a>
+        <a class="manage-theme-link light" href="my-leagues.html?v=myleagues-signin-fix1">My Leagues</a>
       </div>
-
-      <div class="top-links">
-        <a class="pkmn-button-link small secondary" href="league-home.html">Back to League Home</a>
-        <a class="pkmn-button-link small secondary" href="my-leagues.html">My Leagues</a>
-      </div>
-
 
       <div class="pkmn-panel">
         <p><strong>Divisions</strong></p>
@@ -35,7 +380,6 @@
 
         <div id="divisionEditor" class="division-editor"></div>
       </div>
-
 
       <div class="pkmn-panel">
         <p class="manage-section-title">Draft Settings</p>
@@ -63,10 +407,7 @@
 
       <div id="teamManagerList" class="team-manager-list"></div>
 
-      <div style="margin-top:16px;">
-        <button id="saveManagersButton" class="pkmn-button">Save League Settings</button>
-      </div>
-
+      <button id="saveManagersButton" class="pkmn-button">Save League Settings</button>
 
       <div class="pkmn-panel danger-zone">
         <p><strong>Delete League</strong></p>
@@ -82,7 +423,7 @@
         <p id="deleteLeagueStatus" class="small-note"></p>
       </div>
 
-      <div id="manageLeagueStatus" class="pkmn-footer-note">Loading teams...</div>
+      <div id="manageLeagueStatus">Loading teams...</div>
     </section>
   </div>
 

@@ -5,53 +5,249 @@
   <title>Create Account</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/pokemon-ui.css">
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;500;600;700;800&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/pokemon-ui.css?v=create-theme1">
+
+  <style>
+    body.auth-theme-page {
+      margin: 0;
+      min-height: 100vh;
+      background-image: url("images/backgrounds/VictoryRoad.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+      font-family: "Oxanium", Arial, sans-serif;
+    }
+
+    .auth-theme-overlay {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at center 18%, rgba(36, 151, 255, 0.22), transparent 34%),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.58));
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 32px 20px;
+      box-sizing: border-box;
+    }
+
+    .auth-theme-card {
+      width: min(720px, 94vw);
+      padding: 24px;
+      border-radius: 28px;
+      background: linear-gradient(
+        to bottom,
+        rgba(4, 18, 48, 0.68),
+        rgba(4, 18, 48, 0.34)
+      );
+      border: 2px solid rgba(255, 255, 255, 0.22);
+      box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.42),
+        0 0 42px rgba(29, 150, 255, 0.18) inset;
+      backdrop-filter: blur(2px);
+      box-sizing: border-box;
+    }
+
+    .auth-theme-logo {
+      width: min(560px, 88vw);
+      display: block;
+      margin: 0 auto 14px;
+      filter:
+        drop-shadow(0 7px 0 rgba(0, 26, 70, 0.55))
+        drop-shadow(0 16px 24px rgba(0, 0, 0, 0.55));
+    }
+
+    .auth-theme-title {
+      margin: 0;
+      text-align: center;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-shadow:
+        0 3px 0 rgba(0, 0, 0, 0.70),
+        0 0 12px rgba(30, 160, 255, 0.70);
+    }
+
+    .auth-theme-subtitle {
+      margin: 8px 0 22px;
+      text-align: center;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.7px;
+      color: rgba(255, 255, 255, 0.88);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.70);
+    }
+
+    .auth-theme-form {
+      display: grid;
+      gap: 16px;
+    }
+
+    .auth-theme-field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .auth-theme-field label {
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.75);
+    }
+
+    .auth-theme-field input {
+      width: 100%;
+      min-height: 58px;
+      padding: 12px 16px;
+      box-sizing: border-box;
+      border-radius: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.32);
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.96), rgba(225, 235, 250, 0.94));
+      color: #162642;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      outline: none;
+      box-shadow:
+        0 6px 16px rgba(0, 0, 0, 0.18),
+        0 0 0 3px rgba(24, 83, 150, 0.18) inset;
+    }
+
+    .auth-theme-field input:focus {
+      border-color: rgba(255, 217, 76, 0.95);
+      box-shadow:
+        0 6px 18px rgba(0, 0, 0, 0.22),
+        0 0 0 3px rgba(255, 217, 76, 0.36) inset;
+    }
+
+    .auth-theme-button {
+      width: 100%;
+      min-height: 66px;
+      margin-top: 18px;
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      border-radius: 999px;
+      background: linear-gradient(to bottom, #294b77, #102844);
+      color: #ffffff;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95);
+      cursor: pointer;
+      box-shadow:
+        0 10px 22px rgba(0, 0, 0, 0.32),
+        0 0 0 3px rgba(105, 166, 240, 0.16) inset;
+      transition: transform 0.12s ease, filter 0.12s ease;
+    }
+
+    .auth-theme-button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
+
+    .auth-theme-status {
+      margin-top: 16px;
+      padding: 10px 14px;
+      border-radius: 16px;
+      background: rgba(5, 18, 43, 0.54);
+      border: 1px solid rgba(255, 255, 255, 0.20);
+      text-align: center;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.90);
+    }
+
+    .auth-theme-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .auth-theme-link {
+      min-height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.92), rgba(212, 226, 246, 0.88));
+      border: 2px solid rgba(255, 255, 255, 0.36);
+      color: #102844;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.20);
+      transition: transform 0.12s ease;
+    }
+
+    .auth-theme-link:hover {
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 640px) {
+      .auth-theme-card {
+        padding: 18px;
+      }
+
+      .auth-theme-title {
+        font-size: 34px;
+      }
+
+      .auth-theme-links {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
-<body>
-  <div class="page-overlay">
-    <section class="pkmn-window">
-      <img class="corner-ball top-left" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball top-right" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball bottom-left" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball bottom-right" src="images/ui/retroball.png" alt="">
+<body class="auth-theme-page">
+  <div class="auth-theme-overlay">
+    <section class="auth-theme-card">
+      <img class="auth-theme-logo" src="images/ui/LeagueLogo.png" alt="PokeLeague">
 
-      <div class="pkmn-title-box">
-        <h1 class="pkmn-title">CREATE ACCOUNT</h1>
-        <p class="pkmn-subtitle">Create your PokeLeagues account.</p>
-      </div>
+      <h1 class="auth-theme-title">Create Account</h1>
+      <p class="auth-theme-subtitle">Create your PokeLeague account.</p>
 
-      <div class="pkmn-form">
-        <div class="pkmn-field">
-          <label class="pkmn-label" for="displayNameInput">Display Name</label>
-          <input class="pkmn-input" id="displayNameInput" type="text" placeholder="Example: Alex">
+      <div class="auth-theme-form">
+        <div class="auth-theme-field">
+          <label for="displayNameInput">Display Name</label>
+          <input id="displayNameInput" type="text" placeholder="Example: Alex">
         </div>
 
-        <div class="pkmn-field">
-          <label class="pkmn-label" for="emailInput">Email</label>
-          <input class="pkmn-input" id="emailInput" type="email" placeholder="you@example.com">
+        <div class="auth-theme-field">
+          <label for="emailInput">Email</label>
+          <input id="emailInput" type="email" placeholder="you@example.com">
         </div>
 
-        <div class="pkmn-field">
-          <label class="pkmn-label" for="passwordInput">Password</label>
-          <input class="pkmn-input" id="passwordInput" type="password" placeholder="At least 6 characters">
+        <div class="auth-theme-field">
+          <label for="passwordInput">Password</label>
+          <input id="passwordInput" type="password" placeholder="At least 6 characters">
         </div>
 
-        <div class="pkmn-field">
-          <label class="pkmn-label" for="confirmPasswordInput">Confirm Password</label>
-          <input class="pkmn-input" id="confirmPasswordInput" type="password" placeholder="Re-enter password">
+        <div class="auth-theme-field">
+          <label for="confirmPasswordInput">Confirm Password</label>
+          <input id="confirmPasswordInput" type="password" placeholder="Re-enter password">
         </div>
       </div>
 
-      <div style="margin-top:16px;">
-        <button id="createAccountButton" class="pkmn-button">Create Account</button>
-      </div>
+      <button id="createAccountButton" class="auth-theme-button">Create Account</button>
 
-      <div id="createAccountStatus" class="pkmn-footer-note">Fill out all fields to begin.</div>
+      <div id="createAccountStatus" class="auth-theme-status">Fill out all fields to begin.</div>
 
-      <div class="auth-links">
-        <a href="sign-in.html">Already have an account? Sign in</a>
-        <a href="index.html">Back to Home</a>
+      <div class="auth-theme-links">
+        <a class="auth-theme-link" href="sign-in.html?v=auth3">Already have an account?</a>
+        <a class="auth-theme-link" href="index.html?v=home-current1">Back to Home</a>
       </div>
     </section>
   </div>

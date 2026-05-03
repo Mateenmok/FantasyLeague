@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>My Matchup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/pokemon-ui.css?v=weekly1">
+</head>
+<body>
+  <div class="page-overlay top-align">
+    <section class="pkmn-window wide">
+      <img class="corner-ball top-left" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball top-right" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball bottom-left" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball bottom-right" src="images/ui/retroball.png" alt="">
+
+      <div class="pkmn-title-box">
+        <h1 class="pkmn-title">MY MATCHUP</h1>
+        <p id="myMatchupSubtitle" class="pkmn-subtitle">Loading selected league...</p>
+      </div>
+
+      <div class="top-links">
+        <a class="pkmn-button-link small secondary" href="league-home.html">Back to League Home</a>
+        <a class="pkmn-button-link small secondary" href="weekly-matches.html">Weekly Matches</a>
+        <a class="pkmn-button-link small secondary" href="my-team.html">My Team</a>
+      </div>
+
+      <div id="myMatchupContent"></div>
+
+      <div id="myMatchupStatus" class="pkmn-footer-note">Loading matchup...</div>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/my-matchup.js?v=1"></script>
+</body>
+</html>

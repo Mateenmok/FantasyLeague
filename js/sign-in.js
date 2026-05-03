@@ -45,5 +45,5 @@ async function signIn() {
   }
 
   signInStatus.textContent = "Signed in. Redirecting...";
-  window.location.href = "account.html";
+  window.location.href = "account.html?v=account-polish1";
 }

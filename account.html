@@ -5,34 +5,273 @@
   <title>Account</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/pokemon-ui.css?v=accountjoin1">
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;500;600;700;800&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/pokemon-ui.css?v=account-authstyle1">
+
+  <style>
+    body.account-theme-page {
+      margin: 0;
+      min-height: 100vh;
+      background-image: url("images/backgrounds/VictoryRoad.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+      font-family: "Oxanium", Arial, sans-serif;
+    }
+
+    .account-theme-overlay {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at center 18%, rgba(36, 151, 255, 0.22), transparent 34%),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.58));
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 32px 20px;
+      box-sizing: border-box;
+    }
+
+    .account-theme-card {
+      width: min(720px, 94vw);
+      padding: 24px;
+      border-radius: 28px;
+      background: linear-gradient(
+        to bottom,
+        rgba(4, 18, 48, 0.68),
+        rgba(4, 18, 48, 0.34)
+      );
+      border: 2px solid rgba(255, 255, 255, 0.22);
+      box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.42),
+        0 0 42px rgba(29, 150, 255, 0.18) inset;
+      backdrop-filter: blur(2px);
+      box-sizing: border-box;
+    }
+
+    .account-theme-logo {
+      width: min(560px, 88vw);
+      display: block;
+      margin: 0 auto 14px;
+      filter:
+        drop-shadow(0 7px 0 rgba(0, 26, 70, 0.55))
+        drop-shadow(0 16px 24px rgba(0, 0, 0, 0.55));
+    }
+
+    .account-theme-title {
+      margin: 0;
+      text-align: center;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-shadow:
+        0 3px 0 rgba(0, 0, 0, 0.70),
+        0 0 12px rgba(30, 160, 255, 0.70);
+    }
+
+    .account-theme-status {
+      margin: 16px 0 18px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(5, 18, 43, 0.54);
+      border: 1px solid rgba(255, 255, 255, 0.20);
+      text-align: center;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .account-theme-menu {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .account-theme-link,
+    .account-theme-button {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 999px;
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: 0.7px;
+      cursor: pointer;
+      box-shadow:
+        0 10px 22px rgba(0, 0, 0, 0.32),
+        0 0 0 3px rgba(105, 166, 240, 0.16) inset;
+      transition: transform 0.12s ease, filter 0.12s ease;
+      box-sizing: border-box;
+    }
+
+    .account-theme-link {
+      background: linear-gradient(to bottom, #294b77, #102844);
+      color: #ffffff;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95);
+    }
+
+    .account-theme-link.light {
+      grid-column: 1 / -1;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.92), rgba(212, 226, 246, 0.88));
+      color: #102844;
+      text-shadow: none;
+    }
+
+    .account-theme-button {
+      width: 100%;
+      margin-top: 16px;
+      background: linear-gradient(to bottom, #d86a6a, #8d2e3a);
+      color: #ffffff;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95);
+    }
+
+    .account-theme-link:hover,
+    .account-theme-button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
+
+    .account-theme-footer {
+      margin-top: 16px;
+      padding: 10px 14px;
+      border-radius: 16px;
+      background: rgba(5, 18, 43, 0.44);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      text-align: center;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.84);
+    }
+
+    @media (max-width: 640px) {
+      .account-theme-card {
+        padding: 18px;
+      }
+
+      .account-theme-title {
+        font-size: 34px;
+      }
+
+      .account-theme-menu {
+        grid-template-columns: 1fr;
+      }
+
+      .account-theme-link.light {
+        grid-column: auto;
+      }
+    }
+
+    /* Account page polish overrides */
+
+    .account-theme-card {
+      width: min(700px, 92vw);
+      padding: 26px;
+    }
+
+    .account-theme-logo {
+      width: min(520px, 84vw);
+      margin-bottom: 10px;
+    }
+
+    .account-theme-title {
+      font-size: 40px;
+      margin-bottom: 8px;
+    }
+
+    .account-theme-status {
+      margin: 14px 0 18px;
+      min-height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .account-theme-menu {
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .account-theme-link {
+      min-height: 62px;
+      font-size: 20px;
+    }
+
+    .account-theme-link.light {
+      min-height: 62px;
+      background: linear-gradient(to bottom, #294b77, #102844);
+      color: #ffffff;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95);
+    }
+
+    #signOutButton.account-theme-button {
+      width: 100% !important;
+      min-height: 62px !important;
+      margin-top: 14px !important;
+      margin-bottom: 0 !important;
+      padding: 0 !important;
+
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+
+      border-radius: 999px !important;
+      border: 2px solid rgba(255, 255, 255, 0.35) !important;
+
+      font-family: "Oxanium", Arial, sans-serif !important;
+      font-size: 20px !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.7px !important;
+      color: #ffffff !important;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95) !important;
+
+      background: linear-gradient(to bottom, #d86a6a, #8d2e3a) !important;
+
+      box-shadow:
+        0 10px 22px rgba(0, 0, 0, 0.32),
+        0 0 0 3px rgba(255, 255, 255, 0.10) inset !important;
+
+      appearance: none !important;
+      -webkit-appearance: none !important;
+    }
+
+    .account-theme-footer {
+      margin-top: 14px;
+      font-size: 13px;
+    }
+
+  </style>
 </head>
-<body>
-  <div class="page-overlay">
-    <section class="pkmn-window">
-      <img class="corner-ball top-left" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball top-right" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball bottom-left" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball bottom-right" src="images/ui/retroball.png" alt="">
+<body class="account-theme-page">
+  <div class="account-theme-overlay">
+    <section class="account-theme-card">
+      <img class="account-theme-logo" src="images/ui/LeagueLogo.png" alt="PokeLeague">
 
-      <div class="pkmn-title-box">
-        <h1 class="pkmn-title">ACCOUNT</h1>
-      </div>
+      <h1 class="account-theme-title">Account</h1>
 
-      <div class="pkmn-status-box">
+      <div class="account-theme-status">
         <span id="accountStatus">Checking account...</span>
       </div>
 
-      <div class="pkmn-menu">
-        <a class="pkmn-button-link" href="create-league.html">Create League</a>
-        <a class="pkmn-button-link" href="my-leagues.html">My Leagues</a>
-        <a class="pkmn-button-link full-row" href="join-league.html">Join League</a>
+      <div class="account-theme-menu">
+        <a class="account-theme-link" href="create-league.html">Create League</a>
+        <a class="account-theme-link" href="my-leagues.html?v=myleagues-signin-fix1">My Leagues</a>
+        <a class="account-theme-link light" href="join-league.html?v=join-theme1">Join League</a>
       </div>
 
-      <button id="signOutButton" class="pkmn-button danger">Sign Out</button>
+      <button id="signOutButton" class="account-theme-button">Sign Out</button>
 
-      <div class="pkmn-footer-note">
+      <div class="account-theme-footer">
         Max leagues: 3
       </div>
     </section>

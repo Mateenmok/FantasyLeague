@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Account</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/pokemon-ui.css?v=accountjoin1">
+</head>
+<body>
+  <div class="page-overlay">
+    <section class="pkmn-window">
+      <img class="corner-ball top-left" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball top-right" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball bottom-left" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball bottom-right" src="images/ui/retroball.png" alt="">
+
+      <div class="pkmn-title-box">
+        <h1 class="pkmn-title">ACCOUNT</h1>
+      </div>
+
+      <div class="pkmn-status-box">
+        <span id="accountStatus">Checking account...</span>
+      </div>
+
+      <div class="pkmn-menu">
+        <a class="pkmn-button-link" href="create-league.html">Create League</a>
+        <a class="pkmn-button-link" href="my-leagues.html">My Leagues</a>
+        <a class="pkmn-button-link full-row" href="join-league.html">Join League</a>
+      </div>
+
+      <button id="signOutButton" class="pkmn-button danger">Sign Out</button>
+
+      <div class="pkmn-footer-note">
+        Max leagues: 3
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/account.js"></script>
+</body>
+</html>

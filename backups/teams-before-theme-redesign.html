@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>League Info</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/pokemon-ui.css">
+</head>
+<body>
+  <div class="page-overlay top-align">
+    <section class="pkmn-window wide">
+      <img class="corner-ball top-left" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball top-right" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball bottom-left" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball bottom-right" src="images/ui/retroball.png" alt="">
+
+      <div class="pkmn-title-box">
+        <h1 class="pkmn-title">LEAGUE INFO</h1>
+        <p id="teamInfoSubtitle" class="pkmn-subtitle">Loading selected league...</p>
+      </div>
+
+      <div class="top-links">
+        <a class="pkmn-button-link small secondary" href="league-home.html">Back to League Home</a>
+        <a class="pkmn-button-link small secondary" href="manage-league.html">Manage League</a>
+      </div>
+
+      <div id="teamInfoGrid" class="team-info-grid"></div>
+
+      <div id="teamInfoStatus" class="pkmn-footer-note">Loading teams...</div>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/teams.js?v=4"></script>
+</body>
+</html>

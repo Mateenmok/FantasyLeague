@@ -34,7 +34,7 @@ async function createAccount() {
       data: {
         display_name: displayName
       },
-      emailRedirectTo: `${window.location.origin}/account.html`
+      emailRedirectTo: `${window.location.origin}/account.html?v=account-polish1`
     }
   });
 
@@ -47,7 +47,7 @@ async function createAccount() {
 
   if (data.session) {
     createAccountStatus.textContent = "Account created. Redirecting...";
-    window.location.href = "account.html";
+    window.location.href = "account.html?v=account-polish1";
     return;
   }
 

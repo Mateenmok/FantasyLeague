@@ -195,102 +195,12 @@
         min-height: 86px;
       }
     }
-
-    /* League Home icon tile upgrade */
-
-    .league-home-theme-logo {
-      display: none;
-    }
-
-    .league-home-theme-title {
-      margin-top: 4px;
-    }
-
-    .league-home-grid {
-      margin-top: 6px;
-    }
-
-    .league-home-tile {
-      display: grid;
-      grid-template-columns: 62px 1fr;
-      grid-template-rows: auto auto;
-      column-gap: 14px;
-      align-items: center;
-      justify-content: start;
-      text-align: left;
-      min-height: 112px;
-    }
-
-    .league-home-tile-icon {
-      grid-row: 1 / 3;
-      width: 58px;
-      height: 58px;
-      object-fit: contain;
-      filter:
-        drop-shadow(0 5px 8px rgba(0, 0, 0, 0.55))
-        drop-shadow(0 0 8px rgba(56, 168, 255, 0.18));
-      transition: transform 0.12s ease, filter 0.12s ease;
-    }
-
-    .league-home-tile:hover .league-home-tile-icon {
-      transform: scale(1.08) rotate(-2deg);
-      filter:
-        drop-shadow(0 7px 10px rgba(0, 0, 0, 0.62))
-        drop-shadow(0 0 12px rgba(56, 168, 255, 0.35));
-    }
-
-    .league-home-tile-title {
-      align-self: end;
-    }
-
-    .league-home-tile-desc {
-      align-self: start;
-    }
-
-    .league-home-tile.admin .league-home-tile-icon {
-      filter:
-        drop-shadow(0 5px 8px rgba(0, 0, 0, 0.55))
-        drop-shadow(0 0 8px rgba(255, 217, 76, 0.22));
-    }
-
-    .league-home-tile.secondary .league-home-tile-icon {
-      filter: drop-shadow(0 5px 8px rgba(0, 0, 0, 0.35));
-    }
-
-    @media (max-width: 620px) {
-      .league-home-tile {
-        grid-template-columns: 52px 1fr;
-        min-height: 94px;
-      }
-
-      .league-home-tile-icon {
-        width: 48px;
-        height: 48px;
-      }
-    }
-
-
-    /* Make Egg icon larger without affecting other League Home icons */
-
-    .egg-tile-icon {
-      width: 92px !important;
-      height: 92px !important;
-      margin-left: -16px;
-    }
-
-    @media (max-width: 620px) {
-      .egg-tile-icon {
-        width: 76px !important;
-        height: 76px !important;
-        margin-left: -12px;
-      }
-    }
-
   </style>
 </head>
 <body class="league-home-theme-page">
   <div class="league-home-theme-overlay">
     <section class="league-home-theme-card">
+      <img class="league-home-theme-logo" src="images/ui/LeagueLogo.png" alt="PokeLeague">
 
       <h1 class="league-home-theme-title">League Home</h1>
       <p id="leagueSubtitle">Loading selected league...</p>
@@ -299,61 +209,51 @@
 
       <div class="league-home-grid">
         <a class="league-home-tile" href="my-team.html">
-          <img class="league-home-tile-icon egg-tile-icon" src="images/ui/Egg.png" alt="">
           <span class="league-home-tile-title">My Team</span>
           <span class="league-home-tile-desc">View your roster, point cap, and team details.</span>
         </a>
 
         <a class="league-home-tile" href="my-matchup.html">
-          <img class="league-home-tile-icon" src="images/ui/LuckyPunch.png" alt="">
           <span class="league-home-tile-title">My Matchup</span>
           <span class="league-home-tile-desc">Check your current head-to-head matchup.</span>
         </a>
 
         <a class="league-home-tile" href="weekly-matches.html">
-          <img class="league-home-tile-icon" src="images/ui/WiseGlasses.png" alt="">
           <span class="league-home-tile-title">Weekly Matches</span>
           <span class="league-home-tile-desc">See every matchup across the league.</span>
         </a>
 
         <a class="league-home-tile" href="standings.html">
-          <img class="league-home-tile-icon" src="images/ui/KingsRock.png" alt="">
           <span class="league-home-tile-title">Standings</span>
           <span class="league-home-tile-desc">Division records, games back, and playoff picture.</span>
         </a>
 
         <a class="league-home-tile" href="teams.html">
-          <img class="league-home-tile-icon" src="images/ui/ZoomLens.png" alt="">
           <span class="league-home-tile-title">League Info</span>
           <span class="league-home-tile-desc">View teams, managers, divisions, and league setup.</span>
         </a>
 
         <a id="manageLeagueLink" class="league-home-tile admin" href="manage-league.html">
-          <img class="league-home-tile-icon" src="images/ui/Metronome.png" alt="">
           <span class="league-home-tile-title">Manage League</span>
           <span class="league-home-tile-desc">Admin controls for teams, draft, schedule, and settings.</span>
         </a>
 
         <a class="league-home-tile" href="draft-room.html">
-          <img class="league-home-tile-icon" src="images/ui/ExpShare.png" alt="">
           <span class="league-home-tile-title">Draft Room</span>
           <span class="league-home-tile-desc">Make picks, track the clock, and view draft boards.</span>
         </a>
 
         <a class="league-home-tile" href="waiver-wire.html">
-          <img class="league-home-tile-icon" src="images/ui/Leftover.png" alt="">
           <span class="league-home-tile-title">Waiver Wire</span>
           <span class="league-home-tile-desc">Add, drop, and browse available Pokémon.</span>
         </a>
 
         <a class="league-home-tile" href="trading.html">
-          <img class="league-home-tile-icon" src="images/ui/AirBalloon.png" alt="">
           <span class="league-home-tile-title">Trading</span>
           <span class="league-home-tile-desc">Send and review trade offers with other managers.</span>
         </a>
 
         <a class="league-home-tile secondary" href="my-leagues.html?v=myleagues-signin-fix1">
-          <img class="league-home-tile-icon" src="images/ui/PokeDoll.png" alt="">
           <span class="league-home-tile-title">My Leagues</span>
           <span class="league-home-tile-desc">Return to your league selection screen.</span>
         </a>

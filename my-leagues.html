@@ -5,29 +5,291 @@
   <title>My Leagues</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/pokemon-ui.css">
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;500;600;700;800&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/pokemon-ui.css?v=myleagues-theme1">
+
+  <style>
+    body.my-leagues-theme-page {
+      margin: 0;
+      min-height: 100vh;
+      background-image: url("images/backgrounds/VictoryRoad.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+      font-family: "Oxanium", Arial, sans-serif;
+    }
+
+    .my-leagues-theme-overlay {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at center 18%, rgba(36, 151, 255, 0.22), transparent 34%),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.58));
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 32px 20px;
+      box-sizing: border-box;
+    }
+
+    .my-leagues-theme-card {
+      width: min(980px, 94vw);
+      padding: 24px;
+      border-radius: 28px;
+      background: linear-gradient(
+        to bottom,
+        rgba(4, 18, 48, 0.68),
+        rgba(4, 18, 48, 0.34)
+      );
+      border: 2px solid rgba(255, 255, 255, 0.22);
+      box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.42),
+        0 0 42px rgba(29, 150, 255, 0.18) inset;
+      backdrop-filter: blur(2px);
+      box-sizing: border-box;
+    }
+
+    .my-leagues-theme-logo {
+      width: min(560px, 88vw);
+      display: block;
+      margin: 0 auto 12px;
+      filter:
+        drop-shadow(0 7px 0 rgba(0, 26, 70, 0.55))
+        drop-shadow(0 16px 24px rgba(0, 0, 0, 0.55));
+    }
+
+    .my-leagues-theme-title {
+      margin: 0;
+      text-align: center;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-shadow:
+        0 3px 0 rgba(0, 0, 0, 0.70),
+        0 0 12px rgba(30, 160, 255, 0.70);
+    }
+
+    .my-leagues-theme-subtitle {
+      margin: 8px 0 20px;
+      text-align: center;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.7px;
+      color: rgba(255, 255, 255, 0.88);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.70);
+    }
+
+    .my-leagues-theme-links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .my-leagues-theme-link {
+      min-height: 50px;
+      min-width: 170px;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, #294b77, #102844);
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      color: #ffffff;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95);
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(105, 166, 240, 0.16) inset;
+      transition: transform 0.12s ease, filter 0.12s ease;
+      box-sizing: border-box;
+    }
+
+    .my-leagues-theme-link.light {
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.92), rgba(212, 226, 246, 0.88));
+      color: #102844;
+      text-shadow: none;
+    }
+
+    .my-leagues-theme-link:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
+
+    #myLeaguesList.league-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    body.my-leagues-theme-page .pkmn-card {
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(5, 18, 43, 0.58);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(105, 166, 240, 0.10) inset;
+      color: #ffffff;
+      font-family: "Oxanium", Arial, sans-serif;
+    }
+
+    body.my-leagues-theme-page .pkmn-card h2 {
+      margin: 0 0 10px;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      color: #ffffff;
+      text-shadow:
+        0 2px 0 rgba(0, 0, 0, 0.55),
+        0 0 10px rgba(30, 160, 255, 0.48);
+    }
+
+    body.my-leagues-theme-page .pkmn-card p {
+      margin: 6px 0;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.86);
+    }
+
+    body.my-leagues-theme-page .pkmn-card strong {
+      color: #f5efd8;
+      font-weight: 800;
+    }
+
+    body.my-leagues-theme-page .league-actions {
+      margin-top: 14px;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    body.my-leagues-theme-page .select-league-button,
+    body.my-leagues-theme-page .pkmn-button.small {
+      min-height: 48px !important;
+      padding: 0 22px !important;
+      border-radius: 999px !important;
+      background: linear-gradient(to bottom, #294b77, #102844) !important;
+      border: 2px solid rgba(255, 255, 255, 0.35) !important;
+      color: #ffffff !important;
+      font-family: "Oxanium", Arial, sans-serif !important;
+      font-size: 15px !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.5px !important;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95) !important;
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(105, 166, 240, 0.16) inset !important;
+      cursor: pointer !important;
+    }
+
+    body.my-leagues-theme-page .empty-state {
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(5, 18, 43, 0.58);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      color: #ffffff;
+      text-align: center;
+      font-family: "Oxanium", Arial, sans-serif;
+    }
+
+    body.my-leagues-theme-page .empty-state p {
+      color: rgba(255, 255, 255, 0.88);
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    #myLeaguesStatus {
+      margin-top: 16px;
+      padding: 10px 14px;
+      border-radius: 16px;
+      background: rgba(5, 18, 43, 0.54);
+      border: 1px solid rgba(255, 255, 255, 0.20);
+      text-align: center;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.90);
+      box-shadow: none;
+    }
+
+    @media (max-width: 720px) {
+      .my-leagues-theme-card {
+        padding: 18px;
+      }
+
+      .my-leagues-theme-title {
+        font-size: 34px;
+      }
+
+      .my-leagues-theme-links {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .my-leagues-theme-link {
+        width: 100%;
+      }
+    }
+
+    /* Empty-state Sign In button polish */
+
+    body.my-leagues-theme-page .empty-state .pkmn-button-link.small {
+      min-height: 48px !important;
+      padding: 0 24px !important;
+      border-radius: 999px !important;
+      background: linear-gradient(to bottom, #294b77, #102844) !important;
+      border: 2px solid rgba(255, 255, 255, 0.35) !important;
+      color: #ffffff !important;
+      font-family: "Oxanium", Arial, sans-serif !important;
+      font-size: 15px !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.5px !important;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95) !important;
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(105, 166, 240, 0.16) inset !important;
+      text-decoration: none !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: auto !important;
+    }
+
+    body.my-leagues-theme-page .empty-state .pkmn-button-link.small:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
+
+  </style>
 </head>
-<body>
-  <div class="page-overlay top-align">
-    <section class="pkmn-window wide">
-      <img class="corner-ball top-left" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball top-right" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball bottom-left" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball bottom-right" src="images/ui/retroball.png" alt="">
+<body class="my-leagues-theme-page">
+  <div class="my-leagues-theme-overlay">
+    <section class="my-leagues-theme-card">
+      <img class="my-leagues-theme-logo" src="images/ui/LeagueLogo.png" alt="PokeLeague">
 
-      <div class="pkmn-title-box">
-        <h1 class="pkmn-title">MY LEAGUES</h1>
-        <p class="pkmn-subtitle">View the leagues connected to your account.</p>
-      </div>
+      <h1 class="my-leagues-theme-title">My Leagues</h1>
+      <p class="my-leagues-theme-subtitle">View the leagues connected to your account.</p>
 
-      <div class="top-links">
-        <a class="pkmn-button-link small secondary" href="account.html">Back to Account</a>
-        <a class="pkmn-button-link small" href="create-league.html">Create League</a>
+      <div class="my-leagues-theme-links">
+        <a class="my-leagues-theme-link light" href="account.html?v=account-polish1">Back to Account</a>
+        <a class="my-leagues-theme-link" href="create-league.html">Create League</a>
+        <a class="my-leagues-theme-link" href="join-league.html?v=join-theme1">Join League</a>
       </div>
 
       <div id="myLeaguesList" class="league-list"></div>
-      <div id="myLeaguesStatus" class="pkmn-footer-note">Loading leagues...</div>
+      <div id="myLeaguesStatus">Loading leagues...</div>
     </section>
   </div>
 

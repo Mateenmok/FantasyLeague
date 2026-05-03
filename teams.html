@@ -5,30 +5,350 @@
   <title>League Info</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/pokemon-ui.css">
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;500;600;700;800&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/pokemon-ui.css?v=teams-theme1">
+
+  <style>
+    body.teams-theme-page {
+      margin: 0;
+      min-height: 100vh;
+      background-image: url("images/backgrounds/VictoryRoad.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+      font-family: "Oxanium", Arial, sans-serif;
+    }
+
+    .teams-theme-overlay {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at center 18%, rgba(36, 151, 255, 0.22), transparent 34%),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.58));
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 30px 20px;
+      box-sizing: border-box;
+    }
+
+    .teams-theme-card {
+      width: min(1120px, 94vw);
+      padding: 24px;
+      border-radius: 28px;
+      background: linear-gradient(
+        to bottom,
+        rgba(4, 18, 48, 0.70),
+        rgba(4, 18, 48, 0.36)
+      );
+      border: 2px solid rgba(255, 255, 255, 0.22);
+      box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.42),
+        0 0 42px rgba(29, 150, 255, 0.18) inset;
+      backdrop-filter: blur(2px);
+      box-sizing: border-box;
+    }
+
+    .teams-theme-title {
+      margin: 0;
+      text-align: center;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-shadow:
+        0 3px 0 rgba(0, 0, 0, 0.70),
+        0 0 12px rgba(30, 160, 255, 0.70);
+    }
+
+    #teamInfoSubtitle {
+      margin: 8px 0 18px;
+      text-align: center;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.7px;
+      color: rgba(255, 255, 255, 0.90);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.70);
+    }
+
+    .teams-theme-links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .teams-theme-link {
+      min-height: 50px;
+      min-width: 190px;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, #294b77, #102844);
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      color: #ffffff;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95);
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(105, 166, 240, 0.16) inset;
+      transition: transform 0.12s ease, filter 0.12s ease;
+      box-sizing: border-box;
+    }
+
+    .teams-theme-link.light {
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.92), rgba(212, 226, 246, 0.88));
+      color: #102844;
+      text-shadow: none;
+    }
+
+    .teams-theme-link:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
+
+    #teamInfoGrid.team-info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 16px;
+      align-items: start;
+    }
+
+    body.teams-theme-page .team-info-card,
+    body.teams-theme-page .empty-state {
+      padding: 18px;
+      border-radius: 24px;
+      background: rgba(5, 18, 43, 0.58);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(105, 166, 240, 0.10) inset;
+      color: #ffffff;
+      font-family: "Oxanium", Arial, sans-serif;
+      box-sizing: border-box;
+    }
+
+    body.teams-theme-page .team-info-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    body.teams-theme-page .team-number-badge {
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, #294b77, #102844);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95);
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(105, 166, 240, 0.16) inset;
+    }
+
+    body.teams-theme-page .team-info-logo,
+    body.teams-theme-page .team-info-logo-placeholder {
+      width: 92px !important;
+      height: 92px !important;
+      min-width: 92px !important;
+      min-height: 92px !important;
+      border-radius: 20px;
+      object-fit: contain;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.88);
+      border: 2px solid rgba(255, 255, 255, 0.40);
+      color: #102844;
+      font-size: 30px;
+      font-weight: 800;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.28);
+    }
+
+    body.teams-theme-page .team-info-main h2 {
+      margin: 0 0 10px;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: #ffffff;
+      line-height: 1.05;
+      text-shadow:
+        0 2px 0 rgba(0, 0, 0, 0.55),
+        0 0 10px rgba(30, 160, 255, 0.48);
+    }
+
+    body.teams-theme-page .team-info-main p,
+    body.teams-theme-page .empty-state p {
+      margin: 6px 0;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.84);
+    }
+
+    body.teams-theme-page .team-info-main strong {
+      color: #f5efd8;
+      font-weight: 800;
+    }
+
+    body.teams-theme-page .admin-badge,
+    body.teams-theme-page .team-role-badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 0 10px;
+      border-radius: 999px;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+    }
+
+    body.teams-theme-page .admin-badge {
+      background: rgba(255, 217, 76, 0.22);
+      color: #fff4b8;
+    }
+
+    body.teams-theme-page .team-role-badge {
+      background: rgba(56, 168, 255, 0.20);
+      color: #d7edff;
+    }
+
+    body.teams-theme-page .small-note {
+      color: rgba(255, 255, 255, 0.62);
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    body.teams-theme-page .team-edit-form {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    body.teams-theme-page .team-edit-form label {
+      margin-top: 6px;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.88);
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.75);
+    }
+
+    body.teams-theme-page .team-edit-form input {
+      width: 100%;
+      min-height: 46px;
+      padding: 10px 14px;
+      box-sizing: border-box;
+      border-radius: 14px;
+      border: 2px solid rgba(255, 255, 255, 0.32);
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.96), rgba(225, 235, 250, 0.94));
+      color: #162642;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      outline: none;
+      box-shadow:
+        0 6px 16px rgba(0, 0, 0, 0.18),
+        0 0 0 3px rgba(24, 83, 150, 0.18) inset;
+    }
+
+    body.teams-theme-page .save-team-button {
+      width: 100% !important;
+      min-height: 52px !important;
+      margin-top: 10px !important;
+      border-radius: 999px !important;
+      background: linear-gradient(to bottom, #294b77, #102844) !important;
+      border: 2px solid rgba(255, 255, 255, 0.35) !important;
+      color: #ffffff !important;
+      font-family: "Oxanium", Arial, sans-serif !important;
+      font-size: 15px !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.5px !important;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95) !important;
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(105, 166, 240, 0.16) inset !important;
+      cursor: pointer !important;
+    }
+
+    #teamInfoStatus {
+      margin-top: 16px;
+      padding: 10px 14px;
+      border-radius: 16px;
+      background: rgba(5, 18, 43, 0.54);
+      border: 1px solid rgba(255, 255, 255, 0.20);
+      text-align: center;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.90);
+      box-shadow: none;
+    }
+
+    @media (max-width: 640px) {
+      .teams-theme-card {
+        padding: 18px;
+      }
+
+      .teams-theme-title {
+        font-size: 34px;
+      }
+
+      .teams-theme-links {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .teams-theme-link {
+        width: 100%;
+      }
+
+      #teamInfoGrid.team-info-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
-<body>
-  <div class="page-overlay top-align">
-    <section class="pkmn-window wide">
-      <img class="corner-ball top-left" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball top-right" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball bottom-left" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball bottom-right" src="images/ui/retroball.png" alt="">
+<body class="teams-theme-page">
+  <div class="teams-theme-overlay">
+    <section class="teams-theme-card">
+      <h1 class="teams-theme-title">League Info</h1>
+      <p id="teamInfoSubtitle">Loading selected league...</p>
 
-      <div class="pkmn-title-box">
-        <h1 class="pkmn-title">LEAGUE INFO</h1>
-        <p id="teamInfoSubtitle" class="pkmn-subtitle">Loading selected league...</p>
-      </div>
-
-      <div class="top-links">
-        <a class="pkmn-button-link small secondary" href="league-home.html">Back to League Home</a>
-        <a class="pkmn-button-link small secondary" href="manage-league.html">Manage League</a>
+      <div class="teams-theme-links">
+        <a class="teams-theme-link" href="league-home.html?v=leaguehome-icons4">Back to League Home</a>
+        <a class="teams-theme-link light" href="manage-league.html">Manage League</a>
       </div>
 
       <div id="teamInfoGrid" class="team-info-grid"></div>
 
-      <div id="teamInfoStatus" class="pkmn-footer-note">Loading teams...</div>
+      <div id="teamInfoStatus">Loading teams...</div>
     </section>
   </div>
 

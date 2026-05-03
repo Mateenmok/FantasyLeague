@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Manage League</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/pokemon-ui.css?v=guestjoin2">
+</head>
+<body>
+  <div class="page-overlay top-align">
+    <section class="pkmn-window wide">
+      <img class="corner-ball top-left" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball top-right" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball bottom-left" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball bottom-right" src="images/ui/retroball.png" alt="">
+
+      <div class="pkmn-title-box">
+        <h1 class="pkmn-title">MANAGE LEAGUE</h1>
+        <p id="manageLeagueSubtitle" class="pkmn-subtitle">Loading league...</p>
+      </div>
+
+      <div class="top-links">
+        <a class="pkmn-button-link small secondary" href="league-home.html">Back to League Home</a>
+        <a class="pkmn-button-link small secondary" href="my-leagues.html">My Leagues</a>
+      </div>
+
+
+      <div class="pkmn-panel">
+        <p><strong>Divisions</strong></p>
+        <p class="small-note">
+          Rename each division and assign teams to either division.
+        </p>
+
+        <div id="divisionEditor" class="division-editor"></div>
+      </div>
+
+
+      <div class="pkmn-panel">
+        <p class="manage-section-title">Draft Settings</p>
+        <p class="manage-section-note">
+          Set the draft clock and draft order before the draft begins.
+        </p>
+
+        <div class="draft-settings-grid">
+          <label class="draft-clock-setting">
+            <span>Clock Seconds</span>
+            <input id="draftClockSecondsInput" class="pkmn-input" type="number" min="15" max="600" value="120">
+          </label>
+        </div>
+
+        <div id="draftOrderEditor" class="draft-order-editor"></div>
+      </div>
+
+      <div class="pkmn-panel">
+        <p><strong>Team Manager Emails</strong></p>
+        <p class="small-note">
+          Add each participant's email to their team. When they create/sign into an account with that same email,
+          this league will appear in their My Leagues page.
+        </p>
+      </div>
+
+      <div id="teamManagerList" class="team-manager-list"></div>
+
+      <div style="margin-top:16px;">
+        <button id="saveManagersButton" class="pkmn-button">Save League Settings</button>
+      </div>
+
+
+      <div class="pkmn-panel danger-zone">
+        <p><strong>Delete League</strong></p>
+        <p class="small-note">
+          This permanently deletes the league, teams, memberships, draft picks, draft order, and league roster data.
+        </p>
+
+        <div class="delete-league-row">
+          <input id="deleteLeagueConfirmInput" class="pkmn-input" type="text" placeholder="Type DELETE to confirm">
+          <button id="deleteLeagueButton" class="pkmn-button danger">Delete League</button>
+        </div>
+
+        <p id="deleteLeagueStatus" class="small-note"></p>
+      </div>
+
+      <div id="manageLeagueStatus" class="pkmn-footer-note">Loading teams...</div>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/manage-league.js?v=4"></script>
+</body>
+</html>

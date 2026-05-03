@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Sign In</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/pokemon-ui.css">
+</head>
+<body>
+  <div class="page-overlay">
+    <section class="pkmn-window">
+      <img class="corner-ball top-left" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball top-right" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball bottom-left" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball bottom-right" src="images/ui/retroball.png" alt="">
+
+      <div class="pkmn-title-box">
+        <h1 class="pkmn-title">SIGN IN</h1>
+        <p class="pkmn-subtitle">Sign in to your PokeLeagues account.</p>
+      </div>
+
+      <div class="pkmn-form">
+        <div class="pkmn-field">
+          <label class="pkmn-label" for="emailInput">Email</label>
+          <input class="pkmn-input" id="emailInput" type="email" placeholder="you@example.com" autocomplete="email">
+        </div>
+
+        <div class="pkmn-field">
+          <label class="pkmn-label" for="passwordInput">Password</label>
+          <input class="pkmn-input" id="passwordInput" type="password" placeholder="Your password" autocomplete="current-password">
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <button id="signInButton" class="pkmn-button">Sign In</button>
+      </div>
+
+      <div id="signInStatus" class="pkmn-footer-note">Enter your account details.</div>
+
+      <div class="auth-links">
+        <a href="create-account.html">Need an account? Create one</a>
+        <a href="index.html">Back to Home</a>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/sign-in.js"></script>
+</body>
+</html>

@@ -5,31 +5,432 @@
   <title>Weekly Matches</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/pokemon-ui.css?v=weekly1">
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;500;600;700;800&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/pokemon-ui.css?v=weekly-theme1">
+
+  <style>
+    body.weekly-theme-page {
+      margin: 0;
+      min-height: 100vh;
+      background-image: url("images/backgrounds/VictoryRoad.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+      font-family: "Oxanium", Arial, sans-serif;
+    }
+
+    .weekly-theme-overlay {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at center 18%, rgba(36, 151, 255, 0.22), transparent 34%),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.58));
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 30px 20px;
+      box-sizing: border-box;
+    }
+
+    .weekly-theme-card {
+      width: min(1120px, 94vw);
+      padding: 24px;
+      border-radius: 28px;
+      background: linear-gradient(
+        to bottom,
+        rgba(4, 18, 48, 0.70),
+        rgba(4, 18, 48, 0.36)
+      );
+      border: 2px solid rgba(255, 255, 255, 0.22);
+      box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.42),
+        0 0 42px rgba(29, 150, 255, 0.18) inset;
+      backdrop-filter: blur(2px);
+      box-sizing: border-box;
+    }
+
+    .weekly-theme-title {
+      margin: 0;
+      text-align: center;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-shadow:
+        0 3px 0 rgba(0, 0, 0, 0.70),
+        0 0 12px rgba(30, 160, 255, 0.70);
+    }
+
+    #weeklySubtitle {
+      margin: 8px 0 18px;
+      text-align: center;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.7px;
+      color: rgba(255, 255, 255, 0.90);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.70);
+    }
+
+    .weekly-theme-links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .weekly-theme-link {
+      min-height: 50px;
+      min-width: 180px;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, #294b77, #102844);
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      color: #ffffff;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95);
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(105, 166, 240, 0.16) inset;
+      transition: transform 0.12s ease, filter 0.12s ease;
+      box-sizing: border-box;
+    }
+
+    .weekly-theme-link.light {
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.92), rgba(212, 226, 246, 0.88));
+      color: #102844;
+      text-shadow: none;
+    }
+
+    .weekly-theme-link:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
+
+    .weekly-round-panel,
+    body.weekly-theme-page .weekly-admin-controls .pkmn-panel,
+    body.weekly-theme-page .empty-state {
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(5, 18, 43, 0.58);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(105, 166, 240, 0.10) inset;
+      color: #ffffff;
+      font-family: "Oxanium", Arial, sans-serif;
+      box-sizing: border-box;
+      margin-bottom: 16px;
+    }
+
+    .weekly-round-panel strong,
+    body.weekly-theme-page .weekly-admin-controls strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #ffffff;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 0.7px;
+      text-shadow:
+        0 2px 0 rgba(0, 0, 0, 0.55),
+        0 0 10px rgba(30, 160, 255, 0.48);
+    }
+
+    #weeklyRoundStatus,
+    body.weekly-theme-page .small-note,
+    body.weekly-theme-page .empty-state p {
+      margin: 6px 0;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.35;
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    body.weekly-theme-page .weekly-control-buttons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 14px 0;
+    }
+
+    body.weekly-theme-page .weekly-control-buttons .pkmn-button {
+      min-height: 52px !important;
+      border-radius: 999px !important;
+      background: linear-gradient(to bottom, #294b77, #102844) !important;
+      border: 2px solid rgba(255, 255, 255, 0.35) !important;
+      color: #ffffff !important;
+      font-family: "Oxanium", Arial, sans-serif !important;
+      font-size: 15px !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.5px !important;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95) !important;
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(105, 166, 240, 0.16) inset !important;
+      cursor: pointer !important;
+    }
+
+    #weeklyMatchesList.weekly-matches-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    body.weekly-theme-page .weekly-match-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 190px 1fr;
+      gap: 16px;
+      align-items: center;
+      padding: 18px;
+      border-radius: 24px;
+      background: rgba(5, 18, 43, 0.58);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(105, 166, 240, 0.10) inset;
+      color: #ffffff;
+      font-family: "Oxanium", Arial, sans-serif;
+      box-sizing: border-box;
+    }
+
+    body.weekly-theme-page .weekly-match-status {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      z-index: 2;
+    }
+
+    body.weekly-theme-page .weekly-complete-badge,
+    body.weekly-theme-page .weekly-open-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 28px;
+      padding: 0 12px;
+      border-radius: 999px;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      border: 1px solid rgba(255, 255, 255, 0.26);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.24);
+    }
+
+    body.weekly-theme-page .weekly-complete-badge {
+      background: rgba(65, 217, 133, 0.24);
+      color: #d8ffe8;
+    }
+
+    body.weekly-theme-page .weekly-open-badge {
+      background: rgba(255, 217, 76, 0.20);
+      color: #fff3b0;
+    }
+
+    body.weekly-theme-page .weekly-team-side {
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      gap: 12px;
+      align-items: center;
+      min-height: 110px;
+      padding: 12px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.88);
+      border: 2px solid rgba(255, 255, 255, 0.40);
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.22),
+        0 0 0 3px rgba(105, 166, 240, 0.10) inset;
+      box-sizing: border-box;
+    }
+
+    body.weekly-theme-page .weekly-team-side.right {
+      grid-template-columns: 1fr 76px;
+      text-align: right;
+    }
+
+    body.weekly-theme-page .weekly-team-side.right .weekly-team-logo,
+    body.weekly-theme-page .weekly-team-side.right .weekly-team-logo-placeholder {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    body.weekly-theme-page .weekly-team-side.right .weekly-team-text {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    body.weekly-theme-page .weekly-team-logo,
+    body.weekly-theme-page .weekly-team-logo-placeholder {
+      width: 70px;
+      height: 70px;
+      border-radius: 18px;
+      object-fit: contain;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(16, 40, 68, 0.12);
+      border: 2px solid rgba(16, 40, 68, 0.20);
+      color: #102844;
+      font-size: 24px;
+      font-weight: 800;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.16);
+    }
+
+    body.weekly-theme-page .weekly-team-text h2 {
+      margin: 0 0 5px;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: #102844;
+      line-height: 1.05;
+    }
+
+    body.weekly-theme-page .weekly-team-text p {
+      margin: 3px 0;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      color: rgba(16, 40, 68, 0.72);
+    }
+
+    body.weekly-theme-page .weekly-score-center {
+      min-height: 110px;
+      padding: 12px;
+      border-radius: 20px;
+      background: linear-gradient(to bottom, rgba(41, 75, 119, 0.86), rgba(16, 40, 68, 0.82));
+      border: 2px solid rgba(255, 255, 255, 0.30);
+      box-shadow:
+        0 10px 22px rgba(0, 0, 0, 0.30),
+        0 0 0 3px rgba(105, 166, 240, 0.16) inset;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 10px;
+      align-items: center;
+      justify-items: center;
+      box-sizing: border-box;
+    }
+
+    body.weekly-theme-page .weekly-score-center span {
+      color: rgba(255, 255, 255, 0.84);
+      font-size: 18px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    body.weekly-theme-page .weekly-score-display,
+    body.weekly-theme-page .weekly-score-input {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      box-sizing: border-box;
+    }
+
+    body.weekly-theme-page .weekly-score-display {
+      background: rgba(255, 255, 255, 0.92);
+      color: #102844;
+      border: 2px solid rgba(255, 255, 255, 0.36);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.20);
+    }
+
+    body.weekly-theme-page .weekly-score-input {
+      border: 2px solid rgba(255, 255, 255, 0.36);
+      background: rgba(255, 255, 255, 0.94);
+      color: #102844;
+      outline: none;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.20);
+    }
+
+    #weeklyStatus {
+      margin-top: 16px;
+      padding: 10px 14px;
+      border-radius: 16px;
+      background: rgba(5, 18, 43, 0.54);
+      border: 1px solid rgba(255, 255, 255, 0.20);
+      text-align: center;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.90);
+      box-shadow: none;
+    }
+
+    @media (max-width: 960px) {
+      body.weekly-theme-page .weekly-match-card {
+        grid-template-columns: 1fr;
+      }
+
+      body.weekly-theme-page .weekly-team-side.right {
+        grid-template-columns: 76px 1fr;
+        text-align: left;
+      }
+
+      body.weekly-theme-page .weekly-team-side.right .weekly-team-logo,
+      body.weekly-theme-page .weekly-team-side.right .weekly-team-logo-placeholder {
+        grid-column: 1;
+      }
+
+      body.weekly-theme-page .weekly-team-side.right .weekly-team-text {
+        grid-column: 2;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .weekly-theme-card {
+        padding: 18px;
+      }
+
+      .weekly-theme-title {
+        font-size: 34px;
+      }
+
+      .weekly-theme-links,
+      body.weekly-theme-page .weekly-control-buttons {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .weekly-theme-link {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
-<body>
-  <div class="page-overlay top-align">
-    <section class="pkmn-window wide">
-      <img class="corner-ball top-left" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball top-right" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball bottom-left" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball bottom-right" src="images/ui/retroball.png" alt="">
+<body class="weekly-theme-page">
+  <div class="weekly-theme-overlay">
+    <section class="weekly-theme-card">
+      <h1 class="weekly-theme-title">Weekly Matches</h1>
+      <p id="weeklySubtitle">Loading selected league...</p>
 
-      <div class="pkmn-title-box">
-        <h1 class="pkmn-title">WEEKLY MATCHES</h1>
-        <p id="weeklySubtitle" class="pkmn-subtitle">Loading selected league...</p>
+      <div class="weekly-theme-links">
+        <a class="weekly-theme-link" href="league-home.html?v=leaguehome-icons4">Back to League Home</a>
+        <a class="weekly-theme-link" href="my-matchup.html?v=mymatchup-theme1">My Matchup</a>
+        <a class="weekly-theme-link light" href="standings.html">Standings</a>
       </div>
 
-      <div class="top-links">
-        <a class="pkmn-button-link small secondary" href="league-home.html">Back to League Home</a>
-        <a class="pkmn-button-link small secondary" href="my-matchup.html">My Matchup</a>
-        <a class="pkmn-button-link small secondary" href="standings.html">Standings</a>
-      </div>
-
-      <div class="pkmn-panel">
-        <p><strong id="weeklyRoundTitle">Current Matchup</strong></p>
-        <p id="weeklyRoundStatus" class="small-note">Loading matchups...</p>
+      <div class="weekly-round-panel">
+        <strong id="weeklyRoundTitle">Current Matchup</strong>
+        <p id="weeklyRoundStatus">Loading matchups...</p>
       </div>
 
       <section id="weeklyAdminControls" class="weekly-admin-controls">
@@ -51,7 +452,7 @@
 
       <div id="weeklyMatchesList" class="weekly-matches-list"></div>
 
-      <div id="weeklyStatus" class="pkmn-footer-note">Loading...</div>
+      <div id="weeklyStatus">Loading...</div>
     </section>
   </div>
 

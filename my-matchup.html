@@ -5,31 +5,344 @@
   <title>My Matchup</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/pokemon-ui.css?v=weekly1">
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;500;600;700;800&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/pokemon-ui.css?v=mymatchup-theme1">
+
+  <style>
+    body.my-matchup-theme-page {
+      margin: 0;
+      min-height: 100vh;
+      background-image: url("images/backgrounds/VictoryRoad.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+      font-family: "Oxanium", Arial, sans-serif;
+    }
+
+    .my-matchup-theme-overlay {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at center 18%, rgba(36, 151, 255, 0.22), transparent 34%),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.58));
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 30px 20px;
+      box-sizing: border-box;
+    }
+
+    .my-matchup-theme-card {
+      width: min(1120px, 94vw);
+      padding: 24px;
+      border-radius: 28px;
+      background: linear-gradient(
+        to bottom,
+        rgba(4, 18, 48, 0.70),
+        rgba(4, 18, 48, 0.36)
+      );
+      border: 2px solid rgba(255, 255, 255, 0.22);
+      box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.42),
+        0 0 42px rgba(29, 150, 255, 0.18) inset;
+      backdrop-filter: blur(2px);
+      box-sizing: border-box;
+    }
+
+    .my-matchup-theme-title {
+      margin: 0;
+      text-align: center;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-shadow:
+        0 3px 0 rgba(0, 0, 0, 0.70),
+        0 0 12px rgba(30, 160, 255, 0.70);
+    }
+
+    #myMatchupSubtitle {
+      margin: 8px 0 18px;
+      text-align: center;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.7px;
+      color: rgba(255, 255, 255, 0.90);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.70);
+    }
+
+    .my-matchup-theme-links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .my-matchup-theme-link {
+      min-height: 50px;
+      min-width: 180px;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, #294b77, #102844);
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      color: #ffffff;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95);
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(105, 166, 240, 0.16) inset;
+      transition: transform 0.12s ease, filter 0.12s ease;
+      box-sizing: border-box;
+    }
+
+    .my-matchup-theme-link.light {
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.92), rgba(212, 226, 246, 0.88));
+      color: #102844;
+      text-shadow: none;
+    }
+
+    .my-matchup-theme-link:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
+
+    body.my-matchup-theme-page .my-matchup-feature,
+    body.my-matchup-theme-page .empty-state {
+      padding: 20px;
+      border-radius: 24px;
+      background: rgba(5, 18, 43, 0.58);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(105, 166, 240, 0.10) inset;
+      color: #ffffff;
+      font-family: "Oxanium", Arial, sans-serif;
+      box-sizing: border-box;
+    }
+
+    body.my-matchup-theme-page .empty-state {
+      text-align: center;
+    }
+
+    body.my-matchup-theme-page .empty-state p {
+      margin: 8px 0;
+      color: rgba(255, 255, 255, 0.88);
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    body.my-matchup-theme-page .my-matchup-round-label {
+      width: fit-content;
+      margin: 0 auto 18px;
+      padding: 8px 18px;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.92), rgba(212, 226, 246, 0.88));
+      border: 2px solid rgba(255, 255, 255, 0.36);
+      color: #102844;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.20);
+    }
+
+    body.my-matchup-theme-page .my-matchup-teams {
+      display: grid;
+      grid-template-columns: 1fr 230px 1fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    body.my-matchup-theme-page .my-matchup-team-card {
+      min-height: 290px;
+      padding: 18px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.88);
+      border: 2px solid rgba(255, 255, 255, 0.40);
+      box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(105, 166, 240, 0.10) inset;
+      color: #102844;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    body.my-matchup-theme-page .my-matchup-label {
+      width: fit-content;
+      margin: 0 auto 12px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, #294b77, #102844);
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95);
+    }
+
+    body.my-matchup-theme-page .my-matchup-logo,
+    body.my-matchup-theme-page .my-matchup-logo-placeholder {
+      width: 112px;
+      height: 112px;
+      margin: 0 auto 12px;
+      border-radius: 24px;
+      object-fit: contain;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(16, 40, 68, 0.12);
+      border: 2px solid rgba(16, 40, 68, 0.20);
+      color: #102844;
+      font-size: 38px;
+      font-weight: 800;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+    }
+
+    body.my-matchup-theme-page .my-matchup-team-card h2 {
+      margin: 8px 0;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 0.7px;
+      color: #102844;
+      line-height: 1.05;
+    }
+
+    body.my-matchup-theme-page .my-matchup-team-card p {
+      margin: 6px 0;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      color: rgba(16, 40, 68, 0.78);
+    }
+
+    body.my-matchup-theme-page .my-matchup-score-box {
+      padding: 18px;
+      border-radius: 24px;
+      background: linear-gradient(to bottom, rgba(41, 75, 119, 0.86), rgba(16, 40, 68, 0.82));
+      border: 2px solid rgba(255, 255, 255, 0.30);
+      box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.32),
+        0 0 0 3px rgba(105, 166, 240, 0.16) inset;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    body.my-matchup-theme-page .my-matchup-score {
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: #ffffff;
+      text-shadow:
+        0 3px 0 rgba(0, 0, 0, 0.55),
+        0 0 12px rgba(30, 160, 255, 0.58);
+    }
+
+    body.my-matchup-theme-page .my-matchup-vs {
+      margin: 14px 0;
+      width: 86px;
+      height: 86px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.96), rgba(212, 226, 246, 0.88));
+      color: #102844;
+      font-size: 32px;
+      font-weight: 800;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.24);
+    }
+
+    body.my-matchup-theme-page .my-matchup-status {
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(5, 18, 43, 0.48);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: rgba(255, 255, 255, 0.88);
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    #myMatchupStatus {
+      margin-top: 16px;
+      padding: 10px 14px;
+      border-radius: 16px;
+      background: rgba(5, 18, 43, 0.54);
+      border: 1px solid rgba(255, 255, 255, 0.20);
+      text-align: center;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.90);
+      box-shadow: none;
+    }
+
+    @media (max-width: 900px) {
+      body.my-matchup-theme-page .my-matchup-teams {
+        grid-template-columns: 1fr;
+      }
+
+      body.my-matchup-theme-page .my-matchup-score-box {
+        min-height: 190px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .my-matchup-theme-card {
+        padding: 18px;
+      }
+
+      .my-matchup-theme-title {
+        font-size: 34px;
+      }
+
+      .my-matchup-theme-links {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .my-matchup-theme-link {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
-<body>
-  <div class="page-overlay top-align">
-    <section class="pkmn-window wide">
-      <img class="corner-ball top-left" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball top-right" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball bottom-left" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball bottom-right" src="images/ui/retroball.png" alt="">
+<body class="my-matchup-theme-page">
+  <div class="my-matchup-theme-overlay">
+    <section class="my-matchup-theme-card">
+      <h1 class="my-matchup-theme-title">My Matchup</h1>
+      <p id="myMatchupSubtitle">Loading selected league...</p>
 
-      <div class="pkmn-title-box">
-        <h1 class="pkmn-title">MY MATCHUP</h1>
-        <p id="myMatchupSubtitle" class="pkmn-subtitle">Loading selected league...</p>
-      </div>
-
-      <div class="top-links">
-        <a class="pkmn-button-link small secondary" href="league-home.html">Back to League Home</a>
-        <a class="pkmn-button-link small secondary" href="weekly-matches.html">Weekly Matches</a>
-        <a class="pkmn-button-link small secondary" href="my-team.html">My Team</a>
+      <div class="my-matchup-theme-links">
+        <a class="my-matchup-theme-link" href="league-home.html?v=leaguehome-icons4">Back to League Home</a>
+        <a class="my-matchup-theme-link" href="weekly-matches.html">Weekly Matches</a>
+        <a class="my-matchup-theme-link light" href="my-team.html?v=myteam-theme1">My Team</a>
       </div>
 
       <div id="myMatchupContent"></div>
 
-      <div id="myMatchupStatus" class="pkmn-footer-note">Loading matchup...</div>
+      <div id="myMatchupStatus">Loading matchup...</div>
     </section>
   </div>
 

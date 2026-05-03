@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Create Account</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/pokemon-ui.css">
+</head>
+<body>
+  <div class="page-overlay">
+    <section class="pkmn-window">
+      <img class="corner-ball top-left" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball top-right" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball bottom-left" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball bottom-right" src="images/ui/retroball.png" alt="">
+
+      <div class="pkmn-title-box">
+        <h1 class="pkmn-title">CREATE ACCOUNT</h1>
+        <p class="pkmn-subtitle">Create your PokeLeagues account.</p>
+      </div>
+
+      <div class="pkmn-form">
+        <div class="pkmn-field">
+          <label class="pkmn-label" for="displayNameInput">Display Name</label>
+          <input class="pkmn-input" id="displayNameInput" type="text" placeholder="Example: Alex">
+        </div>
+
+        <div class="pkmn-field">
+          <label class="pkmn-label" for="emailInput">Email</label>
+          <input class="pkmn-input" id="emailInput" type="email" placeholder="you@example.com">
+        </div>
+
+        <div class="pkmn-field">
+          <label class="pkmn-label" for="passwordInput">Password</label>
+          <input class="pkmn-input" id="passwordInput" type="password" placeholder="At least 6 characters">
+        </div>
+
+        <div class="pkmn-field">
+          <label class="pkmn-label" for="confirmPasswordInput">Confirm Password</label>
+          <input class="pkmn-input" id="confirmPasswordInput" type="password" placeholder="Re-enter password">
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <button id="createAccountButton" class="pkmn-button">Create Account</button>
+      </div>
+
+      <div id="createAccountStatus" class="pkmn-footer-note">Fill out all fields to begin.</div>
+
+      <div class="auth-links">
+        <a href="sign-in.html">Already have an account? Sign in</a>
+        <a href="index.html">Back to Home</a>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/create-account.js"></script>
+</body>
+</html>
