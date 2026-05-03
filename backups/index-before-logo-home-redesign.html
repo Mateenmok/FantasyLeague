@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>PokeLeague</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background-image: url("images/backgrounds/Stadium4.webp");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+      font-family: "Oxanium", Arial, sans-serif;
+    }
+
+    .home-overlay {
+      min-height: 100vh;
+      background: rgba(0, 0, 0, 0.42);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 40px;
+      box-sizing: border-box;
+    }
+
+    .home-content {
+      width: 100%;
+      text-align: center;
+    }
+
+    .title-image {
+      width: min(900px, 88vw);
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.45));
+    }
+
+    .home-buttons {
+      margin-top: 48px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 52px;
+      flex-wrap: nowrap;
+      width: 100%;
+    }
+
+    .pokeball-link {
+      text-decoration: none;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.2s ease;
+    }
+
+    .pokeball-link:hover {
+      transform: translateY(-8px) scale(1.04);
+    }
+
+    .pokeball-button {
+      width: 190px;
+      height: 190px;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.8));
+    }
+
+    .character-button {
+      object-fit: contain;
+    }
+
+    .button-caption {
+      margin-top: -2px;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-shadow: 0 3px 10px rgba(0, 0, 0, 0.9);
+    }
+
+    @media (max-width: 900px) {
+      .home-buttons {
+        gap: 28px;
+      }
+
+      .pokeball-button {
+        width: 125px;
+        height: 125px;
+      }
+
+      .button-caption {
+        font-size: 20px;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .home-buttons {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="home-overlay">
+    <div class="home-content">
+      <img class="title-image" src="images/ui/PokeLeagues.png" alt="PokeLeague">
+
+      <div class="home-buttons">
+
+        <a class="pokeball-link" href="create-account.html">
+          <img class="pokeball-button character-button" src="images/buttons/PikaPika.webp" alt="Create Account">
+          <div class="button-caption">Create Account</div>
+        </a>
+        <a class="pokeball-link" href="sign-in.html">
+          <img class="pokeball-button character-button" src="images/buttons/Jigglypuff12.png" alt="Sign In">
+          <div class="button-caption">Sign In</div>
+        </a>
+
+        <a class="pokeball-link" href="join-league.html?guest=1">
+          <img class="pokeball-button character-button" src="images/GuestButton.png" alt="Continue as Guest">
+          <div class="button-caption">Continue as Guest</div>
+        </a>
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>
