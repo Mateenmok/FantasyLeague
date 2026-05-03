@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Draft Room</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/pokemon-ui.css?v=typebar4">
+</head>
+<body>
+  <div class="page-overlay top-align">
+    <section class="pkmn-window wide">
+      <img class="corner-ball top-left" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball top-right" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball bottom-left" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball bottom-right" src="images/ui/retroball.png" alt="">
+
+      <div class="pkmn-title-box">
+        <h1 class="pkmn-title">DRAFT ROOM</h1>
+        <p id="draftLeagueSubtitle" class="pkmn-subtitle">Loading selected league...</p>
+      </div>
+
+      <div class="top-links">
+        <a class="pkmn-button-link small secondary" href="league-home.html">Back to League Home</a>
+        <a class="pkmn-button-link small secondary" href="my-team.html">My Team</a>
+      </div>
+
+      <div class="draft-timer-box">
+        <p><strong>Draft Clock</strong></p>
+        <p id="draftClockLine">Loading clock...</p>
+      </div>
+
+      <div class="pkmn-panel">
+        <p><strong>Draft Status</strong></p>
+        <p id="draftStatusLine" class="small-note">Loading draft...</p>
+      </div>
+
+      <section id="draftSetupSection" class="draft-controls-panel">
+        <div class="pkmn-panel">
+          <p><strong>Draft Controls</strong></p>
+          <p class="small-note">
+            Draft order and clock settings are managed from Manage League.
+          </p>
+
+          <div class="draft-admin-buttons">
+            <button id="saveDraftOrderButton" class="pkmn-button small" style="display:none;">Save Draft Order</button>
+            <button id="startDraftButton" class="pkmn-button small">Start Draft</button>
+            <button id="stopDraftButton" class="pkmn-button small danger">Stop Draft</button>
+          </div>
+
+          <div id="draftOrderList" style="display:none;"></div>
+        </div>
+      </section>
+
+
+      <div id="draftPointStatus" class="draft-point-status"></div>
+
+      <section id="draftControls" class="draft-controls-panel">
+        <div class="pkmn-panel">
+          <p><strong>Make Pick</strong></p>
+          <p id="nextPickLine" class="small-note">Loading next pick...</p>
+
+          <div class="draft-pick-form">
+            <input
+              id="pokemonDraftInput"
+              class="pkmn-input"
+              list="availablePokemonOptions"
+              type="text"
+              placeholder="Type Pokémon name">
+
+            <datalist id="availablePokemonOptions"></datalist>
+
+            <button id="makePickButton" class="pkmn-button small">Make Pick</button>
+            <button id="undoPickButton" class="pkmn-button small danger">Undo Last Pick</button>
+          </div>
+
+          <p id="draftActionStatus" class="small-note">Admin draft controls.</p>
+        </div>
+      </section>
+
+      <div class="draft-room-grid">
+        <section class="pkmn-panel">
+          <p><strong>Draft Board</strong></p>
+          <div id="draftPicksList" class="draft-picks-list"></div>
+        </section>
+
+        <section class="pkmn-panel">
+          <p><strong>Team Rosters</strong></p>
+          <div id="draftTeamRosters" class="draft-team-rosters"></div>
+        </section>
+      </div>
+
+      <div class="pkmn-panel">
+        <p><strong>Available Pokémon</strong></p>
+
+        <div class="draft-filter-menu">
+          <label>
+            <span>Search</span>
+            <input id="availablePokemonSearch" class="pkmn-input" type="text" placeholder="Search Pokémon">
+          </label>
+
+          <label>
+            <span>Mega</span>
+            <select id="megaFilterSelect" class="pkmn-select">
+              <option value="all">All Pokémon</option>
+              <option value="mega">Mega Only</option>
+              <option value="non-mega">Non-Mega Only</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Tier</span>
+            <select id="tierFilterSelect" class="pkmn-select">
+              <option value="all">All Tiers</option>
+              <option value="Diamond">Diamond</option>
+              <option value="Gold">Gold</option>
+              <option value="Silver">Silver</option>
+              <option value="Bronze">Bronze</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Type</span>
+            <select id="typeFilterSelect" class="pkmn-select">
+              <option value="all">All Types</option>
+            </select>
+          </label>
+        </div>
+
+        <p id="availablePokemonCount" class="small-note">Loading available Pokémon...</p>
+
+        <div id="availablePokemonGrid" class="draft-available-grid"></div>
+      </div>
+
+      <div id="draftRoomStatus" class="pkmn-footer-note">Loading...</div>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/draft-room.js?v=managerlabel1"></script>
+</body>
+</html>

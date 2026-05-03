@@ -5,25 +5,531 @@
   <title>Draft Room</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/pokemon-ui.css?v=typebar4">
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;500;600;700;800&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/pokemon-ui.css?v=tierbadge-align2">
+
+  <style>
+    body.draft-theme-page {
+      margin: 0;
+      min-height: 100vh;
+      background-image: url("images/backgrounds/VictoryRoad.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+      font-family: "Oxanium", Arial, sans-serif;
+    }
+
+    .draft-theme-overlay {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at center 18%, rgba(36, 151, 255, 0.22), transparent 34%),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.58));
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 30px 20px;
+      box-sizing: border-box;
+    }
+
+    .draft-theme-card {
+      width: min(1220px, 96vw);
+      padding: 24px;
+      border-radius: 28px;
+      background: linear-gradient(
+        to bottom,
+        rgba(4, 18, 48, 0.72),
+        rgba(4, 18, 48, 0.38)
+      );
+      border: 2px solid rgba(255, 255, 255, 0.22);
+      box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.42),
+        0 0 42px rgba(29, 150, 255, 0.18) inset;
+      backdrop-filter: blur(2px);
+      box-sizing: border-box;
+    }
+
+    .draft-theme-title {
+      margin: 0;
+      text-align: center;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-shadow:
+        0 3px 0 rgba(0, 0, 0, 0.70),
+        0 0 12px rgba(30, 160, 255, 0.70);
+    }
+
+    #draftLeagueSubtitle {
+      margin: 8px 0 18px;
+      text-align: center;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.7px;
+      color: rgba(255, 255, 255, 0.90);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.70);
+    }
+
+    .draft-theme-links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .draft-theme-link {
+      min-height: 50px;
+      min-width: 180px;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, #294b77, #102844);
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      color: #ffffff;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95);
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(105, 166, 240, 0.16) inset;
+      transition: transform 0.12s ease, filter 0.12s ease;
+      box-sizing: border-box;
+    }
+
+    .draft-theme-link.light {
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.92), rgba(212, 226, 246, 0.88));
+      color: #102844;
+      text-shadow: none;
+    }
+
+    .draft-theme-link:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
+
+    body.draft-theme-page .pkmn-panel,
+    body.draft-theme-page .draft-timer-box,
+    body.draft-theme-page .draft-point-card,
+    body.draft-theme-page .empty-state {
+      padding: 18px;
+      border-radius: 24px;
+      background: rgba(5, 18, 43, 0.58);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(105, 166, 240, 0.10) inset;
+      color: #ffffff;
+      font-family: "Oxanium", Arial, sans-serif;
+      box-sizing: border-box;
+      margin-bottom: 16px;
+    }
+
+    body.draft-theme-page .draft-timer-box {
+      text-align: center;
+      background:
+        radial-gradient(circle at center, rgba(255, 217, 76, 0.16), transparent 58%),
+        rgba(5, 18, 43, 0.62);
+      border-color: rgba(255, 217, 76, 0.28);
+    }
+
+    body.draft-theme-page .draft-timer-box strong,
+    body.draft-theme-page .pkmn-panel strong {
+      display: block;
+      margin: 0 0 6px;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-shadow:
+        0 2px 0 rgba(0, 0, 0, 0.55),
+        0 0 10px rgba(30, 160, 255, 0.48);
+    }
+
+    #draftClockLine {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 800;
+      color: #fff3b0;
+      text-shadow:
+        0 2px 0 rgba(0, 0, 0, 0.55),
+        0 0 12px rgba(255, 217, 76, 0.42);
+    }
+
+    body.draft-theme-page .small-note,
+    #draftStatusLine,
+    #nextPickLine,
+    #draftActionStatus,
+    #availablePokemonCount {
+      margin: 6px 0;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.35;
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    body.draft-theme-page .draft-admin-buttons,
+    body.draft-theme-page .draft-pick-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+      align-items: center;
+    }
+
+    body.draft-theme-page .draft-pick-form {
+      grid-template-columns: minmax(260px, 1fr) auto auto;
+    }
+
+    body.draft-theme-page .pkmn-input,
+    body.draft-theme-page .pkmn-select,
+    body.draft-theme-page input,
+    body.draft-theme-page select {
+      min-height: 48px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      border: 2px solid rgba(255, 255, 255, 0.32);
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.96), rgba(225, 235, 250, 0.94));
+      color: #162642;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      outline: none;
+      box-shadow:
+        0 6px 16px rgba(0, 0, 0, 0.18),
+        0 0 0 3px rgba(24, 83, 150, 0.18) inset;
+      box-sizing: border-box;
+    }
+
+    body.draft-theme-page .pkmn-button {
+      min-height: 52px !important;
+      border-radius: 999px !important;
+      background: linear-gradient(to bottom, #294b77, #102844) !important;
+      border: 2px solid rgba(255, 255, 255, 0.35) !important;
+      color: #ffffff !important;
+      font-family: "Oxanium", Arial, sans-serif !important;
+      font-size: 15px !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.5px !important;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95) !important;
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(105, 166, 240, 0.16) inset !important;
+      cursor: pointer !important;
+    }
+
+    body.draft-theme-page .pkmn-button.danger,
+    body.draft-theme-page .pkmn-button.small.danger {
+      background: linear-gradient(to bottom, #d86a6a, #8d2e3a) !important;
+    }
+
+    body.draft-theme-page .draft-point-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    body.draft-theme-page .draft-point-card {
+      margin: 0;
+    }
+
+    body.draft-theme-page .draft-point-card p {
+      margin: 5px 0;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.84);
+    }
+
+    body.draft-theme-page .draft-point-card strong {
+      color: #ffffff;
+      font-weight: 800;
+    }
+
+    body.draft-theme-page .draft-point-bar {
+      height: 12px;
+      margin-top: 10px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    body.draft-theme-page .draft-point-bar > div {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(to right, #38a8ff, #ffd94c);
+      box-shadow: 0 0 10px rgba(56, 168, 255, 0.45);
+    }
+
+    body.draft-theme-page .draft-room-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    body.draft-theme-page .draft-picks-list,
+    body.draft-theme-page .draft-team-rosters {
+      display: grid;
+      gap: 10px;
+      max-height: 430px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    body.draft-theme-page .draft-pick-row {
+      display: grid;
+      grid-template-columns: 52px 70px 1fr 1fr;
+      gap: 10px;
+      align-items: center;
+      min-height: 52px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.88);
+      border: 2px solid rgba(255, 255, 255, 0.40);
+      color: #102844;
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.18),
+        0 0 0 3px rgba(105, 166, 240, 0.08) inset;
+      box-sizing: border-box;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    body.draft-theme-page .draft-pick-row strong {
+      color: #102844;
+      font-size: 15px;
+      text-shadow: none;
+    }
+
+    body.draft-theme-page .draft-roster-team {
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.88);
+      border: 2px solid rgba(255, 255, 255, 0.40);
+      color: #102844;
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.18),
+        0 0 0 3px rgba(105, 166, 240, 0.08) inset;
+    }
+
+    body.draft-theme-page .draft-roster-team h3 {
+      margin: 0 0 6px;
+      color: #102844;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    body.draft-theme-page .draft-roster-team p {
+      margin: 4px 0;
+      color: rgba(16, 40, 68, 0.72);
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    body.draft-theme-page .draft-roster-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    body.draft-theme-page .draft-roster-pills span,
+    body.draft-theme-page .draft-empty-pill {
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: rgba(16, 40, 68, 0.12);
+      color: #102844;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    body.draft-theme-page .draft-filter-menu {
+      display: grid;
+      grid-template-columns: 1.2fr repeat(3, 1fr);
+      gap: 12px;
+      margin: 14px 0;
+      padding: 14px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-sizing: border-box;
+    }
+
+    body.draft-theme-page .draft-filter-menu label {
+      display: grid;
+      gap: 7px;
+    }
+
+    body.draft-theme-page .draft-filter-menu span {
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    body.draft-theme-page .draft-available-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    body.draft-theme-page .draft-pokemon-card {
+      position: relative;
+      min-height: 220px;
+      padding: 12px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.90);
+      border: 2px solid rgba(255, 255, 255, 0.45);
+      color: #102844;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.22),
+        0 0 0 3px rgba(105, 166, 240, 0.08) inset;
+      transition: transform 0.12s ease, filter 0.12s ease;
+      overflow: hidden;
+    }
+
+    body.draft-theme-page .draft-pokemon-card:hover {
+      transform: translateY(-3px);
+      filter: brightness(1.05);
+    }
+
+    body.draft-theme-page .draft-pokemon-card > img:not(.mega-badge-overlay) {
+      width: 96px;
+      height: 96px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto 8px;
+    }
+
+    body.draft-theme-page .draft-pokemon-card > span {
+      display: block;
+      min-height: 34px;
+      color: #102844;
+      font-size: 14px;
+      line-height: 1.12;
+      text-align: center;
+    }
+
+    body.draft-theme-page .mega-badge-overlay {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 34px !important;
+      height: 34px !important;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.35));
+    }
+
+    body.draft-theme-page .pokemon-tier-badge {
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      color: #102844;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    body.draft-theme-page .pokemon-tier-badge img {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+    }
+
+    body.draft-theme-page .pokemon-type-strip {
+      margin-top: 8px;
+    }
+
+    #draftRoomStatus {
+      margin-top: 16px;
+      padding: 10px 14px;
+      border-radius: 16px;
+      background: rgba(5, 18, 43, 0.54);
+      border: 1px solid rgba(255, 255, 255, 0.20);
+      text-align: center;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.90);
+      box-shadow: none;
+    }
+
+    @media (max-width: 980px) {
+      body.draft-theme-page .draft-room-grid,
+      body.draft-theme-page .draft-point-grid {
+        grid-template-columns: 1fr;
+      }
+
+      body.draft-theme-page .draft-filter-menu {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      body.draft-theme-page .draft-pick-form {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .draft-theme-card {
+        padding: 18px;
+      }
+
+      .draft-theme-title {
+        font-size: 34px;
+      }
+
+      .draft-theme-links,
+      body.draft-theme-page .draft-filter-menu,
+      body.draft-theme-page .draft-admin-buttons {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .draft-theme-link {
+        width: 100%;
+      }
+
+      body.draft-theme-page .draft-pick-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
-<body>
-  <div class="page-overlay top-align">
-    <section class="pkmn-window wide">
-      <img class="corner-ball top-left" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball top-right" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball bottom-left" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball bottom-right" src="images/ui/retroball.png" alt="">
+<body class="draft-theme-page">
+  <div class="draft-theme-overlay">
+    <section class="draft-theme-card">
+      <h1 class="draft-theme-title">Draft Room</h1>
+      <p id="draftLeagueSubtitle">Loading selected league...</p>
 
-      <div class="pkmn-title-box">
-        <h1 class="pkmn-title">DRAFT ROOM</h1>
-        <p id="draftLeagueSubtitle" class="pkmn-subtitle">Loading selected league...</p>
-      </div>
-
-      <div class="top-links">
-        <a class="pkmn-button-link small secondary" href="league-home.html">Back to League Home</a>
-        <a class="pkmn-button-link small secondary" href="my-team.html">My Team</a>
+      <div class="draft-theme-links">
+        <a class="draft-theme-link" href="league-home.html?v=leaguehome-icons4">Back to League Home</a>
+        <a class="draft-theme-link light" href="my-team.html?v=myteam-theme1">My Team</a>
       </div>
 
       <div class="draft-timer-box">
@@ -52,7 +558,6 @@
           <div id="draftOrderList" style="display:none;"></div>
         </div>
       </section>
-
 
       <div id="draftPointStatus" class="draft-point-status"></div>
 
@@ -133,7 +638,7 @@
         <div id="availablePokemonGrid" class="draft-available-grid"></div>
       </div>
 
-      <div id="draftRoomStatus" class="pkmn-footer-note">Loading...</div>
+      <div id="draftRoomStatus">Loading...</div>
     </section>
   </div>
 
