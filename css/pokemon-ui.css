@@ -2872,3 +2872,717 @@ body.draft-theme-page .draft-pokemon-card .pokemon-tier-badge span {
 body.draft-theme-page .draft-pokemon-card .pokemon-tier-badge img {
   transform: translateY(-2px);
 }
+
+/* =========================================================
+   Global League Light Mode
+   Controlled by Settings page using localStorage key:
+   pokeleague-league-home-theme
+   ========================================================= */
+
+body.league-light-mode.league-home-theme-page .league-home-theme-card,
+body.league-light-mode.my-team-theme-page .my-team-theme-card,
+body.league-light-mode.my-matchup-theme-page .my-matchup-theme-card,
+body.league-light-mode.weekly-theme-page .weekly-theme-card,
+body.league-light-mode.standings-theme-page .standings-theme-card,
+body.league-light-mode.teams-theme-page .teams-theme-card,
+body.league-light-mode.manage-theme-page .manage-theme-card,
+body.league-light-mode.draft-theme-page .draft-theme-card {
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(238, 247, 255, 0.90),
+      rgba(204, 226, 247, 0.80)
+    ) !important;
+  border: 2px solid rgba(255, 255, 255, 0.76) !important;
+  box-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.30),
+    0 0 0 3px rgba(69, 132, 196, 0.18) inset !important;
+  color: #102844 !important;
+}
+
+/* Main titles/subtitles in light mode */
+body.league-light-mode .league-home-theme-title,
+body.league-light-mode .my-team-theme-title,
+body.league-light-mode .my-matchup-theme-title,
+body.league-light-mode .weekly-theme-title,
+body.league-light-mode .standings-theme-title,
+body.league-light-mode .teams-theme-title,
+body.league-light-mode .manage-theme-title,
+body.league-light-mode .draft-theme-title {
+  color: #102844 !important;
+  text-shadow:
+    0 2px 0 rgba(255, 255, 255, 0.85),
+    0 0 14px rgba(68, 150, 230, 0.35) !important;
+}
+
+body.league-light-mode #leagueSubtitle,
+body.league-light-mode #myTeamSubtitle,
+body.league-light-mode #myMatchupSubtitle,
+body.league-light-mode #weeklySubtitle,
+body.league-light-mode #standingsSubtitle,
+body.league-light-mode #teamInfoSubtitle,
+body.league-light-mode #manageLeagueSubtitle,
+body.league-light-mode #draftLeagueSubtitle {
+  color: #17345e !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.80) !important;
+}
+
+/* Status strips */
+body.league-light-mode #leagueStatus,
+body.league-light-mode #myTeamStatus,
+body.league-light-mode #myMatchupStatus,
+body.league-light-mode #weeklyStatus,
+body.league-light-mode #standingsStatus,
+body.league-light-mode #teamInfoStatus,
+body.league-light-mode #manageLeagueStatus,
+body.league-light-mode #draftRoomStatus {
+  background: rgba(255, 255, 255, 0.70) !important;
+  border: 1px solid rgba(69, 132, 196, 0.28) !important;
+  color: #17345e !important;
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.12),
+    0 0 0 2px rgba(255, 255, 255, 0.26) inset !important;
+}
+
+/* Inner panels */
+body.league-light-mode .pkmn-panel,
+body.league-light-mode .my-team-profile-card,
+body.league-light-mode .my-team-roster-card,
+body.league-light-mode .my-matchup-feature,
+body.league-light-mode .weekly-round-panel,
+body.league-light-mode .standings-board,
+body.league-light-mode .standings-playoff-panel,
+body.league-light-mode .team-info-card,
+body.league-light-mode .draft-timer-box,
+body.league-light-mode .draft-point-card,
+body.league-light-mode .empty-state {
+  background: rgba(255, 255, 255, 0.70) !important;
+  border: 1px solid rgba(69, 132, 196, 0.30) !important;
+  color: #102844 !important;
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.13),
+    0 0 0 3px rgba(255, 255, 255, 0.25) inset !important;
+}
+
+body.league-light-mode .pkmn-panel strong,
+body.league-light-mode .manage-section-title,
+body.league-light-mode .standings-division-title,
+body.league-light-mode .standings-section-title,
+body.league-light-mode .my-team-profile-card h2,
+body.league-light-mode .my-team-roster-card h2,
+body.league-light-mode .team-info-main h2,
+body.league-light-mode .bracket-round-title {
+  color: #102844 !important;
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.85),
+    0 0 8px rgba(68, 150, 230, 0.22) !important;
+}
+
+body.league-light-mode .small-note,
+body.league-light-mode .manage-section-note,
+body.league-light-mode .empty-state p,
+body.league-light-mode #draftStatusLine,
+body.league-light-mode #nextPickLine,
+body.league-light-mode #draftActionStatus,
+body.league-light-mode #availablePokemonCount,
+body.league-light-mode #weeklyRoundStatus {
+  color: rgba(16, 40, 68, 0.74) !important;
+}
+
+/* Colorful top menu buttons in light mode */
+body.league-light-mode .my-team-theme-link:nth-child(1),
+body.league-light-mode .my-matchup-theme-link:nth-child(1),
+body.league-light-mode .weekly-theme-link:nth-child(1),
+body.league-light-mode .standings-theme-link:nth-child(1),
+body.league-light-mode .teams-theme-link:nth-child(1),
+body.league-light-mode .manage-theme-link:nth-child(1),
+body.league-light-mode .draft-theme-link:nth-child(1) {
+  background: linear-gradient(to bottom, rgba(198, 234, 255, 0.96), rgba(122, 190, 232, 0.88)) !important;
+  color: #102844 !important;
+  text-shadow: none !important;
+}
+
+body.league-light-mode .my-team-theme-link:nth-child(2),
+body.league-light-mode .my-matchup-theme-link:nth-child(2),
+body.league-light-mode .weekly-theme-link:nth-child(2),
+body.league-light-mode .standings-theme-link:nth-child(2),
+body.league-light-mode .teams-theme-link:nth-child(2),
+body.league-light-mode .manage-theme-link:nth-child(2),
+body.league-light-mode .draft-theme-link:nth-child(2) {
+  background: linear-gradient(to bottom, rgba(255, 247, 218, 0.98), rgba(232, 205, 143, 0.92)) !important;
+  color: #102844 !important;
+  text-shadow: none !important;
+}
+
+body.league-light-mode .my-matchup-theme-link:nth-child(3),
+body.league-light-mode .weekly-theme-link:nth-child(3) {
+  background: linear-gradient(to bottom, rgba(255, 206, 222, 0.96), rgba(230, 127, 162, 0.88)) !important;
+  color: #102844 !important;
+  text-shadow: none !important;
+}
+
+/* Action buttons in light mode */
+body.league-light-mode .pkmn-button:not(.danger),
+body.league-light-mode #saveManagersButton,
+body.league-light-mode #saveMyTeamButton,
+body.league-light-mode #makePickButton,
+body.league-light-mode #startDraftButton,
+body.league-light-mode #saveScoresButton,
+body.league-light-mode #advanceMatchupButton,
+body.league-light-mode .save-team-button {
+  background: linear-gradient(to bottom, rgba(190, 245, 240, 0.96), rgba(109, 204, 196, 0.88)) !important;
+  color: #102844 !important;
+  text-shadow: none !important;
+  border-color: rgba(255, 255, 255, 0.76) !important;
+}
+
+/* Inputs in light mode */
+body.league-light-mode .pkmn-input,
+body.league-light-mode .pkmn-select,
+body.league-light-mode input,
+body.league-light-mode select {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.98), rgba(236, 243, 252, 0.96)) !important;
+  color: #102844 !important;
+  border-color: rgba(69, 132, 196, 0.32) !important;
+}
+
+/* Draft room specific light mode */
+body.league-light-mode.draft-theme-page .draft-timer-box {
+  background:
+    radial-gradient(circle at center, rgba(255, 217, 76, 0.22), transparent 58%),
+    rgba(255, 255, 255, 0.72) !important;
+}
+
+body.league-light-mode.draft-theme-page #draftClockLine {
+  color: #8a5a00 !important;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.8) !important;
+}
+
+/* Keep cards readable */
+body.league-light-mode .draft-pokemon-card,
+body.league-light-mode .my-team-roster-slot,
+body.league-light-mode .weekly-team-side,
+body.league-light-mode .standings-row,
+body.league-light-mode .bracket-matchup,
+body.league-light-mode .team-info-card,
+body.league-light-mode .draft-roster-team,
+body.league-light-mode .draft-pick-row {
+  background: rgba(255, 255, 255, 0.90) !important;
+  color: #102844 !important;
+}
+
+
+/* ===== My Team logo upload styling ===== */
+body.my-team-theme-page .team-logo-upload-box {
+  display: grid;
+  gap: 8px;
+}
+
+body.my-team-theme-page .team-logo-file-input {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 14px;
+  box-sizing: border-box;
+  border-radius: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.32);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.96), rgba(225, 235, 250, 0.94));
+  color: #162642;
+  font-family: "Oxanium", Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  outline: none;
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.18),
+    0 0 0 3px rgba(24, 83, 150, 0.18) inset;
+}
+
+body.league-light-mode.my-team-theme-page .team-logo-file-input {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.98), rgba(236, 243, 252, 0.96)) !important;
+  color: #102844 !important;
+  border-color: rgba(69, 132, 196, 0.32) !important;
+}
+
+/* ===== My Team roster type badges ===== */
+body.my-team-theme-page .my-team-roster-slot {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+}
+
+body.my-team-theme-page .my-team-roster-slot p {
+  min-height: 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+body.my-team-theme-page .my-team-type-strip {
+  width: 100%;
+  margin-top: 7px;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+}
+
+body.my-team-theme-page .my-team-type-strip.single .pokemon-type-segment {
+  width: 76px;
+}
+
+body.my-team-theme-page .my-team-type-strip.dual .pokemon-type-segment {
+  width: 58px;
+}
+
+body.my-team-theme-page .my-team-type-strip .pokemon-type-segment {
+  min-height: 22px;
+  padding: 3px 6px;
+  border-radius: 7px;
+  border: 1px solid rgba(16, 40, 68, 0.26);
+  box-shadow:
+    0 3px 7px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.36);
+  color: #ffffff;
+  font-family: "VT323", monospace;
+  font-size: 15px;
+  line-height: 1;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
+  box-sizing: border-box;
+}
+
+/* ===== Light mode readability fix: My Team ===== */
+:is(
+  body.light-mode.my-team-theme-page,
+  body.theme-light.my-team-theme-page,
+  body.light-theme.my-team-theme-page,
+  body[data-theme="light"].my-team-theme-page,
+  html[data-theme="light"] body.my-team-theme-page
+) .my-team-team-card,
+:is(
+  body.light-mode.my-team-theme-page,
+  body.theme-light.my-team-theme-page,
+  body.light-theme.my-team-theme-page,
+  body[data-theme="light"].my-team-theme-page,
+  html[data-theme="light"] body.my-team-theme-page
+) .my-team-info-card,
+:is(
+  body.light-mode.my-team-theme-page,
+  body.theme-light.my-team-theme-page,
+  body.light-theme.my-team-theme-page,
+  body[data-theme="light"].my-team-theme-page,
+  html[data-theme="light"] body.my-team-theme-page
+) .my-team-details-card,
+:is(
+  body.light-mode.my-team-theme-page,
+  body.theme-light.my-team-theme-page,
+  body.light-theme.my-team-theme-page,
+  body[data-theme="light"].my-team-theme-page,
+  html[data-theme="light"] body.my-team-theme-page
+) .my-team-roster-card {
+  color: #203a5c !important;
+}
+
+:is(
+  body.light-mode.my-team-theme-page,
+  body.theme-light.my-team-theme-page,
+  body.light-theme.my-team-theme-page,
+  body[data-theme="light"].my-team-theme-page,
+  html[data-theme="light"] body.my-team-theme-page
+) .my-team-team-card h1,
+:is(
+  body.light-mode.my-team-theme-page,
+  body.theme-light.my-team-theme-page,
+  body.light-theme.my-team-theme-page,
+  body[data-theme="light"].my-team-theme-page,
+  html[data-theme="light"] body.my-team-theme-page
+) .my-team-team-card h2,
+:is(
+  body.light-mode.my-team-theme-page,
+  body.theme-light.my-team-theme-page,
+  body.light-theme.my-team-theme-page,
+  body[data-theme="light"].my-team-theme-page,
+  html[data-theme="light"] body.my-team-theme-page
+) .my-team-team-card h3,
+:is(
+  body.light-mode.my-team-theme-page,
+  body.theme-light.my-team-theme-page,
+  body.light-theme.my-team-theme-page,
+  body[data-theme="light"].my-team-theme-page,
+  html[data-theme="light"] body.my-team-theme-page
+) .my-team-team-card p,
+:is(
+  body.light-mode.my-team-theme-page,
+  body.theme-light.my-team-theme-page,
+  body.light-theme.my-team-theme-page,
+  body[data-theme="light"].my-team-theme-page,
+  html[data-theme="light"] body.my-team-theme-page
+) .my-team-team-card span,
+:is(
+  body.light-mode.my-team-theme-page,
+  body.theme-light.my-team-theme-page,
+  body.light-theme.my-team-theme-page,
+  body[data-theme="light"].my-team-theme-page,
+  html[data-theme="light"] body.my-team-theme-page
+) .my-team-team-card label,
+:is(
+  body.light-mode.my-team-theme-page,
+  body.theme-light.my-team-theme-page,
+  body.light-theme.my-team-theme-page,
+  body[data-theme="light"].my-team-theme-page,
+  html[data-theme="light"] body.my-team-theme-page
+) .my-team-info-card h1,
+:is(
+  body.light-mode.my-team-theme-page,
+  body.theme-light.my-team-theme-page,
+  body.light-theme.my-team-theme-page,
+  body[data-theme="light"].my-team-theme-page,
+  html[data-theme="light"] body.my-team-theme-page
+) .my-team-info-card h2,
+:is(
+  body.light-mode.my-team-theme-page,
+  body.theme-light.my-team-theme-page,
+  body.light-theme.my-team-theme-page,
+  body[data-theme="light"].my-team-theme-page,
+  html[data-theme="light"] body.my-team-theme-page
+) .my-team-info-card h3,
+:is(
+  body.light-mode.my-team-theme-page,
+  body.theme-light.my-team-theme-page,
+  body.light-theme.my-team-theme-page,
+  body[data-theme="light"].my-team-theme-page,
+  html[data-theme="light"] body.my-team-theme-page
+) .my-team-info-card p,
+:is(
+  body.light-mode.my-team-theme-page,
+  body.theme-light.my-team-theme-page,
+  body.light-theme.my-team-theme-page,
+  body[data-theme="light"].my-team-theme-page,
+  html[data-theme="light"] body.my-team-theme-page
+) .my-team-info-card span,
+:is(
+  body.light-mode.my-team-theme-page,
+  body.theme-light.my-team-theme-page,
+  body.light-theme.my-team-theme-page,
+  body[data-theme="light"].my-team-theme-page,
+  html[data-theme="light"] body.my-team-theme-page
+) .my-team-info-card label,
+:is(
+  body.light-mode.my-team-theme-page,
+  body.theme-light.my-team-theme-page,
+  body.light-theme.my-team-theme-page,
+  body[data-theme="light"].my-team-theme-page,
+  html[data-theme="light"] body.my-team-theme-page
+) .my-team-roster-card h1,
+:is(
+  body.light-mode.my-team-theme-page,
+  body.theme-light.my-team-theme-page,
+  body.light-theme.my-team-theme-page,
+  body[data-theme="light"].my-team-theme-page,
+  html[data-theme="light"] body.my-team-theme-page
+) .my-team-roster-card h2,
+:is(
+  body.light-mode.my-team-theme-page,
+  body.theme-light.my-team-theme-page,
+  body.light-theme.my-team-theme-page,
+  body[data-theme="light"].my-team-theme-page,
+  html[data-theme="light"] body.my-team-theme-page
+) .my-team-roster-card h3,
+:is(
+  body.light-mode.my-team-theme-page,
+  body.theme-light.my-team-theme-page,
+  body.light-theme.my-team-theme-page,
+  body[data-theme="light"].my-team-theme-page,
+  html[data-theme="light"] body.my-team-theme-page
+) .my-team-roster-card p,
+:is(
+  body.light-mode.my-team-theme-page,
+  body.theme-light.my-team-theme-page,
+  body.light-theme.my-team-theme-page,
+  body[data-theme="light"].my-team-theme-page,
+  html[data-theme="light"] body.my-team-theme-page
+) .my-team-roster-card span,
+:is(
+  body.light-mode.my-team-theme-page,
+  body.theme-light.my-team-theme-page,
+  body.light-theme.my-team-theme-page,
+  body[data-theme="light"].my-team-theme-page,
+  html[data-theme="light"] body.my-team-theme-page
+) .my-team-theme-page .pkmn-label,
+:is(
+  body.light-mode.my-team-theme-page,
+  body.theme-light.my-team-theme-page,
+  body.light-theme.my-team-theme-page,
+  body[data-theme="light"].my-team-theme-page,
+  html[data-theme="light"] body.my-team-theme-page
+) .my-team-theme-page .pkmn-footer-note {
+  color: #203a5c !important;
+  text-shadow: none !important;
+}
+
+:is(
+  body.light-mode.my-team-theme-page,
+  body.theme-light.my-team-theme-page,
+  body.light-theme.my-team-theme-page,
+  body[data-theme="light"].my-team-theme-page,
+  html[data-theme="light"] body.my-team-theme-page
+) .my-team-theme-page input,
+:is(
+  body.light-mode.my-team-theme-page,
+  body.theme-light.my-team-theme-page,
+  body.light-theme.my-team-theme-page,
+  body[data-theme="light"].my-team-theme-page,
+  html[data-theme="light"] body.my-team-theme-page
+) .my-team-theme-page textarea,
+:is(
+  body.light-mode.my-team-theme-page,
+  body.theme-light.my-team-theme-page,
+  body.light-theme.my-team-theme-page,
+  body[data-theme="light"].my-team-theme-page,
+  html[data-theme="light"] body.my-team-theme-page
+) .my-team-theme-page select {
+  color: #203a5c !important;
+}
+
+
+/* ===== My Team light mode profile text contrast fix ===== */
+body.league-light-mode.my-team-theme-page .my-team-profile-card p,
+body.league-light-mode.my-team-theme-page .my-team-profile-card span,
+body.league-light-mode.my-team-theme-page .my-team-profile-card .small-note {
+  color: rgba(16, 40, 68, 0.78) !important;
+  text-shadow: none !important;
+}
+
+body.league-light-mode.my-team-theme-page .my-team-profile-card strong,
+body.league-light-mode.my-team-theme-page .my-team-profile-card label {
+  color: #102844 !important;
+  text-shadow: none !important;
+}
+
+body.league-light-mode.my-team-theme-page .team-edit-form label {
+  color: #102844 !important;
+  text-shadow: none !important;
+}
+
+body.league-light-mode.my-team-theme-page .my-team-profile-card h2 {
+  color: #102844 !important;
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.85),
+    0 0 8px rgba(68, 150, 230, 0.22) !important;
+}
+
+/* =========================================================
+   Global light mode text contrast sweep
+   Turns pale/white/yellow panel text dark in light mode.
+   Keeps colorful type badges and main action buttons intact.
+   ========================================================= */
+
+body.league-light-mode .pkmn-panel,
+body.league-light-mode .my-team-profile-card,
+body.league-light-mode .my-team-roster-card,
+body.league-light-mode .my-matchup-feature,
+body.league-light-mode .weekly-round-panel,
+body.league-light-mode .standings-board,
+body.league-light-mode .standings-playoff-panel,
+body.league-light-mode .team-info-card,
+body.league-light-mode .draft-timer-box,
+body.league-light-mode .draft-point-card,
+body.league-light-mode .empty-state {
+  color: #102844 !important;
+}
+
+/* Main readable text inside light panels */
+body.league-light-mode .pkmn-panel p,
+body.league-light-mode .pkmn-panel strong,
+body.league-light-mode .pkmn-panel label,
+body.league-light-mode .pkmn-panel .small-note,
+body.league-light-mode .my-team-profile-card p,
+body.league-light-mode .my-team-profile-card strong,
+body.league-light-mode .my-team-profile-card label,
+body.league-light-mode .my-team-profile-card .small-note,
+body.league-light-mode .my-team-roster-card h2,
+body.league-light-mode .my-team-roster-card p,
+body.league-light-mode .team-info-main p,
+body.league-light-mode .team-info-main strong,
+body.league-light-mode .team-info-main h2,
+body.league-light-mode .team-info-card p,
+body.league-light-mode .team-info-card strong,
+body.league-light-mode .team-info-card label,
+body.league-light-mode .team-info-card .small-note,
+body.league-light-mode .my-matchup-feature p,
+body.league-light-mode .my-matchup-feature strong,
+body.league-light-mode .weekly-round-panel p,
+body.league-light-mode .weekly-round-panel strong,
+body.league-light-mode .standings-playoff-panel p,
+body.league-light-mode .standings-playoff-panel strong,
+body.league-light-mode .draft-timer-box p,
+body.league-light-mode .draft-timer-box strong,
+body.league-light-mode .draft-point-card p,
+body.league-light-mode .draft-point-card strong,
+body.league-light-mode .empty-state p,
+body.league-light-mode .manage-section-title,
+body.league-light-mode .manage-section-note,
+body.league-light-mode .small-note {
+  color: #102844 !important;
+  text-shadow: none !important;
+}
+
+/* Form labels across league pages */
+body.league-light-mode .team-edit-form label,
+body.league-light-mode .draft-clock-setting span,
+body.league-light-mode .draft-filter-menu span,
+body.league-light-mode .division-name-row span,
+body.league-light-mode .manage-draft-order-row span,
+body.league-light-mode .team-row-label,
+body.league-light-mode .pkmn-label {
+  color: #102844 !important;
+  text-shadow: none !important;
+}
+
+/* Secondary text should be dark gray-blue, not white/yellow */
+body.league-light-mode .my-team-profile-card span:not(.pokemon-type-segment),
+body.league-light-mode .team-info-main span:not(.pokemon-type-segment),
+body.league-light-mode .team-info-card span:not(.pokemon-type-segment),
+body.league-light-mode .pkmn-panel span:not(.pokemon-type-segment),
+body.league-light-mode .draft-point-card span:not(.pokemon-type-segment),
+body.league-light-mode .empty-state span:not(.pokemon-type-segment) {
+  color: rgba(16, 40, 68, 0.78) !important;
+  text-shadow: none !important;
+}
+
+/* Headings inside light panels */
+body.league-light-mode .my-team-profile-card h2,
+body.league-light-mode .my-team-roster-card h2,
+body.league-light-mode .team-info-main h2,
+body.league-light-mode .pkmn-panel strong,
+body.league-light-mode .standings-division-title,
+body.league-light-mode .standings-section-title,
+body.league-light-mode .bracket-round-title {
+  color: #102844 !important;
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.85),
+    0 0 8px rgba(68, 150, 230, 0.18) !important;
+}
+
+/* Admin / role badges need dark readable text in light mode */
+body.league-light-mode .admin-badge,
+body.league-light-mode .team-role-badge,
+body.league-light-mode .team-admin-toggle {
+  color: #102844 !important;
+  text-shadow: none !important;
+}
+
+/* Keep type badges white text because they sit on colored type backgrounds */
+body.league-light-mode .pokemon-type-segment,
+body.league-light-mode .my-team-type-strip .pokemon-type-segment {
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55) !important;
+}
+
+
+/* ===== My Matchup stadium background + lineup six ===== */
+body.my-matchup-theme-page {
+  background-image: url("images/backgrounds/PokeStadium.webp") !important;
+}
+
+body.my-matchup-theme-page .matchup-lineup-panel {
+  margin-top: 16px;
+  padding: 12px;
+  border-radius: 18px;
+  background: rgba(16, 40, 68, 0.08);
+  border: 1px solid rgba(16, 40, 68, 0.14);
+}
+
+body.my-matchup-theme-page .matchup-lineup-title {
+  margin-bottom: 9px;
+  color: #102844;
+  font-family: "Oxanium", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+}
+
+body.my-matchup-theme-page .matchup-lineup-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 42px);
+  gap: 7px;
+  justify-content: center;
+}
+
+body.my-matchup-theme-page .matchup-lineup-choice {
+  width: 42px;
+  height: 42px;
+  padding: 2px;
+  border-radius: 10px;
+  border: 2px solid rgba(16, 40, 68, 0.18);
+  background: rgba(255, 255, 255, 0.84);
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.60);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+body.my-matchup-theme-page .matchup-lineup-choice img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  display: block;
+}
+
+body.my-matchup-theme-page .matchup-lineup-choice.selected {
+  border-color: rgba(255, 217, 76, 0.95);
+  background: rgba(255, 246, 188, 0.96);
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.18),
+    0 0 0 3px rgba(255, 217, 76, 0.28);
+}
+
+body.my-matchup-theme-page .matchup-lineup-choice.locked {
+  cursor: default;
+}
+
+body.my-matchup-theme-page .matchup-lineup-save-button {
+  width: 100%;
+  min-height: 36px;
+  margin-top: 10px;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, 0.42);
+  background: linear-gradient(to bottom, #294b77, #102844);
+  color: #ffffff;
+  font-family: "Oxanium", Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.4px;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.85);
+  cursor: pointer;
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.20);
+}
+
+body.my-matchup-theme-page .matchup-lineup-note {
+  margin: 8px 0 0 !important;
+  color: rgba(16, 40, 68, 0.70) !important;
+  font-family: "Oxanium", Arial, sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  text-align: center;
+}
+
+body.league-dark-mode.my-matchup-theme-page .matchup-lineup-panel {
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+body.league-dark-mode.my-matchup-theme-page .matchup-lineup-title,
+body.league-dark-mode.my-matchup-theme-page .matchup-lineup-note {
+  color: rgba(255, 255, 255, 0.88) !important;
+}
+
+body.league-dark-mode.my-matchup-theme-page .matchup-lineup-choice {
+  background: rgba(255, 255, 255, 0.88);
+}

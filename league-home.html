@@ -6,7 +6,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;500;600;700;800&family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/pokemon-ui.css?v=leaguehome-theme1">
+  <link rel="stylesheet" href="css/pokemon-ui.css?v=global-light-contrast1">
 
   <style>
     body.league-home-theme-page {
@@ -286,6 +286,450 @@
       }
     }
 
+
+    /* ===== League Home light panel + pastel tile redesign ===== */
+
+    body.league-home-theme-page .league-home-theme-card {
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(238, 247, 255, 0.88),
+          rgba(204, 226, 247, 0.78)
+        ) !important;
+      border: 2px solid rgba(255, 255, 255, 0.72) !important;
+      box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.34),
+        0 0 0 3px rgba(69, 132, 196, 0.18) inset !important;
+      color: #102844 !important;
+    }
+
+    body.league-home-theme-page .league-home-theme-title {
+      color: #102844 !important;
+      text-shadow:
+        0 2px 0 rgba(255, 255, 255, 0.85),
+        0 0 14px rgba(68, 150, 230, 0.35) !important;
+    }
+
+    body.league-home-theme-page #leagueSubtitle {
+      color: #17345e !important;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.80) !important;
+    }
+
+    body.league-home-theme-page #leagueStatus {
+      background: rgba(255, 255, 255, 0.66) !important;
+      border: 1px solid rgba(69, 132, 196, 0.28) !important;
+      color: #17345e !important;
+      box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.12),
+        0 0 0 2px rgba(255, 255, 255, 0.26) inset !important;
+    }
+
+    body.league-home-theme-page .league-home-tile {
+      color: #102844 !important;
+      border: 2px solid rgba(255, 255, 255, 0.70) !important;
+      box-shadow:
+        0 10px 22px rgba(0, 0, 0, 0.18),
+        0 0 0 3px rgba(255, 255, 255, 0.20) inset !important;
+    }
+
+    body.league-home-theme-page .league-home-tile:hover {
+      transform: translateY(-3px) !important;
+      filter: brightness(1.04) saturate(1.04) !important;
+      box-shadow:
+        0 14px 28px rgba(0, 0, 0, 0.22),
+        0 0 0 3px rgba(255, 255, 255, 0.34) inset,
+        0 0 18px rgba(68, 150, 230, 0.20) !important;
+    }
+
+    body.league-home-theme-page .league-home-tile-title {
+      color: #102844 !important;
+      text-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.80),
+        0 0 8px rgba(255, 255, 255, 0.60) !important;
+    }
+
+    body.league-home-theme-page .league-home-tile-desc {
+      color: rgba(16, 40, 68, 0.74) !important;
+      text-shadow: none !important;
+    }
+
+    body.league-home-theme-page .league-home-tile-icon {
+      filter:
+        drop-shadow(0 4px 6px rgba(0, 0, 0, 0.22))
+        drop-shadow(0 0 8px rgba(255, 255, 255, 0.35)) !important;
+    }
+
+    body.league-home-theme-page .league-home-tile:hover .league-home-tile-icon {
+      transform: scale(1.10) rotate(-2deg) !important;
+      filter:
+        drop-shadow(0 6px 8px rgba(0, 0, 0, 0.28))
+        drop-shadow(0 0 10px rgba(255, 255, 255, 0.48)) !important;
+    }
+
+    /* Pastel tile palette by button */
+    body.league-home-theme-page .league-home-tile[href="my-team.html"] {
+      background: linear-gradient(to bottom, rgba(255, 244, 184, 0.96), rgba(239, 210, 105, 0.88)) !important;
+    }
+
+    body.league-home-theme-page .league-home-tile[href="my-matchup.html"] {
+      background: linear-gradient(to bottom, rgba(255, 214, 174, 0.96), rgba(234, 157, 96, 0.88)) !important;
+    }
+
+    body.league-home-theme-page .league-home-tile[href="weekly-matches.html"] {
+      background: linear-gradient(to bottom, rgba(198, 234, 255, 0.96), rgba(122, 190, 232, 0.88)) !important;
+    }
+
+    body.league-home-theme-page .league-home-tile[href="standings.html"] {
+      background: linear-gradient(to bottom, rgba(255, 229, 130, 0.96), rgba(225, 181, 55, 0.88)) !important;
+    }
+
+    body.league-home-theme-page .league-home-tile[href="teams.html"] {
+      background: linear-gradient(to bottom, rgba(190, 245, 240, 0.96), rgba(109, 204, 196, 0.88)) !important;
+    }
+
+    body.league-home-theme-page .league-home-tile[href="manage-league.html"] {
+      background: linear-gradient(to bottom, rgba(255, 221, 151, 0.96), rgba(222, 159, 60, 0.88)) !important;
+      border-color: rgba(255, 255, 255, 0.76) !important;
+    }
+
+    body.league-home-theme-page .league-home-tile[href="draft-room.html"] {
+      background: linear-gradient(to bottom, rgba(220, 204, 255, 0.96), rgba(158, 135, 224, 0.88)) !important;
+    }
+
+    body.league-home-theme-page .league-home-tile[href="waiver-wire.html"] {
+      background: linear-gradient(to bottom, rgba(197, 244, 205, 0.96), rgba(111, 202, 131, 0.88)) !important;
+    }
+
+    body.league-home-theme-page .league-home-tile[href="trading.html"] {
+      background: linear-gradient(to bottom, rgba(255, 206, 222, 0.96), rgba(230, 127, 162, 0.88)) !important;
+    }
+
+    body.league-home-theme-page .league-home-tile[href="my-leagues.html?v=myleagues-signin-fix1"] {
+      background: linear-gradient(to bottom, rgba(248, 252, 255, 0.98), rgba(218, 231, 246, 0.92)) !important;
+    }
+
+    body.league-home-theme-page .league-home-tile.admin {
+      box-shadow:
+        0 10px 22px rgba(0, 0, 0, 0.18),
+        0 0 0 3px rgba(255, 217, 76, 0.18) inset !important;
+    }
+
+
+    /* ===== League Home dark main glass box with pastel buttons ===== */
+
+    body.league-home-theme-page .league-home-theme-card {
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(4, 18, 48, 0.74),
+          rgba(4, 18, 48, 0.42)
+        ) !important;
+      border: 2px solid rgba(255, 255, 255, 0.22) !important;
+      box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.42),
+        0 0 42px rgba(29, 150, 255, 0.18) inset !important;
+      color: #ffffff !important;
+    }
+
+    body.league-home-theme-page .league-home-theme-title {
+      color: #ffffff !important;
+      text-shadow:
+        0 3px 0 rgba(0, 0, 0, 0.70),
+        0 0 12px rgba(30, 160, 255, 0.70) !important;
+    }
+
+    body.league-home-theme-page #leagueSubtitle {
+      color: rgba(255, 255, 255, 0.90) !important;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.70) !important;
+    }
+
+    body.league-home-theme-page #leagueStatus {
+      background: rgba(5, 18, 43, 0.54) !important;
+      border: 1px solid rgba(255, 255, 255, 0.20) !important;
+      color: rgba(255, 255, 255, 0.90) !important;
+      box-shadow: none !important;
+    }
+
+
+    /* ===== League Home black main glass box ===== */
+
+    body.league-home-theme-page .league-home-theme-card {
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.78),
+          rgba(0, 0, 0, 0.56)
+        ) !important;
+      border: 2px solid rgba(255, 255, 255, 0.24) !important;
+      box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.52),
+        0 0 36px rgba(255, 255, 255, 0.08) inset !important;
+      color: #ffffff !important;
+    }
+
+    body.league-home-theme-page #leagueStatus {
+      background: rgba(0, 0, 0, 0.42) !important;
+      border: 1px solid rgba(255, 255, 255, 0.18) !important;
+      color: rgba(255, 255, 255, 0.92) !important;
+    }
+
+
+    /* Smaller My Team icon */
+    body.league-home-theme-page .league-home-tile[href="my-team.html"] .league-home-tile-icon {
+      width: 72px !important;
+      height: 72px !important;
+      object-fit: contain !important;
+    }
+
+
+    /* My Team icon final size/position tweak */
+    body.league-home-theme-page .league-home-tile[href="my-team.html"] .league-home-tile-icon {
+      width: 66px !important;
+      height: 66px !important;
+      object-fit: contain !important;
+      transform: translateX(5px) !important;
+    }
+
+    body.league-home-theme-page .league-home-tile[href="my-team.html"]:hover .league-home-tile-icon {
+      transform: translateX(5px) scale(1.06) rotate(-2deg) !important;
+    }
+
+
+    /* My Team icon smaller/right override */
+    body.league-home-theme-page .league-home-tile[href="my-team.html"] .league-home-tile-icon {
+      width: 58px !important;
+      height: 58px !important;
+      object-fit: contain !important;
+      transform: translateX(10px) !important;
+    }
+
+    body.league-home-theme-page .league-home-tile[href="my-team.html"]:hover .league-home-tile-icon {
+      transform: translateX(10px) scale(1.06) rotate(-2deg) !important;
+    }
+
+
+    /* My Team icon move right more */
+    body.league-home-theme-page .league-home-tile[href="my-team.html"] .league-home-tile-icon {
+      transform: translateX(18px) !important;
+    }
+
+    body.league-home-theme-page .league-home-tile[href="my-team.html"]:hover .league-home-tile-icon {
+      transform: translateX(18px) scale(1.06) rotate(-2deg) !important;
+    }
+
+
+    /* My Team icon tiny size bump */
+    body.league-home-theme-page .league-home-tile[href="my-team.html"] .league-home-tile-icon {
+      width: 62px !important;
+      height: 62px !important;
+      transform: translateX(18px) !important;
+    }
+
+    body.league-home-theme-page .league-home-tile[href="my-team.html"]:hover .league-home-tile-icon {
+      transform: translateX(18px) scale(1.06) rotate(-2deg) !important;
+    }
+
+
+    /* ===== League Home light/dark mode toggle ===== */
+
+    body.league-home-theme-page .league-theme-toggle-row {
+      display: flex;
+      justify-content: center;
+      margin: -4px 0 16px;
+    }
+
+    body.league-home-theme-page .league-theme-toggle-button {
+      min-height: 42px;
+      padding: 0 18px;
+      border-radius: 999px;
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      background: linear-gradient(to bottom, rgba(255,255,255,0.92), rgba(212,226,246,0.88));
+      color: #102844;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.22),
+        0 0 0 3px rgba(105, 166, 240, 0.12) inset;
+      transition: transform 0.12s ease, filter 0.12s ease;
+    }
+
+    body.league-home-theme-page .league-theme-toggle-button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.06);
+    }
+
+    /* Light mode: restore the white/light-blue glass box */
+    body.league-home-theme-page.league-home-light-mode .league-home-theme-card {
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(238, 247, 255, 0.88),
+          rgba(204, 226, 247, 0.78)
+        ) !important;
+      border: 2px solid rgba(255, 255, 255, 0.72) !important;
+      box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.34),
+        0 0 0 3px rgba(69, 132, 196, 0.18) inset !important;
+      color: #102844 !important;
+    }
+
+    body.league-home-theme-page.league-home-light-mode .league-home-theme-title {
+      color: #102844 !important;
+      text-shadow:
+        0 2px 0 rgba(255, 255, 255, 0.85),
+        0 0 14px rgba(68, 150, 230, 0.35) !important;
+    }
+
+    body.league-home-theme-page.league-home-light-mode #leagueSubtitle {
+      color: #17345e !important;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.80) !important;
+    }
+
+    body.league-home-theme-page.league-home-light-mode #leagueStatus {
+      background: rgba(255, 255, 255, 0.66) !important;
+      border: 1px solid rgba(69, 132, 196, 0.28) !important;
+      color: #17345e !important;
+      box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.12),
+        0 0 0 2px rgba(255, 255, 255, 0.26) inset !important;
+    }
+
+    body.league-home-theme-page.league-home-light-mode .league-theme-toggle-button {
+      background: linear-gradient(to bottom, #294b77, #102844);
+      color: #ffffff;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95);
+    }
+
+
+    /* ===== League Home Settings button ===== */
+
+    body.league-home-theme-page .league-home-settings-row {
+      display: flex;
+      justify-content: center;
+      margin: -4px 0 16px;
+    }
+
+    body.league-home-theme-page .league-home-settings-button {
+      min-height: 42px;
+      padding: 0 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      border-radius: 999px;
+      border: 2px solid rgba(255, 255, 255, 0.34);
+      background: linear-gradient(to bottom, rgba(255,255,255,0.92), rgba(212,226,246,0.88));
+      color: #102844;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.22),
+        0 0 0 3px rgba(105, 166, 240, 0.12) inset;
+      transition: transform 0.12s ease, filter 0.12s ease;
+    }
+
+    body.league-home-theme-page .league-home-settings-button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.06);
+    }
+
+
+    /* Settings as League Home tile */
+    body.league-home-theme-page .league-home-tile[href="settings.html?v=settings1"] {
+      background: linear-gradient(to bottom, rgba(232, 238, 248, 0.98), rgba(178, 194, 216, 0.92)) !important;
+    }
+
+    body.league-home-theme-page .settings-tile-icon {
+      width: 64px !important;
+      height: 64px !important;
+      object-fit: contain !important;
+    }
+
+    body.league-home-theme-page .league-home-settings-row {
+      display: none !important;
+    }
+
+
+    /* Colorful My Leagues tile */
+    body.league-home-theme-page .league-home-tile[href="my-leagues.html?v=myleagues-signin-fix1"] {
+      background: linear-gradient(to bottom, rgba(255, 207, 238, 0.98), rgba(173, 146, 245, 0.92)) !important;
+      border-color: rgba(255, 255, 255, 0.78) !important;
+    }
+
+    body.league-home-theme-page .league-home-tile[href="my-leagues.html?v=myleagues-signin-fix1"] .league-home-tile-title {
+      color: #102844 !important;
+    }
+
+    body.league-home-theme-page .league-home-tile[href="my-leagues.html?v=myleagues-signin-fix1"] .league-home-tile-desc {
+      color: rgba(16, 40, 68, 0.74) !important;
+    }
+
+
+    /* Distinct Manage League tile color */
+    body.league-home-theme-page .league-home-tile[href="manage-league.html"] {
+      background: linear-gradient(to bottom, rgba(185, 224, 255, 0.98), rgba(92, 154, 224, 0.92)) !important;
+      border-color: rgba(255, 255, 255, 0.78) !important;
+    }
+
+    body.league-home-theme-page .league-home-tile[href="manage-league.html"] .league-home-tile-title {
+      color: #102844 !important;
+    }
+
+    body.league-home-theme-page .league-home-tile[href="manage-league.html"] .league-home-tile-desc {
+      color: rgba(16, 40, 68, 0.74) !important;
+    }
+
+
+    /* Final My Leagues / Manage League color choices */
+
+    body.league-home-theme-page .league-home-tile[href="my-leagues.html?v=myleagues-signin-fix1"] {
+      background: linear-gradient(to bottom, rgba(255, 174, 132, 0.98), rgba(226, 91, 62, 0.92)) !important;
+      border-color: rgba(255, 255, 255, 0.78) !important;
+    }
+
+    body.league-home-theme-page .league-home-tile[href="manage-league.html"] {
+      background: linear-gradient(to bottom, rgba(255, 247, 218, 0.98), rgba(232, 205, 143, 0.92)) !important;
+      border-color: rgba(255, 255, 255, 0.78) !important;
+    }
+
+    body.league-home-theme-page .league-home-tile[href="my-leagues.html?v=myleagues-signin-fix1"] .league-home-tile-title,
+    body.league-home-theme-page .league-home-tile[href="manage-league.html"] .league-home-tile-title {
+      color: #102844 !important;
+    }
+
+    body.league-home-theme-page .league-home-tile[href="my-leagues.html?v=myleagues-signin-fix1"] .league-home-tile-desc,
+    body.league-home-theme-page .league-home-tile[href="manage-league.html"] .league-home-tile-desc {
+      color: rgba(16, 40, 68, 0.76) !important;
+    }
+
+
+    /* Swap Manage League / My Leagues colors */
+
+    body.league-home-theme-page .league-home-tile[href="my-leagues.html?v=myleagues-signin-fix1"] {
+      background: linear-gradient(to bottom, rgba(255, 247, 218, 0.98), rgba(232, 205, 143, 0.92)) !important;
+      border-color: rgba(255, 255, 255, 0.78) !important;
+    }
+
+    body.league-home-theme-page .league-home-tile[href="manage-league.html"] {
+      background: linear-gradient(to bottom, rgba(255, 193, 154, 0.98), rgba(238, 122, 88, 0.92)) !important;
+      border-color: rgba(255, 255, 255, 0.78) !important;
+    }
+
+    body.league-home-theme-page .league-home-tile[href="my-leagues.html?v=myleagues-signin-fix1"] .league-home-tile-title,
+    body.league-home-theme-page .league-home-tile[href="manage-league.html"] .league-home-tile-title {
+      color: #102844 !important;
+    }
+
+    body.league-home-theme-page .league-home-tile[href="my-leagues.html?v=myleagues-signin-fix1"] .league-home-tile-desc,
+    body.league-home-theme-page .league-home-tile[href="manage-league.html"] .league-home-tile-desc {
+      color: rgba(16, 40, 68, 0.76) !important;
+    }
+
   </style>
 </head>
 <body class="league-home-theme-page">
@@ -296,10 +740,9 @@
       <p id="leagueSubtitle">Loading selected league...</p>
 
       <span id="leagueStatus">Checking league...</span>
-
-      <div class="league-home-grid">
+<div class="league-home-grid">
         <a class="league-home-tile" href="my-team.html">
-          <img class="league-home-tile-icon egg-tile-icon" src="images/ui/Egg.png" alt="">
+          <img class="league-home-tile-icon egg-tile-icon" src="images/ui/test22.png" alt="">
           <span class="league-home-tile-title">My Team</span>
           <span class="league-home-tile-desc">View your roster, point cap, and team details.</span>
         </a>
@@ -341,13 +784,13 @@
         </a>
 
         <a class="league-home-tile" href="waiver-wire.html">
-          <img class="league-home-tile-icon" src="images/ui/Leftover.png" alt="">
+          <img class="league-home-tile-icon" src="images/ui/Weakness.png" alt="">
           <span class="league-home-tile-title">Waiver Wire</span>
           <span class="league-home-tile-desc">Add, drop, and browse available Pokémon.</span>
         </a>
 
         <a class="league-home-tile" href="trading.html">
-          <img class="league-home-tile-icon" src="images/ui/AirBalloon.png" alt="">
+          <img class="league-home-tile-icon" src="images/ui/LinkCable.png" alt="">
           <span class="league-home-tile-title">Trading</span>
           <span class="league-home-tile-desc">Send and review trade offers with other managers.</span>
         </a>
@@ -357,10 +800,40 @@
           <span class="league-home-tile-title">My Leagues</span>
           <span class="league-home-tile-desc">Return to your league selection screen.</span>
         </a>
+
+        <a class="league-home-tile settings-tile" href="settings.html?v=settings1">
+          <img class="league-home-tile-icon settings-tile-icon" src="images/ui/setting.png" alt="">
+          <span class="league-home-tile-title">Settings</span>
+          <span class="league-home-tile-desc">Switch display options.</span>
+        </a>
+
       </div>
     </section>
   </div>
 
+
+  <script>
+    (function () {
+      const STORAGE_KEY = "pokeleague-league-home-theme";
+      const body = document.body;
+      const button = document.getElementById("leagueThemeToggle");
+
+      function applyTheme(theme) {
+        const isLight = theme === "light";
+        body.classList.toggle("league-home-light-mode", isLight);
+
+        if (button) {
+          button.textContent = isLight ? "Dark Mode" : "Light Mode";
+        }
+      }
+
+      const savedTheme = localStorage.getItem(STORAGE_KEY) || "dark";
+      applyTheme(savedTheme);
+    })();
+  </script>
+
+
+  <script src="js/theme-settings.js?v=global-theme1"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
   <script src="js/league-home.js"></script>

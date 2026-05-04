@@ -6,7 +6,6 @@ let selectedLeagueId = localStorage.getItem("selected-league-id");
 let currentMembership = null;
 let myTeam = null;
 let championsPokemon = [];
-let selectedLogoFile = null;
 
 loadMyTeamPage();
 
@@ -125,13 +124,8 @@ async function renderMyTeam() {
           <label>Owner Name</label>
           <input id="myOwnerNameInput" type="text" value="${escapeHtml(ownerName)}">
 
-          <label>Team Logo</label>
-          <div class="team-logo-upload-box">
-            <input id="myLogoFileInput" class="team-logo-file-input" type="file" accept="image/png,image/jpeg,image/webp,image/gif">
-            <p id="myLogoUploadNote" class="small-note">
-              ${logoUrl ? "Current logo saved. Upload a new image to replace it." : "Upload a PNG, JPG, WEBP, or GIF."}
-            </p>
-          </div>
+          <label>Logo URL</label>
+          <input id="myLogoUrlInput" type="text" value="${escapeHtml(logoUrl)}" placeholder="Paste image URL">
 
           <button id="saveMyTeamButton" class="pkmn-button small">Save My Team</button>
         </div>
@@ -145,21 +139,6 @@ async function renderMyTeam() {
   `;
 
   document.getElementById("saveMyTeamButton").addEventListener("click", saveMyTeam);
-
-  const logoFileInput = document.getElementById("myLogoFileInput");
-  if (logoFileInput) {
-    logoFileInput.addEventListener("change", function () {
-      selectedLogoFile = this.files && this.files.length > 0 ? this.files[0] : null;
-
-      const note = document.getElementById("myLogoUploadNote");
-      if (note) {
-        note.textContent = selectedLogoFile
-          ? `Selected: ${selectedLogoFile.name}`
-          : "Upload a PNG, JPG, WEBP, or GIF.";
-      }
-    });
-  }
-
   myTeamStatus.textContent = "My Team loaded.";
 }
 
@@ -198,7 +177,6 @@ async function getRosterHtml() {
           <div class="my-team-roster-slot">
             <img src="${pokemon.image}" alt="${escapeHtml(pokemon.name)}">
             <p>${escapeHtml(pokemon.name)}</p>
-            ${renderMyTeamTypeBadges(pokemon)}
           </div>
         `;
       }).join("")}
@@ -209,20 +187,7 @@ async function getRosterHtml() {
 async function saveMyTeam() {
   const teamName = document.getElementById("myTeamNameInput").value.trim() || `Team ${myTeam.team_number}`;
   const ownerName = document.getElementById("myOwnerNameInput").value.trim() || "Unassigned";
-
-  let logoUrl = myTeam.logo_url || "";
-
-  myTeamStatus.textContent = selectedLogoFile ? "Uploading logo..." : "Saving team...";
-
-  if (selectedLogoFile) {
-    const uploadedLogoUrl = await uploadTeamLogo(selectedLogoFile);
-
-    if (!uploadedLogoUrl) {
-      return;
-    }
-
-    logoUrl = uploadedLogoUrl;
-  }
+  const logoUrl = document.getElementById("myLogoUrlInput").value.trim();
 
   myTeamStatus.textContent = "Saving team...";
 
@@ -243,8 +208,6 @@ async function saveMyTeam() {
     return;
   }
 
-  selectedLogoFile = null;
-
   const { data: updatedTeam, error: reloadError } = await supabaseClient
     .from("league_teams")
     .select("*")
@@ -257,71 +220,6 @@ async function saveMyTeam() {
 
   myTeamStatus.textContent = "My Team saved.";
   await renderMyTeam();
-}
-
-async function uploadTeamLogo(file) {
-  const allowedTypes = ["image/png", "image/jpeg", "image/webp", "image/gif"];
-
-  if (!allowedTypes.includes(file.type)) {
-    myTeamStatus.textContent = "Logo must be a PNG, JPG, WEBP, or GIF.";
-    return "";
-  }
-
-  const maxSizeBytes = 2 * 1024 * 1024;
-
-  if (file.size > maxSizeBytes) {
-    myTeamStatus.textContent = "Logo file must be under 2 MB.";
-    return "";
-  }
-
-  const extension = file.name.split(".").pop().toLowerCase().replace(/[^a-z0-9]/g, "") || "png";
-  const safeLeagueId = String(selectedLeagueId).replace(/[^a-zA-Z0-9_-]/g, "");
-  const safeTeamId = String(myTeam.id).replace(/[^a-zA-Z0-9_-]/g, "");
-  const filePath = `${safeLeagueId}/${safeTeamId}-${Date.now()}.${extension}`;
-
-  const { error: uploadError } = await supabaseClient.storage
-    .from("team-logos")
-    .upload(filePath, file, {
-      cacheControl: "3600",
-      upsert: true
-    });
-
-  if (uploadError) {
-    console.error("Team logo upload error:", uploadError);
-    myTeamStatus.textContent = "Logo upload failed. Check Supabase Storage policies.";
-    return "";
-  }
-
-  const { data } = supabaseClient.storage
-    .from("team-logos")
-    .getPublicUrl(filePath);
-
-  return data.publicUrl || "";
-}
-
-
-function getTypeClass(type) {
-  return `type-${String(type || "").toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
-}
-
-function renderMyTeamTypeBadges(pokemon) {
-  const types = pokemon.types || [];
-
-  if (!types.length) {
-    return "";
-  }
-
-  const typeClass = types.length === 1 ? "single" : "dual";
-
-  return `
-    <div class="pokemon-type-strip my-team-type-strip ${typeClass}">
-      ${types.map(type => `
-        <span class="pokemon-type-segment ${getTypeClass(type)}">
-          ${escapeHtml(type)}
-        </span>
-      `).join("")}
-    </div>
-  `;
 }
 
 function escapeHtml(value) {

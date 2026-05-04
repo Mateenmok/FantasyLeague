@@ -198,7 +198,6 @@ async function getRosterHtml() {
           <div class="my-team-roster-slot">
             <img src="${pokemon.image}" alt="${escapeHtml(pokemon.name)}">
             <p>${escapeHtml(pokemon.name)}</p>
-            ${renderMyTeamTypeBadges(pokemon)}
           </div>
         `;
       }).join("")}
@@ -297,31 +296,6 @@ async function uploadTeamLogo(file) {
     .getPublicUrl(filePath);
 
   return data.publicUrl || "";
-}
-
-
-function getTypeClass(type) {
-  return `type-${String(type || "").toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
-}
-
-function renderMyTeamTypeBadges(pokemon) {
-  const types = pokemon.types || [];
-
-  if (!types.length) {
-    return "";
-  }
-
-  const typeClass = types.length === 1 ? "single" : "dual";
-
-  return `
-    <div class="pokemon-type-strip my-team-type-strip ${typeClass}">
-      ${types.map(type => `
-        <span class="pokemon-type-segment ${getTypeClass(type)}">
-          ${escapeHtml(type)}
-        </span>
-      `).join("")}
-    </div>
-  `;
 }
 
 function escapeHtml(value) {
