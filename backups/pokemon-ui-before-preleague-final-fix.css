@@ -4917,3 +4917,286 @@ body.league-dark-mode #tradeSubtitle {
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.75) !important;
 }
 
+/* =========================================================
+   Global light/dark mode for pre-league pages
+   Start screen, auth screens, account, my leagues, join league
+   ========================================================= */
+
+/* Dark mode: make old-style windows black instead of navy */
+body.league-dark-mode .pkmn-window,
+body.league-dark-mode .home-window,
+body.league-dark-mode .league-list-window,
+body.league-dark-mode .account-window,
+body.league-dark-mode .auth-window,
+body.league-dark-mode .join-window,
+body.league-dark-mode .create-league-window,
+body.league-dark-mode .my-leagues-window {
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.82),
+      rgba(0, 0, 0, 0.58)
+    ) !important;
+  border: 2px solid rgba(255, 255, 255, 0.24) !important;
+  box-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.54),
+    0 0 36px rgba(255, 255, 255, 0.08) inset !important;
+  color: #ffffff !important;
+}
+
+/* Light mode: make old-style windows icy white/blue */
+body.league-light-mode .pkmn-window,
+body.league-light-mode .home-window,
+body.league-light-mode .league-list-window,
+body.league-light-mode .account-window,
+body.league-light-mode .auth-window,
+body.league-light-mode .join-window,
+body.league-light-mode .create-league-window,
+body.league-light-mode .my-leagues-window {
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(238, 247, 255, 0.92),
+      rgba(204, 226, 247, 0.82)
+    ) !important;
+  border: 2px solid rgba(255, 255, 255, 0.76) !important;
+  box-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.30),
+    0 0 0 3px rgba(69, 132, 196, 0.18) inset !important;
+  color: #102844 !important;
+}
+
+/* Titles */
+body.league-light-mode .pkmn-title,
+body.league-light-mode .home-title,
+body.league-light-mode .league-title,
+body.league-light-mode .account-title,
+body.league-light-mode .auth-title {
+  color: #102844 !important;
+  text-shadow:
+    0 2px 0 rgba(255, 255, 255, 0.85),
+    0 0 14px rgba(68, 150, 230, 0.35) !important;
+}
+
+body.league-dark-mode .pkmn-title,
+body.league-dark-mode .home-title,
+body.league-dark-mode .league-title,
+body.league-dark-mode .account-title,
+body.league-dark-mode .auth-title {
+  color: #ffffff !important;
+  text-shadow:
+    0 3px 0 rgba(0, 0, 0, 0.80),
+    0 0 12px rgba(30, 160, 255, 0.58) !important;
+}
+
+/* Subtitles and notes */
+body.league-light-mode .pkmn-subtitle,
+body.league-light-mode .pkmn-footer-note,
+body.league-light-mode .small-note,
+body.league-light-mode .auth-links a,
+body.league-light-mode .league-card p,
+body.league-light-mode .account-card p {
+  color: rgba(16, 40, 68, 0.78) !important;
+  text-shadow: none !important;
+}
+
+body.league-dark-mode .pkmn-subtitle,
+body.league-dark-mode .pkmn-footer-note,
+body.league-dark-mode .small-note,
+body.league-dark-mode .auth-links a,
+body.league-dark-mode .league-card p,
+body.league-dark-mode .account-card p {
+  color: rgba(255, 255, 255, 0.86) !important;
+}
+
+/* Inner cards/lists */
+body.league-light-mode .pkmn-panel,
+body.league-light-mode .league-card,
+body.league-light-mode .account-card,
+body.league-light-mode .league-list-card,
+body.league-light-mode .my-leagues-card,
+body.league-light-mode .create-league-card {
+  background: rgba(255, 255, 255, 0.72) !important;
+  border: 1px solid rgba(69, 132, 196, 0.30) !important;
+  color: #102844 !important;
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.13),
+    0 0 0 3px rgba(255, 255, 255, 0.25) inset !important;
+}
+
+body.league-dark-mode .pkmn-panel,
+body.league-dark-mode .league-card,
+body.league-dark-mode .account-card,
+body.league-dark-mode .league-list-card,
+body.league-dark-mode .my-leagues-card,
+body.league-dark-mode .create-league-card {
+  background: rgba(0, 0, 0, 0.52) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  color: #ffffff !important;
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.34),
+    0 0 0 3px rgba(255, 255, 255, 0.06) inset !important;
+}
+
+/* Inputs */
+body.league-light-mode .pkmn-input,
+body.league-light-mode .pkmn-select,
+body.league-light-mode input,
+body.league-light-mode select,
+body.league-light-mode textarea {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.98), rgba(236, 243, 252, 0.96)) !important;
+  color: #102844 !important;
+  border-color: rgba(69, 132, 196, 0.32) !important;
+}
+
+body.league-dark-mode .pkmn-input,
+body.league-dark-mode .pkmn-select,
+body.league-dark-mode input,
+body.league-dark-mode select,
+body.league-dark-mode textarea {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.96), rgba(225, 235, 250, 0.94)) !important;
+  color: #162642 !important;
+}
+
+/* Main buttons stay colorful in light mode */
+body.league-light-mode .pkmn-button,
+body.league-light-mode .pkmn-button-link,
+body.league-light-mode .home-button,
+body.league-light-mode .league-button,
+body.league-light-mode .account-button {
+  background: linear-gradient(to bottom, rgba(190, 245, 240, 0.96), rgba(109, 204, 196, 0.88)) !important;
+  color: #102844 !important;
+  text-shadow: none !important;
+  border-color: rgba(255, 255, 255, 0.76) !important;
+}
+
+/* Keep danger buttons red */
+body.league-light-mode .pkmn-button.danger,
+body.league-dark-mode .pkmn-button.danger {
+  background: linear-gradient(to bottom, #d86a6a, #8d2e3a) !important;
+  color: #ffffff !important;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.80) !important;
+}
+
+/* Start-screen tile buttons, if present */
+body.league-light-mode .pokeball-link,
+body.league-light-mode .home-tile,
+body.league-light-mode .start-tile {
+  background: linear-gradient(to bottom, rgba(255, 247, 218, 0.98), rgba(232, 205, 143, 0.92)) !important;
+  color: #102844 !important;
+  border-color: rgba(255, 255, 255, 0.78) !important;
+  text-shadow: none !important;
+}
+
+body.league-dark-mode .pokeball-link,
+body.league-dark-mode .home-tile,
+body.league-dark-mode .start-tile {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.66), rgba(0, 0, 0, 0.44)) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.24) !important;
+}
+
+/* Text contrast inside cards */
+body.league-light-mode strong,
+body.league-light-mode label,
+body.league-light-mode .pkmn-label {
+  color: #102844 !important;
+  text-shadow: none !important;
+}
+
+
+/* =========================================================
+   My Leagues page: repair dark/light mode contrast
+   ========================================================= */
+
+/* Dark mode: actual black cards, readable text */
+body.league-dark-mode .my-leagues-theme-card,
+body.league-dark-mode .my-leagues-card,
+body.league-dark-mode .league-card,
+body.league-dark-mode [id*="leagueList"] > *,
+body.league-dark-mode [id*="myLeagues"] > * {
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.76),
+      rgba(0, 0, 0, 0.52)
+    ) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  color: #ffffff !important;
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.34),
+    0 0 0 3px rgba(255, 255, 255, 0.06) inset !important;
+}
+
+/* Force ALL text inside league cards readable in dark mode */
+body.league-dark-mode .my-leagues-card *,
+body.league-dark-mode .league-card *,
+body.league-dark-mode [id*="leagueList"] > * *,
+body.league-dark-mode [id*="myLeagues"] > * * {
+  color: rgba(255, 255, 255, 0.92) !important;
+  text-shadow: none !important;
+}
+
+/* League names stay bright/title-like */
+body.league-dark-mode .my-leagues-card h1,
+body.league-dark-mode .my-leagues-card h2,
+body.league-dark-mode .my-leagues-card h3,
+body.league-dark-mode .league-card h1,
+body.league-dark-mode .league-card h2,
+body.league-dark-mode .league-card h3,
+body.league-dark-mode [id*="leagueList"] h1,
+body.league-dark-mode [id*="leagueList"] h2,
+body.league-dark-mode [id*="leagueList"] h3,
+body.league-dark-mode [id*="myLeagues"] h1,
+body.league-dark-mode [id*="myLeagues"] h2,
+body.league-dark-mode [id*="myLeagues"] h3 {
+  color: #ffffff !important;
+  text-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.80),
+    0 0 10px rgba(30, 160, 255, 0.38) !important;
+}
+
+/* Buttons should remain styled, not plain white text */
+body.league-dark-mode .my-leagues-card button,
+body.league-dark-mode .league-card button,
+body.league-dark-mode [id*="leagueList"] button,
+body.league-dark-mode [id*="myLeagues"] button {
+  background: linear-gradient(to bottom, #294b77, #102844) !important;
+  color: #ffffff !important;
+  border: 2px solid rgba(255, 255, 255, 0.35) !important;
+  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95) !important;
+}
+
+/* Light mode: readable dark text */
+body.league-light-mode .my-leagues-theme-card,
+body.league-light-mode .my-leagues-card,
+body.league-light-mode .league-card,
+body.league-light-mode [id*="leagueList"] > *,
+body.league-light-mode [id*="myLeagues"] > * {
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.82),
+      rgba(226, 241, 255, 0.74)
+    ) !important;
+  border: 1px solid rgba(69, 132, 196, 0.30) !important;
+  color: #102844 !important;
+}
+
+body.league-light-mode .my-leagues-card *,
+body.league-light-mode .league-card *,
+body.league-light-mode [id*="leagueList"] > * *,
+body.league-light-mode [id*="myLeagues"] > * * {
+  color: #102844 !important;
+  text-shadow: none !important;
+}
+
+body.league-light-mode .my-leagues-card button,
+body.league-light-mode .league-card button,
+body.league-light-mode [id*="leagueList"] button,
+body.league-light-mode [id*="myLeagues"] button {
+  background: linear-gradient(to bottom, rgba(198, 234, 255, 0.96), rgba(122, 190, 232, 0.88)) !important;
+  color: #102844 !important;
+  border: 2px solid rgba(255, 255, 255, 0.76) !important;
+  text-shadow: none !important;
+}

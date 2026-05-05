@@ -181,7 +181,7 @@ function renderPointStatus() {
       <div class="draft-point-card">
         <p><strong>Trade Format</strong></p>
         <p>1 Pokémon for 1 Pokémon</p>
-        <p class="small-note">Multi-Pokémon trades can be added later.</p>
+        <p class="small-note">Multi-Pokémon trades will be added later.</p>
       </div>
     </div>
   `;

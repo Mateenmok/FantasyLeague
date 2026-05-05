@@ -5,26 +5,382 @@
   <title>Waiver Wire</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/pokemon-ui.css?v=waiverbg2">
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;500;600;700;800&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/pokemon-ui.css?v=global-black-dark1">
+
+  <style>
+    body.waiver-theme-page {
+      margin: 0;
+      min-height: 100vh;
+      background-image: url("images/backgrounds/VictoryRoad.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+      font-family: "Oxanium", Arial, sans-serif;
+    }
+
+    .waiver-theme-overlay {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at center 18%, rgba(36, 151, 255, 0.22), transparent 34%),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.58));
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 30px 20px;
+      box-sizing: border-box;
+    }
+
+    .waiver-theme-card {
+      width: min(1220px, 96vw);
+      padding: 24px;
+      border-radius: 28px;
+      background: linear-gradient(
+        to bottom,
+        rgba(4, 18, 48, 0.72),
+        rgba(4, 18, 48, 0.38)
+      );
+      border: 2px solid rgba(255, 255, 255, 0.22);
+      box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.42),
+        0 0 42px rgba(29, 150, 255, 0.18) inset;
+      backdrop-filter: blur(2px);
+      box-sizing: border-box;
+    }
+
+    .waiver-theme-title {
+      margin: 0;
+      text-align: center;
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-shadow:
+        0 3px 0 rgba(0, 0, 0, 0.70),
+        0 0 12px rgba(30, 160, 255, 0.70);
+    }
+
+    #waiverSubtitle {
+      margin: 8px 0 18px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.7px;
+      color: rgba(255, 255, 255, 0.90);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.70);
+    }
+
+    .waiver-theme-links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .waiver-theme-link {
+      min-height: 50px;
+      min-width: 180px;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, #294b77, #102844);
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95);
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(105, 166, 240, 0.16) inset;
+      transition: transform 0.12s ease, filter 0.12s ease;
+      box-sizing: border-box;
+    }
+
+    .waiver-theme-link:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
+
+    .waiver-theme-link:nth-child(1) {
+      background: linear-gradient(to bottom, rgba(198, 234, 255, 0.96), rgba(122, 190, 232, 0.88));
+      color: #102844;
+      text-shadow: none;
+    }
+
+    .waiver-theme-link:nth-child(2) {
+      background: linear-gradient(to bottom, rgba(255, 247, 218, 0.98), rgba(232, 205, 143, 0.92));
+      color: #102844;
+      text-shadow: none;
+    }
+
+    .waiver-theme-link:nth-child(3) {
+      background: linear-gradient(to bottom, rgba(220, 204, 255, 0.96), rgba(158, 135, 224, 0.88));
+      color: #102844;
+      text-shadow: none;
+    }
+
+    body.waiver-theme-page .pkmn-panel,
+    body.waiver-theme-page .draft-point-card,
+    body.waiver-theme-page .empty-state {
+      padding: 18px;
+      margin-bottom: 16px;
+      border-radius: 24px;
+      background: rgba(5, 18, 43, 0.58);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(105, 166, 240, 0.10) inset;
+      color: #ffffff;
+      box-sizing: border-box;
+    }
+
+    body.waiver-theme-page .pkmn-panel strong,
+    body.waiver-theme-page .draft-point-card strong {
+      display: block;
+      margin: 0 0 6px;
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-shadow:
+        0 2px 0 rgba(0, 0, 0, 0.55),
+        0 0 10px rgba(30, 160, 255, 0.48);
+    }
+
+    body.waiver-theme-page .small-note,
+    body.waiver-theme-page .empty-state p {
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    body.waiver-theme-page .waiver-admin-buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    body.waiver-theme-page .draft-point-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    body.waiver-theme-page .draft-point-card {
+      margin: 0;
+    }
+
+    body.waiver-theme-page .draft-point-card p {
+      margin: 5px 0;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.84);
+    }
+
+    body.waiver-theme-page .draft-point-bar {
+      height: 12px;
+      margin-top: 10px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    body.waiver-theme-page .draft-point-bar > div {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(to right, #38a8ff, #ffd94c);
+      box-shadow: 0 0 10px rgba(56, 168, 255, 0.45);
+    }
+
+    body.waiver-theme-page .waiver-roster-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    body.waiver-theme-page .waiver-roster-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.90);
+      color: #102844;
+      font-size: 15px;
+      font-weight: 800;
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.70);
+    }
+
+    body.waiver-theme-page .draft-filter-menu {
+      display: grid;
+      grid-template-columns: 1.2fr repeat(3, 1fr);
+      gap: 12px;
+      margin: 14px 0;
+      padding: 14px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-sizing: border-box;
+    }
+
+    body.waiver-theme-page .draft-filter-menu label {
+      display: grid;
+      gap: 7px;
+    }
+
+    body.waiver-theme-page .draft-filter-menu span {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    body.waiver-theme-page .pkmn-input,
+    body.waiver-theme-page .pkmn-select {
+      min-height: 48px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      border: 2px solid rgba(255, 255, 255, 0.32);
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.96), rgba(225, 235, 250, 0.94));
+      color: #162642;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      outline: none;
+      box-shadow:
+        0 6px 16px rgba(0, 0, 0, 0.18),
+        0 0 0 3px rgba(24, 83, 150, 0.18) inset;
+      box-sizing: border-box;
+    }
+
+    body.waiver-theme-page .draft-available-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    body.waiver-theme-page .draft-pokemon-card {
+      position: relative;
+      min-height: 270px;
+      padding: 12px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 2px solid rgba(255, 255, 255, 0.45);
+      color: #102844;
+      font-weight: 800;
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.22),
+        0 0 0 3px rgba(105, 166, 240, 0.08) inset;
+      overflow: hidden;
+    }
+
+    body.waiver-theme-page .draft-pokemon-card > img:not(.mega-badge-overlay) {
+      width: 96px;
+      height: 96px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto 8px;
+    }
+
+    body.waiver-theme-page .draft-pokemon-card > span {
+      display: block;
+      min-height: 34px;
+      color: #102844;
+      font-size: 13px;
+      line-height: 1.12;
+      text-align: center;
+      font-weight: 800;
+    }
+
+    body.waiver-theme-page .waiver-drop-row {
+      margin-top: 10px;
+    }
+
+    body.waiver-theme-page .waiver-add-button,
+    body.waiver-theme-page .pkmn-button {
+      min-height: 44px !important;
+      border-radius: 999px !important;
+      background: linear-gradient(to bottom, rgba(197, 244, 205, 0.98), rgba(111, 202, 131, 0.88)) !important;
+      border: 2px solid rgba(255, 255, 255, 0.44) !important;
+      color: #102844 !important;
+      font-family: "Oxanium", Arial, sans-serif !important;
+      font-size: 14px !important;
+      font-weight: 900 !important;
+      letter-spacing: 0.4px !important;
+      text-shadow: none !important;
+      cursor: pointer !important;
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.34) !important;
+    }
+
+    body.waiver-theme-page .pkmn-button.danger {
+      background: linear-gradient(to bottom, #d86a6a, #8d2e3a) !important;
+      color: #ffffff !important;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.80) !important;
+    }
+
+    #waiverPageStatus {
+      margin-top: 16px;
+      padding: 10px 14px;
+      border-radius: 16px;
+      background: rgba(5, 18, 43, 0.54);
+      border: 1px solid rgba(255, 255, 255, 0.20);
+      text-align: center;
+      font-size: 15px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.90);
+    }
+
+    @media (max-width: 980px) {
+      body.waiver-theme-page .draft-point-grid,
+      body.waiver-theme-page .draft-filter-menu {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .waiver-theme-card {
+        padding: 18px;
+      }
+
+      .waiver-theme-title {
+        font-size: 34px;
+      }
+
+      .waiver-theme-links {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
-<body class="waiver-page">
-  <div class="page-overlay top-align">
-    <section class="pkmn-window wide">
-      <img class="corner-ball top-left" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball top-right" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball bottom-left" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball bottom-right" src="images/ui/retroball.png" alt="">
+<body class="waiver-theme-page">
+  <div class="waiver-theme-overlay">
+    <section class="waiver-theme-card">
+      <h1 class="waiver-theme-title">Waiver Wire</h1>
+      <p id="waiverSubtitle">Loading selected league...</p>
 
-      <div class="pkmn-title-box">
-        <h1 class="pkmn-title">WAIVER WIRE</h1>
-        <p id="waiverSubtitle" class="pkmn-subtitle">Loading selected league...</p>
-      </div>
-
-      <div class="top-links">
-        <a class="pkmn-button-link small secondary" href="league-home.html">Back to League Home</a>
-        <a class="pkmn-button-link small secondary" href="my-team.html">My Team</a>
-        <a class="pkmn-button-link small secondary" href="draft-room.html">Draft Room</a>
+      <div class="waiver-theme-links">
+        <a class="waiver-theme-link" href="league-home.html?v=league-bg-original1">Back to League Home</a>
+        <a class="waiver-theme-link" href="my-team.html?v=myteam-types1">My Team</a>
+        <a class="waiver-theme-link" href="draft-room.html?v=draft-room-final1">Draft Room</a>
       </div>
 
       <section id="waiverAdminPanel" class="pkmn-panel hidden">
@@ -98,12 +454,13 @@
         </div>
       </section>
 
-      <div id="waiverPageStatus" class="pkmn-footer-note">Loading...</div>
+      <div id="waiverPageStatus">Loading...</div>
     </section>
   </div>
 
+  <script src="js/theme-settings.js?v=global-theme1"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
-  <script src="js/waiver-wire.js?v=waivers1"></script>
+  <script src="js/waiver-wire.js?v=waiver-theme1"></script>
 </body>
 </html>

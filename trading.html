@@ -5,26 +5,443 @@
   <title>Trading</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/pokemon-ui.css?v=tradingbg1">
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;500;600;700;800&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/pokemon-ui.css?v=global-black-dark1">
+
+  <style>
+    body.trading-theme-page {
+      margin: 0;
+      min-height: 100vh;
+      background-image: url("images/backgrounds/VictoryRoad.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+      font-family: "Oxanium", Arial, sans-serif;
+    }
+
+    .trading-theme-overlay {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at center 18%, rgba(36, 151, 255, 0.22), transparent 34%),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.58));
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 30px 20px;
+      box-sizing: border-box;
+    }
+
+    .trading-theme-card {
+      width: min(1120px, 94vw);
+      padding: 24px;
+      border-radius: 28px;
+      background: linear-gradient(
+        to bottom,
+        rgba(4, 18, 48, 0.72),
+        rgba(4, 18, 48, 0.38)
+      );
+      border: 2px solid rgba(255, 255, 255, 0.22);
+      box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.42),
+        0 0 42px rgba(29, 150, 255, 0.18) inset;
+      backdrop-filter: blur(2px);
+      box-sizing: border-box;
+    }
+
+    .trading-theme-title {
+      margin: 0;
+      text-align: center;
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-shadow:
+        0 3px 0 rgba(0, 0, 0, 0.70),
+        0 0 12px rgba(30, 160, 255, 0.70);
+    }
+
+    #tradeSubtitle {
+      margin: 8px 0 18px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.7px;
+      color: rgba(255, 255, 255, 0.90);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.70);
+    }
+
+    .trading-theme-links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .trading-theme-link {
+      min-height: 50px;
+      min-width: 180px;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, #294b77, #102844);
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95);
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(105, 166, 240, 0.16) inset;
+      transition: transform 0.12s ease, filter 0.12s ease;
+      box-sizing: border-box;
+    }
+
+    .trading-theme-link:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
+
+    .trading-theme-link:nth-child(1) {
+      background: linear-gradient(to bottom, rgba(198, 234, 255, 0.96), rgba(122, 190, 232, 0.88));
+      color: #102844;
+      text-shadow: none;
+    }
+
+    .trading-theme-link:nth-child(2) {
+      background: linear-gradient(to bottom, rgba(255, 247, 218, 0.98), rgba(232, 205, 143, 0.92));
+      color: #102844;
+      text-shadow: none;
+    }
+
+    .trading-theme-link:nth-child(3) {
+      background: linear-gradient(to bottom, rgba(197, 244, 205, 0.98), rgba(111, 202, 131, 0.88));
+      color: #102844;
+      text-shadow: none;
+    }
+
+    body.trading-theme-page .pkmn-panel,
+    body.trading-theme-page .draft-point-card,
+    body.trading-theme-page .empty-state {
+      padding: 18px;
+      margin-bottom: 16px;
+      border-radius: 24px;
+      background: rgba(5, 18, 43, 0.58);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(105, 166, 240, 0.10) inset;
+      color: #ffffff;
+      box-sizing: border-box;
+    }
+
+    body.trading-theme-page .pkmn-panel strong,
+    body.trading-theme-page .draft-point-card strong {
+      display: block;
+      margin: 0 0 6px;
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-shadow:
+        0 2px 0 rgba(0, 0, 0, 0.55),
+        0 0 10px rgba(30, 160, 255, 0.48);
+    }
+
+    body.trading-theme-page .small-note,
+    body.trading-theme-page .empty-state p {
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    body.trading-theme-page .draft-point-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    body.trading-theme-page .draft-point-card {
+      margin: 0;
+    }
+
+    body.trading-theme-page .draft-point-card p {
+      margin: 5px 0;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.84);
+    }
+
+    body.trading-theme-page .draft-point-bar {
+      height: 12px;
+      margin-top: 10px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    body.trading-theme-page .draft-point-bar > div {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(to right, #38a8ff, #ffd94c);
+      box-shadow: 0 0 10px rgba(56, 168, 255, 0.45);
+    }
+
+    body.trading-theme-page .trade-offer-form {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 14px 0;
+      padding: 14px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-sizing: border-box;
+    }
+
+    body.trading-theme-page .trade-offer-form label {
+      display: grid;
+      gap: 7px;
+    }
+
+    body.trading-theme-page .trade-offer-form span {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    body.trading-theme-page .pkmn-input,
+    body.trading-theme-page .pkmn-select,
+    body.trading-theme-page textarea {
+      min-height: 48px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      border: 2px solid rgba(255, 255, 255, 0.32);
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.96), rgba(225, 235, 250, 0.94));
+      color: #162642;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      outline: none;
+      box-shadow:
+        0 6px 16px rgba(0, 0, 0, 0.18),
+        0 0 0 3px rgba(24, 83, 150, 0.18) inset;
+      box-sizing: border-box;
+    }
+
+    body.trading-theme-page .trade-message-input {
+      width: 100%;
+      min-height: 88px;
+      resize: vertical;
+      margin-bottom: 12px;
+    }
+
+    body.trading-theme-page .trade-preview {
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    body.trading-theme-page .pkmn-button {
+      min-height: 48px !important;
+      border-radius: 999px !important;
+      background: linear-gradient(to bottom, rgba(255, 206, 222, 0.98), rgba(230, 127, 162, 0.88)) !important;
+      border: 2px solid rgba(255, 255, 255, 0.44) !important;
+      color: #102844 !important;
+      font-family: "Oxanium", Arial, sans-serif !important;
+      font-size: 14px !important;
+      font-weight: 900 !important;
+      letter-spacing: 0.4px !important;
+      text-shadow: none !important;
+      cursor: pointer !important;
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.34) !important;
+    }
+
+    body.trading-theme-page .pkmn-button.danger {
+      background: linear-gradient(to bottom, #d86a6a, #8d2e3a) !important;
+      color: #ffffff !important;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.80) !important;
+    }
+
+    body.trading-theme-page .trade-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    body.trading-theme-page .trade-card {
+      padding: 16px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 2px solid rgba(255, 255, 255, 0.45);
+      color: #102844;
+      box-shadow:
+        0 10px 24px rgba(0, 0, 0, 0.20),
+        inset 0 1px 0 rgba(255, 255, 255, 0.74);
+    }
+
+    body.trading-theme-page .trade-card-header {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    body.trading-theme-page .trade-card-header strong {
+      color: #102844 !important;
+      text-shadow: none !important;
+      font-size: 14px !important;
+    }
+
+    body.trading-theme-page .trade-card-header span {
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, rgba(255, 238, 128, 0.96), rgba(246, 190, 24, 0.92));
+      color: #102844;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    body.trading-theme-page .trade-pokemon-swap {
+      display: grid;
+      grid-template-columns: 1fr 52px 1fr;
+      gap: 12px;
+      align-items: center;
+    }
+
+    body.trading-theme-page .trade-arrow {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, #294b77, #102844);
+      color: white;
+      font-size: 24px;
+      font-weight: 900;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22);
+    }
+
+    body.trading-theme-page .trade-pokemon-mini {
+      position: relative;
+      min-height: 190px;
+      padding: 12px;
+      border-radius: 20px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.98), rgba(235,244,255,0.94));
+      border: 2px solid rgba(207, 223, 242, 0.92);
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    body.trading-theme-page .trade-pokemon-mini p {
+      margin: 0 0 6px;
+      color: rgba(16, 40, 68, 0.70);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    body.trading-theme-page .trade-pokemon-mini img:not(.mega-badge-overlay) {
+      width: 82px;
+      height: 82px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto 6px;
+    }
+
+    body.trading-theme-page .trade-pokemon-mini strong {
+      color: #102844 !important;
+      text-shadow: none !important;
+      font-size: 14px !important;
+      line-height: 1.1;
+    }
+
+    body.trading-theme-page .trade-actions {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    body.trading-theme-page .trade-message {
+      margin: 12px 0 0;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(16, 40, 68, 0.08);
+      color: rgba(16, 40, 68, 0.74);
+      font-weight: 700;
+    }
+
+    #tradePageStatus {
+      margin-top: 16px;
+      padding: 10px 14px;
+      border-radius: 16px;
+      background: rgba(5, 18, 43, 0.54);
+      border: 1px solid rgba(255, 255, 255, 0.20);
+      text-align: center;
+      font-size: 15px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.90);
+    }
+
+    @media (max-width: 900px) {
+      body.trading-theme-page .draft-point-grid,
+      body.trading-theme-page .trade-offer-form,
+      body.trading-theme-page .trade-pokemon-swap {
+        grid-template-columns: 1fr;
+      }
+
+      body.trading-theme-page .trade-arrow {
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .trading-theme-card {
+        padding: 18px;
+      }
+
+      .trading-theme-title {
+        font-size: 34px;
+      }
+
+      .trading-theme-links {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
-<body class="trading-page">
-  <div class="page-overlay top-align">
-    <section class="pkmn-window wide">
-      <img class="corner-ball top-left" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball top-right" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball bottom-left" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball bottom-right" src="images/ui/retroball.png" alt="">
+<body class="trading-theme-page">
+  <div class="trading-theme-overlay">
+    <section class="trading-theme-card">
+      <h1 class="trading-theme-title">Trading</h1>
+      <p id="tradeSubtitle">Loading selected league...</p>
 
-      <div class="pkmn-title-box">
-        <h1 class="pkmn-title">TRADING</h1>
-        <p id="tradeSubtitle" class="pkmn-subtitle">Loading selected league...</p>
-      </div>
-
-      <div class="top-links">
-        <a class="pkmn-button-link small secondary" href="league-home.html">Back to League Home</a>
-        <a class="pkmn-button-link small secondary" href="my-team.html">My Team</a>
-        <a class="pkmn-button-link small secondary" href="waiver-wire.html">Waiver Wire</a>
+      <div class="trading-theme-links">
+        <a class="trading-theme-link" href="league-home.html?v=league-bg-original1">Back to League Home</a>
+        <a class="trading-theme-link" href="my-team.html?v=myteam-types1">My Team</a>
+        <a class="trading-theme-link" href="waiver-wire.html?v=waiver-theme1">Waiver Wire</a>
       </div>
 
       <section id="tradeNoTeamPanel" class="pkmn-panel hidden">
@@ -81,12 +498,13 @@
         </section>
       </section>
 
-      <div id="tradePageStatus" class="pkmn-footer-note">Loading...</div>
+      <div id="tradePageStatus">Loading...</div>
     </section>
   </div>
 
+  <script src="js/theme-settings.js?v=global-theme1"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
-  <script src="js/trading.js?v=trades1"></script>
+  <script src="js/trading.js?v=trade-copy1"></script>
 </body>
 </html>

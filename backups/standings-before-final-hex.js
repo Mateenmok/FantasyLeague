@@ -137,7 +137,7 @@ function renderStandings() {
 
     if (!divisionTeams.length) {
       return `
-        <section class="standings-board division-${getDivisionSlug(division.name)}">
+        <section class="standings-board">
           <div class="standings-division-title">${escapeHtml(division.name)}</div>
           <div class="empty-state">
             <p>No teams assigned to this division.</p>
@@ -177,7 +177,7 @@ function renderStandings() {
     }).join("");
 
     return `
-      <section class="standings-board division-${getDivisionSlug(division.name)}">
+      <section class="standings-board">
         <div class="standings-division-title">${escapeHtml(division.name)}</div>
 
         <div class="standings-header-row">
@@ -215,70 +215,14 @@ function renderPlayoffBracket() {
   const rounds = buildPlayoffRounds(seededTeams);
 
   playoffBracket.innerHTML = rounds.map((round, roundIndex) => {
-    const roundLabel = getRoundLabel(roundIndex, rounds.length);
-
-    if (roundLabel === "Final") {
-      return renderFinalRound(round);
-    }
-
     return `
       <div class="bracket-round">
-        <div class="bracket-round-title">${roundLabel}</div>
+        <div class="bracket-round-title">${getRoundLabel(roundIndex, rounds.length)}</div>
 
         ${round.map(matchup => renderBracketMatchup(matchup)).join("")}
       </div>
     `;
   }).join("");
-}
-
-function renderFinalRound(round) {
-  const finalMatchup = round && round.length ? round[0] : null;
-  const finalist1 = finalMatchup ? finalMatchup.team1 : null;
-  const finalist2 = finalMatchup ? finalMatchup.team2 : null;
-
-  return `
-    <div class="bracket-round final-round">
-      <div class="bracket-round-title">Final</div>
-
-      <div class="bracket-final-showcase">
-        ${renderFinalistSlot(finalist1, "top-slot")}
-        <div class="final-center-chip">
-          <span>${finalist1 && finalist2 ? "VS" : "TBD"}</span>
-        </div>
-        ${renderFinalistSlot(finalist2, "bottom-slot")}
-      </div>
-    </div>
-  `;
-}
-
-function renderFinalistSlot(team, sideClass) {
-  if (!team) {
-    return `
-      <div class="finalist-slot ${sideClass}">
-        <div class="finalist-hex placeholder">?</div>
-        <div class="finalist-meta">
-          <div class="finalist-name">TBD</div>
-          <div class="finalist-sub">Winner of semifinal</div>
-        </div>
-      </div>
-    `;
-  }
-
-  const logoHtml = team.logo_url
-    ? `<img src="${escapeHtml(team.logo_url)}" alt="${escapeHtml(team.team_name)} logo">`
-    : `<span>?</span>`;
-
-  return `
-    <div class="finalist-slot ${sideClass}">
-      <div class="finalist-hex filled">
-        ${logoHtml}
-      </div>
-      <div class="finalist-meta">
-        <div class="finalist-name">${escapeHtml(team.team_name)}</div>
-        <div class="finalist-sub">Seed #${team.playoffSeed} • ${getRecordString(team)}</div>
-      </div>
-    </div>
-  `;
 }
 
 function renderBracketMatchup(matchup) {
@@ -382,15 +326,6 @@ function buildPlayoffRounds(seededTeams) {
   }
 
   return rounds;
-}
-
-
-function getDivisionSlug(name) {
-  return String(name || "")
-    .toLowerCase()
-    .replace(/&/g, "and")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
 }
 
 function compareTeamsForPlayoffs(a, b) {

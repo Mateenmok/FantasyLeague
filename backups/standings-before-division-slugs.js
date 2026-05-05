@@ -137,7 +137,7 @@ function renderStandings() {
 
     if (!divisionTeams.length) {
       return `
-        <section class="standings-board division-${getDivisionSlug(division.name)}">
+        <section class="standings-board">
           <div class="standings-division-title">${escapeHtml(division.name)}</div>
           <div class="empty-state">
             <p>No teams assigned to this division.</p>
@@ -177,7 +177,7 @@ function renderStandings() {
     }).join("");
 
     return `
-      <section class="standings-board division-${getDivisionSlug(division.name)}">
+      <section class="standings-board">
         <div class="standings-division-title">${escapeHtml(division.name)}</div>
 
         <div class="standings-header-row">
@@ -382,15 +382,6 @@ function buildPlayoffRounds(seededTeams) {
   }
 
   return rounds;
-}
-
-
-function getDivisionSlug(name) {
-  return String(name || "")
-    .toLowerCase()
-    .replace(/&/g, "and")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
 }
 
 function compareTeamsForPlayoffs(a, b) {

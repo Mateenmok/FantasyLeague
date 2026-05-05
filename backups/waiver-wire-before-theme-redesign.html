@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Waiver Wire</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/pokemon-ui.css?v=waiverbg2">
+</head>
+<body class="waiver-page">
+  <div class="page-overlay top-align">
+    <section class="pkmn-window wide">
+      <img class="corner-ball top-left" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball top-right" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball bottom-left" src="images/ui/retroball.png" alt="">
+      <img class="corner-ball bottom-right" src="images/ui/retroball.png" alt="">
+
+      <div class="pkmn-title-box">
+        <h1 class="pkmn-title">WAIVER WIRE</h1>
+        <p id="waiverSubtitle" class="pkmn-subtitle">Loading selected league...</p>
+      </div>
+
+      <div class="top-links">
+        <a class="pkmn-button-link small secondary" href="league-home.html">Back to League Home</a>
+        <a class="pkmn-button-link small secondary" href="my-team.html">My Team</a>
+        <a class="pkmn-button-link small secondary" href="draft-room.html">Draft Room</a>
+      </div>
+
+      <section id="waiverAdminPanel" class="pkmn-panel hidden">
+        <p><strong>Admin Waiver Controls</strong></p>
+        <p id="waiverAdminText" class="small-note">Loading waiver status...</p>
+
+        <div class="waiver-admin-buttons">
+          <button id="openWaiversButton" class="pkmn-button small">Open Waivers</button>
+          <button id="closeWaiversButton" class="pkmn-button small danger">Close Waivers</button>
+        </div>
+      </section>
+
+      <section class="pkmn-panel">
+        <p><strong>Waiver Status</strong></p>
+        <p id="waiverStatusText" class="small-note">Loading...</p>
+      </section>
+
+      <div id="waiverClosedMessage" class="pkmn-panel hidden">
+        <p><strong>Waiver period is currently closed.</strong></p>
+        <p class="small-note">Ask a league administrator to open.</p>
+      </div>
+
+      <section id="waiverContent" class="hidden">
+        <div id="waiverPointStatus" class="draft-point-status"></div>
+
+        <div class="pkmn-panel">
+          <p><strong>My Roster</strong></p>
+          <div id="waiverRosterList" class="waiver-roster-list"></div>
+        </div>
+
+        <div class="pkmn-panel">
+          <p><strong>Available Pokémon</strong></p>
+
+          <div class="draft-filter-menu">
+            <label>
+              <span>Search</span>
+              <input id="waiverPokemonSearch" class="pkmn-input" type="text" placeholder="Search Pokémon">
+            </label>
+
+            <label>
+              <span>Mega</span>
+              <select id="waiverMegaFilterSelect" class="pkmn-select">
+                <option value="all">All Pokémon</option>
+                <option value="mega">Mega Only</option>
+                <option value="non-mega">Non-Mega Only</option>
+              </select>
+            </label>
+
+            <label>
+              <span>Tier</span>
+              <select id="waiverTierFilterSelect" class="pkmn-select">
+                <option value="all">All Tiers</option>
+                <option value="Diamond">Diamond</option>
+                <option value="Gold">Gold</option>
+                <option value="Silver">Silver</option>
+                <option value="Bronze">Bronze</option>
+              </select>
+            </label>
+
+            <label>
+              <span>Type</span>
+              <select id="waiverTypeFilterSelect" class="pkmn-select">
+                <option value="all">All Types</option>
+              </select>
+            </label>
+          </div>
+
+          <p id="waiverAvailableCount" class="small-note">Loading available Pokémon...</p>
+
+          <div id="waiverAvailableGrid" class="draft-available-grid"></div>
+        </div>
+      </section>
+
+      <div id="waiverPageStatus" class="pkmn-footer-note">Loading...</div>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/waiver-wire.js?v=waivers1"></script>
+</body>
+</html>
