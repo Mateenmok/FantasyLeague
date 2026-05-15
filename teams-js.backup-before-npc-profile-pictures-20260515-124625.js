@@ -8,18 +8,6 @@ let currentUserId = null;
 let currentUserEmail = "";
 let leagueTeams = [];
 
-const LEAGUEMATE_NPC_IMAGES = [
-  "images/profile-npcs/npc1.png",
-  "images/profile-npcs/npc2.webp",
-  "images/profile-npcs/npc3.webp",
-  "images/profile-npcs/npc4.jpeg",
-  "images/profile-npcs/npc5.jpg",
-  "images/profile-npcs/npc6.webp",
-  "images/profile-npcs/npc7.webp",
-  "images/profile-npcs/npc8.jpg",
-  "images/profile-npcs/npc9.webp"
-];
-
 loadTeamInfoPage();
 
 async function loadTeamInfoPage() {
@@ -166,7 +154,7 @@ function renderTeams() {
 
   document.querySelectorAll(".view-profile-button").forEach(button => {
     button.addEventListener("click", function () {
-      window.location.href = `leaguemate-profile.html?teamId=${encodeURIComponent(this.dataset.teamId)}`;
+      openLeaguemateProfile(this.dataset.teamId);
     });
   });
 
@@ -177,6 +165,88 @@ function renderTeams() {
   });
 }
 
+function openLeaguemateProfile(teamId) {
+  const team = leagueTeams.find(team => team.id === teamId);
+
+  if (!team) {
+    teamInfoStatus.textContent = "Could not find that team profile.";
+    return;
+  }
+
+  const ownerName = team.owner_name || "Unassigned";
+  const teamName = team.team_name || `Team ${team.team_number}`;
+  const record = team.record || "0-0";
+  const logoUrl = team.logo_url || "";
+  const roleLabel = team.is_admin ? "Admin" : "Manager";
+  const isCurrentUserTeam = currentUserEmail && team.manager_email && team.manager_email.toLowerCase() === currentUserEmail;
+
+  const logoHtml = logoUrl
+    ? `<img class="league-profile-logo" src="${escapeHtml(logoUrl)}" alt="${escapeHtml(teamName)} logo">`
+    : `<div class="league-profile-logo-placeholder">T${team.team_number}</div>`;
+
+  closeLeaguemateProfile();
+
+  const backdrop = document.createElement("div");
+  backdrop.className = "league-profile-backdrop open";
+  backdrop.id = "leagueProfileBackdrop";
+
+  backdrop.innerHTML = `
+    <div class="league-profile-modal" role="dialog" aria-modal="true">
+      <div class="league-profile-top">
+        ${logoHtml}
+
+        <div>
+          <p class="league-profile-label">${isCurrentUserTeam ? "Your profile" : "Leaguemate profile"}</p>
+          <h2 class="league-profile-title">${escapeHtml(teamName)}</h2>
+          <p class="league-profile-owner">${escapeHtml(ownerName)}</p>
+        </div>
+      </div>
+
+      <div class="league-profile-grid">
+        <div class="league-profile-stat">
+          <span class="league-profile-stat-value">#${escapeHtml(team.team_number || "-")}</span>
+          <span class="league-profile-stat-name">Team Slot</span>
+        </div>
+
+        <div class="league-profile-stat">
+          <span class="league-profile-stat-value">${escapeHtml(record)}</span>
+          <span class="league-profile-stat-name">Record</span>
+        </div>
+
+        <div class="league-profile-stat">
+          <span class="league-profile-stat-value">${escapeHtml(roleLabel)}</span>
+          <span class="league-profile-stat-name">League Role</span>
+        </div>
+      </div>
+
+      <p class="league-profile-note">
+        This profile is currently built from league team data. The next upgrade would save profile pictures and favorite Pokémon to Supabase so every leaguemate can see each other's custom profile data.
+      </p>
+
+      <div class="league-profile-actions">
+        <button class="league-profile-close" id="closeLeagueProfile">Close</button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(backdrop);
+
+  backdrop.addEventListener("click", function (event) {
+    if (event.target === backdrop) {
+      closeLeaguemateProfile();
+    }
+  });
+
+  document.getElementById("closeLeagueProfile").addEventListener("click", closeLeaguemateProfile);
+}
+
+function closeLeaguemateProfile() {
+  const existing = document.getElementById("leagueProfileBackdrop");
+
+  if (existing) {
+    existing.remove();
+  }
+}
 
 async function saveTeam(teamId) {
   if (!currentMembership || currentMembership.role !== "admin") {

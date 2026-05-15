@@ -335,6 +335,398 @@
     }
   </style>
 
+<style id="league-info-profile-viewer">
+  body.teams-theme-page .team-card-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+  }
+
+  body.teams-theme-page .view-profile-button {
+    min-height: 42px;
+    padding: 0 16px;
+    border: 0;
+    border-radius: 999px;
+    background: linear-gradient(to bottom, #eef0f8, #d8dbeb);
+    color: #102844;
+    font-family: "Oxanium", Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    box-shadow:
+      0 8px 18px rgba(0, 0, 0, 0.22),
+      0 0 0 3px rgba(255, 255, 255, 0.22) inset;
+  }
+
+  body.teams-theme-page .view-profile-button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+  }
+
+  body.teams-theme-page .league-profile-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(4, 10, 18, 0.62);
+    box-sizing: border-box;
+  }
+
+  body.teams-theme-page .league-profile-backdrop.open {
+    display: flex;
+  }
+
+  body.teams-theme-page .league-profile-modal {
+    width: min(760px, 94vw);
+    border-radius: 28px;
+    padding: 22px;
+    background: linear-gradient(
+      145deg,
+      #eeecef 0%,
+      #d6d3d8 52%,
+      #b7b2bc 100%
+    );
+    border: 2px solid rgba(255, 255, 255, 0.62);
+    box-shadow:
+      0 24px 70px rgba(0, 0, 0, 0.46),
+      inset 0 1px 0 rgba(255, 255, 255, 0.66);
+    color: #102844;
+    font-family: "Oxanium", Arial, sans-serif;
+    box-sizing: border-box;
+  }
+
+  body.teams-theme-page .league-profile-top {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 20px;
+    align-items: center;
+  }
+
+  body.teams-theme-page .league-profile-logo,
+  body.teams-theme-page .league-profile-logo-placeholder {
+    width: 142px;
+    height: 142px;
+    border-radius: 24px;
+    background: linear-gradient(
+      145deg,
+      #f4f6fb 0%,
+      #d8dbeb 48%,
+      #bcc3d8 100%
+    );
+    border: 3px solid rgba(255, 255, 255, 0.76);
+    box-shadow: 0 14px 30px rgba(10, 20, 32, 0.20);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    object-fit: contain;
+    color: #102844;
+    font-size: 34px;
+    font-weight: 800;
+    box-sizing: border-box;
+  }
+
+  body.teams-theme-page .league-profile-label {
+    margin: 0 0 8px;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: #2f2b34;
+  }
+
+  body.teams-theme-page .league-profile-title {
+    margin: 0;
+    font-size: 40px;
+    line-height: 1.05;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #102844;
+    text-shadow:
+      0 2px 0 rgba(255, 255, 255, 0.55),
+      0 0 10px rgba(60, 110, 170, 0.16);
+  }
+
+  body.teams-theme-page .league-profile-owner {
+    margin: 8px 0 0;
+    font-size: 18px;
+    font-weight: 800;
+    color: rgba(16, 40, 68, 0.84);
+  }
+
+  body.teams-theme-page .league-profile-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 18px;
+  }
+
+  body.teams-theme-page .league-profile-stat {
+    padding: 16px 12px;
+    border-radius: 18px;
+    background: linear-gradient(
+      145deg,
+      #f4f6fb 0%,
+      #d8dbeb 48%,
+      #bcc3d8 100%
+    );
+    border: 1px solid rgba(16, 40, 68, 0.14);
+    text-align: center;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.72),
+      0 10px 22px rgba(10, 20, 32, 0.12);
+  }
+
+  body.teams-theme-page .league-profile-stat-value {
+    display: block;
+    font-size: 28px;
+    font-weight: 800;
+    color: #102844;
+  }
+
+  body.teams-theme-page .league-profile-stat-name {
+    display: block;
+    margin-top: 7px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: rgba(16, 40, 68, 0.72);
+  }
+
+  body.teams-theme-page .league-profile-note {
+    margin: 16px 0 0;
+    padding: 12px 14px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.42);
+    border: 1px solid rgba(16, 40, 68, 0.10);
+    font-size: 13px;
+    font-weight: 700;
+    color: rgba(16, 40, 68, 0.76);
+    line-height: 1.45;
+  }
+
+  body.teams-theme-page .league-profile-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  body.teams-theme-page .league-profile-close {
+    min-height: 42px;
+    padding: 0 18px;
+    border: 0;
+    border-radius: 999px;
+    background: linear-gradient(to bottom, #33485b, #172435);
+    color: white;
+    font-family: "Oxanium", Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.24);
+  }
+
+  body.teams-theme-page .admin-only-editor-note {
+    margin-top: 12px;
+  }
+
+  @media (max-width: 680px) {
+    body.teams-theme-page .league-profile-top,
+    body.teams-theme-page .league-profile-grid {
+      grid-template-columns: 1fr;
+    }
+
+    body.teams-theme-page .league-profile-logo,
+    body.teams-theme-page .league-profile-logo-placeholder {
+      margin: 0 auto;
+    }
+
+    body.teams-theme-page .league-profile-title,
+    body.teams-theme-page .league-profile-owner,
+    body.teams-theme-page .league-profile-label {
+      text-align: center;
+    }
+  }
+</style>
+
+
+<style id="league-info-profile-viewer-force">
+  body.teams-theme-page .team-card-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+  }
+
+  body.teams-theme-page .view-profile-button {
+    min-height: 42px;
+    padding: 0 16px;
+    border: 0;
+    border-radius: 999px;
+    background: linear-gradient(to bottom, #eef0f8, #d8dbeb);
+    color: #102844;
+    font-family: "Oxanium", Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    box-shadow:
+      0 8px 18px rgba(0, 0, 0, 0.22),
+      0 0 0 3px rgba(255, 255, 255, 0.22) inset;
+  }
+
+  body.teams-theme-page .view-profile-button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+  }
+
+  body.teams-theme-page .league-profile-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(4, 10, 18, 0.62);
+    box-sizing: border-box;
+  }
+
+  body.teams-theme-page .league-profile-backdrop.open {
+    display: flex;
+  }
+
+  body.teams-theme-page .league-profile-modal {
+    width: min(760px, 94vw);
+    border-radius: 28px;
+    padding: 22px;
+    background: linear-gradient(145deg, #eeecef 0%, #d6d3d8 52%, #b7b2bc 100%);
+    border: 2px solid rgba(255, 255, 255, 0.62);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.46);
+    color: #102844;
+    font-family: "Oxanium", Arial, sans-serif;
+    box-sizing: border-box;
+  }
+
+  body.teams-theme-page .league-profile-top {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 20px;
+    align-items: center;
+  }
+
+  body.teams-theme-page .league-profile-logo,
+  body.teams-theme-page .league-profile-logo-placeholder {
+    width: 142px;
+    height: 142px;
+    border-radius: 24px;
+    background: linear-gradient(145deg, #f4f6fb 0%, #d8dbeb 48%, #bcc3d8 100%);
+    border: 3px solid rgba(255, 255, 255, 0.76);
+    box-shadow: 0 14px 30px rgba(10, 20, 32, 0.20);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    object-fit: contain;
+    color: #102844;
+    font-size: 34px;
+    font-weight: 800;
+    box-sizing: border-box;
+  }
+
+  body.teams-theme-page .league-profile-label {
+    margin: 0 0 8px;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: #2f2b34;
+  }
+
+  body.teams-theme-page .league-profile-title {
+    margin: 0;
+    font-size: 40px;
+    line-height: 1.05;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #102844;
+  }
+
+  body.teams-theme-page .league-profile-owner {
+    margin: 8px 0 0;
+    font-size: 18px;
+    font-weight: 800;
+    color: rgba(16, 40, 68, 0.84);
+  }
+
+  body.teams-theme-page .league-profile-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 18px;
+  }
+
+  body.teams-theme-page .league-profile-stat {
+    padding: 16px 12px;
+    border-radius: 18px;
+    background: linear-gradient(145deg, #f4f6fb 0%, #d8dbeb 48%, #bcc3d8 100%);
+    border: 1px solid rgba(16, 40, 68, 0.14);
+    text-align: center;
+  }
+
+  body.teams-theme-page .league-profile-stat-value {
+    display: block;
+    font-size: 28px;
+    font-weight: 800;
+    color: #102844;
+  }
+
+  body.teams-theme-page .league-profile-stat-name {
+    display: block;
+    margin-top: 7px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: rgba(16, 40, 68, 0.72);
+  }
+
+  body.teams-theme-page .league-profile-note {
+    margin: 16px 0 0;
+    padding: 12px 14px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.42);
+    font-size: 13px;
+    font-weight: 700;
+    color: rgba(16, 40, 68, 0.76);
+    line-height: 1.45;
+  }
+
+  body.teams-theme-page .league-profile-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 18px;
+  }
+
+  body.teams-theme-page .league-profile-close {
+    min-height: 42px;
+    padding: 0 18px;
+    border: 0;
+    border-radius: 999px;
+    background: linear-gradient(to bottom, #33485b, #172435);
+    color: white;
+    font-family: "Oxanium", Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+</style>
+
 </head>
 <body class="teams-theme-page">
   <div class="teams-theme-overlay">
@@ -356,6 +748,6 @@
   <script src="js/theme-settings.js?v=global-theme1"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
-  <script src="js/teams.js?v=full-profile-link-clean1"></script>
+  <script src="js/teams.js?v=leaguemate-profiles-force2"></script>
 </body>
 </html>

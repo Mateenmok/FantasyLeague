@@ -5,20 +5,7 @@ const teamInfoStatus = document.getElementById("teamInfoStatus");
 let selectedLeagueId = localStorage.getItem("selected-league-id");
 let currentMembership = null;
 let currentUserId = null;
-let currentUserEmail = "";
 let leagueTeams = [];
-
-const LEAGUEMATE_NPC_IMAGES = [
-  "images/profile-npcs/npc1.png",
-  "images/profile-npcs/npc2.webp",
-  "images/profile-npcs/npc3.webp",
-  "images/profile-npcs/npc4.jpeg",
-  "images/profile-npcs/npc5.jpg",
-  "images/profile-npcs/npc6.webp",
-  "images/profile-npcs/npc7.webp",
-  "images/profile-npcs/npc8.jpg",
-  "images/profile-npcs/npc9.webp"
-];
 
 loadTeamInfoPage();
 
@@ -40,7 +27,6 @@ async function loadTeamInfoPage() {
   }
 
   currentUserId = sessionData.session.user.id;
-  currentUserEmail = (sessionData.session.user.email || "").toLowerCase();
 
   const { data: membership, error: membershipError } = await supabaseClient
     .from("league_memberships")
@@ -57,6 +43,13 @@ async function loadTeamInfoPage() {
   }
 
   currentMembership = membership;
+
+  if (currentMembership.role !== "admin") {
+    teamInfoSubtitle.textContent = "Admin only.";
+    teamInfoStatus.textContent = "Redirecting to My Team...";
+    window.location.href = "my-team.html";
+    return;
+  }
 
   const { data: league, error: leagueError } = await supabaseClient
     .from("leagues")
@@ -88,21 +81,14 @@ async function loadTeamInfoPage() {
   leagueTeams = teams || [];
 
   renderTeams();
-
-  const isAdmin = currentMembership.role === "admin";
-  teamInfoStatus.textContent = isAdmin
-    ? `${leagueTeams.length} teams loaded. Admin record editing enabled.`
-    : `${leagueTeams.length} teams loaded. Select View Profile to see a leaguemate profile.`;
+  teamInfoStatus.textContent = `${leagueTeams.length} teams loaded. Admin record editing enabled.`;
 }
 
 function renderTeams() {
-  const isAdmin = currentMembership && currentMembership.role === "admin";
-
   teamInfoGrid.innerHTML = leagueTeams.map(team => {
     const managerEmail = team.manager_email || "Unassigned";
     const ownerName = team.owner_name || "Unassigned";
     const logoUrl = team.logo_url || "";
-    const roleLabel = team.is_admin ? "Admin" : "Manager";
     const adminBadge = team.is_admin
       ? `<span class="admin-badge">Admin</span>`
       : `<span class="team-role-badge">Manager</span>`;
@@ -110,34 +96,6 @@ function renderTeams() {
     const logoHtml = logoUrl
       ? `<img class="team-info-logo" src="${escapeHtml(logoUrl)}" alt="${escapeHtml(team.team_name)} logo">`
       : `<div class="team-info-logo-placeholder">T${team.team_number}</div>`;
-
-    const adminEditorHtml = isAdmin ? `
-      <p class="small-note admin-only-editor-note">Admin editor.</p>
-
-      <div class="team-edit-form">
-        <label>Team Name</label>
-        <input id="teamName-${team.id}" type="text" value="${escapeHtml(team.team_name)}">
-
-        <label>Owner Name</label>
-        <input id="ownerName-${team.id}" type="text" value="${escapeHtml(ownerName)}">
-
-        <label>Logo URL</label>
-        <input id="logoUrl-${team.id}" type="text" value="${escapeHtml(logoUrl)}" placeholder="Paste image URL">
-
-        <label>Record</label>
-        <input id="record-${team.id}" type="text" value="${escapeHtml(team.record || "0-0")}" placeholder="0-0">
-
-        <button class="pkmn-button small save-team-button" data-team-id="${team.id}">
-          Save Team
-        </button>
-      </div>
-    ` : `
-      <p class="small-note">Profile viewer.</p>
-    `;
-
-    const managerLine = isAdmin
-      ? `<p><strong>Manager:</strong> ${escapeHtml(managerEmail)}</p>`
-      : `<p><strong>Owner:</strong> ${escapeHtml(ownerName)}</p>`;
 
     return `
       <article class="team-info-card editable-team-card">
@@ -148,27 +106,31 @@ function renderTeams() {
 
         <div class="team-info-main">
           <h2>${escapeHtml(team.team_name)}</h2>
-          ${managerLine}
-          <p><strong>Record:</strong> ${escapeHtml(team.record || "0-0")}</p>
+          <p><strong>Manager:</strong> ${escapeHtml(managerEmail)}</p>
           <p><strong>Role:</strong> ${adminBadge}</p>
+          <p class="small-note">Admin editor.</p>
 
-          <div class="team-card-actions">
-            <button class="view-profile-button" data-team-id="${team.id}">
-              View Profile
+          <div class="team-edit-form">
+            <label>Team Name</label>
+            <input id="teamName-${team.id}" type="text" value="${escapeHtml(team.team_name)}">
+
+            <label>Owner Name</label>
+            <input id="ownerName-${team.id}" type="text" value="${escapeHtml(ownerName)}">
+
+            <label>Logo URL</label>
+            <input id="logoUrl-${team.id}" type="text" value="${escapeHtml(logoUrl)}" placeholder="Paste image URL">
+
+            <label>Record</label>
+            <input id="record-${team.id}" type="text" value="${escapeHtml(team.record || "0-0")}" placeholder="0-0">
+
+            <button class="pkmn-button small save-team-button" data-team-id="${team.id}">
+              Save Team
             </button>
           </div>
-
-          ${adminEditorHtml}
         </div>
       </article>
     `;
   }).join("");
-
-  document.querySelectorAll(".view-profile-button").forEach(button => {
-    button.addEventListener("click", function () {
-      window.location.href = `leaguemate-profile.html?teamId=${encodeURIComponent(this.dataset.teamId)}`;
-    });
-  });
 
   document.querySelectorAll(".save-team-button").forEach(button => {
     button.addEventListener("click", function () {
@@ -176,7 +138,6 @@ function renderTeams() {
     });
   });
 }
-
 
 async function saveTeam(teamId) {
   if (!currentMembership || currentMembership.role !== "admin") {

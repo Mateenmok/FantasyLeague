@@ -166,7 +166,7 @@ function renderTeams() {
 
   document.querySelectorAll(".view-profile-button").forEach(button => {
     button.addEventListener("click", function () {
-      window.location.href = `leaguemate-profile.html?teamId=${encodeURIComponent(this.dataset.teamId)}`;
+      openLeaguemateProfile(this.dataset.teamId);
     });
   });
 
@@ -175,6 +175,112 @@ function renderTeams() {
       saveTeam(this.dataset.teamId);
     });
   });
+}
+
+function openLeaguemateProfile(teamId) {
+  const team = leagueTeams.find(team => team.id === teamId);
+
+  if (!team) {
+    teamInfoStatus.textContent = "Could not find that team profile.";
+    return;
+  }
+
+  const ownerName = team.owner_name || "Unassigned";
+  const teamName = team.team_name || `Team ${team.team_number}`;
+  const record = team.record || "0-0";
+  const logoUrl = team.logo_url || "";
+  const roleLabel = team.is_admin ? "Admin" : "Manager";
+  const npcUrl = getStableNpcForTeam(team);
+
+  const avatarHtml = npcUrl
+    ? `<div class="league-profile-avatar-ring">
+        <img class="league-profile-avatar" src="${escapeHtml(npcUrl)}" alt="${escapeHtml(ownerName)} profile picture">
+      </div>`
+    : `<div class="league-profile-avatar-ring">
+        <div class="league-profile-avatar-placeholder">${escapeHtml(getInitial(ownerName || teamName))}</div>
+      </div>`;
+
+  const smallLogoHtml = logoUrl
+    ? `<img class="league-profile-team-logo-small" src="${escapeHtml(logoUrl)}" alt="${escapeHtml(teamName)} logo">`
+    : "";
+
+  const existing = document.getElementById("leagueProfileBackdrop");
+  if (existing) existing.remove();
+
+  const backdrop = document.createElement("div");
+  backdrop.className = "league-profile-backdrop open";
+  backdrop.id = "leagueProfileBackdrop";
+
+  backdrop.innerHTML = `
+    <div class="league-profile-modal">
+      <div class="league-profile-top">
+        ${avatarHtml}
+
+        <div>
+          <p class="league-profile-label">Leaguemate Profile</p>
+          <h2 class="league-profile-title">${escapeHtml(ownerName)}</h2>
+          <p class="league-profile-owner">${escapeHtml(teamName)}</p>
+          ${smallLogoHtml}
+        </div>
+      </div>
+
+      <div class="league-profile-grid">
+        <div class="league-profile-stat">
+          <span class="league-profile-stat-value">#${escapeHtml(team.team_number || "-")}</span>
+          <span class="league-profile-stat-name">Team Slot</span>
+        </div>
+
+        <div class="league-profile-stat">
+          <span class="league-profile-stat-value">${escapeHtml(record)}</span>
+          <span class="league-profile-stat-name">Record</span>
+        </div>
+
+        <div class="league-profile-stat">
+          <span class="league-profile-stat-value">${escapeHtml(roleLabel)}</span>
+          <span class="league-profile-stat-name">Role</span>
+        </div>
+      </div>
+
+      <div class="league-profile-actions">
+        <button class="league-profile-close" id="closeLeagueProfile">Close</button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(backdrop);
+
+  backdrop.addEventListener("click", function (event) {
+    if (event.target === backdrop) backdrop.remove();
+  });
+
+  document.getElementById("closeLeagueProfile").addEventListener("click", function () {
+    backdrop.remove();
+  });
+}
+
+function getStableNpcForTeam(team) {
+  const seed = String(
+    team.manager_email ||
+    team.owner_name ||
+    team.team_name ||
+    team.id ||
+    team.team_number ||
+    "trainer"
+  );
+
+  let hash = 0;
+
+  for (let i = 0; i < seed.length; i += 1) {
+    hash = ((hash << 5) - hash) + seed.charCodeAt(i);
+    hash |= 0;
+  }
+
+  const index = Math.abs(hash) % LEAGUEMATE_NPC_IMAGES.length;
+  return LEAGUEMATE_NPC_IMAGES[index];
+}
+
+function getInitial(value) {
+  return String(value || "T").trim().charAt(0).toUpperCase() || "T";
 }
 
 

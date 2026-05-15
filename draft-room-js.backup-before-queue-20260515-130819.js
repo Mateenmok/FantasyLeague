@@ -67,7 +67,6 @@ if (typeFilterSelect) {
   typeFilterSelect.addEventListener("change", renderAvailablePokemonGrid);
 }
 
-draftQueueForceInit();
 loadDraftRoom();
 
 async function loadDraftRoom() {
@@ -280,7 +279,6 @@ function renderDraftRoom(isBackgroundRefresh = false) {
   renderTeamRosters();
   renderDraftPointStatus();
   renderAvailablePokemonGrid();
-  draftQueueForceRender();
   renderDraftButtons();
   updatePickControls();
   startDraftTimer();
@@ -790,15 +788,6 @@ function getPokemonThatFitTeamCap(teamId) {
 }
 
 function getSmartAutoPickPokemon(teamId) {
-  const queuedPokemon = draftQueueForceGetFirstLegalPokemon(teamId);
-
-  if (queuedPokemon) {
-    if (draftActionStatus) {
-      draftActionStatus.textContent = `Auto-draft selected queued Pokémon: ${queuedPokemon.name}.`;
-    }
-    return queuedPokemon;
-  }
-
   const legalPokemon = getPokemonThatFitTeamCap(teamId);
 
   if (!legalPokemon.length) {
@@ -816,6 +805,11 @@ function getSmartAutoPickPokemon(teamId) {
       const points = getPokemonPoints(pokemon);
       const rank = Number(pokemon.rank || 9999);
 
+      /*
+        If a team still has several open roster spots, avoid burning too many points
+        in a way that makes the rest of the roster impossible.
+        Example: 9 slots left and 9 points remaining means only 1-point Pokémon are realistic.
+      */
       const minimumPointsNeededAfterPick = Math.max(openRosterSlots - 1, 0);
       const pointsLeftAfterPick = remainingPoints - points;
       const keepsRosterPossible = pointsLeftAfterPick >= minimumPointsNeededAfterPick;
@@ -855,271 +849,6 @@ function getSmartAutoPickPokemon(teamId) {
 
         return a.name.localeCompare(b.name);
       })[0];
-}
-
-
-
-function draftQueueForceInit() {
-  setTimeout(function () {
-    const addButton = document.getElementById("addQueueButton");
-    const clearButton = document.getElementById("clearQueueButton");
-    const input = document.getElementById("draftQueueInput");
-
-    if (addButton && !addButton.dataset.queueBound) {
-      addButton.dataset.queueBound = "true";
-      addButton.addEventListener("click", draftQueueForceAdd);
-    }
-
-    if (clearButton && !clearButton.dataset.queueBound) {
-      clearButton.dataset.queueBound = "true";
-      clearButton.addEventListener("click", draftQueueForceClear);
-    }
-
-    if (input && !input.dataset.queueBound) {
-      input.dataset.queueBound = "true";
-      input.addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
-          event.preventDefault();
-          draftQueueForceAdd();
-        }
-      });
-    }
-
-    draftQueueForceRender();
-  }, 0);
-}
-
-function draftQueueForceGetTeamId() {
-  return currentMembership?.league_team_id || "";
-}
-
-function draftQueueForceStorageKey(teamId = draftQueueForceGetTeamId()) {
-  const leaguePart = String(selectedLeagueId || "league").replace(/[^a-zA-Z0-9_-]/g, "");
-  const teamPart = String(teamId || "team").replace(/[^a-zA-Z0-9_-]/g, "");
-
-  return `pokeleague_draft_queue_${leaguePart}_${teamPart}`;
-}
-
-function draftQueueForceGet(teamId = draftQueueForceGetTeamId()) {
-  try {
-    const parsed = JSON.parse(localStorage.getItem(draftQueueForceStorageKey(teamId)) || "[]");
-    return Array.isArray(parsed) ? parsed.filter(Boolean) : [];
-  } catch (error) {
-    return [];
-  }
-}
-
-function draftQueueForceSave(queue, teamId = draftQueueForceGetTeamId()) {
-  localStorage.setItem(draftQueueForceStorageKey(teamId), JSON.stringify(queue.filter(Boolean)));
-}
-
-function draftQueueForceClean(teamId = draftQueueForceGetTeamId()) {
-  const queue = draftQueueForceGet(teamId);
-
-  if (!championsPokemon || !championsPokemon.length) {
-    return queue;
-  }
-
-  const draftedSlugs = getDraftedSlugSet();
-  const availableSlugSet = new Set(getAvailablePokemon().map(pokemon => pokemon.slug));
-  const cleaned = queue.filter(slug => !draftedSlugs.has(slug) && availableSlugSet.has(slug));
-
-  draftQueueForceSave(cleaned, teamId);
-  return cleaned;
-}
-
-function draftQueueForceAdd() {
-  const input = document.getElementById("draftQueueInput");
-  const status = document.getElementById("draftQueueStatus");
-
-  if (!input) return;
-
-  const requested = input.value.trim();
-
-  if (!requested) {
-    if (status) status.textContent = "Choose a Pokémon to queue.";
-    return;
-  }
-
-  const pokemon = findPokemonFromInput(requested);
-
-  if (!pokemon) {
-    if (status) status.textContent = `Could not find "${requested}" in available Pokémon.`;
-    return;
-  }
-
-  const teamId = draftQueueForceGetTeamId();
-
-  if (!teamId) {
-    if (status) status.textContent = "No team assigned for this queue.";
-    return;
-  }
-
-  const queue = draftQueueForceClean(teamId);
-
-  if (queue.includes(pokemon.slug)) {
-    if (status) status.textContent = `${pokemon.name} is already in your queue.`;
-    input.value = "";
-    draftQueueForceRender();
-    return;
-  }
-
-  queue.push(pokemon.slug);
-  draftQueueForceSave(queue, teamId);
-
-  input.value = "";
-  if (status) status.textContent = `${pokemon.name} added to your queue.`;
-
-  draftQueueForceRender();
-}
-
-function draftQueueForceClear() {
-  const teamId = draftQueueForceGetTeamId();
-  const status = document.getElementById("draftQueueStatus");
-
-  draftQueueForceSave([], teamId);
-
-  if (status) {
-    status.textContent = "Queue cleared.";
-  }
-
-  draftQueueForceRender();
-}
-
-function draftQueueForceMove(index, direction) {
-  const teamId = draftQueueForceGetTeamId();
-  const queue = draftQueueForceClean(teamId);
-  const targetIndex = index + direction;
-
-  if (targetIndex < 0 || targetIndex >= queue.length) return;
-
-  const temp = queue[index];
-  queue[index] = queue[targetIndex];
-  queue[targetIndex] = temp;
-
-  draftQueueForceSave(queue, teamId);
-  draftQueueForceRender();
-}
-
-function draftQueueForceRemove(index) {
-  const teamId = draftQueueForceGetTeamId();
-  const queue = draftQueueForceClean(teamId);
-  const removedSlug = queue.splice(index, 1)[0];
-  const status = document.getElementById("draftQueueStatus");
-
-  draftQueueForceSave(queue, teamId);
-
-  const removedPokemon = removedSlug ? getPokemonBySlug(removedSlug) : null;
-
-  if (status) {
-    status.textContent = removedPokemon
-      ? `${removedPokemon.name} removed from your queue.`
-      : "Removed from queue.";
-  }
-
-  draftQueueForceRender();
-}
-
-function draftQueueForceRender() {
-  const list = document.getElementById("draftQueueList");
-  const status = document.getElementById("draftQueueStatus");
-
-  if (!list) return;
-
-  draftQueueForceInit();
-
-  const teamId = draftQueueForceGetTeamId();
-
-  if (!teamId) {
-    list.innerHTML = `<div class="draft-queue-empty">No team assigned yet.</div>`;
-    if (status) status.textContent = "Queue unavailable until your team is assigned.";
-    return;
-  }
-
-  const team = getTeamById(teamId);
-  const pointCap = Number(currentLeague?.roster_point_cap || 50);
-  const usedPoints = getTeamPointUsage(teamId);
-  const remainingPoints = pointCap - usedPoints;
-  const queue = draftQueueForceClean(teamId);
-
-  if (!queue.length) {
-    list.innerHTML = `<div class="draft-queue-empty">No queued Pokémon yet. Add Pokémon here before the draft starts.</div>`;
-    if (status) {
-      status.textContent = team
-        ? `Queue is for ${team.team_name}. Remaining points: ${remainingPoints}.`
-        : "Queue is ready.";
-    }
-    return;
-  }
-
-  list.innerHTML = queue.map((slug, index) => {
-    const pokemon = getPokemonBySlug(slug);
-    const points = getPokemonPoints(pokemon);
-    const fits = pokemon && points <= remainingPoints;
-    const queuedName = pokemon ? pokemon.name : slug;
-
-    return `
-      <div class="draft-queue-row">
-        <span class="draft-queue-rank">${index + 1}</span>
-        <span class="draft-queue-name">
-          ${escapeHtml(queuedName)}
-          <span class="draft-queue-meta">
-            ${pokemon ? `${points} point${points === 1 ? "" : "s"} • ${fits ? "fits current cap" : "would exceed cap right now"}` : "Not available"}
-          </span>
-        </span>
-        <button class="draft-queue-mini-button" type="button" data-queue-action="up" data-queue-index="${index}">Up</button>
-        <button class="draft-queue-mini-button" type="button" data-queue-action="down" data-queue-index="${index}">Down</button>
-        <button class="draft-queue-mini-button danger" type="button" data-queue-action="remove" data-queue-index="${index}">Remove</button>
-      </div>
-    `;
-  }).join("");
-
-  list.querySelectorAll("[data-queue-action]").forEach(button => {
-    button.addEventListener("click", function () {
-      const index = Number(this.dataset.queueIndex);
-      const action = this.dataset.queueAction;
-
-      if (action === "up") draftQueueForceMove(index, -1);
-      if (action === "down") draftQueueForceMove(index, 1);
-      if (action === "remove") draftQueueForceRemove(index);
-    });
-  });
-
-  if (status) {
-    status.textContent = `${queue.length} queued for ${team ? team.team_name : "your team"}. Remaining points: ${remainingPoints}.`;
-  }
-}
-
-function draftQueueForceGetFirstLegalPokemon(teamId) {
-  const queue = draftQueueForceClean(teamId);
-
-  if (!queue.length) return null;
-
-  const draftedSlugs = getDraftedSlugSet();
-  const pointCap = Number(currentLeague?.roster_point_cap || 50);
-  const usedPoints = getTeamPointUsage(teamId);
-  const remainingPoints = pointCap - usedPoints;
-  const rosterRows = getRosterForTeam(teamId);
-  const openRosterSlots = ROSTER_SIZE - rosterRows.length;
-
-  for (const slug of queue) {
-    if (draftedSlugs.has(slug)) continue;
-
-    const pokemon = getPokemonBySlug(slug);
-
-    if (!pokemon) continue;
-
-    const points = getPokemonPoints(pokemon);
-    const minimumPointsNeededAfterPick = Math.max(openRosterSlots - 1, 0);
-    const pointsLeftAfterPick = remainingPoints - points;
-    const keepsRosterPossible = pointsLeftAfterPick >= minimumPointsNeededAfterPick;
-
-    if (points <= remainingPoints && keepsRosterPossible) {
-      return pokemon;
-    }
-  }
-
-  return null;
 }
 
 

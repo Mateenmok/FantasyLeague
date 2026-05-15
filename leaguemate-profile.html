@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Leaguemate Profile | FantasyLeague</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;500;600;700;800&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/pokemon-ui.css?v=global-black-dark1" />
+
+  <style>
+    body.profile-view-page {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        linear-gradient(rgba(12, 17, 24, 0.34), rgba(12, 17, 24, 0.42)),
+        url("images/backgrounds/CentralPlaza.png"),
+        linear-gradient(135deg, #9aa3aa 0%, #c4ccd1 48%, #7c858c 100%);
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: #102844;
+      font-family: "Oxanium", Arial, sans-serif;
+    }
+
+    .profile-view-overlay {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 30px 20px;
+      box-sizing: border-box;
+      background: rgba(0, 0, 0, 0.16);
+    }
+
+    .profile-view-card {
+      width: min(1060px, 94vw);
+      padding: 24px;
+      border-radius: 24px;
+      background: rgba(229, 241, 249, 0.86);
+      border: 2px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 22px 56px rgba(5, 16, 31, 0.34);
+      backdrop-filter: blur(7px);
+      box-sizing: border-box;
+    }
+
+    .profile-view-title {
+      margin: 0;
+      text-align: center;
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #102844;
+      text-shadow:
+        0 2px 0 rgba(255, 255, 255, 0.75),
+        0 0 10px rgba(60, 110, 170, 0.18);
+    }
+
+    .profile-view-nav {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 18px 0;
+    }
+
+    .profile-view-link {
+      min-height: 44px;
+      min-width: 175px;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, #5f7282, #283848);
+      border: 2px solid rgba(255, 255, 255, 0.46);
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.65);
+      box-shadow: 0 8px 18px rgba(8, 16, 28, 0.20);
+    }
+
+    .profile-view-link.light {
+      background: linear-gradient(to bottom, #e0e4e7, #aab3bb);
+      color: #172435;
+      text-shadow: none;
+    }
+
+    .profile-view-grid {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .profile-panel {
+      padding: 18px;
+      border-radius: 22px;
+      background: linear-gradient(145deg, #eeecef 0%, #d6d3d8 52%, #b7b2bc 100%);
+      border: 2px solid rgba(255, 255, 255, 0.62);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.64),
+        inset 0 -1px 0 rgba(56, 48, 62, 0.13),
+        0 14px 30px rgba(12, 14, 20, 0.19);
+      box-sizing: border-box;
+    }
+
+    .profile-avatar-panel {
+      min-height: 362px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .profile-avatar-ring {
+      width: 230px;
+      height: 230px;
+      border-radius: 50%;
+      padding: 7px;
+      margin-bottom: 18px;
+      background: linear-gradient(145deg, #f4f6fb 0%, #d8dbeb 48%, #bcc3d8 100%);
+      box-shadow: 0 16px 34px rgba(10, 20, 32, 0.24);
+      box-sizing: border-box;
+    }
+
+    .profile-avatar-circle {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.92);
+      border: 4px solid rgba(255, 255, 255, 0.88);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+
+    .profile-avatar-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    .avatar-fallback {
+      color: #102844;
+      font-size: 62px;
+      font-weight: 800;
+    }
+
+    .profile-right-column {
+      display: grid;
+      gap: 16px;
+      margin-top: 34px;
+    }
+
+    .profile-section-label {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: #2f2b34;
+    }
+
+    .profile-name {
+      margin: 0;
+      font-size: 38px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      color: #19161d;
+      line-height: 1.05;
+      text-shadow:
+        0 2px 0 rgba(255, 255, 255, 0.55),
+        0 0 10px rgba(60, 110, 170, 0.16);
+    }
+
+    .profile-team {
+      margin: 8px 0 0;
+      font-size: 17px;
+      font-weight: 800;
+      color: rgba(16, 40, 68, 0.82);
+    }
+
+    .stats-grid,
+    .favorite-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .favorite-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .stat-box,
+    .favorite-slot {
+      padding: 18px 12px;
+      border-radius: 18px;
+      background: linear-gradient(145deg, #f4f6fb 0%, #d8dbeb 48%, #bcc3d8 100%);
+      border: 1px solid rgba(16, 40, 68, 0.14);
+      color: #102844;
+      text-align: center;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.72),
+        0 10px 22px rgba(10, 20, 32, 0.12);
+    }
+
+    .stat-value {
+      display: block;
+      font-size: 30px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .stat-name {
+      display: block;
+      margin-top: 8px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .favorite-circle {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.92);
+      border: 3px solid rgba(16, 40, 68, 0.22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: 0 10px 20px rgba(16, 40, 68, 0.16);
+    }
+
+    .favorite-circle img {
+      max-width: 92%;
+      max-height: 92%;
+      object-fit: contain;
+      display: none;
+    }
+
+    .favorite-empty {
+      font-size: 34px;
+      font-weight: 800;
+      color: rgba(16, 40, 68, 0.42);
+    }
+
+    .favorite-name {
+      font-size: 15px;
+      font-weight: 800;
+      color: #19161d;
+    }
+
+    #profileViewStatus {
+      margin-top: 14px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 800;
+      color: rgba(16, 40, 68, 0.76);
+    }
+
+    @media (max-width: 860px) {
+      .profile-view-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-right-column {
+        margin-top: 0;
+      }
+
+      .favorite-grid,
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body class="profile-view-page">
+  <div class="profile-view-overlay">
+    <section class="profile-view-card">
+      <h1 class="profile-view-title">Profile</h1>
+
+      <div class="profile-view-nav">
+        <a class="profile-view-link" href="teams.html?v=profile-return1">Back to League Info</a>
+        <a class="profile-view-link light" href="league-home.html?v=profile-return1">League Home</a>
+      </div>
+
+      <section class="profile-view-grid">
+        <aside class="profile-panel profile-avatar-panel">
+          <div class="profile-avatar-ring">
+            <div class="profile-avatar-circle">
+              <img id="profileViewAvatar" alt="Profile picture">
+              <div id="profileViewFallback" class="avatar-fallback">?</div>
+            </div>
+          </div>
+        </aside>
+
+        <section class="profile-right-column">
+          <div class="profile-panel">
+            <p class="profile-section-label">Account Name</p>
+            <h2 id="profileViewName" class="profile-name">Loading...</h2>
+            <p id="profileViewTeam" class="profile-team"></p>
+          </div>
+
+          <div class="profile-panel">
+            <p class="profile-section-label">League Stats</p>
+            <div class="stats-grid">
+              <div class="stat-box">
+                <span id="profileViewTeamSlot" class="stat-value">--</span>
+                <span class="stat-name">Team Slot</span>
+              </div>
+
+              <div class="stat-box">
+                <span id="profileViewRecord" class="stat-value">0-0</span>
+                <span class="stat-name">Record</span>
+              </div>
+
+              <div class="stat-box">
+                <span id="profileViewRole" class="stat-value">--</span>
+                <span class="stat-name">Role</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-panel">
+            <p class="profile-section-label">My Favorite Pokémon</p>
+            <div id="profileViewFavorites" class="favorite-grid"></div>
+          </div>
+        </section>
+      </section>
+
+      <div id="profileViewStatus">Loading profile...</div>
+    </section>
+  </div>
+
+  <script src="js/theme-settings.js?v=global-theme1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/leaguemate-profile.js?v=shared-profiles1"></script>
+</body>
+</html>

@@ -520,134 +520,6 @@
       }
     }
   </style>
-
-<style id="draft-queue-force-visible-styles">
-  body.draft-theme-page .draft-queue-inline-panel {
-    margin: 0 0 18px;
-    padding: 16px;
-    border-radius: 22px;
-    background: linear-gradient(
-      145deg,
-      rgba(238, 236, 239, 0.94) 0%,
-      rgba(214, 211, 216, 0.94) 52%,
-      rgba(183, 178, 188, 0.94) 100%
-    );
-    border: 2px solid rgba(255, 255, 255, 0.62);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.64),
-      0 12px 24px rgba(12, 14, 20, 0.18);
-    color: #102844;
-    font-family: "Oxanium", Arial, sans-serif;
-    box-sizing: border-box;
-  }
-
-  body.draft-theme-page .draft-queue-inline-panel h3 {
-    margin: 0 0 6px;
-    font-size: 22px;
-    font-weight: 800;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: #102844;
-  }
-
-  body.draft-theme-page .draft-queue-inline-panel .small-note {
-    color: rgba(16, 40, 68, 0.76) !important;
-    text-shadow: none !important;
-  }
-
-  body.draft-theme-page .draft-queue-form {
-    display: grid;
-    grid-template-columns: minmax(260px, 1fr) auto auto;
-    gap: 10px;
-    align-items: center;
-    margin: 12px 0 14px;
-  }
-
-  body.draft-theme-page .draft-queue-list {
-    display: grid;
-    gap: 8px;
-  }
-
-  body.draft-theme-page .draft-queue-row {
-    display: grid;
-    grid-template-columns: auto 1fr auto auto auto;
-    gap: 8px;
-    align-items: center;
-    min-height: 46px;
-    padding: 8px 10px;
-    border-radius: 16px;
-    background: linear-gradient(145deg, #f4f6fb 0%, #d8dbeb 48%, #bcc3d8 100%);
-    color: #102844;
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.70),
-      0 8px 18px rgba(0, 0, 0, 0.14);
-  }
-
-  body.draft-theme-page .draft-queue-rank {
-    width: 34px;
-    height: 34px;
-    border-radius: 999px;
-    background: linear-gradient(to bottom, #294b77, #102844);
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    font-weight: 800;
-  }
-
-  body.draft-theme-page .draft-queue-name {
-    font-size: 14px;
-    font-weight: 800;
-  }
-
-  body.draft-theme-page .draft-queue-meta {
-    display: block;
-    margin-top: 2px;
-    font-size: 11px;
-    font-weight: 800;
-    color: rgba(16, 40, 68, 0.62);
-  }
-
-  body.draft-theme-page .draft-queue-mini-button {
-    min-height: 34px;
-    padding: 0 10px;
-    border: 0;
-    border-radius: 999px;
-    background: linear-gradient(to bottom, #eef0f8, #d8dbeb);
-    color: #102844;
-    font-family: "Oxanium", Arial, sans-serif;
-    font-size: 12px;
-    font-weight: 800;
-    cursor: pointer;
-    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.14);
-  }
-
-  body.draft-theme-page .draft-queue-mini-button.danger {
-    background: linear-gradient(to bottom, #ffded9, #e89c92);
-  }
-
-  body.draft-theme-page .draft-queue-empty {
-    padding: 12px 14px;
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.50);
-    color: rgba(16, 40, 68, 0.82);
-    font-size: 13px;
-    font-weight: 800;
-  }
-
-  @media (max-width: 760px) {
-    body.draft-theme-page .draft-queue-form,
-    body.draft-theme-page .draft-queue-row {
-      grid-template-columns: 1fr;
-    }
-
-    body.draft-theme-page .draft-queue-rank {
-      display: none;
-    }
-  }
-</style>
-
 </head>
 <body class="draft-theme-page">
   <div class="draft-theme-overlay">
@@ -727,29 +599,6 @@
       <div class="pkmn-panel">
         <p><strong>Available Pokémon</strong></p>
 
-        
-        <div id="draftQueueInsideAvailable" class="draft-queue-inline-panel">
-          <h3>Draft Queue</h3>
-          <p class="small-note">
-            Build this before the draft starts. If your clock expires, auto-draft checks this queue first and skips anything drafted or too expensive for your point cap.
-          </p>
-
-          <div class="draft-queue-form">
-            <input
-              id="draftQueueInput"
-              class="pkmn-input"
-              type="text"
-              list="availablePokemonOptions"
-              placeholder="Search Pokémon to queue"
-            >
-            <button id="addQueueButton" class="pkmn-button small" type="button">Add to Queue</button>
-            <button id="clearQueueButton" class="pkmn-button small danger" type="button">Clear Queue</button>
-          </div>
-
-          <div id="draftQueueList" class="draft-queue-list"></div>
-          <p id="draftQueueStatus" class="small-note">Queue loading...</p>
-        </div>
-
         <div class="draft-filter-menu">
           <label>
             <span>Search</span>
@@ -796,6 +645,6 @@
   <script src="js/theme-settings.js?v=global-theme1"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
-  <script src="js/draft-room.js?v=draft-queue-force-visible2"></script>
+  <script src="js/draft-room.js?v=managerlabel1"></script>
 </body>
 </html>
