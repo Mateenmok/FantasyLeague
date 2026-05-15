@@ -1,0 +1,6 @@
+.DS_Store
+*.backup-before-*
+*.broken-before-restore-*
+*-js.backup-before-*
+*.html.backup-before-*
+*.js.backup-before-*
