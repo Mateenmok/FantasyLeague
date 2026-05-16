@@ -1534,7 +1534,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 });
 </script>
 
-
 <script id="favorite-games-script">
 document.addEventListener("DOMContentLoaded", async function () {
   const POKEMON_GAMES = [
@@ -1582,6 +1581,10 @@ document.addEventListener("DOMContentLoaded", async function () {
   const library = document.getElementById("pokemonGameLibrary");
   const status = document.getElementById("favoriteGameStatus");
 
+  let currentUser = null;
+  let storageKey = "pokeleague_favorite_games_guest";
+  let currentGames = [];
+
   function getSupabaseClient() {
     if (window.supabaseClient) return window.supabaseClient;
 
@@ -1592,45 +1595,133 @@ document.addEventListener("DOMContentLoaded", async function () {
     return null;
   }
 
-  async function getStorageKey() {
-    const client = getSupabaseClient();
+  function getUsernameFromUser(user) {
+    const meta = user?.user_metadata || {};
 
-    try {
-      if (client?.auth?.getSession) {
-        const { data } = await client.auth.getSession();
-        const userId = data?.session?.user?.id;
-
-        if (userId) {
-          return `pokeleague_favorite_games_${userId}`;
-        }
-      }
-    } catch (error) {
-      console.warn("Could not create user-specific favorite games key:", error);
-    }
-
-    return "pokeleague_favorite_games_guest";
+    return (
+      meta.username ||
+      meta.display_name ||
+      meta.name ||
+      meta.full_name ||
+      (user?.email ? user.email.split("@")[0] : "Trainer")
+    );
   }
 
-  function getSavedGames(storageKey) {
+  async function getCurrentUser() {
+    const client = getSupabaseClient();
+
+    if (!client?.auth?.getSession) {
+      return null;
+    }
+
     try {
-      const parsed = JSON.parse(localStorage.getItem(storageKey) || "[]");
-      return Array.isArray(parsed) ? parsed.slice(0, 3) : [];
+      const { data } = await client.auth.getSession();
+      return data?.session?.user || null;
+    } catch (error) {
+      console.warn("Could not get session for favorite games:", error);
+      return null;
+    }
+  }
+
+  function normalizeGames(games) {
+    if (!Array.isArray(games)) {
+      return [];
+    }
+
+    const validIds = new Set(POKEMON_GAMES.map((game) => game.id));
+    const clean = [];
+
+    games.forEach((gameId) => {
+      if (validIds.has(gameId) && !clean.includes(gameId) && clean.length < 3) {
+        clean.push(gameId);
+      }
+    });
+
+    return clean;
+  }
+
+  function getLocalGames() {
+    try {
+      return normalizeGames(JSON.parse(localStorage.getItem(storageKey) || "[]"));
     } catch (error) {
       return [];
     }
   }
 
-  function saveGames(storageKey, games) {
-    localStorage.setItem(storageKey, JSON.stringify(games.slice(0, 3)));
+  function saveLocalGames(games) {
+    localStorage.setItem(storageKey, JSON.stringify(normalizeGames(games)));
+  }
+
+  async function loadSharedGames(user) {
+    const client = getSupabaseClient();
+
+    if (!client || !user?.id) {
+      return [];
+    }
+
+    try {
+      const { data, error } = await client
+        .from("user_profiles")
+        .select("favorite_games")
+        .eq("user_id", user.id)
+        .maybeSingle();
+
+      if (error) {
+        console.warn("Could not load favorite games from Supabase:", error);
+        return [];
+      }
+
+      return normalizeGames(data?.favorite_games);
+    } catch (error) {
+      console.warn("Could not load favorite games from Supabase:", error);
+      return [];
+    }
+  }
+
+  async function saveSharedGames(games) {
+    const client = getSupabaseClient();
+    const cleanGames = normalizeGames(games);
+
+    saveLocalGames(cleanGames);
+
+    if (!client || !currentUser?.id) {
+      if (status) status.textContent = "Favorite games saved locally.";
+      return;
+    }
+
+    try {
+      const { error } = await client
+        .from("user_profiles")
+        .upsert({
+          user_id: currentUser.id,
+          email: currentUser.email ? currentUser.email.toLowerCase() : null,
+          username: getUsernameFromUser(currentUser),
+          favorite_games: cleanGames,
+          updated_at: new Date().toISOString()
+        }, {
+          onConflict: "user_id"
+        });
+
+      if (error) {
+        console.warn("Could not save favorite games to Supabase:", error);
+        if (status) status.textContent = "Saved locally, but Supabase did not save. Run the favorite_games SQL.";
+        return;
+      }
+
+      if (status) status.textContent = "Favorite games saved.";
+    } catch (error) {
+      console.warn("Could not save favorite games to Supabase:", error);
+      if (status) status.textContent = "Saved locally, but Supabase did not save.";
+    }
   }
 
   function findGame(gameId) {
     return POKEMON_GAMES.find((game) => game.id === gameId);
   }
 
-  function renderSlots(savedGames) {
+  function renderSlots() {
     slots.forEach((slot, index) => {
-      const game = findGame(savedGames[index]);
+      const game = findGame(currentGames[index]);
       const img = slot.querySelector(".favorite-game-slot-img");
       const label = slot.querySelector("strong");
 
@@ -1648,11 +1739,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
   }
 
-  function renderLibrary(savedGames) {
+  function renderLibrary() {
     if (!library) return;
 
     library.innerHTML = POKEMON_GAMES.map((game) => {
-      const selected = savedGames.includes(game.id) ? "selected" : "";
+      const selected = currentGames.includes(game.id) ? "selected" : "";
 
       return `
         <button class="pokemon-game-button ${selected}" type="button" data-game-id="${game.id}">
@@ -1663,55 +1754,76 @@ document.addEventListener("DOMContentLoaded", async function () {
     }).join("");
   }
 
-  function render(storageKey) {
-    const savedGames = getSavedGames(storageKey);
-    renderSlots(savedGames);
-    renderLibrary(savedGames);
+  function render() {
+    renderSlots();
+    renderLibrary();
   }
 
-  const storageKey = await getStorageKey();
-  render(storageKey);
+  currentUser = await getCurrentUser();
+
+  if (currentUser?.id) {
+    storageKey = `pokeleague_favorite_games_${currentUser.id}`;
+  }
+
+  const sharedGames = await loadSharedGames(currentUser);
+  const localGames = getLocalGames();
+
+  currentGames = sharedGames.length ? sharedGames : localGames;
+
+  saveLocalGames(currentGames);
+  render();
+
+  if (!sharedGames.length && localGames.length && currentUser?.id) {
+    await saveSharedGames(localGames);
+  }
+
+  if (status) {
+    status.textContent = currentGames.length
+      ? "Favorite games loaded."
+      : "Click a game to add it to your favorites.";
+  }
 
   if (library) {
-    library.addEventListener("click", function (event) {
+    library.addEventListener("click", async function (event) {
       const button = event.target.closest(".pokemon-game-button");
       if (!button) return;
 
       const gameId = button.dataset.gameId;
       const game = findGame(gameId);
-      let savedGames = getSavedGames(storageKey);
 
       if (!game) return;
 
-      if (savedGames.includes(gameId)) {
-        savedGames = savedGames.filter((id) => id !== gameId);
+      if (currentGames.includes(gameId)) {
+        currentGames = currentGames.filter((id) => id !== gameId);
         if (status) status.textContent = `${game.name} removed.`;
       } else {
-        if (savedGames.length >= 3) {
-          savedGames[2] = gameId;
+        if (currentGames.length >= 3) {
+          currentGames[2] = gameId;
           if (status) status.textContent = `${game.name} replaced your third favorite game.`;
         } else {
-          savedGames.push(gameId);
+          currentGames.push(gameId);
           if (status) status.textContent = `${game.name} added.`;
         }
       }
 
-      saveGames(storageKey, savedGames);
-      render(storageKey);
+      currentGames = normalizeGames(currentGames);
+      render();
+      await saveSharedGames(currentGames);
     });
   }
 
   slots.forEach((slot) => {
-    slot.addEventListener("click", function () {
+    slot.addEventListener("click", async function () {
       const index = Number(this.dataset.gameSlot);
-      const savedGames = getSavedGames(storageKey);
-      const removed = findGame(savedGames[index]);
+      const removed = findGame(currentGames[index]);
 
       if (!removed) return;
 
-      savedGames.splice(index, 1);
-      saveGames(storageKey, savedGames);
-      render(storageKey);
+      currentGames.splice(index, 1);
+      currentGames = normalizeGames(currentGames);
+
+      render();
+      await saveSharedGames(currentGames);
 
       if (status) {
         status.textContent = `${removed.name} removed.`;
@@ -1720,6 +1832,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   });
 });
 </script>
+
 
 </body>
 </html>
