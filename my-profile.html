@@ -1096,10 +1096,14 @@
   }
 
   .profile-icon-choice-test.pending-save {
-    outline: 3px solid rgba(255, 216, 90, 0.95);
+    outline: 3px solid rgba(255, 216, 90, 0.95) !important;
     box-shadow:
       0 0 0 3px rgba(255, 255, 255, 0.55),
-      0 0 18px rgba(255, 216, 90, 0.60);
+      0 0 18px rgba(255, 216, 90, 0.70) !important;
+  }
+
+  .profile-icon-choice-test.saved-icon {
+    outline: 2px solid rgba(28, 45, 76, 0.55);
   }
 </style>
 
@@ -1952,6 +1956,7 @@ document.addEventListener("DOMContentLoaded", function () {
 (function () {
   let pendingIconId = "";
   let savedIconId = "";
+  let installed = false;
 
   function getSupabaseClient() {
     if (window.supabaseClient) return window.supabaseClient;
@@ -1985,20 +1990,44 @@ document.addEventListener("DOMContentLoaded", function () {
     return "";
   }
 
-  function getIconIdFromButton(button) {
-    const img = button?.querySelector("img");
-    const src = img ? img.getAttribute("src") || "" : "";
-    const match = src.match(/ProfilePicture([1-9]|1[0-8])/);
+  function getIconSrc(iconId) {
+    return `images/profile-icons/${iconId}.avif`;
+  }
 
-    if (!match) {
+  function getIconNumberFromButton(button) {
+    const explicit = button?.dataset?.profileIconId || "";
+    const explicitMatch = explicit.match(/^ProfilePicture([1-9]|1[0-8])$/);
+
+    if (explicitMatch) {
+      return explicitMatch[1];
+    }
+
+    const img = button?.querySelector("img");
+    const src = img ? img.getAttribute("src") || img.src || "" : "";
+    const srcMatch = src.match(/ProfilePicture([1-9]|1[0-8])/);
+
+    if (srcMatch) {
+      return srcMatch[1];
+    }
+
+    const buttons = Array.from(document.querySelectorAll(".profile-icon-choice-test"));
+    const index = buttons.indexOf(button);
+
+    if (index >= 0 && index < 18) {
+      return String(index + 1);
+    }
+
+    return "";
+  }
+
+  function getIconIdFromButton(button) {
+    const number = getIconNumberFromButton(button);
+
+    if (!number) {
       return "";
     }
 
-    return `ProfilePicture${match[1]}`;
-  }
-
-  function getIconSrc(iconId) {
-    return `images/profile-icons/${iconId}.avif`;
+    return `ProfilePicture${number}`;
   }
 
   function getNote() {
@@ -2010,17 +2039,26 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function getAvatarImage() {
-    const profileIconImages = Array.from(document.querySelectorAll('img[src*="images/profile-icons/"]'));
+    const candidates = Array.from(document.querySelectorAll("img"))
+      .filter((img) => !img.closest(".profile-icon-choice-test"))
+      .filter((img) => !img.closest(".favorite-grid"))
+      .filter((img) => !img.closest(".favorite-pokemon-grid"))
+      .filter((img) => !img.closest(".profile-game-grid"))
+      .filter((img) => !img.closest(".achievement-category-grid"))
+      .map((img) => {
+        const rect = img.getBoundingClientRect();
+        return { img, area: rect.width * rect.height, top: rect.top };
+      })
+      .filter((item) => item.area >= 10000)
+      .sort((a, b) => {
+        if (Math.abs(a.top - b.top) > 80) {
+          return a.top - b.top;
+        }
 
-    return (
-      profileIconImages.find((img) => !img.closest(".profile-icon-choice-test")) ||
-      document.querySelector("#profileAvatarImg") ||
-      document.querySelector("#profileAvatarImage") ||
-      document.querySelector("#profileAvatar") ||
-      document.querySelector(".profile-avatar img") ||
-      document.querySelector(".profile-main-avatar img") ||
-      document.querySelector(".profile-picture img")
-    );
+        return b.area - a.area;
+      });
+
+    return candidates[0]?.img || null;
   }
 
   function getSaveButton() {
@@ -2030,7 +2068,9 @@ document.addEventListener("DOMContentLoaded", function () {
   function updatePendingUi() {
     document.querySelectorAll(".profile-icon-choice-test").forEach((button) => {
       const iconId = getIconIdFromButton(button);
+
       button.classList.toggle("pending-save", Boolean(pendingIconId && iconId === pendingIconId));
+      button.classList.toggle("saved-icon", Boolean(savedIconId && iconId === savedIconId));
     });
 
     const saveButton = getSaveButton();
@@ -2053,6 +2093,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (avatarImg) {
       avatarImg.src = getIconSrc(normalized);
+      avatarImg.removeAttribute("srcset");
     }
 
     const note = getNote();
@@ -2119,6 +2160,7 @@ document.addEventListener("DOMContentLoaded", function () {
       localStorage.setItem(`pokeleague_selected_profile_icon_${user.id}`, normalized);
 
       savedIconId = normalized;
+      pendingIconId = normalized;
 
       if (note) {
         note.textContent = `${normalized.replace("ProfilePicture", "Icon ")} saved.`;
@@ -2136,6 +2178,64 @@ document.addEventListener("DOMContentLoaded", function () {
 
       updatePendingUi();
     }
+  }
+
+  function installProfileIconSaveMode() {
+    if (installed) {
+      return;
+    }
+
+    const buttons = Array.from(document.querySelectorAll(".profile-icon-choice-test"));
+
+    if (!buttons.length) {
+      return;
+    }
+
+    installed = true;
+
+    buttons.forEach((oldButton, index) => {
+      const clone = oldButton.cloneNode(true);
+      const iconId = getIconIdFromButton(oldButton) || `ProfilePicture${index + 1}`;
+
+      clone.dataset.profileIconId = iconId;
+      oldButton.replaceWith(clone);
+
+      clone.addEventListener("click", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+
+        previewIcon(iconId);
+      });
+    });
+
+    let saveButton = getSaveButton();
+
+    if (!saveButton) {
+      saveButton = document.createElement("button");
+      saveButton.id = "saveProfileIconButton";
+      saveButton.className = "profile-icon-save-button";
+      saveButton.type = "button";
+      saveButton.textContent = "Save Icon";
+      saveButton.disabled = true;
+
+      const refreshedButtons = Array.from(document.querySelectorAll(".profile-icon-choice-test"));
+      const grid = refreshedButtons[0]?.parentElement;
+
+      if (grid) {
+        grid.insertAdjacentElement("afterend", saveButton);
+      }
+    }
+
+    saveButton.addEventListener("click", saveIcon);
+
+    const note = getNote();
+
+    if (note && /Leaguemate profile support is next/i.test(note.textContent || "")) {
+      note.textContent = note.textContent.replace(/\s*Leaguemate profile support is next\.?/i, "");
+    }
+
+    updatePendingUi();
   }
 
   document.addEventListener("click", function (event) {
@@ -2159,40 +2259,9 @@ document.addEventListener("DOMContentLoaded", function () {
   }, true);
 
   document.addEventListener("DOMContentLoaded", function () {
-    const firstIconButton = document.querySelector(".profile-icon-choice-test");
-
-    if (!firstIconButton) {
-      return;
-    }
-
-    const existingButton = getSaveButton();
-
-    if (!existingButton) {
-      const saveButton = document.createElement("button");
-      saveButton.id = "saveProfileIconButton";
-      saveButton.className = "profile-icon-save-button";
-      saveButton.type = "button";
-      saveButton.textContent = "Save Icon";
-      saveButton.disabled = true;
-
-      const grid = firstIconButton.parentElement;
-      grid.insertAdjacentElement("afterend", saveButton);
-
-      saveButton.addEventListener("click", saveIcon);
-    }
-
-    const avatarImg = getAvatarImage();
-
-    if (avatarImg) {
-      const match = (avatarImg.getAttribute("src") || "").match(/ProfilePicture([1-9]|1[0-8])/);
-
-      if (match) {
-        savedIconId = `ProfilePicture${match[1]}`;
-        pendingIconId = savedIconId;
-      }
-    }
-
-    updatePendingUi();
+    installProfileIconSaveMode();
+    setTimeout(installProfileIconSaveMode, 100);
+    setTimeout(installProfileIconSaveMode, 500);
   });
 })();
 </script>
