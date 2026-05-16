@@ -227,6 +227,112 @@
       }
     }
   </style>
+
+
+<style id="extra-achievement-categories-style">
+  .extra-achievement-section {
+    margin-top: 28px;
+  }
+
+  .extra-achievement-section-title {
+    margin: 0 0 14px;
+    font-family: "Oxanium", Arial, sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    color: #fff4b8;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, 0.45);
+  }
+
+  .extra-achievement-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .extra-achievement-card {
+    min-height: 190px;
+    padding: 16px;
+    border-radius: 22px;
+    border: 2px solid rgba(255, 255, 255, 0.24);
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(215, 222, 239, 0.90));
+    box-shadow:
+      0 12px 24px rgba(0, 0, 0, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.78);
+    color: #18233a;
+    text-align: center;
+    font-family: "Oxanium", Arial, sans-serif;
+  }
+
+  .extra-achievement-card.locked {
+    filter: grayscale(1);
+    opacity: 0.58;
+  }
+
+  .extra-achievement-icon-wrap {
+    width: 82px;
+    height: 82px;
+    margin: 0 auto 10px;
+    border-radius: 20px;
+    display: grid;
+    place-items: center;
+    background: rgba(255, 255, 255, 0.55);
+    box-shadow: inset 0 0 0 2px rgba(24, 35, 58, 0.10);
+    overflow: hidden;
+  }
+
+  .extra-achievement-icon-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .extra-achievement-name {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 900;
+    color: #17233a;
+  }
+
+  .extra-achievement-desc {
+    margin: 6px 0 0;
+    font-size: 13px;
+    font-weight: 800;
+    color: rgba(23, 35, 58, 0.72);
+    line-height: 1.3;
+  }
+
+  .extra-achievement-status {
+    margin-top: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 26px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    background: rgba(24, 35, 58, 0.10);
+    color: rgba(24, 35, 58, 0.72);
+  }
+
+  .extra-achievement-card.unlocked .extra-achievement-status {
+    background: linear-gradient(to bottom, #fff2a8, #d6a83f);
+    color: #1b263b;
+  }
+
+  @media (max-width: 760px) {
+    .extra-achievement-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
 </head>
 
 <body class="achievements-page">
@@ -464,5 +570,222 @@
 
     init();
   </script>
+
+
+<script id="extra-achievement-categories-script">
+document.addEventListener("DOMContentLoaded", async function () {
+  const EXTRA_ACHIEVEMENT_CATEGORIES = [
+    {
+      title: "Leagues",
+      achievements: [
+        {
+          id: "achievement:welcome",
+          title: "Welcome",
+          description: "Join a league.",
+          icon: "images/achievement-icons/PikachuLibre.webp",
+          condition: "join-1-league"
+        },
+        {
+          id: "achievement:all-i-do-is-win",
+          title: "All I do is win",
+          description: "Win a league.",
+          icon: "images/achievement-icons/Champion.webp",
+          condition: "win-league"
+        },
+        {
+          id: "achievement:grinder",
+          title: "Grinder",
+          description: "Join 3 leagues.",
+          icon: "images/achievement-icons/Bisharp.jpg",
+          condition: "join-3-leagues"
+        }
+      ]
+    },
+    {
+      title: "Pokémon",
+      achievements: [
+        {
+          id: "achievement:meta-knight",
+          title: "Meta Knight",
+          description: "Draft Incineroar.",
+          icon: "images/achievement-icons/MetaKnight.avif",
+          condition: "draft-incineroar"
+        }
+      ]
+    }
+  ];
+
+  function getSupabaseClient() {
+    if (window.supabaseClient) return window.supabaseClient;
+
+    try {
+      if (typeof supabaseClient !== "undefined") return supabaseClient;
+    } catch (error) {}
+
+    return null;
+  }
+
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  async function getCurrentUser() {
+    const client = getSupabaseClient();
+
+    if (!client?.auth?.getSession) return null;
+
+    try {
+      const { data } = await client.auth.getSession();
+      return data?.session?.user || null;
+    } catch (error) {
+      console.warn("Could not load achievement user:", error);
+      return null;
+    }
+  }
+
+  async function getLeagueCount(client, user) {
+    if (!client || !user?.email) return 0;
+
+    const email = String(user.email).toLowerCase();
+
+    try {
+      const { data, error } = await client
+        .from("league_teams")
+        .select("league_id")
+        .eq("manager_email", email);
+
+      if (error || !Array.isArray(data)) return 0;
+
+      return new Set(data.map((row) => row.league_id).filter(Boolean)).size;
+    } catch (error) {
+      console.warn("Could not calculate league count:", error);
+      return 0;
+    }
+  }
+
+  async function hasWonLeague(client, user) {
+    if (!client || !user?.email) return false;
+
+    const email = String(user.email).toLowerCase();
+
+    try {
+      const { data, error } = await client
+        .from("league_teams")
+        .select("*")
+        .eq("manager_email", email);
+
+      if (error || !Array.isArray(data)) return false;
+
+      return data.some((team) => {
+        const text = JSON.stringify(team).toLowerCase();
+        return (
+          text.includes('"champion":true') ||
+          text.includes('"winner":true') ||
+          text.includes('"league_winner":true') ||
+          text.includes('"final_rank":1') ||
+          text.includes('"place":1') ||
+          text.includes('"rank":1')
+        );
+      });
+    } catch (error) {
+      console.warn("Could not calculate league winner achievement:", error);
+      return false;
+    }
+  }
+
+  async function hasDraftedIncineroar(client, user) {
+    if (!client || !user?.email) return false;
+
+    const email = String(user.email).toLowerCase();
+
+    try {
+      const { data: teams, error: teamError } = await client
+        .from("league_teams")
+        .select("*")
+        .eq("manager_email", email);
+
+      if (teamError || !Array.isArray(teams)) return false;
+
+      return teams.some((team) => {
+        const text = JSON.stringify(team).toLowerCase();
+        return text.includes("incineroar");
+      });
+    } catch (error) {
+      console.warn("Could not calculate Incineroar achievement:", error);
+      return false;
+    }
+  }
+
+  async function getUnlockedMap() {
+    const client = getSupabaseClient();
+    const user = await getCurrentUser();
+
+    const leagueCount = await getLeagueCount(client, user);
+    const wonLeague = await hasWonLeague(client, user);
+    const draftedIncineroar = await hasDraftedIncineroar(client, user);
+
+    return {
+      "join-1-league": leagueCount >= 1,
+      "join-3-leagues": leagueCount >= 3,
+      "win-league": wonLeague,
+      "draft-incineroar": draftedIncineroar
+    };
+  }
+
+  function findMount() {
+    return (
+      document.querySelector(".achievements-page") ||
+      document.querySelector(".achievement-page") ||
+      document.querySelector(".achievements-shell") ||
+      document.querySelector(".achievement-shell") ||
+      document.querySelector("main") ||
+      document.body
+    );
+  }
+
+  function renderCategories(unlockedMap) {
+    document.getElementById("extraAchievementCategories")?.remove();
+
+    const mount = findMount();
+
+    const wrapper = document.createElement("section");
+    wrapper.id = "extraAchievementCategories";
+    wrapper.className = "extra-achievement-categories";
+
+    wrapper.innerHTML = EXTRA_ACHIEVEMENT_CATEGORIES.map((category) => `
+      <section class="extra-achievement-section">
+        <h2 class="extra-achievement-section-title">${escapeHtml(category.title)}</h2>
+        <div class="extra-achievement-grid">
+          ${category.achievements.map((achievement) => {
+            const unlocked = Boolean(unlockedMap[achievement.condition]);
+
+            return `
+              <article class="extra-achievement-card ${unlocked ? "unlocked" : "locked"}" data-achievement-id="${escapeHtml(achievement.id)}">
+                <div class="extra-achievement-icon-wrap">
+                  <img src="${escapeHtml(achievement.icon)}" alt="">
+                </div>
+                <h3 class="extra-achievement-name">${escapeHtml(achievement.title)}</h3>
+                <p class="extra-achievement-desc">${escapeHtml(achievement.description)}</p>
+                <div class="extra-achievement-status">${unlocked ? "Unlocked" : "Locked"}</div>
+              </article>
+            `;
+          }).join("")}
+        </div>
+      </section>
+    `).join("");
+
+    mount.appendChild(wrapper);
+  }
+
+  const unlockedMap = await getUnlockedMap();
+  renderCategories(unlockedMap);
+});
+</script>
+
 </body>
 </html>
