@@ -291,6 +291,73 @@
       }
     }
   </style>
+
+<style id="safe-leaguemate-favorite-games-style">
+  body.profile-view-page .profile-view-favorite-games-panel {
+    margin-top: 16px;
+  }
+
+  body.profile-view-page .profile-view-game-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  body.profile-view-page .profile-view-game-card {
+    min-height: 142px;
+    padding: 8px;
+    border-radius: 18px;
+    background: linear-gradient(145deg, #eef0f8 0%, #d8dbeb 52%, #bcc3d8 100%);
+    border: 1px solid rgba(255, 255, 255, 0.62);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.72),
+      0 8px 16px rgba(16, 24, 40, 0.15);
+    color: #141b2e;
+    text-align: center;
+    font-family: "Oxanium", Arial, sans-serif;
+    font-weight: 900;
+  }
+
+  body.profile-view-page .profile-view-game-card img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    object-position: center;
+    padding: 5px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.34);
+    display: block;
+    margin-bottom: 7px;
+  }
+
+  body.profile-view-page .profile-view-game-card span {
+    display: block;
+    min-height: 28px;
+    font-size: 11px;
+    line-height: 1.2;
+  }
+
+  body.profile-view-page .profile-view-game-empty {
+    min-height: 110px;
+    padding: 18px;
+    border-radius: 18px;
+    display: grid;
+    place-items: center;
+    background: rgba(216, 219, 235, 0.65);
+    color: rgba(20, 27, 46, 0.62);
+    font-family: "Oxanium", Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 900;
+    text-align: center;
+  }
+
+  @media (max-width: 760px) {
+    body.profile-view-page .profile-view-game-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
 </head>
 
 <body class="profile-view-page">
@@ -355,5 +422,196 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
   <script src="js/leaguemate-profile.js?v=shared-profiles1"></script>
+
+<script id="safe-leaguemate-favorite-games-script">
+document.addEventListener("DOMContentLoaded", async function () {
+  const POKEMON_GAMES = [
+    { id: "red", name: "Pokémon Red" },
+    { id: "blue", name: "Pokémon Blue" },
+    { id: "yellow", name: "Pokémon Yellow" },
+    { id: "gold", name: "Pokémon Gold" },
+    { id: "silver", name: "Pokémon Silver" },
+    { id: "crystal", name: "Pokémon Crystal" },
+    { id: "ruby", name: "Pokémon Ruby" },
+    { id: "sapphire", name: "Pokémon Sapphire" },
+    { id: "emerald", name: "Pokémon Emerald" },
+    { id: "firered", name: "Pokémon FireRed" },
+    { id: "leafgreen", name: "Pokémon LeafGreen" },
+    { id: "diamond", name: "Pokémon Diamond" },
+    { id: "pearl", name: "Pokémon Pearl" },
+    { id: "platinum", name: "Pokémon Platinum" },
+    { id: "heartgold", name: "Pokémon HeartGold" },
+    { id: "soulsilver", name: "Pokémon SoulSilver" },
+    { id: "black", name: "Pokémon Black" },
+    { id: "white", name: "Pokémon White" },
+    { id: "black-2", name: "Pokémon Black 2" },
+    { id: "white-2", name: "Pokémon White 2" },
+    { id: "x", name: "Pokémon X" },
+    { id: "y", name: "Pokémon Y" },
+    { id: "omega-ruby", name: "Pokémon Omega Ruby" },
+    { id: "alpha-sapphire", name: "Pokémon Alpha Sapphire" },
+    { id: "sun", name: "Pokémon Sun" },
+    { id: "moon", name: "Pokémon Moon" },
+    { id: "ultra-sun", name: "Pokémon Ultra Sun" },
+    { id: "ultra-moon", name: "Pokémon Ultra Moon" },
+    { id: "lets-go-pikachu", name: "Pokémon Let's Go Pikachu" },
+    { id: "lets-go-eevee", name: "Pokémon Let's Go Eevee" },
+    { id: "sword", name: "Pokémon Sword" },
+    { id: "shield", name: "Pokémon Shield" },
+    { id: "brilliant-diamond", name: "Pokémon Brilliant Diamond" },
+    { id: "shining-pearl", name: "Pokémon Shining Pearl" },
+    { id: "legends-arceus", name: "Pokémon Legends: Arceus" },
+    { id: "scarlet", name: "Pokémon Scarlet" },
+    { id: "violet", name: "Pokémon Violet" },
+    { id: "legends-z-a", name: "Pokémon Legends: Z-A" }
+  ];
+
+  function getSupabaseClient() {
+    if (window.supabaseClient) return window.supabaseClient;
+
+    try {
+      if (typeof supabaseClient !== "undefined") return supabaseClient;
+    } catch (error) {}
+
+    return null;
+  }
+
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  function findGame(gameId) {
+    return POKEMON_GAMES.find((game) => game.id === gameId);
+  }
+
+  function makePanel() {
+    const existing = document.getElementById("profileViewFavoriteGamesPanel");
+    if (existing) existing.remove();
+
+    const favoritePokemonGrid = document.getElementById("profileViewFavorites");
+    const favoritePokemonPanel = favoritePokemonGrid?.closest(".profile-panel");
+
+    if (!favoritePokemonPanel) {
+      return null;
+    }
+
+    const panel = document.createElement("div");
+    panel.id = "profileViewFavoriteGamesPanel";
+    panel.className = "profile-panel profile-view-favorite-games-panel";
+    panel.innerHTML = `
+      <p class="profile-section-label">Favorite Pokémon Games</p>
+      <div id="profileViewFavoriteGames" class="profile-view-game-grid">
+        <div class="profile-view-game-empty">Loading favorite games...</div>
+      </div>
+    `;
+
+    favoritePokemonPanel.insertAdjacentElement("afterend", panel);
+    return panel.querySelector("#profileViewFavoriteGames");
+  }
+
+  function renderFavoriteGames(gameIds) {
+    const container = document.getElementById("profileViewFavoriteGames") || makePanel();
+
+    if (!container) {
+      return;
+    }
+
+    const cleanGameIds = Array.isArray(gameIds)
+      ? gameIds.filter(Boolean).slice(0, 3)
+      : [];
+
+    if (!cleanGameIds.length) {
+      container.innerHTML = `
+        <div class="profile-view-game-empty">
+          No favorite games selected yet.
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = cleanGameIds.map((gameId, index) => {
+      const game = findGame(gameId);
+
+      if (!game) {
+        return `
+          <div class="profile-view-game-card">
+            <div class="profile-view-game-empty">Favorite Game ${index + 1}</div>
+            <span>Unknown game</span>
+          </div>
+        `;
+      }
+
+      const webpSrc = `images/game-icons/${game.id}.webp`;
+      const svgSrc = `images/game-icons/${game.id}.svg`;
+
+      return `
+        <div class="profile-view-game-card">
+          <img
+            src="${escapeHtml(webpSrc)}"
+            alt=""
+            onerror="this.onerror=null; this.src='${escapeHtml(svgSrc)}';"
+          >
+          <span>${escapeHtml(game.name)}</span>
+        </div>
+      `;
+    }).join("");
+  }
+
+  async function loadFavoriteGames() {
+    try {
+      makePanel();
+
+      const client = getSupabaseClient();
+      const selectedLeagueId = localStorage.getItem("selected-league-id");
+      const params = new URLSearchParams(window.location.search);
+      const teamId = params.get("teamId");
+
+      if (!client || !selectedLeagueId || !teamId) {
+        renderFavoriteGames([]);
+        return;
+      }
+
+      const { data: team, error: teamError } = await client
+        .from("league_teams")
+        .select("manager_email")
+        .eq("id", teamId)
+        .eq("league_id", selectedLeagueId)
+        .maybeSingle();
+
+      if (teamError || !team?.manager_email) {
+        console.warn("Could not load team for favorite games:", teamError);
+        renderFavoriteGames([]);
+        return;
+      }
+
+      const { data: profile, error: profileError } = await client
+        .from("user_profiles")
+        .select("favorite_games")
+        .eq("email", String(team.manager_email).toLowerCase())
+        .maybeSingle();
+
+      if (profileError) {
+        console.warn("Could not load leaguemate favorite games:", profileError);
+        renderFavoriteGames([]);
+        return;
+      }
+
+      renderFavoriteGames(profile?.favorite_games || []);
+    } catch (error) {
+      console.warn("Favorite games viewer failed safely:", error);
+      renderFavoriteGames([]);
+    }
+  }
+
+  setTimeout(loadFavoriteGames, 450);
+});
+</script>
+
+  <script src="js/pokemon-image-overrides.js?v=alt-form-fix1"></script>
 </body>
 </html>

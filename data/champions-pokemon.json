@@ -127,7 +127,7 @@
     "id": 26,
     "name": "Alolan Raichu",
     "slug": "alolan-raichu",
-    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/26.png",
+    "image": "images/pokemon-fixes/alolan-raichu.png",
     "types": [
       "Electric",
       "Psychic"
@@ -135,9 +135,15 @@
     "rank": 179,
     "tier": "Bronze",
     "points": 1,
-    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_icon": "images/pokemon-fixes/alolan-raichu.png",
     "tier_label": "Bronze 1",
-    "can_mega_evolve": false
+    "can_mega_evolve": false,
+    "img": "images/pokemon-fixes/alolan-raichu.png",
+    "icon": "images/pokemon-fixes/alolan-raichu.png",
+    "sprite": "images/pokemon-fixes/alolan-raichu.png",
+    "artwork": "images/pokemon-fixes/alolan-raichu.png",
+    "image_url": "images/pokemon-fixes/alolan-raichu.png",
+    "sprite_url": "images/pokemon-fixes/alolan-raichu.png"
   },
   {
     "id": 36,
@@ -173,7 +179,7 @@
     "id": 38,
     "name": "Alolan Ninetales",
     "slug": "alolan-ninetales",
-    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/38.png",
+    "image": "images/pokemon-fixes/alolan-ninetales.png",
     "types": [
       "Ice",
       "Fairy"
@@ -181,9 +187,15 @@
     "rank": 45,
     "tier": "Gold",
     "points": 6,
-    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_icon": "images/pokemon-fixes/alolan-ninetales.png",
     "tier_label": "Gold 6",
-    "can_mega_evolve": false
+    "can_mega_evolve": false,
+    "img": "images/pokemon-fixes/alolan-ninetales.png",
+    "icon": "images/pokemon-fixes/alolan-ninetales.png",
+    "sprite": "images/pokemon-fixes/alolan-ninetales.png",
+    "artwork": "images/pokemon-fixes/alolan-ninetales.png",
+    "image_url": "images/pokemon-fixes/alolan-ninetales.png",
+    "sprite_url": "images/pokemon-fixes/alolan-ninetales.png"
   },
   {
     "id": 59,
@@ -204,7 +216,7 @@
     "id": 59,
     "name": "Hisuian Arcanine",
     "slug": "hisuian-arcanine",
-    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/59.png",
+    "image": "images/pokemon-fixes/hisuian-arcanine.webp",
     "types": [
       "Fire",
       "Rock"
@@ -212,9 +224,17 @@
     "rank": 39,
     "tier": "Gold",
     "points": 6,
-    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_icon": "images/pokemon-fixes/hisuian-arcanine.webp",
     "tier_label": "Gold 6",
-    "can_mega_evolve": false
+    "can_mega_evolve": false,
+    "img": "images/pokemon-fixes/hisuian-arcanine.webp",
+    "icon": "images/pokemon-fixes/hisuian-arcanine.webp",
+    "sprite": "images/pokemon-fixes/hisuian-arcanine.webp",
+    "artwork": "images/pokemon-fixes/hisuian-arcanine.webp",
+    "image_url": "images/pokemon-fixes/hisuian-arcanine.webp",
+    "sprite_url": "images/pokemon-fixes/hisuian-arcanine.webp",
+    "front_default": "images/pokemon-fixes/hisuian-arcanine.webp",
+    "official_artwork": "images/pokemon-fixes/hisuian-arcanine.webp"
   },
   {
     "id": 65,
@@ -282,7 +302,7 @@
     "id": 80,
     "name": "Galarian Slowbro",
     "slug": "galarian-slowbro",
-    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/80.png",
+    "image": "images/pokemon-fixes/galarian-slowbro.png",
     "types": [
       "Poison",
       "Psychic"
@@ -290,9 +310,15 @@
     "rank": 128,
     "tier": "Bronze",
     "points": 2,
-    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_icon": "images/pokemon-fixes/galarian-slowbro.png",
     "tier_label": "Bronze 2",
-    "can_mega_evolve": false
+    "can_mega_evolve": false,
+    "img": "images/pokemon-fixes/galarian-slowbro.png",
+    "icon": "images/pokemon-fixes/galarian-slowbro.png",
+    "sprite": "images/pokemon-fixes/galarian-slowbro.png",
+    "artwork": "images/pokemon-fixes/galarian-slowbro.png",
+    "image_url": "images/pokemon-fixes/galarian-slowbro.png",
+    "sprite_url": "images/pokemon-fixes/galarian-slowbro.png"
   },
   {
     "id": 94,
@@ -390,7 +416,7 @@
     "id": 128,
     "name": "Paldean Tauros",
     "slug": "paldean-tauros-fighting-fire",
-    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/128.png",
+    "image": "images/pokemon-fixes/fire-tauros.png",
     "types": [
       "Fighting",
       "Fire"
@@ -398,15 +424,21 @@
     "rank": null,
     "tier": "Bronze",
     "points": 1,
-    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_icon": "images/pokemon-fixes/fire-tauros.png",
     "tier_label": "Bronze 1",
-    "can_mega_evolve": false
+    "can_mega_evolve": false,
+    "img": "images/pokemon-fixes/fire-tauros.png",
+    "icon": "images/pokemon-fixes/fire-tauros.png",
+    "sprite": "images/pokemon-fixes/fire-tauros.png",
+    "artwork": "images/pokemon-fixes/fire-tauros.png",
+    "image_url": "images/pokemon-fixes/fire-tauros.png",
+    "sprite_url": "images/pokemon-fixes/fire-tauros.png"
   },
   {
     "id": 128,
     "name": "Paldean Tauros",
     "slug": "paldean-tauros-fighting-water",
-    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/128.png",
+    "image": "images/pokemon-fixes/water-tauros.png",
     "types": [
       "Fighting",
       "Water"
@@ -414,9 +446,15 @@
     "rank": null,
     "tier": "Bronze",
     "points": 1,
-    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_icon": "images/pokemon-fixes/water-tauros.png",
     "tier_label": "Bronze 1",
-    "can_mega_evolve": false
+    "can_mega_evolve": false,
+    "img": "images/pokemon-fixes/water-tauros.png",
+    "icon": "images/pokemon-fixes/water-tauros.png",
+    "sprite": "images/pokemon-fixes/water-tauros.png",
+    "artwork": "images/pokemon-fixes/water-tauros.png",
+    "image_url": "images/pokemon-fixes/water-tauros.png",
+    "sprite_url": "images/pokemon-fixes/water-tauros.png"
   },
   {
     "id": 130,
@@ -575,7 +613,7 @@
     "id": 157,
     "name": "Hisuian Typhlosion",
     "slug": "hisuian-typhlosion",
-    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/157.png",
+    "image": "images/pokemon-fixes/hisuian-typhlosion.png",
     "types": [
       "Fire",
       "Ghost"
@@ -583,9 +621,17 @@
     "rank": 48,
     "tier": "Gold",
     "points": 6,
-    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_icon": "images/pokemon-fixes/hisuian-typhlosion.png",
     "tier_label": "Gold 6",
-    "can_mega_evolve": false
+    "can_mega_evolve": false,
+    "img": "images/pokemon-fixes/hisuian-typhlosion.png",
+    "icon": "images/pokemon-fixes/hisuian-typhlosion.png",
+    "sprite": "images/pokemon-fixes/hisuian-typhlosion.png",
+    "artwork": "images/pokemon-fixes/hisuian-typhlosion.png",
+    "image_url": "images/pokemon-fixes/hisuian-typhlosion.png",
+    "sprite_url": "images/pokemon-fixes/hisuian-typhlosion.png",
+    "front_default": "images/pokemon-fixes/hisuian-typhlosion.png",
+    "official_artwork": "images/pokemon-fixes/hisuian-typhlosion.png"
   },
   {
     "id": 160,
@@ -714,7 +760,7 @@
     "id": 199,
     "name": "Galarian Slowking",
     "slug": "galarian-slowking",
-    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/199.png",
+    "image": "images/pokemon-fixes/galarian-slowking.png",
     "types": [
       "Psychic",
       "Poison"
@@ -722,9 +768,15 @@
     "rank": 103,
     "tier": "Silver",
     "points": 3,
-    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_icon": "images/pokemon-fixes/galarian-slowking.png",
     "tier_label": "Silver 3",
-    "can_mega_evolve": false
+    "can_mega_evolve": false,
+    "img": "images/pokemon-fixes/galarian-slowking.png",
+    "icon": "images/pokemon-fixes/galarian-slowking.png",
+    "sprite": "images/pokemon-fixes/galarian-slowking.png",
+    "artwork": "images/pokemon-fixes/galarian-slowking.png",
+    "image_url": "images/pokemon-fixes/galarian-slowking.png",
+    "sprite_url": "images/pokemon-fixes/galarian-slowking.png"
   },
   {
     "id": 205,
@@ -1498,7 +1550,7 @@
     "id": 503,
     "name": "Hisuian Samurott",
     "slug": "hisuian-samurott",
-    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/503.png",
+    "image": "images/pokemon-fixes/hisuian-samurott.png",
     "types": [
       "Water",
       "Dark"
@@ -1506,9 +1558,17 @@
     "rank": 101,
     "tier": "Silver",
     "points": 3,
-    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_icon": "images/pokemon-fixes/hisuian-samurott.png",
     "tier_label": "Silver 3",
-    "can_mega_evolve": false
+    "can_mega_evolve": false,
+    "img": "images/pokemon-fixes/hisuian-samurott.png",
+    "icon": "images/pokemon-fixes/hisuian-samurott.png",
+    "sprite": "images/pokemon-fixes/hisuian-samurott.png",
+    "artwork": "images/pokemon-fixes/hisuian-samurott.png",
+    "image_url": "images/pokemon-fixes/hisuian-samurott.png",
+    "sprite_url": "images/pokemon-fixes/hisuian-samurott.png",
+    "front_default": "images/pokemon-fixes/hisuian-samurott.png",
+    "official_artwork": "images/pokemon-fixes/hisuian-samurott.png"
   },
   {
     "id": 505,
@@ -1712,7 +1772,7 @@
     "id": 571,
     "name": "Hisuian Zoroark",
     "slug": "hisuian-zoroark",
-    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/571.png",
+    "image": "images/pokemon-fixes/hisuian-zoroark.webp",
     "types": [
       "Normal",
       "Ghost"
@@ -1720,9 +1780,17 @@
     "rank": 59,
     "tier": "Gold",
     "points": 5,
-    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_icon": "images/pokemon-fixes/hisuian-zoroark.webp",
     "tier_label": "Gold 5",
-    "can_mega_evolve": false
+    "can_mega_evolve": false,
+    "img": "images/pokemon-fixes/hisuian-zoroark.webp",
+    "icon": "images/pokemon-fixes/hisuian-zoroark.webp",
+    "sprite": "images/pokemon-fixes/hisuian-zoroark.webp",
+    "artwork": "images/pokemon-fixes/hisuian-zoroark.webp",
+    "image_url": "images/pokemon-fixes/hisuian-zoroark.webp",
+    "sprite_url": "images/pokemon-fixes/hisuian-zoroark.webp",
+    "front_default": "images/pokemon-fixes/hisuian-zoroark.webp",
+    "official_artwork": "images/pokemon-fixes/hisuian-zoroark.webp"
   },
   {
     "id": 579,
@@ -1821,7 +1889,7 @@
     "id": 618,
     "name": "Galarian Stunfisk",
     "slug": "galarian-stunfisk",
-    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/618.png",
+    "image": "images/pokemon-fixes/galarian-stunfisk.png",
     "types": [
       "Ground",
       "Steel"
@@ -1829,9 +1897,15 @@
     "rank": 191,
     "tier": "Bronze",
     "points": 1,
-    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_icon": "images/pokemon-fixes/galarian-stunfisk.png",
     "tier_label": "Bronze 1",
-    "can_mega_evolve": false
+    "can_mega_evolve": false,
+    "img": "images/pokemon-fixes/galarian-stunfisk.png",
+    "icon": "images/pokemon-fixes/galarian-stunfisk.png",
+    "sprite": "images/pokemon-fixes/galarian-stunfisk.png",
+    "artwork": "images/pokemon-fixes/galarian-stunfisk.png",
+    "image_url": "images/pokemon-fixes/galarian-stunfisk.png",
+    "sprite_url": "images/pokemon-fixes/galarian-stunfisk.png"
   },
   {
     "id": 623,
@@ -2291,7 +2365,7 @@
     "id": 713,
     "name": "Hisuian Avalugg",
     "slug": "hisuian-avalugg",
-    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/713.png",
+    "image": "images/pokemon-fixes/hisuian-avalugg.webp",
     "types": [
       "Ice",
       "Rock"
@@ -2299,9 +2373,17 @@
     "rank": 175,
     "tier": "Bronze",
     "points": 1,
-    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_icon": "images/pokemon-fixes/hisuian-avalugg.webp",
     "tier_label": "Bronze 1",
-    "can_mega_evolve": false
+    "can_mega_evolve": false,
+    "img": "images/pokemon-fixes/hisuian-avalugg.webp",
+    "icon": "images/pokemon-fixes/hisuian-avalugg.webp",
+    "sprite": "images/pokemon-fixes/hisuian-avalugg.webp",
+    "artwork": "images/pokemon-fixes/hisuian-avalugg.webp",
+    "image_url": "images/pokemon-fixes/hisuian-avalugg.webp",
+    "sprite_url": "images/pokemon-fixes/hisuian-avalugg.webp",
+    "front_default": "images/pokemon-fixes/hisuian-avalugg.webp",
+    "official_artwork": "images/pokemon-fixes/hisuian-avalugg.webp"
   },
   {
     "id": 715,
@@ -2339,7 +2421,7 @@
     "id": 724,
     "name": "Hisuian Decidueye",
     "slug": "hisuian-decidueye",
-    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/724.png",
+    "image": "images/pokemon-fixes/hisuian-decidueye.webp",
     "types": [
       "Grass",
       "Fighting"
@@ -2347,9 +2429,17 @@
     "rank": 109,
     "tier": "Silver",
     "points": 3,
-    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_icon": "images/pokemon-fixes/hisuian-decidueye.webp",
     "tier_label": "Silver 3",
-    "can_mega_evolve": false
+    "can_mega_evolve": false,
+    "img": "images/pokemon-fixes/hisuian-decidueye.webp",
+    "icon": "images/pokemon-fixes/hisuian-decidueye.webp",
+    "sprite": "images/pokemon-fixes/hisuian-decidueye.webp",
+    "artwork": "images/pokemon-fixes/hisuian-decidueye.webp",
+    "image_url": "images/pokemon-fixes/hisuian-decidueye.webp",
+    "sprite_url": "images/pokemon-fixes/hisuian-decidueye.webp",
+    "front_default": "images/pokemon-fixes/hisuian-decidueye.webp",
+    "official_artwork": "images/pokemon-fixes/hisuian-decidueye.webp"
   },
   {
     "id": 727,
@@ -3190,7 +3280,7 @@
     "id": 706,
     "name": "Goodra-Hisui",
     "slug": "goodra-hisui",
-    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/706.png",
+    "image": "images/pokemon-fixes/hisuian-goodra.webp",
     "types": [
       "Dragon",
       "Steel"
@@ -3198,15 +3288,23 @@
     "rank": 99,
     "tier": "Silver",
     "points": 3,
-    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_icon": "images/pokemon-fixes/hisuian-goodra.webp",
     "tier_label": "Silver 3",
-    "can_mega_evolve": false
+    "can_mega_evolve": false,
+    "img": "images/pokemon-fixes/hisuian-goodra.webp",
+    "icon": "images/pokemon-fixes/hisuian-goodra.webp",
+    "sprite": "images/pokemon-fixes/hisuian-goodra.webp",
+    "artwork": "images/pokemon-fixes/hisuian-goodra.webp",
+    "image_url": "images/pokemon-fixes/hisuian-goodra.webp",
+    "sprite_url": "images/pokemon-fixes/hisuian-goodra.webp",
+    "front_default": "images/pokemon-fixes/hisuian-goodra.webp",
+    "official_artwork": "images/pokemon-fixes/hisuian-goodra.webp"
   },
   {
     "id": 128,
     "name": "Tauros-Aqua",
     "slug": "tauros-aqua",
-    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/128.png",
+    "image": "images/pokemon-fixes/water-tauros.png",
     "types": [
       "Fighting",
       "Water"
@@ -3214,15 +3312,21 @@
     "rank": 62,
     "tier": "Gold",
     "points": 5,
-    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_icon": "images/pokemon-fixes/water-tauros.png",
     "tier_label": "Gold 5",
-    "can_mega_evolve": false
+    "can_mega_evolve": false,
+    "img": "images/pokemon-fixes/water-tauros.png",
+    "icon": "images/pokemon-fixes/water-tauros.png",
+    "sprite": "images/pokemon-fixes/water-tauros.png",
+    "artwork": "images/pokemon-fixes/water-tauros.png",
+    "image_url": "images/pokemon-fixes/water-tauros.png",
+    "sprite_url": "images/pokemon-fixes/water-tauros.png"
   },
   {
     "id": 128,
     "name": "Tauros-Blaze",
     "slug": "tauros-blaze",
-    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/128.png",
+    "image": "images/pokemon-fixes/fire-tauros.png",
     "types": [
       "Fighting",
       "Fire"
@@ -3230,8 +3334,14 @@
     "rank": 151,
     "tier": "Bronze",
     "points": 1,
-    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_icon": "images/pokemon-fixes/fire-tauros.png",
     "tier_label": "Bronze 1",
-    "can_mega_evolve": false
+    "can_mega_evolve": false,
+    "img": "images/pokemon-fixes/fire-tauros.png",
+    "icon": "images/pokemon-fixes/fire-tauros.png",
+    "sprite": "images/pokemon-fixes/fire-tauros.png",
+    "artwork": "images/pokemon-fixes/fire-tauros.png",
+    "image_url": "images/pokemon-fixes/fire-tauros.png",
+    "sprite_url": "images/pokemon-fixes/fire-tauros.png"
   }
 ]

@@ -385,9 +385,18 @@
     "slug": "hisuian-arcanine",
     "tier": "Gold",
     "points": 6,
-    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_icon": "images/pokemon-fixes/hisuian-arcanine.webp",
     "tier_label": "Gold 6",
-    "ranked_name": "Arcanine-Hisui"
+    "ranked_name": "Arcanine-Hisui",
+    "image": "images/pokemon-fixes/hisuian-arcanine.webp",
+    "img": "images/pokemon-fixes/hisuian-arcanine.webp",
+    "icon": "images/pokemon-fixes/hisuian-arcanine.webp",
+    "sprite": "images/pokemon-fixes/hisuian-arcanine.webp",
+    "artwork": "images/pokemon-fixes/hisuian-arcanine.webp",
+    "image_url": "images/pokemon-fixes/hisuian-arcanine.webp",
+    "sprite_url": "images/pokemon-fixes/hisuian-arcanine.webp",
+    "front_default": "images/pokemon-fixes/hisuian-arcanine.webp",
+    "official_artwork": "images/pokemon-fixes/hisuian-arcanine.webp"
   },
   {
     "rank": 40,
@@ -445,9 +454,16 @@
     "slug": "alolan-ninetales",
     "tier": "Gold",
     "points": 6,
-    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_icon": "images/pokemon-fixes/alolan-ninetales.png",
     "tier_label": "Gold 6",
-    "ranked_name": "Ninetales-Alola"
+    "ranked_name": "Ninetales-Alola",
+    "image": "images/pokemon-fixes/alolan-ninetales.png",
+    "img": "images/pokemon-fixes/alolan-ninetales.png",
+    "icon": "images/pokemon-fixes/alolan-ninetales.png",
+    "sprite": "images/pokemon-fixes/alolan-ninetales.png",
+    "artwork": "images/pokemon-fixes/alolan-ninetales.png",
+    "image_url": "images/pokemon-fixes/alolan-ninetales.png",
+    "sprite_url": "images/pokemon-fixes/alolan-ninetales.png"
   },
   {
     "rank": 46,
@@ -475,9 +491,18 @@
     "slug": "hisuian-typhlosion",
     "tier": "Gold",
     "points": 6,
-    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_icon": "images/pokemon-fixes/hisuian-typhlosion.png",
     "tier_label": "Gold 6",
-    "ranked_name": "Typhlosion-Hisui"
+    "ranked_name": "Typhlosion-Hisui",
+    "image": "images/pokemon-fixes/hisuian-typhlosion.png",
+    "img": "images/pokemon-fixes/hisuian-typhlosion.png",
+    "icon": "images/pokemon-fixes/hisuian-typhlosion.png",
+    "sprite": "images/pokemon-fixes/hisuian-typhlosion.png",
+    "artwork": "images/pokemon-fixes/hisuian-typhlosion.png",
+    "image_url": "images/pokemon-fixes/hisuian-typhlosion.png",
+    "sprite_url": "images/pokemon-fixes/hisuian-typhlosion.png",
+    "front_default": "images/pokemon-fixes/hisuian-typhlosion.png",
+    "official_artwork": "images/pokemon-fixes/hisuian-typhlosion.png"
   },
   {
     "rank": 49,
@@ -585,9 +610,18 @@
     "slug": "hisuian-zoroark",
     "tier": "Gold",
     "points": 5,
-    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_icon": "images/pokemon-fixes/hisuian-zoroark.webp",
     "tier_label": "Gold 5",
-    "ranked_name": "Zoroark-Hisui"
+    "ranked_name": "Zoroark-Hisui",
+    "image": "images/pokemon-fixes/hisuian-zoroark.webp",
+    "img": "images/pokemon-fixes/hisuian-zoroark.webp",
+    "icon": "images/pokemon-fixes/hisuian-zoroark.webp",
+    "sprite": "images/pokemon-fixes/hisuian-zoroark.webp",
+    "artwork": "images/pokemon-fixes/hisuian-zoroark.webp",
+    "image_url": "images/pokemon-fixes/hisuian-zoroark.webp",
+    "sprite_url": "images/pokemon-fixes/hisuian-zoroark.webp",
+    "front_default": "images/pokemon-fixes/hisuian-zoroark.webp",
+    "official_artwork": "images/pokemon-fixes/hisuian-zoroark.webp"
   },
   {
     "rank": 60,
@@ -615,9 +649,16 @@
     "slug": "tauros-aqua",
     "tier": "Gold",
     "points": 5,
-    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_icon": "images/pokemon-fixes/water-tauros.png",
     "tier_label": "Gold 5",
-    "ranked_name": "Tauros-Aqua"
+    "ranked_name": "Tauros-Aqua",
+    "image": "images/pokemon-fixes/water-tauros.png",
+    "img": "images/pokemon-fixes/water-tauros.png",
+    "icon": "images/pokemon-fixes/water-tauros.png",
+    "sprite": "images/pokemon-fixes/water-tauros.png",
+    "artwork": "images/pokemon-fixes/water-tauros.png",
+    "image_url": "images/pokemon-fixes/water-tauros.png",
+    "sprite_url": "images/pokemon-fixes/water-tauros.png"
   },
   {
     "rank": 63,
@@ -985,9 +1026,18 @@
     "slug": "goodra-hisui",
     "tier": "Silver",
     "points": 3,
-    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_icon": "images/pokemon-fixes/hisuian-goodra.webp",
     "tier_label": "Silver 3",
-    "ranked_name": "Goodra-Hisui"
+    "ranked_name": "Goodra-Hisui",
+    "image": "images/pokemon-fixes/hisuian-goodra.webp",
+    "img": "images/pokemon-fixes/hisuian-goodra.webp",
+    "icon": "images/pokemon-fixes/hisuian-goodra.webp",
+    "sprite": "images/pokemon-fixes/hisuian-goodra.webp",
+    "artwork": "images/pokemon-fixes/hisuian-goodra.webp",
+    "image_url": "images/pokemon-fixes/hisuian-goodra.webp",
+    "sprite_url": "images/pokemon-fixes/hisuian-goodra.webp",
+    "front_default": "images/pokemon-fixes/hisuian-goodra.webp",
+    "official_artwork": "images/pokemon-fixes/hisuian-goodra.webp"
   },
   {
     "rank": 100,
@@ -1005,9 +1055,18 @@
     "slug": "hisuian-samurott",
     "tier": "Silver",
     "points": 3,
-    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_icon": "images/pokemon-fixes/hisuian-samurott.png",
     "tier_label": "Silver 3",
-    "ranked_name": "Samurott-Hisui"
+    "ranked_name": "Samurott-Hisui",
+    "image": "images/pokemon-fixes/hisuian-samurott.png",
+    "img": "images/pokemon-fixes/hisuian-samurott.png",
+    "icon": "images/pokemon-fixes/hisuian-samurott.png",
+    "sprite": "images/pokemon-fixes/hisuian-samurott.png",
+    "artwork": "images/pokemon-fixes/hisuian-samurott.png",
+    "image_url": "images/pokemon-fixes/hisuian-samurott.png",
+    "sprite_url": "images/pokemon-fixes/hisuian-samurott.png",
+    "front_default": "images/pokemon-fixes/hisuian-samurott.png",
+    "official_artwork": "images/pokemon-fixes/hisuian-samurott.png"
   },
   {
     "rank": 102,
@@ -1025,9 +1084,16 @@
     "slug": "galarian-slowking",
     "tier": "Silver",
     "points": 3,
-    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_icon": "images/pokemon-fixes/galarian-slowking.png",
     "tier_label": "Silver 3",
-    "ranked_name": "Slowking-Galarian"
+    "ranked_name": "Slowking-Galarian",
+    "image": "images/pokemon-fixes/galarian-slowking.png",
+    "img": "images/pokemon-fixes/galarian-slowking.png",
+    "icon": "images/pokemon-fixes/galarian-slowking.png",
+    "sprite": "images/pokemon-fixes/galarian-slowking.png",
+    "artwork": "images/pokemon-fixes/galarian-slowking.png",
+    "image_url": "images/pokemon-fixes/galarian-slowking.png",
+    "sprite_url": "images/pokemon-fixes/galarian-slowking.png"
   },
   {
     "rank": 104,
@@ -1085,9 +1151,18 @@
     "slug": "hisuian-decidueye",
     "tier": "Silver",
     "points": 3,
-    "tier_icon": "images/tiers/SilverButton.png",
+    "tier_icon": "images/pokemon-fixes/hisuian-decidueye.webp",
     "tier_label": "Silver 3",
-    "ranked_name": "Decidueye-Hisui"
+    "ranked_name": "Decidueye-Hisui",
+    "image": "images/pokemon-fixes/hisuian-decidueye.webp",
+    "img": "images/pokemon-fixes/hisuian-decidueye.webp",
+    "icon": "images/pokemon-fixes/hisuian-decidueye.webp",
+    "sprite": "images/pokemon-fixes/hisuian-decidueye.webp",
+    "artwork": "images/pokemon-fixes/hisuian-decidueye.webp",
+    "image_url": "images/pokemon-fixes/hisuian-decidueye.webp",
+    "sprite_url": "images/pokemon-fixes/hisuian-decidueye.webp",
+    "front_default": "images/pokemon-fixes/hisuian-decidueye.webp",
+    "official_artwork": "images/pokemon-fixes/hisuian-decidueye.webp"
   },
   {
     "rank": 110,
@@ -1275,9 +1350,16 @@
     "slug": "galarian-slowbro",
     "tier": "Bronze",
     "points": 2,
-    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_icon": "images/pokemon-fixes/galarian-slowbro.png",
     "tier_label": "Bronze 2",
-    "ranked_name": "Slowbro-Galarian"
+    "ranked_name": "Slowbro-Galarian",
+    "image": "images/pokemon-fixes/galarian-slowbro.png",
+    "img": "images/pokemon-fixes/galarian-slowbro.png",
+    "icon": "images/pokemon-fixes/galarian-slowbro.png",
+    "sprite": "images/pokemon-fixes/galarian-slowbro.png",
+    "artwork": "images/pokemon-fixes/galarian-slowbro.png",
+    "image_url": "images/pokemon-fixes/galarian-slowbro.png",
+    "sprite_url": "images/pokemon-fixes/galarian-slowbro.png"
   },
   {
     "rank": 129,
@@ -1505,9 +1587,16 @@
     "slug": "tauros-blaze",
     "tier": "Bronze",
     "points": 1,
-    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_icon": "images/pokemon-fixes/fire-tauros.png",
     "tier_label": "Bronze 1",
-    "ranked_name": "Tauros-Blaze"
+    "ranked_name": "Tauros-Blaze",
+    "image": "images/pokemon-fixes/fire-tauros.png",
+    "img": "images/pokemon-fixes/fire-tauros.png",
+    "icon": "images/pokemon-fixes/fire-tauros.png",
+    "sprite": "images/pokemon-fixes/fire-tauros.png",
+    "artwork": "images/pokemon-fixes/fire-tauros.png",
+    "image_url": "images/pokemon-fixes/fire-tauros.png",
+    "sprite_url": "images/pokemon-fixes/fire-tauros.png"
   },
   {
     "rank": 152,
@@ -1745,9 +1834,18 @@
     "slug": "hisuian-avalugg",
     "tier": "Bronze",
     "points": 1,
-    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_icon": "images/pokemon-fixes/hisuian-avalugg.webp",
     "tier_label": "Bronze 1",
-    "ranked_name": "Avalugg-Hisui"
+    "ranked_name": "Avalugg-Hisui",
+    "image": "images/pokemon-fixes/hisuian-avalugg.webp",
+    "img": "images/pokemon-fixes/hisuian-avalugg.webp",
+    "icon": "images/pokemon-fixes/hisuian-avalugg.webp",
+    "sprite": "images/pokemon-fixes/hisuian-avalugg.webp",
+    "artwork": "images/pokemon-fixes/hisuian-avalugg.webp",
+    "image_url": "images/pokemon-fixes/hisuian-avalugg.webp",
+    "sprite_url": "images/pokemon-fixes/hisuian-avalugg.webp",
+    "front_default": "images/pokemon-fixes/hisuian-avalugg.webp",
+    "official_artwork": "images/pokemon-fixes/hisuian-avalugg.webp"
   },
   {
     "rank": 176,
@@ -1785,9 +1883,16 @@
     "slug": "alolan-raichu",
     "tier": "Bronze",
     "points": 1,
-    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_icon": "images/pokemon-fixes/alolan-raichu.png",
     "tier_label": "Bronze 1",
-    "ranked_name": "Raichu-Alola"
+    "ranked_name": "Raichu-Alola",
+    "image": "images/pokemon-fixes/alolan-raichu.png",
+    "img": "images/pokemon-fixes/alolan-raichu.png",
+    "icon": "images/pokemon-fixes/alolan-raichu.png",
+    "sprite": "images/pokemon-fixes/alolan-raichu.png",
+    "artwork": "images/pokemon-fixes/alolan-raichu.png",
+    "image_url": "images/pokemon-fixes/alolan-raichu.png",
+    "sprite_url": "images/pokemon-fixes/alolan-raichu.png"
   },
   {
     "rank": 180,
@@ -1905,9 +2010,16 @@
     "slug": "galarian-stunfisk",
     "tier": "Bronze",
     "points": 1,
-    "tier_icon": "images/tiers/BronzeButton.png",
+    "tier_icon": "images/pokemon-fixes/galarian-stunfisk.png",
     "tier_label": "Bronze 1",
-    "ranked_name": "Stunfisk-Galarian"
+    "ranked_name": "Stunfisk-Galarian",
+    "image": "images/pokemon-fixes/galarian-stunfisk.png",
+    "img": "images/pokemon-fixes/galarian-stunfisk.png",
+    "icon": "images/pokemon-fixes/galarian-stunfisk.png",
+    "sprite": "images/pokemon-fixes/galarian-stunfisk.png",
+    "artwork": "images/pokemon-fixes/galarian-stunfisk.png",
+    "image_url": "images/pokemon-fixes/galarian-stunfisk.png",
+    "sprite_url": "images/pokemon-fixes/galarian-stunfisk.png"
   },
   {
     "rank": 192,
