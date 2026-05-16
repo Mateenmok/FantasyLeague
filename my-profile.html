@@ -1042,6 +1042,32 @@
   }
 </style>
 
+
+<style id="disable-custom-profile-picture-style">
+  body.profile-theme-page input[type="file"][accept*="image" i],
+  body.profile-theme-page input[type="file"]#profileAvatarInput,
+  body.profile-theme-page input[type="file"]#profilePictureInput,
+  body.profile-theme-page input[type="file"]#profileImageInput,
+  body.profile-theme-page input[type="file"]#avatarUploadInput,
+  body.profile-theme-page input[type="file"]#avatarFileInput,
+  body.profile-theme-page input[type="file"]#customProfileIconInput,
+  body.profile-theme-page input[type="file"]#profileUploadInput,
+  body.profile-theme-page label[for="profileAvatarInput"],
+  body.profile-theme-page label[for="profilePictureInput"],
+  body.profile-theme-page label[for="profileImageInput"],
+  body.profile-theme-page label[for="avatarUploadInput"],
+  body.profile-theme-page label[for="avatarFileInput"],
+  body.profile-theme-page label[for="customProfileIconInput"],
+  body.profile-theme-page label[for="profileUploadInput"],
+  body.profile-theme-page .profile-avatar-upload,
+  body.profile-theme-page .profile-picture-upload,
+  body.profile-theme-page .profile-upload-control,
+  body.profile-theme-page .custom-profile-upload,
+  body.profile-theme-page .profile-custom-upload {
+    display: none !important;
+  }
+</style>
+
 </head>
 
 <body class="league-home-theme-page profile-theme-page">
@@ -1839,5 +1865,52 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
   <script src="js/pokemon-image-overrides.js?v=alt-form-fix1"></script>
+
+<script id="disable-custom-profile-picture-script">
+document.addEventListener("DOMContentLoaded", function () {
+  const profileWords = /(profile|avatar|picture|pfp|icon)/i;
+  const uploadWords = /(upload|change|choose|custom|own)/i;
+  const allowedTeamWords = /(team|logo)/i;
+
+  document.querySelectorAll('input[type="file"]').forEach(function (input) {
+    const context = [
+      input.id,
+      input.name,
+      input.className,
+      input.getAttribute("aria-label"),
+      input.getAttribute("title"),
+      input.closest("label")?.textContent,
+      document.querySelector(`label[for="${CSS.escape(input.id || "")}"]`)?.textContent,
+      input.parentElement?.textContent
+    ].join(" ");
+
+    if (profileWords.test(context) && !allowedTeamWords.test(context)) {
+      input.disabled = true;
+      input.style.display = "none";
+
+      const label = input.id ? document.querySelector(`label[for="${CSS.escape(input.id)}"]`) : null;
+      if (label) {
+        label.style.display = "none";
+      }
+
+      const wrapper = input.closest(".profile-avatar-upload, .profile-picture-upload, .profile-upload-control, .custom-profile-upload, .profile-custom-upload");
+      if (wrapper) {
+        wrapper.style.display = "none";
+      }
+    }
+  });
+
+  document.querySelectorAll("button, label, a").forEach(function (element) {
+    const text = element.textContent || "";
+
+    if (uploadWords.test(text) && profileWords.test(text) && !allowedTeamWords.test(text)) {
+      element.disabled = true;
+      element.style.display = "none";
+      element.setAttribute("aria-hidden", "true");
+    }
+  });
+});
+</script>
+
 </body>
 </html>
