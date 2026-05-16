@@ -267,10 +267,44 @@
       }
     ];
 
+    const LEAGUE_ACHIEVEMENTS = [
+      {
+        id: "achievement:welcome",
+        title: "Welcome",
+        description: "Join a league.",
+        icon: "images/achievement-icons/PikachuLibre.webp",
+        unlockKey: "join-1-league"
+      },
+      {
+        id: "achievement:all-i-do-is-win",
+        title: "All I do is win",
+        description: "Win a league.",
+        icon: "images/achievement-icons/Champion.webp",
+        unlockKey: "win-league"
+      },
+      {
+        id: "achievement:grinder",
+        title: "Grinder",
+        description: "Join 3 leagues.",
+        icon: "images/achievement-icons/Bisharp.jpg",
+        unlockKey: "join-3-leagues"
+      }
+    ];
+
+    const POKEMON_ACHIEVEMENTS = [
+      {
+        id: "achievement:meta-knight",
+        title: "Meta Knight",
+        description: "Draft Incineroar.",
+        icon: "images/achievement-icons/MetaKnight.avif",
+        unlockKey: "draft-incineroar"
+      }
+    ];
+
     const CATEGORY_LABELS = {
       founders: "Founders",
-      "2": "Category 2",
-      "3": "Category 3",
+      "2": "Leagues",
+      "3": "Pokémon",
       "4": "Category 4",
       "5": "Category 5",
       "6": "Category 6",
@@ -278,6 +312,14 @@
       "8": "Category 8",
       "9": "Category 9"
     };
+
+    const CATEGORY_ACHIEVEMENTS = {
+      founders: FOUNDERS_ACHIEVEMENTS,
+      "2": LEAGUE_ACHIEVEMENTS,
+      "3": POKEMON_ACHIEVEMENTS
+    };
+
+    let UNLOCKED_ACHIEVEMENT_IDS = new Set();
 
     const params = new URLSearchParams(window.location.search);
     const category = params.get("category") || "founders";
@@ -328,9 +370,72 @@
       return data?.session?.user || null;
     }
 
+    function getActiveAchievements() {
+      return CATEGORY_ACHIEVEMENTS[category] || [];
+    }
+
     function isUnlocked(achievement, user) {
+      if (achievement.assignedEmail) {
+        const email = String(user?.email || "").toLowerCase();
+        return email === achievement.assignedEmail.toLowerCase();
+      }
+
+      return UNLOCKED_ACHIEVEMENT_IDS.has(achievement.id);
+    }
+
+    async function loadDynamicAchievementUnlocks(user) {
+      UNLOCKED_ACHIEVEMENT_IDS = new Set();
+
+      const client = getSupabaseClient();
       const email = String(user?.email || "").toLowerCase();
-      return email === achievement.assignedEmail.toLowerCase();
+
+      if (!client || !email) {
+        return;
+      }
+
+      try {
+        const { data: teams, error } = await client
+          .from("league_teams")
+          .select("*")
+          .eq("manager_email", email);
+
+        if (error || !Array.isArray(teams)) {
+          return;
+        }
+
+        const leagueIds = new Set(
+          teams
+            .map((team) => team.league_id || team.leagueId || team.league)
+            .filter(Boolean)
+        );
+
+        if (leagueIds.size >= 1) {
+          UNLOCKED_ACHIEVEMENT_IDS.add("achievement:welcome");
+        }
+
+        if (leagueIds.size >= 3) {
+          UNLOCKED_ACHIEVEMENT_IDS.add("achievement:grinder");
+        }
+
+        const teamText = JSON.stringify(teams).toLowerCase();
+
+        if (
+          teamText.includes('"champion":true') ||
+          teamText.includes('"winner":true') ||
+          teamText.includes('"league_winner":true') ||
+          teamText.includes('"final_rank":1') ||
+          teamText.includes('"place":1') ||
+          teamText.includes('"rank":1')
+        ) {
+          UNLOCKED_ACHIEVEMENT_IDS.add("achievement:all-i-do-is-win");
+        }
+
+        if (teamText.includes("incineroar")) {
+          UNLOCKED_ACHIEVEMENT_IDS.add("achievement:meta-knight");
+        }
+      } catch (error) {
+        console.warn("Could not load dynamic achievement unlocks:", error);
+      }
     }
 
     function renderComingSoon() {
@@ -343,7 +448,7 @@
     }
 
     function renderFounders(user, selectedIconId) {
-      listEl.innerHTML = FOUNDERS_ACHIEVEMENTS.map((achievement) => {
+      listEl.innerHTML = getActiveAchievements().map((achievement) => {
         const unlocked = isUnlocked(achievement, user);
         const equipped = selectedIconId === achievement.id;
 
@@ -407,7 +512,7 @@
         return;
       }
 
-      const achievement = FOUNDERS_ACHIEVEMENTS.find((item) => item.id === achievementId);
+      const achievement = getActiveAchievements().find((item) => item.id === achievementId);
 
       if (!achievement || !isUnlocked(achievement, user)) {
         statusEl.textContent = "This achievement is locked.";
@@ -452,10 +557,12 @@
         return;
       }
 
-      if (category !== "founders") {
+      if (!CATEGORY_ACHIEVEMENTS[category]) {
         renderComingSoon();
         return;
       }
+
+      await loadDynamicAchievementUnlocks(user);
 
       const selectedIconId = await loadSelectedIcon(user);
       renderFounders(user, selectedIconId);
