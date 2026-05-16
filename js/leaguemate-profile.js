@@ -89,6 +89,69 @@ function getFixedPokemonImage(pokemon) {
 }
 
 
+
+const PROFILE_ICON_SOURCES = {
+  "achievement:pults": "images/achievement-icons/pults.webp",
+  "achievement:smear-squad": "images/achievement-icons/SmearSquad.webp",
+  "achievement:welcome": "images/achievement-icons/PikachuLibre.webp",
+  "achievement:all-i-do-is-win": "images/achievement-icons/Champion.webp",
+  "achievement:grinder": "images/achievement-icons/ZardArt.jpg",
+  "achievement:meta-knight": "images/achievement-icons/MetaKnight.avif"
+};
+
+function normalizeProfileIconId(value) {
+  const clean = String(value || "").trim();
+
+  if (/^ProfilePicture([1-9]|1[0-8])$/.test(clean)) {
+    return clean;
+  }
+
+  if (PROFILE_ICON_SOURCES[clean]) {
+    return clean;
+  }
+
+  return "";
+}
+
+function getProfileIconSource(selectedIconId) {
+  const normalized = normalizeProfileIconId(selectedIconId);
+
+  if (!normalized) {
+    return "";
+  }
+
+  if (PROFILE_ICON_SOURCES[normalized]) {
+    return PROFILE_ICON_SOURCES[normalized];
+  }
+
+  return `images/profile-icons/${normalized}.avif`;
+}
+
+function getLeaguemateAvatarSource(profile, team) {
+  const selectedIconSource = getProfileIconSource(profile?.selected_icon_id);
+
+  if (selectedIconSource) {
+    return selectedIconSource;
+  }
+
+  const fallbackSeed = String(
+    team?.manager_email ||
+    team?.team_name ||
+    team?.name ||
+    "pokeleague"
+  );
+
+  let hash = 0;
+
+  for (let i = 0; i < fallbackSeed.length; i += 1) {
+    hash = ((hash << 5) - hash) + fallbackSeed.charCodeAt(i);
+    hash |= 0;
+  }
+
+  const fallbackIndex = Math.abs(hash) % NPC_IMAGES.length;
+  return NPC_IMAGES[fallbackIndex] || NPC_IMAGES[0];
+}
+
 document.addEventListener("DOMContentLoaded", initLeaguemateProfile);
 
 const NPC_IMAGES = [
@@ -187,10 +250,7 @@ async function loadSharedProfile(email) {
 function renderProfile(team, profile) {
   const ownerName = profile?.username || team.owner_name || "Unassigned";
   const teamName = team.team_name || `Team ${team.team_number}`;
-  const avatarSrc =
-    profile?.avatar_data_url ||
-    profile?.default_npc_url ||
-    getStableNpcForTeam(team);
+  const avatarSrc = getLeaguemateAvatarSource(profile, team);
 
   document.getElementById("profileViewName").textContent = ownerName;
   document.getElementById("profileViewTeam").textContent = teamName;
