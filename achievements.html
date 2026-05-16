@@ -333,6 +333,110 @@
   }
 </style>
 
+
+<style id="direct-achievement-categories-style">
+  #directAchievementCategories {
+    width: min(1100px, calc(100% - 28px));
+    margin: 28px auto 60px;
+  }
+
+  #directAchievementCategories .achievement-category-block {
+    margin-top: 28px;
+  }
+
+  #directAchievementCategories .achievement-category-title {
+    margin: 0 0 14px;
+    font-family: "Oxanium", Arial, sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    color: #fff4b8;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, 0.45);
+  }
+
+  #directAchievementCategories .achievement-category-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  #directAchievementCategories .achievement-category-card {
+    min-height: 190px;
+    padding: 16px;
+    border-radius: 22px;
+    border: 2px solid rgba(255, 255, 255, 0.24);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(215, 222, 239, 0.90));
+    box-shadow:
+      0 12px 24px rgba(0, 0, 0, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.78);
+    color: #18233a;
+    text-align: center;
+    font-family: "Oxanium", Arial, sans-serif;
+  }
+
+  #directAchievementCategories .achievement-category-card.locked {
+    filter: grayscale(1);
+    opacity: 0.62;
+  }
+
+  #directAchievementCategories .achievement-category-icon {
+    width: 86px;
+    height: 86px;
+    margin: 0 auto 10px;
+    border-radius: 20px;
+    display: grid;
+    place-items: center;
+    background: rgba(255, 255, 255, 0.55);
+    box-shadow: inset 0 0 0 2px rgba(24, 35, 58, 0.10);
+    overflow: hidden;
+  }
+
+  #directAchievementCategories .achievement-category-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  #directAchievementCategories .achievement-category-card h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 900;
+    color: #17233a;
+  }
+
+  #directAchievementCategories .achievement-category-card p {
+    margin: 6px 0 0;
+    font-size: 13px;
+    font-weight: 800;
+    color: rgba(23, 35, 58, 0.72);
+    line-height: 1.3;
+  }
+
+  #directAchievementCategories .achievement-category-status {
+    margin-top: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 26px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    background: rgba(24, 35, 58, 0.10);
+    color: rgba(24, 35, 58, 0.72);
+  }
+
+  @media (max-width: 760px) {
+    #directAchievementCategories .achievement-category-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
 </head>
 
 <body class="achievements-page">
@@ -348,7 +452,58 @@
 
       <section id="achievementList" class="achievement-list"></section>
       <div id="achievementStatus">Loading achievements...</div>
-    </main>
+    
+<section id="directAchievementCategories">
+  <section class="achievement-category-block">
+    <h2 class="achievement-category-title">Leagues</h2>
+
+    <div class="achievement-category-grid">
+      <article class="achievement-category-card locked">
+        <div class="achievement-category-icon">
+          <img src="images/achievement-icons/PikachuLibre.webp" alt="">
+        </div>
+        <h3>Welcome</h3>
+        <p>Join a league.</p>
+        <div class="achievement-category-status">Locked</div>
+      </article>
+
+      <article class="achievement-category-card locked">
+        <div class="achievement-category-icon">
+          <img src="images/achievement-icons/Champion.webp" alt="">
+        </div>
+        <h3>All I do is win</h3>
+        <p>Win a league.</p>
+        <div class="achievement-category-status">Locked</div>
+      </article>
+
+      <article class="achievement-category-card locked">
+        <div class="achievement-category-icon">
+          <img src="images/achievement-icons/Bisharp.jpg" alt="">
+        </div>
+        <h3>Grinder</h3>
+        <p>Join 3 leagues.</p>
+        <div class="achievement-category-status">Locked</div>
+      </article>
+    </div>
+  </section>
+
+  <section class="achievement-category-block">
+    <h2 class="achievement-category-title">Pokémon</h2>
+
+    <div class="achievement-category-grid">
+      <article class="achievement-category-card locked">
+        <div class="achievement-category-icon">
+          <img src="images/achievement-icons/MetaKnight.avif" alt="">
+        </div>
+        <h3>Meta Knight</h3>
+        <p>Draft Incineroar.</p>
+        <div class="achievement-category-status">Locked</div>
+      </article>
+    </div>
+  </section>
+</section>
+
+</main>
   </div>
 
   <script src="js/theme-settings.js?v=global-theme1"></script>
