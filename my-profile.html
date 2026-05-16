@@ -1068,6 +1068,41 @@
   }
 </style>
 
+
+<style id="profile-icon-save-button-style">
+  .profile-icon-save-button {
+    width: 100%;
+    min-height: 42px;
+    margin-top: 12px;
+    border: 0;
+    border-radius: 999px;
+    background: linear-gradient(to bottom, #fff4a8, #e6bf48);
+    color: #17233a;
+    font-family: "Oxanium", Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 0.8px;
+    cursor: pointer;
+    box-shadow:
+      0 9px 18px rgba(0, 0, 0, 0.20),
+      inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  }
+
+  .profile-icon-save-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.52;
+    background: linear-gradient(to bottom, #d7d9e5, #aeb4c3);
+    color: rgba(20, 27, 46, 0.72);
+  }
+
+  .profile-icon-choice-test.pending-save {
+    outline: 3px solid rgba(255, 216, 90, 0.95);
+    box-shadow:
+      0 0 0 3px rgba(255, 255, 255, 0.55),
+      0 0 18px rgba(255, 216, 90, 0.60);
+  }
+</style>
+
 </head>
 
 <body class="league-home-theme-page profile-theme-page">
@@ -1910,6 +1945,256 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+</script>
+
+
+<script id="profile-icon-save-button-script">
+(function () {
+  let pendingIconId = "";
+  let savedIconId = "";
+
+  function getSupabaseClient() {
+    if (window.supabaseClient) return window.supabaseClient;
+
+    try {
+      if (typeof supabaseClient !== "undefined") return supabaseClient;
+    } catch (error) {}
+
+    return null;
+  }
+
+  function getUsernameFromUser(user) {
+    const meta = user?.user_metadata || {};
+
+    return (
+      meta.username ||
+      meta.display_name ||
+      meta.name ||
+      meta.full_name ||
+      (user?.email ? user.email.split("@")[0] : "Trainer")
+    );
+  }
+
+  function normalizeIconId(value) {
+    const clean = String(value || "").trim();
+
+    if (/^ProfilePicture([1-9]|1[0-8])$/.test(clean)) {
+      return clean;
+    }
+
+    return "";
+  }
+
+  function getIconIdFromButton(button) {
+    const img = button?.querySelector("img");
+    const src = img ? img.getAttribute("src") || "" : "";
+    const match = src.match(/ProfilePicture([1-9]|1[0-8])/);
+
+    if (!match) {
+      return "";
+    }
+
+    return `ProfilePicture${match[1]}`;
+  }
+
+  function getIconSrc(iconId) {
+    return `images/profile-icons/${iconId}.avif`;
+  }
+
+  function getNote() {
+    return (
+      document.querySelector(".profile-icon-note-test") ||
+      document.querySelector("#profileIconStatus") ||
+      document.querySelector("#profileIconNote")
+    );
+  }
+
+  function getAvatarImage() {
+    const profileIconImages = Array.from(document.querySelectorAll('img[src*="images/profile-icons/"]'));
+
+    return (
+      profileIconImages.find((img) => !img.closest(".profile-icon-choice-test")) ||
+      document.querySelector("#profileAvatarImg") ||
+      document.querySelector("#profileAvatarImage") ||
+      document.querySelector("#profileAvatar") ||
+      document.querySelector(".profile-avatar img") ||
+      document.querySelector(".profile-main-avatar img") ||
+      document.querySelector(".profile-picture img")
+    );
+  }
+
+  function getSaveButton() {
+    return document.getElementById("saveProfileIconButton");
+  }
+
+  function updatePendingUi() {
+    document.querySelectorAll(".profile-icon-choice-test").forEach((button) => {
+      const iconId = getIconIdFromButton(button);
+      button.classList.toggle("pending-save", Boolean(pendingIconId && iconId === pendingIconId));
+    });
+
+    const saveButton = getSaveButton();
+
+    if (saveButton) {
+      saveButton.disabled = !pendingIconId || pendingIconId === savedIconId;
+    }
+  }
+
+  function previewIcon(iconId) {
+    const normalized = normalizeIconId(iconId);
+
+    if (!normalized) {
+      return;
+    }
+
+    pendingIconId = normalized;
+
+    const avatarImg = getAvatarImage();
+
+    if (avatarImg) {
+      avatarImg.src = getIconSrc(normalized);
+    }
+
+    const note = getNote();
+
+    if (note) {
+      note.textContent = `${normalized.replace("ProfilePicture", "Icon ")} selected. Click Save Icon to keep it.`;
+    }
+
+    updatePendingUi();
+  }
+
+  async function saveIcon() {
+    const normalized = normalizeIconId(pendingIconId);
+    const note = getNote();
+
+    if (!normalized) {
+      if (note) note.textContent = "Choose an icon first.";
+      return;
+    }
+
+    const client = getSupabaseClient();
+
+    if (!client?.auth?.getSession) {
+      if (note) note.textContent = "Could not save icon. Supabase is not loaded.";
+      return;
+    }
+
+    const saveButton = getSaveButton();
+
+    if (saveButton) {
+      saveButton.disabled = true;
+      saveButton.textContent = "Saving...";
+    }
+
+    try {
+      const { data } = await client.auth.getSession();
+      const user = data?.session?.user;
+
+      if (!user?.id) {
+        if (note) note.textContent = "Sign in before saving an icon.";
+        return;
+      }
+
+      const { error } = await client
+        .from("user_profiles")
+        .upsert({
+          user_id: user.id,
+          email: user.email ? user.email.toLowerCase() : null,
+          username: getUsernameFromUser(user),
+          selected_icon_id: normalized,
+          avatar_data_url: null,
+          default_npc_url: null,
+          updated_at: new Date().toISOString()
+        }, {
+          onConflict: "user_id"
+        });
+
+      if (error) {
+        console.warn("Could not save profile icon:", error);
+        if (note) note.textContent = "Icon saved locally, but Supabase did not save it.";
+        return;
+      }
+
+      localStorage.setItem(`pokeleague_selected_profile_icon_${user.id}`, normalized);
+
+      savedIconId = normalized;
+
+      if (note) {
+        note.textContent = `${normalized.replace("ProfilePicture", "Icon ")} saved.`;
+      }
+    } catch (error) {
+      console.warn("Could not save profile icon:", error);
+
+      if (note) {
+        note.textContent = "Could not save icon.";
+      }
+    } finally {
+      if (saveButton) {
+        saveButton.textContent = "Save Icon";
+      }
+
+      updatePendingUi();
+    }
+  }
+
+  document.addEventListener("click", function (event) {
+    const button = event.target.closest(".profile-icon-choice-test");
+
+    if (!button) {
+      return;
+    }
+
+    const iconId = getIconIdFromButton(button);
+
+    if (!iconId) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+
+    previewIcon(iconId);
+  }, true);
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const firstIconButton = document.querySelector(".profile-icon-choice-test");
+
+    if (!firstIconButton) {
+      return;
+    }
+
+    const existingButton = getSaveButton();
+
+    if (!existingButton) {
+      const saveButton = document.createElement("button");
+      saveButton.id = "saveProfileIconButton";
+      saveButton.className = "profile-icon-save-button";
+      saveButton.type = "button";
+      saveButton.textContent = "Save Icon";
+      saveButton.disabled = true;
+
+      const grid = firstIconButton.parentElement;
+      grid.insertAdjacentElement("afterend", saveButton);
+
+      saveButton.addEventListener("click", saveIcon);
+    }
+
+    const avatarImg = getAvatarImage();
+
+    if (avatarImg) {
+      const match = (avatarImg.getAttribute("src") || "").match(/ProfilePicture([1-9]|1[0-8])/);
+
+      if (match) {
+        savedIconId = `ProfilePicture${match[1]}`;
+        pendingIconId = savedIconId;
+      }
+    }
+
+    updatePendingUi();
+  });
+})();
 </script>
 
 </body>
