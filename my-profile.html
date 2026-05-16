@@ -1103,7 +1103,7 @@
   }
 
   .profile-icon-choice-test.saved-icon {
-    outline: 2px solid rgba(28, 45, 76, 0.55);
+    outline: 2px solid rgba(28, 45, 76, 0.55) !important;
   }
 </style>
 
@@ -1954,9 +1954,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 <script id="profile-icon-save-button-script">
 (function () {
+  const ICON_COUNT = 18;
   let pendingIconId = "";
   let savedIconId = "";
-  let installed = false;
 
   function getSupabaseClient() {
     if (window.supabaseClient) return window.supabaseClient;
@@ -1994,42 +1994,6 @@ document.addEventListener("DOMContentLoaded", function () {
     return `images/profile-icons/${iconId}.avif`;
   }
 
-  function getIconNumberFromButton(button) {
-    const explicit = button?.dataset?.profileIconId || "";
-    const explicitMatch = explicit.match(/^ProfilePicture([1-9]|1[0-8])$/);
-
-    if (explicitMatch) {
-      return explicitMatch[1];
-    }
-
-    const img = button?.querySelector("img");
-    const src = img ? img.getAttribute("src") || img.src || "" : "";
-    const srcMatch = src.match(/ProfilePicture([1-9]|1[0-8])/);
-
-    if (srcMatch) {
-      return srcMatch[1];
-    }
-
-    const buttons = Array.from(document.querySelectorAll(".profile-icon-choice-test"));
-    const index = buttons.indexOf(button);
-
-    if (index >= 0 && index < 18) {
-      return String(index + 1);
-    }
-
-    return "";
-  }
-
-  function getIconIdFromButton(button) {
-    const number = getIconNumberFromButton(button);
-
-    if (!number) {
-      return "";
-    }
-
-    return `ProfilePicture${number}`;
-  }
-
   function getNote() {
     return (
       document.querySelector(".profile-icon-note-test") ||
@@ -2039,6 +2003,23 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function getAvatarImage() {
+    const preferredSelectors = [
+      "#profileAvatarImg",
+      "#profileAvatarImage",
+      "#profileAvatar",
+      ".profile-main-avatar img",
+      ".profile-avatar img",
+      ".profile-picture img"
+    ];
+
+    for (const selector of preferredSelectors) {
+      const img = document.querySelector(selector);
+
+      if (img && !img.closest(".profile-icon-choice-test")) {
+        return img;
+      }
+    }
+
     const candidates = Array.from(document.querySelectorAll("img"))
       .filter((img) => !img.closest(".profile-icon-choice-test"))
       .filter((img) => !img.closest(".favorite-grid"))
@@ -2065,9 +2046,9 @@ document.addEventListener("DOMContentLoaded", function () {
     return document.getElementById("saveProfileIconButton");
   }
 
-  function updatePendingUi() {
+  function updatePickerUi() {
     document.querySelectorAll(".profile-icon-choice-test").forEach((button) => {
-      const iconId = getIconIdFromButton(button);
+      const iconId = button.dataset.profileIconId || "";
 
       button.classList.toggle("pending-save", Boolean(pendingIconId && iconId === pendingIconId));
       button.classList.toggle("saved-icon", Boolean(savedIconId && iconId === savedIconId));
@@ -2102,7 +2083,7 @@ document.addEventListener("DOMContentLoaded", function () {
       note.textContent = `${normalized.replace("ProfilePicture", "Icon ")} selected. Click Save Icon to keep it.`;
     }
 
-    updatePendingUi();
+    updatePickerUi();
   }
 
   async function saveIcon() {
@@ -2176,38 +2157,55 @@ document.addEventListener("DOMContentLoaded", function () {
         saveButton.textContent = "Save Icon";
       }
 
-      updatePendingUi();
+      updatePickerUi();
     }
   }
 
-  function installProfileIconSaveMode() {
-    if (installed) {
+  function rebuildProfileIconPicker() {
+    const firstButton = document.querySelector(".profile-icon-choice-test");
+
+    if (!firstButton) {
       return;
     }
 
-    const buttons = Array.from(document.querySelectorAll(".profile-icon-choice-test"));
+    const grid = firstButton.parentElement;
 
-    if (!buttons.length) {
+    if (!grid) {
       return;
     }
 
-    installed = true;
+    const existingAvatar = getAvatarImage();
+    const existingSrc = existingAvatar ? existingAvatar.getAttribute("src") || "" : "";
+    const existingMatch = existingSrc.match(/ProfilePicture([1-9]|1[0-8])/);
 
-    buttons.forEach((oldButton, index) => {
-      const clone = oldButton.cloneNode(true);
-      const iconId = getIconIdFromButton(oldButton) || `ProfilePicture${index + 1}`;
+    if (existingMatch && !savedIconId) {
+      savedIconId = `ProfilePicture${existingMatch[1]}`;
+      pendingIconId = savedIconId;
+    }
 
-      clone.dataset.profileIconId = iconId;
-      oldButton.replaceWith(clone);
+    grid.innerHTML = "";
 
-      clone.addEventListener("click", function (event) {
+    for (let i = 1; i <= ICON_COUNT; i += 1) {
+      const iconId = `ProfilePicture${i}`;
+      const button = document.createElement("button");
+
+      button.className = "profile-icon-choice-test";
+      button.type = "button";
+      button.dataset.profileIconId = iconId;
+      button.setAttribute("aria-label", `Profile icon ${i}`);
+
+      button.innerHTML = `<img src="images/profile-icons/${iconId}.avif" alt="Profile icon ${i}">`;
+
+      button.addEventListener("click", function (event) {
         event.preventDefault();
         event.stopPropagation();
         event.stopImmediatePropagation();
 
         previewIcon(iconId);
       });
-    });
+
+      grid.appendChild(button);
+    }
 
     let saveButton = getSaveButton();
 
@@ -2219,15 +2217,13 @@ document.addEventListener("DOMContentLoaded", function () {
       saveButton.textContent = "Save Icon";
       saveButton.disabled = true;
 
-      const refreshedButtons = Array.from(document.querySelectorAll(".profile-icon-choice-test"));
-      const grid = refreshedButtons[0]?.parentElement;
-
-      if (grid) {
-        grid.insertAdjacentElement("afterend", saveButton);
-      }
+      grid.insertAdjacentElement("afterend", saveButton);
     }
 
-    saveButton.addEventListener("click", saveIcon);
+    saveButton.onclick = function (event) {
+      event.preventDefault();
+      saveIcon();
+    };
 
     const note = getNote();
 
@@ -2235,17 +2231,17 @@ document.addEventListener("DOMContentLoaded", function () {
       note.textContent = note.textContent.replace(/\s*Leaguemate profile support is next\.?/i, "");
     }
 
-    updatePendingUi();
+    updatePickerUi();
   }
 
-  document.addEventListener("click", function (event) {
+  window.addEventListener("click", function (event) {
     const button = event.target.closest(".profile-icon-choice-test");
 
     if (!button) {
       return;
     }
 
-    const iconId = getIconIdFromButton(button);
+    const iconId = normalizeIconId(button.dataset.profileIconId || "");
 
     if (!iconId) {
       return;
@@ -2259,9 +2255,9 @@ document.addEventListener("DOMContentLoaded", function () {
   }, true);
 
   document.addEventListener("DOMContentLoaded", function () {
-    installProfileIconSaveMode();
-    setTimeout(installProfileIconSaveMode, 100);
-    setTimeout(installProfileIconSaveMode, 500);
+    setTimeout(rebuildProfileIconPicker, 50);
+    setTimeout(rebuildProfileIconPicker, 300);
+    setTimeout(rebuildProfileIconPicker, 900);
   });
 })();
 </script>
