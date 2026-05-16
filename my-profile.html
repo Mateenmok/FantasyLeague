@@ -624,6 +624,424 @@
   }
 </style>
 
+
+<style id="profile-icon-grid-visual-test">
+  body.league-home-theme-page.profile-theme-page .profile-icon-picker-test {
+    width: 100%;
+    margin-top: 16px;
+    padding: 14px;
+    border-radius: 20px;
+    background: rgba(216, 219, 235, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.54);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.58),
+      0 10px 20px rgba(20, 24, 38, 0.14);
+  }
+
+  body.league-home-theme-page.profile-theme-page .profile-icon-picker-title {
+    margin: 0 0 10px;
+    color: #16243a;
+    font-family: "Oxanium", Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  body.league-home-theme-page.profile-theme-page .profile-icon-grid-test {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  body.league-home-theme-page.profile-theme-page .profile-icon-choice-test {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    padding: 4px;
+    border: 2px solid rgba(24, 36, 58, 0.24);
+    border-radius: 16px;
+    background: linear-gradient(145deg, #eef0f8 0%, #d8dbeb 52%, #bcc3d8 100%);
+    cursor: pointer;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.72),
+      0 6px 12px rgba(16, 24, 40, 0.14);
+  }
+
+  body.league-home-theme-page.profile-theme-page .profile-icon-choice-test.active {
+    border-color: #ffd85a;
+    box-shadow:
+      0 0 0 3px rgba(255, 216, 90, 0.34),
+      0 0 18px rgba(255, 216, 90, 0.30),
+      inset 0 1px 0 rgba(255, 255, 255, 0.78);
+  }
+
+  body.league-home-theme-page.profile-theme-page .profile-icon-choice-test img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    object-fit: cover;
+  }
+
+  body.league-home-theme-page.profile-theme-page .profile-icon-note-test {
+    margin: 10px 0 0;
+    color: rgba(22, 36, 58, 0.76);
+    font-family: "Oxanium", Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1.35;
+    text-align: center;
+  }
+
+  @media (max-width: 760px) {
+    body.league-home-theme-page.profile-theme-page .profile-icon-grid-test {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>
+
+
+<style id="profile-achievements-panel-style">
+  body.league-home-theme-page.profile-theme-page .profile-right-column {
+    display: flex;
+    flex-direction: column;
+  }
+
+  body.league-home-theme-page.profile-theme-page .profile-achievements-panel {
+    flex: 1;
+    min-height: 245px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  body.league-home-theme-page.profile-theme-page .profile-achievements-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  body.league-home-theme-page.profile-theme-page .profile-achievements-help {
+    margin: 4px 0 0;
+    color: rgba(22, 36, 58, 0.78);
+    font-family: "Oxanium", Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1.35;
+  }
+
+  body.league-home-theme-page.profile-theme-page .achievement-category-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  body.league-home-theme-page.profile-theme-page .achievement-category-square {
+    min-height: 64px;
+    border-radius: 18px;
+    border: 2px solid rgba(24, 36, 58, 0.24);
+    background: linear-gradient(145deg, #eef0f8 0%, #d8dbeb 50%, #bcc3d8 100%);
+    color: #16243a;
+    text-decoration: none;
+    font-family: "Oxanium", Arial, sans-serif;
+    font-weight: 900;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.72),
+      0 8px 14px rgba(16, 24, 40, 0.14);
+    transition:
+      transform 140ms ease,
+      border-color 140ms ease,
+      box-shadow 140ms ease,
+      filter 140ms ease;
+  }
+
+  body.league-home-theme-page.profile-theme-page .achievement-category-square:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 217, 88, 0.9);
+    filter: brightness(1.04);
+    box-shadow:
+      0 0 0 3px rgba(255, 216, 90, 0.18),
+      0 10px 18px rgba(16, 24, 40, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.78);
+  }
+
+  body.league-home-theme-page.profile-theme-page .achievement-category-square.active {
+    border-color: #ffd85a;
+    background: linear-gradient(145deg, #fff4b0 0%, #e7c553 58%, #b98b24 100%);
+  }
+
+  body.league-home-theme-page.profile-theme-page .achievement-category-square span {
+    font-size: 28px;
+    line-height: 1;
+    letter-spacing: 1px;
+  }
+
+  body.league-home-theme-page.profile-theme-page .achievement-category-square small {
+    font-size: 9px;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+    opacity: 0.82;
+  }
+</style>
+
+
+<style id="favorite-games-style">
+  body.league-home-theme-page.profile-theme-page .favorite-games-panel {
+    grid-column: 1 / -1;
+    margin-top: 18px;
+  }
+
+  body.league-home-theme-page.profile-theme-page .favorite-games-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 18px;
+    margin-bottom: 14px;
+  }
+
+  body.league-home-theme-page.profile-theme-page .favorite-games-help {
+    margin: 0;
+    color: rgba(20, 27, 46, 0.78);
+    font-family: "Oxanium", Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 900;
+    line-height: 1.35;
+    text-align: right;
+  }
+
+  body.league-home-theme-page.profile-theme-page .favorite-game-slots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  body.league-home-theme-page.profile-theme-page .favorite-game-slot {
+    min-height: 154px;
+    padding: 10px;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.62);
+    background: linear-gradient(145deg, #eef0f8 0%, #d8dbeb 52%, #bcc3d8 100%);
+    color: #141b2e;
+    font-family: "Oxanium", Arial, sans-serif;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.72),
+      0 8px 16px rgba(16, 24, 40, 0.13);
+  }
+
+  body.league-home-theme-page.profile-theme-page .favorite-game-slot-img {
+    display: none;
+    width: 100%;
+    height: 104px;
+    object-fit: cover;
+    border-radius: 14px;
+    margin-bottom: 8px;
+    box-shadow: 0 7px 14px rgba(0, 0, 0, 0.18);
+  }
+
+  body.league-home-theme-page.profile-theme-page .favorite-game-slot.filled .favorite-game-slot-img {
+    display: block;
+  }
+
+  body.league-home-theme-page.profile-theme-page .favorite-game-slot-empty {
+    width: 86px;
+    height: 86px;
+    margin: 4px auto 12px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    background: rgba(255, 255, 255, 0.28);
+    border: 2px solid rgba(255, 255, 255, 0.62);
+    color: rgba(20, 27, 46, 0.42);
+    font-size: 34px;
+    font-weight: 900;
+  }
+
+  body.league-home-theme-page.profile-theme-page .favorite-game-slot.filled .favorite-game-slot-empty {
+    display: none;
+  }
+
+  body.league-home-theme-page.profile-theme-page .favorite-game-slot strong {
+    display: block;
+    font-size: 13px;
+    letter-spacing: 0.3px;
+  }
+
+  body.league-home-theme-page.profile-theme-page .pokemon-game-library-wrap {
+    padding: 12px;
+    border-radius: 20px;
+    background: rgba(216, 219, 235, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.54);
+  }
+
+  body.league-home-theme-page.profile-theme-page .pokemon-game-library-title {
+    margin: 0 0 10px;
+    color: #16243a;
+    font-family: "Oxanium", Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  body.league-home-theme-page.profile-theme-page .pokemon-game-library {
+    max-height: 330px;
+    overflow-y: auto;
+    padding-right: 6px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  body.league-home-theme-page.profile-theme-page .pokemon-game-button {
+    padding: 7px;
+    border-radius: 15px;
+    border: 2px solid rgba(24, 36, 58, 0.20);
+    background: linear-gradient(145deg, #eef0f8 0%, #d8dbeb 52%, #bcc3d8 100%);
+    color: #141b2e;
+    font-family: "Oxanium", Arial, sans-serif;
+    font-size: 10px;
+    font-weight: 900;
+    line-height: 1.15;
+    cursor: pointer;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.72),
+      0 6px 12px rgba(16, 24, 40, 0.13);
+    transition:
+      transform 140ms ease,
+      border-color 140ms ease,
+      box-shadow 140ms ease,
+      filter 140ms ease;
+  }
+
+  body.league-home-theme-page.profile-theme-page .pokemon-game-button:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 217, 88, 0.9);
+    filter: brightness(1.04);
+  }
+
+  body.league-home-theme-page.profile-theme-page .pokemon-game-button.selected {
+    border-color: #ffd85a;
+    box-shadow:
+      0 0 0 3px rgba(255, 216, 90, 0.26),
+      0 0 18px rgba(255, 216, 90, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.78);
+  }
+
+  body.league-home-theme-page.profile-theme-page .pokemon-game-button img {
+    width: 100%;
+    aspect-ratio: 1.45 / 1;
+    object-fit: cover;
+    border-radius: 11px;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  body.league-home-theme-page.profile-theme-page .favorite-game-status {
+    min-height: 18px;
+    margin-top: 10px;
+    color: rgba(20, 27, 46, 0.72);
+    font-family: "Oxanium", Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 900;
+  }
+
+  @media (max-width: 820px) {
+    body.league-home-theme-page.profile-theme-page .favorite-game-slots {
+      grid-template-columns: 1fr;
+    }
+
+    body.league-home-theme-page.profile-theme-page .pokemon-game-library {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    body.league-home-theme-page.profile-theme-page .favorite-games-header-row {
+      display: block;
+    }
+
+    body.league-home-theme-page.profile-theme-page .favorite-games-help {
+      margin-top: 6px;
+      text-align: left;
+    }
+  }
+</style>
+
+
+<style id="favorite-games-square-fit">
+  body.league-home-theme-page.profile-theme-page .favorite-game-slots {
+    align-items: stretch;
+  }
+
+  body.league-home-theme-page.profile-theme-page .favorite-game-slot {
+    aspect-ratio: 1 / 1;
+    min-height: 0 !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  body.league-home-theme-page.profile-theme-page .favorite-game-slot-img {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1;
+    object-fit: contain !important;
+    object-position: center;
+    padding: 6px;
+    background: rgba(255, 255, 255, 0.34);
+  }
+
+  body.league-home-theme-page.profile-theme-page .favorite-game-slot strong {
+    min-height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  body.league-home-theme-page.profile-theme-page .pokemon-game-library {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  body.league-home-theme-page.profile-theme-page .pokemon-game-button {
+    aspect-ratio: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 8px;
+  }
+
+  body.league-home-theme-page.profile-theme-page .pokemon-game-button img {
+    width: 100% !important;
+    height: auto !important;
+    flex: 1;
+    min-height: 0;
+    aspect-ratio: 1 / 1;
+    object-fit: contain !important;
+    object-position: center;
+    padding: 5px;
+    margin-bottom: 6px;
+    background: rgba(255, 255, 255, 0.34);
+    border-radius: 12px;
+  }
+
+  body.league-home-theme-page.profile-theme-page .pokemon-game-button span {
+    min-height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+
 </head>
 
 <body class="league-home-theme-page profile-theme-page">
@@ -650,6 +1068,32 @@
             <input id="avatarUpload" type="file" accept="image/*">
           </label>
 
+          <div id="profileIconPickerTest" class="profile-icon-picker-test">
+            <p class="profile-icon-picker-title">Profile Icons</p>
+            <div class="profile-icon-grid-test">
+              <button class="profile-icon-choice-test" type="button"><img src="images/profile-icons/ProfilePicture1.avif" alt="Profile icon 1"></button>
+<button class="profile-icon-choice-test" type="button"><img src="images/profile-icons/ProfilePicture2.avif" alt="Profile icon 2"></button>
+<button class="profile-icon-choice-test" type="button"><img src="images/profile-icons/ProfilePicture3.avif" alt="Profile icon 3"></button>
+<button class="profile-icon-choice-test" type="button"><img src="images/profile-icons/ProfilePicture4.avif" alt="Profile icon 4"></button>
+<button class="profile-icon-choice-test" type="button"><img src="images/profile-icons/ProfilePicture5.avif" alt="Profile icon 5"></button>
+<button class="profile-icon-choice-test" type="button"><img src="images/profile-icons/ProfilePicture6.avif" alt="Profile icon 6"></button>
+<button class="profile-icon-choice-test" type="button"><img src="images/profile-icons/ProfilePicture7.avif" alt="Profile icon 7"></button>
+<button class="profile-icon-choice-test" type="button"><img src="images/profile-icons/ProfilePicture8.avif" alt="Profile icon 8"></button>
+<button class="profile-icon-choice-test" type="button"><img src="images/profile-icons/ProfilePicture9.avif" alt="Profile icon 9"></button>
+<button class="profile-icon-choice-test" type="button"><img src="images/profile-icons/ProfilePicture10.avif" alt="Profile icon 10"></button>
+<button class="profile-icon-choice-test" type="button"><img src="images/profile-icons/ProfilePicture11.avif" alt="Profile icon 11"></button>
+<button class="profile-icon-choice-test" type="button"><img src="images/profile-icons/ProfilePicture12.avif" alt="Profile icon 12"></button>
+<button class="profile-icon-choice-test" type="button"><img src="images/profile-icons/ProfilePicture13.avif" alt="Profile icon 13"></button>
+<button class="profile-icon-choice-test" type="button"><img src="images/profile-icons/ProfilePicture14.avif" alt="Profile icon 14"></button>
+<button class="profile-icon-choice-test" type="button"><img src="images/profile-icons/ProfilePicture15.avif" alt="Profile icon 15"></button>
+<button class="profile-icon-choice-test" type="button"><img src="images/profile-icons/ProfilePicture16.avif" alt="Profile icon 16"></button>
+<button class="profile-icon-choice-test" type="button"><img src="images/profile-icons/ProfilePicture17.avif" alt="Profile icon 17"></button>
+<button class="profile-icon-choice-test" type="button"><img src="images/profile-icons/ProfilePicture18.avif" alt="Profile icon 18"></button>
+            </div>
+            <p class="profile-icon-note-test">Starter icons available now. More can be unlocked later through achievements.</p>
+          </div>
+
+
           <div id="profileStatus" class="profile-status"></div>
         </aside>
 
@@ -675,6 +1119,55 @@
               </div>
             </div>
           </div>
+
+          <div id="profileAchievementsPanel" class="profile-card-panel profile-achievements-panel">
+            <div class="profile-achievements-header">
+              <div>
+                <p class="profile-section-label">Achievements</p>
+                <p class="profile-achievements-help">Unlock special profile icons through league milestones.</p>
+              </div>
+            </div>
+
+            <div class="achievement-category-grid">
+              <a class="achievement-category-square active" href="achievements.html?category=founders">
+                <span>1</span>
+                <small>Founders</small>
+              </a>
+              <a class="achievement-category-square" href="achievements.html?category=2">
+                <span>2</span>
+                <small>Coming Soon</small>
+              </a>
+              <a class="achievement-category-square" href="achievements.html?category=3">
+                <span>3</span>
+                <small>Coming Soon</small>
+              </a>
+              <a class="achievement-category-square" href="achievements.html?category=4">
+                <span>4</span>
+                <small>Coming Soon</small>
+              </a>
+              <a class="achievement-category-square" href="achievements.html?category=5">
+                <span>5</span>
+                <small>Coming Soon</small>
+              </a>
+              <a class="achievement-category-square" href="achievements.html?category=6">
+                <span>6</span>
+                <small>Coming Soon</small>
+              </a>
+              <a class="achievement-category-square" href="achievements.html?category=7">
+                <span>7</span>
+                <small>Coming Soon</small>
+              </a>
+              <a class="achievement-category-square" href="achievements.html?category=8">
+                <span>8</span>
+                <small>Coming Soon</small>
+              </a>
+              <a class="achievement-category-square" href="achievements.html?category=9">
+                <span>9</span>
+                <small>Coming Soon</small>
+              </a>
+            </div>
+          </div>
+
         </section>
 
         <section class="profile-card-panel favorite-panel">
@@ -717,6 +1210,43 @@
           <datalist id="pokemonOptions"></datalist>
           <div id="favoritePokemonStatus">Loading Pokémon database...</div>
         </section>
+
+        <section id="favoriteGamesPanel" class="profile-card-panel favorite-games-panel">
+          <div class="favorite-games-header-row">
+            <div>
+              <p class="profile-section-label">Favorite Pokémon Games</p>
+            </div>
+            <p class="favorite-games-help">Choose up to three favorite games.</p>
+          </div>
+
+          <div id="favoriteGameSlots" class="favorite-game-slots">
+            <button class="favorite-game-slot" type="button" data-game-slot="0">
+              <img class="favorite-game-slot-img" alt="">
+              <span class="favorite-game-slot-empty">+</span>
+              <strong>Favorite Game 1</strong>
+            </button>
+
+            <button class="favorite-game-slot" type="button" data-game-slot="1">
+              <img class="favorite-game-slot-img" alt="">
+              <span class="favorite-game-slot-empty">+</span>
+              <strong>Favorite Game 2</strong>
+            </button>
+
+            <button class="favorite-game-slot" type="button" data-game-slot="2">
+              <img class="favorite-game-slot-img" alt="">
+              <span class="favorite-game-slot-empty">+</span>
+              <strong>Favorite Game 3</strong>
+            </button>
+          </div>
+
+          <div class="pokemon-game-library-wrap">
+            <p class="pokemon-game-library-title">Game Library</p>
+            <div id="pokemonGameLibrary" class="pokemon-game-library"></div>
+          </div>
+
+          <div id="favoriteGameStatus" class="favorite-game-status">Click a game to add it to your favorites.</div>
+        </section>
+
       </section>
     </section>
   </div>
@@ -724,6 +1254,472 @@
   <script src="js/theme-settings.js?v=global-theme1"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
-  <script src="js/my-profile.js?v=shared-profiles1"></script>
+  <script src="js/my-profile.js?v=hard-profile-restore1"></script>
+
+
+<script id="profile-icon-supabase-save">
+document.addEventListener("DOMContentLoaded", async function () {
+  const avatarImg = document.getElementById("profileAvatar");
+  const avatarFallback = document.getElementById("avatarFallback");
+  const buttons = Array.from(document.querySelectorAll(".profile-icon-choice-test"));
+  const note = document.querySelector(".profile-icon-note-test");
+
+  function getSupabaseClient() {
+    if (window.supabaseClient) {
+      return window.supabaseClient;
+    }
+
+    try {
+      if (typeof supabaseClient !== "undefined") {
+        return supabaseClient;
+      }
+    } catch (error) {
+      return null;
+    }
+
+    return null;
+  }
+
+  function getIconSrc(iconId) {
+    return `images/profile-icons/${iconId}.avif`;
+  }
+
+  function normalizeIconId(iconId) {
+    const clean = String(iconId || "").trim();
+
+    if (/^ProfilePicture([1-9]|1[0-8])$/.test(clean)) {
+      return clean;
+    }
+
+    return "";
+  }
+
+  function getIconIdFromButton(button) {
+    const img = button.querySelector("img");
+    const src = img ? img.getAttribute("src") || "" : "";
+    const match = src.match(/ProfilePicture\d+/);
+    return match ? normalizeIconId(match[0]) : "";
+  }
+
+  function getUsernameFromUser(user) {
+    const meta = user?.user_metadata || {};
+    return (
+      meta.username ||
+      meta.display_name ||
+      meta.name ||
+      meta.full_name ||
+      (user?.email ? user.email.split("@")[0] : "Trainer")
+    );
+  }
+
+  async function getCurrentUser() {
+    const client = getSupabaseClient();
+
+    if (!client?.auth?.getSession) {
+      return null;
+    }
+
+    try {
+      const { data } = await client.auth.getSession();
+      return data?.session?.user || null;
+    } catch (error) {
+      console.warn("Could not get session for profile icon:", error);
+      return null;
+    }
+  }
+
+  async function getStorageKey(user) {
+    if (user?.id) {
+      return `pokeleague_selected_profile_icon_${user.id}`;
+    }
+
+    return "pokeleague_selected_profile_icon_guest";
+  }
+
+  function applyIcon(iconId) {
+    const normalized = normalizeIconId(iconId);
+
+    if (!avatarImg || !normalized) {
+      return;
+    }
+
+    avatarImg.src = getIconSrc(normalized);
+    avatarImg.style.display = "block";
+
+    if (avatarFallback) {
+      avatarFallback.style.display = "none";
+    }
+
+    buttons.forEach((button) => {
+      button.classList.toggle("active", getIconIdFromButton(button) === normalized);
+    });
+  }
+
+  async function loadSharedIcon(user) {
+    const client = getSupabaseClient();
+
+    if (!client || !user?.id) {
+      return "";
+    }
+
+    try {
+      const { data, error } = await client
+        .from("user_profiles")
+        .select("selected_icon_id")
+        .eq("user_id", user.id)
+        .maybeSingle();
+
+      if (error) {
+        console.warn("Could not load shared selected icon:", error);
+        return "";
+      }
+
+      return normalizeIconId(data?.selected_icon_id);
+    } catch (error) {
+      console.warn("Could not load shared selected icon:", error);
+      return "";
+    }
+  }
+
+  async function saveSharedIcon(user, iconId) {
+    const client = getSupabaseClient();
+    const normalized = normalizeIconId(iconId);
+
+    if (!client || !user?.id || !normalized) {
+      return false;
+    }
+
+    try {
+      const { error } = await client
+        .from("user_profiles")
+        .upsert({
+          user_id: user.id,
+          email: user.email ? user.email.toLowerCase() : null,
+          username: getUsernameFromUser(user),
+          selected_icon_id: normalized,
+          avatar_data_url: null,
+          default_npc_url: null,
+          updated_at: new Date().toISOString()
+        }, {
+          onConflict: "user_id"
+        });
+
+      if (error) {
+        console.warn("Could not save shared profile icon:", error);
+        if (note) {
+          note.textContent = "Icon saved locally, but Supabase did not save it. Make sure selected_icon_id was added in SQL.";
+        }
+        return false;
+      }
+
+      if (note) {
+        note.textContent = `${normalized.replace("ProfilePicture", "Icon ")} saved. Leaguemate profile support is next.`;
+      }
+
+      return true;
+    } catch (error) {
+      console.warn("Could not save shared profile icon:", error);
+
+      if (note) {
+        note.textContent = "Icon saved locally, but Supabase did not save it.";
+      }
+
+      return false;
+    }
+  }
+
+  const user = await getCurrentUser();
+  const storageKey = await getStorageKey(user);
+
+  const sharedIconId = await loadSharedIcon(user);
+  const localIconId = normalizeIconId(localStorage.getItem(storageKey));
+  const startingIconId = sharedIconId || localIconId;
+
+  if (startingIconId) {
+    applyIcon(startingIconId);
+    setTimeout(() => applyIcon(startingIconId), 500);
+  }
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", async function () {
+      const iconId = getIconIdFromButton(this);
+
+      if (!iconId) {
+        return;
+      }
+
+      localStorage.setItem(storageKey, iconId);
+      applyIcon(iconId);
+
+      if (note) {
+        note.textContent = "Saving icon...";
+      }
+
+      await saveSharedIcon(user, iconId);
+    });
+  });
+});
+</script>
+
+
+<script id="achievement-profile-icon-support">
+document.addEventListener("DOMContentLoaded", async function () {
+  const ACHIEVEMENT_ICONS = {
+    "achievement:pults": "images/achievement-icons/pults.webp",
+    "achievement:smear-squad": "images/achievement-icons/SmearSquad.webp"
+  };
+
+  const avatarImg = document.getElementById("profileAvatar");
+  const avatarFallback = document.getElementById("avatarFallback");
+
+  function getSupabaseClient() {
+    if (window.supabaseClient) return window.supabaseClient;
+    try {
+      if (typeof supabaseClient !== "undefined") return supabaseClient;
+    } catch (error) {}
+    return null;
+  }
+
+  function applyAchievementIcon(iconId) {
+    const src = ACHIEVEMENT_ICONS[iconId];
+
+    if (!src || !avatarImg) {
+      return;
+    }
+
+    avatarImg.src = src;
+    avatarImg.style.display = "block";
+
+    if (avatarFallback) {
+      avatarFallback.style.display = "none";
+    }
+  }
+
+  const client = getSupabaseClient();
+
+  if (!client?.auth?.getSession) {
+    return;
+  }
+
+  try {
+    const { data } = await client.auth.getSession();
+    const user = data?.session?.user;
+
+    if (!user?.id) {
+      return;
+    }
+
+    const storageKey = `pokeleague_selected_profile_icon_${user.id}`;
+    const localIcon = localStorage.getItem(storageKey);
+
+    if (ACHIEVEMENT_ICONS[localIcon]) {
+      setTimeout(() => applyAchievementIcon(localIcon), 750);
+    }
+
+    const { data: profile } = await client
+      .from("user_profiles")
+      .select("selected_icon_id")
+      .eq("user_id", user.id)
+      .maybeSingle();
+
+    const sharedIcon = profile?.selected_icon_id;
+
+    if (ACHIEVEMENT_ICONS[sharedIcon]) {
+      localStorage.setItem(storageKey, sharedIcon);
+      setTimeout(() => applyAchievementIcon(sharedIcon), 900);
+    }
+  } catch (error) {
+    console.warn("Could not load achievement profile icon:", error);
+  }
+});
+</script>
+
+
+<script id="favorite-games-script">
+document.addEventListener("DOMContentLoaded", async function () {
+  const POKEMON_GAMES = [
+    { id: "red", name: "Pokémon Red", img: "images/game-icons/red.webp" },
+    { id: "blue", name: "Pokémon Blue", img: "images/game-icons/blue.webp" },
+    { id: "yellow", name: "Pokémon Yellow", img: "images/game-icons/yellow.webp" },
+    { id: "gold", name: "Pokémon Gold", img: "images/game-icons/gold.webp" },
+    { id: "silver", name: "Pokémon Silver", img: "images/game-icons/silver.webp" },
+    { id: "crystal", name: "Pokémon Crystal", img: "images/game-icons/crystal.webp" },
+    { id: "ruby", name: "Pokémon Ruby", img: "images/game-icons/ruby.webp" },
+    { id: "sapphire", name: "Pokémon Sapphire", img: "images/game-icons/sapphire.webp" },
+    { id: "emerald", name: "Pokémon Emerald", img: "images/game-icons/emerald.webp" },
+    { id: "firered", name: "Pokémon FireRed", img: "images/game-icons/firered.webp" },
+    { id: "leafgreen", name: "Pokémon LeafGreen", img: "images/game-icons/leafgreen.webp" },
+    { id: "diamond", name: "Pokémon Diamond", img: "images/game-icons/diamond.webp" },
+    { id: "pearl", name: "Pokémon Pearl", img: "images/game-icons/pearl.webp" },
+    { id: "platinum", name: "Pokémon Platinum", img: "images/game-icons/platinum.webp" },
+    { id: "heartgold", name: "Pokémon HeartGold", img: "images/game-icons/heartgold.webp" },
+    { id: "soulsilver", name: "Pokémon SoulSilver", img: "images/game-icons/soulsilver.webp" },
+    { id: "black", name: "Pokémon Black", img: "images/game-icons/black.webp" },
+    { id: "white", name: "Pokémon White", img: "images/game-icons/white.webp" },
+    { id: "black-2", name: "Pokémon Black 2", img: "images/game-icons/black-2.webp" },
+    { id: "white-2", name: "Pokémon White 2", img: "images/game-icons/white-2.webp" },
+    { id: "x", name: "Pokémon X", img: "images/game-icons/x.webp" },
+    { id: "y", name: "Pokémon Y", img: "images/game-icons/y.webp" },
+    { id: "omega-ruby", name: "Pokémon Omega Ruby", img: "images/game-icons/omega-ruby.webp" },
+    { id: "alpha-sapphire", name: "Pokémon Alpha Sapphire", img: "images/game-icons/alpha-sapphire.webp" },
+    { id: "sun", name: "Pokémon Sun", img: "images/game-icons/sun.webp" },
+    { id: "moon", name: "Pokémon Moon", img: "images/game-icons/moon.webp" },
+    { id: "ultra-sun", name: "Pokémon Ultra Sun", img: "images/game-icons/ultra-sun.webp" },
+    { id: "ultra-moon", name: "Pokémon Ultra Moon", img: "images/game-icons/ultra-moon.webp" },
+    { id: "lets-go-pikachu", name: "Pokémon Let's Go Pikachu", img: "images/game-icons/lets-go-pikachu.webp" },
+    { id: "lets-go-eevee", name: "Pokémon Let's Go Eevee", img: "images/game-icons/lets-go-eevee.webp" },
+    { id: "sword", name: "Pokémon Sword", img: "images/game-icons/sword.webp" },
+    { id: "shield", name: "Pokémon Shield", img: "images/game-icons/shield.webp" },
+    { id: "brilliant-diamond", name: "Pokémon Brilliant Diamond", img: "images/game-icons/brilliant-diamond.webp" },
+    { id: "shining-pearl", name: "Pokémon Shining Pearl", img: "images/game-icons/shining-pearl.webp" },
+    { id: "legends-arceus", name: "Pokémon Legends: Arceus", img: "images/game-icons/legends-arceus.webp" },
+    { id: "scarlet", name: "Pokémon Scarlet", img: "images/game-icons/scarlet.webp" },
+    { id: "violet", name: "Pokémon Violet", img: "images/game-icons/violet.webp" },
+    { id: "legends-z-a", name: "Pokémon Legends: Z-A", img: "images/game-icons/legends-z-a.webp" }
+  ];
+
+  const slots = Array.from(document.querySelectorAll(".favorite-game-slot"));
+  const library = document.getElementById("pokemonGameLibrary");
+  const status = document.getElementById("favoriteGameStatus");
+
+  function getSupabaseClient() {
+    if (window.supabaseClient) return window.supabaseClient;
+
+    try {
+      if (typeof supabaseClient !== "undefined") return supabaseClient;
+    } catch (error) {}
+
+    return null;
+  }
+
+  async function getStorageKey() {
+    const client = getSupabaseClient();
+
+    try {
+      if (client?.auth?.getSession) {
+        const { data } = await client.auth.getSession();
+        const userId = data?.session?.user?.id;
+
+        if (userId) {
+          return `pokeleague_favorite_games_${userId}`;
+        }
+      }
+    } catch (error) {
+      console.warn("Could not create user-specific favorite games key:", error);
+    }
+
+    return "pokeleague_favorite_games_guest";
+  }
+
+  function getSavedGames(storageKey) {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(storageKey) || "[]");
+      return Array.isArray(parsed) ? parsed.slice(0, 3) : [];
+    } catch (error) {
+      return [];
+    }
+  }
+
+  function saveGames(storageKey, games) {
+    localStorage.setItem(storageKey, JSON.stringify(games.slice(0, 3)));
+  }
+
+  function findGame(gameId) {
+    return POKEMON_GAMES.find((game) => game.id === gameId);
+  }
+
+  function renderSlots(savedGames) {
+    slots.forEach((slot, index) => {
+      const game = findGame(savedGames[index]);
+      const img = slot.querySelector(".favorite-game-slot-img");
+      const label = slot.querySelector("strong");
+
+      slot.classList.toggle("filled", Boolean(game));
+
+      if (game) {
+        img.src = game.img;
+        img.alt = game.name;
+        label.textContent = game.name;
+      } else {
+        img.removeAttribute("src");
+        img.alt = "";
+        label.textContent = `Favorite Game ${index + 1}`;
+      }
+    });
+  }
+
+  function renderLibrary(savedGames) {
+    if (!library) return;
+
+    library.innerHTML = POKEMON_GAMES.map((game) => {
+      const selected = savedGames.includes(game.id) ? "selected" : "";
+
+      return `
+        <button class="pokemon-game-button ${selected}" type="button" data-game-id="${game.id}">
+          <img src="${game.img}" alt="">
+          <span>${game.name}</span>
+        </button>
+      `;
+    }).join("");
+  }
+
+  function render(storageKey) {
+    const savedGames = getSavedGames(storageKey);
+    renderSlots(savedGames);
+    renderLibrary(savedGames);
+  }
+
+  const storageKey = await getStorageKey();
+  render(storageKey);
+
+  if (library) {
+    library.addEventListener("click", function (event) {
+      const button = event.target.closest(".pokemon-game-button");
+      if (!button) return;
+
+      const gameId = button.dataset.gameId;
+      const game = findGame(gameId);
+      let savedGames = getSavedGames(storageKey);
+
+      if (!game) return;
+
+      if (savedGames.includes(gameId)) {
+        savedGames = savedGames.filter((id) => id !== gameId);
+        if (status) status.textContent = `${game.name} removed.`;
+      } else {
+        if (savedGames.length >= 3) {
+          savedGames[2] = gameId;
+          if (status) status.textContent = `${game.name} replaced your third favorite game.`;
+        } else {
+          savedGames.push(gameId);
+          if (status) status.textContent = `${game.name} added.`;
+        }
+      }
+
+      saveGames(storageKey, savedGames);
+      render(storageKey);
+    });
+  }
+
+  slots.forEach((slot) => {
+    slot.addEventListener("click", function () {
+      const index = Number(this.dataset.gameSlot);
+      const savedGames = getSavedGames(storageKey);
+      const removed = findGame(savedGames[index]);
+
+      if (!removed) return;
+
+      savedGames.splice(index, 1);
+      saveGames(storageKey, savedGames);
+      render(storageKey);
+
+      if (status) {
+        status.textContent = `${removed.name} removed.`;
+      }
+    });
+  });
+});
+</script>
+
 </body>
 </html>

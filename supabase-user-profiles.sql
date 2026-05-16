@@ -8,6 +8,7 @@ create table if not exists public.user_profiles (
   username text,
   avatar_data_url text,
   default_npc_url text,
+  selected_icon_id text,
   favorite_pokemon jsonb not null default '[]'::jsonb,
   updated_at timestamptz not null default now()
 );
@@ -35,3 +36,7 @@ for update
 to authenticated
 using (auth.uid() = user_id)
 with check (auth.uid() = user_id);
+
+
+alter table public.user_profiles
+  add column if not exists selected_icon_id text;

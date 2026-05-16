@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Achievements | PokeLeague</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body.achievements-page {
+      min-height: 100vh;
+      margin: 0;
+      font-family: "Oxanium", Arial, sans-serif;
+      background:
+        linear-gradient(rgba(15, 22, 36, 0.40), rgba(15, 22, 36, 0.40)),
+        url("images/backgrounds/CentralPlaza.png"),
+        linear-gradient(135deg, #9fb3c7 0%, #48576f 100%);
+      background-size: cover;
+      background-position: center;
+      color: #16243a;
+    }
+
+    .achievements-overlay {
+      min-height: 100vh;
+      padding: 36px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .achievements-card {
+      width: min(980px, 96vw);
+      padding: 28px;
+      border-radius: 28px;
+      background: rgba(8, 11, 18, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow:
+        0 26px 70px rgba(0, 0, 0, 0.46),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(7px);
+    }
+
+    .achievements-title {
+      margin: 0;
+      color: #ffffff;
+      text-align: center;
+      font-size: clamp(30px, 5vw, 52px);
+      font-weight: 900;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      text-shadow: 0 4px 0 rgba(0, 0, 0, 0.42);
+    }
+
+    .achievements-subtitle {
+      margin: 6px 0 22px;
+      color: rgba(255, 255, 255, 0.82);
+      text-align: center;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .achievements-nav {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+
+    .achievements-link {
+      min-width: 190px;
+      padding: 11px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.58);
+      background: linear-gradient(to bottom, #e8edf6, #aeb8c7);
+      color: #18243a;
+      text-align: center;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.8px;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.24);
+    }
+
+    .achievement-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .achievement-row {
+      display: grid;
+      grid-template-columns: 120px 1fr auto;
+      align-items: center;
+      gap: 18px;
+      padding: 16px;
+      border-radius: 24px;
+      background: linear-gradient(145deg, #eeecef 0%, #d6d3d8 52%, #b7b2bc 100%);
+      border: 1px solid rgba(255, 255, 255, 0.62);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.72),
+        0 12px 24px rgba(0, 0, 0, 0.22);
+    }
+
+    .achievement-icon-wrap {
+      width: 104px;
+      height: 104px;
+      border-radius: 22px;
+      padding: 6px;
+      background: linear-gradient(145deg, #eef0f8 0%, #d8dbeb 52%, #bcc3d8 100%);
+      border: 2px solid rgba(24, 36, 58, 0.20);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.72),
+        0 8px 16px rgba(16, 24, 40, 0.16);
+    }
+
+    .achievement-icon-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 17px;
+      display: block;
+    }
+
+    .achievement-row.locked img {
+      filter: blur(6px) grayscale(0.7) brightness(0.72);
+    }
+
+    .achievement-info h2 {
+      margin: 0 0 7px;
+      font-size: 23px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      color: #141b2e;
+    }
+
+    .achievement-info p {
+      margin: 0;
+      color: rgba(20, 27, 46, 0.78);
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.4;
+    }
+
+    .achievement-state {
+      margin-top: 9px;
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: rgba(20, 27, 46, 0.12);
+      color: rgba(20, 27, 46, 0.78);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+
+    .achievement-row.unlocked .achievement-state {
+      background: rgba(255, 216, 90, 0.42);
+      color: #503800;
+    }
+
+    .equip-achievement-button {
+      min-width: 154px;
+      padding: 12px 16px;
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, #fff4a8, #e6bf48);
+      color: #17233a;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.8px;
+      cursor: pointer;
+      box-shadow:
+        0 9px 18px rgba(0, 0, 0, 0.24),
+        inset 0 1px 0 rgba(255, 255, 255, 0.72);
+    }
+
+    .equip-achievement-button:disabled {
+      cursor: not-allowed;
+      opacity: 0.45;
+      background: linear-gradient(to bottom, #d7d9e5, #aeb4c3);
+      color: rgba(20, 27, 46, 0.72);
+    }
+
+    #achievementStatus {
+      min-height: 20px;
+      margin-top: 18px;
+      color: rgba(255, 255, 255, 0.84);
+      text-align: center;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .coming-soon {
+      padding: 34px;
+      border-radius: 24px;
+      background: linear-gradient(145deg, #eeecef 0%, #d6d3d8 52%, #b7b2bc 100%);
+      text-align: center;
+      color: #16243a;
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 760px) {
+      .achievement-row {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .achievement-icon-wrap {
+        margin: 0 auto;
+      }
+
+      .equip-achievement-button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body class="achievements-page">
+  <div class="achievements-overlay">
+    <main class="achievements-card">
+      <h1 class="achievements-title">Achievements</h1>
+      <p id="achievementCategoryTitle" class="achievements-subtitle">Founders</p>
+
+      <nav class="achievements-nav">
+        <a class="achievements-link" href="my-profile.html?v=achievement-return1">Back to My Profile</a>
+        <a class="achievements-link" href="league-home.html?v=achievement-return1">League Home</a>
+      </nav>
+
+      <section id="achievementList" class="achievement-list"></section>
+      <div id="achievementStatus">Loading achievements...</div>
+    </main>
+  </div>
+
+  <script src="js/theme-settings.js?v=global-theme1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabaseClient.js"></script>
+
+  <script>
+    const FOUNDERS_ACHIEVEMENTS = [
+      {
+        id: "achievement:pults",
+        title: "Miami Dragapults",
+        description: "Be the GM of the Miami Dragapults.",
+        icon: "images/achievement-icons/pults.webp",
+        assignedEmail: "nicholasjagger@gmail.com"
+      },
+      {
+        id: "achievement:smear-squad",
+        title: "Smear Squad",
+        description: "Be the GM of the Smear Squad.",
+        icon: "images/achievement-icons/SmearSquad.webp",
+        assignedEmail: "mateenmok@gmail.com"
+      }
+    ];
+
+    const CATEGORY_LABELS = {
+      founders: "Founders",
+      "2": "Category 2",
+      "3": "Category 3",
+      "4": "Category 4",
+      "5": "Category 5",
+      "6": "Category 6",
+      "7": "Category 7",
+      "8": "Category 8",
+      "9": "Category 9"
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get("category") || "founders";
+
+    const listEl = document.getElementById("achievementList");
+    const statusEl = document.getElementById("achievementStatus");
+    const titleEl = document.getElementById("achievementCategoryTitle");
+
+    titleEl.textContent = CATEGORY_LABELS[category] || "Achievements";
+
+    function getSupabaseClient() {
+      if (window.supabaseClient) return window.supabaseClient;
+      try {
+        if (typeof supabaseClient !== "undefined") return supabaseClient;
+      } catch (error) {}
+      return null;
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function getUsernameFromUser(user) {
+      const meta = user?.user_metadata || {};
+
+      return (
+        meta.username ||
+        meta.display_name ||
+        meta.name ||
+        meta.full_name ||
+        (user?.email ? user.email.split("@")[0] : "Trainer")
+      );
+    }
+
+    async function getCurrentUser() {
+      const client = getSupabaseClient();
+
+      if (!client?.auth?.getSession) {
+        return null;
+      }
+
+      const { data } = await client.auth.getSession();
+      return data?.session?.user || null;
+    }
+
+    function isUnlocked(achievement, user) {
+      const email = String(user?.email || "").toLowerCase();
+      return email === achievement.assignedEmail.toLowerCase();
+    }
+
+    function renderComingSoon() {
+      listEl.innerHTML = `
+        <div class="coming-soon">
+          This achievement category is coming soon.
+        </div>
+      `;
+      statusEl.textContent = "";
+    }
+
+    function renderFounders(user, selectedIconId) {
+      listEl.innerHTML = FOUNDERS_ACHIEVEMENTS.map((achievement) => {
+        const unlocked = isUnlocked(achievement, user);
+        const equipped = selectedIconId === achievement.id;
+
+        return `
+          <article class="achievement-row ${unlocked ? "unlocked" : "locked"}">
+            <div class="achievement-icon-wrap">
+              <img src="${escapeHtml(achievement.icon)}" alt="">
+            </div>
+
+            <div class="achievement-info">
+              <h2>${escapeHtml(achievement.title)}</h2>
+              <p>${escapeHtml(achievement.description)}</p>
+              <span class="achievement-state">${unlocked ? (equipped ? "Unlocked · Equipped" : "Unlocked") : "Locked"}</span>
+            </div>
+
+            <button
+              class="equip-achievement-button"
+              type="button"
+              data-achievement-id="${escapeHtml(achievement.id)}"
+              ${unlocked ? "" : "disabled"}
+            >
+              ${equipped ? "Equipped" : "Use as PFP"}
+            </button>
+          </article>
+        `;
+      }).join("");
+
+      listEl.querySelectorAll(".equip-achievement-button:not(:disabled)").forEach((button) => {
+        button.addEventListener("click", async function () {
+          await equipAchievementIcon(this.dataset.achievementId, user);
+        });
+      });
+    }
+
+    async function loadSelectedIcon(user) {
+      const client = getSupabaseClient();
+
+      if (!client || !user?.id) {
+        return "";
+      }
+
+      const { data, error } = await client
+        .from("user_profiles")
+        .select("selected_icon_id")
+        .eq("user_id", user.id)
+        .maybeSingle();
+
+      if (error) {
+        console.warn("Could not load selected icon:", error);
+        return "";
+      }
+
+      return data?.selected_icon_id || "";
+    }
+
+    async function equipAchievementIcon(achievementId, user) {
+      const client = getSupabaseClient();
+
+      if (!client || !user?.id) {
+        statusEl.textContent = "Sign in before equipping an achievement icon.";
+        return;
+      }
+
+      const achievement = FOUNDERS_ACHIEVEMENTS.find((item) => item.id === achievementId);
+
+      if (!achievement || !isUnlocked(achievement, user)) {
+        statusEl.textContent = "This achievement is locked.";
+        return;
+      }
+
+      statusEl.textContent = "Saving achievement icon...";
+
+      const { error } = await client
+        .from("user_profiles")
+        .upsert({
+          user_id: user.id,
+          email: user.email ? user.email.toLowerCase() : null,
+          username: getUsernameFromUser(user),
+          selected_icon_id: achievement.id,
+          avatar_data_url: null,
+          default_npc_url: null,
+          updated_at: new Date().toISOString()
+        }, {
+          onConflict: "user_id"
+        });
+
+      if (error) {
+        console.warn("Could not equip achievement icon:", error);
+        statusEl.textContent = "Could not save this icon. Make sure selected_icon_id exists in Supabase.";
+        return;
+      }
+
+      localStorage.setItem(`pokeleague_selected_profile_icon_${user.id}`, achievement.id);
+
+      statusEl.textContent = `${achievement.title} equipped as your profile icon.`;
+
+      renderFounders(user, achievement.id);
+    }
+
+    async function init() {
+      const user = await getCurrentUser();
+
+      if (!user) {
+        statusEl.textContent = "Sign in before viewing achievements.";
+        listEl.innerHTML = "";
+        return;
+      }
+
+      if (category !== "founders") {
+        renderComingSoon();
+        return;
+      }
+
+      const selectedIconId = await loadSelectedIcon(user);
+      renderFounders(user, selectedIconId);
+      statusEl.textContent = "Locked achievement icons are blurred. Unlocked icons can be equipped as your PFP.";
+    }
+
+    init();
+  </script>
+</body>
+</html>
