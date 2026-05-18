@@ -26,9 +26,9 @@
     ],
     "rank": 8,
     "tier": "Diamond",
-    "points": 8,
+    "points": 9,
     "tier_icon": "images/tiers/Diamond.webp",
-    "tier_label": "Diamond 8",
+    "tier_label": "Diamond 9",
     "can_mega_evolve": true
   },
   {
@@ -544,10 +544,10 @@
       "Grass"
     ],
     "rank": 24,
-    "tier": "Diamond",
-    "points": 7,
-    "tier_icon": "images/tiers/Diamond.webp",
-    "tier_label": "Diamond 7",
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
     "can_mega_evolve": true
   },
   {
@@ -888,10 +888,10 @@
       "Ghost"
     ],
     "rank": 43,
-    "tier": "Gold",
-    "points": 6,
-    "tier_icon": "images/tiers/GoldButton.png",
-    "tier_label": "Gold 6",
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
     "can_mega_evolve": true
   },
   {
@@ -1324,10 +1324,10 @@
       "Ice"
     ],
     "rank": 81,
-    "tier": "Silver",
-    "points": 4,
-    "tier_icon": "images/tiers/SilverButton.png",
-    "tier_label": "Silver 4",
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
     "can_mega_evolve": false
   },
   {
@@ -1658,9 +1658,9 @@
     ],
     "rank": 11,
     "tier": "Diamond",
-    "points": 8,
+    "points": 9,
     "tier_icon": "images/tiers/Diamond.webp",
-    "tier_label": "Diamond 8",
+    "tier_label": "Diamond 9",
     "can_mega_evolve": false
   },
   {
@@ -1772,10 +1772,10 @@
       "Ice"
     ],
     "rank": 107,
-    "tier": "Silver",
-    "points": 3,
-    "tier_icon": "images/tiers/SilverButton.png",
-    "tier_label": "Silver 3",
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
     "can_mega_evolve": false
   },
   {
@@ -2201,10 +2201,10 @@
       "Fairy"
     ],
     "rank": 36,
-    "tier": "Gold",
-    "points": 6,
-    "tier_icon": "images/tiers/GoldButton.png",
-    "tier_label": "Gold 6",
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
     "can_mega_evolve": false
   },
   {
@@ -2408,9 +2408,9 @@
     ],
     "rank": 2,
     "tier": "Diamond",
-    "points": 8,
+    "points": 9,
     "tier_icon": "images/tiers/Diamond.webp",
-    "tier_label": "Diamond 8",
+    "tier_label": "Diamond 9",
     "can_mega_evolve": false
   },
   {
@@ -2423,10 +2423,10 @@
       "Fairy"
     ],
     "rank": 31,
-    "tier": "Diamond",
-    "points": 7,
-    "tier_icon": "images/tiers/Diamond.webp",
-    "tier_label": "Diamond 7",
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
     "can_mega_evolve": false
   },
   {
@@ -2627,10 +2627,10 @@
       "Fighting"
     ],
     "rank": 30,
-    "tier": "Diamond",
-    "points": 7,
-    "tier_icon": "images/tiers/Diamond.webp",
-    "tier_label": "Diamond 7",
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
     "can_mega_evolve": false
   },
   {
@@ -2849,9 +2849,9 @@
     ],
     "rank": 5,
     "tier": "Diamond",
-    "points": 8,
+    "points": 9,
     "tier_icon": "images/tiers/Diamond.webp",
-    "tier_label": "Diamond 8",
+    "tier_label": "Diamond 9",
     "can_mega_evolve": false
   },
   {
@@ -2865,9 +2865,9 @@
     ],
     "rank": 1,
     "tier": "Diamond",
-    "points": 8,
+    "points": 9,
     "tier_icon": "images/tiers/Diamond.webp",
-    "tier_label": "Diamond 8",
+    "tier_label": "Diamond 9",
     "can_mega_evolve": false
   },
   {
@@ -3115,9 +3115,9 @@
     ],
     "rank": 4,
     "tier": "Diamond",
-    "points": 8,
+    "points": 9,
     "tier_icon": "images/tiers/Diamond.webp",
-    "tier_label": "Diamond 8",
+    "tier_label": "Diamond 9",
     "can_mega_evolve": false
   },
   {

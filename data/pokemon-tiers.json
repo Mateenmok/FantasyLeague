@@ -4,9 +4,9 @@
     "name": "Sneasler",
     "slug": "sneasler",
     "tier": "Diamond",
-    "points": 8,
+    "points": 9,
     "tier_icon": "images/tiers/Diamond.webp",
-    "tier_label": "Diamond 8",
+    "tier_label": "Diamond 9",
     "ranked_name": "Sneasler"
   },
   {
@@ -14,9 +14,9 @@
     "name": "Incineroar",
     "slug": "incineroar",
     "tier": "Diamond",
-    "points": 8,
+    "points": 9,
     "tier_icon": "images/tiers/Diamond.webp",
-    "tier_label": "Diamond 8",
+    "tier_label": "Diamond 9",
     "ranked_name": "Incineroar"
   },
   {
@@ -34,9 +34,9 @@
     "name": "Kingambit",
     "slug": "kingambit",
     "tier": "Diamond",
-    "points": 8,
+    "points": 9,
     "tier_icon": "images/tiers/Diamond.webp",
-    "tier_label": "Diamond 8",
+    "tier_label": "Diamond 9",
     "ranked_name": "Kingambit"
   },
   {
@@ -44,9 +44,9 @@
     "name": "Basculegion",
     "slug": "basculegion",
     "tier": "Diamond",
-    "points": 8,
+    "points": 9,
     "tier_icon": "images/tiers/Diamond.webp",
-    "tier_label": "Diamond 8",
+    "tier_label": "Diamond 9",
     "ranked_name": "Basculegion"
   },
   {
@@ -74,9 +74,9 @@
     "name": "Charizard",
     "slug": "charizard",
     "tier": "Diamond",
-    "points": 8,
+    "points": 9,
     "tier_icon": "images/tiers/Diamond.webp",
-    "tier_label": "Diamond 8",
+    "tier_label": "Diamond 9",
     "ranked_name": "Charizard"
   },
   {
@@ -104,9 +104,9 @@
     "name": "Whimsicott",
     "slug": "whimsicott",
     "tier": "Diamond",
-    "points": 8,
+    "points": 9,
     "tier_icon": "images/tiers/Diamond.webp",
-    "tier_label": "Diamond 8",
+    "tier_label": "Diamond 9",
     "ranked_name": "Whimsicott"
   },
   {
@@ -233,10 +233,10 @@
     "rank": 24,
     "name": "Meganium",
     "slug": "meganium",
-    "tier": "Diamond",
-    "points": 7,
-    "tier_icon": "images/tiers/Diamond.webp",
-    "tier_label": "Diamond 7",
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
     "ranked_name": "Meganium"
   },
   {
@@ -293,20 +293,20 @@
     "rank": 30,
     "name": "Kommo-o",
     "slug": "kommo-o",
-    "tier": "Diamond",
-    "points": 7,
-    "tier_icon": "images/tiers/Diamond.webp",
-    "tier_label": "Diamond 7",
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
     "ranked_name": "Kommo-o"
   },
   {
     "rank": 31,
     "name": "Primarina",
     "slug": "primarina",
-    "tier": "Diamond",
-    "points": 7,
-    "tier_icon": "images/tiers/Diamond.webp",
-    "tier_label": "Diamond 7",
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
     "ranked_name": "Primarina"
   },
   {
@@ -353,10 +353,10 @@
     "rank": 36,
     "name": "Sylveon",
     "slug": "sylveon",
-    "tier": "Gold",
-    "points": 6,
-    "tier_icon": "images/tiers/GoldButton.png",
-    "tier_label": "Gold 6",
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
     "ranked_name": "Sylveon"
   },
   {
@@ -432,10 +432,10 @@
     "rank": 43,
     "name": "Sableye",
     "slug": "sableye",
-    "tier": "Gold",
-    "points": 6,
-    "tier_icon": "images/tiers/GoldButton.png",
-    "tier_label": "Gold 6",
+    "tier": "Diamond",
+    "points": 7,
+    "tier_icon": "images/tiers/Diamond.webp",
+    "tier_label": "Diamond 7",
     "ranked_name": "Sableye"
   },
   {
@@ -844,10 +844,10 @@
     "rank": 81,
     "name": "Weavile",
     "slug": "weavile",
-    "tier": "Silver",
-    "points": 4,
-    "tier_icon": "images/tiers/SilverButton.png",
-    "tier_label": "Silver 4",
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
     "ranked_name": "Weavile"
   },
   {
@@ -1129,10 +1129,10 @@
     "rank": 107,
     "name": "Vanilluxe",
     "slug": "vanilluxe",
-    "tier": "Silver",
-    "points": 3,
-    "tier_icon": "images/tiers/SilverButton.png",
-    "tier_label": "Silver 3",
+    "tier": "Gold",
+    "points": 5,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 5",
     "ranked_name": "Vanilluxe"
   },
   {
