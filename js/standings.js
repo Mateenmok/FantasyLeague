@@ -2,13 +2,21 @@ const standingsSubtitle = document.getElementById("standingsSubtitle");
 const standingsContent = document.getElementById("standingsContent");
 const standingsStatus = document.getElementById("standingsStatus");
 const playoffBracket = document.getElementById("playoffBracket");
+const rosterModal = document.getElementById("standingsRosterModal");
+const rosterModalTitle = document.getElementById("standingsRosterModalTitle");
+const rosterModalMeta = document.getElementById("standingsRosterModalMeta");
+const rosterModalGrid = document.getElementById("standingsRosterModalGrid");
 
 const selectedLeagueId = localStorage.getItem("selected-league-id");
 
 let currentLeague = null;
 let leagueTeams = [];
 let leagueDivisions = [];
+let teamRosterRows = [];
+let championsPokemon = [];
+let rosterLoadError = "";
 
+setupRosterModal();
 loadStandingsPage();
 
 async function loadStandingsPage() {
@@ -86,8 +94,36 @@ async function loadStandingsPage() {
   leagueDivisions = divisions || [];
   leagueTeams = normalizeTeams(teams || []);
 
+  await loadRosterData();
   renderStandings();
   renderPlayoffBracket();
+}
+
+async function loadRosterData() {
+  rosterLoadError = "";
+
+  try {
+    championsPokemon = await fetch("data/champions-pokemon.json?v=standings-roster1")
+      .then(response => response.json());
+  } catch (error) {
+    console.error("Could not load Champions Pokémon data:", error);
+    championsPokemon = [];
+  }
+
+  const { data: rosterRows, error: rosterError } = await supabaseClient
+    .from("team_rosters")
+    .select("*")
+    .eq("league_id", selectedLeagueId)
+    .order("slot_number", { ascending: true });
+
+  if (rosterError) {
+    console.error("Roster load error:", rosterError);
+    rosterLoadError = "Could not load rosters.";
+    teamRosterRows = [];
+    return;
+  }
+
+  teamRosterRows = rosterRows || [];
 }
 
 function normalizeTeams(teams) {
@@ -161,17 +197,31 @@ function renderStandings() {
           <div class="standings-rank">${index + 1}</div>
 
           <div class="standings-team-cell">
-            ${logoHtml}
+            <button
+              type="button"
+              class="standings-logo-button standings-roster-trigger"
+              data-team-id="${escapeHtml(team.id)}"
+              aria-label="View ${escapeHtml(team.team_name)} roster"
+            >
+              ${logoHtml}
+            </button>
             <div>
               <div class="standings-team-name">${escapeHtml(team.team_name)}</div>
               <div class="standings-owner-name">${escapeHtml(team.owner_name || "Unassigned")}</div>
+              <button
+                type="button"
+                class="standings-roster-button standings-roster-trigger"
+                data-team-id="${escapeHtml(team.id)}"
+              >
+                Roster
+              </button>
             </div>
           </div>
 
-          <div class="standings-number">${team.wins}</div>
-          <div class="standings-number">${team.losses}</div>
-          <div class="standings-record">${getRecordString(team)}</div>
-          <div class="standings-gb">${gbText}</div>
+          <div class="standings-record" data-label="Record">${getRecordString(team)}</div>
+          <div class="standings-pct" data-label="PCT">${formatWinningPercentage(team.winningPercentage)}</div>
+          <div class="standings-number" data-label="GW">${team.gamesWon}</div>
+          <div class="standings-gb" data-label="GB">${gbText}</div>
         </div>
       `;
     }).join("");
@@ -183,9 +233,9 @@ function renderStandings() {
         <div class="standings-header-row">
           <div>#</div>
           <div>Team</div>
-          <div>W</div>
-          <div>L</div>
           <div>Record</div>
+          <div>PCT</div>
+          <div>GW</div>
           <div>GB</div>
         </div>
 
@@ -194,7 +244,131 @@ function renderStandings() {
     `;
   }).join("");
 
+  bindRosterButtons();
   standingsStatus.textContent = `${leagueTeams.length} teams loaded. Tiebreaker: games won.`;
+}
+
+function bindRosterButtons() {
+  document.querySelectorAll(".standings-roster-trigger").forEach(button => {
+    button.addEventListener("click", function () {
+      openTeamRoster(this.dataset.teamId);
+    });
+  });
+}
+
+function setupRosterModal() {
+  if (!rosterModal) return;
+
+  rosterModal.querySelectorAll("[data-close-roster]").forEach(button => {
+    button.addEventListener("click", closeTeamRoster);
+  });
+
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && !rosterModal.hidden) {
+      closeTeamRoster();
+    }
+  });
+}
+
+function openTeamRoster(teamId) {
+  if (!rosterModal || !rosterModalTitle || !rosterModalMeta || !rosterModalGrid) {
+    return;
+  }
+
+  const team = leagueTeams.find(candidate => String(candidate.id) === String(teamId));
+
+  if (!team) {
+    return;
+  }
+
+  const rosterRows = teamRosterRows
+    .filter(row => String(row.team_id) === String(team.id))
+    .sort((a, b) => Number(a.slot_number || 0) - Number(b.slot_number || 0));
+
+  rosterModalTitle.textContent = team.team_name || `Team ${team.team_number}`;
+  rosterModalMeta.textContent = `${team.owner_name || "Unassigned"} • ${getRecordString(team)} • ${rosterRows.length} Pokémon`;
+
+  if (rosterLoadError) {
+    rosterModalGrid.innerHTML = `<div class="standings-roster-empty">${escapeHtml(rosterLoadError)}</div>`;
+  } else if (!rosterRows.length) {
+    rosterModalGrid.innerHTML = `<div class="standings-roster-empty">No Pokémon drafted yet.</div>`;
+  } else {
+    rosterModalGrid.innerHTML = rosterRows.map(row => renderRosterPokemonCard(row)).join("");
+  }
+
+  rosterModal.hidden = false;
+  document.body.classList.add("standings-roster-open");
+
+  const closeButton = rosterModal.querySelector(".standings-roster-close");
+  if (closeButton) {
+    closeButton.focus();
+  }
+}
+
+function closeTeamRoster() {
+  if (!rosterModal) return;
+
+  rosterModal.hidden = true;
+  document.body.classList.remove("standings-roster-open");
+}
+
+function renderRosterPokemonCard(row) {
+  const pokemon = getPokemonBySlug(row.pokemon_slug);
+
+  if (!pokemon) {
+    return `
+      <article class="standings-roster-pokemon-card missing">
+        <div class="standings-roster-pokemon-missing">?</div>
+        <div>
+          <div class="standings-roster-pokemon-name">${escapeHtml(row.pokemon_slug)}</div>
+          <div class="standings-roster-pokemon-meta">Roster slot ${escapeHtml(row.slot_number || "")}</div>
+        </div>
+      </article>
+    `;
+  }
+
+  return `
+    <article class="standings-roster-pokemon-card">
+      <img src="${escapeHtml(getPokemonImage(pokemon))}" alt="${escapeHtml(pokemon.name)}">
+      <div>
+        <div class="standings-roster-pokemon-name">${escapeHtml(pokemon.name)}</div>
+        <div class="standings-roster-pokemon-meta">
+          ${escapeHtml(pokemon.tier || "Tier")} • ${escapeHtml(pokemon.points || 1)} pts
+        </div>
+        ${renderRosterTypeBadges(pokemon)}
+      </div>
+    </article>
+  `;
+}
+
+function getPokemonBySlug(slug) {
+  return championsPokemon.find(pokemon => pokemon.slug === slug);
+}
+
+function getPokemonImage(pokemon) {
+  return pokemon.image || pokemon.img || pokemon.icon || pokemon.sprite || pokemon.artwork || "";
+}
+
+function renderRosterTypeBadges(pokemon) {
+  const types = pokemon.types || [];
+
+  if (!types.length) {
+    return "";
+  }
+
+  const typeClass = types.length === 1 ? "single" : "dual";
+
+  return `
+    <div class="pokemon-type-strip standings-roster-type-strip ${typeClass}">
+      ${types.map(type => `
+        <span class="pokemon-type-segment ${getTypeClass(type)}">${escapeHtml(type)}</span>
+      `).join("")}
+    </div>
+  `;
+}
+
+function getTypeClass(type) {
+  return `type-${String(type || "").toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
 }
 
 function renderPlayoffBracket() {
@@ -477,6 +651,10 @@ function formatGamesBack(gamesBack) {
 
 function getRecordString(team) {
   return `${team.wins}-${team.losses}-${team.ties}`;
+}
+
+function formatWinningPercentage(value) {
+  return Number(value || 0).toFixed(3).replace(/^0/, "");
 }
 
 function escapeHtml(value) {
