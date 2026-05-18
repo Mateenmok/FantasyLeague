@@ -4,3 +4,8 @@
 *-js.backup-before-*
 *.html.backup-before-*
 *.js.backup-before-*
+backups/
+*.backup-*
+*.broken-*
+revert-backups-*/
+*.txt
