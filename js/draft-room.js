@@ -1166,11 +1166,11 @@ function getFilteredAvailablePokemon() {
   }
 
   if (megaFilter === "mega") {
-    availablePokemon = availablePokemon.filter(pokemon => pokemon.mega_eligible);
+    availablePokemon = availablePokemon.filter(pokemon => pokemon.can_mega_evolve === true);
   }
 
   if (megaFilter === "non-mega") {
-    availablePokemon = availablePokemon.filter(pokemon => !pokemon.mega_eligible);
+    availablePokemon = availablePokemon.filter(pokemon => pokemon.can_mega_evolve !== true);
   }
 
   if (tierFilter !== "all") {
