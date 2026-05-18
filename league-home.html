@@ -190,11 +190,13 @@
       }
 
       .league-home-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
+        gap: 8px;
       }
 
       .league-home-tile {
-        min-height: 86px;
+        min-height: 58px;
+        padding: 10px 14px;
       }
     }
 
@@ -261,13 +263,14 @@
 
     @media (max-width: 620px) {
       .league-home-tile {
-        grid-template-columns: 52px 1fr;
-        min-height: 94px;
+        grid-template-columns: 42px 1fr;
+        padding: 10px 14px;
+        min-height: 58px;
       }
 
       .league-home-tile-icon {
-        width: 48px;
-        height: 48px;
+        width: 38px;
+        height: 38px;
       }
     }
 
