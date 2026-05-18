@@ -1,94 +1,3 @@
-
-const POKEMON_IMAGE_OVERRIDES = {
-  "galarian-slowbro": "images/pokemon-fixes/galarian-slowbro.png",
-  "slowbro-galarian": "images/pokemon-fixes/galarian-slowbro.png",
-
-  "galarian-slowking": "images/pokemon-fixes/galarian-slowking.png",
-  "slowking-galarian": "images/pokemon-fixes/galarian-slowking.png",
-
-  "galarian-stunfisk": "images/pokemon-fixes/galarian-stunfisk.png",
-  "stunfisk-galarian": "images/pokemon-fixes/galarian-stunfisk.png",
-
-  "alolan-raichu": "images/pokemon-fixes/alolan-raichu.png",
-  "raichu-alolan": "images/pokemon-fixes/alolan-raichu.png",
-
-  "alolan-ninetales": "images/pokemon-fixes/alolan-ninetales.png",
-  "ninetales-alolan": "images/pokemon-fixes/alolan-ninetales.png",
-
-  "water-tauros": "images/pokemon-fixes/water-tauros.png",
-  "tauros-water": "images/pokemon-fixes/water-tauros.png",
-  "paldean-tauros-water": "images/pokemon-fixes/water-tauros.png",
-  "tauros-paldea-aqua": "images/pokemon-fixes/water-tauros.png",
-  "tauros-aqua": "images/pokemon-fixes/water-tauros.png",
-
-  "fire-tauros": "images/pokemon-fixes/fire-tauros.png",
-  "tauros-fire": "images/pokemon-fixes/fire-tauros.png",
-  "paldean-tauros-fire": "images/pokemon-fixes/fire-tauros.png",
-  "tauros-paldea-blaze": "images/pokemon-fixes/fire-tauros.png",
-  "tauros-blaze": "images/pokemon-fixes/fire-tauros.png"
-};
-
-function normalizePokemonImageKey(value) {
-  return String(value || "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
-function getFixedPokemonImage(pokemon) {
-  if (!pokemon) {
-    return "";
-  }
-
-  const keys = [
-    pokemon.slug,
-    pokemon.name,
-    pokemon.ranked_name,
-    pokemon.display_name,
-    pokemon.species,
-    pokemon.form
-  ].map(normalizePokemonImageKey).filter(Boolean);
-
-  const combined = keys.join("-");
-
-  for (const key of keys) {
-    if (POKEMON_IMAGE_OVERRIDES[key]) {
-      return POKEMON_IMAGE_OVERRIDES[key];
-    }
-  }
-
-  if (combined.includes("galarian-slowbro") || combined.includes("slowbro-galarian")) {
-    return POKEMON_IMAGE_OVERRIDES["galarian-slowbro"];
-  }
-
-  if (combined.includes("galarian-slowking") || combined.includes("slowking-galarian")) {
-    return POKEMON_IMAGE_OVERRIDES["galarian-slowking"];
-  }
-
-  if (combined.includes("galarian-stunfisk") || combined.includes("stunfisk-galarian")) {
-    return POKEMON_IMAGE_OVERRIDES["galarian-stunfisk"];
-  }
-
-  if (combined.includes("alolan-raichu") || combined.includes("raichu-alolan")) {
-    return POKEMON_IMAGE_OVERRIDES["alolan-raichu"];
-  }
-
-  if (combined.includes("alolan-ninetales") || combined.includes("ninetales-alolan")) {
-    return POKEMON_IMAGE_OVERRIDES["alolan-ninetales"];
-  }
-
-  if (combined.includes("tauros") && (combined.includes("water") || combined.includes("aqua"))) {
-    return POKEMON_IMAGE_OVERRIDES["water-tauros"];
-  }
-
-  if (combined.includes("tauros") && (combined.includes("fire") || combined.includes("blaze"))) {
-    return POKEMON_IMAGE_OVERRIDES["fire-tauros"];
-  }
-
-  return pokemon.image || pokemon.img || pokemon.icon || pokemon.sprite || pokemon.artwork || "";
-}
-
-
 const draftLeagueSubtitle = document.getElementById("draftLeagueSubtitle");
 const draftClockLine = document.getElementById("draftClockLine");
 const draftStatusLine = document.getElementById("draftStatusLine");
@@ -1239,30 +1148,6 @@ function renderAvailablePokemonFilters() {
   typeFilterSelect.value = sortedTypes.includes(selectedType) ? selectedType : "all";
 }
 
-
-function isMegaEligible(pokemon) {
-  if (!pokemon) {
-    return false;
-  }
-
-  const values = [
-    pokemon.mega_eligible,
-    pokemon.can_mega_evolve,
-    pokemon.canMegaEvolve,
-    pokemon.megaEligible,
-    pokemon.is_mega,
-    pokemon.isMega
-  ];
-
-  return values.some((value) => {
-    if (value === true) return true;
-    if (value === 1) return true;
-
-    const text = String(value || "").trim().toLowerCase();
-    return text === "true" || text === "yes" || text === "1";
-  });
-}
-
 function getFilteredAvailablePokemon() {
   const searchTerm = availablePokemonSearch.value.trim().toLowerCase();
   const megaFilter = megaFilterSelect ? megaFilterSelect.value : "all";
@@ -1281,11 +1166,11 @@ function getFilteredAvailablePokemon() {
   }
 
   if (megaFilter === "mega") {
-    availablePokemon = availablePokemon.filter(pokemon => isMegaEligible(pokemon));
+    availablePokemon = availablePokemon.filter(pokemon => pokemon.mega_eligible);
   }
 
   if (megaFilter === "non-mega") {
-    availablePokemon = availablePokemon.filter(pokemon => !isMegaEligible(pokemon));
+    availablePokemon = availablePokemon.filter(pokemon => !pokemon.mega_eligible);
   }
 
   if (tierFilter !== "all") {
@@ -1319,7 +1204,7 @@ function renderAvailablePokemonGrid() {
   availablePokemonGrid.innerHTML = availablePokemon.map(pokemon => {
     return `
       <button class="draft-pokemon-card" data-slug="${pokemon.slug}">
-        <img src="${getFixedPokemonImage(pokemon)}" alt="${escapeHtml(pokemon.name)}">
+        <img src="${pokemon.image}" alt="${escapeHtml(pokemon.name)}">
         ${renderMegaBadge(pokemon)}
         <span>${escapeHtml(getPokemonLabel(pokemon))}</span>
         ${renderPokemonTierBadge(pokemon)}
@@ -1539,7 +1424,7 @@ async function undoLastPick() {
 
 
 function renderMegaBadge(pokemon) {
-  if (!pokemon || !isMegaEligible(pokemon)) {
+  if (!pokemon || !pokemon.can_mega_evolve) {
     return "";
   }
 
