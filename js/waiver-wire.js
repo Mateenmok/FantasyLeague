@@ -78,7 +78,7 @@ async function loadWaiverPage() {
   isAdmin = membership.role === "admin";
 
   try {
-    championsPokemon = await fetch("data/champions-pokemon.json?v=waivers1").then(response => response.json());
+    championsPokemon = await fetch("data/champions-pokemon.json?v=waivers2").then(response => response.json());
   } catch (error) {
     console.error("Pokémon data load error:", error);
     waiverPageStatus.textContent = "Could not load Pokémon data.";

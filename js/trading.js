@@ -161,7 +161,7 @@ async function loadTradingPage() {
   isAdmin = membership.role === "admin";
 
   try {
-    championsPokemon = await fetch("data/champions-pokemon.json?v=trades1").then(response => response.json());
+    championsPokemon = await fetch("data/champions-pokemon.json?v=trades2").then(response => response.json());
   } catch (error) {
     console.error("Pokémon data load error:", error);
     tradePageStatus.textContent = "Could not load Pokémon data.";

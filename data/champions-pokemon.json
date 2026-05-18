@@ -401,7 +401,7 @@
     "id": 128,
     "name": "Paldean Tauros",
     "slug": "paldean-tauros-fighting",
-    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/128.png",
+    "image": "images/pokemon-fixes/paldean-tauros-combat.png",
     "types": [
       "Fighting"
     ],
@@ -411,50 +411,6 @@
     "tier_icon": "images/tiers/BronzeButton.png",
     "tier_label": "Bronze 1",
     "can_mega_evolve": false
-  },
-  {
-    "id": 128,
-    "name": "Paldean Tauros",
-    "slug": "paldean-tauros-fighting-fire",
-    "image": "images/pokemon-fixes/fire-tauros.png",
-    "types": [
-      "Fighting",
-      "Fire"
-    ],
-    "rank": null,
-    "tier": "Bronze",
-    "points": 1,
-    "tier_icon": "images/tiers/BronzeButton.png",
-    "tier_label": "Bronze 1",
-    "can_mega_evolve": false,
-    "img": "images/pokemon-fixes/fire-tauros.png",
-    "icon": "images/pokemon-fixes/fire-tauros.png",
-    "sprite": "images/pokemon-fixes/fire-tauros.png",
-    "artwork": "images/pokemon-fixes/fire-tauros.png",
-    "image_url": "images/pokemon-fixes/fire-tauros.png",
-    "sprite_url": "images/pokemon-fixes/fire-tauros.png"
-  },
-  {
-    "id": 128,
-    "name": "Paldean Tauros",
-    "slug": "paldean-tauros-fighting-water",
-    "image": "images/pokemon-fixes/water-tauros.png",
-    "types": [
-      "Fighting",
-      "Water"
-    ],
-    "rank": null,
-    "tier": "Bronze",
-    "points": 1,
-    "tier_icon": "images/tiers/BronzeButton.png",
-    "tier_label": "Bronze 1",
-    "can_mega_evolve": false,
-    "img": "images/pokemon-fixes/water-tauros.png",
-    "icon": "images/pokemon-fixes/water-tauros.png",
-    "sprite": "images/pokemon-fixes/water-tauros.png",
-    "artwork": "images/pokemon-fixes/water-tauros.png",
-    "image_url": "images/pokemon-fixes/water-tauros.png",
-    "sprite_url": "images/pokemon-fixes/water-tauros.png"
   },
   {
     "id": 130,
@@ -3216,7 +3172,7 @@
     "id": 479,
     "name": "Rotom-Wash",
     "slug": "rotom-wash",
-    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/479.png",
+    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10009.png",
     "types": [
       "Electric",
       "Water"
@@ -3232,7 +3188,7 @@
     "id": 479,
     "name": "Rotom-Frost",
     "slug": "rotom-frost",
-    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/479.png",
+    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10010.png",
     "types": [
       "Electric",
       "Ice"
@@ -3248,7 +3204,7 @@
     "id": 479,
     "name": "Rotom-Mow",
     "slug": "rotom-mow",
-    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/479.png",
+    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10012.png",
     "types": [
       "Electric",
       "Grass"
@@ -3264,7 +3220,7 @@
     "id": 479,
     "name": "Rotom-Fan",
     "slug": "rotom-fan",
-    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/479.png",
+    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10011.png",
     "types": [
       "Electric",
       "Flying"
@@ -3274,6 +3230,22 @@
     "points": 1,
     "tier_icon": "images/tiers/BronzeButton.png",
     "tier_label": "Bronze 1",
+    "can_mega_evolve": false
+  },
+  {
+    "id": 479,
+    "name": "Rotom-Heat",
+    "slug": "rotom-heat",
+    "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10008.png",
+    "types": [
+      "Electric",
+      "Fire"
+    ],
+    "rank": 51,
+    "tier": "Gold",
+    "points": 6,
+    "tier_icon": "images/tiers/GoldButton.png",
+    "tier_label": "Gold 6",
     "can_mega_evolve": false
   },
   {

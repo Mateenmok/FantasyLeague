@@ -133,7 +133,7 @@ async function loadDraftRoom() {
   draftLeagueSubtitle.textContent = league.name;
 
   try {
-    championsPokemon = await fetch("data/champions-pokemon.json?v=tiers2").then(response => response.json());
+    championsPokemon = await fetch("data/champions-pokemon.json?v=tiers3").then(response => response.json());
   } catch (error) {
     console.error("Champions Pokémon load error:", error);
     draftRoomStatus.textContent = "Could not load Pokémon data.";
