@@ -232,21 +232,10 @@ function renderPlayoffBracket() {
 }
 
 function renderFinalRound(round) {
-  const finalMatchup = round && round.length ? round[0] : null;
-  const finalist1 = finalMatchup ? finalMatchup.team1 : null;
-  const finalist2 = finalMatchup ? finalMatchup.team2 : null;
-
   return `
     <div class="bracket-round final-round">
       <div class="bracket-round-title">Final</div>
-
-      <div class="bracket-final-showcase">
-        ${renderFinalistSlot(finalist1, "top-slot")}
-        <div class="final-center-chip">
-          <span>${finalist1 && finalist2 ? "VS" : "TBD"}</span>
-        </div>
-        ${renderFinalistSlot(finalist2, "bottom-slot")}
-      </div>
+      ${round.map(matchup => renderBracketMatchup(matchup)).join("")}
     </div>
   `;
 }
