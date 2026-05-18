@@ -389,27 +389,25 @@ function renderPlayoffBracket() {
   const rounds = buildPlayoffRounds(seededTeams);
 
   playoffBracket.innerHTML = rounds.map((round, roundIndex) => {
-    const roundLabel = getRoundLabel(roundIndex, rounds.length);
-
-    if (roundLabel === "Final") {
-      return renderFinalRound(round);
-    }
-
-    return `
-      <div class="bracket-round">
-        <div class="bracket-round-title">${roundLabel}</div>
-
-        ${round.map(matchup => renderBracketMatchup(matchup)).join("")}
-      </div>
-    `;
+    return renderBracketRound(round, roundIndex, rounds.length);
   }).join("");
 }
 
-function renderFinalRound(round) {
+function renderBracketRound(round, roundIndex, totalRounds) {
+  const roundLabel = getRoundLabel(roundIndex, totalRounds);
+  const roundStatus = roundIndex === 0 ? "Projected" : "TBD";
+  const finalClass = roundIndex === totalRounds - 1 ? "final-round" : "";
+
   return `
-    <div class="bracket-round final-round">
-      <div class="bracket-round-title">Final</div>
-      ${round.map(matchup => renderBracketMatchup(matchup)).join("")}
+    <div class="bracket-round ${finalClass}" data-round="${roundIndex + 1}">
+      <div class="bracket-round-title">
+        <span class="bracket-round-status">${roundStatus}</span>
+        <span class="bracket-round-name">${roundLabel}</span>
+      </div>
+
+      <div class="bracket-round-track">
+        ${round.map(matchup => renderBracketMatchup(matchup)).join("")}
+      </div>
     </div>
   `;
 }
@@ -445,9 +443,13 @@ function renderFinalistSlot(team, sideClass) {
 }
 
 function renderBracketMatchup(matchup) {
+  if (!matchup.team1 && !matchup.team2) {
+    return renderBracketPlaceholderMatchup();
+  }
+
   if (matchup.bye) {
     return `
-      <div class="bracket-matchup">
+      <div class="bracket-matchup has-bye">
         ${renderBracketTeam(matchup.team1)}
         <div class="bracket-bye">BYE</div>
       </div>
@@ -458,15 +460,40 @@ function renderBracketMatchup(matchup) {
     return `
       <div class="bracket-matchup">
         ${renderBracketTeam(matchup.team1)}
-        <div class="bracket-vs">vs</div>
         ${renderBracketTeam(matchup.team2)}
       </div>
     `;
   }
 
+  if (matchup.team1 || matchup.team2) {
+    return `
+      <div class="bracket-matchup">
+        ${renderBracketTeam(matchup.team1 || matchup.team2)}
+        ${renderBracketPlaceholderTeam()}
+      </div>
+    `;
+  }
+
+  return renderBracketPlaceholderMatchup();
+}
+
+function renderBracketPlaceholderMatchup() {
   return `
-    <div class="bracket-matchup">
-      <div class="bracket-bye">TBD</div>
+    <div class="bracket-matchup bracket-matchup-placeholder" aria-label="Pending matchup">
+      ${renderBracketPlaceholderTeam()}
+      ${renderBracketPlaceholderTeam()}
+    </div>
+  `;
+}
+
+function renderBracketPlaceholderTeam() {
+  return `
+    <div class="bracket-team-row bracket-team-placeholder">
+      <div class="bracket-placeholder-logo"></div>
+      <div class="bracket-placeholder-lines">
+        <span></span>
+        <span></span>
+      </div>
     </div>
   `;
 }
@@ -597,8 +624,8 @@ function sortTeamsForStandings(a, b) {
 }
 
 function getRoundLabel(roundIndex, totalRounds) {
-  if (totalRounds === 1) return "Final";
-  if (roundIndex === totalRounds - 1) return "Final";
+  if (totalRounds === 1) return "Championship";
+  if (roundIndex === totalRounds - 1) return "Championship";
   if (roundIndex === totalRounds - 2) return "Semifinals";
   if (roundIndex === totalRounds - 3) return "Quarterfinals";
   return `Round ${roundIndex + 1}`;
