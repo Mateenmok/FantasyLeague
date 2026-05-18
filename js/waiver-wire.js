@@ -28,6 +28,9 @@ let allRosterRows = [];
 let myRosterRows = [];
 let championsPokemon = [];
 let isAdmin = false;
+const WAIVER_AVAILABLE_POKEMON_PAGE_SIZE = 60;
+let waiverAvailablePokemonPage = 0;
+let waiverAvailablePokemonFilterSignature = "";
 
 openWaiversButton.addEventListener("click", () => setWaiversOpen(true));
 closeWaiversButton.addEventListener("click", () => setWaiversOpen(false));
@@ -257,13 +260,99 @@ function renderRosterList() {
   }).join("");
 }
 
+
+function getWaiverAvailablePokemonFilterSignature() {
+  return [
+    waiverPokemonSearch ? waiverPokemonSearch.value.trim().toLowerCase() : "",
+    waiverMegaFilterSelect ? waiverMegaFilterSelect.value : "all",
+    waiverTierFilterSelect ? waiverTierFilterSelect.value : "all",
+    waiverTypeFilterSelect ? waiverTypeFilterSelect.value : "all"
+  ].join("|");
+}
+
+function getWaiverAvailablePokemonPaginationElement() {
+  if (!waiverAvailableGrid) {
+    return null;
+  }
+
+  let paginationEl = document.getElementById("waiverAvailablePokemonPagination");
+
+  if (!paginationEl) {
+    paginationEl = document.createElement("div");
+    paginationEl.id = "waiverAvailablePokemonPagination";
+    paginationEl.style.cssText = "display:flex;align-items:center;justify-content:center;gap:12px;margin:16px 0 0;flex-wrap:wrap;";
+    waiverAvailableGrid.insertAdjacentElement("afterend", paginationEl);
+  }
+
+  return paginationEl;
+}
+
+function renderWaiverAvailablePokemonPagination(totalCount) {
+  const paginationEl = getWaiverAvailablePokemonPaginationElement();
+
+  if (!paginationEl) {
+    return;
+  }
+
+  const totalPages = Math.max(1, Math.ceil(totalCount / WAIVER_AVAILABLE_POKEMON_PAGE_SIZE));
+
+  if (totalCount <= WAIVER_AVAILABLE_POKEMON_PAGE_SIZE) {
+    paginationEl.innerHTML = "";
+    return;
+  }
+
+  paginationEl.innerHTML = `
+    <button id="waiverAvailablePokemonPrevPage" class="pkmn-button" type="button" ${waiverAvailablePokemonPage <= 0 ? "disabled" : ""}>Previous Page</button>
+    <span class="small-note">Page ${waiverAvailablePokemonPage + 1} of ${totalPages}</span>
+    <button id="waiverAvailablePokemonNextPage" class="pkmn-button" type="button" ${waiverAvailablePokemonPage >= totalPages - 1 ? "disabled" : ""}>Next Page</button>
+  `;
+
+  const prevButton = document.getElementById("waiverAvailablePokemonPrevPage");
+  const nextButton = document.getElementById("waiverAvailablePokemonNextPage");
+
+  if (prevButton) {
+    prevButton.addEventListener("click", function () {
+      waiverAvailablePokemonPage = Math.max(0, waiverAvailablePokemonPage - 1);
+      renderAvailablePokemonGrid();
+    });
+  }
+
+  if (nextButton) {
+    nextButton.addEventListener("click", function () {
+      waiverAvailablePokemonPage = Math.min(totalPages - 1, waiverAvailablePokemonPage + 1);
+      renderAvailablePokemonGrid();
+    });
+  }
+}
+
 function renderAvailablePokemonGrid() {
   let availablePokemon = getFilteredAvailablePokemon();
+
+  const activeFilterSignature = getWaiverAvailablePokemonFilterSignature();
+
+  if (activeFilterSignature !== waiverAvailablePokemonFilterSignature) {
+    waiverAvailablePokemonFilterSignature = activeFilterSignature;
+    waiverAvailablePokemonPage = 0;
+  }
+
   const totalFilteredCount = availablePokemon.length;
+  const totalPages = Math.max(1, Math.ceil(totalFilteredCount / WAIVER_AVAILABLE_POKEMON_PAGE_SIZE));
 
-  waiverAvailableCount.textContent = `${totalFilteredCount} available Pokémon match current filters. Showing up to 60.`;
+  if (waiverAvailablePokemonPage >= totalPages) {
+    waiverAvailablePokemonPage = totalPages - 1;
+  }
 
-  availablePokemon = availablePokemon.slice(0, 60);
+  const startIndex = waiverAvailablePokemonPage * WAIVER_AVAILABLE_POKEMON_PAGE_SIZE;
+  const endIndex = startIndex + WAIVER_AVAILABLE_POKEMON_PAGE_SIZE;
+
+  if (totalFilteredCount === 0) {
+    waiverAvailableCount.textContent = "0 available Pokémon match current filters.";
+  } else {
+    waiverAvailableCount.textContent = `${totalFilteredCount} available Pokémon match current filters. Showing ${startIndex + 1}-${Math.min(endIndex, totalFilteredCount)}.`;
+  }
+
+  availablePokemon = availablePokemon.slice(startIndex, endIndex);
+  renderWaiverAvailablePokemonPagination(totalFilteredCount);
 
   if (!availablePokemon.length) {
     waiverAvailableGrid.innerHTML = `<div class="empty-state"><p>No available Pokémon found.</p></div>`;
@@ -428,11 +517,11 @@ function getFilteredAvailablePokemon() {
   }
 
   if (megaFilter === "mega") {
-    availablePokemon = availablePokemon.filter(pokemon => pokemon.mega_eligible);
+    availablePokemon = availablePokemon.filter(pokemon => pokemon.can_mega_evolve === true);
   }
 
   if (megaFilter === "non-mega") {
-    availablePokemon = availablePokemon.filter(pokemon => !pokemon.mega_eligible);
+    availablePokemon = availablePokemon.filter(pokemon => pokemon.can_mega_evolve !== true);
   }
 
   if (tierFilter !== "all") {
@@ -529,7 +618,7 @@ function renderPokemonTierBadge(pokemon) {
 }
 
 function renderMegaBadge(pokemon) {
-  if (!pokemon || !pokemon.mega_eligible) {
+  if (!pokemon || pokemon.can_mega_evolve !== true) {
     return "";
   }
 

@@ -18,6 +18,9 @@ const megaFilterSelect = document.getElementById("megaFilterSelect");
 const tierFilterSelect = document.getElementById("tierFilterSelect");
 const typeFilterSelect = document.getElementById("typeFilterSelect");
 const availablePokemonCount = document.getElementById("availablePokemonCount");
+const AVAILABLE_POKEMON_PAGE_SIZE = 60;
+let availablePokemonPage = 0;
+let availablePokemonFilterSignature = "";
 const draftRoomStatus = document.getElementById("draftRoomStatus");
 const draftPointStatus = document.getElementById("draftPointStatus");
 const draftControls = document.getElementById("draftControls");
@@ -1186,15 +1189,101 @@ function getFilteredAvailablePokemon() {
   return availablePokemon;
 }
 
-function renderAvailablePokemonGrid() {
-  let availablePokemon = getFilteredAvailablePokemon();
-  const totalFilteredCount = availablePokemon.length;
 
-  if (availablePokemonCount) {
-    availablePokemonCount.textContent = `${totalFilteredCount} available Pokémon match current filters. Showing up to 60.`;
+function getAvailablePokemonFilterSignature() {
+  return [
+    availablePokemonSearch ? availablePokemonSearch.value.trim().toLowerCase() : "",
+    megaFilterSelect ? megaFilterSelect.value : "all",
+    tierFilterSelect ? tierFilterSelect.value : "all",
+    typeFilterSelect ? typeFilterSelect.value : "all"
+  ].join("|");
+}
+
+function getAvailablePokemonPaginationElement() {
+  if (!availablePokemonGrid) {
+    return null;
   }
 
-  availablePokemon = availablePokemon.slice(0, 60);
+  let paginationEl = document.getElementById("availablePokemonPagination");
+
+  if (!paginationEl) {
+    paginationEl = document.createElement("div");
+    paginationEl.id = "availablePokemonPagination";
+    paginationEl.style.cssText = "display:flex;align-items:center;justify-content:center;gap:12px;margin:16px 0 0;flex-wrap:wrap;";
+    availablePokemonGrid.insertAdjacentElement("afterend", paginationEl);
+  }
+
+  return paginationEl;
+}
+
+function renderAvailablePokemonPagination(totalCount) {
+  const paginationEl = getAvailablePokemonPaginationElement();
+
+  if (!paginationEl) {
+    return;
+  }
+
+  const totalPages = Math.max(1, Math.ceil(totalCount / AVAILABLE_POKEMON_PAGE_SIZE));
+
+  if (totalCount <= AVAILABLE_POKEMON_PAGE_SIZE) {
+    paginationEl.innerHTML = "";
+    return;
+  }
+
+  paginationEl.innerHTML = `
+    <button id="availablePokemonPrevPage" class="pkmn-button" type="button" ${availablePokemonPage <= 0 ? "disabled" : ""}>Previous Page</button>
+    <span class="small-note">Page ${availablePokemonPage + 1} of ${totalPages}</span>
+    <button id="availablePokemonNextPage" class="pkmn-button" type="button" ${availablePokemonPage >= totalPages - 1 ? "disabled" : ""}>Next Page</button>
+  `;
+
+  const prevButton = document.getElementById("availablePokemonPrevPage");
+  const nextButton = document.getElementById("availablePokemonNextPage");
+
+  if (prevButton) {
+    prevButton.addEventListener("click", function () {
+      availablePokemonPage = Math.max(0, availablePokemonPage - 1);
+      renderAvailablePokemonGrid();
+    });
+  }
+
+  if (nextButton) {
+    nextButton.addEventListener("click", function () {
+      availablePokemonPage = Math.min(totalPages - 1, availablePokemonPage + 1);
+      renderAvailablePokemonGrid();
+    });
+  }
+}
+
+function renderAvailablePokemonGrid() {
+  let availablePokemon = getFilteredAvailablePokemon();
+
+  const activeFilterSignature = getAvailablePokemonFilterSignature();
+
+  if (activeFilterSignature !== availablePokemonFilterSignature) {
+    availablePokemonFilterSignature = activeFilterSignature;
+    availablePokemonPage = 0;
+  }
+
+  const totalFilteredCount = availablePokemon.length;
+  const totalPages = Math.max(1, Math.ceil(totalFilteredCount / AVAILABLE_POKEMON_PAGE_SIZE));
+
+  if (availablePokemonPage >= totalPages) {
+    availablePokemonPage = totalPages - 1;
+  }
+
+  const startIndex = availablePokemonPage * AVAILABLE_POKEMON_PAGE_SIZE;
+  const endIndex = startIndex + AVAILABLE_POKEMON_PAGE_SIZE;
+
+  if (availablePokemonCount) {
+    if (totalFilteredCount === 0) {
+      availablePokemonCount.textContent = "0 available Pokémon match current filters.";
+    } else {
+      availablePokemonCount.textContent = `${totalFilteredCount} available Pokémon match current filters. Showing ${startIndex + 1}-${Math.min(endIndex, totalFilteredCount)}.`;
+    }
+  }
+
+  availablePokemon = availablePokemon.slice(startIndex, endIndex);
+  renderAvailablePokemonPagination(totalFilteredCount);
 
   if (availablePokemon.length === 0) {
     availablePokemonGrid.innerHTML = `<div class="empty-state"><p>No available Pokémon found.</p></div>`;
