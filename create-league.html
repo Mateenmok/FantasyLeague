@@ -2,98 +2,616 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="images/favicon.png">
   <title>Create League | PokeLeague</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/pokemon-ui.css?v=preleague-reverted1">
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;500;600;700;800&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/pokemon-ui.css?v=global-black-dark1">
+
+  <style>
+    body.create-league-theme-page {
+      margin: 0;
+      min-height: 100vh;
+      background-image: url("images/backgrounds/VictoryRoad.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: #ffffff;
+      font-family: "Oxanium", Arial, sans-serif;
+    }
+
+    .create-league-theme-overlay {
+      min-height: 100vh;
+      padding: 30px 20px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      box-sizing: border-box;
+      background:
+        radial-gradient(circle at center 18%, rgba(36, 151, 255, 0.22), transparent 34%),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.58));
+    }
+
+    .create-league-theme-card {
+      width: min(1120px, 94vw);
+      padding: 24px;
+      border-radius: 28px;
+      background: linear-gradient(
+        to bottom,
+        rgba(4, 18, 48, 0.70),
+        rgba(4, 18, 48, 0.36)
+      );
+      border: 2px solid rgba(255, 255, 255, 0.22);
+      box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.42),
+        0 0 42px rgba(29, 150, 255, 0.18) inset;
+      backdrop-filter: blur(2px);
+      box-sizing: border-box;
+    }
+
+    .create-league-theme-title {
+      margin: 0;
+      text-align: center;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: clamp(30px, 6vw, 42px);
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-shadow:
+        0 3px 0 rgba(0, 0, 0, 0.70),
+        0 0 12px rgba(30, 160, 255, 0.70);
+    }
+
+    #createLeagueSubtitle {
+      margin: 8px 0 18px;
+      text-align: center;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.35;
+      letter-spacing: 0.7px;
+      color: rgba(255, 255, 255, 0.90);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.70);
+    }
+
+    .create-league-theme-links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .create-league-theme-link {
+      min-height: 50px;
+      min-width: 190px;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, #294b77, #102844);
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      color: #ffffff;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95);
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(105, 166, 240, 0.16) inset;
+      transition: transform 0.12s ease, filter 0.12s ease;
+      box-sizing: border-box;
+    }
+
+    .create-league-theme-link.light {
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.92), rgba(212, 226, 246, 0.88));
+      color: #102844;
+      text-shadow: none;
+    }
+
+    .create-league-theme-link:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
+
+    body.create-league-theme-page .create-league-form {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    body.create-league-theme-page .create-league-column {
+      display: grid;
+      gap: 16px;
+      min-width: 0;
+    }
+
+    body.create-league-theme-page .pkmn-panel,
+    body.create-league-theme-page .pkmn-result-box {
+      padding: 18px;
+      border-radius: 24px;
+      background: rgba(5, 18, 43, 0.58);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(105, 166, 240, 0.10) inset;
+      color: #ffffff;
+      box-sizing: border-box;
+    }
+
+    body.create-league-theme-page .pkmn-panel p,
+    body.create-league-theme-page .pkmn-result-box p {
+      margin: 0;
+    }
+
+    body.create-league-theme-page .pkmn-panel p + p,
+    body.create-league-theme-page .pkmn-result-box p + p {
+      margin-top: 8px;
+    }
+
+    body.create-league-theme-page .pkmn-panel strong,
+    body.create-league-theme-page .create-league-eyebrow {
+      color: #ffffff;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(30, 160, 255, 0.48);
+    }
+
+    body.create-league-theme-page .small-note {
+      color: rgba(255, 255, 255, 0.74);
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    body.create-league-theme-page .pkmn-field {
+      gap: 8px;
+    }
+
+    body.create-league-theme-page .pkmn-label,
+    body.create-league-theme-page .division-name-row span,
+    body.create-league-theme-page .team-email-row span,
+    body.create-league-theme-page .pkmn-checkbox-item {
+      color: rgba(255, 255, 255, 0.88);
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+    }
+
+    body.create-league-theme-page .pkmn-input,
+    body.create-league-theme-page .pkmn-select,
+    body.create-league-theme-page .division-name-row input,
+    body.create-league-theme-page .team-email-row input {
+      width: 100%;
+      min-height: 48px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 2px solid rgba(255, 255, 255, 0.34);
+      background: rgba(245, 249, 255, 0.94);
+      box-shadow:
+        0 0 0 3px rgba(105, 166, 240, 0.10) inset,
+        0 8px 18px rgba(0, 0, 0, 0.12);
+      color: #102844;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      box-sizing: border-box;
+    }
+
+    body.create-league-theme-page .pkmn-input::placeholder,
+    body.create-league-theme-page .team-email-row input::placeholder {
+      color: rgba(16, 40, 68, 0.48);
+    }
+
+    .create-league-settings-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .create-league-division-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 180px) minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
+    }
+
+    body.create-league-theme-page .division-editor,
+    body.create-league-theme-page .team-email-grid,
+    body.create-league-theme-page .pkmn-checkbox-grid {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    body.create-league-theme-page .division-name-row,
+    body.create-league-theme-page .team-email-row {
+      display: grid;
+      grid-template-columns: 110px minmax(0, 1fr);
+      gap: 10px;
+      align-items: center;
+      min-width: 0;
+    }
+
+    body.create-league-theme-page .pkmn-checkbox-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    body.create-league-theme-page .pkmn-checkbox-item {
+      min-height: 42px;
+      padding: 9px 10px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.09);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-sizing: border-box;
+    }
+
+    body.create-league-theme-page .pkmn-checkbox-item input {
+      width: 16px;
+      height: 16px;
+      accent-color: #8ec9ff;
+    }
+
+    .create-league-actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 18px;
+    }
+
+    body.create-league-theme-page .pkmn-button {
+      min-height: 54px;
+      min-width: min(100%, 320px);
+      padding: 0 24px;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, #294b77, #102844);
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      color: #ffffff;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.7px;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95);
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(105, 166, 240, 0.16) inset;
+      cursor: pointer;
+    }
+
+    body.create-league-theme-page .pkmn-button:disabled {
+      cursor: wait;
+      opacity: 0.6;
+    }
+
+    body.create-league-theme-page #createLeagueStatus {
+      display: block;
+      margin: 16px auto 0;
+      padding: 11px 16px;
+      border-radius: 16px;
+      background: rgba(5, 18, 43, 0.54);
+      border: 1px solid rgba(255, 255, 255, 0.20);
+      text-align: center;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.90);
+      box-sizing: border-box;
+    }
+
+    body.create-league-theme-page .pkmn-result-box {
+      margin-top: 18px;
+    }
+
+    body.create-league-theme-page .pkmn-result-box h2 {
+      margin: 6px 0 14px;
+      color: #ffffff;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+    }
+
+    body.create-league-theme-page .league-code-box {
+      margin: 0 0 14px;
+      padding: 14px;
+      border-radius: 18px;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.92), rgba(212, 226, 246, 0.88));
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      color: #102844;
+      display: grid;
+      gap: 4px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    body.create-league-theme-page .league-code-box span {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+
+    body.create-league-theme-page .league-code-box strong {
+      font-size: 30px;
+      letter-spacing: 3px;
+    }
+
+    body.create-league-theme-page .created-teams-table {
+      width: 100%;
+      margin-top: 14px;
+      border-collapse: separate;
+      border-spacing: 0 8px;
+      color: #ffffff;
+      font-family: "Oxanium", Arial, sans-serif;
+    }
+
+    body.create-league-theme-page .created-teams-table th {
+      padding: 0 10px 6px;
+      color: rgba(255, 255, 255, 0.68);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.7px;
+      text-align: left;
+      text-transform: uppercase;
+    }
+
+    body.create-league-theme-page .created-teams-table td {
+      padding: 11px 10px;
+      background: rgba(255, 255, 255, 0.09);
+      border-top: 1px solid rgba(255, 255, 255, 0.14);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    body.create-league-theme-page .created-teams-table td:first-child {
+      border-left: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 14px 0 0 14px;
+    }
+
+    body.create-league-theme-page .created-teams-table td:last-child {
+      border-right: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 0 14px 14px 0;
+    }
+
+    body.create-league-theme-page .admin-badge {
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(255, 232, 129, 0.95);
+      color: #3f2c00;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    body.create-league-theme-page .create-league-result-link {
+      color: #ffffff;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-weight: 800;
+      text-decoration: underline;
+      text-decoration-color: rgba(142, 201, 255, 0.8);
+      text-underline-offset: 3px;
+    }
+
+    body.league-light-mode.create-league-theme-page .create-league-theme-card {
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.84), rgba(232, 242, 255, 0.72));
+      border-color: rgba(255, 255, 255, 0.72);
+      box-shadow:
+        0 18px 50px rgba(34, 51, 77, 0.28),
+        0 0 36px rgba(122, 184, 255, 0.24) inset;
+    }
+
+    body.league-light-mode.create-league-theme-page .create-league-theme-title,
+    body.league-light-mode.create-league-theme-page #createLeagueSubtitle {
+      color: #17233f;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85), 0 0 12px rgba(111, 174, 239, 0.42);
+    }
+
+    body.league-light-mode.create-league-theme-page .pkmn-panel,
+    body.league-light-mode.create-league-theme-page .pkmn-result-box,
+    body.league-light-mode.create-league-theme-page #createLeagueStatus {
+      background: rgba(255, 255, 255, 0.82);
+      border-color: rgba(115, 139, 177, 0.34);
+      color: #17233f;
+      box-shadow:
+        0 12px 28px rgba(43, 61, 90, 0.13),
+        0 0 0 3px rgba(255, 255, 255, 0.38) inset;
+    }
+
+    body.league-light-mode.create-league-theme-page .pkmn-panel strong,
+    body.league-light-mode.create-league-theme-page .create-league-eyebrow,
+    body.league-light-mode.create-league-theme-page .pkmn-result-box h2,
+    body.league-light-mode.create-league-theme-page .pkmn-label,
+    body.league-light-mode.create-league-theme-page .division-name-row span,
+    body.league-light-mode.create-league-theme-page .team-email-row span,
+    body.league-light-mode.create-league-theme-page .pkmn-checkbox-item {
+      color: #17233f;
+      text-shadow: none;
+    }
+
+    body.league-light-mode.create-league-theme-page .small-note,
+    body.league-light-mode.create-league-theme-page #createLeagueStatus {
+      color: #42506c;
+    }
+
+    body.league-light-mode.create-league-theme-page .pkmn-checkbox-item,
+    body.league-light-mode.create-league-theme-page .created-teams-table td {
+      background: rgba(36, 96, 164, 0.08);
+      border-color: rgba(91, 123, 164, 0.22);
+      color: #17233f;
+    }
+
+    body.league-light-mode.create-league-theme-page .created-teams-table th {
+      color: #66738b;
+    }
+
+    body.league-light-mode.create-league-theme-page .create-league-result-link {
+      color: #102844;
+    }
+
+    @media (max-width: 920px) {
+      body.create-league-theme-page .create-league-form,
+      .create-league-division-grid {
+        grid-template-columns: 1fr;
+      }
+
+      body.create-league-theme-page .pkmn-checkbox-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 620px) {
+      .create-league-theme-overlay {
+        padding: 18px 12px;
+      }
+
+      .create-league-theme-card {
+        width: 100%;
+        padding: 18px;
+        border-radius: 22px;
+      }
+
+      .create-league-theme-title {
+        font-size: 30px;
+        letter-spacing: 0.8px;
+      }
+
+      #createLeagueSubtitle {
+        font-size: 15px;
+      }
+
+      .create-league-theme-link {
+        min-width: 0;
+        width: 100%;
+      }
+
+      .create-league-settings-grid,
+      body.create-league-theme-page .division-name-row,
+      body.create-league-theme-page .team-email-row,
+      body.create-league-theme-page .pkmn-checkbox-grid {
+        grid-template-columns: 1fr;
+      }
+
+      body.create-league-theme-page .created-teams-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+    }
+  </style>
 </head>
-<body>
-  <div class="page-overlay top-align">
-    <section class="pkmn-window wide">
-      <img class="corner-ball top-left" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball top-right" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball bottom-left" src="images/ui/retroball.png" alt="">
-      <img class="corner-ball bottom-right" src="images/ui/retroball.png" alt="">
+<body class="create-league-theme-page">
+  <div class="create-league-theme-overlay">
+    <section class="create-league-theme-card">
+      <h1 class="create-league-theme-title">Create League</h1>
+      <p id="createLeagueSubtitle">Build the league shell, divisions, and manager slots.</p>
 
-      <div class="pkmn-title-box">
-        <h1 class="pkmn-title">CREATE LEAGUE</h1>
-        <p class="pkmn-subtitle">Set up a new Pokémon draft league.</p>
+      <div class="create-league-theme-links">
+        <a class="create-league-theme-link" href="account.html">Back to Account</a>
+        <a class="create-league-theme-link light" href="my-leagues.html">My Leagues</a>
       </div>
 
-      <div class="top-links">
-        <a class="pkmn-button-link small secondary" href="account.html">Back to Account</a>
-        <a class="pkmn-button-link small secondary" href="my-leagues.html">My Leagues</a>
-      </div>
-
-      <div class="pkmn-form two-col">
-        <div class="pkmn-field full">
-          <label class="pkmn-label" for="leagueNameInput">League Name</label>
-          <input class="pkmn-input" id="leagueNameInput" type="text" placeholder="Example: Claremont Champions League">
-        </div>
-
-        <div class="pkmn-field full">
-          <label class="pkmn-label" for="teamCountSelect">Number of Teams</label>
-          <select class="pkmn-select" id="teamCountSelect">
-            <option value="8">8 Teams</option>
-            <option value="10">10 Teams</option>
-            <option value="12" selected>12 Teams</option>
-            <option value="14">14 Teams</option>
-            <option value="16">16 Teams</option>
-          </select>
-        </div>
-
-        <div class="pkmn-field">
-          <label class="pkmn-label" for="pointCapInput">Roster Point Cap</label>
-          <input class="pkmn-input" id="pointCapInput" type="number" min="1" max="999" value="50">
-        </div>
-
-        <div class="pkmn-field">
-          <label class="pkmn-label" for="regularSeasonMatchesSelect">Matches Before Playoffs</label>
-          <select class="pkmn-select" id="regularSeasonMatchesSelect">
-            <option value="6">6 Matches</option>
-            <option value="7">7 Matches</option>
-            <option value="8">8 Matches</option>
-            <option value="9">9 Matches</option>
-            <option value="10" selected>10 Matches</option>
-            <option value="11">11 Matches</option>
-            <option value="12">12 Matches</option>
-          </select>
-        </div>
-
-        <div class="pkmn-field full">
+      <div class="create-league-form">
+        <div class="create-league-column">
           <div class="pkmn-panel">
-            <p><strong>League Format</strong></p>
-            <p id="leagueSettingsPreview" class="small-note">
-              12 teams • 6 playoff teams • 10 regular season matches • 50 roster points
+            <div class="pkmn-field">
+              <label class="pkmn-label" for="leagueNameInput">League Name</label>
+              <input class="pkmn-input" id="leagueNameInput" type="text" placeholder="Example: Claremont Champions League">
+            </div>
+
+            <div class="create-league-settings-grid" style="margin-top:14px;">
+              <div class="pkmn-field">
+                <label class="pkmn-label" for="teamCountSelect">Teams</label>
+                <select class="pkmn-select" id="teamCountSelect">
+                  <option value="8">8 Teams</option>
+                  <option value="10">10 Teams</option>
+                  <option value="12" selected>12 Teams</option>
+                  <option value="14">14 Teams</option>
+                  <option value="16">16 Teams</option>
+                </select>
+              </div>
+
+              <div class="pkmn-field">
+                <label class="pkmn-label" for="divisionCountSelect">Divisions</label>
+                <select class="pkmn-select" id="divisionCountSelect">
+                  <option value="1">1 Division</option>
+                  <option value="2" selected>2 Divisions</option>
+                  <option value="3">3 Divisions</option>
+                  <option value="4">4 Divisions</option>
+                </select>
+              </div>
+
+              <div class="pkmn-field">
+                <label class="pkmn-label" for="pointCapInput">Roster Point Cap</label>
+                <input class="pkmn-input" id="pointCapInput" type="number" min="1" max="999" value="50">
+              </div>
+
+              <div class="pkmn-field">
+                <label class="pkmn-label" for="regularSeasonMatchesSelect">Matches Before Playoffs</label>
+                <select class="pkmn-select" id="regularSeasonMatchesSelect">
+                  <option value="6">6 Matches</option>
+                  <option value="7">7 Matches</option>
+                  <option value="8">8 Matches</option>
+                  <option value="9">9 Matches</option>
+                  <option value="10" selected>10 Matches</option>
+                  <option value="11">11 Matches</option>
+                  <option value="12">12 Matches</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="pkmn-panel">
+            <p><strong>Division Setup</strong></p>
+            <p class="small-note">
+              Name each division. Teams are distributed evenly across the divisions you choose.
             </p>
+            <div class="create-league-division-grid">
+              <div class="pkmn-field">
+                <label class="pkmn-label" for="divisionCountSelect">Format Preview</label>
+                <p id="leagueSettingsPreview" class="small-note">
+                  12 teams • 2 divisions • 6 playoff teams • 10 regular season matches • 50 roster points
+                </p>
+              </div>
+              <div id="divisionNameFields" class="division-editor"></div>
+            </div>
           </div>
         </div>
 
-        <div class="pkmn-field full">
+        <div class="create-league-column">
           <div class="pkmn-panel">
             <p><strong>Assign Team Emails</strong></p>
             <p class="small-note">
-              Optional for now. If a participant signs in with the email assigned to a team,
-              that league will appear in their My Leagues page.
+              Optional for now. Assigned participants will see the league after they sign in.
             </p>
             <div id="teamEmailAssignments" class="team-email-grid"></div>
           </div>
-        </div>
 
-        <div class="pkmn-field full">
           <div class="pkmn-panel">
             <p><strong>Admin Teams</strong></p>
-            <p class="small-note">
-              Choose which teams should start with admin permissions. Team 1 is selected by default.
-            </p>
+            <p class="small-note">Choose which teams should start with admin permissions. Team 1 is selected by default.</p>
             <div id="adminTeamCheckboxes" class="pkmn-checkbox-grid"></div>
           </div>
         </div>
       </div>
 
-      <div style="margin-top:16px;">
+      <div class="create-league-actions">
         <button id="createLeagueButton" class="pkmn-button">Create League</button>
       </div>
 
@@ -102,8 +620,9 @@
       <section id="createdLeagueResult" class="pkmn-result-box hidden"></section>
     </section>
   </div>
+  <script src="js/theme-settings.js?v=global-theme1"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
-  <script src="js/create-league.js"></script>
+  <script src="js/create-league.js?v=create-league-theme-divisions1"></script>
 </body>
 </html>

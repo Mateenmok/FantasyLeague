@@ -28,6 +28,7 @@ const draftSetupSection = document.getElementById("draftSetupSection");
 const draftOrderList = document.getElementById("draftOrderList");
 
 const ROSTER_SIZE = 10;
+const DRAFT_TIER_ORDER = ["Diamond", "Gold", "Silver", "Bronze"];
 function getPickSeconds() {
   return Number(currentLeague?.draft_pick_seconds || 120);
 }
@@ -780,6 +781,88 @@ function getTeamPointUsage(teamId) {
   }, 0);
 }
 
+function getNextRosterSlotNumber(rosterRows) {
+  return rosterRows.length > 0
+    ? Math.max(...rosterRows.map(row => Number(row.slot_number || 0))) + 1
+    : 1;
+}
+
+async function insertDraftRosterRow({ teamId, pokemonSlug, slotNumber }) {
+  let nextSlot = slotNumber;
+  let lastError = null;
+
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const { error } = await supabaseClient
+      .from("team_rosters")
+      .insert({
+        league_id: selectedLeagueId,
+        team_id: teamId,
+        pokemon_slug: pokemonSlug,
+        slot_number: nextSlot
+      });
+
+    if (!error) {
+      return null;
+    }
+
+    lastError = error;
+
+    if (!isRosterSlotConflict(error)) {
+      return error;
+    }
+
+    const { data: latestRosterRows, error: reloadError } = await supabaseClient
+      .from("team_rosters")
+      .select("*")
+      .eq("league_id", selectedLeagueId)
+      .eq("team_id", teamId)
+      .order("slot_number", { ascending: true });
+
+    if (reloadError) {
+      console.error("Roster reload after slot conflict failed:", reloadError);
+      return error;
+    }
+
+    nextSlot = getNextRosterSlotNumber(latestRosterRows || []);
+  }
+
+  return lastError;
+}
+
+function isRosterSlotConflict(error) {
+  const errorText = getSupabaseErrorText(error);
+
+  return errorText.includes("unique_team_slot") ||
+    errorText.includes("slot_number");
+}
+
+function getRosterInsertFailureMessage(error) {
+  const errorText = getSupabaseErrorText(error);
+
+  if (errorText.includes("unique_pokemon_owner")) {
+    return "Roster update failed because the database is still enforcing old global roster uniqueness. Draft pick was undone.";
+  }
+
+  if (errorText.includes("unique_league_pokemon_owner") || errorText.includes("pokemon_slug")) {
+    return "Roster update failed because that Pokémon is already rostered in this league. Draft pick was undone.";
+  }
+
+  if (isRosterSlotConflict(error)) {
+    return "Roster slot was taken by another draft update. Draft pick was undone; refresh and try again.";
+  }
+
+  return "Roster update failed. Draft pick was undone.";
+}
+
+function getSupabaseErrorText(error) {
+  return [
+    error?.message,
+    error?.details,
+    error?.hint,
+    error?.code
+  ].filter(Boolean).join(" ").toLowerCase();
+}
+
 function getPokemonPoints(pokemon) {
   return Number(pokemon?.points || 1);
 }
@@ -1186,9 +1269,38 @@ function getFilteredAvailablePokemon() {
     });
   }
 
-  return availablePokemon;
+  return sortAvailablePokemonForDraft(availablePokemon);
 }
 
+function sortAvailablePokemonForDraft(pokemonList) {
+  return pokemonList.slice().sort((a, b) => {
+    const tierDiff = getDraftTierSortValue(a.tier) - getDraftTierSortValue(b.tier);
+
+    if (tierDiff !== 0) {
+      return tierDiff;
+    }
+
+    const pointDiff = getPokemonPoints(b) - getPokemonPoints(a);
+
+    if (pointDiff !== 0) {
+      return pointDiff;
+    }
+
+    const aRank = Number(a.rank || 9999);
+    const bRank = Number(b.rank || 9999);
+
+    if (aRank !== bRank) {
+      return aRank - bRank;
+    }
+
+    return a.name.localeCompare(b.name);
+  });
+}
+
+function getDraftTierSortValue(tier) {
+  const tierIndex = DRAFT_TIER_ORDER.indexOf(tier);
+  return tierIndex === -1 ? DRAFT_TIER_ORDER.length : tierIndex;
+}
 
 function getAvailablePokemonFilterSignature() {
   return [
@@ -1400,18 +1512,12 @@ async function makeDraftPick(randomPick) {
     return;
   }
 
-  const nextSlot = rosterRows.length > 0
-    ? Math.max(...rosterRows.map(row => row.slot_number)) + 1
-    : 1;
-
-  const { error: rosterError } = await supabaseClient
-    .from("team_rosters")
-    .insert({
-      league_id: selectedLeagueId,
-      team_id: nextPick.team.id,
-      pokemon_slug: pokemon.slug,
-      slot_number: nextSlot
-    });
+  const nextSlot = getNextRosterSlotNumber(rosterRows);
+  const rosterError = await insertDraftRosterRow({
+    teamId: nextPick.team.id,
+    pokemonSlug: pokemon.slug,
+    slotNumber: nextSlot
+  });
 
   if (rosterError) {
     console.error("Roster insert error:", rosterError);
@@ -1422,7 +1528,8 @@ async function makeDraftPick(randomPick) {
       .eq("league_id", selectedLeagueId)
       .eq("overall_pick", nextPick.overallPick);
 
-    draftActionStatus.textContent = "Roster update failed. Draft pick was undone.";
+    draftActionStatus.textContent = getRosterInsertFailureMessage(rosterError);
+    await refreshDraftData(true);
     makePickButton.disabled = false;
     return;
   }
