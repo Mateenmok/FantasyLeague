@@ -1,63 +1,58 @@
 const teamCountSelect = document.getElementById("teamCountSelect");
-const divisionCountSelect = document.getElementById("divisionCountSelect");
+const playoffTeamCountSelect = document.getElementById("playoffTeamCountSelect");
 const pointCapInput = document.getElementById("pointCapInput");
 const regularSeasonMatchesSelect = document.getElementById("regularSeasonMatchesSelect");
 const leagueSettingsPreview = document.getElementById("leagueSettingsPreview");
-const divisionNameFields = document.getElementById("divisionNameFields");
 const teamEmailAssignments = document.getElementById("teamEmailAssignments");
 const adminTeamCheckboxes = document.getElementById("adminTeamCheckboxes");
 const createLeagueButton = document.getElementById("createLeagueButton");
 const createLeagueStatus = document.getElementById("createLeagueStatus");
 const createdLeagueResult = document.getElementById("createdLeagueResult");
-const DEFAULT_DIVISION_NAMES = ["Division A", "Division B", "Division C", "Division D"];
 
-renderDivisionNameFields();
+renderPlayoffTeamOptions();
 renderAdminCheckboxes();
 renderTeamEmailAssignments();
 updateLeagueSettingsPreview();
 
 teamCountSelect.addEventListener("change", function () {
+  renderPlayoffTeamOptions();
   renderAdminCheckboxes();
   renderTeamEmailAssignments();
   updateLeagueSettingsPreview();
 });
 
-divisionCountSelect.addEventListener("change", function () {
-  renderDivisionNameFields();
-  updateLeagueSettingsPreview();
-});
-
+playoffTeamCountSelect.addEventListener("change", updateLeagueSettingsPreview);
 pointCapInput.addEventListener("input", updateLeagueSettingsPreview);
 regularSeasonMatchesSelect.addEventListener("change", updateLeagueSettingsPreview);
 createLeagueButton.addEventListener("click", createLeague);
 
 function updateLeagueSettingsPreview() {
   const teamCount = Number(teamCountSelect.value);
-  const divisionCount = getDivisionCount();
-  const playoffTeams = teamCount / 2;
+  const playoffTeams = getPlayoffTeamCount();
   const pointCap = Number(pointCapInput.value || 50);
   const regularSeasonMatches = Number(regularSeasonMatchesSelect.value);
 
   leagueSettingsPreview.textContent =
-    `${teamCount} teams • ${divisionCount} ${pluralize("division", divisionCount)} • ${playoffTeams} playoff teams • ${regularSeasonMatches} regular season matches • ${pointCap} roster points`;
+    `${teamCount} teams • ${playoffTeams} playoff teams • ${regularSeasonMatches} regular season matches • ${pointCap} roster points`;
 }
 
-function renderDivisionNameFields() {
-  const previousNames = getDivisionNameDrafts();
-  const divisionCount = getDivisionCount();
+function renderPlayoffTeamOptions() {
+  const teamCount = Number(teamCountSelect.value);
+  const previousValue = Number(playoffTeamCountSelect.value);
+  const defaultValue = getDefaultPlayoffTeamCount(teamCount);
+  const options = [];
 
-  divisionNameFields.innerHTML = "";
-
-  for (let i = 1; i <= divisionCount; i++) {
-    const row = document.createElement("label");
-    row.className = "division-name-row";
-    row.innerHTML = `
-      <span>Division ${i}</span>
-      <input id="divisionName-${i}" type="text" maxlength="40" value="${escapeHtml(previousNames[i - 1] || DEFAULT_DIVISION_NAMES[i - 1] || `Division ${i}`)}">
-    `;
-
-    divisionNameFields.appendChild(row);
+  for (let i = 2; i <= teamCount; i += 2) {
+    options.push(i);
   }
+
+  playoffTeamCountSelect.innerHTML = options.map(count => {
+    return `<option value="${count}">${count} Teams</option>`;
+  }).join("");
+
+  playoffTeamCountSelect.value = options.includes(previousValue)
+    ? String(previousValue)
+    : String(defaultValue);
 }
 
 function renderTeamEmailAssignments() {
@@ -97,8 +92,7 @@ function renderAdminCheckboxes() {
 async function createLeague() {
   const leagueName = document.getElementById("leagueNameInput").value.trim();
   const teamCount = Number(teamCountSelect.value);
-  const divisionCount = getDivisionCount();
-  const divisionNames = getDivisionNames();
+  const playoffTeamCount = getPlayoffTeamCount();
   const rosterPointCap = Number(pointCapInput.value);
   const regularSeasonMatches = Number(regularSeasonMatchesSelect.value);
   const teamEmails = getTeamEmailAssignments();
@@ -113,18 +107,8 @@ async function createLeague() {
     return;
   }
 
-  if (divisionCount < 1 || divisionCount > 4 || divisionCount > teamCount) {
-    createLeagueStatus.textContent = "Choose between 1 and 4 divisions.";
-    return;
-  }
-
-  if (divisionNames.some(name => !name)) {
-    createLeagueStatus.textContent = "Every division needs a name.";
-    return;
-  }
-
-  if (hasDuplicateDivisionName(divisionNames)) {
-    createLeagueStatus.textContent = "Division names must be unique.";
+  if (playoffTeamCount < 2 || playoffTeamCount > teamCount || playoffTeamCount % 2 !== 0) {
+    createLeagueStatus.textContent = "Playoff teams must be an even number between 2 and the league size.";
     return;
   }
 
@@ -191,12 +175,6 @@ async function createLeague() {
 
   const leagueId = makeId();
   const leagueCode = generateLeagueCode();
-  const divisions = divisionNames.map((name, index) => ({
-    id: makeId(),
-    league_id: leagueId,
-    division_number: index + 1,
-    name
-  }));
 
   const adminTeamNumbers = getAdminTeamNumbers();
   const usedPasscodes = new Set();
@@ -206,8 +184,6 @@ async function createLeague() {
     const passcode = generateUniquePasscode(usedPasscodes);
     const managerEmail = teamEmails.get(i) || (i === 1 ? userEmail : null);
     const ownerName = managerEmail === userEmail ? displayName : "Unassigned";
-    const divisionIndex = getDivisionIndexForTeam(i, teamCount, divisionCount);
-    const divisionId = divisions[divisionIndex].id;
 
     teams.push({
       id: makeId(),
@@ -219,7 +195,7 @@ async function createLeague() {
       logo_url: "",
       team_passcode: passcode,
       manager_email: managerEmail,
-      division_id: divisionId,
+      division_id: null,
       is_admin: adminTeamNumbers.has(i)
     });
   }
@@ -231,6 +207,7 @@ async function createLeague() {
       league_code: leagueCode,
       name: leagueName,
       team_count: teamCount,
+      playoff_team_count: playoffTeamCount,
       roster_point_cap: rosterPointCap,
       regular_season_matches: regularSeasonMatches
     });
@@ -238,17 +215,6 @@ async function createLeague() {
   if (leagueError) {
     console.error("Error creating league:", leagueError);
     createLeagueStatus.textContent = "Error creating league. Check the console.";
-    createLeagueButton.disabled = false;
-    return;
-  }
-
-  const { error: divisionsError } = await supabaseClient
-    .from("league_divisions")
-    .insert(divisions);
-
-  if (divisionsError) {
-    console.error("Error creating divisions:", divisionsError);
-    createLeagueStatus.textContent = "League was created, but divisions failed. Check the console.";
     createLeagueButton.disabled = false;
     return;
   }
@@ -292,9 +258,9 @@ async function createLeague() {
     leagueCode,
     leagueName,
     teamCount,
+    playoffTeamCount,
     rosterPointCap,
     regularSeasonMatches,
-    divisions,
     teams
   });
 }
@@ -303,31 +269,21 @@ function renderCreatedLeagueResult({
   leagueCode,
   leagueName,
   teamCount,
+  playoffTeamCount,
   rosterPointCap,
   regularSeasonMatches,
-  divisions,
   teams
 }) {
   createdLeagueResult.classList.remove("hidden");
 
-  const playoffTeams = teamCount / 2;
-  const divisionList = divisions.map(division => escapeHtml(division.name)).join(" / ");
-  const divisionsById = {};
-
-  divisions.forEach(division => {
-    divisionsById[division.id] = division.name;
-  });
-
   const teamRows = teams.map(team => {
     const adminBadge = team.is_admin ? `<span class="admin-badge">Admin</span>` : "";
     const email = team.manager_email || "Unassigned";
-    const divisionName = divisionsById[team.division_id] || "Unassigned";
 
     return `
       <tr>
         <td>${team.team_number}</td>
         <td>${escapeHtml(team.team_name)}</td>
-        <td>${escapeHtml(divisionName)}</td>
         <td>${escapeHtml(email)}</td>
         <td>${adminBadge}</td>
       </tr>
@@ -346,11 +302,9 @@ function renderCreatedLeagueResult({
     <div class="pkmn-panel">
       <p><strong>League Settings</strong></p>
       <p>${teamCount} teams</p>
-      <p>${divisions.length} ${pluralize("division", divisions.length)}</p>
-      <p>${playoffTeams} playoff teams</p>
+      <p>${playoffTeamCount} playoff teams</p>
       <p>${regularSeasonMatches} matches before playoffs</p>
       <p>${rosterPointCap} roster points maximum</p>
-      <p>${divisionList}</p>
     </div>
 
     <p class="small-note">
@@ -362,7 +316,6 @@ function renderCreatedLeagueResult({
         <tr>
           <th>#</th>
           <th>Team</th>
-          <th>Division</th>
           <th>Manager Email</th>
           <th>Role</th>
         </tr>
@@ -401,58 +354,15 @@ function getTeamEmailAssignments() {
   return assignments;
 }
 
-function getDivisionCount() {
-  return Number(divisionCountSelect.value || 2);
+function getPlayoffTeamCount() {
+  const teamCount = Number(teamCountSelect.value);
+  return Number(playoffTeamCountSelect.value || getDefaultPlayoffTeamCount(teamCount));
 }
 
-function getDivisionNameDrafts() {
-  const names = [];
-  const inputs = divisionNameFields.querySelectorAll("input");
-
-  inputs.forEach(input => {
-    names.push(input.value.trim());
-  });
-
-  return names;
-}
-
-function getDivisionNames() {
-  const divisionCount = getDivisionCount();
-  const names = [];
-
-  for (let i = 1; i <= divisionCount; i++) {
-    const input = document.getElementById(`divisionName-${i}`);
-    const fallback = DEFAULT_DIVISION_NAMES[i - 1] || `Division ${i}`;
-    names.push((input?.value || fallback).trim());
-  }
-
-  return names;
-}
-
-function hasDuplicateDivisionName(divisionNames) {
-  const seen = new Set();
-
-  return divisionNames.some(name => {
-    const normalizedName = name.trim().toLowerCase();
-
-    if (seen.has(normalizedName)) {
-      return true;
-    }
-
-    seen.add(normalizedName);
-    return false;
-  });
-}
-
-function getDivisionIndexForTeam(teamNumber, teamCount, divisionCount) {
-  return Math.min(
-    divisionCount - 1,
-    Math.floor((teamNumber - 1) * divisionCount / teamCount)
-  );
-}
-
-function pluralize(word, count) {
-  return count === 1 ? word : `${word}s`;
+function getDefaultPlayoffTeamCount(teamCount) {
+  if (teamCount >= 10) return 6;
+  if (teamCount >= 4) return 4;
+  return 2;
 }
 
 function findDuplicateEmail(teamEmails) {

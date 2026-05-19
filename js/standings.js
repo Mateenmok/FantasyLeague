@@ -11,7 +11,6 @@ const selectedLeagueId = localStorage.getItem("selected-league-id");
 
 let currentLeague = null;
 let leagueTeams = [];
-let leagueDivisions = [];
 let teamRosterRows = [];
 let championsPokemon = [];
 let rosterLoadError = "";
@@ -67,18 +66,6 @@ async function loadStandingsPage() {
   currentLeague = league;
   standingsSubtitle.textContent = league.name;
 
-  const { data: divisions, error: divisionsError } = await supabaseClient
-    .from("league_divisions")
-    .select("*")
-    .eq("league_id", selectedLeagueId)
-    .order("division_number", { ascending: true });
-
-  if (divisionsError) {
-    console.error("Divisions error:", divisionsError);
-    standingsStatus.textContent = "Could not load divisions.";
-    return;
-  }
-
   const { data: teams, error: teamsError } = await supabaseClient
     .from("league_teams")
     .select("*")
@@ -91,7 +78,6 @@ async function loadStandingsPage() {
     return;
   }
 
-  leagueDivisions = divisions || [];
   leagueTeams = normalizeTeams(teams || []);
 
   await loadRosterData();
@@ -159,90 +145,67 @@ function renderStandings() {
     return;
   }
 
-  const divisionsToRender = leagueDivisions.length
-    ? leagueDivisions
-    : [{ id: "all", name: "League Standings", division_number: 1 }];
+  const orderedTeams = [...leagueTeams].sort(sortTeamsForStandings);
+  const leader = orderedTeams[0];
 
-  standingsContent.innerHTML = divisionsToRender.map(division => {
-    const divisionTeams = leagueTeams
-      .filter(team => {
-        if (division.id === "all") return true;
-        return team.division_id === division.id;
-      })
-      .sort(sortTeamsForStandings);
+  const rows = orderedTeams.map((team, index) => {
+    const gamesBack = calculateGamesBack(leader, team);
+    const gbText = formatGamesBack(gamesBack);
 
-    if (!divisionTeams.length) {
-      return `
-        <section class="standings-board division-${getDivisionSlug(division.name)}">
-          <div class="standings-division-title">${escapeHtml(division.name)}</div>
-          <div class="empty-state">
-            <p>No teams assigned to this division.</p>
-          </div>
-        </section>
-      `;
-    }
-
-    const leader = divisionTeams[0];
-
-    const rows = divisionTeams.map((team, index) => {
-      const gamesBack = calculateGamesBack(leader, team);
-      const gbText = formatGamesBack(gamesBack);
-
-      const logoHtml = team.logo_url
-        ? `<img class="standings-logo" src="${escapeHtml(team.logo_url)}" alt="${escapeHtml(team.team_name)} logo">`
-        : `<div class="standings-logo-placeholder">T${team.team_number}</div>`;
-
-      return `
-        <div class="standings-row ${index === 0 ? "division-leader" : ""}">
-          <div class="standings-rank">${index + 1}</div>
-
-          <div class="standings-team-cell">
-            <button
-              type="button"
-              class="standings-logo-button standings-roster-trigger"
-              data-team-id="${escapeHtml(team.id)}"
-              aria-label="View ${escapeHtml(team.team_name)} roster"
-            >
-              ${logoHtml}
-            </button>
-            <div>
-              <div class="standings-team-name">${escapeHtml(team.team_name)}</div>
-              <div class="standings-owner-name">${escapeHtml(team.owner_name || "Unassigned")}</div>
-              <button
-                type="button"
-                class="standings-roster-button standings-roster-trigger"
-                data-team-id="${escapeHtml(team.id)}"
-              >
-                Roster
-              </button>
-            </div>
-          </div>
-
-          <div class="standings-record" data-label="Record">${getRecordString(team)}</div>
-          <div class="standings-pct" data-label="PCT">${formatWinningPercentage(team.winningPercentage)}</div>
-          <div class="standings-number" data-label="GW">${team.gamesWon}</div>
-          <div class="standings-gb" data-label="GB">${gbText}</div>
-        </div>
-      `;
-    }).join("");
+    const logoHtml = team.logo_url
+      ? `<img class="standings-logo" src="${escapeHtml(team.logo_url)}" alt="${escapeHtml(team.team_name)} logo">`
+      : `<div class="standings-logo-placeholder">T${team.team_number}</div>`;
 
     return `
-      <section class="standings-board division-${getDivisionSlug(division.name)}">
-        <div class="standings-division-title">${escapeHtml(division.name)}</div>
+      <div class="standings-row ${index === 0 ? "division-leader" : ""}">
+        <div class="standings-rank">${index + 1}</div>
 
-        <div class="standings-header-row">
-          <div>#</div>
-          <div>Team</div>
-          <div>Record</div>
-          <div>PCT</div>
-          <div>GW</div>
-          <div>GB</div>
+        <div class="standings-team-cell">
+          <button
+            type="button"
+            class="standings-logo-button standings-roster-trigger"
+            data-team-id="${escapeHtml(team.id)}"
+            aria-label="View ${escapeHtml(team.team_name)} roster"
+          >
+            ${logoHtml}
+          </button>
+          <div>
+            <div class="standings-team-name">${escapeHtml(team.team_name)}</div>
+            <div class="standings-owner-name">${escapeHtml(team.owner_name || "Unassigned")}</div>
+            <button
+              type="button"
+              class="standings-roster-button standings-roster-trigger"
+              data-team-id="${escapeHtml(team.id)}"
+            >
+              Roster
+            </button>
+          </div>
         </div>
 
-        ${rows}
-      </section>
+        <div class="standings-record" data-label="Record">${getRecordString(team)}</div>
+        <div class="standings-pct" data-label="PCT">${formatWinningPercentage(team.winningPercentage)}</div>
+        <div class="standings-number" data-label="GW">${team.gamesWon}</div>
+        <div class="standings-gb" data-label="GB">${gbText}</div>
+      </div>
     `;
   }).join("");
+
+  standingsContent.innerHTML = `
+    <section class="standings-board division-league-standings">
+      <div class="standings-division-title">League Standings</div>
+
+      <div class="standings-header-row">
+        <div>#</div>
+        <div>Team</div>
+        <div>Record</div>
+        <div>PCT</div>
+        <div>GW</div>
+        <div>GB</div>
+      </div>
+
+      ${rows}
+    </section>
+  `;
 
   bindRosterButtons();
   standingsStatus.textContent = `${leagueTeams.length} teams loaded. Tiebreaker: games won.`;
@@ -376,7 +339,7 @@ function renderPlayoffBracket() {
     return;
   }
 
-  const playoffCount = Math.floor(Number(currentLeague.team_count || leagueTeams.length) / 2);
+  const playoffCount = getLeaguePlayoffTeamCount();
 
   const seededTeams = [...leagueTeams]
     .sort(compareTeamsForPlayoffs)
@@ -575,12 +538,19 @@ function buildPlayoffRounds(seededTeams) {
 }
 
 
-function getDivisionSlug(name) {
-  return String(name || "")
-    .toLowerCase()
-    .replace(/&/g, "and")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
+function getLeaguePlayoffTeamCount() {
+  const teamCount = Number(currentLeague.team_count || leagueTeams.length);
+  const configuredCount = Number(currentLeague.playoff_team_count);
+  const fallbackCount = getDefaultPlayoffTeamCount(teamCount);
+  const playoffCount = configuredCount || fallbackCount;
+
+  return Math.min(Math.max(playoffCount, 2), leagueTeams.length);
+}
+
+function getDefaultPlayoffTeamCount(teamCount) {
+  if (teamCount >= 10) return 6;
+  if (teamCount >= 4) return 4;
+  return 2;
 }
 
 function compareTeamsForPlayoffs(a, b) {

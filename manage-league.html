@@ -168,14 +168,12 @@
       color: rgba(255, 255, 255, 0.76);
     }
 
-    body.manage-theme-page .division-editor,
     body.manage-theme-page .draft-order-editor,
     body.manage-theme-page .team-manager-list {
       display: grid;
       gap: 12px;
     }
 
-    body.manage-theme-page .division-name-row,
     body.manage-theme-page .manage-draft-order-row,
     body.manage-theme-page .team-manager-row {
       display: grid;
@@ -188,19 +186,14 @@
       box-sizing: border-box;
     }
 
-    body.manage-theme-page .division-name-row {
-      grid-template-columns: 150px 1fr;
-    }
-
     body.manage-theme-page .manage-draft-order-row {
       grid-template-columns: 120px 1fr;
     }
 
     body.manage-theme-page .team-manager-row {
-      grid-template-columns: 90px 1.1fr 1.3fr 1fr auto;
+      grid-template-columns: 90px 1.1fr 1.4fr auto;
     }
 
-    body.manage-theme-page .division-name-row span,
     body.manage-theme-page .manage-draft-order-row span,
     body.manage-theme-page .team-row-label {
       font-family: "Oxanium", Arial, sans-serif;
@@ -232,7 +225,7 @@
 
     body.manage-theme-page .draft-settings-grid {
       display: grid;
-      grid-template-columns: minmax(220px, 320px);
+      grid-template-columns: repeat(2, minmax(220px, 320px));
       gap: 12px;
       margin-top: 12px;
       margin-bottom: 14px;
@@ -335,8 +328,8 @@
         grid-template-columns: 1fr;
       }
 
-      body.manage-theme-page .division-name-row,
       body.manage-theme-page .manage-draft-order-row,
+      body.manage-theme-page .draft-settings-grid,
       body.manage-theme-page .delete-league-row {
         grid-template-columns: 1fr;
       }
@@ -374,15 +367,6 @@
       </div>
 
       <div class="pkmn-panel">
-        <p><strong>Divisions</strong></p>
-        <p class="small-note">
-          Rename each division and assign teams to either division.
-        </p>
-
-        <div id="divisionEditor" class="division-editor"></div>
-      </div>
-
-      <div class="pkmn-panel">
         <p class="manage-section-title">Draft Settings</p>
         <p class="manage-section-note">
           Set the draft clock and draft order before the draft begins.
@@ -392,6 +376,11 @@
           <label class="draft-clock-setting">
             <span>Clock Seconds</span>
             <input id="draftClockSecondsInput" class="pkmn-input" type="number" min="15" max="600" value="120">
+          </label>
+
+          <label class="draft-clock-setting">
+            <span>Playoff Teams</span>
+            <select id="playoffTeamCountSelect" class="pkmn-select"></select>
           </label>
         </div>
 
@@ -431,6 +420,6 @@
   <script src="js/theme-settings.js?v=global-theme1"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
-  <script src="js/manage-league.js?v=4"></script>
+  <script src="js/manage-league.js?v=manage-playoffs1"></script>
 </body>
 </html>
