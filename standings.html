@@ -675,883 +675,237 @@
 
   </style>
 
-
-<style id="standings-real-pipe-node-board">
-  /* ===== REAL CIRCLE + PIPE STANDINGS BOARD ===== */
-
-  body.standings-theme-page #standingsContent.standings-content {
-    width: 100% !important;
-    max-width: 900px !important;
-    margin: 0 auto 20px !important;
-    display: grid !important;
-    gap: 24px !important;
-  }
-
-  body.standings-theme-page #standingsContent .standings-board {
-    position: relative !important;
-    padding: 22px 24px 28px !important;
-    border-radius: 30px !important;
-    background:
-      radial-gradient(circle at top left, rgba(150, 213, 255, 0.20), transparent 34%),
-      linear-gradient(180deg, rgba(235, 245, 255, 0.92), rgba(214, 230, 247, 0.86)) !important;
-    border: 2px solid rgba(255, 255, 255, 0.72) !important;
-    box-shadow:
-      0 20px 42px rgba(0, 0, 0, 0.24),
-      0 0 0 4px rgba(70, 145, 220, 0.08) inset !important;
-    overflow: visible !important;
-  }
-
-  body.standings-theme-page #standingsContent .standings-division-title {
-    position: relative !important;
-    z-index: 5 !important;
-    height: 50px !important;
-    margin: 0 0 18px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    border-radius: 24px !important;
-    background: linear-gradient(90deg, #b7a5ff, #86cfff) !important;
-    border: 2px solid rgba(255, 255, 255, 0.76) !important;
-    color: #102844 !important;
-    text-shadow: none !important;
-    font-size: 22px !important;
-    font-weight: 900 !important;
-    letter-spacing: 3px !important;
-    text-transform: uppercase !important;
-    box-shadow:
-      0 8px 18px rgba(0, 0, 0, 0.16),
-      0 -3px 0 rgba(255, 255, 255, 0.24) inset,
-      0 3px 0 rgba(35, 86, 140, 0.14) inset !important;
-  }
-
-  /* main vertical pipe connecting rank circles */
-  body.standings-theme-page #standingsContent .standings-board::before {
-    content: "" !important;
-    position: absolute !important;
-    left: 53px !important;
-    top: 125px !important;
-    bottom: 42px !important;
-    width: 10px !important;
-    border-radius: 999px !important;
-    background: linear-gradient(to bottom, #79c4f6, #b9e2ff) !important;
-    box-shadow:
-      0 0 0 2px rgba(255, 255, 255, 0.44) inset,
-      0 8px 18px rgba(40, 108, 176, 0.20) !important;
-    z-index: 0 !important;
-  }
-
-  /* 4-column node track */
-  body.standings-theme-page #standingsContent .standings-header-row,
-  body.standings-theme-page #standingsContent .standings-row {
-    position: relative !important;
-    display: grid !important;
-    grid-template-columns: 70px 1fr 86px 86px !important;
-    column-gap: 18px !important;
-    align-items: center !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    padding: 0 !important;
-    border: 0 !important;
-    box-shadow: none !important;
-    background: transparent !important;
-    overflow: visible !important;
-  }
-
-  body.standings-theme-page #standingsContent .standings-header-row {
-    min-height: 54px !important;
-    margin: 0 0 12px !important;
-    z-index: 4 !important;
-  }
-
-  body.standings-theme-page #standingsContent .standings-row {
-    min-height: 92px !important;
-    margin: 12px 0 0 !important;
-    z-index: 2 !important;
-  }
-
-  /* force-remove all older colored row/card backgrounds */
-  body.standings-theme-page #standingsContent .standings-board .standings-row,
-  body.standings-theme-page #standingsContent .standings-board .standings-row:nth-of-type(2),
-  body.standings-theme-page #standingsContent .standings-board .standings-row:nth-of-type(3),
-  body.standings-theme-page #standingsContent .standings-board .standings-row:nth-of-type(4),
-  body.standings-theme-page #standingsContent .standings-board .standings-row:nth-of-type(5),
-  body.standings-theme-page #standingsContent .standings-board .standings-row:nth-of-type(6),
-  body.standings-theme-page #standingsContent .standings-board .standings-row:nth-of-type(7),
-  body.standings-theme-page #standingsContent .standings-board .standings-row:nth-of-type(8),
-  body.standings-theme-page #standingsContent .standings-board .standings-row:nth-of-type(n+9),
-  body.league-light-mode.standings-theme-page #standingsContent .standings-board .standings-row {
-    background: transparent !important;
-    border: 0 !important;
-    box-shadow: none !important;
-    outline: 0 !important;
-  }
-
-  /* horizontal pipe connecting all row nodes */
-  body.standings-theme-page #standingsContent .standings-row::before {
-    content: "" !important;
-    position: absolute !important;
-    left: 54px !important;
-    right: 45px !important;
-    top: 50% !important;
-    height: 14px !important;
-    transform: translateY(-50%) !important;
-    border-radius: 999px !important;
-    background: linear-gradient(90deg, #74bff2 0%, #bce8ff 42%, #f3e16b 100%) !important;
-    border: 2px solid rgba(255, 255, 255, 0.52) !important;
-    box-shadow:
-      0 8px 18px rgba(46, 111, 178, 0.18),
-      0 2px 0 rgba(255, 255, 255, 0.40) inset,
-      0 -2px 0 rgba(40, 85, 135, 0.12) inset !important;
-    z-index: 0 !important;
-  }
-
-  /* header pipe */
-  body.standings-theme-page #standingsContent .standings-header-row::before {
-    content: "" !important;
-    position: absolute !important;
-    left: 54px !important;
-    right: 45px !important;
-    top: 50% !important;
-    height: 10px !important;
-    transform: translateY(-50%) !important;
-    border-radius: 999px !important;
-    background: linear-gradient(90deg, rgba(116, 191, 242, 0.50), rgba(188, 232, 255, 0.62), rgba(243, 225, 107, 0.50)) !important;
-    border: 2px solid rgba(255, 255, 255, 0.34) !important;
-    z-index: 0 !important;
-  }
-
-  body.standings-theme-page #standingsContent .standings-row > *,
-  body.standings-theme-page #standingsContent .standings-header-row > * {
-    position: relative !important;
-    z-index: 2 !important;
-  }
-
-  /* header nodes */
-  body.standings-theme-page #standingsContent .standings-header-row > div {
-    color: #102844 !important;
-    font-size: 11px !important;
-    font-weight: 900 !important;
-    letter-spacing: 1px !important;
-    text-transform: uppercase !important;
-  }
-
-  body.standings-theme-page #standingsContent .standings-header-row > div:nth-child(1),
-  body.standings-theme-page #standingsContent .standings-header-row > div:nth-child(3),
-  body.standings-theme-page #standingsContent .standings-header-row > div:nth-child(4) {
-    width: 58px !important;
-    height: 58px !important;
-    min-width: 58px !important;
-    min-height: 58px !important;
-    margin: 0 auto !important;
-    border-radius: 999px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background: radial-gradient(circle at 35% 25%, #ffffff, #d8e9f8 62%, #b8d5ef) !important;
-    border: 3px solid rgba(255, 255, 255, 0.94) !important;
-    box-shadow:
-      0 7px 16px rgba(0, 0, 0, 0.12),
-      0 0 0 4px rgba(70, 145, 220, 0.08) inset !important;
-  }
-
-  body.standings-theme-page #standingsContent .standings-header-row > div:nth-child(2) {
-    justify-self: start !important;
-    padding-left: 16px !important;
-    background: transparent !important;
-    border: 0 !important;
-    box-shadow: none !important;
-  }
-
-  /* rank circle */
-  body.standings-theme-page #standingsContent .standings-rank {
-    width: 62px !important;
-    height: 62px !important;
-    min-width: 62px !important;
-    min-height: 62px !important;
-    margin: 0 auto !important;
-    border-radius: 999px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background: radial-gradient(circle at 35% 25%, #ffffff, #a9dcff 62%, #64b6eb) !important;
-    border: 3px solid rgba(255, 255, 255, 0.96) !important;
-    color: #102844 !important;
-    font-size: 20px !important;
-    font-weight: 900 !important;
-    text-shadow: none !important;
-    box-shadow:
-      0 9px 18px rgba(0, 0, 0, 0.18),
-      0 0 0 4px rgba(34, 108, 185, 0.10) inset !important;
-  }
-
-  /* team area: no container, only logo circle and text on pipe */
-  body.standings-theme-page #standingsContent .standings-team-cell {
-    position: relative !important;
-    min-height: 76px !important;
-    display: grid !important;
-    grid-template-columns: 74px minmax(0, 1fr) !important;
-    gap: 14px !important;
-    align-items: center !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    background: transparent !important;
-    border: 0 !important;
-    box-shadow: none !important;
-    outline: 0 !important;
-    min-width: 0 !important;
-  }
-
-  body.standings-theme-page #standingsContent .standings-team-cell::before {
-    content: "" !important;
-    position: absolute !important;
-    left: 34px !important;
-    right: -18px !important;
-    top: 50% !important;
-    height: 18px !important;
-    transform: translateY(-50%) !important;
-    border-radius: 999px !important;
-    background: linear-gradient(90deg, #bce8ff, rgba(236, 249, 255, 0.76)) !important;
-    border: 2px solid rgba(255, 255, 255, 0.46) !important;
-    z-index: -1 !important;
-  }
-
-  body.standings-theme-page #standingsContent .standings-logo,
-  body.standings-theme-page #standingsContent .standings-logo-placeholder {
-    width: 70px !important;
-    height: 70px !important;
-    min-width: 70px !important;
-    min-height: 70px !important;
-    border-radius: 999px !important;
-    object-fit: contain !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background: radial-gradient(circle at 35% 25%, #ffffff, #e3eef8 58%, #c2d9ee) !important;
-    border: 3px solid rgba(255, 255, 255, 0.97) !important;
-    color: #102844 !important;
-    font-size: 13px !important;
-    font-weight: 900 !important;
-    box-shadow:
-      0 9px 18px rgba(0, 0, 0, 0.16),
-      0 0 0 4px rgba(40, 105, 170, 0.08) inset !important;
-  }
-
-  body.standings-theme-page #standingsContent .standings-team-cell > div:last-child {
-    min-width: 0 !important;
-    padding: 0 !important;
-    background: transparent !important;
-    border: 0 !important;
-    box-shadow: none !important;
-  }
-
-  body.standings-theme-page #standingsContent .standings-team-name {
-    max-width: 100% !important;
-    color: #102844 !important;
-    font-size: 17px !important;
-    font-weight: 900 !important;
-    line-height: 1.05 !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.38) !important;
-  }
-
-  body.standings-theme-page #standingsContent .standings-owner-name {
-    max-width: 100% !important;
-    margin-top: 4px !important;
-    color: rgba(16, 40, 68, 0.72) !important;
-    font-size: 10px !important;
-    font-weight: 900 !important;
-    line-height: 1 !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-  }
-
-  /* W-L and GB circles */
-  body.standings-theme-page #standingsContent .standings-record,
-  body.standings-theme-page #standingsContent .standings-gb {
-    width: 72px !important;
-    height: 72px !important;
-    min-width: 72px !important;
-    min-height: 72px !important;
-    margin: 0 auto !important;
-    border-radius: 999px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 0 !important;
-    color: #102844 !important;
-    font-size: 13px !important;
-    font-weight: 900 !important;
-    text-align: center !important;
-    border: 3px solid rgba(255, 255, 255, 0.96) !important;
-    box-shadow:
-      0 9px 18px rgba(0, 0, 0, 0.16),
-      0 0 0 4px rgba(40, 105, 170, 0.08) inset !important;
-  }
-
-  body.standings-theme-page #standingsContent .standings-record {
-    background: radial-gradient(circle at 35% 25%, #ffffff, #c9edff 60%, #98d1ee) !important;
-  }
-
-  body.standings-theme-page #standingsContent .standings-gb {
-    background: radial-gradient(circle at 35% 25%, #fff9b6, #ffd93c 60%, #efba13) !important;
-  }
-
-  body.standings-theme-page #standingsContent .standings-row.division-leader::before {
-    background: linear-gradient(90deg, #79c4f6 0%, #d8f2ff 42%, #ffe15a 100%) !important;
-    box-shadow:
-      0 0 0 2px rgba(255, 255, 255, 0.46) inset,
-      0 0 16px rgba(255, 218, 54, 0.22),
-      0 8px 18px rgba(46, 111, 178, 0.20) !important;
-  }
-
-  body.standings-theme-page #standingsContent .standings-row.division-leader .standings-rank,
-  body.standings-theme-page #standingsContent .standings-row.division-leader .standings-logo,
-  body.standings-theme-page #standingsContent .standings-row.division-leader .standings-logo-placeholder,
-  body.standings-theme-page #standingsContent .standings-row.division-leader .standings-record,
-  body.standings-theme-page #standingsContent .standings-row.division-leader .standings-gb {
-    border-color: rgba(255, 225, 84, 1) !important;
-    box-shadow:
-      0 9px 18px rgba(0, 0, 0, 0.18),
-      0 0 0 4px rgba(255, 225, 84, 0.16) inset,
-      0 0 14px rgba(255, 220, 66, 0.22) !important;
-  }
-
-  body.standings-theme-page #standingsContent .standings-number {
-    display: none !important;
-  }
-
-</style>
-
-
-<style id="standings-real-pipe-node-board-glow-tune">
-  /* ===== TUNE: BIGGER TEAM PIPES, BIGGER LOGOS, MORE GLOW ===== */
-
-  body.standings-theme-page #standingsContent .standings-row {
-    min-height: 108px !important;
-  }
-
-  body.standings-theme-page #standingsContent .standings-team-cell {
-    min-height: 92px !important;
-    grid-template-columns: 92px minmax(0, 1fr) !important;
-    gap: 18px !important;
-  }
-
-  /* make the long name/GM pipe bigger */
-  body.standings-theme-page #standingsContent .standings-team-cell::before {
-    left: 44px !important;
-    right: -22px !important;
-    height: 26px !important;
-    border-radius: 999px !important;
-    background: linear-gradient(
-      90deg,
-      rgba(120, 210, 255, 0.95),
-      rgba(205, 244, 255, 0.95),
-      rgba(255, 247, 170, 0.92)
-    ) !important;
-    border: 2px solid rgba(255, 255, 255, 0.62) !important;
-    box-shadow:
-      0 0 18px rgba(108, 212, 255, 0.34),
-      0 0 30px rgba(255, 236, 120, 0.18),
-      0 2px 0 rgba(255,255,255,0.45) inset,
-      0 -2px 0 rgba(45,95,150,0.10) inset !important;
-  }
-
-  /* bigger team logos */
-  body.standings-theme-page #standingsContent .standings-logo,
-  body.standings-theme-page #standingsContent .standings-logo-placeholder {
-    width: 84px !important;
-    height: 84px !important;
-    min-width: 84px !important;
-    min-height: 84px !important;
-    border: 4px solid rgba(255,255,255,0.98) !important;
-    background: radial-gradient(circle at 35% 25%, #ffffff, #eef7ff 55%, #bfe0ff 100%) !important;
-    box-shadow:
-      0 0 0 4px rgba(130, 214, 255, 0.25),
-      0 0 24px rgba(108, 212, 255, 0.45),
-      0 0 40px rgba(255, 235, 120, 0.18),
-      0 10px 20px rgba(0, 0, 0, 0.16),
-      0 0 0 5px rgba(40, 105, 170, 0.08) inset !important;
-  }
-
-  /* bigger/more vibrant circles */
-  body.standings-theme-page #standingsContent .standings-rank {
-    width: 72px !important;
-    height: 72px !important;
-    min-width: 72px !important;
-    min-height: 72px !important;
-    border: 4px solid rgba(255,255,255,0.98) !important;
-    background: radial-gradient(circle at 35% 25%, #ffffff, #9fe0ff 58%, #43b3ff 100%) !important;
-    box-shadow:
-      0 0 0 4px rgba(126, 214, 255, 0.24),
-      0 0 24px rgba(77, 190, 255, 0.42),
-      0 10px 20px rgba(0, 0, 0, 0.18),
-      0 0 0 5px rgba(34, 108, 185, 0.10) inset !important;
-  }
-
-  body.standings-theme-page #standingsContent .standings-record,
-  body.standings-theme-page #standingsContent .standings-gb {
-    width: 80px !important;
-    height: 80px !important;
-    min-width: 80px !important;
-    min-height: 80px !important;
-    border: 4px solid rgba(255,255,255,0.98) !important;
-  }
-
-  body.standings-theme-page #standingsContent .standings-record {
-    background: radial-gradient(circle at 35% 25%, #ffffff, #bfeeff 58%, #67cbff 100%) !important;
-    box-shadow:
-      0 0 0 4px rgba(115, 221, 255, 0.22),
-      0 0 24px rgba(82, 200, 255, 0.35),
-      0 10px 20px rgba(0, 0, 0, 0.16),
-      0 0 0 5px rgba(40, 105, 170, 0.08) inset !important;
-  }
-
-  body.standings-theme-page #standingsContent .standings-gb {
-    background: radial-gradient(circle at 35% 25%, #fffed8, #ffe866 55%, #ffc928 100%) !important;
-    box-shadow:
-      0 0 0 4px rgba(255, 232, 103, 0.24),
-      0 0 26px rgba(255, 215, 55, 0.45),
-      0 0 38px rgba(255, 241, 132, 0.20),
-      0 10px 20px rgba(0, 0, 0, 0.16),
-      0 0 0 5px rgba(180, 130, 10, 0.08) inset !important;
-  }
-
-  /* stronger pipe glow across each row */
-  body.standings-theme-page #standingsContent .standings-row::before {
-    height: 16px !important;
-    background: linear-gradient(
-      90deg,
-      #63c4ff 0%,
-      #c6efff 42%,
-      #ffe45a 100%
-    ) !important;
-    border: 2px solid rgba(255,255,255,0.60) !important;
-    box-shadow:
-      0 0 18px rgba(92, 204, 255, 0.28),
-      0 0 28px rgba(255, 226, 92, 0.14),
-      0 8px 18px rgba(46, 111, 178, 0.18),
-      0 2px 0 rgba(255, 255, 255, 0.42) inset,
-      0 -2px 0 rgba(40, 85, 135, 0.12) inset !important;
-  }
-
-  /* make team text a little bigger so it matches the larger pipe */
-  body.standings-theme-page #standingsContent .standings-team-name {
-    font-size: 18px !important;
-  }
-
-  body.standings-theme-page #standingsContent .standings-owner-name {
-    margin-top: 5px !important;
-    font-size: 11px !important;
-  }
-
-  /* extra glow for division leader row */
-  body.standings-theme-page #standingsContent .standings-row.division-leader .standings-rank,
-  body.standings-theme-page #standingsContent .standings-row.division-leader .standings-logo,
-  body.standings-theme-page #standingsContent .standings-row.division-leader .standings-logo-placeholder,
-  body.standings-theme-page #standingsContent .standings-row.division-leader .standings-record,
-  body.standings-theme-page #standingsContent .standings-row.division-leader .standings-gb {
-    box-shadow:
-      0 0 0 4px rgba(255, 228, 84, 0.20),
-      0 0 18px rgba(255, 219, 64, 0.26),
-      0 0 30px rgba(112, 210, 255, 0.18),
-      0 10px 20px rgba(0,0,0,0.18),
-      0 0 0 5px rgba(255, 225, 84, 0.14) inset !important;
-  }
-</style>
-
-
-<style id="standings-node-pipes-bigger-logos-pass">
-  /* =========================================================
-     BIGGER LOGOS + BIGGER TEAM BAR + REMOVE # COLUMN
-     ========================================================= */
-
-  /* overall board width feel */
-  body.standings-theme-page #standingsContent .standings-board {
-    padding: 24px 26px 28px !important;
-  }
-
-  /* hide the old # header and the rank circles entirely */
-  body.standings-theme-page #standingsContent .standings-header-row > :first-child,
-  body.standings-theme-page #standingsContent .standings-rank {
-    display: none !important;
-  }
-
-  /* header row: now just TEAM / W-L / GB */
-  body.standings-theme-page #standingsContent .standings-header-row {
-    grid-template-columns: minmax(0, 1fr) 120px 120px !important;
-    gap: 22px !important;
-    align-items: center !important;
-    min-height: 92px !important;
-    padding: 0 !important;
-    margin: 8px 0 18px !important;
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-  }
-
-  /* TEAM header = big long glowing bar */
-  body.standings-theme-page #standingsContent .standings-header-row > div:nth-child(2) {
-    height: 82px !important;
-    border-radius: 999px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: flex-start !important;
-    padding: 0 34px !important;
-    background: linear-gradient(90deg, #8fc7ff 0%, #d9f1ff 55%, #fff3a6 100%) !important;
-    border: 4px solid rgba(255,255,255,0.96) !important;
-    color: #102844 !important;
-    font-size: 28px !important;
-    font-weight: 900 !important;
-    letter-spacing: 2px !important;
-    text-transform: uppercase !important;
-    box-shadow:
-      0 0 0 4px rgba(145, 214, 255, 0.18),
-      0 0 22px rgba(110, 203, 255, 0.28),
-      0 10px 20px rgba(0, 0, 0, 0.14),
-      0 2px 0 rgba(255,255,255,0.55) inset,
-      0 -2px 0 rgba(50,95,145,0.10) inset !important;
-    position: relative !important;
-  }
-
-  /* W-L and GB header circles */
-  body.standings-theme-page #standingsContent .standings-header-row > div:nth-child(3),
-  body.standings-theme-page #standingsContent .standings-header-row > div:nth-child(4) {
-    width: 104px !important;
-    height: 104px !important;
-    min-width: 104px !important;
-    min-height: 104px !important;
-    border-radius: 50% !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background: radial-gradient(circle at 35% 25%, #ffffff, #dcecff 60%, #bddbff 100%) !important;
-    border: 4px solid rgba(255,255,255,0.96) !important;
-    color: #102844 !important;
-    font-size: 22px !important;
-    font-weight: 900 !important;
-    letter-spacing: 1px !important;
-    text-transform: uppercase !important;
-    box-shadow:
-      0 0 0 4px rgba(145, 214, 255, 0.14),
-      0 0 18px rgba(106, 198, 255, 0.20),
-      0 10px 20px rgba(0,0,0,0.14),
-      0 2px 0 rgba(255,255,255,0.50) inset !important;
-  }
-
-  /* each row now has 3 visible columns: team / W-L / GB */
-  body.standings-theme-page #standingsContent .standings-row {
-    grid-template-columns: minmax(0, 1fr) 120px 120px !important;
-    gap: 22px !important;
-    align-items: center !important;
-    min-height: 138px !important;
-    padding: 8px 0 !important;
-    margin-top: 14px !important;
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-    position: relative !important;
-  }
-
-  /* thick pipe running across the full row */
-  body.standings-theme-page #standingsContent .standings-row::before {
-    content: "" !important;
-    position: absolute !important;
-    left: 118px !important;
-    right: 56px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    height: 18px !important;
-    border-radius: 999px !important;
-    background: linear-gradient(90deg, #64c6ff 0%, #d3f1ff 55%, #ffe45f 100%) !important;
-    border: 2px solid rgba(255,255,255,0.66) !important;
-    box-shadow:
-      0 0 16px rgba(110, 206, 255, 0.26),
-      0 0 24px rgba(255, 229, 92, 0.12),
-      0 2px 0 rgba(255,255,255,0.40) inset,
-      0 -2px 0 rgba(50,95,145,0.10) inset !important;
-    z-index: 0 !important;
-  }
-
-  /* team cell = giant logo + thicker team pipe */
-  body.standings-theme-page #standingsContent .standings-team-cell {
-    display: grid !important;
-    grid-template-columns: 122px minmax(0, 1fr) !important;
-    gap: 18px !important;
-    align-items: center !important;
-    min-height: 122px !important;
-    min-width: 0 !important;
-    position: relative !important;
-    z-index: 1 !important;
-  }
-
-  /* make the name/GM bar chunkier */
-  body.standings-theme-page #standingsContent .standings-team-cell::before {
-    content: "" !important;
-    position: absolute !important;
-    left: 60px !important;
-    right: -18px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    height: 34px !important;
-    border-radius: 999px !important;
-    background: linear-gradient(90deg, rgba(123, 214, 255, 0.98), rgba(220, 247, 255, 0.96), rgba(255, 241, 144, 0.92)) !important;
-    border: 2px solid rgba(255,255,255,0.70) !important;
-    box-shadow:
-      0 0 16px rgba(109, 210, 255, 0.24),
-      0 0 26px rgba(255, 232, 104, 0.12),
-      0 2px 0 rgba(255,255,255,0.50) inset,
-      0 -2px 0 rgba(49,98,150,0.10) inset !important;
-    z-index: 0 !important;
-  }
-
-  /* BIG logo circles */
-  body.standings-theme-page #standingsContent .standings-logo,
-  body.standings-theme-page #standingsContent .standings-logo-placeholder {
-    width: 112px !important;
-    height: 112px !important;
-    min-width: 112px !important;
-    min-height: 112px !important;
-    border-radius: 50% !important;
-    object-fit: contain !important;
-    padding: 10px !important;
-    background: radial-gradient(circle at 35% 25%, #ffffff 0%, #eef8ff 55%, #c6e5ff 100%) !important;
-    border: 5px solid rgba(255,255,255,0.98) !important;
-    box-shadow:
-      0 0 0 4px rgba(130, 218, 255, 0.20),
-      0 0 26px rgba(96, 201, 255, 0.34),
-      0 0 42px rgba(255, 230, 98, 0.12),
-      0 12px 24px rgba(0,0,0,0.16),
-      0 0 0 5px rgba(55,114,180,0.08) inset !important;
-    z-index: 2 !important;
-  }
-
-  /* team text bigger */
-  body.standings-theme-page #standingsContent .standings-team-name {
-    font-size: 20px !important;
-    line-height: 1.05 !important;
-    font-weight: 900 !important;
-    color: #102844 !important;
-    position: relative !important;
-    z-index: 2 !important;
-  }
-
-  body.standings-theme-page #standingsContent .standings-owner-name {
-    margin-top: 6px !important;
-    font-size: 12px !important;
-    font-weight: 800 !important;
-    color: rgba(16, 40, 68, 0.78) !important;
-    position: relative !important;
-    z-index: 2 !important;
-  }
-
-  /* bigger W-L + GB circles */
-  body.standings-theme-page #standingsContent .standings-record,
-  body.standings-theme-page #standingsContent .standings-gb {
-    width: 102px !important;
-    height: 102px !important;
-    min-width: 102px !important;
-    min-height: 102px !important;
-    border-radius: 50% !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    font-size: 18px !important;
-    font-weight: 900 !important;
-    letter-spacing: 0.6px !important;
-    position: relative !important;
-    z-index: 2 !important;
-    border: 4px solid rgba(255,255,255,0.98) !important;
-  }
-
-  body.standings-theme-page #standingsContent .standings-record {
-    background: radial-gradient(circle at 35% 25%, #ffffff, #c8efff 58%, #79d2ff 100%) !important;
-    color: #102844 !important;
-    box-shadow:
-      0 0 0 4px rgba(122, 217, 255, 0.18),
-      0 0 22px rgba(103, 205, 255, 0.24),
-      0 10px 20px rgba(0,0,0,0.15),
-      0 2px 0 rgba(255,255,255,0.52) inset !important;
-  }
-
-  body.standings-theme-page #standingsContent .standings-gb {
-    background: radial-gradient(circle at 35% 25%, #fffce0, #ffe76b 58%, #ffcb2f 100%) !important;
-    color: #102844 !important;
-    box-shadow:
-      0 0 0 4px rgba(255, 232, 103, 0.18),
-      0 0 24px rgba(255, 215, 55, 0.28),
-      0 10px 20px rgba(0,0,0,0.15),
-      0 2px 0 rgba(255,255,255,0.52) inset !important;
-  }
-
-  /* division title still big */
-  body.standings-theme-page #standingsContent .standings-division-title {
-    margin-bottom: 18px !important;
-    padding: 22px 28px !important;
-    border-radius: 24px !important;
-    background: linear-gradient(90deg, #b09df2 0%, #8ab8ef 100%) !important;
-    color: #102844 !important;
-    text-align: center !important;
-    font-size: 26px !important;
-    font-weight: 900 !important;
-    letter-spacing: 2px !important;
-    text-transform: uppercase !important;
-    border: 3px solid rgba(255,255,255,0.75) !important;
-    box-shadow:
-      0 8px 24px rgba(0,0,0,0.12),
-      0 0 18px rgba(123, 201, 255, 0.20) !important;
-  }
-
-  /* mobile: scale down to preserve the pipe-node layout */
-  @media (max-width: 860px) {
-    body.standings-theme-page #standingsContent .standings-board {
-      padding: 16px 12px 20px !important;
+<style id="standings-wide-bracket-layout-fix">
+  @media (min-width: 900px) {
+    body.standings-theme-page .standings-theme-overlay {
+      align-items: flex-start !important;
+      padding: 28px 24px 64px !important;
     }
 
-    body.standings-theme-page #standingsContent .standings-header-row {
+    body.standings-theme-page .standings-theme-card {
+      width: min(1180px, calc(100vw - 56px)) !important;
+      max-width: 1180px !important;
+      padding: 28px 32px 34px !important;
+    }
+
+    body.standings-theme-page #standingsContent.standings-content {
+      width: 100% !important;
+      max-width: 980px !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    body.standings-theme-page .standings-playoff-panel {
+      width: 100% !important;
+      max-width: 1080px !important;
+      margin: 22px auto 0 !important;
+      padding: 22px 20px 18px !important;
+      overflow-x: auto !important;
+    }
+
+    body.standings-theme-page .playoff-bracket {
+      width: 100% !important;
+      min-width: 960px !important;
       display: grid !important;
-      grid-template-columns: minmax(0, 1fr) 72px 72px !important;
+      grid-template-columns: minmax(280px, 1fr) minmax(280px, 1fr) minmax(280px, 1fr) !important;
+      gap: 20px !important;
+      align-items: stretch !important;
+    }
+
+    body.standings-theme-page .bracket-round,
+    body.standings-theme-page .bracket-round.final-round {
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: none !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: flex-start !important;
+      align-items: stretch !important;
+      gap: 14px !important;
+      padding: 0 !important;
+      transform: none !important;
+    }
+
+    body.standings-theme-page .bracket-round::after {
+      display: none !important;
+    }
+
+    body.standings-theme-page .bracket-round-title {
+      width: 100% !important;
+      min-height: 30px !important;
+      padding: 8px 12px !important;
+      border-radius: 12px !important;
+      font-size: 11px !important;
+      line-height: 1 !important;
+      text-align: center !important;
+    }
+
+    body.standings-theme-page .bracket-matchup,
+    body.standings-theme-page .final-round .bracket-matchup {
+      width: 100% !important;
+      min-height: 112px !important;
+      max-width: none !important;
+      margin: 0 !important;
+      padding: 12px !important;
+      border-radius: 16px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: center !important;
+      gap: 7px !important;
+      transform: none !important;
+    }
+
+    body.standings-theme-page .bracket-team-row {
+      width: 100% !important;
+      min-height: 46px !important;
+      display: grid !important;
+      grid-template-columns: 36px 42px minmax(0, 1fr) !important;
+      align-items: center !important;
       gap: 10px !important;
-      min-height: 72px !important;
-      margin: 4px 0 12px !important;
+      padding: 7px 8px !important;
+      border-radius: 12px !important;
     }
 
-    body.standings-theme-page #standingsContent .standings-header-row > div:nth-child(2) {
-      height: 64px !important;
-      font-size: 18px !important;
-      padding: 0 18px !important;
-    }
-
-    body.standings-theme-page #standingsContent .standings-header-row > div:nth-child(3),
-    body.standings-theme-page #standingsContent .standings-header-row > div:nth-child(4) {
-      width: 64px !important;
-      height: 64px !important;
-      min-width: 64px !important;
-      min-height: 64px !important;
-      font-size: 14px !important;
-    }
-
-    body.standings-theme-page #standingsContent .standings-row {
-      grid-template-columns: minmax(0, 1fr) 72px 72px !important;
-      gap: 10px !important;
-      min-height: 96px !important;
-      padding: 4px 0 !important;
-      margin-top: 10px !important;
-    }
-
-    body.standings-theme-page #standingsContent .standings-team-cell {
-      grid-template-columns: 76px minmax(0, 1fr) !important;
-      gap: 10px !important;
-      min-height: 80px !important;
-    }
-
-    body.standings-theme-page #standingsContent .standings-team-cell::before {
-      left: 38px !important;
-      right: -10px !important;
-      height: 22px !important;
-    }
-
-    body.standings-theme-page #standingsContent .standings-logo,
-    body.standings-theme-page #standingsContent .standings-logo-placeholder {
-      width: 70px !important;
-      height: 70px !important;
-      min-width: 70px !important;
-      min-height: 70px !important;
-      border: 3px solid rgba(255,255,255,0.98) !important;
-    }
-
-    body.standings-theme-page #standingsContent .standings-record,
-    body.standings-theme-page #standingsContent .standings-gb {
-      width: 64px !important;
-      height: 64px !important;
-      min-width: 64px !important;
-      min-height: 64px !important;
-      font-size: 13px !important;
-      border: 3px solid rgba(255,255,255,0.98) !important;
-    }
-
-    body.standings-theme-page #standingsContent .standings-row::before {
-      left: 74px !important;
-      right: 34px !important;
-      height: 12px !important;
-    }
-
-    body.standings-theme-page #standingsContent .standings-team-name {
-      font-size: 15px !important;
-    }
-
-    body.standings-theme-page #standingsContent .standings-owner-name {
+    body.standings-theme-page .bracket-seed {
+      width: 30px !important;
+      height: 30px !important;
+      min-width: 30px !important;
       font-size: 10px !important;
+    }
+
+    body.standings-theme-page .bracket-team-logo,
+    body.standings-theme-page .bracket-team-logo-placeholder {
+      width: 34px !important;
+      height: 34px !important;
+      min-width: 34px !important;
+      border-radius: 10px !important;
+      font-size: 10px !important;
+    }
+
+    body.standings-theme-page .bracket-team-info {
+      min-width: 0 !important;
+      width: 100% !important;
+    }
+
+    body.standings-theme-page .bracket-team-name {
+      max-width: 100% !important;
+      font-size: 12px !important;
+      line-height: 1.1 !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+
+    body.standings-theme-page .bracket-team-meta {
+      max-width: 100% !important;
       margin-top: 3px !important;
+      font-size: 8px !important;
+      line-height: 1.1 !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+
+    body.standings-theme-page .bracket-vs,
+    body.standings-theme-page .bracket-bye {
+      min-height: 18px !important;
+      padding: 4px 8px !important;
+      border-radius: 999px !important;
+      font-size: 9px !important;
+      line-height: 1 !important;
     }
   }
 
-  /* extra-small screens */
-  @media (max-width: 460px) {
-    body.standings-theme-page #standingsContent .standings-header-row {
-      grid-template-columns: minmax(0, 1fr) 56px 56px !important;
+  @media (max-width: 899px) {
+    body.standings-theme-page .standings-theme-card {
+      width: min(96vw, 680px) !important;
+      max-width: 680px !important;
+    }
+
+    body.standings-theme-page .standings-playoff-panel {
+      overflow-x: auto !important;
+    }
+
+    body.standings-theme-page .playoff-bracket {
+      min-width: 860px !important;
+    }
+  }
+</style>
+
+
+<style id="standings-bracket-compact-logo-tune">
+  @media (min-width: 900px) {
+    body.standings-theme-page .standings-playoff-panel {
+      max-width: 980px !important;
+      padding: 18px 16px 16px !important;
+    }
+
+    body.standings-theme-page .playoff-bracket {
+      min-width: 880px !important;
+      grid-template-columns: repeat(3, minmax(240px, 1fr)) !important;
+      gap: 14px !important;
+    }
+
+    body.standings-theme-page .bracket-round,
+    body.standings-theme-page .bracket-round.final-round {
+      gap: 10px !important;
+    }
+
+    body.standings-theme-page .bracket-round-title {
+      min-height: 24px !important;
+      padding: 6px 10px !important;
+      font-size: 10px !important;
+      border-radius: 10px !important;
+    }
+
+    body.standings-theme-page .bracket-matchup,
+    body.standings-theme-page .final-round .bracket-matchup {
+      min-height: 86px !important;
+      padding: 8px !important;
+      gap: 4px !important;
+      border-radius: 13px !important;
+    }
+
+    body.standings-theme-page .bracket-team-row {
+      min-height: 42px !important;
+      grid-template-columns: 28px 48px minmax(0, 1fr) !important;
       gap: 8px !important;
+      padding: 5px 7px !important;
+      border-radius: 10px !important;
     }
 
-    body.standings-theme-page #standingsContent .standings-header-row > div:nth-child(2) {
-      height: 52px !important;
-      font-size: 15px !important;
-      padding: 0 14px !important;
+    body.standings-theme-page .bracket-seed {
+      width: 24px !important;
+      height: 24px !important;
+      min-width: 24px !important;
+      font-size: 8px !important;
     }
 
-    body.standings-theme-page #standingsContent .standings-header-row > div:nth-child(3),
-    body.standings-theme-page #standingsContent .standings-header-row > div:nth-child(4) {
-      width: 50px !important;
-      height: 50px !important;
-      min-width: 50px !important;
-      min-height: 50px !important;
-      font-size: 12px !important;
-    }
-
-    body.standings-theme-page #standingsContent .standings-row {
-      grid-template-columns: minmax(0, 1fr) 56px 56px !important;
-      gap: 8px !important;
-      min-height: 84px !important;
-    }
-
-    body.standings-theme-page #standingsContent .standings-team-cell {
-      grid-template-columns: 62px minmax(0, 1fr) !important;
-      gap: 8px !important;
-    }
-
-    body.standings-theme-page #standingsContent .standings-team-cell::before {
-      left: 30px !important;
-      height: 18px !important;
-    }
-
-    body.standings-theme-page #standingsContent .standings-logo,
-    body.standings-theme-page #standingsContent .standings-logo-placeholder {
-      width: 58px !important;
-      height: 58px !important;
-      min-width: 58px !important;
-      min-height: 58px !important;
-    }
-
-    body.standings-theme-page #standingsContent .standings-record,
-    body.standings-theme-page #standingsContent .standings-gb {
-      width: 50px !important;
-      height: 50px !important;
-      min-width: 50px !important;
-      min-height: 50px !important;
+    body.standings-theme-page .bracket-team-logo,
+    body.standings-theme-page .bracket-team-logo-placeholder {
+      width: 46px !important;
+      height: 46px !important;
+      min-width: 46px !important;
+      border-radius: 12px !important;
       font-size: 11px !important;
+      object-fit: cover !important;
     }
 
-    body.standings-theme-page #standingsContent .standings-row::before {
-      left: 60px !important;
-      right: 26px !important;
-      height: 10px !important;
+    body.standings-theme-page .bracket-team-name {
+      font-size: 11px !important;
+      line-height: 1.05 !important;
     }
 
-    body.standings-theme-page #standingsContent .standings-team-name {
-      font-size: 13px !important;
+    body.standings-theme-page .bracket-team-meta {
+      font-size: 7px !important;
+      margin-top: 2px !important;
+    }
+
+    body.standings-theme-page .bracket-vs,
+    body.standings-theme-page .bracket-bye {
+      min-height: 14px !important;
+      padding: 2px 7px !important;
+      font-size: 7px !important;
     }
   }
 </style>

@@ -448,7 +448,7 @@
       statusEl.textContent = "";
     }
 
-    function renderAchievements(user, selectedIconId) {
+    function renderFounders(user, selectedIconId) {
       listEl.innerHTML = getActiveAchievements().map((achievement) => {
         const unlocked = isUnlocked(achievement, user);
         const equipped = selectedIconId === achievement.id;
@@ -546,7 +546,7 @@
 
       statusEl.textContent = `${achievement.title} equipped as your profile icon.`;
 
-      renderAchievements(user, achievement.id);
+      renderFounders(user, achievement.id);
     }
 
     async function init() {
@@ -566,7 +566,7 @@
       await loadDynamicAchievementUnlocks(user);
 
       const selectedIconId = await loadSelectedIcon(user);
-      renderAchievements(user, selectedIconId);
+      renderFounders(user, selectedIconId);
       statusEl.textContent = "Locked achievement icons are blurred. Unlocked icons can be equipped as your PFP.";
     }
 
