@@ -254,6 +254,36 @@ function renderTradingPage() {
   tradePageStatus.textContent = "Trading loaded.";
 }
 
+async function logTradeActivityEvent({ senderTeam, receiverTeam, offeredPokemon, requestedPokemon }) {
+  if (!selectedLeagueId || !senderTeam || !receiverTeam || !offeredPokemon || !requestedPokemon) {
+    return;
+  }
+
+  const title = `${senderTeam.team_name} traded ${offeredPokemon.name} to ${receiverTeam.team_name} for ${requestedPokemon.name}`;
+  const description = `${senderTeam.team_name} sent ${offeredPokemon.name} to ${receiverTeam.team_name} and received ${requestedPokemon.name}.`;
+
+  try {
+    const { error } = await supabaseClient
+      .from("league_activity_events")
+      .insert({
+        league_id: selectedLeagueId,
+        team_id: senderTeam.id,
+        team_name: senderTeam.team_name,
+        event_type: "trade",
+        pokemon_name: offeredPokemon.name,
+        pokemon_slug: offeredPokemon.slug,
+        title,
+        description
+      });
+
+    if (error) {
+      console.warn("Trade activity log skipped:", error);
+    }
+  } catch (error) {
+    console.warn("Trade activity log failed:", error);
+  }
+}
+
 function renderPointStatus() {
   const pointCap = Number(currentLeague.roster_point_cap || 50);
   const usedPoints = getTeamPointUsage(myTeam.id);
@@ -595,6 +625,18 @@ async function acceptTradeOffer(tradeId) {
     tradePageStatus.textContent = "Could not accept trade. Check console.";
     return;
   }
+
+  const senderTeam = getTeamById(offer.sender_team_id);
+  const receiverTeam = getTeamById(offer.receiver_team_id);
+  const offeredPokemon = getPokemonBySlug(offer.offered_pokemon_slug);
+  const requestedPokemon = getPokemonBySlug(offer.requested_pokemon_slug);
+
+  await logTradeActivityEvent({
+    senderTeam,
+    receiverTeam,
+    offeredPokemon,
+    requestedPokemon
+  });
 
   tradePageStatus.textContent = "Trade accepted.";
   await refreshTradeData();

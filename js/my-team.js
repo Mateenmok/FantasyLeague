@@ -237,6 +237,8 @@ async function renderMyTeam() {
 
   document.getElementById("saveMyTeamButton").addEventListener("click", saveMyTeam);
 
+  attachMyTeamRosterActionCards();
+
   const logoFileInput = document.getElementById("myLogoFileInput");
   if (logoFileInput) {
     logoFileInput.addEventListener("change", function () {
@@ -278,23 +280,185 @@ async function getRosterHtml() {
 
         if (!pokemon) {
           return `
-            <div class="my-team-roster-slot">
+            <div
+              class="my-team-roster-slot my-team-roster-action-card"
+              role="button"
+              tabindex="0"
+              data-roster-id="${escapeHtml(row.id)}"
+              data-pokemon-name="${escapeHtml(row.pokemon_slug)}"
+              data-pokemon-slug="${escapeHtml(row.pokemon_slug)}"
+            >
               <div class="missing-image">?</div>
               <p>${escapeHtml(row.pokemon_slug)}</p>
+              <p class="small-note roster-action-hint"></p>
             </div>
           `;
         }
 
         return `
-          <div class="my-team-roster-slot">
+          <div
+            class="my-team-roster-slot my-team-roster-action-card"
+            role="button"
+            tabindex="0"
+            data-roster-id="${escapeHtml(row.id)}"
+            data-pokemon-name="${escapeHtml(pokemon.name)}"
+            data-pokemon-slug="${escapeHtml(pokemon.slug)}"
+          >
             <img src="${getFixedPokemonImage(pokemon)}" alt="${escapeHtml(pokemon.name)}">
             <p>${escapeHtml(pokemon.name)}</p>
             ${renderMyTeamTypeBadges(pokemon)}
+            <p class="small-note roster-action-hint"></p>
           </div>
         `;
       }).join("")}
     </div>
   `;
+}
+
+
+async function logMyTeamActivityEvent({ eventType, pokemonName, pokemonSlug, title, description }) {
+  if (!selectedLeagueId || !myTeam) {
+    return;
+  }
+
+  try {
+    const { error } = await supabaseClient
+      .from("league_activity_events")
+      .insert({
+        league_id: selectedLeagueId,
+        team_id: myTeam.id,
+        team_name: myTeam.team_name,
+        event_type: eventType,
+        pokemon_name: pokemonName || null,
+        pokemon_slug: pokemonSlug || null,
+        title,
+        description
+      });
+
+    if (error) {
+      console.warn("League activity log skipped:", error);
+    }
+  } catch (error) {
+    console.warn("League activity log failed:", error);
+  }
+}
+
+function attachMyTeamRosterActionCards() {
+  document.querySelectorAll(".my-team-roster-action-card").forEach(card => {
+    card.addEventListener("click", function () {
+      showMyTeamPokemonActionMenu({
+        rosterId: this.dataset.rosterId,
+        pokemonName: this.dataset.pokemonName,
+        pokemonSlug: this.dataset.pokemonSlug
+      });
+    });
+
+    card.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+
+        showMyTeamPokemonActionMenu({
+          rosterId: this.dataset.rosterId,
+          pokemonName: this.dataset.pokemonName,
+          pokemonSlug: this.dataset.pokemonSlug
+        });
+      }
+    });
+  });
+}
+
+function closeMyTeamPokemonActionMenu() {
+  const existingMenu = document.getElementById("myTeamPokemonActionMenu");
+
+  if (existingMenu) {
+    existingMenu.remove();
+  }
+}
+
+function showMyTeamPokemonActionMenu({ rosterId, pokemonName, pokemonSlug }) {
+  closeMyTeamPokemonActionMenu();
+
+  const safeName = pokemonName || "this Pokémon";
+  const safeSlug = pokemonSlug || "";
+
+  const menu = document.createElement("div");
+  menu.id = "myTeamPokemonActionMenu";
+  menu.className = "my-team-action-menu-backdrop";
+
+  menu.innerHTML = `
+    <div class="my-team-action-menu-card">
+      <p class="my-team-action-menu-kicker">Roster Options</p>
+      <h3>${escapeHtml(safeName)}</h3>
+      <p class="small-note">Choose what you want to do with this Pokémon.</p>
+
+      <div class="my-team-action-menu-buttons">
+        <button id="myTeamTradePokemonButton" class="my-team-action-button trade" type="button">Trade</button>
+        <button id="myTeamDropPokemonButton" class="my-team-action-button drop" type="button">Drop</button>
+        <button id="myTeamCancelPokemonButton" class="my-team-action-button cancel" type="button">Cancel</button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(menu);
+
+  document.getElementById("myTeamCancelPokemonButton").addEventListener("click", closeMyTeamPokemonActionMenu);
+
+  document.getElementById("myTeamTradePokemonButton").addEventListener("click", function () {
+    localStorage.setItem("pokeleague_trade_target_pokemon_slug", safeSlug);
+    localStorage.setItem("pokeleague_trade_target_pokemon_name", safeName);
+    window.location.href = `trading.html?pokemon=${encodeURIComponent(safeSlug)}`;
+  });
+
+  document.getElementById("myTeamDropPokemonButton").addEventListener("click", async function () {
+    closeMyTeamPokemonActionMenu();
+    await dropMyTeamRosterPokemon(rosterId, safeName);
+  });
+
+  menu.addEventListener("click", function (event) {
+    if (event.target === menu) {
+      closeMyTeamPokemonActionMenu();
+    }
+  });
+}
+
+async function dropMyTeamRosterPokemon(rosterId, pokemonName) {
+  if (!rosterId || !myTeam) {
+    myTeamStatus.textContent = "Could not identify that roster slot.";
+    return;
+  }
+
+  const confirmed = window.confirm(`Drop ${pokemonName || "this Pokémon"} from your roster?`);
+
+  if (!confirmed) {
+    myTeamStatus.textContent = "Drop cancelled.";
+    return;
+  }
+
+  myTeamStatus.textContent = `Dropping ${pokemonName || "Pokémon"}...`;
+
+  const { error } = await supabaseClient
+    .from("team_rosters")
+    .delete()
+    .eq("id", rosterId)
+    .eq("league_id", selectedLeagueId)
+    .eq("team_id", myTeam.id);
+
+  if (error) {
+    console.error("My Team roster drop error:", error);
+    myTeamStatus.textContent = "Could not drop Pokémon. Check console.";
+    return;
+  }
+
+  await logMyTeamActivityEvent({
+    eventType: "drop",
+    pokemonName: pokemonName || "Pokémon",
+    pokemonSlug: "",
+    title: `${myTeam.team_name} dropped ${pokemonName || "a Pokémon"}`,
+    description: `${myTeam.team_name} dropped ${pokemonName || "a Pokémon"} from its roster.`
+  });
+
+  myTeamStatus.textContent = `Dropped ${pokemonName || "Pokémon"}.`;
+  await renderMyTeam();
 }
 
 async function saveMyTeam() {

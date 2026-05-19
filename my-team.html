@@ -370,6 +370,105 @@
       }
     }
   </style>
+
+
+<style id="my-team-click-roster-actions-style">
+  body.my-team-theme-page .my-team-roster-action-card {
+    cursor: pointer !important;
+    transition: transform 0.14s ease, filter 0.14s ease, box-shadow 0.14s ease !important;
+  }
+
+  body.my-team-theme-page .my-team-roster-action-card:hover {
+    transform: translateY(-3px) !important;
+    filter: brightness(1.08) !important;
+    box-shadow:
+      0 12px 26px rgba(0, 0, 0, 0.30),
+      0 0 22px rgba(255, 218, 74, 0.28) !important;
+  }
+
+  body.my-team-theme-page .roster-action-hint {
+    margin-top: 6px !important;
+    font-size: 10px !important;
+    font-weight: 900 !important;
+    color: rgba(255, 244, 170, 0.95) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  .my-team-action-menu-backdrop {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 99999 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 20px !important;
+    background: rgba(0, 0, 0, 0.58) !important;
+    backdrop-filter: blur(3px) !important;
+  }
+
+  .my-team-action-menu-card {
+    width: min(360px, 92vw) !important;
+    padding: 22px !important;
+    border-radius: 24px !important;
+    background:
+      radial-gradient(circle at top left, rgba(116, 201, 255, 0.22), transparent 38%),
+      linear-gradient(to bottom, rgba(10, 30, 68, 0.98), rgba(5, 16, 40, 0.98)) !important;
+    border: 2px solid rgba(255, 255, 255, 0.28) !important;
+    color: white !important;
+    font-family: "Oxanium", Arial, sans-serif !important;
+    text-align: center !important;
+    box-shadow:
+      0 20px 50px rgba(0, 0, 0, 0.48),
+      0 0 0 4px rgba(105, 166, 240, 0.12) inset !important;
+  }
+
+  .my-team-action-menu-kicker {
+    margin: 0 0 6px !important;
+    color: #ffe66b !important;
+    font-size: 12px !important;
+    font-weight: 900 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+  }
+
+  .my-team-action-menu-card h3 {
+    margin: 0 0 8px !important;
+    font-size: 24px !important;
+    font-weight: 900 !important;
+    color: #ffffff !important;
+  }
+
+  .my-team-action-menu-buttons {
+    display: grid !important;
+    gap: 10px !important;
+    margin-top: 16px !important;
+  }
+
+  .my-team-action-button {
+    min-height: 44px !important;
+    border-radius: 999px !important;
+    border: 2px solid rgba(255, 255, 255, 0.28) !important;
+    color: white !important;
+    font-family: "Oxanium", Arial, sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 900 !important;
+    cursor: pointer !important;
+  }
+
+  .my-team-action-button.trade {
+    background: linear-gradient(to bottom, #70c8ff, #256fb5) !important;
+  }
+
+  .my-team-action-button.drop {
+    background: linear-gradient(to bottom, #ff8f8f, #d94343) !important;
+  }
+
+  .my-team-action-button.cancel {
+    background: linear-gradient(to bottom, #d8dce8, #7f8798) !important;
+  }
+</style>
+
 </head>
 <body class="my-team-theme-page">
   <div class="my-team-theme-overlay">
@@ -391,6 +490,6 @@
   <script src="js/theme-settings.js?v=global-theme1"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
-  <script src="js/my-team.js?v=logo-upload1"></script>
+  <script src="js/my-team.js?v=click-roster-actions1"></script>
 </body>
 </html>

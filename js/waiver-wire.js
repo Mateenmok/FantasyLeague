@@ -216,6 +216,33 @@ async function setWaiversOpen(open) {
   await refreshWaiverData();
 }
 
+async function logLeagueActivityEvent({ eventType, pokemonName, pokemonSlug, title, description }) {
+  if (!selectedLeagueId || !myTeam) {
+    return;
+  }
+
+  try {
+    const { error } = await supabaseClient
+      .from("league_activity_events")
+      .insert({
+        league_id: selectedLeagueId,
+        team_id: myTeam.id,
+        team_name: myTeam.team_name,
+        event_type: eventType,
+        pokemon_name: pokemonName || null,
+        pokemon_slug: pokemonSlug || null,
+        title,
+        description
+      });
+
+    if (error) {
+      console.warn("League activity log skipped:", error);
+    }
+  } catch (error) {
+    console.warn("League activity log failed:", error);
+  }
+}
+
 function renderPointStatus() {
   const pointCap = Number(currentLeague.roster_point_cap || 50);
   const usedPoints = getTeamPointUsage(myTeam.id);
@@ -249,15 +276,61 @@ function renderRosterList() {
 
   waiverRosterList.innerHTML = myRosterRows.map(row => {
     const pokemon = getPokemonBySlug(row.pokemon_slug);
+    const name = pokemon ? pokemon.name : row.pokemon_slug;
     const points = pokemon ? getPokemonPoints(pokemon) : 1;
 
     return `
-      <div class="waiver-roster-row">
-        <span>${escapeHtml(pokemon ? pokemon.name : row.pokemon_slug)}</span>
-        <span>${points} pts</span>
+      <div class="waiver-roster-row waiver-roster-row-with-drop">
+        <span class="waiver-roster-name">${escapeHtml(name)}</span>
+        <span class="waiver-roster-points">${points} pts</span>
+        <button class="waiver-roster-drop-button" type="button" data-roster-id="${escapeHtml(row.id)}" data-pokemon-name="${escapeHtml(name)}">Drop</button>
       </div>
     `;
   }).join("");
+
+  document.querySelectorAll(".waiver-roster-drop-button").forEach(button => {
+    button.addEventListener("click", function () {
+      dropWaiverRosterPokemon(this.dataset.rosterId, this.dataset.pokemonName);
+    });
+  });
+}
+
+async function dropWaiverRosterPokemon(rosterId, pokemonName) {
+  if (!rosterId || !myTeam) {
+    waiverPageStatus.textContent = "Could not identify that roster slot.";
+    return;
+  }
+
+  if (!window.confirm(`Drop ${pokemonName || "this Pokémon"} from your roster?`)) {
+    waiverPageStatus.textContent = "Drop cancelled.";
+    return;
+  }
+
+  waiverPageStatus.textContent = `Dropping ${pokemonName || "Pokémon"}...`;
+
+  const { error } = await supabaseClient
+    .from("team_rosters")
+    .delete()
+    .eq("id", rosterId)
+    .eq("league_id", selectedLeagueId)
+    .eq("team_id", myTeam.id);
+
+  if (error) {
+    console.error("Waiver direct drop error:", error);
+    waiverPageStatus.textContent = "Could not drop Pokémon. Check console.";
+    return;
+  }
+
+  await logLeagueActivityEvent({
+    eventType: "drop",
+    pokemonName: pokemonName || "Pokémon",
+    pokemonSlug: "",
+    title: `${myTeam.team_name} dropped ${pokemonName || "a Pokémon"}`,
+    description: `${myTeam.team_name} dropped ${pokemonName || "a Pokémon"} from its roster.`
+  });
+
+  waiverPageStatus.textContent = `Dropped ${pokemonName || "Pokémon"}.`;
+  await refreshWaiverData();
 }
 
 
@@ -478,6 +551,18 @@ async function addWaiverPokemon(pokemonSlug) {
     waiverPageStatus.textContent = "Could not add Pokémon. It may already be rostered.";
     return;
   }
+
+  await logLeagueActivityEvent({
+    eventType: dropPokemon ? "add_drop" : "add",
+    pokemonName: pokemon.name,
+    pokemonSlug: pokemon.slug,
+    title: dropPokemon
+      ? `${myTeam.team_name} added ${pokemon.name} and dropped ${dropPokemon.name}`
+      : `${myTeam.team_name} added ${pokemon.name}`,
+    description: dropPokemon
+      ? `${myTeam.team_name} added ${pokemon.name} and dropped ${dropPokemon.name}.`
+      : `${myTeam.team_name} added ${pokemon.name} to its roster.`
+  });
 
   waiverPageStatus.textContent = dropPokemon
     ? `Added ${pokemon.name} and dropped ${dropPokemon.name}.`
