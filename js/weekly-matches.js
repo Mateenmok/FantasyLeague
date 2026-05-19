@@ -132,7 +132,7 @@ async function loadLeagueActivityEvents() {
       .select("*")
       .eq("league_id", selectedLeagueId)
       .order("created_at", { ascending: false })
-      .limit(30);
+      .limit(10);
 
     if (error) {
       console.warn("League activity table not available yet:", error);
@@ -211,7 +211,7 @@ function renderLeagueActivity() {
     return;
   }
 
-  leagueActivityFeed.innerHTML = feedItems.slice(0, 12).map(item => `
+  leagueActivityFeed.innerHTML = feedItems.slice(0, 10).map(item => `
     <div class="league-activity-item ${escapeHtml(item.type)}">
       <div class="league-activity-icon">${escapeHtml(item.icon)}</div>
       <div>
