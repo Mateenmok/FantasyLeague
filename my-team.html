@@ -469,6 +469,76 @@
   }
 </style>
 
+
+<style id="my-team-compact-roster-cards-fix">
+  /* Compact My Team roster cards so type badges do not leave blank space underneath */
+
+  body.my-team-theme-page .my-team-roster-grid,
+  body.my-team-theme-page .drafted-roster-grid,
+  body.my-team-theme-page #myTeamRosterList {
+    align-items: start !important;
+  }
+
+  body.my-team-theme-page .my-team-roster-slot {
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 12px 10px 10px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    gap: 5px !important;
+    box-sizing: border-box !important;
+  }
+
+  body.my-team-theme-page .my-team-roster-slot img {
+    width: 82px !important;
+    height: 82px !important;
+    max-height: 82px !important;
+    object-fit: contain !important;
+    margin: 0 0 4px !important;
+    display: block !important;
+  }
+
+  body.my-team-theme-page .my-team-roster-slot p {
+    margin: 0 0 3px !important;
+    padding: 0 !important;
+    line-height: 1.05 !important;
+  }
+
+  body.my-team-theme-page .my-team-roster-slot .pokemon-type-row,
+  body.my-team-theme-page .my-team-roster-slot .pokemon-type-list,
+  body.my-team-theme-page .my-team-roster-slot .type-row,
+  body.my-team-theme-page .my-team-roster-slot .type-list,
+  body.my-team-theme-page .my-team-roster-slot .my-team-type-badges,
+  body.my-team-theme-page .my-team-roster-slot .pokemon-type-badges,
+  body.my-team-theme-page .my-team-roster-slot .type-badges {
+    margin: 1px 0 0 !important;
+    padding: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 4px !important;
+    line-height: 1 !important;
+  }
+
+  body.my-team-theme-page .my-team-roster-slot .type-badge,
+  body.my-team-theme-page .my-team-roster-slot .pokemon-type,
+  body.my-team-theme-page .my-team-roster-slot span[class*="type"],
+  body.my-team-theme-page .my-team-roster-slot div[class*="type"] span {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    line-height: 1 !important;
+  }
+
+  body.my-team-theme-page .my-team-roster-slot .roster-action-hint {
+    display: none !important;
+  }
+</style>
+
 </head>
 <body class="my-team-theme-page">
   <div class="my-team-theme-overlay">
@@ -490,6 +560,6 @@
   <script src="js/theme-settings.js?v=global-theme1"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
-  <script src="js/my-team.js?v=click-roster-actions1"></script>
+  <script src="js/my-team.js?v=compact-roster-cards1"></script>
 </body>
 </html>
