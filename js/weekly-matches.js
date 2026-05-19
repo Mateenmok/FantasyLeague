@@ -5,6 +5,7 @@ const weeklyMatchesList = document.getElementById("weeklyMatchesList");
 const weeklyStatus = document.getElementById("weeklyStatus");
 const weeklyAdminControls = document.getElementById("weeklyAdminControls");
 const weeklyAdminStatus = document.getElementById("weeklyAdminStatus");
+const leagueActivityFeed = document.getElementById("leagueActivityFeed");
 
 const generateScheduleButton = document.getElementById("generateScheduleButton");
 const saveScoresButton = document.getElementById("saveScoresButton");
@@ -17,6 +18,7 @@ let currentMembership = null;
 let leagueTeams = [];
 let leagueMatchups = [];
 let isAdmin = false;
+let leagueActivityEvents = [];
 
 generateScheduleButton.addEventListener("click", generateSchedule);
 saveScoresButton.addEventListener("click", saveCurrentScores);
@@ -67,6 +69,7 @@ async function loadWeeklyMatchesPage() {
   }
 
   await loadLeagueData();
+  renderLeagueActivity();
   renderWeeklyMatches();
 }
 
@@ -116,6 +119,147 @@ async function loadLeagueData() {
   }
 
   leagueMatchups = matchups || [];
+
+  await loadLeagueActivityEvents();
+}
+
+async function loadLeagueActivityEvents() {
+  leagueActivityEvents = [];
+
+  try {
+    const { data, error } = await supabaseClient
+      .from("league_activity_events")
+      .select("*")
+      .eq("league_id", selectedLeagueId)
+      .order("created_at", { ascending: false })
+      .limit(30);
+
+    if (error) {
+      console.warn("League activity table not available yet:", error);
+      leagueActivityEvents = [];
+      return;
+    }
+
+    leagueActivityEvents = data || [];
+  } catch (error) {
+    console.warn("League activity load skipped:", error);
+    leagueActivityEvents = [];
+  }
+}
+
+function renderLeagueActivity() {
+  if (!leagueActivityFeed) {
+    return;
+  }
+
+  const feedItems = [];
+
+  // Real league activity should appear first, newest first.
+  leagueActivityEvents.forEach(event => {
+    const type = getActivityEventType(event);
+
+    feedItems.push({
+      type,
+      icon: getActivityIcon(type),
+      title: event.title || formatActivityType(type),
+      description: event.description || buildActivityDescription(event)
+    });
+  });
+
+  // Automatic league status alerts go underneath real activity.
+  if (currentLeague) {
+    if (typeof currentLeague.waiver_open === "boolean") {
+      feedItems.push({
+        type: "alert",
+        icon: "W",
+        title: currentLeague.waiver_open ? "Waivers are open" : "Waivers are closed",
+        description: currentLeague.waiver_open
+          ? "Teams can currently add and drop Pokémon through Waiver Wire."
+          : "Waiver Wire is currently closed."
+      });
+    }
+
+    if (currentLeague.schedule_generated) {
+      feedItems.push({
+        type: "alert",
+        icon: "M",
+        title: "Weekly matchups are active",
+        description: `Current matchup: ${currentLeague.current_matchup_number || 1}.`
+      });
+    }
+
+    if (currentLeague.season_phase === "complete") {
+      feedItems.push({
+        type: "alert",
+        icon: "✓",
+        title: "Regular season complete",
+        description: "The regular-season matchup schedule has finished."
+      });
+    }
+  }
+
+  if (!feedItems.length) {
+    leagueActivityFeed.innerHTML = `
+      <div class="league-activity-item alert">
+        <div class="league-activity-icon">!</div>
+        <div>
+          <p class="league-activity-title">No activity yet</p>
+          <p class="league-activity-desc">Adds, drops, trades, draft alerts, and waiver updates will show here once activity logging is connected.</p>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  leagueActivityFeed.innerHTML = feedItems.slice(0, 12).map(item => `
+    <div class="league-activity-item ${escapeHtml(item.type)}">
+      <div class="league-activity-icon">${escapeHtml(item.icon)}</div>
+      <div>
+        <p class="league-activity-title">${escapeHtml(item.title)}</p>
+        <p class="league-activity-desc">${escapeHtml(item.description)}</p>
+      </div>
+    </div>
+  `).join("");
+}
+
+function getActivityEventType(event) {
+  const rawType = String(event.event_type || event.type || "").toLowerCase();
+
+  if (rawType.includes("trade")) return "trade";
+  if (rawType.includes("drop")) return "drop";
+  if (rawType.includes("add") || rawType.includes("claim")) return "add";
+
+  return "alert";
+}
+
+function getActivityIcon(type) {
+  if (type === "add") return "+";
+  if (type === "drop") return "-";
+  if (type === "trade") return "⇄";
+  return "!";
+}
+
+function formatActivityType(type) {
+  if (type === "add") return "Pokémon added";
+  if (type === "drop") return "Pokémon dropped";
+  if (type === "trade") return "Trade completed";
+  return "League alert";
+}
+
+function buildActivityDescription(event) {
+  const team = event.team_name || event.actor_team_name || "A team";
+  const pokemon = event.pokemon_name || event.pokemon || "";
+  const target = event.target_team_name || "";
+
+  if (pokemon && target) {
+    return `${team} moved ${pokemon} with ${target}.`;
+  }
+
+  if (pokemon) {
+    return `${team}: ${pokemon}.`;
+  }
+
+  return event.message || "League activity was recorded.";
 }
 
 function renderWeeklyMatches() {
@@ -295,6 +439,7 @@ async function generateSchedule() {
   generateScheduleButton.disabled = false;
 
   await loadLeagueData();
+  renderLeagueActivity();
   renderWeeklyMatches();
 }
 
@@ -570,6 +715,7 @@ async function saveCurrentScores() {
   saveScoresButton.disabled = false;
 
   await loadLeagueData();
+  renderLeagueActivity();
   renderWeeklyMatches();
 }
 
@@ -697,6 +843,7 @@ async function advanceMatchup() {
   advanceMatchupButton.disabled = false;
 
   await loadLeagueData();
+  renderLeagueActivity();
   renderWeeklyMatches();
 }
 
