@@ -2,6 +2,7 @@ const manageLeagueSubtitle = document.getElementById("manageLeagueSubtitle");
 const manageLeagueStatus = document.getElementById("manageLeagueStatus");
 const teamManagerList = document.getElementById("teamManagerList");
 const saveManagersButton = document.getElementById("saveManagersButton");
+const divisionEditor = document.getElementById("divisionEditor");
 const draftClockSecondsInput = document.getElementById("draftClockSecondsInput");
 const playoffTeamCountSelect = document.getElementById("playoffTeamCountSelect");
 const draftOrderEditor = document.getElementById("draftOrderEditor");
@@ -14,6 +15,7 @@ let selectedLeagueId = localStorage.getItem("selected-league-id");
 let currentMembership = null;
 let currentLeague = null;
 let leagueTeams = [];
+let leagueDivisions = [];
 let draftOrderTeamIds = [];
 let draftState = null;
 let draftPicks = [];
@@ -87,16 +89,18 @@ async function loadManageLeaguePage() {
   currentLeague = league;
   manageLeagueSubtitle.textContent = league.name;
 
-  await loadTeams();
+  await loadTeamsAndDivisions();
+  await ensureLeagueDivisions();
   await loadDraftSettings();
 
+  renderDivisionEditor();
   renderDraftSettings();
   renderTeamManagerRows();
 
-  manageLeagueStatus.textContent = "Edit draft settings, teams, manager emails, and admin status.";
+  manageLeagueStatus.textContent = "Edit divisions, draft settings, teams, manager emails, and admin status.";
 }
 
-async function loadTeams() {
+async function loadTeamsAndDivisions() {
   const { data: teams, error: teamsError } = await supabaseClient
     .from("league_teams")
     .select("*")
@@ -111,6 +115,21 @@ async function loadTeams() {
   }
 
   leagueTeams = teams || [];
+
+  const { data: divisions, error: divisionsError } = await supabaseClient
+    .from("league_divisions")
+    .select("*")
+    .eq("league_id", selectedLeagueId)
+    .order("division_number", { ascending: true });
+
+  if (divisionsError) {
+    console.error("Divisions error:", divisionsError);
+    manageLeagueStatus.textContent = "Could not load league divisions.";
+    saveManagersButton.disabled = true;
+    return;
+  }
+
+  leagueDivisions = divisions || [];
 }
 
 async function loadDraftSettings() {
@@ -200,6 +219,74 @@ function renderDraftSettings() {
   `;
 }
 
+async function ensureLeagueDivisions() {
+  if (leagueDivisions.length === 0) {
+    const fallbackDivisionCount = Math.min(2, Math.max(1, leagueTeams.length));
+    const divisions = Array.from({ length: fallbackDivisionCount }, (_, index) => ({
+      id: makeId(),
+      league_id: selectedLeagueId,
+      division_number: index + 1,
+      name: `Division ${String.fromCharCode(65 + index)}`
+    }));
+
+    const { error } = await supabaseClient
+      .from("league_divisions")
+      .insert(divisions);
+
+    if (error) {
+      console.error("Create divisions error:", error);
+      manageLeagueStatus.textContent = "Could not create default divisions.";
+      return;
+    }
+
+    await loadTeamsAndDivisions();
+  }
+
+  const missingDivisionTeams = leagueTeams.filter(team => !team.division_id);
+
+  if (leagueDivisions.length && missingDivisionTeams.length) {
+    for (const team of missingDivisionTeams) {
+      const divisionIndex = getDefaultDivisionIndexForTeam(
+        team.team_number,
+        leagueTeams.length,
+        leagueDivisions.length
+      );
+      const divisionId = leagueDivisions[divisionIndex]?.id || leagueDivisions[0].id;
+
+      await supabaseClient
+        .from("league_teams")
+        .update({
+          division_id: divisionId,
+          updated_at: new Date().toISOString()
+        })
+        .eq("id", team.id);
+    }
+
+    await loadTeamsAndDivisions();
+  }
+}
+
+function renderDivisionEditor() {
+  if (!divisionEditor) {
+    return;
+  }
+
+  divisionEditor.innerHTML = leagueDivisions.map(division => {
+    return `
+      <label class="division-name-row">
+        <span>Division ${division.division_number}</span>
+        <input
+          id="divisionName-${division.id}"
+          class="pkmn-input"
+          type="text"
+          maxlength="40"
+          value="${escapeHtml(division.name)}"
+          placeholder="Division name">
+      </label>
+    `;
+  }).join("");
+}
+
 function renderPlayoffTeamOptions() {
   if (!playoffTeamCountSelect) {
     return;
@@ -233,6 +320,10 @@ function getDefaultPlayoffTeamCount(teamCount) {
 function renderTeamManagerRows() {
   teamManagerList.innerHTML = leagueTeams.map(team => {
     const checked = team.is_admin ? "checked" : "";
+    const divisionOptions = leagueDivisions.map(division => {
+      const selected = division.id === team.division_id ? "selected" : "";
+      return `<option value="${division.id}" ${selected}>${escapeHtml(division.name)}</option>`;
+    }).join("");
 
     return `
       <div class="team-manager-row" data-team-id="${team.id}">
@@ -251,6 +342,10 @@ function renderTeamManagerRows() {
           id="managerEmail-${team.id}"
           value="${escapeHtml(team.manager_email || "")}"
           placeholder="manager@email.com">
+
+        <select id="division-${team.id}" class="pkmn-select">
+          ${divisionOptions}
+        </select>
 
         <label class="team-admin-toggle">
           <input id="isAdmin-${team.id}" type="checkbox" ${checked}>
@@ -277,6 +372,18 @@ async function saveLeagueSettings() {
 
   if (playoffTeamCount < 2 || playoffTeamCount > leagueTeams.length || playoffTeamCount % 2 !== 0) {
     manageLeagueStatus.textContent = "Playoff teams must be an even number between 2 and the league size.";
+    return;
+  }
+
+  const divisionNames = getDivisionNames();
+
+  if (divisionNames.some(name => !name)) {
+    manageLeagueStatus.textContent = "Every division needs a name.";
+    return;
+  }
+
+  if (hasDuplicateDivisionName(divisionNames)) {
+    manageLeagueStatus.textContent = "Division names must be unique.";
     return;
   }
 
@@ -313,9 +420,30 @@ async function saveLeagueSettings() {
     return;
   }
 
+  for (const division of leagueDivisions) {
+    const divisionName = document.getElementById(`divisionName-${division.id}`).value.trim() || `Division ${division.division_number}`;
+
+    const { error } = await supabaseClient
+      .from("league_divisions")
+      .update({
+        name: divisionName,
+        updated_at: new Date().toISOString()
+      })
+      .eq("id", division.id)
+      .eq("league_id", selectedLeagueId);
+
+    if (error) {
+      console.error("Save division error:", error);
+      manageLeagueStatus.textContent = "Error saving divisions. Check the console.";
+      saveManagersButton.disabled = false;
+      return;
+    }
+  }
+
   for (const team of leagueTeams) {
     const teamName = document.getElementById(`teamName-${team.id}`).value.trim() || `Team ${team.team_number}`;
     const managerEmailRaw = document.getElementById(`managerEmail-${team.id}`).value.trim().toLowerCase();
+    const divisionId = document.getElementById(`division-${team.id}`).value;
     const isAdmin = document.getElementById(`isAdmin-${team.id}`).checked;
 
     const managerEmail = managerEmailRaw ? managerEmailRaw : null;
@@ -325,6 +453,7 @@ async function saveLeagueSettings() {
       .update({
         team_name: teamName,
         manager_email: managerEmail,
+        division_id: divisionId,
         is_admin: isAdmin,
         updated_at: new Date().toISOString()
       })
@@ -357,12 +486,42 @@ async function saveLeagueSettings() {
     currentLeague = refreshedLeague;
   }
 
-  await loadTeams();
+  await loadTeamsAndDivisions();
   await loadDraftSettings();
+  renderDivisionEditor();
   renderDraftSettings();
   renderTeamManagerRows();
 
   saveManagersButton.disabled = false;
+}
+
+function getDivisionNames() {
+  return leagueDivisions.map(division => {
+    const input = document.getElementById(`divisionName-${division.id}`);
+    return (input?.value || "").trim();
+  });
+}
+
+function hasDuplicateDivisionName(divisionNames) {
+  const seen = new Set();
+
+  return divisionNames.some(name => {
+    const normalizedName = name.trim().toLowerCase();
+
+    if (seen.has(normalizedName)) {
+      return true;
+    }
+
+    seen.add(normalizedName);
+    return false;
+  });
+}
+
+function getDefaultDivisionIndexForTeam(teamNumber, teamCount, divisionCount) {
+  return Math.min(
+    divisionCount - 1,
+    Math.floor((teamNumber - 1) * divisionCount / teamCount)
+  );
 }
 
 async function saveDraftOrderIfUnlocked() {

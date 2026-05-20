@@ -168,12 +168,14 @@
       color: rgba(255, 255, 255, 0.76);
     }
 
+    body.manage-theme-page .division-editor,
     body.manage-theme-page .draft-order-editor,
     body.manage-theme-page .team-manager-list {
       display: grid;
       gap: 12px;
     }
 
+    body.manage-theme-page .division-name-row,
     body.manage-theme-page .manage-draft-order-row,
     body.manage-theme-page .team-manager-row {
       display: grid;
@@ -186,14 +188,19 @@
       box-sizing: border-box;
     }
 
+    body.manage-theme-page .division-name-row {
+      grid-template-columns: 150px 1fr;
+    }
+
     body.manage-theme-page .manage-draft-order-row {
       grid-template-columns: 120px 1fr;
     }
 
     body.manage-theme-page .team-manager-row {
-      grid-template-columns: 90px 1.1fr 1.4fr auto;
+      grid-template-columns: 90px 1.1fr 1.3fr 1fr auto;
     }
 
+    body.manage-theme-page .division-name-row span,
     body.manage-theme-page .manage-draft-order-row span,
     body.manage-theme-page .team-row-label {
       font-family: "Oxanium", Arial, sans-serif;
@@ -328,6 +335,7 @@
         grid-template-columns: 1fr;
       }
 
+      body.manage-theme-page .division-name-row,
       body.manage-theme-page .manage-draft-order-row,
       body.manage-theme-page .draft-settings-grid,
       body.manage-theme-page .delete-league-row {
@@ -367,6 +375,15 @@
       </div>
 
       <div class="pkmn-panel">
+        <p class="manage-section-title">Divisions</p>
+        <p class="manage-section-note">
+          Rename divisions here, then use each team's division menu below to place them.
+        </p>
+
+        <div id="divisionEditor" class="division-editor"></div>
+      </div>
+
+      <div class="pkmn-panel">
         <p class="manage-section-title">Draft Settings</p>
         <p class="manage-section-note">
           Set the draft clock and draft order before the draft begins.
@@ -388,10 +405,9 @@
       </div>
 
       <div class="pkmn-panel">
-        <p><strong>Team Manager Emails</strong></p>
+        <p><strong>Team Settings</strong></p>
         <p class="small-note">
-          Add each participant's email to their team. When they create/sign into an account with that same email,
-          this league will appear in their My Leagues page.
+          Edit team names, manager emails, division placement, and admin access.
         </p>
       </div>
 
@@ -420,6 +436,6 @@
   <script src="js/theme-settings.js?v=global-theme1"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
-  <script src="js/manage-league.js?v=manage-playoffs1"></script>
+  <script src="js/manage-league.js?v=manage-divisions1"></script>
 </body>
 </html>

@@ -11,6 +11,7 @@ const selectedLeagueId = localStorage.getItem("selected-league-id");
 
 let currentLeague = null;
 let leagueTeams = [];
+let leagueDivisions = [];
 let teamRosterRows = [];
 let championsPokemon = [];
 let rosterLoadError = "";
@@ -66,6 +67,18 @@ async function loadStandingsPage() {
   currentLeague = league;
   standingsSubtitle.textContent = league.name;
 
+  const { data: divisions, error: divisionsError } = await supabaseClient
+    .from("league_divisions")
+    .select("*")
+    .eq("league_id", selectedLeagueId)
+    .order("division_number", { ascending: true });
+
+  if (divisionsError) {
+    console.error("Divisions error:", divisionsError);
+    standingsStatus.textContent = "Could not load divisions.";
+    return;
+  }
+
   const { data: teams, error: teamsError } = await supabaseClient
     .from("league_teams")
     .select("*")
@@ -78,6 +91,7 @@ async function loadStandingsPage() {
     return;
   }
 
+  leagueDivisions = divisions || [];
   leagueTeams = normalizeTeams(teams || []);
 
   await loadRosterData();
@@ -145,10 +159,41 @@ function renderStandings() {
     return;
   }
 
-  const orderedTeams = [...leagueTeams].sort(sortTeamsForStandings);
-  const leader = orderedTeams[0];
+  const divisionsToRender = leagueDivisions.length
+    ? leagueDivisions
+    : [{ id: "all", name: "League Standings", division_number: 1 }];
 
-  const rows = orderedTeams.map((team, index) => {
+  const renderedDivisionIds = new Set(divisionsToRender.map(division => division.id));
+  const unassignedTeams = leagueTeams.filter(team => !team.division_id || !renderedDivisionIds.has(team.division_id));
+  const boards = [...divisionsToRender];
+
+  if (unassignedTeams.length) {
+    boards.push({ id: "unassigned", name: "Unassigned", division_number: boards.length + 1 });
+  }
+
+  standingsContent.innerHTML = boards.map(division => {
+    const divisionTeams = leagueTeams
+      .filter(team => {
+        if (division.id === "all") return true;
+        if (division.id === "unassigned") return !team.division_id || !renderedDivisionIds.has(team.division_id);
+        return team.division_id === division.id;
+      })
+      .sort(sortTeamsForStandings);
+
+    if (!divisionTeams.length) {
+      return `
+        <section class="standings-board division-${getDivisionSlug(division.name)}">
+          <div class="standings-division-title">${escapeHtml(division.name)}</div>
+          <div class="empty-state">
+            <p>No teams assigned to this division.</p>
+          </div>
+        </section>
+      `;
+    }
+
+    const leader = divisionTeams[0];
+
+    const rows = divisionTeams.map((team, index) => {
     const gamesBack = calculateGamesBack(leader, team);
     const gbText = formatGamesBack(gamesBack);
 
@@ -188,24 +233,25 @@ function renderStandings() {
         <div class="standings-gb" data-label="GB">${gbText}</div>
       </div>
     `;
+    }).join("");
+
+    return `
+      <section class="standings-board division-${getDivisionSlug(division.name)}">
+        <div class="standings-division-title">${escapeHtml(division.name)}</div>
+
+        <div class="standings-header-row">
+          <div>#</div>
+          <div>Team</div>
+          <div>Record</div>
+          <div>PCT</div>
+          <div>GW</div>
+          <div>GB</div>
+        </div>
+
+        ${rows}
+      </section>
+    `;
   }).join("");
-
-  standingsContent.innerHTML = `
-    <section class="standings-board division-league-standings">
-      <div class="standings-division-title">League Standings</div>
-
-      <div class="standings-header-row">
-        <div>#</div>
-        <div>Team</div>
-        <div>Record</div>
-        <div>PCT</div>
-        <div>GW</div>
-        <div>GB</div>
-      </div>
-
-      ${rows}
-    </section>
-  `;
 
   bindRosterButtons();
   standingsStatus.textContent = `${leagueTeams.length} teams loaded. Tiebreaker: games won.`;
@@ -535,6 +581,14 @@ function buildPlayoffRounds(seededTeams) {
   }
 
   return rounds;
+}
+
+function getDivisionSlug(name) {
+  return String(name || "")
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
 

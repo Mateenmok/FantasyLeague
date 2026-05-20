@@ -181,6 +181,7 @@
     }
 
     body.create-league-theme-page .pkmn-label,
+    body.create-league-theme-page .division-name-row span,
     body.create-league-theme-page .team-email-row span,
     body.create-league-theme-page .pkmn-checkbox-item {
       color: rgba(255, 255, 255, 0.88);
@@ -193,6 +194,8 @@
 
     body.create-league-theme-page .pkmn-input,
     body.create-league-theme-page .pkmn-select,
+    body.create-league-theme-page .division-name-row input,
+    body.create-league-theme-page .team-email-row select,
     body.create-league-theme-page .team-email-row input {
       width: 100%;
       min-height: 48px;
@@ -221,6 +224,7 @@
       gap: 14px;
     }
 
+    body.create-league-theme-page .division-editor,
     body.create-league-theme-page .team-email-grid,
     body.create-league-theme-page .pkmn-checkbox-grid {
       display: grid;
@@ -228,12 +232,17 @@
       margin-top: 12px;
     }
 
+    body.create-league-theme-page .division-name-row,
     body.create-league-theme-page .team-email-row {
       display: grid;
-      grid-template-columns: 110px minmax(0, 1fr);
+      grid-template-columns: 110px minmax(0, 1fr) minmax(145px, 0.55fr);
       gap: 10px;
       align-items: center;
       min-width: 0;
+    }
+
+    body.create-league-theme-page .division-name-row {
+      grid-template-columns: 110px minmax(0, 1fr);
     }
 
     body.create-league-theme-page .pkmn-checkbox-grid {
@@ -427,6 +436,7 @@
     body.league-light-mode.create-league-theme-page .create-league-eyebrow,
     body.league-light-mode.create-league-theme-page .pkmn-result-box h2,
     body.league-light-mode.create-league-theme-page .pkmn-label,
+    body.league-light-mode.create-league-theme-page .division-name-row span,
     body.league-light-mode.create-league-theme-page .team-email-row span,
     body.league-light-mode.create-league-theme-page .pkmn-checkbox-item {
       color: #17233f;
@@ -489,6 +499,7 @@
       }
 
       .create-league-settings-grid,
+      body.create-league-theme-page .division-name-row,
       body.create-league-theme-page .team-email-row,
       body.create-league-theme-page .pkmn-checkbox-grid {
         grid-template-columns: 1fr;
@@ -534,6 +545,16 @@
               </div>
 
               <div class="pkmn-field">
+                <label class="pkmn-label" for="divisionCountSelect">Divisions</label>
+                <select class="pkmn-select" id="divisionCountSelect">
+                  <option value="1">1 Division</option>
+                  <option value="2" selected>2 Divisions</option>
+                  <option value="3">3 Divisions</option>
+                  <option value="4">4 Divisions</option>
+                </select>
+              </div>
+
+              <div class="pkmn-field">
                 <label class="pkmn-label" for="pointCapInput">Roster Point Cap</label>
                 <input class="pkmn-input" id="pointCapInput" type="number" min="1" max="999" value="50">
               </div>
@@ -561,11 +582,12 @@
           <div class="pkmn-panel">
             <p><strong>League Format</strong></p>
             <p class="small-note">
-              Choose the regular season length, playoff field, and roster points for the league.
+              Name the divisions, then assign each team to the division you want.
             </p>
             <p id="leagueSettingsPreview" class="small-note">
-              12 teams • 6 playoff teams • 10 regular season matches • 50 roster points
+              12 teams • 2 divisions • 6 playoff teams • 10 regular season matches • 50 roster points
             </p>
+            <div id="divisionNameFields" class="division-editor"></div>
           </div>
         </div>
 
@@ -573,7 +595,7 @@
           <div class="pkmn-panel">
             <p><strong>Assign Team Emails</strong></p>
             <p class="small-note">
-              Optional for now. Assigned participants will see the league after they sign in.
+              Optional for now. Use the division menu to place each team before creating the league.
             </p>
             <div id="teamEmailAssignments" class="team-email-grid"></div>
           </div>
@@ -598,6 +620,6 @@
   <script src="js/theme-settings.js?v=global-theme1"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
-  <script src="js/create-league.js?v=create-league-playoffs1"></script>
+  <script src="js/create-league.js?v=create-league-divisions1"></script>
 </body>
 </html>
