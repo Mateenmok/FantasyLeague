@@ -261,7 +261,7 @@ async function refreshDraftData(isBackgroundRefresh = false) {
 }
 
 function renderDraftRoom(isBackgroundRefresh = false) {
-  const totalPicks = leagueTeams.length * ROSTER_SIZE;
+  const totalPicks = getTotalDraftPicks();
   const picksMade = draftPicks.length;
   const availableCount = getAvailablePokemon().length;
   const nextPick = getNextPickInfo();
@@ -576,31 +576,64 @@ function updateDraftClock() {
 }
 
 function getNextPickInfo() {
-  const orderedTeams = getOrderedTeams();
-  const totalPicks = orderedTeams.length * ROSTER_SIZE;
+  const draftSequence = getDraftPickSequence();
 
-  if (draftPicks.length >= totalPicks || orderedTeams.length === 0) {
+  if (draftPicks.length >= draftSequence.length || draftSequence.length === 0) {
     return null;
   }
 
-  const overallPick = draftPicks.length + 1;
-  const roundNumber = Math.floor((overallPick - 1) / orderedTeams.length) + 1;
-  const pickInRound = ((overallPick - 1) % orderedTeams.length) + 1;
+  return draftSequence[draftPicks.length];
+}
 
-  const teamIndex = roundNumber % 2 === 1
-    ? pickInRound - 1
-    : orderedTeams.length - pickInRound;
+function getDraftPickSequence() {
+  const orderedTeams = getOrderedTeams();
+  const draftCapacities = new Map();
+  let maxRounds = 0;
+  const sequence = [];
 
-  return {
-    overallPick,
-    roundNumber,
-    pickInRound,
-    team: orderedTeams[teamIndex]
-  };
+  orderedTeams.forEach(team => {
+    const capacity = Math.max(ROSTER_SIZE - getMascotCountForTeam(team.id), 0);
+    draftCapacities.set(team.id, capacity);
+    maxRounds = Math.max(maxRounds, capacity);
+  });
+
+  for (let roundNumber = 1; roundNumber <= maxRounds; roundNumber++) {
+    const roundTeams = roundNumber % 2 === 1
+      ? orderedTeams
+      : [...orderedTeams].reverse();
+    let pickInRound = 0;
+
+    roundTeams.forEach(team => {
+      if ((draftCapacities.get(team.id) || 0) < roundNumber) {
+        return;
+      }
+
+      pickInRound += 1;
+      sequence.push({
+        overallPick: sequence.length + 1,
+        roundNumber,
+        pickInRound,
+        team
+      });
+    });
+  }
+
+  return sequence;
+}
+
+function getTotalDraftPicks() {
+  return getDraftPickSequence().length;
+}
+
+function getMascotCountForTeam(teamId) {
+  return getRosterForTeam(teamId).filter(row => row.is_mascot === true).length;
 }
 
 function getDraftedSlugSet() {
-  return new Set(draftPicks.map(pick => pick.pokemon_slug));
+  return new Set([
+    ...draftPicks.map(pick => pick.pokemon_slug),
+    ...allRosterRows.map(row => row.pokemon_slug)
+  ]);
 }
 
 function getAvailablePokemon() {
@@ -1537,7 +1570,7 @@ async function makeDraftPick(randomPick) {
   pokemonDraftInput.value = "";
 
   const upcomingPick = draftPicks.length + 1;
-  const totalPicks = leagueTeams.length * ROSTER_SIZE;
+  const totalPicks = getTotalDraftPicks();
 
   await supabaseClient
     .from("league_draft_state")

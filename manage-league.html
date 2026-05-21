@@ -170,6 +170,7 @@
 
     body.manage-theme-page .division-editor,
     body.manage-theme-page .draft-order-editor,
+    body.manage-theme-page .mascot-assignment-list,
     body.manage-theme-page .team-manager-list {
       display: grid;
       gap: 12px;
@@ -177,6 +178,7 @@
 
     body.manage-theme-page .division-name-row,
     body.manage-theme-page .manage-draft-order-row,
+    body.manage-theme-page .mascot-assignment-row,
     body.manage-theme-page .team-manager-row {
       display: grid;
       gap: 10px;
@@ -196,18 +198,29 @@
       grid-template-columns: 120px 1fr;
     }
 
+    body.manage-theme-page .mascot-assignment-row {
+      grid-template-columns: minmax(170px, 0.7fr) minmax(0, 1.2fr) minmax(120px, 0.45fr);
+    }
+
     body.manage-theme-page .team-manager-row {
       grid-template-columns: 90px 1.1fr 1.3fr 1fr auto;
     }
 
     body.manage-theme-page .division-name-row span,
     body.manage-theme-page .manage-draft-order-row span,
+    body.manage-theme-page .mascot-team-name,
+    body.manage-theme-page .mascot-points,
     body.manage-theme-page .team-row-label {
       font-family: "Oxanium", Arial, sans-serif;
       font-size: 15px;
       font-weight: 800;
       letter-spacing: 0.4px;
       color: #f5efd8;
+    }
+
+    body.manage-theme-page .mascot-points {
+      text-align: right;
+      color: rgba(255, 255, 255, 0.76);
     }
 
     body.manage-theme-page .pkmn-input,
@@ -278,6 +291,7 @@
     }
 
     #saveManagersButton,
+    #saveMascotsButton,
     #deleteLeagueButton {
       width: 100% !important;
       min-height: 60px !important;
@@ -298,6 +312,17 @@
     #saveManagersButton {
       background: linear-gradient(to bottom, #294b77, #102844) !important;
       margin: 2px 0 16px !important;
+    }
+
+    #saveMascotsButton {
+      background: linear-gradient(to bottom, #2f7c78, #11413f) !important;
+      margin-top: 12px !important;
+    }
+
+    #saveMascotsButton:disabled {
+      cursor: not-allowed !important;
+      filter: grayscale(0.4) brightness(0.76);
+      opacity: 0.72;
     }
 
     #deleteLeagueButton {
@@ -337,9 +362,14 @@
 
       body.manage-theme-page .division-name-row,
       body.manage-theme-page .manage-draft-order-row,
+      body.manage-theme-page .mascot-assignment-row,
       body.manage-theme-page .draft-settings-grid,
       body.manage-theme-page .delete-league-row {
         grid-template-columns: 1fr;
+      }
+
+      body.manage-theme-page .mascot-points {
+        text-align: left;
       }
     }
 
@@ -405,6 +435,18 @@
       </div>
 
       <div class="pkmn-panel">
+        <p class="manage-section-title">Mascots</p>
+        <p class="manage-section-note">
+          Choose one starting Pokémon for every team before the draft begins. Mascots count toward roster size and point cap.
+        </p>
+
+        <div id="mascotAssignmentList" class="mascot-assignment-list"></div>
+        <datalist id="mascotPokemonOptions"></datalist>
+        <button id="saveMascotsButton" class="pkmn-button">Save Mascots</button>
+        <p id="mascotStatus" class="small-note"></p>
+      </div>
+
+      <div class="pkmn-panel">
         <p><strong>Team Settings</strong></p>
         <p class="small-note">
           Edit team names, manager emails, division placement, and admin access.
@@ -436,6 +478,6 @@
   <script src="js/theme-settings.js?v=global-theme1"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
-  <script src="js/manage-league.js?v=manage-divisions1"></script>
+  <script src="js/manage-league.js?v=manage-mascots1"></script>
 </body>
 </html>

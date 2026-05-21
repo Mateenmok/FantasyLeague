@@ -6,6 +6,10 @@ const divisionEditor = document.getElementById("divisionEditor");
 const draftClockSecondsInput = document.getElementById("draftClockSecondsInput");
 const playoffTeamCountSelect = document.getElementById("playoffTeamCountSelect");
 const draftOrderEditor = document.getElementById("draftOrderEditor");
+const mascotAssignmentList = document.getElementById("mascotAssignmentList");
+const mascotPokemonOptions = document.getElementById("mascotPokemonOptions");
+const saveMascotsButton = document.getElementById("saveMascotsButton");
+const mascotStatus = document.getElementById("mascotStatus");
 
 const deleteLeagueButton = document.getElementById("deleteLeagueButton");
 const deleteLeagueConfirmInput = document.getElementById("deleteLeagueConfirmInput");
@@ -19,8 +23,14 @@ let leagueDivisions = [];
 let draftOrderTeamIds = [];
 let draftState = null;
 let draftPicks = [];
+let mascotRows = [];
+let championsPokemon = [];
 
 saveManagersButton.addEventListener("click", saveLeagueSettings);
+
+if (saveMascotsButton) {
+  saveMascotsButton.addEventListener("click", saveMascotAssignments);
+}
 
 if (deleteLeagueButton) {
   deleteLeagueButton.addEventListener("click", deleteLeague);
@@ -89,12 +99,15 @@ async function loadManageLeaguePage() {
   currentLeague = league;
   manageLeagueSubtitle.textContent = league.name;
 
+  await loadPokemonData();
   await loadTeamsAndDivisions();
   await ensureLeagueDivisions();
   await loadDraftSettings();
+  await loadMascotRows();
 
   renderDivisionEditor();
   renderDraftSettings();
+  renderMascotAssignments();
   renderTeamManagerRows();
 
   manageLeagueStatus.textContent = "Edit divisions, draft settings, teams, manager emails, and admin status.";
@@ -130,6 +143,19 @@ async function loadTeamsAndDivisions() {
   }
 
   leagueDivisions = divisions || [];
+}
+
+async function loadPokemonData() {
+  try {
+    championsPokemon = await fetch("data/champions-pokemon.json?v=manage-mascots1")
+      .then(response => response.json());
+  } catch (error) {
+    console.error("Pokemon data load error:", error);
+    championsPokemon = [];
+    if (mascotStatus) {
+      mascotStatus.textContent = "Could not load Pokemon data for mascots.";
+    }
+  }
 }
 
 async function loadDraftSettings() {
@@ -175,6 +201,26 @@ async function loadDraftSettings() {
   }
 }
 
+async function loadMascotRows() {
+  const { data, error } = await supabaseClient
+    .from("team_rosters")
+    .select("*")
+    .eq("league_id", selectedLeagueId)
+    .eq("is_mascot", true)
+    .order("slot_number", { ascending: true });
+
+  if (error) {
+    console.error("Mascot load error:", error);
+    mascotRows = [];
+    if (mascotStatus) {
+      mascotStatus.textContent = "Could not load mascot assignments.";
+    }
+    return;
+  }
+
+  mascotRows = data || [];
+}
+
 function renderDraftSettings() {
   if (!draftOrderEditor || !draftClockSecondsInput) {
     return;
@@ -217,6 +263,84 @@ function renderDraftSettings() {
       }).join("")}
     </div>
   `;
+}
+
+function renderMascotAssignments() {
+  if (!mascotAssignmentList || !mascotPokemonOptions) {
+    return;
+  }
+
+  renderMascotPokemonOptions();
+
+  const locked = isMascotLocked();
+  const mascotByTeamId = {};
+
+  mascotRows.forEach(row => {
+    mascotByTeamId[row.team_id] = row;
+  });
+
+  mascotAssignmentList.innerHTML = leagueTeams.map(team => {
+    const mascot = getPokemonBySlug(mascotByTeamId[team.id]?.pokemon_slug);
+    const mascotValue = mascot ? getPokemonLabel(mascot) : "";
+    const pointText = mascot ? `${getPokemonPoints(mascot)} pts` : "Required";
+
+    return `
+      <label class="mascot-assignment-row">
+        <span class="mascot-team-name">${escapeHtml(team.team_name)}</span>
+        <input
+          id="mascot-${team.id}"
+          class="pkmn-input mascot-input"
+          type="text"
+          list="mascotPokemonOptions"
+          value="${escapeHtml(mascotValue)}"
+          placeholder="Choose mascot"
+          ${locked ? "disabled" : ""}>
+        <span class="mascot-points" id="mascotPoints-${team.id}">${escapeHtml(pointText)}</span>
+      </label>
+    `;
+  }).join("");
+
+  document.querySelectorAll(".mascot-input").forEach(input => {
+    input.addEventListener("input", updateMascotPointLabels);
+  });
+
+  if (saveMascotsButton) {
+    saveMascotsButton.disabled = locked || championsPokemon.length === 0;
+  }
+
+  if (mascotStatus) {
+    if (locked) {
+      mascotStatus.textContent = "Mascots are locked because the draft has started or picks already exist.";
+    } else if (mascotRows.length === leagueTeams.length) {
+      mascotStatus.textContent = "Mascots saved. You can still change them before the draft begins.";
+    } else {
+      mascotStatus.textContent = "Choose a mascot for every team before saving.";
+    }
+  }
+}
+
+function renderMascotPokemonOptions() {
+  mascotPokemonOptions.innerHTML = championsPokemon.map(pokemon => {
+    return `<option value="${escapeHtml(getPokemonLabel(pokemon))}"></option>`;
+  }).join("");
+}
+
+function updateMascotPointLabels() {
+  leagueTeams.forEach(team => {
+    const input = document.getElementById(`mascot-${team.id}`);
+    const pointLabel = document.getElementById(`mascotPoints-${team.id}`);
+
+    if (!input || !pointLabel) {
+      return;
+    }
+
+    const pokemon = findPokemonFromInput(input.value);
+    pointLabel.textContent = pokemon ? `${getPokemonPoints(pokemon)} pts` : "Required";
+  });
+}
+
+function isMascotLocked() {
+  return Boolean(draftState?.is_started) || draftPicks.length > 0;
 }
 
 async function ensureLeagueDivisions() {
@@ -491,8 +615,76 @@ async function saveLeagueSettings() {
   renderDivisionEditor();
   renderDraftSettings();
   renderTeamManagerRows();
+  renderMascotAssignments();
 
   saveManagersButton.disabled = false;
+}
+
+async function saveMascotAssignments() {
+  if (!currentMembership || currentMembership.role !== "admin") {
+    mascotStatus.textContent = "Only admins can save mascots.";
+    return;
+  }
+
+  if (isMascotLocked()) {
+    mascotStatus.textContent = "Mascots can only be saved before the draft begins.";
+    return;
+  }
+
+  if (championsPokemon.length === 0) {
+    mascotStatus.textContent = "Pokemon data is not loaded yet.";
+    return;
+  }
+
+  const mascotAssignments = [];
+  const usedSlugs = new Set();
+
+  for (const team of leagueTeams) {
+    const input = document.getElementById(`mascot-${team.id}`);
+    const pokemon = findPokemonFromInput(input?.value || "");
+
+    if (!pokemon) {
+      mascotStatus.textContent = `Choose a valid mascot for ${team.team_name}. Every team needs one.`;
+      return;
+    }
+
+    if (usedSlugs.has(pokemon.slug)) {
+      mascotStatus.textContent = `${pokemon.name} is already assigned. Mascots must be unique.`;
+      return;
+    }
+
+    usedSlugs.add(pokemon.slug);
+    mascotAssignments.push({
+      team_id: team.id,
+      pokemon_slug: pokemon.slug
+    });
+  }
+
+  if (mascotAssignments.length !== leagueTeams.length) {
+    mascotStatus.textContent = "A mascot must be assigned for every team.";
+    return;
+  }
+
+  saveMascotsButton.disabled = true;
+  mascotStatus.textContent = "Saving mascots...";
+
+  const { error } = await supabaseClient
+    .rpc("save_league_mascots", {
+      p_league_id: selectedLeagueId,
+      p_mascots: mascotAssignments
+    });
+
+  if (error) {
+    console.error("Save mascots error:", error);
+    mascotStatus.textContent = getMascotSaveErrorMessage(error);
+    saveMascotsButton.disabled = false;
+    return;
+  }
+
+  await loadMascotRows();
+  renderMascotAssignments();
+  mascotStatus.textContent = "Mascots saved for every team.";
+  saveMascotsButton.disabled = false;
 }
 
 function getDivisionNames() {
@@ -522,6 +714,61 @@ function getDefaultDivisionIndexForTeam(teamNumber, teamCount, divisionCount) {
     divisionCount - 1,
     Math.floor((teamNumber - 1) * divisionCount / teamCount)
   );
+}
+
+function findPokemonFromInput(value) {
+  const cleaned = String(value || "").trim().toLowerCase();
+
+  if (!cleaned) {
+    return null;
+  }
+
+  return championsPokemon.find(pokemon => {
+    return pokemon.slug.toLowerCase() === cleaned ||
+      pokemon.name.toLowerCase() === cleaned ||
+      getPokemonLabel(pokemon).toLowerCase() === cleaned;
+  });
+}
+
+function getPokemonBySlug(slug) {
+  return championsPokemon.find(pokemon => pokemon.slug === slug);
+}
+
+function getPokemonLabel(pokemon) {
+  const sameNameCount = championsPokemon.filter(p => p.name.toLowerCase() === pokemon.name.toLowerCase()).length;
+
+  if (sameNameCount > 1) {
+    return `${pokemon.name} (${(pokemon.types || []).join("/")})`;
+  }
+
+  return pokemon.name;
+}
+
+function getPokemonPoints(pokemon) {
+  return Number(pokemon?.points || 1);
+}
+
+function getMascotSaveErrorMessage(error) {
+  const text = [
+    error?.message,
+    error?.details,
+    error?.hint,
+    error?.code
+  ].filter(Boolean).join(" ").toLowerCase();
+
+  if (text.includes("non-mascot roster")) {
+    return "Mascots cannot be changed after roster activity has started.";
+  }
+
+  if (text.includes("draft")) {
+    return "Mascots can only be saved before the draft begins.";
+  }
+
+  if (text.includes("unique_league_pokemon_owner") || text.includes("unique")) {
+    return "One of those Pokemon is already rostered in this league.";
+  }
+
+  return "Could not save mascots. Check the console.";
 }
 
 async function saveDraftOrderIfUnlocked() {
