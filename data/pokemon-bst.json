@@ -1,0 +1,3092 @@
+{
+  "venusaur": {
+    "name": "Venusaur",
+    "pokeapi_name": "venusaur",
+    "pokeapi_id": 3,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/venusaur",
+    "bst": 525,
+    "stats": {
+      "hp": 80,
+      "attack": 82,
+      "defense": 83,
+      "sp_atk": 100,
+      "sp_def": 100,
+      "speed": 80
+    }
+  },
+  "charizard": {
+    "name": "Charizard",
+    "pokeapi_name": "charizard",
+    "pokeapi_id": 6,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/charizard",
+    "bst": 534,
+    "stats": {
+      "hp": 78,
+      "attack": 84,
+      "defense": 78,
+      "sp_atk": 109,
+      "sp_def": 85,
+      "speed": 100
+    }
+  },
+  "blastoise": {
+    "name": "Blastoise",
+    "pokeapi_name": "blastoise",
+    "pokeapi_id": 9,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/blastoise",
+    "bst": 530,
+    "stats": {
+      "hp": 79,
+      "attack": 83,
+      "defense": 100,
+      "sp_atk": 85,
+      "sp_def": 105,
+      "speed": 78
+    }
+  },
+  "beedrill": {
+    "name": "Beedrill",
+    "pokeapi_name": "beedrill",
+    "pokeapi_id": 15,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/beedrill",
+    "bst": 395,
+    "stats": {
+      "hp": 65,
+      "attack": 90,
+      "defense": 40,
+      "sp_atk": 45,
+      "sp_def": 80,
+      "speed": 75
+    }
+  },
+  "pidgeot": {
+    "name": "Pidgeot",
+    "pokeapi_name": "pidgeot",
+    "pokeapi_id": 18,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/pidgeot",
+    "bst": 479,
+    "stats": {
+      "hp": 83,
+      "attack": 80,
+      "defense": 75,
+      "sp_atk": 70,
+      "sp_def": 70,
+      "speed": 101
+    }
+  },
+  "arbok": {
+    "name": "Arbok",
+    "pokeapi_name": "arbok",
+    "pokeapi_id": 24,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/arbok",
+    "bst": 448,
+    "stats": {
+      "hp": 60,
+      "attack": 95,
+      "defense": 69,
+      "sp_atk": 65,
+      "sp_def": 79,
+      "speed": 80
+    }
+  },
+  "pikachu": {
+    "name": "Pikachu",
+    "pokeapi_name": "pikachu",
+    "pokeapi_id": 25,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/pikachu",
+    "bst": 320,
+    "stats": {
+      "hp": 35,
+      "attack": 55,
+      "defense": 40,
+      "sp_atk": 50,
+      "sp_def": 50,
+      "speed": 90
+    }
+  },
+  "raichu": {
+    "name": "Raichu",
+    "pokeapi_name": "raichu",
+    "pokeapi_id": 26,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/raichu",
+    "bst": 485,
+    "stats": {
+      "hp": 60,
+      "attack": 90,
+      "defense": 55,
+      "sp_atk": 90,
+      "sp_def": 80,
+      "speed": 110
+    }
+  },
+  "alolan-raichu": {
+    "name": "Alolan Raichu",
+    "pokeapi_name": "raichu-alola",
+    "pokeapi_id": 10100,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/raichu-alola",
+    "bst": 485,
+    "stats": {
+      "hp": 60,
+      "attack": 85,
+      "defense": 50,
+      "sp_atk": 95,
+      "sp_def": 85,
+      "speed": 110
+    }
+  },
+  "clefable": {
+    "name": "Clefable",
+    "pokeapi_name": "clefable",
+    "pokeapi_id": 36,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/clefable",
+    "bst": 483,
+    "stats": {
+      "hp": 95,
+      "attack": 70,
+      "defense": 73,
+      "sp_atk": 95,
+      "sp_def": 90,
+      "speed": 60
+    }
+  },
+  "ninetales": {
+    "name": "Ninetales",
+    "pokeapi_name": "ninetales",
+    "pokeapi_id": 38,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/ninetales",
+    "bst": 505,
+    "stats": {
+      "hp": 73,
+      "attack": 76,
+      "defense": 75,
+      "sp_atk": 81,
+      "sp_def": 100,
+      "speed": 100
+    }
+  },
+  "alolan-ninetales": {
+    "name": "Alolan Ninetales",
+    "pokeapi_name": "ninetales-alola",
+    "pokeapi_id": 10104,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/ninetales-alola",
+    "bst": 505,
+    "stats": {
+      "hp": 73,
+      "attack": 67,
+      "defense": 75,
+      "sp_atk": 81,
+      "sp_def": 100,
+      "speed": 109
+    }
+  },
+  "arcanine": {
+    "name": "Arcanine",
+    "pokeapi_name": "arcanine",
+    "pokeapi_id": 59,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/arcanine",
+    "bst": 555,
+    "stats": {
+      "hp": 90,
+      "attack": 110,
+      "defense": 80,
+      "sp_atk": 100,
+      "sp_def": 80,
+      "speed": 95
+    }
+  },
+  "hisuian-arcanine": {
+    "name": "Hisuian Arcanine",
+    "pokeapi_name": "arcanine-hisui",
+    "pokeapi_id": 10230,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/arcanine-hisui",
+    "bst": 555,
+    "stats": {
+      "hp": 95,
+      "attack": 115,
+      "defense": 80,
+      "sp_atk": 95,
+      "sp_def": 80,
+      "speed": 90
+    }
+  },
+  "alakazam": {
+    "name": "Alakazam",
+    "pokeapi_name": "alakazam",
+    "pokeapi_id": 65,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/alakazam",
+    "bst": 500,
+    "stats": {
+      "hp": 55,
+      "attack": 50,
+      "defense": 45,
+      "sp_atk": 135,
+      "sp_def": 95,
+      "speed": 120
+    }
+  },
+  "machamp": {
+    "name": "Machamp",
+    "pokeapi_name": "machamp",
+    "pokeapi_id": 68,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/machamp",
+    "bst": 505,
+    "stats": {
+      "hp": 90,
+      "attack": 130,
+      "defense": 80,
+      "sp_atk": 65,
+      "sp_def": 85,
+      "speed": 55
+    }
+  },
+  "victreebel": {
+    "name": "Victreebel",
+    "pokeapi_name": "victreebel",
+    "pokeapi_id": 71,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/victreebel",
+    "bst": 490,
+    "stats": {
+      "hp": 80,
+      "attack": 105,
+      "defense": 65,
+      "sp_atk": 100,
+      "sp_def": 70,
+      "speed": 70
+    }
+  },
+  "slowbro": {
+    "name": "Slowbro",
+    "pokeapi_name": "slowbro",
+    "pokeapi_id": 80,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/slowbro",
+    "bst": 490,
+    "stats": {
+      "hp": 95,
+      "attack": 75,
+      "defense": 110,
+      "sp_atk": 100,
+      "sp_def": 80,
+      "speed": 30
+    }
+  },
+  "galarian-slowbro": {
+    "name": "Galarian Slowbro",
+    "pokeapi_name": "slowbro-galar",
+    "pokeapi_id": 10165,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/slowbro-galar",
+    "bst": 490,
+    "stats": {
+      "hp": 95,
+      "attack": 100,
+      "defense": 95,
+      "sp_atk": 100,
+      "sp_def": 70,
+      "speed": 30
+    }
+  },
+  "gengar": {
+    "name": "Gengar",
+    "pokeapi_name": "gengar",
+    "pokeapi_id": 94,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/gengar",
+    "bst": 500,
+    "stats": {
+      "hp": 60,
+      "attack": 65,
+      "defense": 60,
+      "sp_atk": 130,
+      "sp_def": 75,
+      "speed": 110
+    }
+  },
+  "kangaskhan": {
+    "name": "Kangaskhan",
+    "pokeapi_name": "kangaskhan",
+    "pokeapi_id": 115,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/kangaskhan",
+    "bst": 490,
+    "stats": {
+      "hp": 105,
+      "attack": 95,
+      "defense": 80,
+      "sp_atk": 40,
+      "sp_def": 80,
+      "speed": 90
+    }
+  },
+  "starmie": {
+    "name": "Starmie",
+    "pokeapi_name": "starmie",
+    "pokeapi_id": 121,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/starmie",
+    "bst": 520,
+    "stats": {
+      "hp": 60,
+      "attack": 75,
+      "defense": 85,
+      "sp_atk": 100,
+      "sp_def": 85,
+      "speed": 115
+    }
+  },
+  "pinsir": {
+    "name": "Pinsir",
+    "pokeapi_name": "pinsir",
+    "pokeapi_id": 127,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/pinsir",
+    "bst": 500,
+    "stats": {
+      "hp": 65,
+      "attack": 125,
+      "defense": 100,
+      "sp_atk": 55,
+      "sp_def": 70,
+      "speed": 85
+    }
+  },
+  "tauros": {
+    "name": "Tauros",
+    "pokeapi_name": "tauros",
+    "pokeapi_id": 128,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/tauros",
+    "bst": 490,
+    "stats": {
+      "hp": 75,
+      "attack": 100,
+      "defense": 95,
+      "sp_atk": 40,
+      "sp_def": 70,
+      "speed": 110
+    }
+  },
+  "paldean-tauros-fighting": {
+    "name": "Paldean Tauros",
+    "pokeapi_name": "tauros-paldea-combat-breed",
+    "pokeapi_id": 10250,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/tauros-paldea-combat-breed",
+    "bst": 490,
+    "stats": {
+      "hp": 75,
+      "attack": 110,
+      "defense": 105,
+      "sp_atk": 30,
+      "sp_def": 70,
+      "speed": 100
+    }
+  },
+  "gyarados": {
+    "name": "Gyarados",
+    "pokeapi_name": "gyarados",
+    "pokeapi_id": 130,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/gyarados",
+    "bst": 540,
+    "stats": {
+      "hp": 95,
+      "attack": 125,
+      "defense": 79,
+      "sp_atk": 60,
+      "sp_def": 100,
+      "speed": 81
+    }
+  },
+  "ditto": {
+    "name": "Ditto",
+    "pokeapi_name": "ditto",
+    "pokeapi_id": 132,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/ditto",
+    "bst": 288,
+    "stats": {
+      "hp": 48,
+      "attack": 48,
+      "defense": 48,
+      "sp_atk": 48,
+      "sp_def": 48,
+      "speed": 48
+    }
+  },
+  "vaporeon": {
+    "name": "Vaporeon",
+    "pokeapi_name": "vaporeon",
+    "pokeapi_id": 134,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/vaporeon",
+    "bst": 525,
+    "stats": {
+      "hp": 130,
+      "attack": 65,
+      "defense": 60,
+      "sp_atk": 110,
+      "sp_def": 95,
+      "speed": 65
+    }
+  },
+  "jolteon": {
+    "name": "Jolteon",
+    "pokeapi_name": "jolteon",
+    "pokeapi_id": 135,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/jolteon",
+    "bst": 525,
+    "stats": {
+      "hp": 65,
+      "attack": 65,
+      "defense": 60,
+      "sp_atk": 110,
+      "sp_def": 95,
+      "speed": 130
+    }
+  },
+  "flareon": {
+    "name": "Flareon",
+    "pokeapi_name": "flareon",
+    "pokeapi_id": 136,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/flareon",
+    "bst": 525,
+    "stats": {
+      "hp": 65,
+      "attack": 130,
+      "defense": 60,
+      "sp_atk": 95,
+      "sp_def": 110,
+      "speed": 65
+    }
+  },
+  "aerodactyl": {
+    "name": "Aerodactyl",
+    "pokeapi_name": "aerodactyl",
+    "pokeapi_id": 142,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/aerodactyl",
+    "bst": 515,
+    "stats": {
+      "hp": 80,
+      "attack": 105,
+      "defense": 65,
+      "sp_atk": 60,
+      "sp_def": 75,
+      "speed": 130
+    }
+  },
+  "snorlax": {
+    "name": "Snorlax",
+    "pokeapi_name": "snorlax",
+    "pokeapi_id": 143,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/snorlax",
+    "bst": 540,
+    "stats": {
+      "hp": 160,
+      "attack": 110,
+      "defense": 65,
+      "sp_atk": 65,
+      "sp_def": 110,
+      "speed": 30
+    }
+  },
+  "dragonite": {
+    "name": "Dragonite",
+    "pokeapi_name": "dragonite",
+    "pokeapi_id": 149,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/dragonite",
+    "bst": 600,
+    "stats": {
+      "hp": 91,
+      "attack": 134,
+      "defense": 95,
+      "sp_atk": 100,
+      "sp_def": 100,
+      "speed": 80
+    }
+  },
+  "meganium": {
+    "name": "Meganium",
+    "pokeapi_name": "meganium",
+    "pokeapi_id": 154,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/meganium",
+    "bst": 525,
+    "stats": {
+      "hp": 80,
+      "attack": 82,
+      "defense": 100,
+      "sp_atk": 83,
+      "sp_def": 100,
+      "speed": 80
+    }
+  },
+  "typhlosion": {
+    "name": "Typhlosion",
+    "pokeapi_name": "typhlosion",
+    "pokeapi_id": 157,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/typhlosion",
+    "bst": 534,
+    "stats": {
+      "hp": 78,
+      "attack": 84,
+      "defense": 78,
+      "sp_atk": 109,
+      "sp_def": 85,
+      "speed": 100
+    }
+  },
+  "hisuian-typhlosion": {
+    "name": "Hisuian Typhlosion",
+    "pokeapi_name": "typhlosion-hisui",
+    "pokeapi_id": 10233,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/typhlosion-hisui",
+    "bst": 534,
+    "stats": {
+      "hp": 73,
+      "attack": 84,
+      "defense": 78,
+      "sp_atk": 119,
+      "sp_def": 85,
+      "speed": 95
+    }
+  },
+  "feraligatr": {
+    "name": "Feraligatr",
+    "pokeapi_name": "feraligatr",
+    "pokeapi_id": 160,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/feraligatr",
+    "bst": 530,
+    "stats": {
+      "hp": 85,
+      "attack": 105,
+      "defense": 100,
+      "sp_atk": 79,
+      "sp_def": 83,
+      "speed": 78
+    }
+  },
+  "ariados": {
+    "name": "Ariados",
+    "pokeapi_name": "ariados",
+    "pokeapi_id": 168,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/ariados",
+    "bst": 400,
+    "stats": {
+      "hp": 70,
+      "attack": 90,
+      "defense": 70,
+      "sp_atk": 60,
+      "sp_def": 70,
+      "speed": 40
+    }
+  },
+  "ampharos": {
+    "name": "Ampharos",
+    "pokeapi_name": "ampharos",
+    "pokeapi_id": 181,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/ampharos",
+    "bst": 510,
+    "stats": {
+      "hp": 90,
+      "attack": 75,
+      "defense": 85,
+      "sp_atk": 115,
+      "sp_def": 90,
+      "speed": 55
+    }
+  },
+  "azumarill": {
+    "name": "Azumarill",
+    "pokeapi_name": "azumarill",
+    "pokeapi_id": 184,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/azumarill",
+    "bst": 420,
+    "stats": {
+      "hp": 100,
+      "attack": 50,
+      "defense": 80,
+      "sp_atk": 60,
+      "sp_def": 80,
+      "speed": 50
+    }
+  },
+  "politoed": {
+    "name": "Politoed",
+    "pokeapi_name": "politoed",
+    "pokeapi_id": 186,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/politoed",
+    "bst": 500,
+    "stats": {
+      "hp": 90,
+      "attack": 75,
+      "defense": 75,
+      "sp_atk": 90,
+      "sp_def": 100,
+      "speed": 70
+    }
+  },
+  "espeon": {
+    "name": "Espeon",
+    "pokeapi_name": "espeon",
+    "pokeapi_id": 196,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/espeon",
+    "bst": 525,
+    "stats": {
+      "hp": 65,
+      "attack": 65,
+      "defense": 60,
+      "sp_atk": 130,
+      "sp_def": 95,
+      "speed": 110
+    }
+  },
+  "umbreon": {
+    "name": "Umbreon",
+    "pokeapi_name": "umbreon",
+    "pokeapi_id": 197,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/umbreon",
+    "bst": 525,
+    "stats": {
+      "hp": 95,
+      "attack": 65,
+      "defense": 110,
+      "sp_atk": 60,
+      "sp_def": 130,
+      "speed": 65
+    }
+  },
+  "slowking": {
+    "name": "Slowking",
+    "pokeapi_name": "slowking",
+    "pokeapi_id": 199,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/slowking",
+    "bst": 490,
+    "stats": {
+      "hp": 95,
+      "attack": 75,
+      "defense": 80,
+      "sp_atk": 100,
+      "sp_def": 110,
+      "speed": 30
+    }
+  },
+  "galarian-slowking": {
+    "name": "Galarian Slowking",
+    "pokeapi_name": "slowking-galar",
+    "pokeapi_id": 10172,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/slowking-galar",
+    "bst": 490,
+    "stats": {
+      "hp": 95,
+      "attack": 65,
+      "defense": 80,
+      "sp_atk": 110,
+      "sp_def": 110,
+      "speed": 30
+    }
+  },
+  "forretress": {
+    "name": "Forretress",
+    "pokeapi_name": "forretress",
+    "pokeapi_id": 205,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/forretress",
+    "bst": 465,
+    "stats": {
+      "hp": 75,
+      "attack": 90,
+      "defense": 140,
+      "sp_atk": 60,
+      "sp_def": 60,
+      "speed": 40
+    }
+  },
+  "steelix": {
+    "name": "Steelix",
+    "pokeapi_name": "steelix",
+    "pokeapi_id": 208,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/steelix",
+    "bst": 510,
+    "stats": {
+      "hp": 75,
+      "attack": 85,
+      "defense": 200,
+      "sp_atk": 55,
+      "sp_def": 65,
+      "speed": 30
+    }
+  },
+  "scizor": {
+    "name": "Scizor",
+    "pokeapi_name": "scizor",
+    "pokeapi_id": 212,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/scizor",
+    "bst": 500,
+    "stats": {
+      "hp": 70,
+      "attack": 130,
+      "defense": 100,
+      "sp_atk": 55,
+      "sp_def": 80,
+      "speed": 65
+    }
+  },
+  "heracross": {
+    "name": "Heracross",
+    "pokeapi_name": "heracross",
+    "pokeapi_id": 214,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/heracross",
+    "bst": 500,
+    "stats": {
+      "hp": 80,
+      "attack": 125,
+      "defense": 75,
+      "sp_atk": 40,
+      "sp_def": 95,
+      "speed": 85
+    }
+  },
+  "skarmory": {
+    "name": "Skarmory",
+    "pokeapi_name": "skarmory",
+    "pokeapi_id": 227,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/skarmory",
+    "bst": 465,
+    "stats": {
+      "hp": 65,
+      "attack": 80,
+      "defense": 140,
+      "sp_atk": 40,
+      "sp_def": 70,
+      "speed": 70
+    }
+  },
+  "houndoom": {
+    "name": "Houndoom",
+    "pokeapi_name": "houndoom",
+    "pokeapi_id": 229,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/houndoom",
+    "bst": 500,
+    "stats": {
+      "hp": 75,
+      "attack": 90,
+      "defense": 50,
+      "sp_atk": 110,
+      "sp_def": 80,
+      "speed": 95
+    }
+  },
+  "tyranitar": {
+    "name": "Tyranitar",
+    "pokeapi_name": "tyranitar",
+    "pokeapi_id": 248,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/tyranitar",
+    "bst": 600,
+    "stats": {
+      "hp": 100,
+      "attack": 134,
+      "defense": 110,
+      "sp_atk": 95,
+      "sp_def": 100,
+      "speed": 61
+    }
+  },
+  "pelipper": {
+    "name": "Pelipper",
+    "pokeapi_name": "pelipper",
+    "pokeapi_id": 279,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/pelipper",
+    "bst": 440,
+    "stats": {
+      "hp": 60,
+      "attack": 50,
+      "defense": 100,
+      "sp_atk": 95,
+      "sp_def": 70,
+      "speed": 65
+    }
+  },
+  "gardevoir": {
+    "name": "Gardevoir",
+    "pokeapi_name": "gardevoir",
+    "pokeapi_id": 282,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/gardevoir",
+    "bst": 518,
+    "stats": {
+      "hp": 68,
+      "attack": 65,
+      "defense": 65,
+      "sp_atk": 125,
+      "sp_def": 115,
+      "speed": 80
+    }
+  },
+  "sableye": {
+    "name": "Sableye",
+    "pokeapi_name": "sableye",
+    "pokeapi_id": 302,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/sableye",
+    "bst": 380,
+    "stats": {
+      "hp": 50,
+      "attack": 75,
+      "defense": 75,
+      "sp_atk": 65,
+      "sp_def": 65,
+      "speed": 50
+    }
+  },
+  "aggron": {
+    "name": "Aggron",
+    "pokeapi_name": "aggron",
+    "pokeapi_id": 306,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/aggron",
+    "bst": 530,
+    "stats": {
+      "hp": 70,
+      "attack": 110,
+      "defense": 180,
+      "sp_atk": 60,
+      "sp_def": 60,
+      "speed": 50
+    }
+  },
+  "medicham": {
+    "name": "Medicham",
+    "pokeapi_name": "medicham",
+    "pokeapi_id": 308,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/medicham",
+    "bst": 410,
+    "stats": {
+      "hp": 60,
+      "attack": 60,
+      "defense": 75,
+      "sp_atk": 60,
+      "sp_def": 75,
+      "speed": 80
+    }
+  },
+  "manectric": {
+    "name": "Manectric",
+    "pokeapi_name": "manectric",
+    "pokeapi_id": 310,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/manectric",
+    "bst": 475,
+    "stats": {
+      "hp": 70,
+      "attack": 75,
+      "defense": 60,
+      "sp_atk": 105,
+      "sp_def": 60,
+      "speed": 105
+    }
+  },
+  "sharpedo": {
+    "name": "Sharpedo",
+    "pokeapi_name": "sharpedo",
+    "pokeapi_id": 319,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/sharpedo",
+    "bst": 460,
+    "stats": {
+      "hp": 70,
+      "attack": 120,
+      "defense": 40,
+      "sp_atk": 95,
+      "sp_def": 40,
+      "speed": 95
+    }
+  },
+  "camerupt": {
+    "name": "Camerupt",
+    "pokeapi_name": "camerupt",
+    "pokeapi_id": 323,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/camerupt",
+    "bst": 460,
+    "stats": {
+      "hp": 70,
+      "attack": 100,
+      "defense": 70,
+      "sp_atk": 105,
+      "sp_def": 75,
+      "speed": 40
+    }
+  },
+  "torkoal": {
+    "name": "Torkoal",
+    "pokeapi_name": "torkoal",
+    "pokeapi_id": 324,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/torkoal",
+    "bst": 470,
+    "stats": {
+      "hp": 70,
+      "attack": 85,
+      "defense": 140,
+      "sp_atk": 85,
+      "sp_def": 70,
+      "speed": 20
+    }
+  },
+  "altaria": {
+    "name": "Altaria",
+    "pokeapi_name": "altaria",
+    "pokeapi_id": 334,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/altaria",
+    "bst": 490,
+    "stats": {
+      "hp": 75,
+      "attack": 70,
+      "defense": 90,
+      "sp_atk": 70,
+      "sp_def": 105,
+      "speed": 80
+    }
+  },
+  "milotic": {
+    "name": "Milotic",
+    "pokeapi_name": "milotic",
+    "pokeapi_id": 350,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/milotic",
+    "bst": 540,
+    "stats": {
+      "hp": 95,
+      "attack": 60,
+      "defense": 79,
+      "sp_atk": 100,
+      "sp_def": 125,
+      "speed": 81
+    }
+  },
+  "castform": {
+    "name": "Castform",
+    "pokeapi_name": "castform",
+    "pokeapi_id": 351,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/castform",
+    "bst": 420,
+    "stats": {
+      "hp": 70,
+      "attack": 70,
+      "defense": 70,
+      "sp_atk": 70,
+      "sp_def": 70,
+      "speed": 70
+    }
+  },
+  "banette": {
+    "name": "Banette",
+    "pokeapi_name": "banette",
+    "pokeapi_id": 354,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/banette",
+    "bst": 455,
+    "stats": {
+      "hp": 64,
+      "attack": 115,
+      "defense": 65,
+      "sp_atk": 83,
+      "sp_def": 63,
+      "speed": 65
+    }
+  },
+  "chimecho": {
+    "name": "Chimecho",
+    "pokeapi_name": "chimecho",
+    "pokeapi_id": 358,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/chimecho",
+    "bst": 455,
+    "stats": {
+      "hp": 75,
+      "attack": 50,
+      "defense": 80,
+      "sp_atk": 95,
+      "sp_def": 90,
+      "speed": 65
+    }
+  },
+  "absol": {
+    "name": "Absol",
+    "pokeapi_name": "absol",
+    "pokeapi_id": 359,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/absol",
+    "bst": 465,
+    "stats": {
+      "hp": 65,
+      "attack": 130,
+      "defense": 60,
+      "sp_atk": 75,
+      "sp_def": 60,
+      "speed": 75
+    }
+  },
+  "glalie": {
+    "name": "Glalie",
+    "pokeapi_name": "glalie",
+    "pokeapi_id": 362,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/glalie",
+    "bst": 480,
+    "stats": {
+      "hp": 80,
+      "attack": 80,
+      "defense": 80,
+      "sp_atk": 80,
+      "sp_def": 80,
+      "speed": 80
+    }
+  },
+  "torterra": {
+    "name": "Torterra",
+    "pokeapi_name": "torterra",
+    "pokeapi_id": 389,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/torterra",
+    "bst": 525,
+    "stats": {
+      "hp": 95,
+      "attack": 109,
+      "defense": 105,
+      "sp_atk": 75,
+      "sp_def": 85,
+      "speed": 56
+    }
+  },
+  "infernape": {
+    "name": "Infernape",
+    "pokeapi_name": "infernape",
+    "pokeapi_id": 392,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/infernape",
+    "bst": 534,
+    "stats": {
+      "hp": 76,
+      "attack": 104,
+      "defense": 71,
+      "sp_atk": 104,
+      "sp_def": 71,
+      "speed": 108
+    }
+  },
+  "empoleon": {
+    "name": "Empoleon",
+    "pokeapi_name": "empoleon",
+    "pokeapi_id": 395,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/empoleon",
+    "bst": 530,
+    "stats": {
+      "hp": 84,
+      "attack": 86,
+      "defense": 88,
+      "sp_atk": 111,
+      "sp_def": 101,
+      "speed": 60
+    }
+  },
+  "luxray": {
+    "name": "Luxray",
+    "pokeapi_name": "luxray",
+    "pokeapi_id": 405,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/luxray",
+    "bst": 523,
+    "stats": {
+      "hp": 80,
+      "attack": 120,
+      "defense": 79,
+      "sp_atk": 95,
+      "sp_def": 79,
+      "speed": 70
+    }
+  },
+  "roserade": {
+    "name": "Roserade",
+    "pokeapi_name": "roserade",
+    "pokeapi_id": 407,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/roserade",
+    "bst": 515,
+    "stats": {
+      "hp": 60,
+      "attack": 70,
+      "defense": 65,
+      "sp_atk": 125,
+      "sp_def": 105,
+      "speed": 90
+    }
+  },
+  "rampardos": {
+    "name": "Rampardos",
+    "pokeapi_name": "rampardos",
+    "pokeapi_id": 409,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/rampardos",
+    "bst": 495,
+    "stats": {
+      "hp": 97,
+      "attack": 165,
+      "defense": 60,
+      "sp_atk": 65,
+      "sp_def": 50,
+      "speed": 58
+    }
+  },
+  "bastiodon": {
+    "name": "Bastiodon",
+    "pokeapi_name": "bastiodon",
+    "pokeapi_id": 411,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/bastiodon",
+    "bst": 495,
+    "stats": {
+      "hp": 60,
+      "attack": 52,
+      "defense": 168,
+      "sp_atk": 47,
+      "sp_def": 138,
+      "speed": 30
+    }
+  },
+  "lopunny": {
+    "name": "Lopunny",
+    "pokeapi_name": "lopunny",
+    "pokeapi_id": 428,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/lopunny",
+    "bst": 480,
+    "stats": {
+      "hp": 65,
+      "attack": 76,
+      "defense": 84,
+      "sp_atk": 54,
+      "sp_def": 96,
+      "speed": 105
+    }
+  },
+  "spiritomb": {
+    "name": "Spiritomb",
+    "pokeapi_name": "spiritomb",
+    "pokeapi_id": 442,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/spiritomb",
+    "bst": 485,
+    "stats": {
+      "hp": 50,
+      "attack": 92,
+      "defense": 108,
+      "sp_atk": 92,
+      "sp_def": 108,
+      "speed": 35
+    }
+  },
+  "garchomp": {
+    "name": "Garchomp",
+    "pokeapi_name": "garchomp",
+    "pokeapi_id": 445,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/garchomp",
+    "bst": 600,
+    "stats": {
+      "hp": 108,
+      "attack": 130,
+      "defense": 95,
+      "sp_atk": 80,
+      "sp_def": 85,
+      "speed": 102
+    }
+  },
+  "lucario": {
+    "name": "Lucario",
+    "pokeapi_name": "lucario",
+    "pokeapi_id": 448,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/lucario",
+    "bst": 525,
+    "stats": {
+      "hp": 70,
+      "attack": 110,
+      "defense": 70,
+      "sp_atk": 115,
+      "sp_def": 70,
+      "speed": 90
+    }
+  },
+  "hippowdon": {
+    "name": "Hippowdon",
+    "pokeapi_name": "hippowdon",
+    "pokeapi_id": 450,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/hippowdon",
+    "bst": 525,
+    "stats": {
+      "hp": 108,
+      "attack": 112,
+      "defense": 118,
+      "sp_atk": 68,
+      "sp_def": 72,
+      "speed": 47
+    }
+  },
+  "toxicroak": {
+    "name": "Toxicroak",
+    "pokeapi_name": "toxicroak",
+    "pokeapi_id": 454,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/toxicroak",
+    "bst": 490,
+    "stats": {
+      "hp": 83,
+      "attack": 106,
+      "defense": 65,
+      "sp_atk": 86,
+      "sp_def": 65,
+      "speed": 85
+    }
+  },
+  "abomasnow": {
+    "name": "Abomasnow",
+    "pokeapi_name": "abomasnow",
+    "pokeapi_id": 460,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/abomasnow",
+    "bst": 494,
+    "stats": {
+      "hp": 90,
+      "attack": 92,
+      "defense": 75,
+      "sp_atk": 92,
+      "sp_def": 85,
+      "speed": 60
+    }
+  },
+  "weavile": {
+    "name": "Weavile",
+    "pokeapi_name": "weavile",
+    "pokeapi_id": 461,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/weavile",
+    "bst": 510,
+    "stats": {
+      "hp": 70,
+      "attack": 120,
+      "defense": 65,
+      "sp_atk": 45,
+      "sp_def": 85,
+      "speed": 125
+    }
+  },
+  "rhyperior": {
+    "name": "Rhyperior",
+    "pokeapi_name": "rhyperior",
+    "pokeapi_id": 464,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/rhyperior",
+    "bst": 535,
+    "stats": {
+      "hp": 115,
+      "attack": 140,
+      "defense": 130,
+      "sp_atk": 55,
+      "sp_def": 55,
+      "speed": 40
+    }
+  },
+  "leafeon": {
+    "name": "Leafeon",
+    "pokeapi_name": "leafeon",
+    "pokeapi_id": 470,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/leafeon",
+    "bst": 525,
+    "stats": {
+      "hp": 65,
+      "attack": 110,
+      "defense": 130,
+      "sp_atk": 60,
+      "sp_def": 65,
+      "speed": 95
+    }
+  },
+  "glaceon": {
+    "name": "Glaceon",
+    "pokeapi_name": "glaceon",
+    "pokeapi_id": 471,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/glaceon",
+    "bst": 525,
+    "stats": {
+      "hp": 65,
+      "attack": 60,
+      "defense": 110,
+      "sp_atk": 130,
+      "sp_def": 95,
+      "speed": 65
+    }
+  },
+  "gliscor": {
+    "name": "Gliscor",
+    "pokeapi_name": "gliscor",
+    "pokeapi_id": 472,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/gliscor",
+    "bst": 510,
+    "stats": {
+      "hp": 75,
+      "attack": 95,
+      "defense": 125,
+      "sp_atk": 45,
+      "sp_def": 75,
+      "speed": 95
+    }
+  },
+  "mamoswine": {
+    "name": "Mamoswine",
+    "pokeapi_name": "mamoswine",
+    "pokeapi_id": 473,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/mamoswine",
+    "bst": 530,
+    "stats": {
+      "hp": 110,
+      "attack": 130,
+      "defense": 80,
+      "sp_atk": 70,
+      "sp_def": 60,
+      "speed": 80
+    }
+  },
+  "gallade": {
+    "name": "Gallade",
+    "pokeapi_name": "gallade",
+    "pokeapi_id": 475,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/gallade",
+    "bst": 518,
+    "stats": {
+      "hp": 68,
+      "attack": 125,
+      "defense": 65,
+      "sp_atk": 65,
+      "sp_def": 115,
+      "speed": 80
+    }
+  },
+  "froslass": {
+    "name": "Froslass",
+    "pokeapi_name": "froslass",
+    "pokeapi_id": 478,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/froslass",
+    "bst": 480,
+    "stats": {
+      "hp": 70,
+      "attack": 80,
+      "defense": 70,
+      "sp_atk": 80,
+      "sp_def": 70,
+      "speed": 110
+    }
+  },
+  "rotom": {
+    "name": "Rotom",
+    "pokeapi_name": "rotom",
+    "pokeapi_id": 479,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/rotom",
+    "bst": 440,
+    "stats": {
+      "hp": 50,
+      "attack": 50,
+      "defense": 77,
+      "sp_atk": 95,
+      "sp_def": 77,
+      "speed": 91
+    }
+  },
+  "serperior": {
+    "name": "Serperior",
+    "pokeapi_name": "serperior",
+    "pokeapi_id": 497,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/serperior",
+    "bst": 528,
+    "stats": {
+      "hp": 75,
+      "attack": 75,
+      "defense": 95,
+      "sp_atk": 75,
+      "sp_def": 95,
+      "speed": 113
+    }
+  },
+  "emboar": {
+    "name": "Emboar",
+    "pokeapi_name": "emboar",
+    "pokeapi_id": 500,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/emboar",
+    "bst": 528,
+    "stats": {
+      "hp": 110,
+      "attack": 123,
+      "defense": 65,
+      "sp_atk": 100,
+      "sp_def": 65,
+      "speed": 65
+    }
+  },
+  "samurott": {
+    "name": "Samurott",
+    "pokeapi_name": "samurott",
+    "pokeapi_id": 503,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/samurott",
+    "bst": 528,
+    "stats": {
+      "hp": 95,
+      "attack": 100,
+      "defense": 85,
+      "sp_atk": 108,
+      "sp_def": 70,
+      "speed": 70
+    }
+  },
+  "hisuian-samurott": {
+    "name": "Hisuian Samurott",
+    "pokeapi_name": "samurott-hisui",
+    "pokeapi_id": 10236,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/samurott-hisui",
+    "bst": 528,
+    "stats": {
+      "hp": 90,
+      "attack": 108,
+      "defense": 80,
+      "sp_atk": 100,
+      "sp_def": 65,
+      "speed": 85
+    }
+  },
+  "watchog": {
+    "name": "Watchog",
+    "pokeapi_name": "watchog",
+    "pokeapi_id": 505,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/watchog",
+    "bst": 420,
+    "stats": {
+      "hp": 60,
+      "attack": 85,
+      "defense": 69,
+      "sp_atk": 60,
+      "sp_def": 69,
+      "speed": 77
+    }
+  },
+  "liepard": {
+    "name": "Liepard",
+    "pokeapi_name": "liepard",
+    "pokeapi_id": 510,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/liepard",
+    "bst": 446,
+    "stats": {
+      "hp": 64,
+      "attack": 88,
+      "defense": 50,
+      "sp_atk": 88,
+      "sp_def": 50,
+      "speed": 106
+    }
+  },
+  "simisage": {
+    "name": "Simisage",
+    "pokeapi_name": "simisage",
+    "pokeapi_id": 512,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/simisage",
+    "bst": 498,
+    "stats": {
+      "hp": 75,
+      "attack": 98,
+      "defense": 63,
+      "sp_atk": 98,
+      "sp_def": 63,
+      "speed": 101
+    }
+  },
+  "simisear": {
+    "name": "Simisear",
+    "pokeapi_name": "simisear",
+    "pokeapi_id": 514,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/simisear",
+    "bst": 498,
+    "stats": {
+      "hp": 75,
+      "attack": 98,
+      "defense": 63,
+      "sp_atk": 98,
+      "sp_def": 63,
+      "speed": 101
+    }
+  },
+  "simipour": {
+    "name": "Simipour",
+    "pokeapi_name": "simipour",
+    "pokeapi_id": 516,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/simipour",
+    "bst": 498,
+    "stats": {
+      "hp": 75,
+      "attack": 98,
+      "defense": 63,
+      "sp_atk": 98,
+      "sp_def": 63,
+      "speed": 101
+    }
+  },
+  "excadrill": {
+    "name": "Excadrill",
+    "pokeapi_name": "excadrill",
+    "pokeapi_id": 530,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/excadrill",
+    "bst": 508,
+    "stats": {
+      "hp": 110,
+      "attack": 135,
+      "defense": 60,
+      "sp_atk": 50,
+      "sp_def": 65,
+      "speed": 88
+    }
+  },
+  "audino": {
+    "name": "Audino",
+    "pokeapi_name": "audino",
+    "pokeapi_id": 531,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/audino",
+    "bst": 445,
+    "stats": {
+      "hp": 103,
+      "attack": 60,
+      "defense": 86,
+      "sp_atk": 60,
+      "sp_def": 86,
+      "speed": 50
+    }
+  },
+  "conkeldurr": {
+    "name": "Conkeldurr",
+    "pokeapi_name": "conkeldurr",
+    "pokeapi_id": 534,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/conkeldurr",
+    "bst": 505,
+    "stats": {
+      "hp": 105,
+      "attack": 140,
+      "defense": 95,
+      "sp_atk": 55,
+      "sp_def": 65,
+      "speed": 45
+    }
+  },
+  "whimsicott": {
+    "name": "Whimsicott",
+    "pokeapi_name": "whimsicott",
+    "pokeapi_id": 547,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/whimsicott",
+    "bst": 480,
+    "stats": {
+      "hp": 60,
+      "attack": 67,
+      "defense": 85,
+      "sp_atk": 77,
+      "sp_def": 75,
+      "speed": 116
+    }
+  },
+  "krookodile": {
+    "name": "Krookodile",
+    "pokeapi_name": "krookodile",
+    "pokeapi_id": 553,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/krookodile",
+    "bst": 519,
+    "stats": {
+      "hp": 95,
+      "attack": 117,
+      "defense": 80,
+      "sp_atk": 65,
+      "sp_def": 70,
+      "speed": 92
+    }
+  },
+  "cofagrigus": {
+    "name": "Cofagrigus",
+    "pokeapi_name": "cofagrigus",
+    "pokeapi_id": 563,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/cofagrigus",
+    "bst": 483,
+    "stats": {
+      "hp": 58,
+      "attack": 50,
+      "defense": 145,
+      "sp_atk": 95,
+      "sp_def": 105,
+      "speed": 30
+    }
+  },
+  "garbodor": {
+    "name": "Garbodor",
+    "pokeapi_name": "garbodor",
+    "pokeapi_id": 569,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/garbodor",
+    "bst": 474,
+    "stats": {
+      "hp": 80,
+      "attack": 95,
+      "defense": 82,
+      "sp_atk": 60,
+      "sp_def": 82,
+      "speed": 75
+    }
+  },
+  "zoroark": {
+    "name": "Zoroark",
+    "pokeapi_name": "zoroark",
+    "pokeapi_id": 571,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/zoroark",
+    "bst": 510,
+    "stats": {
+      "hp": 60,
+      "attack": 105,
+      "defense": 60,
+      "sp_atk": 120,
+      "sp_def": 60,
+      "speed": 105
+    }
+  },
+  "hisuian-zoroark": {
+    "name": "Hisuian Zoroark",
+    "pokeapi_name": "zoroark-hisui",
+    "pokeapi_id": 10239,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/zoroark-hisui",
+    "bst": 510,
+    "stats": {
+      "hp": 55,
+      "attack": 100,
+      "defense": 60,
+      "sp_atk": 125,
+      "sp_def": 60,
+      "speed": 110
+    }
+  },
+  "reuniclus": {
+    "name": "Reuniclus",
+    "pokeapi_name": "reuniclus",
+    "pokeapi_id": 579,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/reuniclus",
+    "bst": 490,
+    "stats": {
+      "hp": 110,
+      "attack": 65,
+      "defense": 75,
+      "sp_atk": 125,
+      "sp_def": 85,
+      "speed": 30
+    }
+  },
+  "vanilluxe": {
+    "name": "Vanilluxe",
+    "pokeapi_name": "vanilluxe",
+    "pokeapi_id": 584,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/vanilluxe",
+    "bst": 535,
+    "stats": {
+      "hp": 71,
+      "attack": 95,
+      "defense": 85,
+      "sp_atk": 110,
+      "sp_def": 95,
+      "speed": 79
+    }
+  },
+  "emolga": {
+    "name": "Emolga",
+    "pokeapi_name": "emolga",
+    "pokeapi_id": 587,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/emolga",
+    "bst": 428,
+    "stats": {
+      "hp": 55,
+      "attack": 75,
+      "defense": 60,
+      "sp_atk": 75,
+      "sp_def": 60,
+      "speed": 103
+    }
+  },
+  "chandelure": {
+    "name": "Chandelure",
+    "pokeapi_name": "chandelure",
+    "pokeapi_id": 609,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/chandelure",
+    "bst": 520,
+    "stats": {
+      "hp": 60,
+      "attack": 55,
+      "defense": 90,
+      "sp_atk": 145,
+      "sp_def": 90,
+      "speed": 80
+    }
+  },
+  "beartic": {
+    "name": "Beartic",
+    "pokeapi_name": "beartic",
+    "pokeapi_id": 614,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/beartic",
+    "bst": 505,
+    "stats": {
+      "hp": 95,
+      "attack": 130,
+      "defense": 80,
+      "sp_atk": 70,
+      "sp_def": 80,
+      "speed": 50
+    }
+  },
+  "stunfisk": {
+    "name": "Stunfisk",
+    "pokeapi_name": "stunfisk",
+    "pokeapi_id": 618,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/stunfisk",
+    "bst": 471,
+    "stats": {
+      "hp": 109,
+      "attack": 66,
+      "defense": 84,
+      "sp_atk": 81,
+      "sp_def": 99,
+      "speed": 32
+    }
+  },
+  "galarian-stunfisk": {
+    "name": "Galarian Stunfisk",
+    "pokeapi_name": "stunfisk-galar",
+    "pokeapi_id": 10180,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/stunfisk-galar",
+    "bst": 471,
+    "stats": {
+      "hp": 109,
+      "attack": 81,
+      "defense": 99,
+      "sp_atk": 66,
+      "sp_def": 84,
+      "speed": 32
+    }
+  },
+  "golurk": {
+    "name": "Golurk",
+    "pokeapi_name": "golurk",
+    "pokeapi_id": 623,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/golurk",
+    "bst": 483,
+    "stats": {
+      "hp": 89,
+      "attack": 124,
+      "defense": 80,
+      "sp_atk": 55,
+      "sp_def": 80,
+      "speed": 55
+    }
+  },
+  "hydreigon": {
+    "name": "Hydreigon",
+    "pokeapi_name": "hydreigon",
+    "pokeapi_id": 635,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/hydreigon",
+    "bst": 600,
+    "stats": {
+      "hp": 92,
+      "attack": 105,
+      "defense": 90,
+      "sp_atk": 125,
+      "sp_def": 90,
+      "speed": 98
+    }
+  },
+  "volcarona": {
+    "name": "Volcarona",
+    "pokeapi_name": "volcarona",
+    "pokeapi_id": 637,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/volcarona",
+    "bst": 550,
+    "stats": {
+      "hp": 85,
+      "attack": 60,
+      "defense": 65,
+      "sp_atk": 135,
+      "sp_def": 105,
+      "speed": 100
+    }
+  },
+  "chesnaught": {
+    "name": "Chesnaught",
+    "pokeapi_name": "chesnaught",
+    "pokeapi_id": 652,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/chesnaught",
+    "bst": 530,
+    "stats": {
+      "hp": 88,
+      "attack": 107,
+      "defense": 122,
+      "sp_atk": 74,
+      "sp_def": 75,
+      "speed": 64
+    }
+  },
+  "delphox": {
+    "name": "Delphox",
+    "pokeapi_name": "delphox",
+    "pokeapi_id": 655,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/delphox",
+    "bst": 534,
+    "stats": {
+      "hp": 75,
+      "attack": 69,
+      "defense": 72,
+      "sp_atk": 114,
+      "sp_def": 100,
+      "speed": 104
+    }
+  },
+  "greninja": {
+    "name": "Greninja",
+    "pokeapi_name": "greninja",
+    "pokeapi_id": 658,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/greninja",
+    "bst": 530,
+    "stats": {
+      "hp": 72,
+      "attack": 95,
+      "defense": 67,
+      "sp_atk": 103,
+      "sp_def": 71,
+      "speed": 122
+    }
+  },
+  "diggersby": {
+    "name": "Diggersby",
+    "pokeapi_name": "diggersby",
+    "pokeapi_id": 660,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/diggersby",
+    "bst": 423,
+    "stats": {
+      "hp": 85,
+      "attack": 56,
+      "defense": 77,
+      "sp_atk": 50,
+      "sp_def": 77,
+      "speed": 78
+    }
+  },
+  "talonflame": {
+    "name": "Talonflame",
+    "pokeapi_name": "talonflame",
+    "pokeapi_id": 663,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/talonflame",
+    "bst": 499,
+    "stats": {
+      "hp": 78,
+      "attack": 81,
+      "defense": 71,
+      "sp_atk": 74,
+      "sp_def": 69,
+      "speed": 126
+    }
+  },
+  "vivillon": {
+    "name": "Vivillon",
+    "pokeapi_name": "vivillon",
+    "pokeapi_id": 666,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/vivillon",
+    "bst": 411,
+    "stats": {
+      "hp": 80,
+      "attack": 52,
+      "defense": 50,
+      "sp_atk": 90,
+      "sp_def": 50,
+      "speed": 89
+    }
+  },
+  "eternal-flower-floette": {
+    "name": "Eternal Flower Floette",
+    "pokeapi_name": "floette",
+    "pokeapi_id": 670,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/floette",
+    "bst": 371,
+    "stats": {
+      "hp": 54,
+      "attack": 45,
+      "defense": 47,
+      "sp_atk": 75,
+      "sp_def": 98,
+      "speed": 52
+    }
+  },
+  "florges": {
+    "name": "Florges",
+    "pokeapi_name": "florges",
+    "pokeapi_id": 671,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/florges",
+    "bst": 552,
+    "stats": {
+      "hp": 78,
+      "attack": 65,
+      "defense": 68,
+      "sp_atk": 112,
+      "sp_def": 154,
+      "speed": 75
+    }
+  },
+  "pangoro": {
+    "name": "Pangoro",
+    "pokeapi_name": "pangoro",
+    "pokeapi_id": 675,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/pangoro",
+    "bst": 495,
+    "stats": {
+      "hp": 95,
+      "attack": 124,
+      "defense": 78,
+      "sp_atk": 69,
+      "sp_def": 71,
+      "speed": 58
+    }
+  },
+  "furfrou": {
+    "name": "Furfrou",
+    "pokeapi_name": "furfrou",
+    "pokeapi_id": 676,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/furfrou",
+    "bst": 472,
+    "stats": {
+      "hp": 75,
+      "attack": 80,
+      "defense": 60,
+      "sp_atk": 65,
+      "sp_def": 90,
+      "speed": 102
+    }
+  },
+  "meowstic": {
+    "name": "Meowstic",
+    "pokeapi_name": "meowstic-male",
+    "pokeapi_id": 678,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/meowstic-male",
+    "bst": 466,
+    "stats": {
+      "hp": 74,
+      "attack": 48,
+      "defense": 76,
+      "sp_atk": 83,
+      "sp_def": 81,
+      "speed": 104
+    }
+  },
+  "aegislash": {
+    "name": "Aegislash",
+    "pokeapi_name": "aegislash-shield",
+    "pokeapi_id": 681,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/aegislash-shield",
+    "bst": 500,
+    "stats": {
+      "hp": 60,
+      "attack": 50,
+      "defense": 140,
+      "sp_atk": 50,
+      "sp_def": 140,
+      "speed": 60
+    }
+  },
+  "aromatisse": {
+    "name": "Aromatisse",
+    "pokeapi_name": "aromatisse",
+    "pokeapi_id": 683,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/aromatisse",
+    "bst": 462,
+    "stats": {
+      "hp": 101,
+      "attack": 72,
+      "defense": 72,
+      "sp_atk": 99,
+      "sp_def": 89,
+      "speed": 29
+    }
+  },
+  "slurpuff": {
+    "name": "Slurpuff",
+    "pokeapi_name": "slurpuff",
+    "pokeapi_id": 685,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/slurpuff",
+    "bst": 480,
+    "stats": {
+      "hp": 82,
+      "attack": 80,
+      "defense": 86,
+      "sp_atk": 85,
+      "sp_def": 75,
+      "speed": 72
+    }
+  },
+  "clawitzer": {
+    "name": "Clawitzer",
+    "pokeapi_name": "clawitzer",
+    "pokeapi_id": 693,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/clawitzer",
+    "bst": 500,
+    "stats": {
+      "hp": 71,
+      "attack": 73,
+      "defense": 88,
+      "sp_atk": 120,
+      "sp_def": 89,
+      "speed": 59
+    }
+  },
+  "heliolisk": {
+    "name": "Heliolisk",
+    "pokeapi_name": "heliolisk",
+    "pokeapi_id": 695,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/heliolisk",
+    "bst": 481,
+    "stats": {
+      "hp": 62,
+      "attack": 55,
+      "defense": 52,
+      "sp_atk": 109,
+      "sp_def": 94,
+      "speed": 109
+    }
+  },
+  "tyrantrum": {
+    "name": "Tyrantrum",
+    "pokeapi_name": "tyrantrum",
+    "pokeapi_id": 697,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/tyrantrum",
+    "bst": 521,
+    "stats": {
+      "hp": 82,
+      "attack": 121,
+      "defense": 119,
+      "sp_atk": 69,
+      "sp_def": 59,
+      "speed": 71
+    }
+  },
+  "aurorus": {
+    "name": "Aurorus",
+    "pokeapi_name": "aurorus",
+    "pokeapi_id": 699,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/aurorus",
+    "bst": 521,
+    "stats": {
+      "hp": 123,
+      "attack": 77,
+      "defense": 72,
+      "sp_atk": 99,
+      "sp_def": 92,
+      "speed": 58
+    }
+  },
+  "sylveon": {
+    "name": "Sylveon",
+    "pokeapi_name": "sylveon",
+    "pokeapi_id": 700,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/sylveon",
+    "bst": 525,
+    "stats": {
+      "hp": 95,
+      "attack": 65,
+      "defense": 65,
+      "sp_atk": 110,
+      "sp_def": 130,
+      "speed": 60
+    }
+  },
+  "hawlucha": {
+    "name": "Hawlucha",
+    "pokeapi_name": "hawlucha",
+    "pokeapi_id": 701,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/hawlucha",
+    "bst": 500,
+    "stats": {
+      "hp": 78,
+      "attack": 92,
+      "defense": 75,
+      "sp_atk": 74,
+      "sp_def": 63,
+      "speed": 118
+    }
+  },
+  "dedenne": {
+    "name": "Dedenne",
+    "pokeapi_name": "dedenne",
+    "pokeapi_id": 702,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/dedenne",
+    "bst": 431,
+    "stats": {
+      "hp": 67,
+      "attack": 58,
+      "defense": 57,
+      "sp_atk": 81,
+      "sp_def": 67,
+      "speed": 101
+    }
+  },
+  "goodra": {
+    "name": "Goodra",
+    "pokeapi_name": "goodra",
+    "pokeapi_id": 706,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/goodra",
+    "bst": 600,
+    "stats": {
+      "hp": 90,
+      "attack": 100,
+      "defense": 70,
+      "sp_atk": 110,
+      "sp_def": 150,
+      "speed": 80
+    }
+  },
+  "klefki": {
+    "name": "Klefki",
+    "pokeapi_name": "klefki",
+    "pokeapi_id": 707,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/klefki",
+    "bst": 470,
+    "stats": {
+      "hp": 57,
+      "attack": 80,
+      "defense": 91,
+      "sp_atk": 80,
+      "sp_def": 87,
+      "speed": 75
+    }
+  },
+  "trevenant": {
+    "name": "Trevenant",
+    "pokeapi_name": "trevenant",
+    "pokeapi_id": 709,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/trevenant",
+    "bst": 474,
+    "stats": {
+      "hp": 85,
+      "attack": 110,
+      "defense": 76,
+      "sp_atk": 65,
+      "sp_def": 82,
+      "speed": 56
+    }
+  },
+  "gourgeist": {
+    "name": "Gourgeist",
+    "pokeapi_name": "gourgeist-average",
+    "pokeapi_id": 711,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/gourgeist-average",
+    "bst": 494,
+    "stats": {
+      "hp": 65,
+      "attack": 90,
+      "defense": 122,
+      "sp_atk": 58,
+      "sp_def": 75,
+      "speed": 84
+    }
+  },
+  "avalugg": {
+    "name": "Avalugg",
+    "pokeapi_name": "avalugg",
+    "pokeapi_id": 713,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/avalugg",
+    "bst": 514,
+    "stats": {
+      "hp": 95,
+      "attack": 117,
+      "defense": 184,
+      "sp_atk": 44,
+      "sp_def": 46,
+      "speed": 28
+    }
+  },
+  "hisuian-avalugg": {
+    "name": "Hisuian Avalugg",
+    "pokeapi_name": "avalugg-hisui",
+    "pokeapi_id": 10243,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/avalugg-hisui",
+    "bst": 514,
+    "stats": {
+      "hp": 95,
+      "attack": 127,
+      "defense": 184,
+      "sp_atk": 34,
+      "sp_def": 36,
+      "speed": 38
+    }
+  },
+  "noivern": {
+    "name": "Noivern",
+    "pokeapi_name": "noivern",
+    "pokeapi_id": 715,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/noivern",
+    "bst": 535,
+    "stats": {
+      "hp": 85,
+      "attack": 70,
+      "defense": 80,
+      "sp_atk": 97,
+      "sp_def": 80,
+      "speed": 123
+    }
+  },
+  "decidueye": {
+    "name": "Decidueye",
+    "pokeapi_name": "decidueye",
+    "pokeapi_id": 724,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/decidueye",
+    "bst": 530,
+    "stats": {
+      "hp": 78,
+      "attack": 107,
+      "defense": 75,
+      "sp_atk": 100,
+      "sp_def": 100,
+      "speed": 70
+    }
+  },
+  "hisuian-decidueye": {
+    "name": "Hisuian Decidueye",
+    "pokeapi_name": "decidueye-hisui",
+    "pokeapi_id": 10244,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/decidueye-hisui",
+    "bst": 530,
+    "stats": {
+      "hp": 88,
+      "attack": 112,
+      "defense": 80,
+      "sp_atk": 95,
+      "sp_def": 95,
+      "speed": 60
+    }
+  },
+  "incineroar": {
+    "name": "Incineroar",
+    "pokeapi_name": "incineroar",
+    "pokeapi_id": 727,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/incineroar",
+    "bst": 530,
+    "stats": {
+      "hp": 95,
+      "attack": 115,
+      "defense": 90,
+      "sp_atk": 80,
+      "sp_def": 90,
+      "speed": 60
+    }
+  },
+  "primarina": {
+    "name": "Primarina",
+    "pokeapi_name": "primarina",
+    "pokeapi_id": 730,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/primarina",
+    "bst": 530,
+    "stats": {
+      "hp": 80,
+      "attack": 74,
+      "defense": 74,
+      "sp_atk": 126,
+      "sp_def": 116,
+      "speed": 60
+    }
+  },
+  "toucannon": {
+    "name": "Toucannon",
+    "pokeapi_name": "toucannon",
+    "pokeapi_id": 733,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/toucannon",
+    "bst": 485,
+    "stats": {
+      "hp": 80,
+      "attack": 120,
+      "defense": 75,
+      "sp_atk": 75,
+      "sp_def": 75,
+      "speed": 60
+    }
+  },
+  "crabominable": {
+    "name": "Crabominable",
+    "pokeapi_name": "crabominable",
+    "pokeapi_id": 740,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/crabominable",
+    "bst": 478,
+    "stats": {
+      "hp": 97,
+      "attack": 132,
+      "defense": 77,
+      "sp_atk": 62,
+      "sp_def": 67,
+      "speed": 43
+    }
+  },
+  "lycanroc": {
+    "name": "Lycanroc",
+    "pokeapi_name": "lycanroc-midday",
+    "pokeapi_id": 745,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/lycanroc-midday",
+    "bst": 487,
+    "stats": {
+      "hp": 75,
+      "attack": 115,
+      "defense": 65,
+      "sp_atk": 55,
+      "sp_def": 65,
+      "speed": 112
+    }
+  },
+  "toxapex": {
+    "name": "Toxapex",
+    "pokeapi_name": "toxapex",
+    "pokeapi_id": 748,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/toxapex",
+    "bst": 495,
+    "stats": {
+      "hp": 50,
+      "attack": 63,
+      "defense": 152,
+      "sp_atk": 53,
+      "sp_def": 142,
+      "speed": 35
+    }
+  },
+  "mudsdale": {
+    "name": "Mudsdale",
+    "pokeapi_name": "mudsdale",
+    "pokeapi_id": 750,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/mudsdale",
+    "bst": 500,
+    "stats": {
+      "hp": 100,
+      "attack": 125,
+      "defense": 100,
+      "sp_atk": 55,
+      "sp_def": 85,
+      "speed": 35
+    }
+  },
+  "araquanid": {
+    "name": "Araquanid",
+    "pokeapi_name": "araquanid",
+    "pokeapi_id": 752,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/araquanid",
+    "bst": 454,
+    "stats": {
+      "hp": 68,
+      "attack": 70,
+      "defense": 92,
+      "sp_atk": 50,
+      "sp_def": 132,
+      "speed": 42
+    }
+  },
+  "salazzle": {
+    "name": "Salazzle",
+    "pokeapi_name": "salazzle",
+    "pokeapi_id": 758,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/salazzle",
+    "bst": 480,
+    "stats": {
+      "hp": 68,
+      "attack": 64,
+      "defense": 60,
+      "sp_atk": 111,
+      "sp_def": 60,
+      "speed": 117
+    }
+  },
+  "tsareena": {
+    "name": "Tsareena",
+    "pokeapi_name": "tsareena",
+    "pokeapi_id": 763,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/tsareena",
+    "bst": 510,
+    "stats": {
+      "hp": 72,
+      "attack": 120,
+      "defense": 98,
+      "sp_atk": 50,
+      "sp_def": 98,
+      "speed": 72
+    }
+  },
+  "oranguru": {
+    "name": "Oranguru",
+    "pokeapi_name": "oranguru",
+    "pokeapi_id": 765,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/oranguru",
+    "bst": 490,
+    "stats": {
+      "hp": 90,
+      "attack": 60,
+      "defense": 80,
+      "sp_atk": 90,
+      "sp_def": 110,
+      "speed": 60
+    }
+  },
+  "passimian": {
+    "name": "Passimian",
+    "pokeapi_name": "passimian",
+    "pokeapi_id": 766,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/passimian",
+    "bst": 490,
+    "stats": {
+      "hp": 100,
+      "attack": 120,
+      "defense": 90,
+      "sp_atk": 40,
+      "sp_def": 60,
+      "speed": 80
+    }
+  },
+  "mimikyu": {
+    "name": "Mimikyu",
+    "pokeapi_name": "mimikyu-disguised",
+    "pokeapi_id": 778,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/mimikyu-disguised",
+    "bst": 476,
+    "stats": {
+      "hp": 55,
+      "attack": 90,
+      "defense": 80,
+      "sp_atk": 50,
+      "sp_def": 105,
+      "speed": 96
+    }
+  },
+  "drampa": {
+    "name": "Drampa",
+    "pokeapi_name": "drampa",
+    "pokeapi_id": 780,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/drampa",
+    "bst": 485,
+    "stats": {
+      "hp": 78,
+      "attack": 60,
+      "defense": 85,
+      "sp_atk": 135,
+      "sp_def": 91,
+      "speed": 36
+    }
+  },
+  "kommo-o": {
+    "name": "Kommo-o",
+    "pokeapi_name": "kommo-o",
+    "pokeapi_id": 784,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/kommo-o",
+    "bst": 600,
+    "stats": {
+      "hp": 75,
+      "attack": 110,
+      "defense": 125,
+      "sp_atk": 100,
+      "sp_def": 105,
+      "speed": 85
+    }
+  },
+  "corviknight": {
+    "name": "Corviknight",
+    "pokeapi_name": "corviknight",
+    "pokeapi_id": 823,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/corviknight",
+    "bst": 495,
+    "stats": {
+      "hp": 98,
+      "attack": 87,
+      "defense": 105,
+      "sp_atk": 53,
+      "sp_def": 85,
+      "speed": 67
+    }
+  },
+  "flapple": {
+    "name": "Flapple",
+    "pokeapi_name": "flapple",
+    "pokeapi_id": 841,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/flapple",
+    "bst": 485,
+    "stats": {
+      "hp": 70,
+      "attack": 110,
+      "defense": 80,
+      "sp_atk": 95,
+      "sp_def": 60,
+      "speed": 70
+    }
+  },
+  "appletun": {
+    "name": "Appletun",
+    "pokeapi_name": "appletun",
+    "pokeapi_id": 842,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/appletun",
+    "bst": 485,
+    "stats": {
+      "hp": 110,
+      "attack": 85,
+      "defense": 80,
+      "sp_atk": 100,
+      "sp_def": 80,
+      "speed": 30
+    }
+  },
+  "sandaconda": {
+    "name": "Sandaconda",
+    "pokeapi_name": "sandaconda",
+    "pokeapi_id": 844,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/sandaconda",
+    "bst": 510,
+    "stats": {
+      "hp": 72,
+      "attack": 107,
+      "defense": 125,
+      "sp_atk": 65,
+      "sp_def": 70,
+      "speed": 71
+    }
+  },
+  "polteageist": {
+    "name": "Polteageist",
+    "pokeapi_name": "polteageist",
+    "pokeapi_id": 855,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/polteageist",
+    "bst": 508,
+    "stats": {
+      "hp": 60,
+      "attack": 65,
+      "defense": 65,
+      "sp_atk": 134,
+      "sp_def": 114,
+      "speed": 70
+    }
+  },
+  "hatterene": {
+    "name": "Hatterene",
+    "pokeapi_name": "hatterene",
+    "pokeapi_id": 858,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/hatterene",
+    "bst": 510,
+    "stats": {
+      "hp": 57,
+      "attack": 90,
+      "defense": 95,
+      "sp_atk": 136,
+      "sp_def": 103,
+      "speed": 29
+    }
+  },
+  "mr-rime": {
+    "name": "Mr. Rime",
+    "pokeapi_name": "mr-rime",
+    "pokeapi_id": 866,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/mr-rime",
+    "bst": 520,
+    "stats": {
+      "hp": 80,
+      "attack": 85,
+      "defense": 75,
+      "sp_atk": 110,
+      "sp_def": 100,
+      "speed": 70
+    }
+  },
+  "runerigus": {
+    "name": "Runerigus",
+    "pokeapi_name": "runerigus",
+    "pokeapi_id": 867,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/runerigus",
+    "bst": 483,
+    "stats": {
+      "hp": 58,
+      "attack": 95,
+      "defense": 145,
+      "sp_atk": 50,
+      "sp_def": 105,
+      "speed": 30
+    }
+  },
+  "alcremie": {
+    "name": "Alcremie",
+    "pokeapi_name": "alcremie",
+    "pokeapi_id": 869,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/alcremie",
+    "bst": 495,
+    "stats": {
+      "hp": 65,
+      "attack": 60,
+      "defense": 75,
+      "sp_atk": 110,
+      "sp_def": 121,
+      "speed": 64
+    }
+  },
+  "morpeko": {
+    "name": "Morpeko",
+    "pokeapi_name": "morpeko-full-belly",
+    "pokeapi_id": 877,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/morpeko-full-belly",
+    "bst": 436,
+    "stats": {
+      "hp": 58,
+      "attack": 95,
+      "defense": 58,
+      "sp_atk": 70,
+      "sp_def": 58,
+      "speed": 97
+    }
+  },
+  "dragapult": {
+    "name": "Dragapult",
+    "pokeapi_name": "dragapult",
+    "pokeapi_id": 887,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/dragapult",
+    "bst": 600,
+    "stats": {
+      "hp": 88,
+      "attack": 120,
+      "defense": 75,
+      "sp_atk": 100,
+      "sp_def": 75,
+      "speed": 142
+    }
+  },
+  "wyrdeer": {
+    "name": "Wyrdeer",
+    "pokeapi_name": "wyrdeer",
+    "pokeapi_id": 899,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/wyrdeer",
+    "bst": 525,
+    "stats": {
+      "hp": 103,
+      "attack": 105,
+      "defense": 72,
+      "sp_atk": 105,
+      "sp_def": 75,
+      "speed": 65
+    }
+  },
+  "kleavor": {
+    "name": "Kleavor",
+    "pokeapi_name": "kleavor",
+    "pokeapi_id": 900,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/kleavor",
+    "bst": 500,
+    "stats": {
+      "hp": 70,
+      "attack": 135,
+      "defense": 95,
+      "sp_atk": 45,
+      "sp_def": 70,
+      "speed": 85
+    }
+  },
+  "basculegion": {
+    "name": "Basculegion",
+    "pokeapi_name": "basculegion-male",
+    "pokeapi_id": 902,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/basculegion-male",
+    "bst": 530,
+    "stats": {
+      "hp": 120,
+      "attack": 112,
+      "defense": 65,
+      "sp_atk": 80,
+      "sp_def": 75,
+      "speed": 78
+    }
+  },
+  "sneasler": {
+    "name": "Sneasler",
+    "pokeapi_name": "sneasler",
+    "pokeapi_id": 903,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/sneasler",
+    "bst": 510,
+    "stats": {
+      "hp": 80,
+      "attack": 130,
+      "defense": 60,
+      "sp_atk": 40,
+      "sp_def": 80,
+      "speed": 120
+    }
+  },
+  "meowscarada": {
+    "name": "Meowscarada",
+    "pokeapi_name": "meowscarada",
+    "pokeapi_id": 908,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/meowscarada",
+    "bst": 530,
+    "stats": {
+      "hp": 76,
+      "attack": 110,
+      "defense": 70,
+      "sp_atk": 81,
+      "sp_def": 70,
+      "speed": 123
+    }
+  },
+  "skeledirge": {
+    "name": "Skeledirge",
+    "pokeapi_name": "skeledirge",
+    "pokeapi_id": 911,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/skeledirge",
+    "bst": 530,
+    "stats": {
+      "hp": 104,
+      "attack": 75,
+      "defense": 100,
+      "sp_atk": 110,
+      "sp_def": 75,
+      "speed": 66
+    }
+  },
+  "quaquaval": {
+    "name": "Quaquaval",
+    "pokeapi_name": "quaquaval",
+    "pokeapi_id": 914,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/quaquaval",
+    "bst": 530,
+    "stats": {
+      "hp": 85,
+      "attack": 120,
+      "defense": 80,
+      "sp_atk": 85,
+      "sp_def": 75,
+      "speed": 85
+    }
+  },
+  "maushold": {
+    "name": "Maushold",
+    "pokeapi_name": "maushold-family-of-four",
+    "pokeapi_id": 925,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/maushold-family-of-four",
+    "bst": 470,
+    "stats": {
+      "hp": 74,
+      "attack": 75,
+      "defense": 70,
+      "sp_atk": 65,
+      "sp_def": 75,
+      "speed": 111
+    }
+  },
+  "garganacl": {
+    "name": "Garganacl",
+    "pokeapi_name": "garganacl",
+    "pokeapi_id": 934,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/garganacl",
+    "bst": 500,
+    "stats": {
+      "hp": 100,
+      "attack": 100,
+      "defense": 130,
+      "sp_atk": 45,
+      "sp_def": 90,
+      "speed": 35
+    }
+  },
+  "armarouge": {
+    "name": "Armarouge",
+    "pokeapi_name": "armarouge",
+    "pokeapi_id": 936,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/armarouge",
+    "bst": 525,
+    "stats": {
+      "hp": 85,
+      "attack": 60,
+      "defense": 100,
+      "sp_atk": 125,
+      "sp_def": 80,
+      "speed": 75
+    }
+  },
+  "ceruledge": {
+    "name": "Ceruledge",
+    "pokeapi_name": "ceruledge",
+    "pokeapi_id": 937,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/ceruledge",
+    "bst": 525,
+    "stats": {
+      "hp": 75,
+      "attack": 125,
+      "defense": 80,
+      "sp_atk": 60,
+      "sp_def": 100,
+      "speed": 85
+    }
+  },
+  "bellibolt": {
+    "name": "Bellibolt",
+    "pokeapi_name": "bellibolt",
+    "pokeapi_id": 939,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/bellibolt",
+    "bst": 495,
+    "stats": {
+      "hp": 109,
+      "attack": 64,
+      "defense": 91,
+      "sp_atk": 103,
+      "sp_def": 83,
+      "speed": 45
+    }
+  },
+  "scovillain": {
+    "name": "Scovillain",
+    "pokeapi_name": "scovillain",
+    "pokeapi_id": 952,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/scovillain",
+    "bst": 486,
+    "stats": {
+      "hp": 65,
+      "attack": 108,
+      "defense": 65,
+      "sp_atk": 108,
+      "sp_def": 65,
+      "speed": 75
+    }
+  },
+  "espathra": {
+    "name": "Espathra",
+    "pokeapi_name": "espathra",
+    "pokeapi_id": 956,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/espathra",
+    "bst": 481,
+    "stats": {
+      "hp": 95,
+      "attack": 60,
+      "defense": 60,
+      "sp_atk": 101,
+      "sp_def": 60,
+      "speed": 105
+    }
+  },
+  "tinkaton": {
+    "name": "Tinkaton",
+    "pokeapi_name": "tinkaton",
+    "pokeapi_id": 959,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/tinkaton",
+    "bst": 506,
+    "stats": {
+      "hp": 85,
+      "attack": 75,
+      "defense": 77,
+      "sp_atk": 70,
+      "sp_def": 105,
+      "speed": 94
+    }
+  },
+  "palafin": {
+    "name": "Palafin",
+    "pokeapi_name": "palafin-zero",
+    "pokeapi_id": 964,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/palafin-zero",
+    "bst": 457,
+    "stats": {
+      "hp": 100,
+      "attack": 70,
+      "defense": 72,
+      "sp_atk": 53,
+      "sp_def": 62,
+      "speed": 100
+    }
+  },
+  "orthworm": {
+    "name": "Orthworm",
+    "pokeapi_name": "orthworm",
+    "pokeapi_id": 968,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/orthworm",
+    "bst": 480,
+    "stats": {
+      "hp": 70,
+      "attack": 85,
+      "defense": 145,
+      "sp_atk": 60,
+      "sp_def": 55,
+      "speed": 65
+    }
+  },
+  "glimmora": {
+    "name": "Glimmora",
+    "pokeapi_name": "glimmora",
+    "pokeapi_id": 970,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/glimmora",
+    "bst": 525,
+    "stats": {
+      "hp": 83,
+      "attack": 55,
+      "defense": 90,
+      "sp_atk": 130,
+      "sp_def": 81,
+      "speed": 86
+    }
+  },
+  "farigiraf": {
+    "name": "Farigiraf",
+    "pokeapi_name": "farigiraf",
+    "pokeapi_id": 981,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/farigiraf",
+    "bst": 520,
+    "stats": {
+      "hp": 120,
+      "attack": 90,
+      "defense": 70,
+      "sp_atk": 110,
+      "sp_def": 70,
+      "speed": 60
+    }
+  },
+  "kingambit": {
+    "name": "Kingambit",
+    "pokeapi_name": "kingambit",
+    "pokeapi_id": 983,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/kingambit",
+    "bst": 550,
+    "stats": {
+      "hp": 100,
+      "attack": 135,
+      "defense": 120,
+      "sp_atk": 60,
+      "sp_def": 85,
+      "speed": 50
+    }
+  },
+  "sinistcha": {
+    "name": "Sinistcha",
+    "pokeapi_name": "sinistcha",
+    "pokeapi_id": 1013,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/sinistcha",
+    "bst": 508,
+    "stats": {
+      "hp": 71,
+      "attack": 60,
+      "defense": 106,
+      "sp_atk": 121,
+      "sp_def": 80,
+      "speed": 70
+    }
+  },
+  "archaludon": {
+    "name": "Archaludon",
+    "pokeapi_name": "archaludon",
+    "pokeapi_id": 1018,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/archaludon",
+    "bst": 600,
+    "stats": {
+      "hp": 90,
+      "attack": 105,
+      "defense": 130,
+      "sp_atk": 125,
+      "sp_def": 65,
+      "speed": 85
+    }
+  },
+  "hydrapple": {
+    "name": "Hydrapple",
+    "pokeapi_name": "hydrapple",
+    "pokeapi_id": 1019,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/hydrapple",
+    "bst": 540,
+    "stats": {
+      "hp": 106,
+      "attack": 80,
+      "defense": 110,
+      "sp_atk": 120,
+      "sp_def": 80,
+      "speed": 44
+    }
+  },
+  "rotom-wash": {
+    "name": "Rotom-Wash",
+    "pokeapi_name": "rotom-wash",
+    "pokeapi_id": 10009,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/rotom-wash",
+    "bst": 520,
+    "stats": {
+      "hp": 50,
+      "attack": 65,
+      "defense": 107,
+      "sp_atk": 105,
+      "sp_def": 107,
+      "speed": 86
+    }
+  },
+  "rotom-frost": {
+    "name": "Rotom-Frost",
+    "pokeapi_name": "rotom-frost",
+    "pokeapi_id": 10010,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/rotom-frost",
+    "bst": 520,
+    "stats": {
+      "hp": 50,
+      "attack": 65,
+      "defense": 107,
+      "sp_atk": 105,
+      "sp_def": 107,
+      "speed": 86
+    }
+  },
+  "rotom-mow": {
+    "name": "Rotom-Mow",
+    "pokeapi_name": "rotom-mow",
+    "pokeapi_id": 10012,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/rotom-mow",
+    "bst": 520,
+    "stats": {
+      "hp": 50,
+      "attack": 65,
+      "defense": 107,
+      "sp_atk": 105,
+      "sp_def": 107,
+      "speed": 86
+    }
+  },
+  "rotom-fan": {
+    "name": "Rotom-Fan",
+    "pokeapi_name": "rotom-fan",
+    "pokeapi_id": 10011,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/rotom-fan",
+    "bst": 520,
+    "stats": {
+      "hp": 50,
+      "attack": 65,
+      "defense": 107,
+      "sp_atk": 105,
+      "sp_def": 107,
+      "speed": 86
+    }
+  },
+  "rotom-heat": {
+    "name": "Rotom-Heat",
+    "pokeapi_name": "rotom-heat",
+    "pokeapi_id": 10008,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/rotom-heat",
+    "bst": 520,
+    "stats": {
+      "hp": 50,
+      "attack": 65,
+      "defense": 107,
+      "sp_atk": 105,
+      "sp_def": 107,
+      "speed": 86
+    }
+  },
+  "goodra-hisui": {
+    "name": "Goodra-Hisui",
+    "pokeapi_name": "goodra-hisui",
+    "pokeapi_id": 10242,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/goodra-hisui",
+    "bst": 600,
+    "stats": {
+      "hp": 80,
+      "attack": 100,
+      "defense": 100,
+      "sp_atk": 110,
+      "sp_def": 150,
+      "speed": 60
+    }
+  },
+  "tauros-aqua": {
+    "name": "Tauros-Aqua",
+    "pokeapi_name": "tauros-paldea-aqua-breed",
+    "pokeapi_id": 10252,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/tauros-paldea-aqua-breed",
+    "bst": 490,
+    "stats": {
+      "hp": 75,
+      "attack": 110,
+      "defense": 105,
+      "sp_atk": 30,
+      "sp_def": 70,
+      "speed": 100
+    }
+  },
+  "tauros-blaze": {
+    "name": "Tauros-Blaze",
+    "pokeapi_name": "tauros-paldea-blaze-breed",
+    "pokeapi_id": 10251,
+    "source_url": "https://pokeapi.co/api/v2/pokemon/tauros-paldea-blaze-breed",
+    "bst": 490,
+    "stats": {
+      "hp": 75,
+      "attack": 110,
+      "defense": 105,
+      "sp_atk": 30,
+      "sp_def": 70,
+      "speed": 100
+    }
+  }
+}

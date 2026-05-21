@@ -520,6 +520,931 @@
         grid-template-columns: 1fr;
       }
     }
+
+    body.draft-theme-page.draft-war-room-page {
+      background-image:
+        linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.18)),
+        url("images/backgrounds/VictoryRoad.png");
+      background-color: #060607;
+    }
+
+    body.draft-theme-page.draft-war-room-page .draft-theme-overlay {
+      background:
+        radial-gradient(circle at 72% 5%, rgba(239, 57, 40, 0.30), transparent 28%),
+        radial-gradient(circle at 18% 0%, rgba(255, 183, 66, 0.13), transparent 22%),
+        linear-gradient(115deg, rgba(2, 2, 5, 0.92), rgba(18, 6, 7, 0.88) 48%, rgba(3, 3, 6, 0.95));
+      padding: 18px 18px 24px;
+    }
+
+    body.draft-theme-page.draft-war-room-page .draft-theme-card {
+      width: min(1840px, 98vw);
+      padding: 0;
+      border-radius: 0;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      backdrop-filter: none;
+    }
+
+    body.draft-theme-page .draft-command-header {
+      min-height: 142px;
+      display: grid;
+      grid-template-columns: 116px minmax(170px, 230px) minmax(300px, 1fr) minmax(250px, 340px);
+      gap: 14px;
+      align-items: stretch;
+      margin-bottom: 14px;
+    }
+
+    body.draft-theme-page .draft-round-tile,
+    body.draft-theme-page .draft-clock-tile,
+    body.draft-theme-page .draft-team-tile,
+    body.draft-theme-page .draft-brand-stage {
+      position: relative;
+      min-width: 0;
+      overflow: hidden;
+      border-radius: 8px;
+      background:
+        linear-gradient(145deg, rgba(34, 36, 42, 0.92), rgba(8, 9, 12, 0.96));
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 14px 34px rgba(0, 0, 0, 0.42);
+    }
+
+    body.draft-theme-page .draft-round-tile {
+      padding: 16px 12px;
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      text-align: center;
+      background:
+        linear-gradient(160deg, rgba(189, 13, 23, 0.94), rgba(43, 5, 8, 0.98));
+      border-color: rgba(255, 51, 58, 0.70);
+    }
+
+    body.draft-theme-page .draft-kicker {
+      margin: 0 0 4px;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+
+    body.draft-theme-page .draft-round-number {
+      margin: 0;
+      color: #ffffff;
+      font-size: 52px;
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: 0;
+      text-shadow: 0 4px 0 rgba(0, 0, 0, 0.48);
+    }
+
+    body.draft-theme-page .draft-round-meta {
+      margin: 4px 0 0;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    body.draft-theme-page .draft-clock-tile {
+      padding: 16px;
+      display: grid;
+      align-content: center;
+      text-align: center;
+      border-color: rgba(255, 53, 57, 0.34);
+    }
+
+    body.draft-theme-page .draft-clock-tile .draft-timer-box {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+    }
+
+    body.draft-theme-page .draft-clock-tile .draft-timer-box strong {
+      color: #d4a44c !important;
+      font-size: 15px;
+      letter-spacing: 1.3px;
+      text-shadow:
+        0 1px 0 rgba(75, 48, 0, 0.42),
+        0 0 10px rgba(212, 164, 76, 0.34) !important;
+    }
+
+    body.draft-theme-page #draftClockLine {
+      font-size: 28px;
+      line-height: 1.05;
+      color: #ff403e;
+      text-shadow:
+        0 0 16px rgba(255, 47, 55, 0.48),
+        0 2px 0 rgba(0, 0, 0, 0.75);
+    }
+
+    body.draft-theme-page #draftClockLine[data-clock-state="stopped"] {
+      color: #d4a44c !important;
+      text-shadow:
+        0 1px 0 rgba(75, 48, 0, 0.48),
+        0 0 10px rgba(212, 164, 76, 0.42),
+        0 0 20px rgba(180, 122, 34, 0.26) !important;
+    }
+
+    body.draft-theme-page .draft-brand-stage {
+      padding: 18px 24px;
+      display: grid;
+      align-content: center;
+      background:
+        linear-gradient(95deg, rgba(2, 2, 5, 0.96), rgba(9, 9, 13, 0.84) 46%, rgba(67, 9, 12, 0.54)),
+        radial-gradient(circle at 86% 26%, rgba(255, 66, 43, 0.28), transparent 26%);
+      border-color: rgba(255, 54, 47, 0.30);
+    }
+
+    body.draft-theme-page .draft-brand-stage::after {
+      content: "";
+      position: absolute;
+      right: -4%;
+      top: 12%;
+      width: 42%;
+      height: 74%;
+      background:
+        linear-gradient(125deg, transparent 0 20%, rgba(255, 55, 44, 0.20) 20% 24%, transparent 24% 38%, rgba(255, 138, 44, 0.18) 38% 42%, transparent 42%),
+        radial-gradient(circle at 55% 45%, rgba(255, 46, 36, 0.25), transparent 42%);
+      transform: skewX(-18deg);
+      pointer-events: none;
+    }
+
+    body.draft-theme-page .draft-theme-title {
+      margin: 0;
+      text-align: left;
+      font-size: clamp(34px, 4.1vw, 72px);
+      line-height: 0.95;
+      letter-spacing: 1px;
+      color: #f7f7f4;
+      text-shadow:
+        0 4px 0 rgba(0, 0, 0, 0.76),
+        0 0 18px rgba(255, 255, 255, 0.18);
+    }
+
+    body.draft-theme-page #draftLeagueSubtitle {
+      margin: 12px 0 0;
+      text-align: left;
+      color: rgba(255, 255, 255, 0.76);
+      font-size: 15px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    body.draft-theme-page .draft-team-tile {
+      padding: 16px;
+      display: grid;
+      align-content: center;
+      gap: 12px;
+      border-color: rgba(255, 53, 57, 0.42);
+    }
+
+    body.draft-theme-page .draft-theme-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin: 0;
+    }
+
+    body.draft-theme-page .draft-theme-link {
+      min-width: 0;
+      min-height: 42px;
+      border-radius: 5px;
+      background: linear-gradient(to bottom, rgba(38, 41, 48, 0.92), rgba(12, 13, 17, 0.96));
+      border-color: rgba(255, 255, 255, 0.18);
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    body.draft-theme-page .draft-theme-link.light {
+      color: #ffffff;
+      background: linear-gradient(to bottom, rgba(111, 18, 21, 0.92), rgba(48, 5, 8, 0.96));
+      border-color: rgba(255, 67, 58, 0.52);
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95);
+    }
+
+    body.draft-theme-page .draft-status-card {
+      margin: 0 0 14px;
+      padding: 12px 16px;
+      border-radius: 7px;
+      background: linear-gradient(90deg, rgba(133, 11, 17, 0.90), rgba(12, 13, 17, 0.94));
+      border: 1px solid rgba(255, 65, 58, 0.38);
+    }
+
+    body.draft-theme-page .draft-status-card strong {
+      margin: 0 0 4px;
+      font-size: 15px;
+      letter-spacing: 1px;
+      color: #ffffff;
+    }
+
+    body.draft-theme-page .draft-layout-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(310px, 380px);
+      gap: 14px;
+      align-items: start;
+    }
+
+    body.draft-theme-page .draft-left-stack,
+    body.draft-theme-page .draft-right-stack {
+      display: grid;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    body.draft-theme-page .draft-left-stack .draft-room-grid {
+      order: 1;
+    }
+
+    body.draft-theme-page .draft-left-stack #draftControls {
+      order: 2;
+    }
+
+    body.draft-theme-page .draft-left-stack > .pkmn-panel {
+      order: 3;
+    }
+
+    body.draft-theme-page .pkmn-panel,
+    body.draft-theme-page .draft-point-card,
+    body.draft-theme-page .empty-state {
+      margin-bottom: 0;
+      border-radius: 7px;
+      background:
+        linear-gradient(145deg, rgba(28, 30, 36, 0.94), rgba(7, 8, 11, 0.96));
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.07),
+        0 12px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    body.draft-theme-page .pkmn-panel strong,
+    body.draft-theme-page .draft-point-card strong {
+      font-size: 18px;
+      letter-spacing: 1px;
+      color: #ffffff;
+      text-shadow: 0 0 12px rgba(255, 55, 48, 0.30);
+    }
+
+    body.draft-theme-page .draft-controls-panel .pkmn-panel {
+      border-color: rgba(255, 63, 57, 0.28);
+    }
+
+    body.draft-theme-page .draft-room-grid {
+      display: block;
+    }
+
+    body.draft-theme-page .draft-room-grid > .pkmn-panel:first-child {
+      margin: 0;
+    }
+
+    body.draft-theme-page .draft-board-shell {
+      width: 100%;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    body.draft-theme-page .draft-picks-list {
+      max-height: none;
+      overflow: visible;
+      padding-right: 0;
+    }
+
+    body.draft-theme-page .draft-board-grid {
+      display: grid;
+      min-width: max(920px, 100%);
+      border-radius: 7px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(0, 0, 0, 0.26);
+    }
+
+    body.draft-theme-page .draft-board-header-cell,
+    body.draft-theme-page .draft-board-round-cell,
+    body.draft-theme-page .draft-board-pick-cell {
+      min-width: 0;
+      min-height: 76px;
+      padding: 8px;
+      border-right: 1px solid rgba(255, 255, 255, 0.12);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+      box-sizing: border-box;
+    }
+
+    body.draft-theme-page .draft-board-header-cell {
+      min-height: 66px;
+      display: grid;
+      align-content: center;
+      gap: 2px;
+      background: linear-gradient(180deg, rgba(43, 45, 53, 0.96), rgba(15, 16, 20, 0.98));
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    body.draft-theme-page .draft-board-header-cell.active-team {
+      background: linear-gradient(180deg, rgba(164, 16, 22, 0.98), rgba(74, 7, 11, 0.98));
+      color: #ffffff;
+    }
+
+    body.draft-theme-page .draft-board-logo-header {
+      place-items: center;
+      align-content: center;
+      justify-content: center;
+      padding: 7px;
+    }
+
+    body.draft-theme-page .draft-board-team-logo,
+    body.draft-theme-page .draft-board-team-logo-placeholder {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 34% 28%, rgba(255, 255, 255, 0.94), rgba(216, 237, 255, 0.80) 44%, rgba(81, 138, 198, 0.68));
+      border: 2px solid rgba(255, 255, 255, 0.58);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.62),
+        0 5px 14px rgba(0, 0, 0, 0.30);
+    }
+
+    body.draft-theme-page .draft-board-team-logo {
+      object-fit: contain;
+      padding: 4px;
+      box-sizing: border-box;
+    }
+
+    body.draft-theme-page .draft-board-team-logo-placeholder {
+      display: grid;
+      place-items: center;
+      color: #102844;
+      font-size: 13px;
+      font-weight: 800;
+      text-shadow: none;
+    }
+
+    body.draft-theme-page .draft-board-header-cell.active-team .draft-board-team-logo,
+    body.draft-theme-page .draft-board-header-cell.active-team .draft-board-team-logo-placeholder {
+      border-color: rgba(255, 235, 128, 0.92);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.78),
+        0 0 0 3px rgba(255, 224, 90, 0.20),
+        0 0 18px rgba(255, 224, 90, 0.36);
+    }
+
+    body.draft-theme-page .draft-board-team-name {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    body.draft-theme-page .draft-board-owner {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      color: rgba(255, 255, 255, 0.56);
+      font-size: 10px;
+    }
+
+    body.draft-theme-page .draft-board-corner,
+    body.draft-theme-page .draft-board-round-cell {
+      display: grid;
+      place-items: center;
+      background: rgba(7, 8, 11, 0.94);
+      color: rgba(255, 255, 255, 0.76);
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    body.draft-theme-page .draft-board-round-cell {
+      font-size: 22px;
+      color: #ffffff;
+    }
+
+    body.draft-theme-page .draft-board-pick-cell {
+      display: grid;
+      align-content: center;
+      background: linear-gradient(145deg, rgba(20, 22, 27, 0.92), rgba(9, 10, 13, 0.96));
+    }
+
+    body.draft-theme-page .draft-board-pick-cell.picked {
+      background: linear-gradient(145deg, rgba(47, 28, 22, 0.96), rgba(17, 18, 22, 0.98));
+    }
+
+    body.draft-theme-page .draft-board-pick-cell.on-clock {
+      background: linear-gradient(145deg, rgba(171, 13, 20, 0.98), rgba(71, 5, 9, 0.98));
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.22),
+        inset 0 0 26px rgba(255, 53, 47, 0.28);
+    }
+
+    body.draft-theme-page .draft-board-pick-cell.up-next {
+      background: linear-gradient(145deg, rgba(38, 38, 45, 0.98), rgba(14, 15, 18, 0.98));
+    }
+
+    body.draft-theme-page .draft-board-pokemon {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr);
+      gap: 8px;
+      align-items: center;
+      min-width: 0;
+    }
+
+    body.draft-theme-page .draft-board-pokemon img,
+    body.draft-theme-page .draft-board-empty-img {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      object-fit: contain;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    body.draft-theme-page .draft-board-pokemon-name,
+    body.draft-theme-page .draft-board-cell-label {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    body.draft-theme-page .draft-board-pokemon-meta,
+    body.draft-theme-page .draft-board-cell-meta {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      color: rgba(255, 255, 255, 0.62);
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    body.draft-theme-page .draft-board-cell-label {
+      text-align: center;
+      letter-spacing: 0.8px;
+    }
+
+    body.draft-theme-page .draft-board-cell-meta {
+      text-align: center;
+      margin-top: 4px;
+    }
+
+    body.draft-theme-page .draft-side-roster-panel {
+      position: sticky;
+      top: 14px;
+    }
+
+    body.draft-theme-page .draft-team-rosters {
+      max-height: 616px;
+      overflow: auto;
+    }
+
+    body.draft-theme-page .draft-roster-team {
+      border-radius: 7px;
+      background: linear-gradient(145deg, rgba(27, 29, 35, 0.96), rgba(9, 10, 13, 0.98));
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+    }
+
+    body.draft-theme-page .draft-roster-team h3 {
+      color: #ffffff;
+      font-size: 16px;
+    }
+
+    body.draft-theme-page .draft-roster-team p {
+      color: rgba(255, 255, 255, 0.66);
+    }
+
+    body.draft-theme-page .draft-roster-team.on-clock-roster {
+      border-color: rgba(255, 59, 53, 0.65);
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 59, 53, 0.18),
+        0 0 24px rgba(255, 42, 36, 0.12);
+    }
+
+    body.draft-theme-page .draft-roster-pills span,
+    body.draft-theme-page .draft-empty-pill {
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.84);
+    }
+
+    body.draft-theme-page .draft-roster-pills span.mascot-pill {
+      background: rgba(255, 65, 55, 0.22);
+      color: #ffd9d6;
+      border: 1px solid rgba(255, 65, 55, 0.36);
+    }
+
+    body.draft-theme-page .draft-filter-menu {
+      border-radius: 7px;
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    body.draft-theme-page .draft-available-grid {
+      grid-template-columns: repeat(auto-fill, minmax(176px, 1fr));
+      max-height: none;
+      overflow: visible;
+      padding-right: 0;
+    }
+
+    body.draft-theme-page .draft-pokemon-card {
+      min-height: 248px;
+      padding: 0;
+      display: grid;
+      align-content: start;
+      border-radius: 7px;
+      background:
+        linear-gradient(180deg, rgba(35, 37, 43, 0.98), rgba(11, 12, 15, 0.98));
+      border-color: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+      cursor: default;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 12px 26px rgba(0, 0, 0, 0.34);
+    }
+
+    body.draft-theme-page .draft-pokemon-pick-button {
+      all: unset;
+      min-height: 100%;
+      padding: 12px;
+      display: grid;
+      align-content: start;
+      box-sizing: border-box;
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
+    }
+
+    body.draft-theme-page .draft-pokemon-pick-button:focus-visible {
+      outline: 2px solid rgba(255, 66, 58, 0.92);
+      outline-offset: -4px;
+      border-radius: 7px;
+    }
+
+    body.draft-theme-page .draft-pokemon-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 55, 48, 0.15), transparent 36%);
+      pointer-events: none;
+    }
+
+    body.draft-theme-page .draft-pokemon-card img:not(.mega-badge-overlay) {
+      width: 112px;
+      height: 112px;
+      margin-top: 4px;
+      object-fit: contain;
+      justify-self: center;
+      filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.44));
+    }
+
+    body.draft-theme-page .draft-pokemon-pick-button > span {
+      color: #ffffff;
+      font-size: 15px;
+      min-height: 34px;
+      line-height: 1.12;
+      text-align: center;
+    }
+
+    body.draft-theme-page .pokemon-tier-badge {
+      color: rgba(255, 255, 255, 0.86);
+    }
+
+    body.draft-theme-page .draft-card-rank-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-top: 9px;
+    }
+
+    body.draft-theme-page .draft-card-rank-row span {
+      min-height: 28px;
+      padding: 5px 6px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 11px;
+      font-weight: 800;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    body.draft-theme-page .draft-card-stat-bars {
+      display: grid;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    body.draft-theme-page .draft-stat-row {
+      display: grid;
+      grid-template-columns: 36px minmax(0, 1fr) 32px;
+      gap: 8px;
+      align-items: center;
+      color: rgba(255, 255, 255, 0.76);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    body.draft-theme-page .draft-stat-row span {
+      color: rgba(255, 255, 255, 0.76) !important;
+      font-size: 10px !important;
+      line-height: 1 !important;
+    }
+
+    body.draft-theme-page .draft-stat-track {
+      height: 10px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(6, 18, 36, 0.42);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      box-shadow:
+        inset 0 1px 3px rgba(0, 0, 0, 0.32),
+        0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+
+    body.draft-theme-page .draft-stat-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #ff2f37, #ffb23e);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.46),
+        0 0 10px rgba(255, 231, 115, 0.34);
+    }
+
+    body.draft-theme-page .draft-card-role-row {
+      margin-top: 9px;
+      padding: 6px 8px;
+      border-radius: 4px;
+      background: rgba(255, 47, 55, 0.13);
+      color: rgba(255, 255, 255, 0.88);
+      font-size: 10px;
+      font-weight: 800;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    body.draft-theme-page .draft-bst-link {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      z-index: 2;
+      min-height: 28px;
+      padding: 0 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      background: rgba(5, 6, 9, 0.78);
+      border: 1px solid rgba(255, 66, 58, 0.50);
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    body.draft-theme-page .draft-scout-panel {
+      border-color: rgba(255, 63, 57, 0.36);
+    }
+
+    body.draft-theme-page .draft-scout-card {
+      display: grid;
+      gap: 12px;
+    }
+
+    body.draft-theme-page .draft-scout-main {
+      display: grid;
+      grid-template-columns: 82px minmax(0, 1fr);
+      gap: 12px;
+      align-items: center;
+    }
+
+    body.draft-theme-page .draft-scout-main img {
+      width: 82px;
+      height: 82px;
+      object-fit: contain;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.36));
+    }
+
+    body.draft-theme-page .draft-scout-name {
+      margin: 0;
+      color: #ffffff;
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.05;
+      text-transform: uppercase;
+    }
+
+    body.draft-theme-page .draft-scout-meta {
+      margin: 5px 0 0;
+      color: rgba(255, 255, 255, 0.68);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    body.draft-theme-page .draft-scout-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    body.draft-theme-page .draft-scout-actions .draft-theme-link {
+      min-width: 0;
+      min-height: 38px;
+      margin: 0;
+    }
+
+    body.draft-theme-page .draft-roster-list {
+      display: grid;
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    body.draft-theme-page .draft-roster-slot {
+      display: grid;
+      grid-template-columns: 40px minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: center;
+      min-height: 46px;
+      padding: 6px 8px;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    body.draft-theme-page .draft-roster-slot img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    body.draft-theme-page .draft-roster-slot-name {
+      overflow: hidden;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    body.draft-theme-page .draft-roster-slot-meta {
+      overflow: hidden;
+      color: rgba(255, 255, 255, 0.58);
+      font-size: 10px;
+      font-weight: 800;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    body.draft-theme-page .draft-roster-slot-points {
+      min-width: 34px;
+      padding: 5px 7px;
+      border-radius: 4px;
+      background: rgba(255, 47, 55, 0.16);
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 11px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    body.league-light-mode.draft-theme-page.draft-war-room-page,
+    body.league-light-mode.draft-theme-page.draft-war-room-page .draft-command-header,
+    body.league-light-mode.draft-theme-page.draft-war-room-page .draft-layout-grid {
+      color: #ffffff !important;
+    }
+
+    body.league-light-mode.draft-theme-page.draft-war-room-page .pkmn-panel,
+    body.league-light-mode.draft-theme-page.draft-war-room-page .draft-point-card,
+    body.league-light-mode.draft-theme-page.draft-war-room-page .empty-state {
+      background:
+        linear-gradient(145deg, rgba(28, 30, 36, 0.94), rgba(7, 8, 11, 0.96)) !important;
+      border: 1px solid rgba(255, 255, 255, 0.13) !important;
+      color: #ffffff !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.07),
+        0 12px 30px rgba(0, 0, 0, 0.35) !important;
+    }
+
+    body.league-light-mode.draft-theme-page.draft-war-room-page .pkmn-panel p,
+    body.league-light-mode.draft-theme-page.draft-war-room-page .pkmn-panel strong,
+    body.league-light-mode.draft-theme-page.draft-war-room-page .pkmn-panel label,
+    body.league-light-mode.draft-theme-page.draft-war-room-page .pkmn-panel .small-note,
+    body.league-light-mode.draft-theme-page.draft-war-room-page #draftActionStatus,
+    body.league-light-mode.draft-theme-page.draft-war-room-page #availablePokemonCount,
+    body.league-light-mode.draft-theme-page.draft-war-room-page #draftStatusLine,
+    body.league-light-mode.draft-theme-page.draft-war-room-page .draft-status-card .small-note,
+    body.league-light-mode.draft-theme-page.draft-war-room-page #draftHeaderTeamSummary,
+    body.league-light-mode.draft-theme-page.draft-war-room-page #draftHeaderTeamSummary p,
+    body.league-light-mode.draft-theme-page.draft-war-room-page #draftHeaderTeamSummary strong,
+    body.league-light-mode.draft-theme-page.draft-war-room-page #draftHeaderTeamSummary .small-note {
+      color: rgba(255, 255, 255, 0.84) !important;
+      text-shadow: none !important;
+    }
+
+    body.league-light-mode.draft-theme-page.draft-war-room-page .pkmn-panel strong,
+    body.league-light-mode.draft-theme-page.draft-war-room-page #draftHeaderTeamSummary strong {
+      color: #ffffff !important;
+    }
+
+    body.league-light-mode.draft-theme-page.draft-war-room-page .draft-board-header-cell,
+    body.league-light-mode.draft-theme-page.draft-war-room-page .draft-board-team-name,
+    body.league-light-mode.draft-theme-page.draft-war-room-page .draft-board-owner,
+    body.league-light-mode.draft-theme-page.draft-war-room-page .draft-board-pokemon-name,
+    body.league-light-mode.draft-theme-page.draft-war-room-page .draft-board-pokemon-meta,
+    body.league-light-mode.draft-theme-page.draft-war-room-page .draft-board-cell-label,
+    body.league-light-mode.draft-theme-page.draft-war-room-page .draft-board-cell-meta {
+      color: rgba(255, 255, 255, 0.86) !important;
+      text-shadow: none !important;
+    }
+
+    body.league-light-mode.draft-theme-page.draft-war-room-page .draft-board-owner,
+    body.league-light-mode.draft-theme-page.draft-war-room-page .draft-board-pokemon-meta,
+    body.league-light-mode.draft-theme-page.draft-war-room-page .draft-board-cell-meta {
+      color: rgba(255, 255, 255, 0.62) !important;
+    }
+
+    body.league-light-mode.draft-theme-page.draft-war-room-page .draft-filter-menu span {
+      color: rgba(255, 255, 255, 0.78) !important;
+    }
+
+    body.league-light-mode.draft-theme-page.draft-war-room-page .draft-pokemon-card {
+      background:
+        linear-gradient(180deg, rgba(35, 37, 43, 0.98), rgba(11, 12, 15, 0.98)) !important;
+      border-color: rgba(255, 255, 255, 0.14) !important;
+      color: #ffffff !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 12px 26px rgba(0, 0, 0, 0.34) !important;
+    }
+
+    body.league-light-mode.draft-theme-page.draft-war-room-page .draft-pokemon-pick-button > span,
+    body.league-light-mode.draft-theme-page.draft-war-room-page .draft-card-rank-row span,
+    body.league-light-mode.draft-theme-page.draft-war-room-page .draft-card-role-row,
+    body.league-light-mode.draft-theme-page.draft-war-room-page .draft-stat-row,
+    body.league-light-mode.draft-theme-page.draft-war-room-page .draft-stat-row span,
+    body.league-light-mode.draft-theme-page.draft-war-room-page .draft-scout-name,
+    body.league-light-mode.draft-theme-page.draft-war-room-page .draft-scout-meta,
+    body.league-light-mode.draft-theme-page.draft-war-room-page .draft-roster-slot-name,
+    body.league-light-mode.draft-theme-page.draft-war-room-page .draft-roster-slot-meta,
+    body.league-light-mode.draft-theme-page.draft-war-room-page .draft-roster-slot-points,
+    body.league-light-mode.draft-theme-page.draft-war-room-page .pokemon-tier-badge {
+      color: rgba(255, 255, 255, 0.86) !important;
+    }
+
+    body.league-light-mode.draft-theme-page.draft-war-room-page .draft-card-rank-row span {
+      background: rgba(255, 255, 255, 0.08) !important;
+    }
+
+    @media (max-width: 1180px) {
+      body.draft-theme-page .draft-command-header {
+        grid-template-columns: 116px minmax(170px, 230px) minmax(0, 1fr);
+      }
+
+      body.draft-theme-page .draft-team-tile {
+        grid-column: 1 / -1;
+        grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+        align-items: center;
+      }
+
+      body.draft-theme-page .draft-layout-grid {
+        grid-template-columns: 1fr;
+      }
+
+      body.draft-theme-page .draft-side-roster-panel {
+        position: static;
+      }
+    }
+
+    @media (max-width: 760px) {
+      body.draft-theme-page .draft-command-header,
+      body.draft-theme-page .draft-team-tile {
+        grid-template-columns: 1fr;
+      }
+
+      body.draft-theme-page .draft-team-tile {
+        grid-column: auto;
+      }
+
+      body.draft-theme-page .draft-round-number {
+        font-size: 48px;
+      }
+
+      body.draft-theme-page .draft-brand-stage {
+        padding: 18px;
+      }
+    }
   </style>
 
 <style id="draft-queue-force-visible-styles">
@@ -647,147 +1572,583 @@
       display: none;
     }
   }
+
+  body.draft-theme-page.draft-war-room-page .draft-queue-inline-panel {
+    border-radius: 7px;
+    background:
+      linear-gradient(145deg, rgba(28, 30, 36, 0.94), rgba(7, 8, 11, 0.96)) !important;
+    border: 1px solid rgba(255, 63, 57, 0.28) !important;
+    color: #ffffff !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.07),
+      0 12px 30px rgba(0, 0, 0, 0.35) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-queue-inline-panel h3,
+  body.draft-theme-page.draft-war-room-page .draft-queue-inline-panel .small-note {
+    color: rgba(255, 255, 255, 0.84) !important;
+    text-shadow: none !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-queue-row {
+    grid-template-columns: auto 38px minmax(0, 1fr) auto auto auto;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.07) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #ffffff !important;
+    box-shadow: none !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-queue-sprite {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-queue-meta {
+    color: rgba(255, 255, 255, 0.58) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-queue-empty {
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.07) !important;
+    color: rgba(255, 255, 255, 0.78) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page {
+    background-color: #dbeeff;
+    background-image:
+      linear-gradient(rgba(230, 244, 255, 0.50), rgba(170, 207, 238, 0.56)),
+      url("images/backgrounds/VictoryRoad.png") !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-theme-overlay {
+    background:
+      radial-gradient(circle at 18% 8%, rgba(255, 239, 174, 0.36), transparent 24%),
+      radial-gradient(circle at 78% 0%, rgba(94, 180, 255, 0.42), transparent 30%),
+      linear-gradient(135deg, rgba(232, 245, 255, 0.82), rgba(112, 174, 224, 0.70) 46%, rgba(80, 126, 184, 0.78)) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-round-tile {
+    background: linear-gradient(155deg, #6db8ff 0%, #7d9df6 48%, #f7d979 100%) !important;
+    border-color: rgba(255, 255, 255, 0.62) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-clock-tile,
+  body.draft-theme-page.draft-war-room-page .draft-brand-stage,
+  body.draft-theme-page.draft-war-room-page .draft-team-tile,
+  body.draft-theme-page.draft-war-room-page .draft-status-card,
+  body.draft-theme-page.draft-war-room-page .pkmn-panel,
+  body.draft-theme-page.draft-war-room-page .draft-point-card,
+  body.draft-theme-page.draft-war-room-page .draft-queue-inline-panel {
+    background:
+      linear-gradient(145deg, rgba(41, 85, 133, 0.88), rgba(24, 43, 78, 0.90) 56%, rgba(37, 92, 125, 0.86)) !important;
+    border-color: rgba(221, 244, 255, 0.34) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      0 12px 28px rgba(23, 48, 78, 0.28) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-brand-stage {
+    background:
+      linear-gradient(95deg, rgba(28, 56, 106, 0.94), rgba(63, 121, 178, 0.76) 58%, rgba(245, 219, 118, 0.40)),
+      radial-gradient(circle at 86% 26%, rgba(255, 247, 194, 0.40), transparent 28%) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-status-card {
+    background: linear-gradient(90deg, rgba(87, 160, 220, 0.88), rgba(36, 74, 127, 0.92)) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-theme-link.light {
+    color: #102844;
+    background: linear-gradient(to bottom, #fff8cf, #d9ecff) !important;
+    border-color: rgba(255, 255, 255, 0.66) !important;
+    text-shadow: none !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-board-pick-cell.picked {
+    background: linear-gradient(145deg, rgba(43, 78, 113, 0.94), rgba(26, 39, 68, 0.98)) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-board-pick-cell.on-clock {
+    background: linear-gradient(145deg, rgba(81, 158, 219, 0.96), rgba(33, 82, 134, 0.98)) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-pokemon-card {
+    background:
+      linear-gradient(180deg, rgba(49, 95, 139, 0.96), rgba(24, 44, 78, 0.98)) !important;
+    border-color: rgba(225, 245, 255, 0.28) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.16),
+      0 12px 26px rgba(21, 47, 78, 0.30) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-pokemon-card::before {
+    background: linear-gradient(135deg, rgba(255, 245, 185, 0.18), transparent 36%) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-card-role-row,
+  body.draft-theme-page.draft-war-room-page .draft-roster-slot-points {
+    background: rgba(250, 218, 107, 0.18) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-bst-link {
+    background: rgba(20, 44, 82, 0.82) !important;
+    border-color: rgba(250, 218, 107, 0.62) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-stat-track {
+    height: 13px;
+    background: rgba(6, 18, 36, 0.60) !important;
+    border: 1px solid rgba(255, 255, 255, 0.40);
+    box-sizing: border-box;
+    box-shadow:
+      inset 0 1px 4px rgba(0, 0, 0, 0.44),
+      0 0 0 1px rgba(255, 255, 255, 0.12);
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-stat-fill {
+    display: block;
+    min-width: 8px;
+    background: linear-gradient(90deg, #f6c44a, #f2dd58) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.65),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.24),
+      0 0 13px rgba(255, 231, 115, 0.44);
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-stat-fill.stat-low {
+    background: linear-gradient(90deg, #ff9d57, #ffd35c) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-stat-fill.stat-medium {
+    background: linear-gradient(90deg, #f1d652, #aeea22) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-stat-fill.stat-high {
+    background: linear-gradient(90deg, #91e61c, #37ca68) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-stat-fill.stat-elite {
+    background: linear-gradient(90deg, #36cd68, #1fbf95) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-scout-panel .draft-stat-row {
+    grid-template-columns: 48px minmax(0, 1fr) 34px;
+    gap: 8px;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-scout-panel .draft-stat-row span {
+    font-size: 12px !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-scout-panel .draft-stat-track {
+    height: 16px;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-scout-panel .pokemon-type-strip,
+  body.draft-theme-page.draft-war-room-page .draft-pokemon-card .pokemon-type-strip {
+    width: 112px !important;
+    height: 24px !important;
+    margin: 7px auto 3px !important;
+    display: grid !important;
+    overflow: hidden !important;
+    border: 2px solid rgba(0, 0, 0, 0.42) !important;
+    border-radius: 8px !important;
+    background: #dde7f4 !important;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.45) inset,
+      0 2px 0 rgba(0, 0, 0, 0.20) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-scout-panel .pokemon-type-strip.single,
+  body.draft-theme-page.draft-war-room-page .draft-pokemon-card .pokemon-type-strip.single {
+    width: 76px !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-scout-panel .pokemon-type-strip.dual,
+  body.draft-theme-page.draft-war-room-page .draft-pokemon-card .pokemon-type-strip.dual {
+    width: 112px !important;
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-scout-panel .pokemon-type-segment,
+  body.draft-theme-page.draft-war-room-page .draft-pokemon-card .pokemon-type-segment {
+    min-width: 0 !important;
+    width: auto !important;
+    height: 100% !important;
+    padding: 0 3px !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-family: "VT323", monospace !important;
+    font-size: 16px !important;
+    line-height: 1 !important;
+    color: #ffffff !important;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.55) !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-scout-panel .pokemon-type-strip.dual .pokemon-type-segment:first-child,
+  body.draft-theme-page.draft-war-room-page .draft-pokemon-card .pokemon-type-strip.dual .pokemon-type-segment:first-child {
+    border-right: 2px solid rgba(0, 0, 0, 0.35) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-scout-panel .pokemon-type-segment.type-electric,
+  body.draft-theme-page.draft-war-room-page .draft-scout-panel .pokemon-type-segment.type-ice,
+  body.draft-theme-page.draft-war-room-page .draft-scout-panel .pokemon-type-segment.type-ground,
+  body.draft-theme-page.draft-war-room-page .draft-scout-panel .pokemon-type-segment.type-steel,
+  body.draft-theme-page.draft-war-room-page .draft-pokemon-card .pokemon-type-segment.type-electric,
+  body.draft-theme-page.draft-war-room-page .draft-pokemon-card .pokemon-type-segment.type-ice,
+  body.draft-theme-page.draft-war-room-page .draft-pokemon-card .pokemon-type-segment.type-ground,
+  body.draft-theme-page.draft-war-room-page .draft-pokemon-card .pokemon-type-segment.type-steel {
+    color: #202030 !important;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.60) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-layout-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 350px);
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-right-stack {
+    position: sticky;
+    top: 14px;
+    max-height: calc(100vh - 28px);
+    overflow: auto;
+    align-self: start;
+    padding-right: 2px;
+    min-width: 0;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-right-stack > * {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-right-stack .draft-queue-form {
+    grid-template-columns: 1fr;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-right-stack .draft-admin-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-side-roster-panel {
+    position: static;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-team-rosters {
+    max-height: min(52vh, 440px);
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-clock-tile,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-brand-stage,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-team-tile,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-status-card,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .pkmn-panel,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-point-card,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-queue-inline-panel {
+    background:
+      linear-gradient(145deg, rgba(41, 85, 133, 0.88), rgba(24, 43, 78, 0.90) 56%, rgba(37, 92, 125, 0.86)) !important;
+    border-color: rgba(221, 244, 255, 0.34) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      0 12px 28px rgba(23, 48, 78, 0.28) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-brand-stage {
+    background:
+      linear-gradient(95deg, rgba(28, 56, 106, 0.94), rgba(63, 121, 178, 0.76) 58%, rgba(245, 219, 118, 0.40)),
+      radial-gradient(circle at 86% 26%, rgba(255, 247, 194, 0.40), transparent 28%) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-brand-stage::after {
+    background:
+      linear-gradient(125deg, transparent 0 20%, rgba(125, 186, 238, 0.22) 20% 24%, transparent 24% 38%, rgba(246, 222, 130, 0.28) 38% 42%, transparent 42%),
+      radial-gradient(circle at 55% 45%, rgba(255, 247, 194, 0.24), transparent 44%) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-brand-stage .draft-theme-title {
+    color: #f8fbff !important;
+    text-shadow:
+      0 2px 0 rgba(9, 25, 52, 0.74),
+      0 0 18px rgba(255, 255, 255, 0.28) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-brand-stage #draftLeagueSubtitle {
+    color: rgba(248, 251, 255, 0.86) !important;
+    text-shadow: 0 1px 0 rgba(9, 25, 52, 0.58) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-status-card {
+    background: linear-gradient(90deg, rgba(87, 160, 220, 0.88), rgba(36, 74, 127, 0.92)) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .pkmn-button.danger {
+    background: linear-gradient(to bottom, #f6df86, #b9852f) !important;
+    border-color: rgba(255, 248, 204, 0.70) !important;
+    color: #132947 !important;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.42) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.42),
+      0 8px 18px rgba(45, 76, 118, 0.20) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-pokemon-card {
+    background:
+      linear-gradient(180deg, rgba(49, 95, 139, 0.96), rgba(24, 44, 78, 0.98)) !important;
+    border-color: rgba(225, 245, 255, 0.28) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.16),
+      0 12px 26px rgba(21, 47, 78, 0.30) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-card-role-row,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-roster-slot-points {
+    background: rgba(250, 218, 107, 0.18) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-side-roster-panel > p > strong {
+    color: #f8fbff !important;
+    text-shadow:
+      0 2px 0 rgba(9, 25, 52, 0.58),
+      0 0 14px rgba(255, 255, 255, 0.20) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-side-roster-panel .draft-roster-team {
+    background:
+      linear-gradient(145deg, rgba(15, 41, 80, 0.88), rgba(30, 79, 124, 0.72)) !important;
+    border-color: rgba(232, 247, 255, 0.24) !important;
+    color: #f8fbff !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.13),
+      0 8px 18px rgba(8, 24, 50, 0.18) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-side-roster-panel .draft-roster-team h3,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-side-roster-panel .draft-roster-team p,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-side-roster-panel .draft-roster-slot-name,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-side-roster-panel .draft-roster-slot-meta {
+    color: rgba(248, 251, 255, 0.88) !important;
+    text-shadow: none !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-side-roster-panel .draft-roster-team h3,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-side-roster-panel .draft-roster-slot-name {
+    color: #ffffff !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-side-roster-panel .draft-roster-slot {
+    background: rgba(8, 24, 50, 0.24) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-side-roster-panel .draft-roster-slot-points {
+    background: rgba(250, 218, 107, 0.30) !important;
+    color: #f8fbff !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-point-card p,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-point-card strong,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-point-card .small-note,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-queue-inline-panel h3,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-queue-inline-panel .small-note {
+    color: rgba(255, 255, 255, 0.86) !important;
+    text-shadow: none !important;
+  }
+
+  @media (max-width: 860px) {
+    body.draft-theme-page.draft-war-room-page .draft-layout-grid {
+      grid-template-columns: 1fr;
+    }
+
+    body.draft-theme-page.draft-war-room-page .draft-right-stack {
+      position: static;
+      max-height: none;
+      overflow: visible;
+      padding-right: 0;
+    }
+  }
 </style>
 
 </head>
-<body class="draft-theme-page">
+<body class="draft-theme-page draft-war-room-page">
   <div class="draft-theme-overlay">
     <section class="draft-theme-card">
-      <h1 class="draft-theme-title">Draft Room</h1>
-      <p id="draftLeagueSubtitle">Loading selected league...</p>
+      <header class="draft-command-header">
+        <div class="draft-round-tile">
+          <p class="draft-kicker">Draft Round</p>
+          <p id="draftRoundNumber" class="draft-round-number">--</p>
+          <p id="draftRoundMeta" class="draft-round-meta">of --</p>
+        </div>
 
-      <div class="draft-theme-links">
-        <a class="draft-theme-link" href="league-home.html?v=leaguehome-icons4">Back to League Home</a>
-        <a class="draft-theme-link light" href="my-team.html?v=myteam-theme1">My Team</a>
-      </div>
+        <div class="draft-clock-tile">
+          <div class="draft-timer-box">
+            <p><strong>On The Clock</strong></p>
+            <p id="draftClockLine">Loading clock...</p>
+          </div>
+        </div>
 
-      <div class="draft-timer-box">
-        <p><strong>Draft Clock</strong></p>
-        <p id="draftClockLine">Loading clock...</p>
-      </div>
+        <div class="draft-brand-stage">
+          <h1 class="draft-theme-title">Draft Room</h1>
+          <p id="draftLeagueSubtitle">Loading selected league...</p>
+        </div>
 
-      <div class="pkmn-panel">
+        <aside class="draft-team-tile">
+          <div id="draftHeaderTeamSummary">
+            <p class="draft-kicker">Your Team</p>
+            <p class="small-note">Loading team status...</p>
+          </div>
+
+          <div class="draft-theme-links">
+            <a class="draft-theme-link" href="league-home.html?v=leaguehome-icons4">League Home</a>
+            <a class="draft-theme-link light" href="my-team.html?v=myteam-theme1">My Team</a>
+          </div>
+        </aside>
+      </header>
+
+      <div class="draft-status-card">
         <p><strong>Draft Status</strong></p>
         <p id="draftStatusLine" class="small-note">Loading draft...</p>
       </div>
 
-      <section id="draftSetupSection" class="draft-controls-panel">
-        <div class="pkmn-panel">
-          <p><strong>Draft Controls</strong></p>
-          <p class="small-note">
-            Draft order and clock settings are managed from Manage League.
-          </p>
+      <div class="draft-layout-grid">
+        <main class="draft-left-stack">
+          <section id="draftControls" class="draft-controls-panel">
+            <div class="pkmn-panel">
+              <p><strong>Make Pick</strong></p>
+              <p id="nextPickLine" class="small-note">Loading next pick...</p>
 
-          <div class="draft-admin-buttons">
-            <button id="saveDraftOrderButton" class="pkmn-button small" style="display:none;">Save Draft Order</button>
-            <button id="startDraftButton" class="pkmn-button small">Start Draft</button>
-            <button id="stopDraftButton" class="pkmn-button small danger">Stop Draft</button>
+              <div class="draft-pick-form">
+                <input
+                  id="pokemonDraftInput"
+                  class="pkmn-input"
+                  list="availablePokemonOptions"
+                  type="text"
+                  placeholder="Type Pokémon name">
+
+                <datalist id="availablePokemonOptions"></datalist>
+
+                <button id="makePickButton" class="pkmn-button small">Make Pick</button>
+                <button id="undoPickButton" class="pkmn-button small danger">Undo Last Pick</button>
+              </div>
+
+              <p id="draftActionStatus" class="small-note">Admin draft controls.</p>
+            </div>
+          </section>
+
+          <div class="draft-room-grid">
+            <section class="pkmn-panel">
+              <p><strong>Draft Board</strong></p>
+              <div id="draftPicksList" class="draft-picks-list"></div>
+            </section>
           </div>
 
-          <div id="draftOrderList" style="display:none;"></div>
-        </div>
-      </section>
+          <div class="pkmn-panel">
+            <p><strong>Available Pokémon</strong></p>
 
-      <div id="draftPointStatus" class="draft-point-status"></div>
+            <div class="draft-filter-menu">
+              <label>
+                <span>Search</span>
+                <input id="availablePokemonSearch" class="pkmn-input" type="text" placeholder="Search Pokémon">
+              </label>
 
-      <section id="draftControls" class="draft-controls-panel">
-        <div class="pkmn-panel">
-          <p><strong>Make Pick</strong></p>
-          <p id="nextPickLine" class="small-note">Loading next pick...</p>
+              <label>
+                <span>Mega</span>
+                <select id="megaFilterSelect" class="pkmn-select">
+                  <option value="all">All Pokémon</option>
+                  <option value="mega">Mega Only</option>
+                  <option value="non-mega">Non-Mega Only</option>
+                </select>
+              </label>
 
-          <div class="draft-pick-form">
-            <input
-              id="pokemonDraftInput"
-              class="pkmn-input"
-              list="availablePokemonOptions"
-              type="text"
-              placeholder="Type Pokémon name">
+              <label>
+                <span>Tier</span>
+                <select id="tierFilterSelect" class="pkmn-select">
+                  <option value="all">All Tiers</option>
+                  <option value="Diamond">Diamond</option>
+                  <option value="Gold">Gold</option>
+                  <option value="Silver">Silver</option>
+                  <option value="Bronze">Bronze</option>
+                </select>
+              </label>
 
-            <datalist id="availablePokemonOptions"></datalist>
+              <label>
+                <span>Type</span>
+                <select id="typeFilterSelect" class="pkmn-select">
+                  <option value="all">All Types</option>
+                </select>
+              </label>
+            </div>
 
-            <button id="makePickButton" class="pkmn-button small">Make Pick</button>
-            <button id="undoPickButton" class="pkmn-button small danger">Undo Last Pick</button>
+            <p id="availablePokemonCount" class="small-note">Loading available Pokémon...</p>
+
+            <div id="availablePokemonGrid" class="draft-available-grid"></div>
           </div>
+        </main>
 
-          <p id="draftActionStatus" class="small-note">Admin draft controls.</p>
-        </div>
-      </section>
+        <aside class="draft-right-stack">
+          <section class="pkmn-panel draft-side-roster-panel">
+            <p><strong>Team Rosters</strong></p>
+            <div id="draftTeamRosters" class="draft-team-rosters"></div>
+          </section>
 
-      <div class="draft-room-grid">
-        <section class="pkmn-panel">
-          <p><strong>Draft Board</strong></p>
-          <div id="draftPicksList" class="draft-picks-list"></div>
-        </section>
+          <section id="draftSetupSection" class="draft-controls-panel">
+            <div class="pkmn-panel">
+              <p><strong>Draft Controls</strong></p>
+              <p class="small-note">
+                Draft order and clock settings are managed from Manage League.
+              </p>
 
-        <section class="pkmn-panel">
-          <p><strong>Team Rosters</strong></p>
-          <div id="draftTeamRosters" class="draft-team-rosters"></div>
-        </section>
-      </div>
+              <div class="draft-admin-buttons">
+                <button id="saveDraftOrderButton" class="pkmn-button small" style="display:none;">Save Draft Order</button>
+                <button id="startDraftButton" class="pkmn-button small">Start Draft</button>
+                <button id="stopDraftButton" class="pkmn-button small danger">Stop Draft</button>
+              </div>
 
-      <div class="pkmn-panel">
-        <p><strong>Available Pokémon</strong></p>
+              <div id="draftOrderList" style="display:none;"></div>
+            </div>
+          </section>
 
-        
-        <div id="draftQueueInsideAvailable" class="draft-queue-inline-panel">
-          <h3>Draft Queue</h3>
-          <p class="small-note">
-            Build this before the draft starts. If your clock expires, auto-draft checks this queue first and skips anything drafted or too expensive for your point cap.
-          </p>
+          <div id="draftPointStatus" class="draft-point-status"></div>
 
-          <div class="draft-queue-form">
-            <input
-              id="draftQueueInput"
-              class="pkmn-input"
-              type="text"
-              list="availablePokemonOptions"
-              placeholder="Search Pokémon to queue"
-            >
-            <button id="addQueueButton" class="pkmn-button small" type="button">Add to Queue</button>
-            <button id="clearQueueButton" class="pkmn-button small danger" type="button">Clear Queue</button>
+          <section class="pkmn-panel draft-scout-panel">
+            <p><strong>Pokémon Scout</strong></p>
+            <div id="selectedPokemonScoutBody">
+              <p class="small-note">Select a Pokémon to view draft intel.</p>
+            </div>
+          </section>
+
+          <div id="draftQueueInsideAvailable" class="draft-queue-inline-panel">
+            <h3>Draft Queue</h3>
+            <p class="small-note">
+              Build this before the draft starts. If your clock expires, auto-draft checks this queue first.
+            </p>
+
+            <div class="draft-queue-form">
+              <input
+                id="draftQueueInput"
+                class="pkmn-input"
+                type="text"
+                list="availablePokemonOptions"
+                placeholder="Search Pokémon to queue"
+              >
+              <button id="addQueueButton" class="pkmn-button small" type="button">Add</button>
+              <button id="clearQueueButton" class="pkmn-button small danger" type="button">Clear</button>
+            </div>
+
+            <div id="draftQueueList" class="draft-queue-list"></div>
+            <p id="draftQueueStatus" class="small-note">Queue loading...</p>
           </div>
-
-          <div id="draftQueueList" class="draft-queue-list"></div>
-          <p id="draftQueueStatus" class="small-note">Queue loading...</p>
-        </div>
-
-        <div class="draft-filter-menu">
-          <label>
-            <span>Search</span>
-            <input id="availablePokemonSearch" class="pkmn-input" type="text" placeholder="Search Pokémon">
-          </label>
-
-          <label>
-            <span>Mega</span>
-            <select id="megaFilterSelect" class="pkmn-select">
-              <option value="all">All Pokémon</option>
-              <option value="mega">Mega Only</option>
-              <option value="non-mega">Non-Mega Only</option>
-            </select>
-          </label>
-
-          <label>
-            <span>Tier</span>
-            <select id="tierFilterSelect" class="pkmn-select">
-              <option value="all">All Tiers</option>
-              <option value="Diamond">Diamond</option>
-              <option value="Gold">Gold</option>
-              <option value="Silver">Silver</option>
-              <option value="Bronze">Bronze</option>
-            </select>
-          </label>
-
-          <label>
-            <span>Type</span>
-            <select id="typeFilterSelect" class="pkmn-select">
-              <option value="all">All Types</option>
-            </select>
-          </label>
-        </div>
-
-        <p id="availablePokemonCount" class="small-note">Loading available Pokémon...</p>
-
-        <div id="availablePokemonGrid" class="draft-available-grid"></div>
+        </aside>
       </div>
 
       <div id="draftRoomStatus">Loading...</div>
@@ -797,6 +2158,6 @@
   <script src="js/theme-settings.js?v=global-theme1"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
-  <script src="js/draft-room.js?v=draft-mascots1"></script>
+  <script src="js/draft-room.js?v=draft-war-room5"></script>
 </body>
 </html>

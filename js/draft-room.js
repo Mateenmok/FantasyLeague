@@ -18,7 +18,7 @@ const megaFilterSelect = document.getElementById("megaFilterSelect");
 const tierFilterSelect = document.getElementById("tierFilterSelect");
 const typeFilterSelect = document.getElementById("typeFilterSelect");
 const availablePokemonCount = document.getElementById("availablePokemonCount");
-const AVAILABLE_POKEMON_PAGE_SIZE = 60;
+const AVAILABLE_POKEMON_PAGE_SIZE = 12;
 let availablePokemonPage = 0;
 let availablePokemonFilterSignature = "";
 const draftRoomStatus = document.getElementById("draftRoomStatus");
@@ -26,9 +26,21 @@ const draftPointStatus = document.getElementById("draftPointStatus");
 const draftControls = document.getElementById("draftControls");
 const draftSetupSection = document.getElementById("draftSetupSection");
 const draftOrderList = document.getElementById("draftOrderList");
+const draftRoundNumber = document.getElementById("draftRoundNumber");
+const draftRoundMeta = document.getElementById("draftRoundMeta");
+const draftHeaderTeamSummary = document.getElementById("draftHeaderTeamSummary");
+const selectedPokemonScoutBody = document.getElementById("selectedPokemonScoutBody");
 
 const ROSTER_SIZE = 10;
 const DRAFT_TIER_ORDER = ["Diamond", "Gold", "Silver", "Bronze"];
+const DRAFT_STAT_ROWS = [
+  ["hp", "HP"],
+  ["attack", "ATK"],
+  ["defense", "DEF"],
+  ["sp_atk", "SpA"],
+  ["sp_def", "SpD"],
+  ["speed", "Spe"]
+];
 function getPickSeconds() {
   return Number(currentLeague?.draft_pick_seconds || 120);
 }
@@ -42,6 +54,8 @@ let draftState = null;
 let draftPicks = [];
 let allRosterRows = [];
 let championsPokemon = [];
+let pokemonBstBySlug = {};
+let selectedPokemonSlug = "";
 let isAdmin = false;
 let timerInterval = null;
 let autoPickInProgress = false;
@@ -140,6 +154,13 @@ async function loadDraftRoom() {
     draftRoomStatus.textContent = "Could not load Pokémon data.";
     disableDraftControls();
     return;
+  }
+
+  try {
+    pokemonBstBySlug = await fetch("data/pokemon-bst.json?v=draft-war-room3").then(response => response.json());
+  } catch (error) {
+    console.warn("Pokémon BST data unavailable:", error);
+    pokemonBstBySlug = {};
   }
 
   await ensureDraftState();
@@ -265,6 +286,7 @@ function renderDraftRoom(isBackgroundRefresh = false) {
   const picksMade = draftPicks.length;
   const availableCount = getAvailablePokemon().length;
   const nextPick = getNextPickInfo();
+  const maxDraftRounds = getMaxDraftRounds();
 
   draftStatusLine.textContent =
     `${picksMade}/${totalPicks} picks made • ${availableCount} Pokémon available • ${ROSTER_SIZE} roster spots per team`;
@@ -276,6 +298,8 @@ function renderDraftRoom(isBackgroundRefresh = false) {
     nextPickLine.textContent = "Draft complete.";
   }
 
+  renderDraftHeaderSummary(nextPick, maxDraftRounds);
+
   renderDraftOrderControls();
   const typedPick = pokemonDraftInput ? pokemonDraftInput.value : "";
 
@@ -283,6 +307,7 @@ function renderDraftRoom(isBackgroundRefresh = false) {
   renderDraftPicksList();
   renderTeamRosters();
   renderDraftPointStatus();
+  renderSelectedPokemonScout();
   renderAvailablePokemonGrid();
   draftQueueForceRender();
   renderDraftButtons();
@@ -337,6 +362,42 @@ function updatePickControls() {
       draftActionStatus.textContent = "Draft complete.";
     }
   }
+}
+
+function renderDraftHeaderSummary(nextPick, maxDraftRounds) {
+  if (draftRoundNumber) {
+    draftRoundNumber.textContent = nextPick ? String(nextPick.roundNumber) : "--";
+  }
+
+  if (draftRoundMeta) {
+    draftRoundMeta.textContent = maxDraftRounds ? `of ${maxDraftRounds}` : "of --";
+  }
+
+  if (!draftHeaderTeamSummary) {
+    return;
+  }
+
+  const teamId = currentMembership?.league_team_id || nextPick?.team?.id;
+  const team = teamId ? getTeamById(teamId) : null;
+  const pointCap = Number(currentLeague?.roster_point_cap || 50);
+
+  if (!team) {
+    draftHeaderTeamSummary.innerHTML = `
+      <p class="draft-kicker">Your Team</p>
+      <p class="small-note">No team assigned.</p>
+    `;
+    return;
+  }
+
+  const rosterRows = getRosterForTeam(team.id);
+  const pointUsage = getTeamPointUsage(team.id);
+  const nextPickText = nextPick ? `${nextPick.roundNumber}.${nextPick.pickInRound}` : "--";
+
+  draftHeaderTeamSummary.innerHTML = `
+    <p class="draft-kicker">${currentMembership?.league_team_id ? "Your Team" : "On The Clock"}</p>
+    <p class="draft-board-pokemon-name">${escapeHtml(team.team_name)}</p>
+    <p class="small-note">${rosterRows.length}/${ROSTER_SIZE} roster • ${pointUsage}/${pointCap} points • Next ${escapeHtml(nextPickText)}</p>
+  `;
 }
 
 function renderDraftButtons() {
@@ -532,26 +593,35 @@ function startDraftTimer() {
   timerInterval = setInterval(updateDraftClock, 1000);
 }
 
+function setDraftClockLine(message, state = "") {
+  if (!draftClockLine) {
+    return;
+  }
+
+  draftClockLine.textContent = message;
+  draftClockLine.dataset.clockState = state;
+}
+
 function updateDraftClock() {
   const nextPick = getNextPickInfo();
 
   if (!draftState?.is_started) {
-    draftClockLine.textContent = "Draft has not started.";
+    setDraftClockLine("Draft has not started.", "idle");
     return;
   }
 
   if (draftState?.is_paused) {
-    draftClockLine.textContent = "Draft is stopped.";
+    setDraftClockLine("Draft is stopped.", "stopped");
     return;
   }
 
   if (!nextPick) {
-    draftClockLine.textContent = "Draft complete.";
+    setDraftClockLine("Draft complete.", "complete");
     return;
   }
 
   if (!draftState.current_pick_started_at) {
-    draftClockLine.textContent = "Clock waiting...";
+    setDraftClockLine("Clock waiting...", "waiting");
     return;
   }
 
@@ -563,8 +633,10 @@ function updateDraftClock() {
   const minutes = Math.floor(remainingSeconds / 60);
   const seconds = String(remainingSeconds % 60).padStart(2, "0");
 
-  draftClockLine.textContent =
-    `${minutes}:${seconds} remaining • On the clock: ${nextPick.team.team_name}`;
+  setDraftClockLine(
+    `${minutes}:${seconds} remaining • On the clock: ${nextPick.team.team_name}`,
+    "running"
+  );
 
   if (remainingSeconds <= 0 && !autoPickInProgress) {
     autoPickInProgress = true;
@@ -625,6 +697,12 @@ function getTotalDraftPicks() {
   return getDraftPickSequence().length;
 }
 
+function getMaxDraftRounds() {
+  return getDraftPickSequence().reduce((maxRound, pick) => {
+    return Math.max(maxRound, pick.roundNumber);
+  }, 0);
+}
+
 function getMascotCountForTeam(teamId) {
   return getRosterForTeam(teamId).filter(row => row.is_mascot === true).length;
 }
@@ -682,26 +760,149 @@ function renderPokemonOptions() {
 }
 
 function renderDraftPicksList() {
-  if (draftPicks.length === 0) {
-    draftPicksList.innerHTML = `<div class="empty-state"><p>No picks made yet.</p></div>`;
+  const orderedTeams = getOrderedTeams();
+  const maxRounds = getMaxDraftRounds();
+
+  if (!orderedTeams.length || !maxRounds) {
+    draftPicksList.innerHTML = `<div class="empty-state"><p>No draft board yet.</p></div>`;
     return;
   }
 
-  draftPicksList.innerHTML = draftPicks.map(pick => {
-    const team = getTeamById(pick.league_team_id);
-    const pokemon = getPokemonBySlug(pick.pokemon_slug);
+  const nextPick = getNextPickInfo();
+  const picksByRoundTeam = new Map();
+  const sequenceByRoundTeam = new Map();
 
-    return `
-      <div class="draft-pick-row">
-        <span>#${pick.overall_pick}</span>
-        <span>R${pick.round_number}.${pick.pick_in_round}</span>
-        <span>${escapeHtml(team ? team.team_name : "Unknown Team")}</span>
-        <strong>${escapeHtml(pokemon ? pokemon.name : pick.pokemon_slug)}</strong>
+  draftPicks.forEach(pick => {
+    picksByRoundTeam.set(`${pick.round_number}:${pick.league_team_id}`, pick);
+  });
+
+  getDraftPickSequence().forEach(pick => {
+    sequenceByRoundTeam.set(`${pick.roundNumber}:${pick.team.id}`, pick);
+  });
+
+  const columns = `72px repeat(${orderedTeams.length}, minmax(116px, 1fr))`;
+  const cells = [];
+
+  cells.push(`<div class="draft-board-header-cell draft-board-corner" style="grid-column:1;grid-row:1;">Round</div>`);
+
+  orderedTeams.forEach((team, index) => {
+    const isActiveTeam = nextPick?.team?.id === team.id ? "active-team" : "";
+    cells.push(`
+      <div
+        class="draft-board-header-cell draft-board-logo-header ${isActiveTeam}"
+        style="grid-column:${index + 2};grid-row:1;"
+        title="${escapeHtml(team.team_name)}"
+        aria-label="${escapeHtml(team.team_name)}">
+        ${renderDraftBoardTeamLogo(team)}
       </div>
-    `;
-  }).join("");
+    `);
+  });
+
+  for (let round = 1; round <= maxRounds; round++) {
+    cells.push(`
+      <div class="draft-board-round-cell" style="grid-column:1;grid-row:${round + 1};">
+        ${round}
+      </div>
+    `);
+
+    orderedTeams.forEach((team, index) => {
+      const pick = picksByRoundTeam.get(`${round}:${team.id}`);
+      const pendingPick = sequenceByRoundTeam.get(`${round}:${team.id}`);
+      const isOnClock = nextPick && pendingPick && nextPick.overallPick === pendingPick.overallPick;
+      const isUpNext = pendingPick && !pick && !isOnClock;
+      const cellClass = pick ? "picked" : isOnClock ? "on-clock" : isUpNext ? "up-next" : "";
+
+      cells.push(`
+        <div class="draft-board-pick-cell ${cellClass}" style="grid-column:${index + 2};grid-row:${round + 1};">
+          ${renderDraftBoardCell(pick, pendingPick, isOnClock)}
+        </div>
+      `);
+    });
+  }
+
+  draftPicksList.innerHTML = `
+    <div class="draft-board-shell">
+      <div class="draft-board-grid" style="grid-template-columns:${columns};">
+        ${cells.join("")}
+      </div>
+    </div>
+  `;
 }
 
+function renderDraftBoardTeamLogo(team) {
+  if (team.logo_url) {
+    return `
+      <img
+        class="draft-board-team-logo"
+        src="${escapeHtml(team.logo_url)}"
+        alt="${escapeHtml(team.team_name)} logo">
+    `;
+  }
+
+  const fallbackText = team.team_number ? `T${team.team_number}` : getTeamInitials(team.team_name);
+
+  return `
+    <span class="draft-board-team-logo-placeholder" aria-hidden="true">
+      ${escapeHtml(fallbackText)}
+    </span>
+  `;
+}
+
+function getTeamInitials(teamName) {
+  return String(teamName || "T")
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map(word => word[0])
+    .join("")
+    .toUpperCase() || "T";
+}
+
+function renderDraftBoardCell(pick, pendingPick, isOnClock) {
+  if (pick) {
+    const pokemon = getPokemonBySlug(pick.pokemon_slug);
+    const tier = pokemon?.tier || "Drafted";
+    const points = pokemon ? getPokemonPoints(pokemon) : "--";
+    const bst = pokemon ? getPokemonBst(pokemon) : null;
+
+    return `
+      <div class="draft-board-pokemon">
+        ${pokemon?.image
+          ? `<img src="${escapeHtml(pokemon.image)}" alt="${escapeHtml(pokemon.name)}">`
+          : `<div class="draft-board-empty-img"></div>`}
+        <div>
+          <div class="draft-board-pokemon-name">${escapeHtml(pokemon ? pokemon.name : pick.pokemon_slug)}</div>
+          <div class="draft-board-pokemon-meta">#${pick.overall_pick} • ${escapeHtml(tier)} • ${points} pts${bst ? ` • BST ${bst}` : ""}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  if (isOnClock) {
+    return `
+      <div>
+        <div class="draft-board-cell-label">On The Clock</div>
+        <div class="draft-board-cell-meta">Pick #${pendingPick.overallPick}</div>
+      </div>
+    `;
+  }
+
+  if (pendingPick) {
+    return `
+      <div>
+        <div class="draft-board-cell-label">Up Next</div>
+        <div class="draft-board-cell-meta">Pick #${pendingPick.overallPick}</div>
+      </div>
+    `;
+  }
+
+  return `
+    <div>
+      <div class="draft-board-cell-label">-</div>
+      <div class="draft-board-cell-meta">No pick</div>
+    </div>
+  `;
+}
 
 function getManagerDisplayName(team) {
   return (
@@ -728,7 +929,7 @@ function renderTeamRosters() {
     const pointUsage = getTeamPointUsage(team.id);
 
     return `
-      <div class="draft-roster-team">
+      <div class="draft-roster-team ${getNextPickInfo()?.team?.id === team.id ? "on-clock-roster" : ""}">
         <h3>${escapeHtml(getDraftRoomTeamLabel(team))}</h3>
         <p>${rosterRows.length}/${ROSTER_SIZE} Pokémon • ${pointUsage}/${pointCap} points</p>
 
@@ -736,13 +937,27 @@ function renderTeamRosters() {
           <div style="width:${Math.min((pointUsage / pointCap) * 100, 100)}%"></div>
         </div>
 
-        <div class="draft-roster-pills">
+        <div class="draft-roster-list">
           ${
             rosterRows.length === 0
               ? `<span class="draft-empty-pill">Empty</span>`
               : rosterRows.map(row => {
                   const pokemon = getPokemonBySlug(row.pokemon_slug);
-                  return `<span>${escapeHtml(pokemon ? `${pokemon.name} (${pokemon.points || 1})` : row.pokemon_slug)}</span>`;
+                  const mascotLabel = row.is_mascot === true ? "Mascot • " : "";
+                  const bst = getPokemonBst(pokemon);
+
+                  return `
+                    <div class="draft-roster-slot">
+                      ${pokemon?.image
+                        ? `<img src="${escapeHtml(pokemon.image)}" alt="${escapeHtml(pokemon.name)}">`
+                        : `<div class="draft-board-empty-img"></div>`}
+                      <div>
+                        <div class="draft-roster-slot-name">${escapeHtml(pokemon ? `${mascotLabel}${pokemon.name}` : row.pokemon_slug)}</div>
+                        <div class="draft-roster-slot-meta">${pokemon ? `${escapeHtml((pokemon.types || []).join(" / "))}${bst ? ` • BST ${bst}` : ""}` : "Unknown"}</div>
+                      </div>
+                      <span class="draft-roster-slot-points">${pokemon ? getPokemonPoints(pokemon) : "?"}</span>
+                    </div>
+                  `;
                 }).join("")
           }
         </div>
@@ -805,6 +1020,94 @@ function renderDraftPointStatus() {
       ${onClockHtml || `<div class="draft-point-card"><p><strong>On The Clock</strong></p><p class="small-note">Draft complete or not started.</p></div>`}
     </div>
   `;
+}
+
+function getDefaultScoutPokemon() {
+  if (selectedPokemonSlug) {
+    const selectedPokemon = getPokemonBySlug(selectedPokemonSlug);
+
+    if (selectedPokemon && !getDraftedSlugSet().has(selectedPokemon.slug)) {
+      return selectedPokemon;
+    }
+  }
+
+  return getFilteredAvailablePokemon()[0] || null;
+}
+
+function setSelectedPokemon(pokemon, fillPickInput = true) {
+  if (!pokemon) {
+    return;
+  }
+
+  selectedPokemonSlug = pokemon.slug;
+
+  if (fillPickInput && pokemonDraftInput) {
+    pokemonDraftInput.value = getPokemonLabel(pokemon);
+  }
+
+  renderSelectedPokemonScout();
+}
+
+function renderSelectedPokemonScout() {
+  if (!selectedPokemonScoutBody) {
+    return;
+  }
+
+  const pokemon = getDefaultScoutPokemon();
+
+  if (!pokemon) {
+    selectedPokemonScoutBody.innerHTML = `<p class="small-note">No available Pokémon to scout.</p>`;
+    return;
+  }
+
+  const bst = getPokemonBst(pokemon);
+  const points = getPokemonPoints(pokemon);
+  const statUrl = getPokemonStatsUrl(pokemon);
+
+  selectedPokemonScoutBody.innerHTML = `
+    <div class="draft-scout-card">
+      <div class="draft-scout-main">
+        <img src="${escapeHtml(pokemon.image)}" alt="${escapeHtml(pokemon.name)}">
+        <div>
+          <p class="draft-scout-name">${escapeHtml(getPokemonLabel(pokemon))}</p>
+          <p class="draft-scout-meta">${escapeHtml(pokemon.tier || "Tier")} • ${points} pts • BST ${bst || "--"} • ${escapeHtml(getPokemonDraftRole(pokemon))}</p>
+          ${renderPokemonTypeBadges(pokemon)}
+        </div>
+      </div>
+
+      ${renderPokemonStatBars(pokemon)}
+
+      <div class="draft-scout-actions">
+        <button id="useScoutPokemonButton" class="draft-theme-link" type="button">Use Pick</button>
+        <button id="queueScoutPokemonButton" class="draft-theme-link light" type="button">Queue</button>
+      </div>
+
+      <a class="draft-theme-link" href="${escapeHtml(statUrl)}" target="_blank" rel="noopener">BST Source</a>
+    </div>
+  `;
+
+  const useButton = document.getElementById("useScoutPokemonButton");
+  const queueButton = document.getElementById("queueScoutPokemonButton");
+
+  if (useButton) {
+    useButton.addEventListener("click", function () {
+      setSelectedPokemon(pokemon, true);
+      draftControls?.scrollIntoView({ behavior: "smooth", block: "center" });
+      pokemonDraftInput?.focus();
+    });
+  }
+
+  if (queueButton) {
+    queueButton.addEventListener("click", function () {
+      const queueInput = document.getElementById("draftQueueInput");
+
+      if (queueInput) {
+        queueInput.value = getPokemonLabel(pokemon);
+      }
+
+      draftQueueForceAdd();
+    });
+  }
 }
 
 function getTeamPointUsage(teamId) {
@@ -898,6 +1201,111 @@ function getSupabaseErrorText(error) {
 
 function getPokemonPoints(pokemon) {
   return Number(pokemon?.points || 1);
+}
+
+function getPokemonStatData(pokemon) {
+  if (!pokemon) {
+    return null;
+  }
+
+  return pokemonBstBySlug[pokemon.slug] || null;
+}
+
+function getPokemonBst(pokemon) {
+  const statData = getPokemonStatData(pokemon);
+  return statData?.bst ? Number(statData.bst) : null;
+}
+
+function getPokemonStatsUrl(pokemon) {
+  const statData = getPokemonStatData(pokemon);
+
+  if (statData?.source_url) {
+    return statData.source_url;
+  }
+
+  if (pokemon?.id) {
+    return `https://pokeapi.co/api/v2/pokemon/${encodeURIComponent(String(pokemon.id))}`;
+  }
+
+  return "https://pokeapi.co/";
+}
+
+function getPokemonDraftRole(pokemon) {
+  const stats = getPokemonStatData(pokemon)?.stats;
+
+  if (!stats) {
+    return "Scout";
+  }
+
+  const attack = Number(stats.attack || 0);
+  const specialAttack = Number(stats.sp_atk || 0);
+  const defense = Number(stats.defense || 0);
+  const specialDefense = Number(stats.sp_def || 0);
+  const hp = Number(stats.hp || 0);
+  const speed = Number(stats.speed || 0);
+  const bulk = hp + defense + specialDefense;
+
+  if (speed >= attack && speed >= specialAttack && speed >= defense && speed >= specialDefense) {
+    return "Speed";
+  }
+
+  if (bulk >= (attack + specialAttack + speed) * 1.15) {
+    return "Tank";
+  }
+
+  if (specialAttack > attack + 12) {
+    return "Special";
+  }
+
+  if (attack > specialAttack + 12) {
+    return "Physical";
+  }
+
+  return "Balanced";
+}
+
+function renderPokemonStatBars(pokemon, compact = false) {
+  const stats = getPokemonStatData(pokemon)?.stats;
+
+  if (!stats) {
+    return `<div class="draft-card-role-row">BST loading</div>`;
+  }
+
+  const rows = compact ? DRAFT_STAT_ROWS.slice(0, 6) : DRAFT_STAT_ROWS;
+
+  return `
+    <div class="draft-card-stat-bars">
+      ${rows.map(([key, label]) => {
+        const value = Number(stats[key] || 0);
+        const width = Math.min((value / 120) * 100, 100);
+        const tone = getStatTone(value);
+
+        return `
+          <div class="draft-stat-row">
+            <span>${label}</span>
+            <span class="draft-stat-track"><span class="draft-stat-fill ${tone}" style="width:${width}%"></span></span>
+            <span>${value}</span>
+          </div>
+        `;
+      }).join("")}
+    </div>
+  `;
+}
+
+function getStatTone(value) {
+  if (value >= 120) {
+    return "stat-elite";
+  }
+
+  if (value >= 95) {
+    return "stat-high";
+  }
+
+  if (value >= 70) {
+    return "stat-medium";
+  }
+
+  return "stat-low";
 }
 
 function getPokemonThatFitTeamCap(teamId) {
@@ -1176,14 +1584,18 @@ function draftQueueForceRender() {
     const points = getPokemonPoints(pokemon);
     const fits = pokemon && points <= remainingPoints;
     const queuedName = pokemon ? pokemon.name : slug;
+    const bst = getPokemonBst(pokemon);
 
     return `
       <div class="draft-queue-row">
         <span class="draft-queue-rank">${index + 1}</span>
+        ${pokemon?.image
+          ? `<img class="draft-queue-sprite" src="${escapeHtml(pokemon.image)}" alt="${escapeHtml(pokemon.name)}">`
+          : `<span class="draft-queue-sprite"></span>`}
         <span class="draft-queue-name">
           ${escapeHtml(queuedName)}
           <span class="draft-queue-meta">
-            ${pokemon ? `${points} point${points === 1 ? "" : "s"} • ${fits ? "fits current cap" : "would exceed cap right now"}` : "Not available"}
+            ${pokemon ? `${points} point${points === 1 ? "" : "s"}${bst ? ` • BST ${bst}` : ""} • ${fits ? "fits current cap" : "would exceed cap right now"}` : "Not available"}
           </span>
         </span>
         <button class="draft-queue-mini-button" type="button" data-queue-action="up" data-queue-index="${index}">Up</button>
@@ -1436,24 +1848,35 @@ function renderAvailablePokemonGrid() {
   }
 
   availablePokemonGrid.innerHTML = availablePokemon.map(pokemon => {
+    const bst = getPokemonBst(pokemon);
+    const statUrl = getPokemonStatsUrl(pokemon);
+
     return `
-      <button class="draft-pokemon-card" data-slug="${pokemon.slug}">
-        <img src="${pokemon.image}" alt="${escapeHtml(pokemon.name)}">
-        ${renderMegaBadge(pokemon)}
-        <span>${escapeHtml(getPokemonLabel(pokemon))}</span>
-        ${renderPokemonTierBadge(pokemon)}
-        ${renderPokemonTypeBadges(pokemon)}
-      </button>
+      <div class="draft-pokemon-card" data-slug="${pokemon.slug}">
+        <a class="draft-bst-link" href="${escapeHtml(statUrl)}" target="_blank" rel="noopener">BST ${bst || "--"}</a>
+        <button class="draft-pokemon-pick-button" type="button" data-slug="${pokemon.slug}">
+          <img src="${pokemon.image}" alt="${escapeHtml(pokemon.name)}">
+          ${renderMegaBadge(pokemon)}
+          <span>${escapeHtml(getPokemonLabel(pokemon))}</span>
+          ${renderPokemonTierBadge(pokemon)}
+          ${renderPokemonTypeBadges(pokemon)}
+          <div class="draft-card-rank-row">
+            <span>Rank ${escapeHtml(pokemon.rank || "--")}</span>
+            <span>${getPokemonPoints(pokemon)} pts</span>
+          </div>
+          ${renderPokemonStatBars(pokemon, true)}
+          <div class="draft-card-role-row">${escapeHtml(getPokemonDraftRole(pokemon))}</div>
+        </button>
+      </div>
     `;
   }).join("");
 
-  document.querySelectorAll(".draft-pokemon-card").forEach(button => {
+  document.querySelectorAll(".draft-pokemon-pick-button").forEach(button => {
     button.addEventListener("click", function () {
       const pokemon = championsPokemon.find(p => p.slug === this.dataset.slug);
 
       if (pokemon) {
-        pokemonDraftInput.value = getPokemonLabel(pokemon);
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        setSelectedPokemon(pokemon, true);
       }
     });
   });
