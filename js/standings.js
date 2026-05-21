@@ -79,11 +79,6 @@ async function loadStandingsPage() {
     return;
   }
 
-<<<<<<< Updated upstream
-=======
-  leagueDivisions = divisions || [];
-
->>>>>>> Stashed changes
   const { data: teams, error: teamsError } = await supabaseClient
     .from("league_teams")
     .select("*")
@@ -165,7 +160,6 @@ function renderStandings() {
   }
 
   const divisionsToRender = leagueDivisions.length
-<<<<<<< Updated upstream
     ? leagueDivisions
     : [{ id: "all", name: "League Standings", division_number: 1 }];
 
@@ -200,55 +194,6 @@ function renderStandings() {
     const leader = divisionTeams[0];
 
     const rows = divisionTeams.map((team, index) => {
-=======
-    ? [...leagueDivisions].sort((a, b) => Number(a.division_number || 0) - Number(b.division_number || 0))
-    : [{ id: "all", name: "League Standings", division_number: 1 }];
-
-  const assignedDivisionIds = new Set(divisionsToRender.map(division => String(division.id)));
-  const unassignedTeams = leagueDivisions.length
-    ? leagueTeams.filter(team => !team.division_id || !assignedDivisionIds.has(String(team.division_id)))
-    : [];
-
-  const divisionBoards = divisionsToRender.map(division => {
-    const divisionTeams = leagueTeams
-      .filter(team => {
-        if (division.id === "all") {
-          return true;
-        }
-
-        return String(team.division_id || "") === String(division.id);
-      })
-      .sort(sortTeamsForStandings);
-
-    return renderDivisionStandingsBoard(division.name || "Division", divisionTeams);
-  });
-
-  if (unassignedTeams.length) {
-    divisionBoards.push(renderDivisionStandingsBoard("Unassigned", unassignedTeams.sort(sortTeamsForStandings)));
-  }
-
-  standingsContent.innerHTML = divisionBoards.join("");
-
-  bindRosterButtons();
-  standingsStatus.textContent = `${leagueTeams.length} teams loaded across ${divisionBoards.length} division board${divisionBoards.length === 1 ? "" : "s"}. Tiebreaker: games won.`;
-}
-
-function renderDivisionStandingsBoard(divisionName, divisionTeams) {
-  if (!divisionTeams.length) {
-    return `
-      <section class="standings-board division-${getDivisionSlug(divisionName)}">
-        <div class="standings-division-title">${escapeHtml(divisionName)}</div>
-        <div class="empty-state">
-          <p>No teams assigned to this division.</p>
-        </div>
-      </section>
-    `;
-  }
-
-  const leader = divisionTeams[0];
-
-  const rows = divisionTeams.map((team, index) => {
->>>>>>> Stashed changes
     const gamesBack = calculateGamesBack(leader, team);
     const gbText = formatGamesBack(gamesBack);
 
@@ -308,34 +253,8 @@ function renderDivisionStandingsBoard(divisionName, divisionTeams) {
     `;
   }).join("");
 
-<<<<<<< Updated upstream
   bindRosterButtons();
   standingsStatus.textContent = `${leagueTeams.length} teams loaded. Tiebreaker: games won.`;
-=======
-  return `
-    <section class="standings-board division-${getDivisionSlug(divisionName)}">
-      <div class="standings-division-title">${escapeHtml(divisionName)}</div>
-
-      <div class="standings-header-row">
-        <div>#</div>
-        <div>Team</div>
-        <div>Record</div>
-        <div>PCT</div>
-        <div>GW</div>
-        <div>GB</div>
-      </div>
-
-      ${rows}
-    </section>
-  `;
-}
-
-function getDivisionSlug(value) {
-  return String(value || "division")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "") || "division";
->>>>>>> Stashed changes
 }
 
 function bindRosterButtons() {
@@ -576,13 +495,14 @@ function renderBracketPlaceholderMatchup() {
   `;
 }
 
+
 function renderBracketPlaceholderTeam() {
   return `
     <div class="bracket-team-row bracket-team-placeholder">
       <div class="bracket-placeholder-logo"></div>
       <div class="bracket-placeholder-lines">
-        <span></span>
-        <span></span>
+        
+        
       </div>
     </div>
   `;
@@ -644,14 +564,14 @@ function buildPlayoffRounds(seededTeams) {
           team2: null,
           bye: false,
           matchupLabel: "#1 vs winner of #4/#5",
-          placeholderText: "Winner of #4/#5"
+          placeholderText: "#4/#5"
         },
         {
           team1: seed2,
           team2: null,
           bye: false,
           matchupLabel: "#2 vs winner of #3/#6",
-          placeholderText: "Winner of #3/#6"
+          placeholderText: "#3/#6"
         }
       ],
       [
@@ -660,13 +580,18 @@ function buildPlayoffRounds(seededTeams) {
           team2: null,
           bye: false,
           matchupLabel: "Championship",
-          placeholderText: "Winner of semifinals"
+          placeholderText: "Semifinal winners"
         }
       ]
     ];
   }
 
-  const bracketSize = getNextPowerOfTwo(playoffCount);
+  let bracketSize = 1;
+
+  while (bracketSize < playoffCount) {
+    bracketSize *= 2;
+  }
+
   const byeCount = bracketSize - playoffCount;
   const rounds = [];
 
@@ -713,7 +638,6 @@ function buildPlayoffRounds(seededTeams) {
   return rounds;
 }
 
-<<<<<<< Updated upstream
 function getDivisionSlug(name) {
   return String(name || "")
     .toLowerCase()
@@ -722,17 +646,6 @@ function getDivisionSlug(name) {
     .replace(/^-+|-+$/g, "");
 }
 
-=======
-function getNextPowerOfTwo(value) {
-  let bracketSize = 1;
-
-  while (bracketSize < value) {
-    bracketSize *= 2;
-  }
-
-  return bracketSize;
-}
->>>>>>> Stashed changes
 
 function getLeaguePlayoffTeamCount() {
   const teamCount = Number(currentLeague.team_count || leagueTeams.length);
