@@ -803,9 +803,12 @@
     }
 
     body.draft-theme-page .draft-board-shell {
+      max-width: 100%;
       width: 100%;
       overflow-x: auto;
+      overflow-y: hidden;
       padding-bottom: 4px;
+      -webkit-overflow-scrolling: touch;
     }
 
     body.draft-theme-page .draft-picks-list {
@@ -816,6 +819,7 @@
 
     body.draft-theme-page .draft-board-grid {
       display: grid;
+      width: max-content;
       min-width: max(920px, 100%);
       border-radius: 7px;
       overflow: hidden;
@@ -1153,12 +1157,14 @@
     }
 
     body.draft-theme-page .draft-stat-row span {
+      margin: 0 !important;
       color: rgba(255, 255, 255, 0.76) !important;
       font-size: 10px !important;
       line-height: 1 !important;
     }
 
     body.draft-theme-page .draft-stat-track {
+      margin: 0 !important;
       height: 10px;
       overflow: hidden;
       border-radius: 999px;
@@ -1170,6 +1176,7 @@
     }
 
     body.draft-theme-page .draft-stat-fill {
+      margin: 0 !important;
       height: 100%;
       border-radius: inherit;
       background: linear-gradient(90deg, #ff2f37, #ffb23e);
@@ -1965,6 +1972,602 @@
     text-shadow: none !important;
   }
 
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) {
+    background-color: #111214;
+    background-image:
+      linear-gradient(rgba(18, 19, 21, 0.88), rgba(18, 19, 21, 0.90)),
+      url("images/backgrounds/VictoryRoad.png") !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .draft-theme-overlay {
+    background:
+      radial-gradient(circle at 20% 8%, rgba(212, 164, 76, 0.16), transparent 26%),
+      radial-gradient(circle at 78% 0%, rgba(255, 255, 255, 0.09), transparent 30%),
+      linear-gradient(135deg, rgba(38, 39, 42, 0.94), rgba(24, 25, 27, 0.94) 48%, rgba(13, 14, 16, 0.96)) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .draft-round-tile {
+    background: linear-gradient(155deg, #4a4c50 0%, #2a2b2e 58%, #5a4721 100%) !important;
+    border-color: rgba(255, 255, 255, 0.18) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .draft-clock-tile,
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .draft-brand-stage,
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .draft-team-tile,
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .draft-status-card,
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .pkmn-panel,
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .draft-point-card,
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .draft-queue-inline-panel {
+    background:
+      linear-gradient(145deg, rgba(45, 47, 50, 0.94), rgba(27, 28, 31, 0.96) 56%, rgba(36, 38, 41, 0.94)) !important;
+    border-color: rgba(255, 255, 255, 0.14) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.10),
+      0 12px 28px rgba(0, 0, 0, 0.34) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .draft-brand-stage {
+    background:
+      linear-gradient(95deg, rgba(27, 28, 31, 0.96), rgba(55, 57, 61, 0.84) 58%, rgba(212, 164, 76, 0.22)),
+      radial-gradient(circle at 86% 26%, rgba(255, 236, 178, 0.16), transparent 28%) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .draft-brand-stage::after {
+    background:
+      linear-gradient(125deg, transparent 0 20%, rgba(255, 255, 255, 0.09) 20% 24%, transparent 24% 38%, rgba(212, 164, 76, 0.20) 38% 42%, transparent 42%),
+      radial-gradient(circle at 55% 45%, rgba(255, 255, 255, 0.08), transparent 44%) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .draft-status-card {
+    background: linear-gradient(90deg, rgba(62, 64, 68, 0.94), rgba(32, 33, 36, 0.96)) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .draft-theme-link.light {
+    color: #17181a;
+    background: linear-gradient(to bottom, #f0ece0, #d9dadd) !important;
+    border-color: rgba(255, 255, 255, 0.56) !important;
+    text-shadow: none !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .draft-board-header-cell,
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .draft-board-pick-cell,
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .draft-board-round-cell,
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .draft-board-corner {
+    border-color: rgba(255, 255, 255, 0.10) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .draft-board-header-cell {
+    background: linear-gradient(180deg, rgba(34, 35, 38, 0.98), rgba(13, 14, 16, 0.98)) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .draft-board-pick-cell {
+    background: linear-gradient(145deg, rgba(34, 35, 38, 0.94), rgba(16, 17, 19, 0.96)) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .draft-board-pick-cell.picked {
+    background: linear-gradient(145deg, rgba(56, 58, 62, 0.96), rgba(26, 27, 30, 0.98)) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .draft-board-pick-cell.on-clock {
+    background: linear-gradient(145deg, rgba(90, 74, 35, 0.98), rgba(43, 44, 47, 0.98)) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .draft-pokemon-card {
+    background:
+      linear-gradient(180deg, rgba(56, 58, 62, 0.96), rgba(27, 28, 31, 0.98)) !important;
+    border-color: rgba(255, 255, 255, 0.14) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.11),
+      0 12px 26px rgba(0, 0, 0, 0.30) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .draft-pokemon-card::before {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 36%) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .draft-roster-team {
+    background:
+      linear-gradient(145deg, rgba(34, 35, 38, 0.94), rgba(23, 24, 26, 0.96)) !important;
+    border-color: rgba(255, 255, 255, 0.10) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .draft-roster-slot,
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .draft-queue-row,
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .draft-queue-empty {
+    background: rgba(255, 255, 255, 0.06) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .draft-bst-link {
+    background: rgba(20, 21, 23, 0.86) !important;
+    border-color: rgba(212, 164, 76, 0.58) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .draft-stat-track {
+    background: rgba(8, 9, 11, 0.66) !important;
+    border-color: rgba(255, 255, 255, 0.28) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page {
+    background-color: #ededee;
+    background-image:
+      linear-gradient(rgba(244, 245, 246, 0.76), rgba(224, 226, 229, 0.82)),
+      url("images/backgrounds/VictoryRoad.png") !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-theme-overlay {
+    background:
+      radial-gradient(circle at 20% 8%, rgba(212, 164, 76, 0.16), transparent 26%),
+      radial-gradient(circle at 78% 0%, rgba(255, 255, 255, 0.72), transparent 30%),
+      linear-gradient(135deg, rgba(247, 248, 249, 0.92), rgba(229, 231, 234, 0.88) 48%, rgba(207, 210, 214, 0.90)) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-round-tile {
+    background: linear-gradient(155deg, #f5f6f7 0%, #d7d9dd 58%, #d0b96d 100%) !important;
+    border-color: rgba(255, 255, 255, 0.82) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-round-tile .draft-kicker,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-round-number,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-round-meta {
+    color: #2a2c30 !important;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.72) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-clock-tile,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-brand-stage,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-team-tile,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-status-card,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .pkmn-panel,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-point-card,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-queue-inline-panel {
+    background:
+      linear-gradient(145deg, rgba(250, 251, 252, 0.94), rgba(222, 224, 228, 0.92) 58%, rgba(238, 239, 241, 0.94)) !important;
+    border-color: rgba(255, 255, 255, 0.86) !important;
+    color: #26282c !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.76),
+      0 12px 28px rgba(92, 96, 104, 0.20) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-brand-stage {
+    background:
+      linear-gradient(95deg, rgba(243, 244, 246, 0.96), rgba(216, 218, 222, 0.90) 58%, rgba(212, 164, 76, 0.22)),
+      radial-gradient(circle at 86% 26%, rgba(255, 246, 207, 0.54), transparent 28%) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-brand-stage::after {
+    background:
+      linear-gradient(125deg, transparent 0 20%, rgba(124, 127, 134, 0.14) 20% 24%, transparent 24% 38%, rgba(212, 164, 76, 0.24) 38% 42%, transparent 42%),
+      radial-gradient(circle at 55% 45%, rgba(255, 255, 255, 0.36), transparent 44%) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-brand-stage .draft-theme-title,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-side-roster-panel > p > strong {
+    color: #25272b !important;
+    text-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.86),
+      0 0 12px rgba(120, 124, 132, 0.18) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-brand-stage #draftLeagueSubtitle {
+    color: rgba(38, 40, 44, 0.72) !important;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.78) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .pkmn-panel p,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .pkmn-panel strong,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .pkmn-panel label,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .pkmn-panel .small-note,
+  body.league-light-mode.draft-theme-page.draft-war-room-page #draftActionStatus,
+  body.league-light-mode.draft-theme-page.draft-war-room-page #availablePokemonCount,
+  body.league-light-mode.draft-theme-page.draft-war-room-page #draftStatusLine,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-status-card strong,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-status-card .small-note,
+  body.league-light-mode.draft-theme-page.draft-war-room-page #draftHeaderTeamSummary,
+  body.league-light-mode.draft-theme-page.draft-war-room-page #draftHeaderTeamSummary p,
+  body.league-light-mode.draft-theme-page.draft-war-room-page #draftHeaderTeamSummary strong,
+  body.league-light-mode.draft-theme-page.draft-war-room-page #draftHeaderTeamSummary .small-note,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-point-card p,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-point-card strong,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-point-card .small-note,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-queue-inline-panel h3,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-queue-inline-panel .small-note {
+    color: rgba(38, 40, 44, 0.84) !important;
+    text-shadow: none !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .pkmn-panel strong,
+  body.league-light-mode.draft-theme-page.draft-war-room-page #draftHeaderTeamSummary strong {
+    color: #25272b !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-theme-link {
+    background: linear-gradient(to bottom, #f6f7f8, #d7dadd) !important;
+    border-color: rgba(255, 255, 255, 0.82) !important;
+    color: #25272b !important;
+    text-shadow: none !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-theme-link.light {
+    background: linear-gradient(to bottom, #fff8dc, #e4e5e8) !important;
+    color: #25272b !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-board-grid {
+    background: rgba(196, 199, 204, 0.42) !important;
+    border-color: rgba(58, 60, 66, 0.14) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-board-header-cell,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-board-round-cell,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-board-corner {
+    background: linear-gradient(180deg, rgba(224, 226, 230, 0.98), rgba(195, 198, 203, 0.98)) !important;
+    color: #25272b !important;
+    border-color: rgba(58, 60, 66, 0.12) !important;
+    text-shadow: none !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-board-pick-cell {
+    background: linear-gradient(145deg, rgba(246, 247, 248, 0.96), rgba(219, 222, 226, 0.94)) !important;
+    border-color: rgba(58, 60, 66, 0.10) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-board-pick-cell.picked {
+    background: linear-gradient(145deg, rgba(232, 234, 237, 0.96), rgba(205, 208, 213, 0.98)) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-board-pick-cell.on-clock {
+    background: linear-gradient(145deg, rgba(226, 199, 98, 0.82), rgba(205, 208, 213, 0.96)) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-board-team-name,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-board-pokemon-name,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-board-cell-label {
+    color: #25272b !important;
+    text-shadow: none !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-board-owner,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-board-pokemon-meta,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-board-cell-meta {
+    color: rgba(38, 40, 44, 0.62) !important;
+    text-shadow: none !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-filter-menu {
+    background: rgba(255, 255, 255, 0.38) !important;
+    border-color: rgba(78, 82, 90, 0.20) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-filter-menu span {
+    color: rgba(38, 40, 44, 0.76) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-pokemon-card {
+    background:
+      linear-gradient(180deg, rgba(246, 247, 248, 0.96), rgba(211, 214, 219, 0.98)) !important;
+    border-color: rgba(78, 82, 90, 0.22) !important;
+    color: #25272b !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.72),
+      0 10px 22px rgba(96, 100, 108, 0.20) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-pokemon-card::before {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.38), transparent 36%) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-pokemon-pick-button > span,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-stat-row,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-stat-row span,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-scout-name,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-scout-meta,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-roster-slot-name,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-roster-slot-meta,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-roster-slot-points,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-side-roster-panel .draft-roster-slot-name,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-side-roster-panel .draft-roster-slot-meta,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-side-roster-panel .draft-roster-slot-points,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .pokemon-tier-badge {
+    color: rgba(38, 40, 44, 0.86) !important;
+    text-shadow: none !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-scout-name,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-roster-slot-name,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-side-roster-panel .draft-roster-slot-name,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-pokemon-pick-button > span {
+    color: #25272b !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-bst-link {
+    background: rgba(49, 51, 56, 0.88) !important;
+    border-color: rgba(212, 164, 76, 0.66) !important;
+    color: #f8fbff !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-stat-track {
+    background: rgba(70, 73, 80, 0.24) !important;
+    border-color: rgba(70, 73, 80, 0.32) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-roster-team,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-side-roster-panel .draft-roster-team {
+    background:
+      linear-gradient(145deg, rgba(246, 247, 248, 0.96), rgba(218, 221, 225, 0.94)) !important;
+    border-color: rgba(78, 82, 90, 0.18) !important;
+    color: #25272b !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.70),
+      0 8px 18px rgba(96, 100, 108, 0.16) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-roster-team h3,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-roster-team p,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-side-roster-panel .draft-roster-team h3,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-side-roster-panel .draft-roster-team p {
+    color: rgba(38, 40, 44, 0.86) !important;
+    text-shadow: none !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-roster-team h3,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-side-roster-panel .draft-roster-team h3 {
+    color: #25272b !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-roster-slot,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-side-roster-panel .draft-roster-slot,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-queue-row,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-queue-empty {
+    background: rgba(255, 255, 255, 0.46) !important;
+    border-color: rgba(78, 82, 90, 0.14) !important;
+    color: #25272b !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-roster-slot-points,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-side-roster-panel .draft-roster-slot-points,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-card-role-row {
+    background: rgba(212, 164, 76, 0.28) !important;
+    color: #25272b !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-queue-meta {
+    color: rgba(38, 40, 44, 0.60) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-type-card {
+    --card-type-color: #9ca3aa;
+    --card-type-border: rgba(156, 163, 170, 0.62);
+    --card-type-soft: rgba(156, 163, 170, 0.18);
+    --card-type-shadow: rgba(156, 163, 170, 0.26);
+    border-color: var(--card-type-border) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      0 0 0 1px var(--card-type-soft),
+      0 12px 26px rgba(0, 0, 0, 0.30),
+      0 0 22px var(--card-type-shadow) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-type-card::before {
+    background:
+      radial-gradient(circle at 27px 28px, var(--card-type-soft), transparent 34%),
+      linear-gradient(135deg, var(--card-type-soft), transparent 42%) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-type-card::after {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 5px;
+    background: var(--card-type-color);
+    opacity: 0.72;
+    pointer-events: none;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-primary-normal {
+    --card-type-color: #9ca3aa;
+    --card-type-border: rgba(156, 163, 170, 0.66);
+    --card-type-soft: rgba(156, 163, 170, 0.18);
+    --card-type-shadow: rgba(156, 163, 170, 0.28);
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-primary-fire {
+    --card-type-color: #ff9952;
+    --card-type-border: rgba(255, 153, 82, 0.70);
+    --card-type-soft: rgba(255, 153, 82, 0.18);
+    --card-type-shadow: rgba(255, 153, 82, 0.30);
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-primary-water {
+    --card-type-color: #4f92da;
+    --card-type-border: rgba(79, 146, 218, 0.70);
+    --card-type-soft: rgba(79, 146, 218, 0.18);
+    --card-type-shadow: rgba(79, 146, 218, 0.30);
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-primary-electric {
+    --card-type-color: #f2cf35;
+    --card-type-border: rgba(242, 207, 53, 0.76);
+    --card-type-soft: rgba(242, 207, 53, 0.18);
+    --card-type-shadow: rgba(242, 207, 53, 0.30);
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-primary-grass {
+    --card-type-color: #62bd5f;
+    --card-type-border: rgba(98, 189, 95, 0.74);
+    --card-type-soft: rgba(98, 189, 95, 0.18);
+    --card-type-shadow: rgba(98, 189, 95, 0.30);
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-primary-ice {
+    --card-type-color: #75cfc7;
+    --card-type-border: rgba(117, 207, 199, 0.72);
+    --card-type-soft: rgba(117, 207, 199, 0.18);
+    --card-type-shadow: rgba(117, 207, 199, 0.30);
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-primary-fighting {
+    --card-type-color: #d24475;
+    --card-type-border: rgba(210, 68, 117, 0.72);
+    --card-type-soft: rgba(210, 68, 117, 0.18);
+    --card-type-shadow: rgba(210, 68, 117, 0.30);
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-primary-poison {
+    --card-type-color: #a866c9;
+    --card-type-border: rgba(168, 102, 201, 0.72);
+    --card-type-soft: rgba(168, 102, 201, 0.18);
+    --card-type-shadow: rgba(168, 102, 201, 0.30);
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-primary-ground {
+    --card-type-color: #df7b45;
+    --card-type-border: rgba(223, 123, 69, 0.72);
+    --card-type-soft: rgba(223, 123, 69, 0.18);
+    --card-type-shadow: rgba(223, 123, 69, 0.30);
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-primary-flying {
+    --card-type-color: #8ea7dc;
+    --card-type-border: rgba(142, 167, 220, 0.72);
+    --card-type-soft: rgba(142, 167, 220, 0.18);
+    --card-type-shadow: rgba(142, 167, 220, 0.30);
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-primary-psychic {
+    --card-type-color: #f66d75;
+    --card-type-border: rgba(246, 109, 117, 0.72);
+    --card-type-soft: rgba(246, 109, 117, 0.18);
+    --card-type-shadow: rgba(246, 109, 117, 0.30);
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-primary-bug {
+    --card-type-color: #94c82d;
+    --card-type-border: rgba(148, 200, 45, 0.72);
+    --card-type-soft: rgba(148, 200, 45, 0.18);
+    --card-type-shadow: rgba(148, 200, 45, 0.30);
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-primary-rock {
+    --card-type-color: #c9b783;
+    --card-type-border: rgba(201, 183, 131, 0.72);
+    --card-type-soft: rgba(201, 183, 131, 0.18);
+    --card-type-shadow: rgba(201, 183, 131, 0.30);
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-primary-ghost {
+    --card-type-color: #5a6fb2;
+    --card-type-border: rgba(90, 111, 178, 0.72);
+    --card-type-soft: rgba(90, 111, 178, 0.18);
+    --card-type-shadow: rgba(90, 111, 178, 0.30);
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-primary-dragon {
+    --card-type-color: #7b5ce6;
+    --card-type-border: rgba(123, 92, 230, 0.74);
+    --card-type-soft: rgba(123, 92, 230, 0.18);
+    --card-type-shadow: rgba(123, 92, 230, 0.32);
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-primary-dark {
+    --card-type-color: #675f75;
+    --card-type-border: rgba(103, 95, 117, 0.72);
+    --card-type-soft: rgba(103, 95, 117, 0.20);
+    --card-type-shadow: rgba(103, 95, 117, 0.30);
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-primary-steel {
+    --card-type-color: #6095a7;
+    --card-type-border: rgba(96, 149, 167, 0.72);
+    --card-type-soft: rgba(96, 149, 167, 0.18);
+    --card-type-shadow: rgba(96, 149, 167, 0.30);
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-primary-fairy {
+    --card-type-color: #dd7edc;
+    --card-type-border: rgba(221, 126, 220, 0.72);
+    --card-type-soft: rgba(221, 126, 220, 0.18);
+    --card-type-shadow: rgba(221, 126, 220, 0.30);
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-type-icon-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 3;
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--card-type-color);
+    border: 2px solid rgba(0, 0, 0, 0.48);
+    color: #07080a;
+    cursor: default;
+    pointer-events: none;
+    text-decoration: none;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.48),
+      0 0 0 2px rgba(255, 255, 255, 0.12),
+      0 8px 16px var(--card-type-shadow);
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-type-icon-badge:hover,
+  body.draft-theme-page.draft-war-room-page .draft-type-icon-badge:focus-visible {
+    transform: translateY(-1px) scale(1.04);
+    outline: none;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.56),
+      0 0 0 3px rgba(255, 255, 255, 0.18),
+      0 10px 18px var(--card-type-shadow);
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-type-icon-svg {
+    width: 22px;
+    height: 22px;
+    display: block;
+    color: currentColor;
+    filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.18));
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-type-card {
+    border-color: var(--card-type-border) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.74),
+      0 0 0 1px var(--card-type-soft),
+      0 10px 22px rgba(96, 100, 108, 0.18),
+      0 0 20px var(--card-type-shadow) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .draft-pokemon-card.draft-type-card {
+    border-color: var(--card-type-border) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      0 0 0 1px var(--card-type-soft),
+      0 12px 26px rgba(0, 0, 0, 0.30),
+      0 0 22px var(--card-type-shadow) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-pokemon-card.draft-type-card {
+    border-color: var(--card-type-border) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page:not(.league-light-mode) .draft-pokemon-card.draft-type-card::before,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-pokemon-card.draft-type-card::before {
+    background:
+      radial-gradient(circle at 27px 28px, var(--card-type-soft), transparent 34%),
+      linear-gradient(135deg, var(--card-type-soft), transparent 42%) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .draft-type-icon-badge {
+    border-color: rgba(255, 255, 255, 0.80);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.62),
+      0 0 0 1px rgba(38, 40, 44, 0.16),
+      0 8px 16px var(--card-type-shadow);
+  }
+
   @media (max-width: 860px) {
     body.draft-theme-page.draft-war-room-page .draft-layout-grid {
       grid-template-columns: 1fr;
@@ -2158,6 +2761,6 @@
   <script src="js/theme-settings.js?v=global-theme1"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
-  <script src="js/draft-room.js?v=draft-war-room5"></script>
+  <script src="js/draft-room.js?v=draft-board-scroll-icons1"></script>
 </body>
 </html>

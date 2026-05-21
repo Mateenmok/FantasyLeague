@@ -4,6 +4,8 @@ const waiverAdminText = document.getElementById("waiverAdminText");
 const openWaiversButton = document.getElementById("openWaiversButton");
 const closeWaiversButton = document.getElementById("closeWaiversButton");
 const waiverStatusText = document.getElementById("waiverStatusText");
+const waiverHeaderStatus = document.getElementById("waiverHeaderStatus");
+const waiverHeaderTeamSummary = document.getElementById("waiverHeaderTeamSummary");
 const waiverClosedMessage = document.getElementById("waiverClosedMessage");
 const waiverContent = document.getElementById("waiverContent");
 const waiverPointStatus = document.getElementById("waiverPointStatus");
@@ -19,6 +21,14 @@ const waiverTypeFilterSelect = document.getElementById("waiverTypeFilterSelect")
 
 const selectedLeagueId = localStorage.getItem("selected-league-id");
 const ROSTER_SIZE = 10;
+const WAIVER_STAT_ROWS = [
+  ["hp", "HP"],
+  ["attack", "ATK"],
+  ["defense", "DEF"],
+  ["sp_atk", "SpA"],
+  ["sp_def", "SpD"],
+  ["speed", "Spe"]
+];
 
 let currentLeague = null;
 let currentMembership = null;
@@ -27,8 +37,9 @@ let leagueTeams = [];
 let allRosterRows = [];
 let myRosterRows = [];
 let championsPokemon = [];
+let pokemonBstBySlug = {};
 let isAdmin = false;
-const WAIVER_AVAILABLE_POKEMON_PAGE_SIZE = 60;
+const WAIVER_AVAILABLE_POKEMON_PAGE_SIZE = 12;
 let waiverAvailablePokemonPage = 0;
 let waiverAvailablePokemonFilterSignature = "";
 
@@ -83,6 +94,13 @@ async function loadWaiverPage() {
     console.error("Pokémon data load error:", error);
     waiverPageStatus.textContent = "Could not load Pokémon data.";
     return;
+  }
+
+  try {
+    pokemonBstBySlug = await fetch("data/pokemon-bst.json?v=waiver-modern1").then(response => response.json());
+  } catch (error) {
+    console.warn("Pokémon BST data unavailable:", error);
+    pokemonBstBySlug = {};
   }
 
   renderTypeFilterOptions();
@@ -149,6 +167,12 @@ function renderWaiverPage() {
   waiverStatusText.textContent = waiversOpen
     ? "Waivers are currently open."
     : "Waiver period is currently closed. Ask a league administrator to open.";
+
+  if (waiverHeaderStatus) {
+    waiverHeaderStatus.textContent = waiversOpen ? "Open" : "Closed";
+  }
+
+  renderWaiverHeaderTeamSummary();
 
   if (isAdmin) {
     waiverAdminPanel.classList.remove("hidden");
@@ -268,6 +292,30 @@ function renderPointStatus() {
   `;
 }
 
+function renderWaiverHeaderTeamSummary() {
+  if (!waiverHeaderTeamSummary) {
+    return;
+  }
+
+  if (!myTeam) {
+    waiverHeaderTeamSummary.innerHTML = `
+      <p class="waiver-kicker">Your Team</p>
+      <strong>No team assigned</strong>
+      <p class="small-note">Ask an admin to assign your account.</p>
+    `;
+    return;
+  }
+
+  const pointCap = Number(currentLeague?.roster_point_cap || 50);
+  const usedPoints = getTeamPointUsage(myTeam.id);
+
+  waiverHeaderTeamSummary.innerHTML = `
+    <p class="waiver-kicker">Your Team</p>
+    <strong>${escapeHtml(myTeam.team_name)}</strong>
+    <p class="small-note">${myRosterRows.length}/${ROSTER_SIZE} roster - ${usedPoints}/${pointCap} points</p>
+  `;
+}
+
 function renderRosterList() {
   if (!myRosterRows.length) {
     waiverRosterList.innerHTML = `<div class="empty-state"><p>Your roster is empty.</p></div>`;
@@ -278,10 +326,15 @@ function renderRosterList() {
     const pokemon = getPokemonBySlug(row.pokemon_slug);
     const name = pokemon ? pokemon.name : row.pokemon_slug;
     const points = pokemon ? getPokemonPoints(pokemon) : 1;
+    const primaryType = getPokemonPrimaryType(pokemon);
 
     return `
-      <div class="waiver-roster-row waiver-roster-row-with-drop">
-        <span class="waiver-roster-name">${escapeHtml(name)}</span>
+      <div class="waiver-roster-row waiver-roster-row-with-drop draft-type-card draft-primary-${primaryType}">
+        ${pokemon ? `<img class="waiver-roster-sprite" src="${escapeHtml(pokemon.image)}" alt="${escapeHtml(name)}">` : `<span class="waiver-roster-sprite missing"></span>`}
+        <span class="waiver-roster-copy">
+          <span class="waiver-roster-name">${escapeHtml(name)}</span>
+          <span class="waiver-roster-meta">${pokemon ? escapeHtml((pokemon.types || []).join(" / ")) : "Unknown"}</span>
+        </span>
         <span class="waiver-roster-points">${points} pts</span>
         <button class="waiver-roster-drop-button" type="button" data-roster-id="${escapeHtml(row.id)}" data-pokemon-name="${escapeHtml(name)}">Drop</button>
       </div>
@@ -433,27 +486,33 @@ function renderAvailablePokemonGrid() {
   }
 
   waiverAvailableGrid.innerHTML = availablePokemon.map(pokemon => {
+    const primaryType = getPokemonPrimaryType(pokemon);
+
     return `
-      <article class="draft-pokemon-card waiver-pokemon-card" data-slug="${pokemon.slug}">
+      <article class="draft-pokemon-card waiver-pokemon-card draft-type-card draft-primary-${primaryType}" data-slug="${pokemon.slug}" data-primary-type="${primaryType}">
+        ${renderPokemonTypeIconBadge(pokemon)}
         <img src="${escapeHtml(pokemon.image)}" alt="${escapeHtml(pokemon.name)}">
         ${renderMegaBadge(pokemon)}
         <span>${escapeHtml(getPokemonLabel(pokemon))}</span>
         ${renderPokemonTierBadge(pokemon)}
         ${renderPokemonTypeBadges(pokemon)}
+        ${renderPokemonStatBars(pokemon)}
 
-        <div class="waiver-drop-row">
-          <select class="pkmn-select waiver-drop-select" id="dropSelect-${pokemon.slug}">
-            <option value="">Drop nobody</option>
-            ${myRosterRows.map(row => {
-              const rosterPokemon = getPokemonBySlug(row.pokemon_slug);
-              return `<option value="${escapeHtml(row.id)}">${escapeHtml(rosterPokemon ? rosterPokemon.name : row.pokemon_slug)}</option>`;
-            }).join("")}
-          </select>
+        <div class="waiver-card-actions">
+          <div class="waiver-drop-row">
+            <select class="pkmn-select waiver-drop-select" id="dropSelect-${pokemon.slug}">
+              <option value="">Drop nobody</option>
+              ${myRosterRows.map(row => {
+                const rosterPokemon = getPokemonBySlug(row.pokemon_slug);
+                return `<option value="${escapeHtml(row.id)}">${escapeHtml(rosterPokemon ? rosterPokemon.name : row.pokemon_slug)}</option>`;
+              }).join("")}
+            </select>
+          </div>
+
+          <button class="pkmn-button small waiver-add-button" data-slug="${pokemon.slug}">
+            Add
+          </button>
         </div>
-
-        <button class="pkmn-button small waiver-add-button" data-slug="${pokemon.slug}">
-          Add
-        </button>
       </article>
     `;
   }).join("");
@@ -651,6 +710,33 @@ function getPokemonPoints(pokemon) {
   return Number(pokemon?.points || 1);
 }
 
+function getPokemonStatData(pokemon) {
+  if (!pokemon) {
+    return null;
+  }
+
+  return pokemonBstBySlug[pokemon.slug] || null;
+}
+
+function getPokemonBst(pokemon) {
+  const statData = getPokemonStatData(pokemon);
+  return statData?.bst ? Number(statData.bst) : null;
+}
+
+function getPokemonStatsUrl(pokemon) {
+  const statData = getPokemonStatData(pokemon);
+
+  if (statData?.source_url) {
+    return statData.source_url;
+  }
+
+  if (pokemon?.id) {
+    return `https://pokeapi.co/api/v2/pokemon/${encodeURIComponent(String(pokemon.id))}`;
+  }
+
+  return "https://pokeapi.co/";
+}
+
 function getPokemonBySlug(slug) {
   return championsPokemon.find(pokemon => pokemon.slug === slug);
 }
@@ -666,7 +752,102 @@ function getPokemonLabel(pokemon) {
 }
 
 function getTypeClass(type) {
-  return `type-${String(type || "").toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+  return `type-${getTypeSlug(type)}`;
+}
+
+function getTypeSlug(type) {
+  return String(type || "normal").toLowerCase().replace(/[^a-z0-9]+/g, "-") || "normal";
+}
+
+function getPokemonPrimaryType(pokemon) {
+  return getTypeSlug((pokemon?.types || [])[0]);
+}
+
+function getTypeDisplayName(type) {
+  return String(type || "normal")
+    .split(/[^a-z0-9]+/i)
+    .filter(Boolean)
+    .map(part => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
+    .join(" ");
+}
+
+const TYPE_ICON_SVGS = {
+  normal: `<svg class="draft-type-icon-svg" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="9" fill="none" stroke="currentColor" stroke-width="6"/></svg>`,
+  fire: `<svg class="draft-type-icon-svg" viewBox="0 0 32 32" aria-hidden="true"><path d="M17 3c4 5-1 7 4 11 2 2 4 5 4 8 0 5-4 8-9 8s-9-3-9-8c0-4 3-8 8-13 0 4 3 5 2 9 3-2 4-7 0-15Z"/></svg>`,
+  water: `<svg class="draft-type-icon-svg" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3C10 11 7 16 7 21c0 5 4 9 9 9s9-4 9-9c0-5-3-10-9-18Zm-4 17c0 3 2 5 5 5-4 1-7-1-7-5 0-2 1-4 3-6-1 2-1 4-1 6Z"/></svg>`,
+  electric: `<svg class="draft-type-icon-svg" viewBox="0 0 32 32" aria-hidden="true"><path d="M18 2 7 18h8l-2 12 12-17h-8l1-11Z"/></svg>`,
+  grass: `<svg class="draft-type-icon-svg" viewBox="0 0 32 32" aria-hidden="true"><path d="M27 5C15 5 7 11 7 20c0 4 3 7 7 7 9 0 13-10 13-22Zm-15 17c4-6 8-9 13-12-4 4-7 9-9 16l-4-4Z"/></svg>`,
+  ice: `<svg class="draft-type-icon-svg" viewBox="0 0 32 32" aria-hidden="true"><path d="M14 3h4v8l7-4 2 4-7 4 7 4-2 4-7-4v8h-4v-8l-7 4-2-4 7-4-7-4 2-4 7 4V3Z"/></svg>`,
+  fighting: `<svg class="draft-type-icon-svg" viewBox="0 0 32 32" aria-hidden="true"><path d="M7 14h4V6h4v8h2V5h4v9h2V7h4v12c0 6-4 10-10 10h-4l-6-6v-9Z"/></svg>`,
+  poison: `<svg class="draft-type-icon-svg" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4c7 0 11 4 11 10 0 4-2 7-6 9v5H11v-5c-4-2-6-5-6-9C5 8 9 4 16 4Zm-5 10a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm10 0a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm-5 6-3 5h6l-3-5Z"/></svg>`,
+  ground: `<svg class="draft-type-icon-svg" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 24 13 7h14v17H5Zm5-4h12v-9h-7l-5 9Z"/></svg>`,
+  flying: `<svg class="draft-type-icon-svg" viewBox="0 0 32 32" aria-hidden="true"><path d="M4 19c9-1 14-5 22-14-1 8-5 14-13 17 5 0 9-1 14-4-4 6-10 9-18 9H4l6-5c-3 0-5-1-6-3Z"/></svg>`,
+  psychic: `<svg class="draft-type-icon-svg" viewBox="0 0 32 32" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="5" d="M22 16c0-4-3-7-7-7s-7 3-7 7 3 7 7 7c3 0 5-2 5-5 0-2-2-4-4-4s-4 2-4 4c0 1 1 2 2 2"/></svg>`,
+  bug: `<svg class="draft-type-icon-svg" viewBox="0 0 32 32" aria-hidden="true"><path d="M12 8 8 4 5 7l4 4c-2 2-3 5-3 8h5c0 4 2 8 5 8s5-4 5-8h5c0-3-1-6-3-8l4-4-3-3-4 4c-1-1-3-2-4-2s-3 1-4 2Zm4 3c3 0 5 3 5 8H11c0-5 2-8 5-8Z"/></svg>`,
+  rock: `<svg class="draft-type-icon-svg" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 12 14 5l10 2 4 12-8 9-12-3-3-13Zm7 2-2 7 8 2 5-5-2-7-6-1-3 4Z"/></svg>`,
+  ghost: `<svg class="draft-type-icon-svg" viewBox="0 0 32 32" aria-hidden="true"><path d="M6 28V15C6 8 10 4 16 4s10 4 10 11v13l-4-3-3 3-3-3-3 3-3-3-4 3Zm7-15a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/></svg>`,
+  dragon: `<svg class="draft-type-icon-svg" viewBox="0 0 32 32" aria-hidden="true"><path d="M27 3c-2 7-6 11-13 12l-5 7 8-2c4-2 8-7 10-17Zm-7 14c5 1 8 4 8 8 0 4-4 6-10 6H7c5-2 8-5 9-9l-8 2 5-7h7Zm-1-7 4-4-1 6-5 1 2-3Z"/></svg>`,
+  dark: `<svg class="draft-type-icon-svg" viewBox="0 0 32 32" aria-hidden="true"><path d="M25 5a12 12 0 1 0 0 22 14 14 0 1 1 0-22Z"/></svg>`,
+  steel: `<svg class="draft-type-icon-svg" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3 28 10v12l-12 7-12-7V10L16 3Zm0 8a5 5 0 1 0 0 10 5 5 0 0 0 0-10Z" fill-rule="evenodd"/></svg>`,
+  fairy: `<svg class="draft-type-icon-svg" viewBox="0 0 32 32" aria-hidden="true"><path d="m16 3 4 9 9 4-9 4-4 9-4-9-9-4 9-4 4-9Zm0 9-2 4 2 4 2-4-2-4Z"/></svg>`
+};
+
+function renderTypeIconSvg(type) {
+  return TYPE_ICON_SVGS[getTypeSlug(type)] || TYPE_ICON_SVGS.normal;
+}
+
+function renderPokemonTypeIconBadge(pokemon) {
+  const primaryType = getPokemonPrimaryType(pokemon);
+  const typeLabel = getTypeDisplayName(primaryType);
+  const ariaLabel = `${typeLabel} type`;
+
+  return `
+    <span class="draft-type-icon-badge" role="img" aria-label="${escapeHtml(ariaLabel)}" title="${escapeHtml(ariaLabel)}">
+      ${renderTypeIconSvg(primaryType)}
+    </span>
+  `;
+}
+
+function renderPokemonStatBars(pokemon) {
+  const stats = getPokemonStatData(pokemon)?.stats;
+
+  if (!stats) {
+    return "";
+  }
+
+  return `
+    <div class="draft-card-stat-bars">
+      ${WAIVER_STAT_ROWS.map(([key, label]) => {
+        const value = Number(stats[key] || 0);
+        const width = Math.min((value / 120) * 100, 100);
+        const tone = getStatTone(value);
+
+        return `
+          <div class="draft-stat-row">
+            <span>${label}</span>
+            <span class="draft-stat-track"><span class="draft-stat-fill ${tone}" style="width:${width}%"></span></span>
+            <span>${value}</span>
+          </div>
+        `;
+      }).join("")}
+    </div>
+  `;
+}
+
+function getStatTone(value) {
+  if (value >= 120) {
+    return "stat-elite";
+  }
+
+  if (value >= 95) {
+    return "stat-high";
+  }
+
+  if (value >= 70) {
+    return "stat-medium";
+  }
+
+  return "stat-low";
 }
 
 function renderPokemonTypeBadges(pokemon) {
