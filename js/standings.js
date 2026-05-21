@@ -1,4 +1,5 @@
 const standingsSubtitle = document.getElementById("standingsSubtitle");
+const standingsSummary = document.getElementById("standingsSummary");
 const standingsContent = document.getElementById("standingsContent");
 const standingsStatus = document.getElementById("standingsStatus");
 const playoffBracket = document.getElementById("playoffBracket");
@@ -95,8 +96,39 @@ async function loadStandingsPage() {
   leagueTeams = normalizeTeams(teams || []);
 
   await loadRosterData();
+  renderStandingsSummary();
   renderStandings();
   renderPlayoffBracket();
+}
+
+function renderStandingsSummary() {
+  if (!standingsSummary) {
+    return;
+  }
+
+  const sortedTeams = [...leagueTeams].sort(sortTeamsForStandings);
+  const leader = sortedTeams[0];
+  const divisionCount = leagueDivisions.length || 1;
+  const playoffCount = getLeaguePlayoffTeamCount();
+
+  standingsSummary.innerHTML = `
+    <div class="standings-summary-stat">
+      <span>Teams</span>
+      <strong>${leagueTeams.length}</strong>
+    </div>
+    <div class="standings-summary-stat">
+      <span>Divisions</span>
+      <strong>${divisionCount}</strong>
+    </div>
+    <div class="standings-summary-stat">
+      <span>Playoff Spots</span>
+      <strong>${playoffCount}</strong>
+    </div>
+    <div class="standings-summary-stat">
+      <span>Top Seed</span>
+      <strong>${leader ? escapeHtml(leader.team_name) : "--"}</strong>
+    </div>
+  `;
 }
 
 async function loadRosterData() {

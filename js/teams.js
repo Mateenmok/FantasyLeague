@@ -1,12 +1,15 @@
 const teamInfoSubtitle = document.getElementById("teamInfoSubtitle");
 const teamInfoGrid = document.getElementById("teamInfoGrid");
 const teamInfoStatus = document.getElementById("teamInfoStatus");
+const leagueInfoSummary = document.getElementById("leagueInfoSummary");
 
 let selectedLeagueId = localStorage.getItem("selected-league-id");
 let currentMembership = null;
 let currentUserId = null;
 let currentUserEmail = "";
 let leagueTeams = [];
+let leagueDivisions = [];
+let teamProfilesByEmail = new Map();
 
 const LEAGUEMATE_NPC_IMAGES = [
   "images/profile-npcs/npc1.png",
@@ -19,6 +22,15 @@ const LEAGUEMATE_NPC_IMAGES = [
   "images/profile-npcs/npc8.jpg",
   "images/profile-npcs/npc9.webp"
 ];
+
+const PROFILE_ICON_SOURCES = {
+  "achievement:pults": "images/achievement-icons/pults.webp",
+  "achievement:smear-squad": "images/achievement-icons/SmearSquad.webp",
+  "achievement:welcome": "images/achievement-icons/PikachuLibre.webp",
+  "achievement:all-i-do-is-win": "images/achievement-icons/Champion.webp",
+  "achievement:grinder": "images/achievement-icons/ZardArt.jpg",
+  "achievement:meta-knight": "images/achievement-icons/MetaKnight.avif"
+};
 
 loadTeamInfoPage();
 
@@ -87,6 +99,12 @@ async function loadTeamInfoPage() {
 
   leagueTeams = teams || [];
 
+  await Promise.all([
+    loadLeagueDivisions(),
+    loadTeamProfiles()
+  ]);
+
+  renderLeagueSummary();
   renderTeams();
 
   const isAdmin = currentMembership.role === "admin";
@@ -95,14 +113,98 @@ async function loadTeamInfoPage() {
     : `${leagueTeams.length} teams loaded. Select View Profile to see a leaguemate profile.`;
 }
 
+async function loadLeagueDivisions() {
+  try {
+    const { data, error } = await supabaseClient
+      .from("league_divisions")
+      .select("*")
+      .eq("league_id", selectedLeagueId)
+      .order("division_number", { ascending: true });
+
+    if (error) {
+      console.warn("Could not load league divisions:", error);
+      leagueDivisions = [];
+      return;
+    }
+
+    leagueDivisions = data || [];
+  } catch (error) {
+    console.warn("Could not load league divisions:", error);
+    leagueDivisions = [];
+  }
+}
+
+async function loadTeamProfiles() {
+  const emails = [...new Set(leagueTeams
+    .map(team => normalizeEmail(team.manager_email))
+    .filter(Boolean))];
+
+  teamProfilesByEmail = new Map();
+
+  if (!emails.length) {
+    return;
+  }
+
+  try {
+    const { data, error } = await supabaseClient
+      .from("user_profiles")
+      .select("email, username, avatar_data_url, default_npc_url, selected_icon_id")
+      .in("email", emails);
+
+    if (error) {
+      console.warn("Could not load user profile pictures:", error);
+      return;
+    }
+
+    (data || []).forEach(profile => {
+      const email = normalizeEmail(profile.email);
+      if (email) {
+        teamProfilesByEmail.set(email, profile);
+      }
+    });
+  } catch (error) {
+    console.warn("Could not load user profile pictures:", error);
+  }
+}
+
+function renderLeagueSummary() {
+  if (!leagueInfoSummary) {
+    return;
+  }
+
+  const assignedTeams = leagueTeams.filter(team => normalizeEmail(team.manager_email)).length;
+  const profileCount = leagueTeams.filter(team => getTeamProfile(team)).length;
+  const divisionCount = leagueDivisions.length || new Set(leagueTeams.map(team => team.division_id).filter(Boolean)).size;
+
+  leagueInfoSummary.innerHTML = `
+    <div class="league-info-stat">
+      <span>Teams</span>
+      <strong>${leagueTeams.length}</strong>
+    </div>
+    <div class="league-info-stat">
+      <span>Managers</span>
+      <strong>${assignedTeams}/${leagueTeams.length || 0}</strong>
+    </div>
+    <div class="league-info-stat">
+      <span>Profiles</span>
+      <strong>${profileCount}</strong>
+    </div>
+    <div class="league-info-stat">
+      <span>Divisions</span>
+      <strong>${divisionCount || "--"}</strong>
+    </div>
+  `;
+}
+
 function renderTeams() {
   const isAdmin = currentMembership && currentMembership.role === "admin";
 
   teamInfoGrid.innerHTML = leagueTeams.map(team => {
     const managerEmail = team.manager_email || "Unassigned";
-    const ownerName = team.owner_name || "Unassigned";
+    const profile = getTeamProfile(team);
+    const ownerName = profile?.username || team.owner_name || "Unassigned";
     const logoUrl = team.logo_url || "";
-    const roleLabel = team.is_admin ? "Admin" : "Manager";
+    const divisionName = getDivisionName(team);
     const adminBadge = team.is_admin
       ? `<span class="admin-badge">Admin</span>`
       : `<span class="team-role-badge">Manager</span>`;
@@ -111,55 +213,85 @@ function renderTeams() {
       ? `<img class="team-info-logo" src="${escapeHtml(logoUrl)}" alt="${escapeHtml(team.team_name)} logo">`
       : `<div class="team-info-logo-placeholder">T${team.team_number}</div>`;
 
+    const avatarHtml = renderProfileAvatar(profile, team, ownerName);
+
     const adminEditorHtml = isAdmin ? `
-      <p class="small-note admin-only-editor-note">Admin editor.</p>
+      <details class="team-admin-editor">
+        <summary>Team Editor</summary>
+        <div class="team-edit-form">
+          <div class="team-edit-field wide">
+            <label>Team Name</label>
+            <input id="teamName-${team.id}" type="text" value="${escapeHtml(team.team_name)}">
+          </div>
 
-      <div class="team-edit-form">
-        <label>Team Name</label>
-        <input id="teamName-${team.id}" type="text" value="${escapeHtml(team.team_name)}">
+          <div class="team-edit-field">
+            <label>Owner Name</label>
+            <input id="ownerName-${team.id}" type="text" value="${escapeHtml(ownerName)}">
+          </div>
 
-        <label>Owner Name</label>
-        <input id="ownerName-${team.id}" type="text" value="${escapeHtml(ownerName)}">
+          <div class="team-edit-field">
+            <label>Record</label>
+            <input id="record-${team.id}" type="text" value="${escapeHtml(team.record || "0-0")}" placeholder="0-0">
+          </div>
 
-        <label>Logo URL</label>
-        <input id="logoUrl-${team.id}" type="text" value="${escapeHtml(logoUrl)}" placeholder="Paste image URL">
+          <div class="team-edit-field wide">
+            <label>Logo URL</label>
+            <input id="logoUrl-${team.id}" type="text" value="${escapeHtml(logoUrl)}" placeholder="Paste image URL">
+          </div>
 
-        <label>Record</label>
-        <input id="record-${team.id}" type="text" value="${escapeHtml(team.record || "0-0")}" placeholder="0-0">
+          <button class="pkmn-button small save-team-button" data-team-id="${team.id}">
+            Save Team
+          </button>
+        </div>
+      </details>
+    ` : "";
 
-        <button class="pkmn-button small save-team-button" data-team-id="${team.id}">
-          Save Team
-        </button>
-      </div>
-    ` : `
-      <p class="small-note">Profile viewer.</p>
-    `;
-
-    const managerLine = isAdmin
-      ? `<p><strong>Manager:</strong> ${escapeHtml(managerEmail)}</p>`
-      : `<p><strong>Owner:</strong> ${escapeHtml(ownerName)}</p>`;
+    const managerEmailHtml = isAdmin
+      ? `<p class="team-manager-email">${escapeHtml(managerEmail)}</p>`
+      : "";
 
     return `
       <article class="team-info-card editable-team-card">
         <div class="team-info-top">
-          <div class="team-number-badge">#${team.team_number}</div>
-          ${logoHtml}
-        </div>
-
-        <div class="team-info-main">
-          <h2>${escapeHtml(team.team_name)}</h2>
-          ${managerLine}
-          <p><strong>Record:</strong> ${escapeHtml(team.record || "0-0")}</p>
-          <p><strong>Role:</strong> ${adminBadge}</p>
-
-          <div class="team-card-actions">
-            <button class="view-profile-button" data-team-id="${team.id}">
-              View Profile
-            </button>
+          <div class="team-portrait-pair">
+            ${avatarHtml}
+            ${logoHtml}
           </div>
 
-          ${adminEditorHtml}
+          <div class="team-info-main">
+            <span class="team-card-kicker">${escapeHtml(ownerName)}</span>
+            <h2>${escapeHtml(team.team_name)}</h2>
+            <p class="team-owner-line">${escapeHtml(team.is_admin ? "League Admin" : "Team Manager")}</p>
+            <div class="team-card-badges">
+              ${adminBadge}
+              <span class="division-badge">${escapeHtml(divisionName)}</span>
+            </div>
+          </div>
         </div>
+
+        <div class="team-info-meta-grid">
+          <div>
+            <span>Record</span>
+            <strong>${escapeHtml(team.record || "0-0")}</strong>
+          </div>
+          <div>
+            <span>Division</span>
+            <strong>${escapeHtml(divisionName)}</strong>
+          </div>
+          <div>
+            <span>Profile</span>
+            <strong>${profile ? "Linked" : "Default"}</strong>
+          </div>
+        </div>
+
+        <div class="team-card-actions">
+          <button class="view-profile-button" data-team-id="${team.id}">
+            View Profile
+          </button>
+        </div>
+
+        ${managerEmailHtml}
+        ${adminEditorHtml}
       </article>
     `;
   }).join("");
@@ -230,7 +362,116 @@ async function saveTeam(teamId) {
   }
 
   leagueTeams = teams || leagueTeams;
+  await loadTeamProfiles();
+  renderLeagueSummary();
   renderTeams();
+}
+
+function getTeamProfile(team) {
+  return teamProfilesByEmail.get(normalizeEmail(team.manager_email)) || null;
+}
+
+function getDivisionName(team) {
+  const division = leagueDivisions.find(item => item.id === team.division_id);
+
+  if (division?.name) {
+    return division.name;
+  }
+
+  return team.division_id ? "Division" : "Unassigned";
+}
+
+function renderProfileAvatar(profile, team, ownerName) {
+  const src = getProfileAvatarSource(profile, team);
+  const fallback = getInitial(ownerName || team.team_name);
+
+  if (!src) {
+    return `<div class="team-profile-avatar-placeholder">${escapeHtml(fallback)}</div>`;
+  }
+
+  return `
+    <img
+      class="team-profile-avatar"
+      src="${escapeHtml(src)}"
+      alt="${escapeHtml(ownerName || "Manager")} profile picture"
+      onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
+    <div class="team-profile-avatar-placeholder" style="display:none;">${escapeHtml(fallback)}</div>
+  `;
+}
+
+function getProfileAvatarSource(profile, team) {
+  if (profile?.avatar_data_url) {
+    return profile.avatar_data_url;
+  }
+
+  const selectedIconSource = getProfileIconSource(profile?.selected_icon_id);
+
+  if (selectedIconSource) {
+    return selectedIconSource;
+  }
+
+  if (profile?.default_npc_url) {
+    return profile.default_npc_url;
+  }
+
+  return getStableNpcForTeam(team);
+}
+
+function getProfileIconSource(selectedIconId) {
+  const normalized = normalizeProfileIconId(selectedIconId);
+
+  if (!normalized) {
+    return "";
+  }
+
+  if (PROFILE_ICON_SOURCES[normalized]) {
+    return PROFILE_ICON_SOURCES[normalized];
+  }
+
+  return `images/profile-icons/${normalized}.avif`;
+}
+
+function normalizeProfileIconId(value) {
+  const clean = String(value || "").trim();
+
+  if (/^ProfilePicture([1-9]|1[0-8])$/.test(clean)) {
+    return clean;
+  }
+
+  if (PROFILE_ICON_SOURCES[clean]) {
+    return clean;
+  }
+
+  return "";
+}
+
+function getStableNpcForTeam(team) {
+  const seed = String(
+    team.manager_email ||
+    team.owner_name ||
+    team.team_name ||
+    team.id ||
+    team.team_number ||
+    "trainer"
+  );
+
+  let hash = 0;
+
+  for (let i = 0; i < seed.length; i += 1) {
+    hash = ((hash << 5) - hash) + seed.charCodeAt(i);
+    hash |= 0;
+  }
+
+  return LEAGUEMATE_NPC_IMAGES[Math.abs(hash) % LEAGUEMATE_NPC_IMAGES.length];
+}
+
+function getInitial(value) {
+  const clean = String(value || "").trim();
+  return (clean.charAt(0) || "?").toUpperCase();
+}
+
+function normalizeEmail(value) {
+  return String(value || "").trim().toLowerCase();
 }
 
 function escapeHtml(value) {
