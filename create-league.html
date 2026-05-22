@@ -194,6 +194,7 @@
 
     body.create-league-theme-page .pkmn-input,
     body.create-league-theme-page .pkmn-select,
+    body.create-league-theme-page .public-league-textarea,
     body.create-league-theme-page .division-name-row input,
     body.create-league-theme-page .team-email-row select,
     body.create-league-theme-page .team-email-row input {
@@ -213,7 +214,14 @@
       box-sizing: border-box;
     }
 
+    body.create-league-theme-page .public-league-textarea {
+      min-height: 116px;
+      resize: vertical;
+      line-height: 1.4;
+    }
+
     body.create-league-theme-page .pkmn-input::placeholder,
+    body.create-league-theme-page .public-league-textarea::placeholder,
     body.create-league-theme-page .team-email-row input::placeholder {
       color: rgba(16, 40, 68, 0.48);
     }
@@ -265,6 +273,24 @@
       width: 16px;
       height: 16px;
       accent-color: #8ec9ff;
+    }
+
+    body.create-league-theme-page .public-league-fields {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    body.create-league-theme-page .public-league-toggle {
+      margin-top: 14px;
+    }
+
+    body.create-league-theme-page .public-league-note {
+      margin-top: 10px !important;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
     }
 
     .create-league-actions {
@@ -449,6 +475,7 @@
     }
 
     body.league-light-mode.create-league-theme-page .pkmn-checkbox-item,
+    body.league-light-mode.create-league-theme-page .public-league-note,
     body.league-light-mode.create-league-theme-page .created-teams-table td {
       background: rgba(36, 96, 164, 0.08);
       border-color: rgba(91, 123, 164, 0.22);
@@ -522,6 +549,7 @@
       <div class="create-league-theme-links">
         <a class="create-league-theme-link" href="account.html">Back to Account</a>
         <a class="create-league-theme-link light" href="my-leagues.html">My Leagues</a>
+        <a class="create-league-theme-link" href="public-leagues.html?v=public-leagues-page1">Public Leagues</a>
       </div>
 
       <div class="create-league-form">
@@ -577,6 +605,31 @@
                 <select class="pkmn-select" id="playoffTeamCountSelect"></select>
               </div>
             </div>
+
+            <label class="pkmn-checkbox-item public-league-toggle">
+              <input id="publicLeagueCheckbox" type="checkbox">
+              Post to Public Leagues
+            </label>
+
+            <div class="public-league-fields">
+              <div class="pkmn-field">
+                <label class="pkmn-label" for="publicLeagueDescriptionInput">Public Description</label>
+                <textarea
+                  class="public-league-textarea"
+                  id="publicLeagueDescriptionInput"
+                  maxlength="500"
+                  placeholder="Tell people what kind of league this is, who should join, and any special rules."></textarea>
+              </div>
+
+              <div class="pkmn-field">
+                <label class="pkmn-label" for="discordUrlInput">Discord Server Link</label>
+                <input class="pkmn-input" id="discordUrlInput" type="url" maxlength="300" placeholder="https://discord.gg/example">
+              </div>
+            </div>
+
+            <p class="small-note public-league-note">
+              Public leagues appear in My Leagues for signed-in players. Open teams are first come, first served.
+            </p>
           </div>
 
           <div class="pkmn-panel">
@@ -620,6 +673,6 @@
   <script src="js/theme-settings.js?v=global-theme1"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
-  <script src="js/create-league.js?v=create-league-divisions1"></script>
+  <script src="js/create-league.js?v=create-league-public1"></script>
 </body>
 </html>

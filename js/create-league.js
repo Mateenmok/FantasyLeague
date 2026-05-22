@@ -4,6 +4,9 @@ const playoffTeamCountSelect = document.getElementById("playoffTeamCountSelect")
 const pointCapInput = document.getElementById("pointCapInput");
 const regularSeasonMatchesSelect = document.getElementById("regularSeasonMatchesSelect");
 const leagueSettingsPreview = document.getElementById("leagueSettingsPreview");
+const publicLeagueCheckbox = document.getElementById("publicLeagueCheckbox");
+const publicLeagueDescriptionInput = document.getElementById("publicLeagueDescriptionInput");
+const discordUrlInput = document.getElementById("discordUrlInput");
 const divisionNameFields = document.getElementById("divisionNameFields");
 const teamEmailAssignments = document.getElementById("teamEmailAssignments");
 const adminTeamCheckboxes = document.getElementById("adminTeamCheckboxes");
@@ -34,6 +37,7 @@ divisionCountSelect.addEventListener("change", function () {
 playoffTeamCountSelect.addEventListener("change", updateLeagueSettingsPreview);
 pointCapInput.addEventListener("input", updateLeagueSettingsPreview);
 regularSeasonMatchesSelect.addEventListener("change", updateLeagueSettingsPreview);
+publicLeagueCheckbox.addEventListener("change", updateLeagueSettingsPreview);
 divisionNameFields.addEventListener("input", function () {
   syncTeamDivisionOptionLabels();
   updateLeagueSettingsPreview();
@@ -46,9 +50,10 @@ function updateLeagueSettingsPreview() {
   const playoffTeams = getPlayoffTeamCount();
   const pointCap = Number(pointCapInput.value || 50);
   const regularSeasonMatches = Number(regularSeasonMatchesSelect.value);
+  const listingStatus = publicLeagueCheckbox.checked ? "public listing" : "private league";
 
   leagueSettingsPreview.textContent =
-    `${teamCount} teams • ${divisionCount} ${pluralize("division", divisionCount)} • ${playoffTeams} playoff teams • ${regularSeasonMatches} regular season matches • ${pointCap} roster points`;
+    `${teamCount} teams • ${divisionCount} ${pluralize("division", divisionCount)} • ${playoffTeams} playoff teams • ${regularSeasonMatches} regular season matches • ${pointCap} roster points • ${listingStatus}`;
 }
 
 function renderPlayoffTeamOptions() {
@@ -137,6 +142,9 @@ async function createLeague() {
   const regularSeasonMatches = Number(regularSeasonMatchesSelect.value);
   const teamEmails = getTeamEmailAssignments();
   const teamDivisionAssignments = getTeamDivisionAssignments();
+  const isPublicLeague = publicLeagueCheckbox.checked;
+  const publicDescription = publicLeagueDescriptionInput.value.trim();
+  const discordUrl = normalizeDiscordUrl(discordUrlInput.value);
 
   if (!leagueName) {
     createLeagueStatus.textContent = "Enter a league name first.";
@@ -175,6 +183,16 @@ async function createLeague() {
 
   if (regularSeasonMatches < 6 || regularSeasonMatches > 12) {
     createLeagueStatus.textContent = "Matches before playoffs must be between 6 and 12.";
+    return;
+  }
+
+  if (publicDescription.length > 500) {
+    createLeagueStatus.textContent = "Public description must be 500 characters or fewer.";
+    return;
+  }
+
+  if (discordUrl === null) {
+    createLeagueStatus.textContent = "Discord link must be a valid https://discord.gg or discord.com invite URL.";
     return;
   }
 
@@ -258,6 +276,7 @@ async function createLeague() {
       record: "0-0",
       logo_url: "",
       team_passcode: passcode,
+      team_access_code: passcode,
       manager_email: managerEmail,
       division_id: divisionId,
       is_admin: adminTeamNumbers.has(i)
@@ -273,7 +292,10 @@ async function createLeague() {
       team_count: teamCount,
       playoff_team_count: playoffTeamCount,
       roster_point_cap: rosterPointCap,
-      regular_season_matches: regularSeasonMatches
+      regular_season_matches: regularSeasonMatches,
+      is_public: isPublicLeague,
+      public_description: isPublicLeague ? publicDescription : "",
+      discord_url: isPublicLeague ? discordUrl : ""
     });
 
   if (leagueError) {
@@ -336,6 +358,9 @@ async function createLeague() {
     playoffTeamCount,
     rosterPointCap,
     regularSeasonMatches,
+    isPublicLeague,
+    publicDescription,
+    discordUrl,
     divisions,
     teams
   });
@@ -348,6 +373,9 @@ function renderCreatedLeagueResult({
   playoffTeamCount,
   rosterPointCap,
   regularSeasonMatches,
+  isPublicLeague,
+  publicDescription,
+  discordUrl,
   divisions,
   teams
 }) {
@@ -390,6 +418,13 @@ function renderCreatedLeagueResult({
       <p>${playoffTeamCount} playoff teams</p>
       <p>${regularSeasonMatches} matches before playoffs</p>
       <p>${rosterPointCap} roster points maximum</p>
+    </div>
+
+    <div class="pkmn-panel" style="margin-top: 14px;">
+      <p><strong>Public Listing</strong></p>
+      <p>${isPublicLeague ? "Posted to Public Leagues" : "Private league"}</p>
+      ${isPublicLeague && publicDescription ? `<p>${escapeHtml(publicDescription)}</p>` : ""}
+      ${isPublicLeague && discordUrl ? `<p><a class="create-league-result-link" href="${escapeHtml(discordUrl)}" target="_blank" rel="noopener">Discord Server</a></p>` : ""}
     </div>
 
     <p class="small-note">
@@ -553,6 +588,28 @@ function getAdminTeamNumbers() {
   });
 
   return adminNumbers;
+}
+
+function normalizeDiscordUrl(value) {
+  const trimmedValue = String(value || "").trim();
+
+  if (!trimmedValue) {
+    return "";
+  }
+
+  try {
+    const url = new URL(trimmedValue);
+    const host = url.hostname.toLowerCase();
+    const isDiscordHost = host === "discord.gg" || host === "discord.com" || host === "www.discord.com";
+
+    if (url.protocol !== "https:" || !isDiscordHost) {
+      return null;
+    }
+
+    return url.href;
+  } catch (error) {
+    return null;
+  }
 }
 
 function makeId() {

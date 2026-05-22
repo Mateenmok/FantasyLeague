@@ -128,9 +128,57 @@
       filter: brightness(1.08);
     }
 
-    #myLeaguesList.league-list {
+    #myLeaguesList.league-list,
+    #publicLeaguesList.league-list {
       display: grid;
       gap: 14px;
+    }
+
+    .public-leagues-section {
+      margin-top: 24px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .public-leagues-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .public-leagues-header h2 {
+      margin: 0;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-shadow:
+        0 2px 0 rgba(0, 0, 0, 0.55),
+        0 0 10px rgba(30, 160, 255, 0.48);
+    }
+
+    .public-leagues-kicker,
+    .public-leagues-copy {
+      margin: 0;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      color: rgba(255, 255, 255, 0.74);
+    }
+
+    .public-leagues-kicker {
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .public-leagues-copy {
+      margin-top: 6px;
+      font-size: 14px;
+      line-height: 1.4;
     }
 
     body.my-leagues-theme-page .pkmn-card {
@@ -170,6 +218,70 @@
       font-weight: 800;
     }
 
+    body.my-leagues-theme-page .public-league-badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      background: rgba(232, 196, 88, 0.18);
+      border: 1px solid rgba(232, 196, 88, 0.40);
+      color: #f5efd8;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+
+    body.my-leagues-theme-page .public-league-description {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      line-height: 1.45;
+    }
+
+    body.my-leagues-theme-page .public-league-meta {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    body.my-leagues-theme-page .public-league-stat {
+      padding: 10px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    body.my-leagues-theme-page .public-league-stat span {
+      display: block;
+      color: rgba(255, 255, 255, 0.62);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+    }
+
+    body.my-leagues-theme-page .public-league-stat strong {
+      display: block;
+      margin-top: 4px;
+      color: #ffffff;
+      font-size: 16px;
+    }
+
+    body.my-leagues-theme-page .discord-link {
+      margin-left: 12px;
+      color: #ffffff;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-weight: 800;
+      text-decoration: underline;
+      text-decoration-color: rgba(142, 201, 255, 0.8);
+      text-underline-offset: 3px;
+    }
+
     body.my-leagues-theme-page .league-actions {
       margin-top: 14px;
       display: flex;
@@ -177,7 +289,8 @@
     }
 
     body.my-leagues-theme-page .select-league-button,
-    body.my-leagues-theme-page .pkmn-button.small {
+    body.my-leagues-theme-page .pkmn-button.small,
+    body.my-leagues-theme-page .join-public-league-button {
       min-height: 48px !important;
       padding: 0 22px !important;
       border-radius: 999px !important;
@@ -193,6 +306,12 @@
         0 8px 18px rgba(0, 0, 0, 0.28),
         0 0 0 3px rgba(105, 166, 240, 0.16) inset !important;
       cursor: pointer !important;
+    }
+
+    body.my-leagues-theme-page .join-public-league-button:disabled {
+      cursor: not-allowed !important;
+      opacity: 0.62;
+      filter: grayscale(0.15);
     }
 
     body.my-leagues-theme-page .empty-state {
@@ -211,7 +330,8 @@
       font-weight: 700;
     }
 
-    #myLeaguesStatus {
+    #myLeaguesStatus,
+    #publicLeaguesStatus {
       margin-top: 16px;
       padding: 10px 14px;
       border-radius: 16px;
@@ -241,6 +361,20 @@
 
       .my-leagues-theme-link {
         width: 100%;
+      }
+
+      .public-leagues-header {
+        display: block;
+      }
+
+      body.my-leagues-theme-page .public-league-meta {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 520px) {
+      body.my-leagues-theme-page .public-league-meta {
+        grid-template-columns: 1fr;
       }
     }
 
@@ -286,15 +420,29 @@
       <div class="my-leagues-theme-links">
         <a class="my-leagues-theme-link light" href="account.html?v=account-polish1">Back to Account</a>
         <a class="my-leagues-theme-link" href="create-league.html">Create League</a>
+        <a class="my-leagues-theme-link" href="public-leagues.html?v=public-leagues-page1">Public Leagues</a>
         <a class="my-leagues-theme-link" href="join-league.html?v=join-theme1">Join League</a>
       </div>
 
       <div id="myLeaguesList" class="league-list"></div>
       <div id="myLeaguesStatus">Loading leagues...</div>
+
+      <section class="public-leagues-section">
+        <div class="public-leagues-header">
+          <div>
+            <p class="public-leagues-kicker">Public Directory</p>
+            <h2>Public Leagues</h2>
+            <p class="public-leagues-copy">Browse leagues with open teams and join one directly.</p>
+          </div>
+        </div>
+
+        <div id="publicLeaguesList" class="league-list"></div>
+        <div id="publicLeaguesStatus">Loading public leagues...</div>
+      </section>
     </section>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
-  <script src="js/my-leagues.js"></script>
+  <script src="js/my-leagues.js?v=public-leagues1"></script>
 </body>
 </html>
