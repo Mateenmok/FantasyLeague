@@ -1848,9 +1848,10 @@ function renderAvailablePokemonGrid() {
 
   availablePokemonGrid.innerHTML = availablePokemon.map(pokemon => {
     const primaryType = getPokemonPrimaryType(pokemon);
+    const secondaryType = getPokemonSecondaryType(pokemon);
 
     return `
-      <div class="draft-pokemon-card draft-type-card draft-primary-${primaryType}" data-slug="${pokemon.slug}" data-primary-type="${primaryType}">
+      <div class="draft-pokemon-card draft-type-card draft-primary-${primaryType} draft-secondary-${secondaryType}" data-slug="${pokemon.slug}" data-primary-type="${primaryType}" data-secondary-type="${secondaryType}">
         ${renderPokemonTypeIconBadge(pokemon)}
         <button class="draft-pokemon-pick-button" type="button" data-slug="${pokemon.slug}">
           <img src="${pokemon.image}" alt="${escapeHtml(pokemon.name)}">
@@ -2089,6 +2090,11 @@ function getPokemonPrimaryType(pokemon) {
   return getTypeSlug((pokemon?.types || [])[0]);
 }
 
+function getPokemonSecondaryType(pokemon) {
+  const types = (pokemon?.types || []).map(getTypeSlug).filter(Boolean);
+  return types[1] || types[0] || "normal";
+}
+
 function getTypeDisplayName(type) {
   return String(type || "normal")
     .split(/[^a-z0-9]+/i)
@@ -2123,13 +2129,18 @@ function renderTypeIconSvg(type) {
 }
 
 function renderPokemonTypeIconBadge(pokemon) {
-  const primaryType = getPokemonPrimaryType(pokemon);
-  const typeLabel = getTypeDisplayName(primaryType);
-  const ariaLabel = `${typeLabel} type`;
+  const typeSlugs = (pokemon?.types || []).map(getTypeSlug).filter(Boolean).slice(0, 2);
+  const displayedTypes = typeSlugs.length > 0 ? typeSlugs : ["normal"];
+  const ariaLabel = `${displayedTypes.map(getTypeDisplayName).join(" / ")} type`;
+  const stackClass = displayedTypes.length > 1 ? "dual" : "single";
 
   return `
-    <span class="draft-type-icon-badge" role="img" aria-label="${escapeHtml(ariaLabel)}" title="${escapeHtml(ariaLabel)}">
-      ${renderTypeIconSvg(primaryType)}
+    <span class="draft-type-icon-stack ${stackClass}" role="group" aria-label="${escapeHtml(ariaLabel)}" title="${escapeHtml(ariaLabel)}">
+      ${displayedTypes.map(type => `
+        <span class="draft-type-icon-badge draft-type-icon-${type}" role="img" aria-label="${escapeHtml(`${getTypeDisplayName(type)} type`)}">
+          ${renderTypeIconSvg(type)}
+        </span>
+      `).join("")}
     </span>
   `;
 }

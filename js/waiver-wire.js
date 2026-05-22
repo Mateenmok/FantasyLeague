@@ -327,9 +327,10 @@ function renderRosterList() {
     const name = pokemon ? pokemon.name : row.pokemon_slug;
     const points = pokemon ? getPokemonPoints(pokemon) : 1;
     const primaryType = getPokemonPrimaryType(pokemon);
+    const secondaryType = getPokemonSecondaryType(pokemon);
 
     return `
-      <div class="waiver-roster-row waiver-roster-row-with-drop draft-type-card draft-primary-${primaryType}">
+      <div class="waiver-roster-row waiver-roster-row-with-drop draft-type-card draft-primary-${primaryType} draft-secondary-${secondaryType}">
         ${pokemon ? `<img class="waiver-roster-sprite" src="${escapeHtml(pokemon.image)}" alt="${escapeHtml(name)}">` : `<span class="waiver-roster-sprite missing"></span>`}
         <span class="waiver-roster-copy">
           <span class="waiver-roster-name">${escapeHtml(name)}</span>
@@ -487,9 +488,10 @@ function renderAvailablePokemonGrid() {
 
   waiverAvailableGrid.innerHTML = availablePokemon.map(pokemon => {
     const primaryType = getPokemonPrimaryType(pokemon);
+    const secondaryType = getPokemonSecondaryType(pokemon);
 
     return `
-      <article class="draft-pokemon-card waiver-pokemon-card draft-type-card draft-primary-${primaryType}" data-slug="${pokemon.slug}" data-primary-type="${primaryType}">
+      <article class="draft-pokemon-card waiver-pokemon-card draft-type-card draft-primary-${primaryType} draft-secondary-${secondaryType}" data-slug="${pokemon.slug}" data-primary-type="${primaryType}" data-secondary-type="${secondaryType}">
         ${renderPokemonTypeIconBadge(pokemon)}
         <img src="${escapeHtml(pokemon.image)}" alt="${escapeHtml(pokemon.name)}">
         ${renderMegaBadge(pokemon)}
@@ -763,6 +765,11 @@ function getPokemonPrimaryType(pokemon) {
   return getTypeSlug((pokemon?.types || [])[0]);
 }
 
+function getPokemonSecondaryType(pokemon) {
+  const types = (pokemon?.types || []).map(getTypeSlug).filter(Boolean);
+  return types[1] || types[0] || "normal";
+}
+
 function getTypeDisplayName(type) {
   return String(type || "normal")
     .split(/[^a-z0-9]+/i)
@@ -797,13 +804,18 @@ function renderTypeIconSvg(type) {
 }
 
 function renderPokemonTypeIconBadge(pokemon) {
-  const primaryType = getPokemonPrimaryType(pokemon);
-  const typeLabel = getTypeDisplayName(primaryType);
-  const ariaLabel = `${typeLabel} type`;
+  const typeSlugs = (pokemon?.types || []).map(getTypeSlug).filter(Boolean).slice(0, 2);
+  const displayedTypes = typeSlugs.length > 0 ? typeSlugs : ["normal"];
+  const ariaLabel = `${displayedTypes.map(getTypeDisplayName).join(" / ")} type`;
+  const stackClass = displayedTypes.length > 1 ? "dual" : "single";
 
   return `
-    <span class="draft-type-icon-badge" role="img" aria-label="${escapeHtml(ariaLabel)}" title="${escapeHtml(ariaLabel)}">
-      ${renderTypeIconSvg(primaryType)}
+    <span class="draft-type-icon-stack ${stackClass}" role="group" aria-label="${escapeHtml(ariaLabel)}" title="${escapeHtml(ariaLabel)}">
+      ${displayedTypes.map(type => `
+        <span class="draft-type-icon-badge draft-type-icon-${type}" role="img" aria-label="${escapeHtml(`${getTypeDisplayName(type)} type`)}">
+          ${renderTypeIconSvg(type)}
+        </span>
+      `).join("")}
     </span>
   `;
 }
