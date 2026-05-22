@@ -1184,8 +1184,9 @@
   body.league-home-theme-page.profile-theme-page.profile-modern-page .profile-avatar-panel {
     min-height: 0 !important;
     display: grid !important;
+    grid-template-rows: auto minmax(0, 1fr) auto !important;
     justify-items: center !important;
-    align-content: start !important;
+    align-content: stretch !important;
     gap: 14px !important;
     text-align: center !important;
     background: linear-gradient(145deg, rgba(35, 38, 44, 0.95), rgba(13, 14, 17, 0.96)) !important;
@@ -1221,12 +1222,22 @@
 
   body.league-home-theme-page.profile-theme-page.profile-modern-page .profile-icon-picker-test {
     width: 100% !important;
+    height: 100% !important;
+    align-self: stretch !important;
     margin: 0 !important;
     padding: 12px !important;
+    display: grid !important;
+    grid-template-rows: auto minmax(0, 1fr) auto !important;
+    align-content: start !important;
     border-radius: 8px !important;
     background: rgba(255, 255, 255, 0.045) !important;
     border: 1px solid rgba(255, 255, 255, 0.10) !important;
     box-shadow: none !important;
+    box-sizing: border-box !important;
+  }
+
+  body.league-home-theme-page.profile-theme-page.profile-modern-page .profile-status:empty {
+    display: none !important;
   }
 
   body.league-home-theme-page.profile-theme-page.profile-modern-page .profile-icon-picker-title,
@@ -1245,15 +1256,22 @@
 
   body.league-home-theme-page.profile-theme-page.profile-modern-page .profile-icon-grid-test {
     display: grid !important;
-    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
-    gap: 8px !important;
+    height: 100% !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    grid-template-rows: repeat(6, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    align-content: stretch !important;
+    align-items: center !important;
   }
 
   body.league-home-theme-page.profile-theme-page.profile-modern-page .profile-icon-choice-test {
-    width: 100% !important;
+    width: min(100%, 82px) !important;
+    height: min(100%, 82px) !important;
     aspect-ratio: 1 / 1 !important;
     min-height: 0 !important;
     padding: 4px !important;
+    justify-self: center !important;
+    align-self: center !important;
     border-radius: 8px !important;
     background: linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05)) !important;
     border: 1px solid rgba(255, 255, 255, 0.12) !important;
@@ -2120,7 +2138,9 @@ document.addEventListener("DOMContentLoaded", async function () {
 document.addEventListener("DOMContentLoaded", async function () {
   const ACHIEVEMENT_ICONS = {
     "achievement:pults": "images/achievement-icons/pults.webp",
-    "achievement:smear-squad": "images/achievement-icons/SmearSquad.webp",
+    "achievement:smear-squad": "images/achievement-icons/puffy.jpg",
+    "achievement:hot-pocket": "images/achievement-icons/andujar.png",
+    "achievement:playoff-fengcheng": "images/achievement-icons/HZoroark.jpg",
     "achievement:welcome": "images/achievement-icons/PikachuLibre.webp",
     "achievement:all-i-do-is-win": "images/achievement-icons/Champion.webp",
     "achievement:grinder": "images/achievement-icons/ZardArt.jpg",

@@ -25,7 +25,9 @@ const LEAGUEMATE_NPC_IMAGES = [
 
 const PROFILE_ICON_SOURCES = {
   "achievement:pults": "images/achievement-icons/pults.webp",
-  "achievement:smear-squad": "images/achievement-icons/SmearSquad.webp",
+  "achievement:smear-squad": "images/achievement-icons/puffy.jpg",
+  "achievement:hot-pocket": "images/achievement-icons/andujar.png",
+  "achievement:playoff-fengcheng": "images/achievement-icons/HZoroark.jpg",
   "achievement:welcome": "images/achievement-icons/PikachuLibre.webp",
   "achievement:all-i-do-is-win": "images/achievement-icons/Champion.webp",
   "achievement:grinder": "images/achievement-icons/ZardArt.jpg",
