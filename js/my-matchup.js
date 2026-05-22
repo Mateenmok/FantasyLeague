@@ -104,6 +104,8 @@ let championsPokemon = [];
 let myRosterRows = [];
 let opponentRosterRows = [];
 let matchupLineups = [];
+let lineupSubmissionCounts = {};
+let pokemonUsageRows = [];
 
 loadMyMatchupPage();
 
@@ -224,6 +226,9 @@ async function loadMatchupData() {
 
 async function loadRosterAndLineupData() {
   championsPokemon = [];
+  matchupLineups = [];
+  lineupSubmissionCounts = {};
+  pokemonUsageRows = [];
 
   try {
     championsPokemon = await fetch("data/champions-pokemon.json?v=my-matchup-lineups1")
@@ -254,19 +259,88 @@ async function loadRosterAndLineupData() {
     opponentRosterRows = (rosterRows || []).filter(row => row.team_id === opponentTeam.id);
   }
 
-  const { data: lineupRows, error: lineupError } = await supabaseClient
+  const { data: savedMyLineupRows, error: myLineupError } = await supabaseClient
     .from("league_matchup_lineups")
     .select("*")
     .eq("league_id", selectedLeagueId)
     .eq("matchup_id", currentMatchup.id)
-    .in("team_id", teamIds)
+    .eq("team_id", myTeam.id)
     .order("slot_number", { ascending: true });
 
-  if (lineupError) {
-    console.error("Lineup load error:", lineupError);
-    matchupLineups = [];
+  if (myLineupError) {
+    console.error("My lineup load error:", myLineupError);
   } else {
-    matchupLineups = lineupRows || [];
+    matchupLineups = savedMyLineupRows || [];
+  }
+
+  lineupSubmissionCounts = teamIds.reduce((counts, teamId) => ({
+    ...counts,
+    [teamId]: 0
+  }), {});
+
+  const { data: statusRows, error: statusError } = await supabaseClient
+    .rpc("get_matchup_lineup_status", {
+      target_league_id: selectedLeagueId,
+      target_matchup_id: currentMatchup.id
+    });
+
+  if (statusError) {
+    console.warn("Lineup status RPC unavailable, falling back to team counts:", statusError);
+
+    const { data: countRows, error: countError } = await supabaseClient
+      .from("league_matchup_lineups")
+      .select("team_id")
+      .eq("league_id", selectedLeagueId)
+      .eq("matchup_id", currentMatchup.id)
+      .in("team_id", teamIds);
+
+    if (countError) {
+      console.error("Lineup count load error:", countError);
+    } else {
+      (countRows || []).forEach(row => {
+        lineupSubmissionCounts[row.team_id] = (lineupSubmissionCounts[row.team_id] || 0) + 1;
+      });
+    }
+  } else {
+    (statusRows || []).forEach(row => {
+      lineupSubmissionCounts[row.team_id] = Number(row.selected_count || 0);
+    });
+  }
+
+  lineupSubmissionCounts[myTeam.id] = Math.max(
+    lineupSubmissionCounts[myTeam.id] || 0,
+    matchupLineups.filter(row => row.team_id === myTeam.id).length
+  );
+
+  if (hasBothLineupsSubmitted()) {
+    const { data: opponentLineupRows, error: opponentLineupError } = await supabaseClient
+      .from("league_matchup_lineups")
+      .select("*")
+      .eq("league_id", selectedLeagueId)
+      .eq("matchup_id", currentMatchup.id)
+      .eq("team_id", opponentTeam.id)
+      .order("slot_number", { ascending: true });
+
+    if (opponentLineupError) {
+      console.error("Opponent lineup reveal error:", opponentLineupError);
+    } else {
+      matchupLineups = [
+        ...matchupLineups,
+        ...(opponentLineupRows || [])
+      ];
+    }
+  }
+
+  const { data: usageRows, error: usageError } = await supabaseClient
+    .from("league_matchup_lineups")
+    .select("matchup_id,pokemon_slug,team_id")
+    .eq("league_id", selectedLeagueId)
+    .eq("team_id", myTeam.id);
+
+  if (usageError) {
+    console.warn("Usage stats unavailable:", usageError);
+  } else {
+    pokemonUsageRows = usageRows || [];
   }
 }
 
@@ -301,8 +375,10 @@ function renderMyMatchup() {
     ? `${myScore} - ${opponentScore}`
     : "Score not reported";
 
+  const bothLineupsSubmitted = hasBothLineupsSubmitted();
+
   myMatchupContent.innerHTML = `
-    <section class="my-matchup-feature">
+    <section class="my-matchup-feature" data-lineups-revealed="${bothLineupsSubmitted ? "true" : "false"}">
       <div class="my-matchup-round-label">
         Matchup ${matchupNumber}
       </div>
@@ -318,14 +394,22 @@ function renderMyMatchup() {
 
         ${renderFeaturedTeam(opponentTeam, "Opponent", false)}
       </div>
+
+      ${renderUsagePanel()}
     </section>
   `;
 
   bindLineupControls();
 
-  myMatchupStatus.textContent = currentMatchup.completed
-    ? "This matchup has been reported."
-    : "Pick your six Pokémon for this matchup.";
+  if (currentMatchup.completed) {
+    myMatchupStatus.textContent = "This matchup has been reported.";
+  } else if (bothLineupsSubmitted) {
+    myMatchupStatus.textContent = "Both matchup sixes are locked and revealed.";
+  } else if (hasSubmittedLineup(myTeam.id)) {
+    myMatchupStatus.textContent = "Your six are saved. Waiting for both teams before revealing the matchup.";
+  } else {
+    myMatchupStatus.textContent = "Pick your six Pokémon for this matchup.";
+  }
 }
 
 function renderFeaturedTeam(team, label, canEditLineup) {
@@ -335,20 +419,24 @@ function renderFeaturedTeam(team, label, canEditLineup) {
 
   return `
     <div class="my-matchup-team-card">
-      <div class="my-matchup-label">${label}</div>
-      ${logoHtml}
-      <h2>${escapeHtml(team.team_name)}</h2>
-      <p>${formatTeamRecord(team)}</p>
-      <p>${escapeHtml(team.owner_name || "Unassigned")}</p>
+      <div class="my-matchup-team-header">
+        <div class="my-matchup-logo-frame">
+          ${logoHtml}
+        </div>
+        <div class="my-matchup-team-meta">
+          <div class="my-matchup-label">${label}</div>
+          <h2>${escapeHtml(team.team_name)}</h2>
+          <p>${escapeHtml(team.owner_name || "Unassigned")}</p>
+          <span class="my-matchup-record-pill">${formatTeamRecord(team)}</span>
+        </div>
+      </div>
       ${renderMatchupLineup(team, canEditLineup)}
     </div>
   `;
 }
 
 function renderMatchupLineup(team, canEditLineup) {
-  const lineupRows = matchupLineups
-    .filter(row => row.team_id === team.id)
-    .sort((a, b) => a.slot_number - b.slot_number);
+  const lineupRows = getLineupRowsForTeam(team.id);
 
   if (canEditLineup) {
     const selectedSlugs = new Set(lineupRows.map(row => row.pokemon_slug));
@@ -364,15 +452,26 @@ function renderMatchupLineup(team, canEditLineup) {
 
     return `
       <div class="matchup-lineup-panel">
-        <div class="matchup-lineup-title">Choose Your 6</div>
+        <div class="matchup-lineup-title-row">
+          <div class="matchup-lineup-title">Choose Your 6</div>
+          <span>${lineupRows.length}/6 saved</span>
+        </div>
         <div class="matchup-lineup-grid editable">
           ${myRosterRows.map(row => {
             const pokemon = getPokemonBySlug(row.pokemon_slug);
             const selected = selectedSlugs.has(row.pokemon_slug) ? "selected" : "";
+            const name = pokemon ? pokemon.name : row.pokemon_slug;
+            const usage = getPokemonUsageStats(row.pokemon_slug);
 
             return `
-              <button class="matchup-lineup-choice ${selected}" type="button" data-slug="${escapeHtml(row.pokemon_slug)}">
-                ${pokemon ? `<img src="${escapeHtml(getFixedPokemonImage(pokemon))}" alt="${escapeHtml(pokemon.name)}">` : `<span>?</span>`}
+              <button class="matchup-lineup-choice ${selected}" type="button" data-slug="${escapeHtml(row.pokemon_slug)}" aria-pressed="${selected ? "true" : "false"}">
+                <span class="matchup-lineup-image">
+                  ${pokemon ? `<img src="${escapeHtml(getFixedPokemonImage(pokemon))}" alt="${escapeHtml(name)}">` : `<span>?</span>`}
+                </span>
+                <span class="matchup-lineup-copy">
+                  <strong>${escapeHtml(name)}</strong>
+                  <small>${formatUsageLabel(usage)}</small>
+                </span>
               </button>
             `;
           }).join("")}
@@ -383,6 +482,37 @@ function renderMatchupLineup(team, canEditLineup) {
         <p id="matchupLineupStatus" class="matchup-lineup-note">
           ${lineupRows.length}/6 selected.
         </p>
+      </div>
+    `;
+  }
+
+  if (!hasBothLineupsSubmitted()) {
+    const opponentSubmitted = hasSubmittedLineup(team.id);
+    const mySubmitted = myTeam ? hasSubmittedLineup(myTeam.id) : false;
+    let message = "Lineups stay hidden until both teams save exactly six Pokémon.";
+
+    if (opponentSubmitted && !mySubmitted) {
+      message = "Opponent is locked in. Save your six to reveal both lineups.";
+    } else if (!opponentSubmitted && mySubmitted) {
+      message = "Your six are locked. Waiting on the opponent.";
+    } else if (opponentSubmitted && mySubmitted) {
+      message = "Both teams are locked. Refreshing reveal...";
+    }
+
+    return `
+      <div class="matchup-lineup-panel matchup-lineup-panel-hidden">
+        <div class="matchup-lineup-title-row">
+          <div class="matchup-lineup-title">Opponent Six</div>
+          <span>${opponentSubmitted ? "Locked" : "Hidden"}</span>
+        </div>
+        <div class="matchup-lineup-grid hidden">
+          ${Array.from({ length: 6 }).map((_, index) => `
+            <div class="matchup-lineup-choice locked hidden-slot">
+              <span>${index + 1}</span>
+            </div>
+          `).join("")}
+        </div>
+        <p class="matchup-lineup-note">${message}</p>
       </div>
     `;
   }
@@ -402,10 +532,17 @@ function renderMatchupLineup(team, canEditLineup) {
       <div class="matchup-lineup-grid">
         ${lineupRows.map(row => {
           const pokemon = getPokemonBySlug(row.pokemon_slug);
+          const name = pokemon ? pokemon.name : row.pokemon_slug;
 
           return `
             <div class="matchup-lineup-choice locked">
-              ${pokemon ? `<img src="${escapeHtml(getFixedPokemonImage(pokemon))}" alt="${escapeHtml(pokemon.name)}">` : `<span>?</span>`}
+              <span class="matchup-lineup-image">
+                ${pokemon ? `<img src="${escapeHtml(getFixedPokemonImage(pokemon))}" alt="${escapeHtml(name)}">` : `<span>?</span>`}
+              </span>
+              <span class="matchup-lineup-copy">
+                <strong>${escapeHtml(name)}</strong>
+                <small>Slot ${row.slot_number}</small>
+              </span>
             </div>
           `;
         }).join("")}
@@ -415,7 +552,7 @@ function renderMatchupLineup(team, canEditLineup) {
 }
 
 function bindLineupControls() {
-  const choices = Array.from(document.querySelectorAll(".matchup-lineup-choice:not(.locked)"));
+  const choices = Array.from(document.querySelectorAll(".matchup-lineup-grid.editable .matchup-lineup-choice"));
   const saveButton = document.getElementById("saveMatchupLineupButton");
   const status = document.getElementById("matchupLineupStatus");
 
@@ -425,8 +562,10 @@ function bindLineupControls() {
 
       if (this.classList.contains("selected")) {
         this.classList.remove("selected");
+        this.setAttribute("aria-pressed", "false");
       } else if (selectedChoices.length < 6) {
         this.classList.add("selected");
+        this.setAttribute("aria-pressed", "true");
       }
 
       const selectedCount = document.querySelectorAll(".matchup-lineup-choice.selected").length;
@@ -440,6 +579,83 @@ function bindLineupControls() {
   if (saveButton) {
     saveButton.addEventListener("click", saveMatchupLineup);
   }
+}
+
+function getLineupRowsForTeam(teamId) {
+  return matchupLineups
+    .filter(row => row.team_id === teamId)
+    .sort((a, b) => a.slot_number - b.slot_number);
+}
+
+function getSubmittedCount(teamId) {
+  return Number(lineupSubmissionCounts[teamId] || 0);
+}
+
+function hasSubmittedLineup(teamId) {
+  return getSubmittedCount(teamId) >= 6;
+}
+
+function hasBothLineupsSubmitted() {
+  return Boolean(myTeam && opponentTeam && hasSubmittedLineup(myTeam.id) && hasSubmittedLineup(opponentTeam.id));
+}
+
+function getPokemonUsageStats(slug) {
+  const rowsForPokemon = pokemonUsageRows.filter(row => row.pokemon_slug === slug);
+  const totalMatchups = new Set(pokemonUsageRows.map(row => row.matchup_id)).size;
+  const matchupCount = new Set(rowsForPokemon.map(row => row.matchup_id)).size;
+  const usageRate = totalMatchups ? Math.round((matchupCount / totalMatchups) * 100) : 0;
+
+  return {
+    appearances: rowsForPokemon.length,
+    matchupCount,
+    totalMatchups,
+    usageRate
+  };
+}
+
+function formatUsageLabel(usage) {
+  if (!usage.totalMatchups) {
+    return "No usage yet";
+  }
+
+  return `${usage.matchupCount}/${usage.totalMatchups} uses • ${usage.usageRate}%`;
+}
+
+function renderUsagePanel() {
+  if (!myRosterRows.length) {
+    return "";
+  }
+
+  const totalMatchups = new Set(pokemonUsageRows.map(row => row.matchup_id)).size;
+  const leaders = myRosterRows
+    .map(row => {
+      const pokemon = getPokemonBySlug(row.pokemon_slug);
+      return {
+        slug: row.pokemon_slug,
+        name: pokemon ? pokemon.name : row.pokemon_slug,
+        usage: getPokemonUsageStats(row.pokemon_slug)
+      };
+    })
+    .sort((a, b) => b.usage.matchupCount - a.usage.matchupCount || a.name.localeCompare(b.name))
+    .slice(0, 4);
+
+  return `
+    <section class="matchup-usage-panel">
+      <div>
+        <span class="matchup-usage-kicker">Usage Tracking</span>
+        <h3>Matchup picks are now being counted.</h3>
+        <p>${totalMatchups ? `${totalMatchups} saved matchup lineup${totalMatchups === 1 ? "" : "s"} tracked for your team.` : "Save your first matchup six to begin tracking usage."}</p>
+      </div>
+      <div class="matchup-usage-list">
+        ${leaders.map(leader => `
+          <div class="matchup-usage-item">
+            <strong>${escapeHtml(leader.name)}</strong>
+            <span>${formatUsageLabel(leader.usage)}</span>
+          </div>
+        `).join("")}
+      </div>
+    </section>
+  `;
 }
 
 async function saveMatchupLineup() {
