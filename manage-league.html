@@ -429,6 +429,17 @@
             <span>Playoff Teams</span>
             <select id="playoffTeamCountSelect" class="pkmn-select"></select>
           </label>
+
+          <label class="draft-clock-setting">
+            <span>Pokémon Per Team</span>
+            <select id="rosterPokemonCapSelect" class="pkmn-select">
+              <option value="8">8 Pokémon</option>
+              <option value="9">9 Pokémon</option>
+              <option value="10">10 Pokémon</option>
+              <option value="11">11 Pokémon</option>
+              <option value="12">12 Pokémon</option>
+            </select>
+          </label>
         </div>
 
         <div id="draftOrderEditor" class="draft-order-editor"></div>
@@ -478,6 +489,6 @@
   <script src="js/theme-settings.js?v=global-theme1"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
-  <script src="js/manage-league.js?v=manage-mascots1"></script>
+  <script src="js/manage-league.js?v=manage-roster-cap1"></script>
 </body>
 </html>

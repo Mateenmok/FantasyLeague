@@ -10,6 +10,11 @@
   <link rel="stylesheet" href="css/pokemon-ui.css?v=global-black-dark1">
 
   <style>
+    html,
+    body.draft-theme-page {
+      overflow-x: hidden;
+    }
+
     body.draft-theme-page {
       margin: 0;
       min-height: 100vh;
@@ -23,6 +28,7 @@
 
     .draft-theme-overlay {
       min-height: 100vh;
+      width: 100%;
       background:
         radial-gradient(circle at center 18%, rgba(36, 151, 255, 0.22), transparent 34%),
         linear-gradient(to bottom, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.58));
@@ -537,7 +543,8 @@
     }
 
     body.draft-theme-page.draft-war-room-page .draft-theme-card {
-      width: min(1840px, 98vw);
+      width: 100%;
+      max-width: none;
       padding: 0;
       border-radius: 0;
       background: transparent;
@@ -549,7 +556,7 @@
     body.draft-theme-page .draft-command-header {
       min-height: 142px;
       display: grid;
-      grid-template-columns: 116px minmax(170px, 230px) minmax(300px, 1fr) minmax(250px, 340px);
+      grid-template-columns: 116px minmax(170px, 230px) minmax(0, 1fr) minmax(250px, 340px);
       gap: 14px;
       align-items: stretch;
       margin-bottom: 14px;
@@ -2636,6 +2643,449 @@
       0 8px 16px var(--card-type-shadow);
   }
 
+  body.draft-theme-page.draft-war-room-page .draft-available-grid {
+    grid-template-columns: repeat(auto-fill, minmax(158px, 1fr));
+    gap: 10px;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-pokemon-card {
+    min-width: 0;
+    min-height: 224px;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-pokemon-pick-button {
+    min-width: 0;
+    padding: 10px;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-pokemon-card img:not(.mega-badge-overlay) {
+    width: 98px;
+    height: 98px;
+    margin-top: 2px;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-pokemon-pick-button > span {
+    min-height: 30px;
+    font-size: 12px !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-pokemon-card .pokemon-tier-badge {
+    box-sizing: border-box !important;
+    min-height: 26px !important;
+    height: 26px !important;
+    min-width: 84px !important;
+    margin-top: 6px !important;
+    padding: 3px 10px !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-pokemon-card .pokemon-tier-badge span {
+    font-size: 13px !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-pokemon-card .pokemon-tier-badge img {
+    width: 14px !important;
+    height: 14px !important;
+    min-width: 14px !important;
+    min-height: 14px !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-pokemon-card .pokemon-type-strip {
+    margin-top: 6px !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-card-stat-bars {
+    gap: 5px;
+    margin-top: 8px;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-stat-row {
+    grid-template-columns: 32px minmax(0, 1fr) 28px;
+    gap: 6px;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-stat-track {
+    height: 11px;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-inline-panel {
+    display: none;
+    overflow: hidden;
+    max-width: 100%;
+    min-width: 0;
+    margin: 0 0 14px;
+    border-color: rgba(212, 164, 76, 0.28) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-inline-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-inline-title {
+    margin: 0 0 4px;
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-inline-status {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-inline-body {
+    display: grid;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    gap: 14px;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-inline-lock,
+  body.draft-theme-page.draft-war-room-page .mock-draft-inline-mini-panel,
+  body.draft-theme-page.draft-war-room-page .mock-draft-inline-stat,
+  body.draft-theme-page.draft-war-room-page .mock-draft-roster-team,
+  body.draft-theme-page.draft-war-room-page .mock-draft-pokemon-card {
+    border-radius: 7px;
+    background: linear-gradient(145deg, rgba(35, 37, 41, 0.92), rgba(15, 16, 19, 0.96));
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    box-sizing: border-box;
+  }
+
+  body.draft-theme-page.draft-war-room-page .draft-theme-overlay,
+  body.draft-theme-page.draft-war-room-page .draft-theme-card,
+  body.draft-theme-page.draft-war-room-page .draft-command-header,
+  body.draft-theme-page.draft-war-room-page .draft-status-card,
+  body.draft-theme-page.draft-war-room-page .draft-layout-grid,
+  body.draft-theme-page.draft-war-room-page .draft-left-stack,
+  body.draft-theme-page.draft-war-room-page .draft-right-stack,
+  body.draft-theme-page.draft-war-room-page .mock-draft-inline-lock,
+  body.draft-theme-page.draft-war-room-page .mock-draft-inline-mini-panel,
+  body.draft-theme-page.draft-war-room-page .mock-draft-stats,
+  body.draft-theme-page.draft-war-room-page .mock-draft-controls-grid,
+  body.draft-theme-page.draft-war-room-page .mock-draft-filter-grid,
+  body.draft-theme-page.draft-war-room-page .mock-draft-roster-list,
+  body.draft-theme-page.draft-war-room-page .mock-draft-pool-grid {
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-inline-lock,
+  body.draft-theme-page.draft-war-room-page .mock-draft-inline-mini-panel {
+    overflow: hidden;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-inline-lock {
+    padding: 16px;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-inline-lock strong {
+    font-size: 18px;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-stats {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-inline-stat {
+    padding: 12px;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-inline-stat span,
+  body.draft-theme-page.draft-war-room-page .mock-draft-field span {
+    display: block;
+    margin-bottom: 5px;
+    color: rgba(255, 255, 255, 0.58);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-inline-stat strong {
+    display: block;
+    overflow: hidden;
+    color: #ffffff;
+    font-size: 20px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-shadow: none;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-controls-grid,
+  body.draft-theme-page.draft-war-room-page .mock-draft-filter-grid {
+    display: grid;
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr) repeat(2, minmax(128px, 160px));
+    gap: 10px;
+    align-items: end;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-filter-grid {
+    grid-template-columns: minmax(0, 1fr) repeat(2, minmax(130px, 180px));
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-inline-mini-panel {
+    padding: 14px;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-inline-mini-panel h3 {
+    margin: 0 0 10px;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-board-shell {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-board-grid {
+    min-width: max(860px, 100%);
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-pool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-pokemon-card {
+    position: relative;
+    min-height: 94px;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 54px minmax(0, 1fr);
+    gap: 10px;
+    align-items: center;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-pokemon-card > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-pokemon-card > div {
+    min-width: 0;
+    padding-right: 28px;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-pokemon-card .draft-type-icon-stack {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    left: auto;
+    z-index: 4;
+    gap: 3px;
+    transform: scale(0.78);
+    transform-origin: top right;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-pokemon-card .draft-type-icon-badge,
+  body.draft-theme-page.draft-war-room-page .mock-draft-pokemon-card .draft-type-icon-stack.dual .draft-type-icon-badge {
+    width: 24px;
+    height: 24px;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-pokemon-card .draft-type-icon-svg,
+  body.draft-theme-page.draft-war-room-page .mock-draft-pokemon-card .draft-type-icon-stack.dual .draft-type-icon-svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-pokemon-card.selected {
+    outline: 2px solid rgba(229, 198, 104, 0.72);
+    outline-offset: 2px;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-pokemon-card img {
+    width: 54px;
+    height: 54px;
+    object-fit: contain;
+    border-radius: 9px;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-pokemon-name {
+    overflow: hidden;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 800;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-pokemon-meta,
+  body.draft-theme-page.draft-war-room-page .mock-draft-roster-meta {
+    overflow: hidden;
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 11px;
+    font-weight: 800;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-pokemon-card .pokemon-type-strip {
+    width: 106px !important;
+    height: 23px !important;
+    margin: 6px 0 0 !important;
+    display: grid !important;
+    overflow: hidden !important;
+    border: 2px solid rgba(0, 0, 0, 0.42) !important;
+    border-radius: 8px !important;
+    background: #dde7f4 !important;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.45) inset,
+      0 2px 0 rgba(0, 0, 0, 0.20) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-pokemon-card .pokemon-type-strip.single {
+    width: 76px !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-pokemon-card .pokemon-type-strip.dual {
+    width: 106px !important;
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-pokemon-card .pokemon-type-segment {
+    min-width: 0 !important;
+    width: auto !important;
+    height: 100% !important;
+    padding: 0 3px !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-family: "VT323", monospace !important;
+    font-size: 15px !important;
+    line-height: 1 !important;
+    color: #ffffff !important;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.55) !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: clip !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-pokemon-card .pokemon-type-strip.dual .pokemon-type-segment:first-child {
+    border-right: 2px solid rgba(0, 0, 0, 0.35) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-pokemon-card .pokemon-type-segment.type-electric,
+  body.draft-theme-page.draft-war-room-page .mock-draft-pokemon-card .pokemon-type-segment.type-ice,
+  body.draft-theme-page.draft-war-room-page .mock-draft-pokemon-card .pokemon-type-segment.type-ground,
+  body.draft-theme-page.draft-war-room-page .mock-draft-pokemon-card .pokemon-type-segment.type-steel {
+    color: #202030 !important;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.60) !important;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-roster-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 10px;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-roster-team {
+    padding: 12px;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-roster-team h4 {
+    margin: 0 0 4px;
+    overflow: hidden;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 800;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-roster-picks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 9px;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-roster-pick {
+    min-width: 0;
+    max-width: 100%;
+    padding: 5px 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 11px;
+    font-weight: 800;
+  }
+
+  body.draft-theme-page.draft-war-room-page .mock-draft-inline-message {
+    min-height: 20px;
+    margin: 8px 0 0;
+    color: rgba(229, 198, 104, 0.92);
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .mock-draft-inline-title,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .mock-draft-inline-mini-panel h3,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .mock-draft-inline-stat strong,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .mock-draft-pokemon-name,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .mock-draft-roster-team h4 {
+    color: #ffffff !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .mock-draft-inline-lock,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .mock-draft-inline-mini-panel,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .mock-draft-inline-stat,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .mock-draft-roster-team,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .mock-draft-pokemon-card {
+    background: rgba(8, 24, 50, 0.24) !important;
+    border-color: rgba(255, 255, 255, 0.14) !important;
+  }
+
+  body.league-light-mode.draft-theme-page.draft-war-room-page .mock-draft-inline-status,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .mock-draft-inline-stat span,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .mock-draft-field span,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .mock-draft-pokemon-meta,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .mock-draft-roster-meta,
+  body.league-light-mode.draft-theme-page.draft-war-room-page .mock-draft-roster-pick {
+    color: rgba(255, 255, 255, 0.76) !important;
+  }
+
   @media (max-width: 860px) {
     body.draft-theme-page.draft-war-room-page .draft-layout-grid {
       grid-template-columns: 1fr;
@@ -2646,6 +3096,18 @@
       max-height: none;
       overflow: visible;
       padding-right: 0;
+    }
+
+    body.draft-theme-page.draft-war-room-page .mock-draft-inline-header,
+    body.draft-theme-page.draft-war-room-page .mock-draft-controls-grid,
+    body.draft-theme-page.draft-war-room-page .mock-draft-filter-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: stretch;
+    }
+
+    body.draft-theme-page.draft-war-room-page .mock-draft-stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 </style>
@@ -2681,7 +3143,6 @@
 
           <div class="draft-theme-links">
             <a class="draft-theme-link" href="league-home.html?v=leaguehome-icons4">League Home</a>
-            <a class="draft-theme-link" href="mock-draft.html?v=mock-draft1">Mock Drafts</a>
             <a class="draft-theme-link light" href="my-team.html?v=myteam-theme1">My Team</a>
           </div>
         </aside>
@@ -2691,6 +3152,27 @@
         <p><strong>Draft Status</strong></p>
         <p id="draftStatusLine" class="small-note">Loading draft...</p>
       </div>
+
+      <section id="mockDraftPanel" class="pkmn-panel mock-draft-inline-panel">
+        <div class="mock-draft-inline-header">
+          <div>
+            <p class="mock-draft-inline-title">Practice Draft</p>
+            <p id="mockDraftInlineStatus" class="mock-draft-inline-status">
+              Loading practice draft...
+            </p>
+          </div>
+          <button id="mockDraftResetHeaderButton" class="pkmn-button small danger" type="button">
+            Reset Mock
+          </button>
+        </div>
+
+        <div id="mockDraftInlineContent" class="mock-draft-inline-body">
+          <div class="mock-draft-inline-lock">
+            <strong>Loading practice room...</strong>
+            <p class="small-note">Mock drafts live inside Draft Room and never affect real rosters.</p>
+          </div>
+        </div>
+      </section>
 
       <div class="draft-layout-grid">
         <main class="draft-left-stack">
@@ -2830,6 +3312,6 @@
   <script src="js/theme-settings.js?v=global-theme1"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
-  <script src="js/draft-room.js?v=dual-type-icons1"></script>
+  <script src="js/draft-room.js?v=draft-practice-types1"></script>
 </body>
 </html>

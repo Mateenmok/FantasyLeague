@@ -198,6 +198,10 @@ function renderPublicLeagueCard(card) {
           <span>Point Cap</span>
           <strong>${league.roster_point_cap || 50}</strong>
         </div>
+        <div class="public-meta-item">
+          <span>Roster</span>
+          <strong>${league.roster_pokemon_cap || 10}</strong>
+        </div>
       </div>
 
       <div class="public-card-actions">

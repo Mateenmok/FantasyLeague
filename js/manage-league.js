@@ -5,6 +5,7 @@ const saveManagersButton = document.getElementById("saveManagersButton");
 const divisionEditor = document.getElementById("divisionEditor");
 const draftClockSecondsInput = document.getElementById("draftClockSecondsInput");
 const playoffTeamCountSelect = document.getElementById("playoffTeamCountSelect");
+const rosterPokemonCapSelect = document.getElementById("rosterPokemonCapSelect");
 const draftOrderEditor = document.getElementById("draftOrderEditor");
 const mascotAssignmentList = document.getElementById("mascotAssignmentList");
 const mascotPokemonOptions = document.getElementById("mascotPokemonOptions");
@@ -230,6 +231,7 @@ function renderDraftSettings() {
   renderPlayoffTeamOptions();
 
   const orderLocked = Boolean(draftState?.is_started) || draftPicks.length > 0;
+  renderRosterPokemonCapOptions(orderLocked);
   const teamsById = {};
 
   leagueTeams.forEach(team => {
@@ -435,6 +437,25 @@ function renderPlayoffTeamOptions() {
     : String(defaultCount);
 }
 
+function renderRosterPokemonCapOptions(orderLocked) {
+  if (!rosterPokemonCapSelect) {
+    return;
+  }
+
+  const configuredCap = Number(currentLeague.roster_pokemon_cap || 10);
+  const options = [8, 9, 10, 11, 12];
+
+  rosterPokemonCapSelect.innerHTML = options.map(count => {
+    return `<option value="${count}">${count} Pokémon</option>`;
+  }).join("");
+
+  rosterPokemonCapSelect.value = options.includes(configuredCap) ? String(configuredCap) : "10";
+  rosterPokemonCapSelect.disabled = orderLocked;
+  rosterPokemonCapSelect.title = orderLocked
+    ? "Pokémon per team is locked once the real draft has started."
+    : "";
+}
+
 function getDefaultPlayoffTeamCount(teamCount) {
   if (teamCount >= 10) return 6;
   if (teamCount >= 4) return 4;
@@ -488,6 +509,7 @@ async function saveLeagueSettings() {
 
   const clockSeconds = Number(draftClockSecondsInput?.value || 120);
   const playoffTeamCount = Number(playoffTeamCountSelect?.value || currentLeague.playoff_team_count || getDefaultPlayoffTeamCount(leagueTeams.length));
+  const rosterPokemonCap = Number(rosterPokemonCapSelect?.value || currentLeague.roster_pokemon_cap || 10);
 
   if (clockSeconds < 15 || clockSeconds > 600) {
     manageLeagueStatus.textContent = "Draft clock must be between 15 and 600 seconds.";
@@ -496,6 +518,16 @@ async function saveLeagueSettings() {
 
   if (playoffTeamCount < 2 || playoffTeamCount > leagueTeams.length || playoffTeamCount % 2 !== 0) {
     manageLeagueStatus.textContent = "Playoff teams must be an even number between 2 and the league size.";
+    return;
+  }
+
+  if (!Number.isInteger(rosterPokemonCap) || rosterPokemonCap < 8 || rosterPokemonCap > 12) {
+    manageLeagueStatus.textContent = "Pokémon per team must be between 8 and 12.";
+    return;
+  }
+
+  if ((Boolean(draftState?.is_started) || draftPicks.length > 0) && rosterPokemonCap !== Number(currentLeague.roster_pokemon_cap || 10)) {
+    manageLeagueStatus.textContent = "Pokémon per team can only be changed before the real draft begins.";
     return;
   }
 
@@ -533,7 +565,8 @@ async function saveLeagueSettings() {
     .from("leagues")
     .update({
       draft_pick_seconds: clockSeconds,
-      playoff_team_count: playoffTeamCount
+      playoff_team_count: playoffTeamCount,
+      roster_pokemon_cap: rosterPokemonCap
     })
     .eq("id", selectedLeagueId);
 
@@ -543,6 +576,10 @@ async function saveLeagueSettings() {
     saveManagersButton.disabled = false;
     return;
   }
+
+  currentLeague.draft_pick_seconds = clockSeconds;
+  currentLeague.playoff_team_count = playoffTeamCount;
+  currentLeague.roster_pokemon_cap = rosterPokemonCap;
 
   for (const division of leagueDivisions) {
     const divisionName = document.getElementById(`divisionName-${division.id}`).value.trim() || `Division ${division.division_number}`;

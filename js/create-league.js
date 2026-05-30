@@ -2,6 +2,7 @@ const teamCountSelect = document.getElementById("teamCountSelect");
 const divisionCountSelect = document.getElementById("divisionCountSelect");
 const playoffTeamCountSelect = document.getElementById("playoffTeamCountSelect");
 const pointCapInput = document.getElementById("pointCapInput");
+const rosterPokemonCapSelect = document.getElementById("rosterPokemonCapSelect");
 const regularSeasonMatchesSelect = document.getElementById("regularSeasonMatchesSelect");
 const leagueSettingsPreview = document.getElementById("leagueSettingsPreview");
 const publicLeagueCheckbox = document.getElementById("publicLeagueCheckbox");
@@ -36,6 +37,7 @@ divisionCountSelect.addEventListener("change", function () {
 
 playoffTeamCountSelect.addEventListener("change", updateLeagueSettingsPreview);
 pointCapInput.addEventListener("input", updateLeagueSettingsPreview);
+rosterPokemonCapSelect.addEventListener("change", updateLeagueSettingsPreview);
 regularSeasonMatchesSelect.addEventListener("change", updateLeagueSettingsPreview);
 publicLeagueCheckbox.addEventListener("change", updateLeagueSettingsPreview);
 divisionNameFields.addEventListener("input", function () {
@@ -49,11 +51,12 @@ function updateLeagueSettingsPreview() {
   const divisionCount = getDivisionCount();
   const playoffTeams = getPlayoffTeamCount();
   const pointCap = Number(pointCapInput.value || 50);
+  const rosterPokemonCap = getRosterPokemonCap();
   const regularSeasonMatches = Number(regularSeasonMatchesSelect.value);
   const listingStatus = publicLeagueCheckbox.checked ? "public listing" : "private league";
 
   leagueSettingsPreview.textContent =
-    `${teamCount} teams • ${divisionCount} ${pluralize("division", divisionCount)} • ${playoffTeams} playoff teams • ${regularSeasonMatches} regular season matches • ${pointCap} roster points • ${listingStatus}`;
+    `${teamCount} teams • ${divisionCount} ${pluralize("division", divisionCount)} • ${playoffTeams} playoff teams • ${rosterPokemonCap} Pokémon per team • ${regularSeasonMatches} regular season matches • ${pointCap} roster points • ${listingStatus}`;
 }
 
 function renderPlayoffTeamOptions() {
@@ -139,6 +142,7 @@ async function createLeague() {
   const divisionCount = getDivisionCount();
   const divisionNames = getDivisionNames();
   const rosterPointCap = Number(pointCapInput.value);
+  const rosterPokemonCap = getRosterPokemonCap();
   const regularSeasonMatches = Number(regularSeasonMatchesSelect.value);
   const teamEmails = getTeamEmailAssignments();
   const teamDivisionAssignments = getTeamDivisionAssignments();
@@ -178,6 +182,11 @@ async function createLeague() {
 
   if (!rosterPointCap || rosterPointCap < 1 || rosterPointCap > 999) {
     createLeagueStatus.textContent = "Roster point cap must be between 1 and 999.";
+    return;
+  }
+
+  if (!isValidRosterPokemonCap(rosterPokemonCap)) {
+    createLeagueStatus.textContent = "Pokémon per team must be between 8 and 12.";
     return;
   }
 
@@ -292,6 +301,7 @@ async function createLeague() {
       team_count: teamCount,
       playoff_team_count: playoffTeamCount,
       roster_point_cap: rosterPointCap,
+      roster_pokemon_cap: rosterPokemonCap,
       regular_season_matches: regularSeasonMatches,
       is_public: isPublicLeague,
       public_description: isPublicLeague ? publicDescription : "",
@@ -416,6 +426,7 @@ function renderCreatedLeagueResult({
       <p>${teamCount} teams</p>
       <p>${divisions.length} ${pluralize("division", divisions.length)}</p>
       <p>${playoffTeamCount} playoff teams</p>
+      <p>${rosterPokemonCap} Pokémon per team</p>
       <p>${regularSeasonMatches} matches before playoffs</p>
       <p>${rosterPointCap} roster points maximum</p>
     </div>
@@ -563,6 +574,14 @@ function getDefaultPlayoffTeamCount(teamCount) {
   if (teamCount >= 10) return 6;
   if (teamCount >= 4) return 4;
   return 2;
+}
+
+function getRosterPokemonCap() {
+  return Number(rosterPokemonCapSelect?.value || 10);
+}
+
+function isValidRosterPokemonCap(value) {
+  return Number.isInteger(value) && value >= 8 && value <= 12;
 }
 
 function findDuplicateEmail(teamEmails) {

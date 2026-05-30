@@ -138,6 +138,7 @@ async function renderJoinedLeagues() {
         <p><strong>Playoff Teams:</strong> ${league.playoff_team_count || getDefaultPlayoffTeamCount(league.team_count)}</p>
         <p><strong>Matches Before Playoffs:</strong> ${league.regular_season_matches || 10}</p>
         <p><strong>Roster Point Cap:</strong> ${league.roster_point_cap || 50}</p>
+        <p><strong>Pokémon Per Team:</strong> ${league.roster_pokemon_cap || 10}</p>
         <p><strong>Your Team:</strong> ${escapeHtml(teamLabel)}</p>
         <p><strong>Role:</strong> ${roleLabel}</p>
 
@@ -237,6 +238,10 @@ async function loadPublicLeagues() {
           <div class="public-league-stat">
             <span>Point Cap</span>
             <strong>${league.roster_point_cap || 50}</strong>
+          </div>
+          <div class="public-league-stat">
+            <span>Roster</span>
+            <strong>${league.roster_pokemon_cap || 10}</strong>
           </div>
         </div>
 

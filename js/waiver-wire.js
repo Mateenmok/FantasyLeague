@@ -20,7 +20,7 @@ const waiverTierFilterSelect = document.getElementById("waiverTierFilterSelect")
 const waiverTypeFilterSelect = document.getElementById("waiverTypeFilterSelect");
 
 const selectedLeagueId = localStorage.getItem("selected-league-id");
-const ROSTER_SIZE = 10;
+const DEFAULT_ROSTER_SIZE = 10;
 const WAIVER_STAT_ROWS = [
   ["hp", "HP"],
   ["attack", "ATK"],
@@ -42,6 +42,13 @@ let isAdmin = false;
 const WAIVER_AVAILABLE_POKEMON_PAGE_SIZE = 12;
 let waiverAvailablePokemonPage = 0;
 let waiverAvailablePokemonFilterSignature = "";
+
+function getRosterSize() {
+  const configuredSize = Number(currentLeague?.roster_pokemon_cap || DEFAULT_ROSTER_SIZE);
+  return Number.isFinite(configuredSize) && configuredSize >= 1
+    ? configuredSize
+    : DEFAULT_ROSTER_SIZE;
+}
 
 openWaiversButton.addEventListener("click", () => setWaiversOpen(true));
 closeWaiversButton.addEventListener("click", () => setWaiversOpen(false));
@@ -271,6 +278,7 @@ function renderPointStatus() {
   const pointCap = Number(currentLeague.roster_point_cap || 50);
   const usedPoints = getTeamPointUsage(myTeam.id);
   const remaining = pointCap - usedPoints;
+  const rosterSize = getRosterSize();
 
   waiverPointStatus.innerHTML = `
     <div class="draft-point-grid">
@@ -285,7 +293,7 @@ function renderPointStatus() {
 
       <div class="draft-point-card">
         <p><strong>Roster Spots</strong></p>
-        <p>${myRosterRows.length}/${ROSTER_SIZE} Pokémon</p>
+        <p>${myRosterRows.length}/${rosterSize} Pokémon</p>
         <p class="small-note">Drop a Pokémon if your roster is full or your cap is too tight.</p>
       </div>
     </div>
@@ -308,11 +316,12 @@ function renderWaiverHeaderTeamSummary() {
 
   const pointCap = Number(currentLeague?.roster_point_cap || 50);
   const usedPoints = getTeamPointUsage(myTeam.id);
+  const rosterSize = getRosterSize();
 
   waiverHeaderTeamSummary.innerHTML = `
     <p class="waiver-kicker">Your Team</p>
     <strong>${escapeHtml(myTeam.team_name)}</strong>
-    <p class="small-note">${myRosterRows.length}/${ROSTER_SIZE} roster - ${usedPoints}/${pointCap} points</p>
+    <p class="small-note">${myRosterRows.length}/${rosterSize} roster - ${usedPoints}/${pointCap} points</p>
   `;
 }
 
@@ -557,7 +566,7 @@ async function addWaiverPokemon(pokemonSlug) {
 
   const projectedRosterSize = myRosterRows.length - (dropRow ? 1 : 0) + 1;
 
-  if (projectedRosterSize > ROSTER_SIZE) {
+  if (projectedRosterSize > getRosterSize()) {
     waiverPageStatus.textContent = "Your roster is full. Select a Pokémon to drop first.";
     return;
   }

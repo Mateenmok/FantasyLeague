@@ -18,7 +18,7 @@ const megaFilterSelect = document.getElementById("megaFilterSelect");
 const tierFilterSelect = document.getElementById("tierFilterSelect");
 const typeFilterSelect = document.getElementById("typeFilterSelect");
 const availablePokemonCount = document.getElementById("availablePokemonCount");
-const AVAILABLE_POKEMON_PAGE_SIZE = 12;
+const AVAILABLE_POKEMON_PAGE_SIZE = 18;
 let availablePokemonPage = 0;
 let availablePokemonFilterSignature = "";
 const draftRoomStatus = document.getElementById("draftRoomStatus");
@@ -30,8 +30,12 @@ const draftRoundNumber = document.getElementById("draftRoundNumber");
 const draftRoundMeta = document.getElementById("draftRoundMeta");
 const draftHeaderTeamSummary = document.getElementById("draftHeaderTeamSummary");
 const selectedPokemonScoutBody = document.getElementById("selectedPokemonScoutBody");
+const mockDraftPanel = document.getElementById("mockDraftPanel");
+const mockDraftInlineStatus = document.getElementById("mockDraftInlineStatus");
+const mockDraftInlineContent = document.getElementById("mockDraftInlineContent");
+const mockDraftResetHeaderButton = document.getElementById("mockDraftResetHeaderButton");
 
-const ROSTER_SIZE = 10;
+const DEFAULT_ROSTER_SIZE = 10;
 const DRAFT_TIER_ORDER = ["Diamond", "Gold", "Silver", "Bronze"];
 const DRAFT_STAT_ROWS = [
   ["hp", "HP"],
@@ -45,6 +49,13 @@ function getPickSeconds() {
   return Number(currentLeague?.draft_pick_seconds || 120);
 }
 
+function getRosterSize() {
+  const configuredSize = Number(currentLeague?.roster_pokemon_cap || DEFAULT_ROSTER_SIZE);
+  return Number.isFinite(configuredSize) && configuredSize >= 1
+    ? configuredSize
+    : DEFAULT_ROSTER_SIZE;
+}
+
 let selectedLeagueId = localStorage.getItem("selected-league-id");
 let currentMembership = null;
 let currentLeague = null;
@@ -56,6 +67,9 @@ let allRosterRows = [];
 let championsPokemon = [];
 let pokemonBstBySlug = {};
 let selectedPokemonSlug = "";
+let mockDraftPicks = [];
+let mockSelectedPokemonSlug = "";
+let mockDraftStatusMessage = "Mock draft picks are saved in this browser only.";
 let isAdmin = false;
 let timerInterval = null;
 let autoPickInProgress = false;
@@ -83,6 +97,10 @@ if (tierFilterSelect) {
 
 if (typeFilterSelect) {
   typeFilterSelect.addEventListener("change", renderAvailablePokemonGrid);
+}
+
+if (mockDraftResetHeaderButton) {
+  mockDraftResetHeaderButton.addEventListener("click", resetMockDraft);
 }
 
 draftQueueForceInit();
@@ -278,10 +296,14 @@ async function refreshDraftData(isBackgroundRefresh = false) {
     allRosterRows = rosterRows || [];
   }
 
+  mockDraftPicks = loadMockDraftPicks();
+  sanitizeMockDraftPicks();
+
   renderDraftRoom(isBackgroundRefresh);
 }
 
 function renderDraftRoom(isBackgroundRefresh = false) {
+  const rosterSize = getRosterSize();
   const totalPicks = getTotalDraftPicks();
   const picksMade = draftPicks.length;
   const availableCount = getAvailablePokemon().length;
@@ -289,7 +311,7 @@ function renderDraftRoom(isBackgroundRefresh = false) {
   const maxDraftRounds = getMaxDraftRounds();
 
   draftStatusLine.textContent =
-    `${picksMade}/${totalPicks} picks made • ${availableCount} Pokémon available • ${ROSTER_SIZE} roster spots per team`;
+    `${picksMade}/${totalPicks} picks made • ${availableCount} Pokémon available • ${rosterSize} roster spots per team`;
 
   if (nextPick) {
     nextPickLine.textContent =
@@ -302,6 +324,9 @@ function renderDraftRoom(isBackgroundRefresh = false) {
 
   renderDraftOrderControls();
   const typedPick = pokemonDraftInput ? pokemonDraftInput.value : "";
+  const activeMockFieldId = mockDraftPanel?.contains(document.activeElement) ? document.activeElement.id : "";
+  const mockTypedPick = document.getElementById("mockPokemonInput")?.value || "";
+  const mockTypedSearch = document.getElementById("mockSearchInput")?.value || "";
 
   renderPokemonOptions();
   renderDraftPicksList();
@@ -311,6 +336,7 @@ function renderDraftRoom(isBackgroundRefresh = false) {
   renderAvailablePokemonGrid();
   draftQueueForceRender();
   renderDraftButtons();
+  renderMockDraftPanel();
   updatePickControls();
   startDraftTimer();
 
@@ -318,9 +344,737 @@ function renderDraftRoom(isBackgroundRefresh = false) {
     pokemonDraftInput.value = typedPick;
   }
 
+  if (isBackgroundRefresh && activeMockFieldId) {
+    const mockPickInput = document.getElementById("mockPokemonInput");
+    const mockSearchInput = document.getElementById("mockSearchInput");
+    const activeMockField = document.getElementById(activeMockFieldId);
+
+    if (mockPickInput) {
+      mockPickInput.value = mockTypedPick;
+    }
+
+    if (mockSearchInput) {
+      mockSearchInput.value = mockTypedSearch;
+    }
+
+    activeMockField?.focus();
+  }
+
   draftRoomStatus.textContent = isAdmin
     ? "Admin draft controls enabled."
     : "Viewing draft room. You can pick when your team is on the clock.";
+}
+
+function renderMockDraftPanel() {
+  if (!mockDraftPanel || !mockDraftInlineContent || !mockDraftInlineStatus) {
+    return;
+  }
+
+  mockDraftPanel.style.display = "block";
+
+  if (!leagueTeams.length || !championsPokemon.length) {
+    mockDraftInlineStatus.textContent = "Practice draft will appear once league data loads.";
+    mockDraftInlineContent.innerHTML = `
+      <div class="mock-draft-inline-lock">
+        <strong>Loading practice draft...</strong>
+        <p class="small-note">Draft Room is still gathering teams and Pokémon.</p>
+      </div>
+    `;
+    if (mockDraftResetHeaderButton) {
+      mockDraftResetHeaderButton.disabled = true;
+    }
+    return;
+  }
+
+  if (!isMockDraftOpen()) {
+    mockDraftInlineStatus.textContent = "Practice drafts close once the real draft starts.";
+    mockDraftInlineContent.innerHTML = `
+      <div class="mock-draft-inline-lock">
+        <strong>Practice Draft Locked</strong>
+        <p class="small-note">
+          Mock drafts are only available before the real draft begins and before any real picks are made.
+        </p>
+      </div>
+    `;
+    if (mockDraftResetHeaderButton) {
+      mockDraftResetHeaderButton.disabled = mockDraftPicks.length === 0;
+    }
+    return;
+  }
+
+  const sequence = getMockDraftPickSequence();
+  const nextPick = getMockNextPickInfo();
+  const availablePokemon = getMockAvailablePokemon();
+  const pointCap = Number(currentLeague?.roster_point_cap || 50);
+
+  mockDraftInlineStatus.textContent =
+    "Practice-only picks are saved locally and never touch the real draft board.";
+
+  if (mockDraftResetHeaderButton) {
+    mockDraftResetHeaderButton.disabled = mockDraftPicks.length === 0;
+  }
+
+  mockDraftInlineContent.innerHTML = `
+    <div class="mock-draft-stats">
+      <div class="mock-draft-inline-stat">
+        <span>Practice Picks</span>
+        <strong>${mockDraftPicks.length}/${sequence.length}</strong>
+      </div>
+      <div class="mock-draft-inline-stat">
+        <span>On The Clock</span>
+        <strong>${nextPick ? escapeHtml(nextPick.team.team_name) : "Complete"}</strong>
+      </div>
+      <div class="mock-draft-inline-stat">
+        <span>Available</span>
+        <strong>${availablePokemon.length}</strong>
+      </div>
+      <div class="mock-draft-inline-stat">
+        <span>Point Cap</span>
+        <strong>${pointCap}</strong>
+      </div>
+    </div>
+
+    <div class="mock-draft-inline-mini-panel">
+      <h3>${nextPick ? `Practice Pick #${nextPick.overallPick}` : "Practice Complete"}</h3>
+      <div class="mock-draft-controls-grid">
+        <label class="mock-draft-field">
+          <span>Pokémon</span>
+          <input id="mockPokemonInput" class="pkmn-input" list="mockPokemonOptions" type="text" placeholder="Search available Pokémon">
+          <datalist id="mockPokemonOptions">${renderMockPokemonOptions()}</datalist>
+        </label>
+        <button id="mockMakePickButton" class="pkmn-button small" type="button" ${nextPick ? "" : "disabled"}>Make Pick</button>
+        <button id="mockAutoPickButton" class="pkmn-button small" type="button" ${nextPick ? "" : "disabled"}>Auto Pick</button>
+      </div>
+      <div class="mock-draft-actions">
+        <button id="mockAutoDraftAllButton" class="pkmn-button small" type="button" ${nextPick ? "" : "disabled"}>Auto Draft All</button>
+        <button id="mockUndoPickButton" class="pkmn-button small" type="button" ${mockDraftPicks.length ? "" : "disabled"}>Undo Pick</button>
+      </div>
+      <p id="mockDraftInlineMessage" class="mock-draft-inline-message">${escapeHtml(mockDraftStatusMessage)}</p>
+    </div>
+
+    <div class="mock-draft-inline-mini-panel">
+      <h3>Practice Board</h3>
+      ${renderMockDraftBoard()}
+    </div>
+
+    <div class="mock-draft-inline-mini-panel">
+      <h3>Practice Pool</h3>
+      <div class="mock-draft-filter-grid">
+        <label class="mock-draft-field">
+          <span>Search</span>
+          <input id="mockSearchInput" class="pkmn-input" type="text" placeholder="Name, type, or tier" value="${escapeHtml(getMockSavedFilter("search"))}">
+        </label>
+        <label class="mock-draft-field">
+          <span>Tier</span>
+          <select id="mockTierSelect" class="pkmn-select">${renderMockTierOptions()}</select>
+        </label>
+        <label class="mock-draft-field">
+          <span>Type</span>
+          <select id="mockTypeSelect" class="pkmn-select">${renderMockTypeOptions()}</select>
+        </label>
+      </div>
+      <p id="mockAvailableCount" class="small-note"></p>
+      <div id="mockAvailableGrid" class="mock-draft-pool-grid"></div>
+    </div>
+
+    <div class="mock-draft-inline-mini-panel">
+      <h3>Practice Rosters</h3>
+      <div class="mock-draft-roster-list">
+        ${renderMockRosters()}
+      </div>
+    </div>
+  `;
+
+  bindMockDraftControls();
+  renderMockAvailablePokemonGrid();
+}
+
+function isMockDraftOpen() {
+  return !draftState?.is_started && draftPicks.length === 0;
+}
+
+function bindMockDraftControls() {
+  const input = document.getElementById("mockPokemonInput");
+  const makePickButton = document.getElementById("mockMakePickButton");
+  const autoPickButton = document.getElementById("mockAutoPickButton");
+  const autoDraftAllButton = document.getElementById("mockAutoDraftAllButton");
+  const undoPickButton = document.getElementById("mockUndoPickButton");
+  const searchInput = document.getElementById("mockSearchInput");
+  const tierSelect = document.getElementById("mockTierSelect");
+  const typeSelect = document.getElementById("mockTypeSelect");
+
+  if (mockSelectedPokemonSlug && input) {
+    const selected = getPokemonBySlug(mockSelectedPokemonSlug);
+    input.value = selected ? getPokemonLabel(selected) : "";
+  }
+
+  makePickButton?.addEventListener("click", makeMockPickFromInput);
+  autoPickButton?.addEventListener("click", autoMockPick);
+  autoDraftAllButton?.addEventListener("click", autoMockDraftAll);
+  undoPickButton?.addEventListener("click", undoMockPick);
+
+  input?.addEventListener("keydown", event => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      makeMockPickFromInput();
+    }
+  });
+
+  searchInput?.addEventListener("input", function () {
+    saveMockFilter("search", this.value);
+    renderMockAvailablePokemonGrid();
+  });
+
+  tierSelect?.addEventListener("change", function () {
+    saveMockFilter("tier", this.value);
+    renderMockAvailablePokemonGrid();
+  });
+
+  typeSelect?.addEventListener("change", function () {
+    saveMockFilter("type", this.value);
+    renderMockAvailablePokemonGrid();
+  });
+}
+
+function setMockDraftStatus(message) {
+  mockDraftStatusMessage = message;
+  const messageEl = document.getElementById("mockDraftInlineMessage");
+
+  if (messageEl) {
+    messageEl.textContent = message;
+  }
+}
+
+function makeMockPickFromInput() {
+  const input = document.getElementById("mockPokemonInput");
+  const pokemon = findMockPokemonFromInput(input?.value || "");
+
+  if (!pokemon) {
+    setMockDraftStatus("Choose an available Pokémon from the practice list.");
+    return;
+  }
+
+  makeMockPick(pokemon);
+}
+
+function autoMockPick() {
+  const nextPick = getMockNextPickInfo();
+
+  if (!nextPick) {
+    setMockDraftStatus("Practice draft is already complete.");
+    return;
+  }
+
+  const pokemon = getMockSmartAutoPickPokemon(nextPick.team.id);
+
+  if (!pokemon) {
+    setMockDraftStatus(`${nextPick.team.team_name} has no legal Pokémon under the point cap.`);
+    return;
+  }
+
+  makeMockPick(pokemon);
+}
+
+function autoMockDraftAll() {
+  let safety = 0;
+  let stoppedTeamName = "";
+
+  while (getMockNextPickInfo() && safety < 500) {
+    const nextPick = getMockNextPickInfo();
+    const pokemon = getMockSmartAutoPickPokemon(nextPick.team.id);
+
+    if (!pokemon) {
+      stoppedTeamName = nextPick.team.team_name;
+      break;
+    }
+
+    addMockPick(nextPick, pokemon);
+    safety += 1;
+  }
+
+  saveMockDraftPicks();
+  mockSelectedPokemonSlug = "";
+  renderMockDraftPanel();
+
+  setMockDraftStatus(stoppedTeamName
+    ? `Auto draft stopped. ${stoppedTeamName} has no legal Pokémon under the point cap.`
+    : "Practice draft filled out.");
+}
+
+function makeMockPick(pokemon) {
+  if (!isMockDraftOpen()) {
+    setMockDraftStatus("Practice draft is locked because the real draft has started.");
+    renderMockDraftPanel();
+    return;
+  }
+
+  const nextPick = getMockNextPickInfo();
+
+  if (!nextPick) {
+    setMockDraftStatus("Practice draft is already complete.");
+    return;
+  }
+
+  if (!getMockAvailablePokemon().some(candidate => candidate.slug === pokemon.slug)) {
+    setMockDraftStatus(`${pokemon.name} is no longer available in this practice draft.`);
+    return;
+  }
+
+  const pointCap = Number(currentLeague?.roster_point_cap || 50);
+  const usedPoints = getMockTeamPointUsage(nextPick.team.id);
+  const points = getPokemonPoints(pokemon);
+  const rosterRows = getMockRosterForTeam(nextPick.team.id);
+  const rosterSize = getRosterSize();
+
+  if (usedPoints + points > pointCap) {
+    setMockDraftStatus(`${pokemon.name} costs ${points}. ${nextPick.team.team_name} only has ${pointCap - usedPoints} points remaining.`);
+    return;
+  }
+
+  if (rosterRows.length >= rosterSize) {
+    setMockDraftStatus(`${nextPick.team.team_name} already has ${rosterSize} Pokémon.`);
+    return;
+  }
+
+  addMockPick(nextPick, pokemon);
+  saveMockDraftPicks();
+  mockSelectedPokemonSlug = "";
+  renderMockDraftPanel();
+  setMockDraftStatus(`Mock drafted ${pokemon.name} to ${nextPick.team.team_name}.`);
+}
+
+function addMockPick(nextPick, pokemon) {
+  mockDraftPicks.push({
+    league_id: selectedLeagueId,
+    league_team_id: nextPick.team.id,
+    overall_pick: nextPick.overallPick,
+    round_number: nextPick.roundNumber,
+    pick_in_round: nextPick.pickInRound,
+    pokemon_slug: pokemon.slug,
+    created_at: new Date().toISOString()
+  });
+}
+
+function undoMockPick() {
+  const removed = mockDraftPicks.pop();
+  saveMockDraftPicks();
+  mockSelectedPokemonSlug = "";
+  renderMockDraftPanel();
+
+  const pokemon = removed ? getPokemonBySlug(removed.pokemon_slug) : null;
+  setMockDraftStatus(pokemon ? `Undid mock pick: ${pokemon.name}.` : "No mock picks to undo.");
+}
+
+function resetMockDraft() {
+  mockDraftPicks = [];
+  mockSelectedPokemonSlug = "";
+  saveMockDraftPicks();
+  renderMockDraftPanel();
+  setMockDraftStatus("Practice draft reset.");
+}
+
+function renderMockDraftBoard() {
+  const orderedTeams = getOrderedTeams();
+  const sequence = getMockDraftPickSequence();
+  const maxRounds = sequence.reduce((max, pick) => Math.max(max, pick.roundNumber), 0);
+  const nextPick = getMockNextPickInfo();
+
+  if (!orderedTeams.length || !maxRounds) {
+    return `<div class="empty-state"><p>No practice board available yet.</p></div>`;
+  }
+
+  const picksByRoundTeam = new Map();
+  const sequenceByRoundTeam = new Map();
+
+  mockDraftPicks.forEach(pick => {
+    picksByRoundTeam.set(`${pick.round_number}:${pick.league_team_id}`, pick);
+  });
+
+  sequence.forEach(pick => {
+    sequenceByRoundTeam.set(`${pick.roundNumber}:${pick.team.id}`, pick);
+  });
+
+  const teamColumnWidth = 132;
+  const boardMinWidth = 72 + (orderedTeams.length * teamColumnWidth);
+  const columns = `72px repeat(${orderedTeams.length}, minmax(${teamColumnWidth}px, ${teamColumnWidth}px))`;
+  const cells = [
+    `<div class="draft-board-header-cell draft-board-corner" style="grid-column:1;grid-row:1;">Round</div>`
+  ];
+
+  orderedTeams.forEach((team, index) => {
+    const isActiveTeam = nextPick?.team?.id === team.id ? "active-team" : "";
+    cells.push(`
+      <div
+        class="draft-board-header-cell draft-board-logo-header ${isActiveTeam}"
+        style="grid-column:${index + 2};grid-row:1;"
+        title="${escapeHtml(team.team_name)}"
+        aria-label="${escapeHtml(team.team_name)}">
+        ${renderDraftBoardTeamLogo(team)}
+      </div>
+    `);
+  });
+
+  for (let round = 1; round <= maxRounds; round++) {
+    cells.push(`<div class="draft-board-round-cell" style="grid-column:1;grid-row:${round + 1};">${round}</div>`);
+
+    orderedTeams.forEach((team, index) => {
+      const pick = picksByRoundTeam.get(`${round}:${team.id}`);
+      const pendingPick = sequenceByRoundTeam.get(`${round}:${team.id}`);
+      const isOnClock = nextPick && pendingPick && nextPick.overallPick === pendingPick.overallPick;
+      const isUpNext = pendingPick && !pick && !isOnClock;
+      const cellClass = pick ? "picked" : isOnClock ? "on-clock" : isUpNext ? "up-next" : "";
+
+      cells.push(`
+        <div class="draft-board-pick-cell ${cellClass}" style="grid-column:${index + 2};grid-row:${round + 1};">
+          ${renderDraftBoardCell(pick, pendingPick, isOnClock)}
+        </div>
+      `);
+    });
+  }
+
+  return `
+    <div class="mock-draft-board-shell">
+      <div class="draft-board-grid mock-draft-board-grid" style="grid-template-columns:${columns};min-width:${boardMinWidth}px;">
+        ${cells.join("")}
+      </div>
+    </div>
+  `;
+}
+
+function renderMockRosters() {
+  const pointCap = Number(currentLeague?.roster_point_cap || 50);
+
+  return getOrderedTeams().map(team => {
+    const rosterRows = getMockRosterForTeam(team.id);
+    const pointUsage = getMockTeamPointUsage(team.id);
+    const rosterSize = getRosterSize();
+    const mockNames = rosterRows.slice(0, 5).map(row => {
+      const pokemon = getPokemonBySlug(row.pokemon_slug);
+      return pokemon ? pokemon.name : row.pokemon_slug;
+    });
+
+    return `
+      <div class="mock-draft-roster-team">
+        <h4>${escapeHtml(team.team_name)}</h4>
+        <div class="mock-draft-roster-meta">${rosterRows.length}/${rosterSize} Pokémon • ${pointUsage}/${pointCap} points</div>
+        <div class="draft-point-bar"><div style="width:${Math.min((pointUsage / pointCap) * 100, 100)}%"></div></div>
+        <div class="mock-draft-roster-picks">
+          ${mockNames.length
+            ? mockNames.map(name => `<span class="mock-draft-roster-pick">${escapeHtml(name)}</span>`).join("")
+            : `<span class="mock-draft-roster-pick">Empty</span>`}
+          ${rosterRows.length > mockNames.length ? `<span class="mock-draft-roster-pick">+${rosterRows.length - mockNames.length}</span>` : ""}
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function renderMockAvailablePokemonGrid() {
+  const grid = document.getElementById("mockAvailableGrid");
+  const count = document.getElementById("mockAvailableCount");
+
+  if (!grid) {
+    return;
+  }
+
+  const filteredPokemon = getMockFilteredAvailablePokemon();
+  const visiblePokemon = filteredPokemon.slice(0, 12);
+
+  if (count) {
+    count.textContent = filteredPokemon.length
+      ? `${filteredPokemon.length} available Pokémon match current filters. Showing ${visiblePokemon.length}.`
+      : "No available Pokémon match current filters.";
+  }
+
+  if (!visiblePokemon.length) {
+    grid.innerHTML = `<div class="empty-state"><p>No available Pokémon found.</p></div>`;
+    return;
+  }
+
+  grid.innerHTML = visiblePokemon.map(pokemon => renderMockPokemonCard(pokemon)).join("");
+
+  grid.querySelectorAll(".mock-draft-pokemon-card").forEach(button => {
+    button.addEventListener("click", function () {
+      const pokemon = getPokemonBySlug(this.dataset.slug);
+
+      if (!pokemon) {
+        return;
+      }
+
+      mockSelectedPokemonSlug = pokemon.slug;
+      const input = document.getElementById("mockPokemonInput");
+
+      if (input) {
+        input.value = getPokemonLabel(pokemon);
+      }
+
+      renderMockAvailablePokemonGrid();
+      setMockDraftStatus(`${pokemon.name} selected for the next practice pick.`);
+    });
+  });
+}
+
+function renderMockPokemonCard(pokemon) {
+  const selected = mockSelectedPokemonSlug === pokemon.slug ? "selected" : "";
+  const primaryType = getPokemonPrimaryType(pokemon);
+  const secondaryType = getPokemonSecondaryType(pokemon);
+
+  return `
+    <button
+      class="mock-draft-pokemon-card draft-type-card draft-primary-${primaryType} draft-secondary-${secondaryType} ${selected}"
+      type="button"
+      data-slug="${escapeHtml(pokemon.slug)}"
+      data-primary-type="${primaryType}"
+      data-secondary-type="${secondaryType}">
+      ${renderPokemonTypeIconBadge(pokemon)}
+      ${pokemon.image ? `<img src="${escapeHtml(pokemon.image)}" alt="${escapeHtml(pokemon.name)}">` : `<span></span>`}
+      <div>
+        <div class="mock-draft-pokemon-name">${escapeHtml(getPokemonLabel(pokemon))}</div>
+        <div class="mock-draft-pokemon-meta">Rank ${pokemon.rank || "--"} • ${escapeHtml(pokemon.tier || "Bronze")} • ${getPokemonPoints(pokemon)} pts</div>
+        ${renderPokemonTypeBadges(pokemon)}
+      </div>
+    </button>
+  `;
+}
+
+function renderMockPokemonOptions() {
+  return getMockAvailablePokemon()
+    .map(pokemon => `<option value="${escapeHtml(getPokemonLabel(pokemon))}"></option>`)
+    .join("");
+}
+
+function renderMockTierOptions() {
+  const selected = getMockSavedFilter("tier") || "all";
+
+  return ["all", ...DRAFT_TIER_ORDER].map(tier => {
+    const label = tier === "all" ? "All Tiers" : tier;
+    return `<option value="${escapeHtml(tier)}" ${selected === tier ? "selected" : ""}>${escapeHtml(label)}</option>`;
+  }).join("");
+}
+
+function renderMockTypeOptions() {
+  const selected = getMockSavedFilter("type") || "all";
+  const types = Array.from(new Set(championsPokemon.flatMap(pokemon => pokemon.types || []))).sort();
+
+  return [
+    `<option value="all">All Types</option>`,
+    ...types.map(type => `<option value="${escapeHtml(type)}" ${selected === type ? "selected" : ""}>${escapeHtml(type)}</option>`)
+  ].join("");
+}
+
+function getMockFilteredAvailablePokemon() {
+  const searchTerm = (document.getElementById("mockSearchInput")?.value || getMockSavedFilter("search") || "").trim().toLowerCase();
+  const tierFilter = document.getElementById("mockTierSelect")?.value || getMockSavedFilter("tier") || "all";
+  const typeFilter = document.getElementById("mockTypeSelect")?.value || getMockSavedFilter("type") || "all";
+
+  return sortAvailablePokemonForDraft(getMockAvailablePokemon().filter(pokemon => {
+    const haystack = [
+      pokemon.name,
+      pokemon.slug,
+      pokemon.tier,
+      (pokemon.types || []).join(" "),
+      getPokemonLabel(pokemon)
+    ].join(" ").toLowerCase();
+
+    if (searchTerm && !haystack.includes(searchTerm)) {
+      return false;
+    }
+
+    if (tierFilter !== "all" && pokemon.tier !== tierFilter) {
+      return false;
+    }
+
+    if (typeFilter !== "all" && !(pokemon.types || []).includes(typeFilter)) {
+      return false;
+    }
+
+    return true;
+  }));
+}
+
+function getMockNextPickInfo() {
+  const sequence = getMockDraftPickSequence();
+
+  if (mockDraftPicks.length >= sequence.length) {
+    return null;
+  }
+
+  return sequence[mockDraftPicks.length] || null;
+}
+
+function getMockDraftPickSequence() {
+  const orderedTeams = getOrderedTeams();
+  const capacities = new Map();
+  const sequence = [];
+  let maxRounds = 0;
+
+  orderedTeams.forEach(team => {
+    const capacity = Math.max(getRosterSize() - getMockBaseRosterForTeam(team.id).length, 0);
+    capacities.set(team.id, capacity);
+    maxRounds = Math.max(maxRounds, capacity);
+  });
+
+  for (let roundNumber = 1; roundNumber <= maxRounds; roundNumber++) {
+    const roundTeams = roundNumber % 2 === 1 ? orderedTeams : [...orderedTeams].reverse();
+    let pickInRound = 0;
+
+    roundTeams.forEach(team => {
+      if ((capacities.get(team.id) || 0) < roundNumber) {
+        return;
+      }
+
+      pickInRound += 1;
+      sequence.push({
+        overallPick: sequence.length + 1,
+        roundNumber,
+        pickInRound,
+        team
+      });
+    });
+  }
+
+  return sequence;
+}
+
+function getMockBaseRosterForTeam(teamId) {
+  return allRosterRows
+    .filter(row => row.team_id === teamId)
+    .sort((a, b) => Number(a.slot_number || 0) - Number(b.slot_number || 0));
+}
+
+function getMockRosterForTeam(teamId) {
+  const baseRows = getMockBaseRosterForTeam(teamId);
+  const mockRows = mockDraftPicks
+    .filter(pick => pick.league_team_id === teamId)
+    .map((pick, index) => ({
+      league_id: selectedLeagueId,
+      team_id: teamId,
+      pokemon_slug: pick.pokemon_slug,
+      slot_number: baseRows.length + index + 1,
+      is_mock: true
+    }));
+
+  return [...baseRows, ...mockRows];
+}
+
+function getMockTeamPointUsage(teamId) {
+  return getMockRosterForTeam(teamId).reduce((total, row) => {
+    return total + getPokemonPoints(getPokemonBySlug(row.pokemon_slug));
+  }, 0);
+}
+
+function getMockDraftedSlugSet() {
+  return new Set([
+    ...allRosterRows.map(row => row.pokemon_slug),
+    ...draftPicks.map(pick => pick.pokemon_slug),
+    ...mockDraftPicks.map(pick => pick.pokemon_slug)
+  ]);
+}
+
+function getMockAvailablePokemon() {
+  const draftedSlugs = getMockDraftedSlugSet();
+  return championsPokemon.filter(pokemon => !draftedSlugs.has(pokemon.slug));
+}
+
+function getMockPokemonThatFitTeamCap(teamId) {
+  const pointCap = Number(currentLeague?.roster_point_cap || 50);
+  const usedPoints = getMockTeamPointUsage(teamId);
+  const remainingPoints = pointCap - usedPoints;
+  const rosterRows = getMockRosterForTeam(teamId);
+  const openRosterSlots = Math.max(getRosterSize() - rosterRows.length, 0);
+
+  return getMockAvailablePokemon().filter(pokemon => {
+    const points = getPokemonPoints(pokemon);
+    const pointsLeftAfterPick = remainingPoints - points;
+    const minimumPointsNeededAfterPick = Math.max(openRosterSlots - 1, 0);
+
+    return points <= remainingPoints && pointsLeftAfterPick >= minimumPointsNeededAfterPick;
+  });
+}
+
+function getMockSmartAutoPickPokemon(teamId) {
+  return getBalancedAutoPickPokemon(teamId, {
+    availablePokemonGetter: getMockAvailablePokemon,
+    rosterGetter: getMockRosterForTeam,
+    pointUsageGetter: getMockTeamPointUsage
+  });
+}
+
+function findMockPokemonFromInput(inputValue) {
+  const cleaned = String(inputValue || "").trim().toLowerCase();
+
+  if (!cleaned) {
+    return null;
+  }
+
+  return getMockAvailablePokemon().find(pokemon =>
+    pokemon.name.toLowerCase() === cleaned ||
+    pokemon.slug.toLowerCase() === cleaned ||
+    getPokemonLabel(pokemon).toLowerCase() === cleaned
+  ) || getMockAvailablePokemon().find(pokemon =>
+    pokemon.name.toLowerCase().includes(cleaned) ||
+    getPokemonLabel(pokemon).toLowerCase().includes(cleaned)
+  );
+}
+
+function getMockDraftStorageKey() {
+  const cleanLeagueId = String(selectedLeagueId || "league").replace(/[^a-zA-Z0-9_-]/g, "");
+  return `pokeleague_mock_draft_${cleanLeagueId}`;
+}
+
+function getMockFilterStorageKey(name) {
+  const cleanLeagueId = String(selectedLeagueId || "league").replace(/[^a-zA-Z0-9_-]/g, "");
+  return `pokeleague_mock_draft_filter_${cleanLeagueId}_${name}`;
+}
+
+function loadMockDraftPicks() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(getMockDraftStorageKey()) || "[]");
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function saveMockDraftPicks() {
+  localStorage.setItem(getMockDraftStorageKey(), JSON.stringify(mockDraftPicks));
+}
+
+function sanitizeMockDraftPicks() {
+  if (!leagueTeams.length || !championsPokemon.length) {
+    return;
+  }
+
+  const teamIds = new Set(leagueTeams.map(team => team.id));
+  const pokemonSlugs = new Set(championsPokemon.map(pokemon => pokemon.slug));
+  const seenSlugs = new Set(allRosterRows.map(row => row.pokemon_slug));
+  const sequence = getMockDraftPickSequence();
+
+  mockDraftPicks = mockDraftPicks.filter((pick, index) => {
+    const sequencePick = sequence[index];
+
+    if (!sequencePick || !teamIds.has(pick.league_team_id) || !pokemonSlugs.has(pick.pokemon_slug) || seenSlugs.has(pick.pokemon_slug)) {
+      return false;
+    }
+
+    seenSlugs.add(pick.pokemon_slug);
+    pick.league_id = selectedLeagueId;
+    pick.league_team_id = sequencePick.team.id;
+    pick.overall_pick = sequencePick.overallPick;
+    pick.round_number = sequencePick.roundNumber;
+    pick.pick_in_round = sequencePick.pickInRound;
+    return true;
+  });
+
+  saveMockDraftPicks();
+}
+
+function saveMockFilter(name, value) {
+  localStorage.setItem(getMockFilterStorageKey(name), value || "");
+}
+
+function getMockSavedFilter(name) {
+  return localStorage.getItem(getMockFilterStorageKey(name)) || (name === "tier" || name === "type" ? "all" : "");
 }
 
 function updatePickControls() {
@@ -392,11 +1146,12 @@ function renderDraftHeaderSummary(nextPick, maxDraftRounds) {
   const rosterRows = getRosterForTeam(team.id);
   const pointUsage = getTeamPointUsage(team.id);
   const nextPickText = nextPick ? `${nextPick.roundNumber}.${nextPick.pickInRound}` : "--";
+  const rosterSize = getRosterSize();
 
   draftHeaderTeamSummary.innerHTML = `
     <p class="draft-kicker">${currentMembership?.league_team_id ? "Your Team" : "On The Clock"}</p>
     <p class="draft-board-pokemon-name">${escapeHtml(team.team_name)}</p>
-    <p class="small-note">${rosterRows.length}/${ROSTER_SIZE} roster • ${pointUsage}/${pointCap} points • Next ${escapeHtml(nextPickText)}</p>
+    <p class="small-note">${rosterRows.length}/${rosterSize} roster • ${pointUsage}/${pointCap} points • Next ${escapeHtml(nextPickText)}</p>
   `;
 }
 
@@ -664,7 +1419,7 @@ function getDraftPickSequence() {
   const sequence = [];
 
   orderedTeams.forEach(team => {
-    const capacity = Math.max(ROSTER_SIZE - getMascotCountForTeam(team.id), 0);
+    const capacity = Math.max(getRosterSize() - getMascotCountForTeam(team.id), 0);
     draftCapacities.set(team.id, capacity);
     maxRounds = Math.max(maxRounds, capacity);
   });
@@ -929,11 +1684,12 @@ function renderTeamRosters() {
   draftTeamRosters.innerHTML = leagueTeams.map(team => {
     const rosterRows = getRosterForTeam(team.id);
     const pointUsage = getTeamPointUsage(team.id);
+    const rosterSize = getRosterSize();
 
     return `
       <div class="draft-roster-team ${getNextPickInfo()?.team?.id === team.id ? "on-clock-roster" : ""}">
         <h3>${escapeHtml(getDraftRoomTeamLabel(team))}</h3>
-        <p>${rosterRows.length}/${ROSTER_SIZE} Pokémon • ${pointUsage}/${pointCap} points</p>
+        <p>${rosterRows.length}/${rosterSize} Pokémon • ${pointUsage}/${pointCap} points</p>
 
         <div class="draft-point-bar">
           <div style="width:${Math.min((pointUsage / pointCap) * 100, 100)}%"></div>
@@ -1325,62 +2081,192 @@ function getSmartAutoPickPokemon(teamId) {
     return queuedPokemon;
   }
 
-  const legalPokemon = getPokemonThatFitTeamCap(teamId);
+  return getBalancedAutoPickPokemon(teamId);
+}
 
-  if (!legalPokemon.length) {
-    return null;
-  }
-
-  const rosterRows = getRosterForTeam(teamId);
-  const openRosterSlots = ROSTER_SIZE - rosterRows.length;
+function getBalancedAutoPickPokemon(teamId, options = {}) {
+  const availablePokemonGetter = options.availablePokemonGetter || getAvailablePokemon;
+  const rosterGetter = options.rosterGetter || getRosterForTeam;
+  const pointUsageGetter = options.pointUsageGetter || getTeamPointUsage;
   const pointCap = Number(currentLeague?.roster_point_cap || 50);
-  const usedPoints = getTeamPointUsage(teamId);
+  const usedPoints = pointUsageGetter(teamId);
   const remainingPoints = pointCap - usedPoints;
+  const rosterRows = rosterGetter(teamId);
+  const openRosterSlots = getRosterSize() - rosterRows.length;
+  const profile = getRosterAutoDraftProfile(rosterRows);
 
-  return legalPokemon
+  const scoredCandidates = availablePokemonGetter()
     .map(pokemon => {
       const points = getPokemonPoints(pokemon);
       const rank = Number(pokemon.rank || 9999);
-
       const minimumPointsNeededAfterPick = Math.max(openRosterSlots - 1, 0);
       const pointsLeftAfterPick = remainingPoints - points;
-      const keepsRosterPossible = pointsLeftAfterPick >= minimumPointsNeededAfterPick;
 
       return {
         pokemon,
         points,
         rank,
-        keepsRosterPossible
+        keepsRosterPossible: pointsLeftAfterPick >= minimumPointsNeededAfterPick,
+        score: scoreAutoDraftPokemon(pokemon, profile, {
+          openRosterSlots,
+          pointCap,
+          remainingPoints
+        })
       };
     })
-    .filter(candidate => candidate.keepsRosterPossible)
-    .sort((a, b) => {
-      if (b.points !== a.points) {
-        return b.points - a.points;
-      }
+    .filter(candidate => candidate.points <= remainingPoints);
 
-      if (a.rank !== b.rank) {
-        return a.rank - b.rank;
-      }
+  const preferredCandidates = scoredCandidates.filter(candidate => candidate.keepsRosterPossible);
+  const candidates = preferredCandidates.length ? preferredCandidates : scoredCandidates;
 
-      return a.pokemon.name.localeCompare(b.pokemon.name);
-    })[0]?.pokemon || legalPokemon
-      .sort((a, b) => {
-        const pointDiff = getPokemonPoints(b) - getPokemonPoints(a);
+  if (!candidates.length) {
+    return null;
+  }
 
-        if (pointDiff !== 0) {
-          return pointDiff;
-        }
+  return candidates.sort(compareAutoDraftCandidates)[0].pokemon;
+}
 
-        const aRank = Number(a.rank || 9999);
-        const bRank = Number(b.rank || 9999);
+function compareAutoDraftCandidates(a, b) {
+  if (b.score !== a.score) {
+    return b.score - a.score;
+  }
 
-        if (aRank !== bRank) {
-          return aRank - bRank;
-        }
+  if (b.points !== a.points) {
+    return b.points - a.points;
+  }
 
-        return a.name.localeCompare(b.name);
-      })[0];
+  if (a.rank !== b.rank) {
+    return a.rank - b.rank;
+  }
+
+  return a.pokemon.name.localeCompare(b.pokemon.name);
+}
+
+function getRosterAutoDraftProfile(rosterRows) {
+  const profile = {
+    rosterCount: rosterRows.length,
+    typeCounts: {},
+    roleCounts: {},
+    statTotals: {},
+    statCounts: {}
+  };
+
+  rosterRows.forEach(row => {
+    const pokemon = getPokemonBySlug(row.pokemon_slug);
+
+    if (!pokemon) {
+      return;
+    }
+
+    (pokemon.types || []).forEach(type => {
+      const typeSlug = getTypeSlug(type);
+      profile.typeCounts[typeSlug] = (profile.typeCounts[typeSlug] || 0) + 1;
+    });
+
+    const role = getPokemonDraftRole(pokemon);
+    profile.roleCounts[role] = (profile.roleCounts[role] || 0) + 1;
+
+    const stats = getPokemonStatData(pokemon)?.stats;
+
+    if (!stats) {
+      return;
+    }
+
+    DRAFT_STAT_ROWS.forEach(([key]) => {
+      const value = Number(stats[key] || 0);
+      profile.statTotals[key] = (profile.statTotals[key] || 0) + value;
+      profile.statCounts[key] = (profile.statCounts[key] || 0) + 1;
+    });
+  });
+
+  return profile;
+}
+
+function scoreAutoDraftPokemon(pokemon, profile, context) {
+  const points = getPokemonPoints(pokemon);
+  const rank = Number(pokemon.rank || 9999);
+  const bst = getPokemonBst(pokemon) || 0;
+  const types = (pokemon.types || []).map(getTypeSlug).filter(Boolean);
+  const primaryType = types[0] || "normal";
+  const secondaryType = types[1] || "";
+  const role = getPokemonDraftRole(pokemon);
+  const stats = getPokemonStatData(pokemon)?.stats || {};
+
+  let score = points * 140;
+  score += Math.max(0, 180 - Math.min(rank, 180)) * 1.4;
+  score += bst ? bst / 6 : 0;
+  score += getTypeFitScore(primaryType, profile.typeCounts, true);
+
+  if (secondaryType && secondaryType !== primaryType) {
+    score += getTypeFitScore(secondaryType, profile.typeCounts, false);
+  }
+
+  score += getRoleFitScore(role, profile.roleCounts);
+  score += getStatNeedScore(stats, profile);
+  score += getPointPacingScore(points, context);
+
+  return score;
+}
+
+function getTypeFitScore(type, typeCounts, isPrimary) {
+  const count = typeCounts[type] || 0;
+
+  if (count === 0) {
+    return isPrimary ? 95 : 42;
+  }
+
+  if (count === 1) {
+    return isPrimary ? -14 : -6;
+  }
+
+  return isPrimary ? -34 * count : -16 * count;
+}
+
+function getRoleFitScore(role, roleCounts) {
+  const count = roleCounts[role] || 0;
+  const keyRoles = ["Speed", "Tank", "Physical", "Special"];
+
+  if (keyRoles.includes(role) && count === 0) {
+    return 92;
+  }
+
+  if (role === "Balanced" && count === 0) {
+    return 46;
+  }
+
+  return -18 * count;
+}
+
+function getStatNeedScore(stats, profile) {
+  if (!stats || Object.keys(stats).length === 0) {
+    return 0;
+  }
+
+  if (profile.rosterCount === 0) {
+    return DRAFT_STAT_ROWS.reduce((total, [key]) => {
+      return total + Math.min(Number(stats[key] || 0), 125) / 14;
+    }, 0);
+  }
+
+  return DRAFT_STAT_ROWS.reduce((total, [key]) => {
+    const candidateValue = Number(stats[key] || 0);
+    const rosterAverage = (profile.statTotals[key] || 0) / Math.max(profile.statCounts[key] || 1, 1);
+    const needMultiplier = rosterAverage < 75 ? 1.4 : rosterAverage < 90 ? 0.9 : 0.35;
+
+    return total + (Math.min(candidateValue, 130) * needMultiplier / 8);
+  }, 0);
+}
+
+function getPointPacingScore(points, context) {
+  const openSlots = Math.max(context.openRosterSlots || 1, 1);
+  const averageRemainingBudget = context.remainingPoints / openSlots;
+  const scarcityPressure = openSlots <= 2 ? 1.25 : 1;
+
+  if (points >= averageRemainingBudget - 0.5) {
+    return 18 * scarcityPressure;
+  }
+
+  return -Math.min((averageRemainingBudget - points) * 10, 28);
 }
 
 
@@ -1630,7 +2516,7 @@ function draftQueueForceGetFirstLegalPokemon(teamId) {
   const usedPoints = getTeamPointUsage(teamId);
   const remainingPoints = pointCap - usedPoints;
   const rosterRows = getRosterForTeam(teamId);
-  const openRosterSlots = ROSTER_SIZE - rosterRows.length;
+  const openRosterSlots = getRosterSize() - rosterRows.length;
 
   for (const slug of queue) {
     if (draftedSlugs.has(slug)) continue;
@@ -1924,6 +2810,7 @@ async function makeDraftPick(randomPick) {
   }
 
   const rosterRows = getRosterForTeam(nextPick.team.id);
+  const rosterSize = getRosterSize();
   const pointCap = Number(currentLeague?.roster_point_cap || 50);
   const usedPoints = getTeamPointUsage(nextPick.team.id);
   const pokemonPoints = getPokemonPoints(pokemon);
@@ -1935,8 +2822,8 @@ async function makeDraftPick(randomPick) {
     return;
   }
 
-  if (rosterRows.length >= ROSTER_SIZE) {
-    draftActionStatus.textContent = `${nextPick.team.team_name} already has ${ROSTER_SIZE} Pokémon.`;
+  if (rosterRows.length >= rosterSize) {
+    draftActionStatus.textContent = `${nextPick.team.team_name} already has ${rosterSize} Pokémon.`;
     return;
   }
 

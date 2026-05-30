@@ -588,6 +588,17 @@
               </div>
 
               <div class="pkmn-field">
+                <label class="pkmn-label" for="rosterPokemonCapSelect">Pokémon Per Team</label>
+                <select class="pkmn-select" id="rosterPokemonCapSelect">
+                  <option value="8">8 Pokémon</option>
+                  <option value="9">9 Pokémon</option>
+                  <option value="10" selected>10 Pokémon</option>
+                  <option value="11">11 Pokémon</option>
+                  <option value="12">12 Pokémon</option>
+                </select>
+              </div>
+
+              <div class="pkmn-field">
                 <label class="pkmn-label" for="regularSeasonMatchesSelect">Matches Before Playoffs</label>
                 <select class="pkmn-select" id="regularSeasonMatchesSelect">
                   <option value="6">6 Matches</option>
@@ -638,7 +649,7 @@
               Name the divisions, then assign each team to the division you want.
             </p>
             <p id="leagueSettingsPreview" class="small-note">
-              12 teams • 2 divisions • 6 playoff teams • 10 regular season matches • 50 roster points
+              12 teams • 2 divisions • 6 playoff teams • 10 Pokémon per team • 10 regular season matches • 50 roster points
             </p>
             <div id="divisionNameFields" class="division-editor"></div>
           </div>
@@ -673,6 +684,6 @@
   <script src="js/theme-settings.js?v=global-theme1"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
-  <script src="js/create-league.js?v=create-league-public1"></script>
+  <script src="js/create-league.js?v=create-league-roster-cap1"></script>
 </body>
 </html>
