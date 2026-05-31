@@ -92,7 +92,7 @@ async function loadMockDraftPage() {
   mockDraftSubtitle.textContent = league.name;
 
   try {
-    championsPokemon = await fetch("data/champions-pokemon.json?v=mock-draft1").then(response => response.json());
+    championsPokemon = await fetch("data/champions-pokemon.json?v=garchomp9").then(response => response.json());
   } catch (error) {
     console.error("Pokémon data load error:", error);
     renderLockedState("Pokémon data could not be loaded.", "Refresh the page and try again.");

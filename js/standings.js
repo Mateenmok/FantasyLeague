@@ -135,7 +135,7 @@ async function loadRosterData() {
   rosterLoadError = "";
 
   try {
-    championsPokemon = await fetch("data/champions-pokemon.json?v=standings-roster1")
+    championsPokemon = await fetch("data/champions-pokemon.json?v=garchomp9")
       .then(response => response.json());
   } catch (error) {
     console.error("Could not load Champions Pokémon data:", error);

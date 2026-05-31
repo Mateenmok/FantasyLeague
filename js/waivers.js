@@ -6,7 +6,7 @@ let selectedTeamId = localStorage.getItem("selected-team-id") || "team-1";
 
 Promise.all([
   fetch("data/teams.json").then(response => response.json()),
-  fetch("data/champions-pokemon.json").then(response => response.json())
+  fetch("data/champions-pokemon.json?v=garchomp9").then(response => response.json())
 ])
   .then(async ([teamsData, championsData]) => {
     allTeams = teamsData;

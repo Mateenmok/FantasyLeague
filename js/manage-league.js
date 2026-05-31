@@ -148,7 +148,7 @@ async function loadTeamsAndDivisions() {
 
 async function loadPokemonData() {
   try {
-    championsPokemon = await fetch("data/champions-pokemon.json?v=manage-mascots1")
+    championsPokemon = await fetch("data/champions-pokemon.json?v=garchomp9")
       .then(response => response.json());
   } catch (error) {
     console.error("Pokemon data load error:", error);

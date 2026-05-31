@@ -176,7 +176,7 @@ async function loadMyTeamPage() {
   myTeam = team;
 
   try {
-    championsPokemon = await fetch("data/champions-pokemon.json").then(response => response.json());
+    championsPokemon = await fetch("data/champions-pokemon.json?v=garchomp9").then(response => response.json());
   } catch (error) {
     console.error("Could not load Champions Pokémon data:", error);
     championsPokemon = [];

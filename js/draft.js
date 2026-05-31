@@ -98,7 +98,7 @@ let allDraftPicks = [];
 
 Promise.all([
   fetch("data/teams.json").then(response => response.json()),
-  fetch("data/champions-pokemon.json").then(response => response.json()),
+  fetch("data/champions-pokemon.json?v=garchomp9").then(response => response.json()),
   fetch("data/draft-settings.json").then(response => response.json())
 ])
   .then(async ([teamsData, championsData, settingsData]) => {
