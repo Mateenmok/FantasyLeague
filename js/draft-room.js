@@ -36,6 +36,8 @@ const mockDraftInlineContent = document.getElementById("mockDraftInlineContent")
 const mockDraftResetHeaderButton = document.getElementById("mockDraftResetHeaderButton");
 
 const DEFAULT_ROSTER_SIZE = 10;
+const DRAFT_TIMER_AUTOPICK_DISABLED = true;
+const DRAFT_AUTO_DRAFT_DISABLED = true;
 const DRAFT_TIER_ORDER = ["Diamond", "Gold", "Silver", "Bronze"];
 const DRAFT_STAT_ROWS = [
   ["hp", "HP"],
@@ -443,10 +445,10 @@ function renderMockDraftPanel() {
           <datalist id="mockPokemonOptions">${renderMockPokemonOptions()}</datalist>
         </label>
         <button id="mockMakePickButton" class="pkmn-button small" type="button" ${nextPick ? "" : "disabled"}>Make Pick</button>
-        <button id="mockAutoPickButton" class="pkmn-button small" type="button" ${nextPick ? "" : "disabled"}>Auto Pick</button>
+        <button id="mockAutoPickButton" class="pkmn-button small" type="button" ${nextPick && !DRAFT_AUTO_DRAFT_DISABLED ? "" : "disabled"}>Auto Pick</button>
       </div>
       <div class="mock-draft-actions">
-        <button id="mockAutoDraftAllButton" class="pkmn-button small" type="button" ${nextPick ? "" : "disabled"}>Auto Draft All</button>
+        <button id="mockAutoDraftAllButton" class="pkmn-button small" type="button" ${nextPick && !DRAFT_AUTO_DRAFT_DISABLED ? "" : "disabled"}>Auto Draft All</button>
         <button id="mockUndoPickButton" class="pkmn-button small" type="button" ${mockDraftPicks.length ? "" : "disabled"}>Undo Pick</button>
       </div>
       <p id="mockDraftInlineMessage" class="mock-draft-inline-message">${escapeHtml(mockDraftStatusMessage)}</p>
@@ -558,6 +560,11 @@ function makeMockPickFromInput() {
 }
 
 function autoMockPick() {
+  if (DRAFT_AUTO_DRAFT_DISABLED) {
+    setMockDraftStatus("Auto draft is temporarily disabled. Make practice picks manually.");
+    return;
+  }
+
   const nextPick = getMockNextPickInfo();
 
   if (!nextPick) {
@@ -576,6 +583,11 @@ function autoMockPick() {
 }
 
 function autoMockDraftAll() {
+  if (DRAFT_AUTO_DRAFT_DISABLED) {
+    setMockDraftStatus("Auto draft is temporarily disabled. Make practice picks manually.");
+    return;
+  }
+
   let safety = 0;
   let stoppedTeamName = "";
 
@@ -1377,6 +1389,14 @@ function updateDraftClock() {
 
   if (!draftState.current_pick_started_at) {
     setDraftClockLine("Clock waiting...", "waiting");
+    return;
+  }
+
+  if (DRAFT_TIMER_AUTOPICK_DISABLED) {
+    setDraftClockLine(
+      `Unlimited clock • Auto-pick off • On the clock: ${nextPick.team.team_name}`,
+      "running"
+    );
     return;
   }
 
@@ -2763,6 +2783,11 @@ function renderAvailablePokemonGrid() {
 }
 
 async function makeDraftPick(randomPick) {
+  if (randomPick && DRAFT_AUTO_DRAFT_DISABLED) {
+    draftActionStatus.textContent = "Auto-pick is temporarily disabled. Make picks manually.";
+    return;
+  }
+
   const permissionPickInfo = getNextPickInfo();
   const isMyTurn = Boolean(
     currentMembership?.league_team_id &&
