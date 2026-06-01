@@ -3,6 +3,10 @@ const waiverAdminPanel = document.getElementById("waiverAdminPanel");
 const waiverAdminText = document.getElementById("waiverAdminText");
 const openWaiversButton = document.getElementById("openWaiversButton");
 const closeWaiversButton = document.getElementById("closeWaiversButton");
+const waiverWindowStartInput = document.getElementById("waiverWindowStartInput");
+const waiverWindowEndInput = document.getElementById("waiverWindowEndInput");
+const waiverAcquisitionLimitSelect = document.getElementById("waiverAcquisitionLimitSelect");
+const saveWaiverSettingsButton = document.getElementById("saveWaiverSettingsButton");
 const waiverStatusText = document.getElementById("waiverStatusText");
 const waiverHeaderStatus = document.getElementById("waiverHeaderStatus");
 const waiverHeaderTeamSummary = document.getElementById("waiverHeaderTeamSummary");
@@ -36,6 +40,7 @@ let myTeam = null;
 let leagueTeams = [];
 let allRosterRows = [];
 let myRosterRows = [];
+let myWaiverAcquisitionRows = [];
 let championsPokemon = [];
 let pokemonBstBySlug = {};
 let isAdmin = false;
@@ -52,6 +57,7 @@ function getRosterSize() {
 
 openWaiversButton.addEventListener("click", () => setWaiversOpen(true));
 closeWaiversButton.addEventListener("click", () => setWaiversOpen(false));
+saveWaiverSettingsButton.addEventListener("click", saveWaiverSettings);
 
 waiverPokemonSearch.addEventListener("input", renderAvailablePokemonGrid);
 waiverMegaFilterSelect.addEventListener("change", renderAvailablePokemonGrid);
@@ -165,15 +171,56 @@ async function refreshWaiverData() {
     ? allRosterRows.filter(row => row.team_id === myTeam.id).sort((a, b) => a.slot_number - b.slot_number)
     : [];
 
+  await loadMyWaiverAcquisitions();
   renderWaiverPage();
 }
 
+async function loadMyWaiverAcquisitions() {
+  myWaiverAcquisitionRows = [];
+
+  if (!myTeam) {
+    return;
+  }
+
+  try {
+    let query = supabaseClient
+      .from("league_waiver_acquisitions")
+      .select("*")
+      .eq("league_id", selectedLeagueId)
+      .eq("team_id", myTeam.id);
+
+    if (currentLeague.waiver_window_start_at) {
+      query = query.gte("created_at", currentLeague.waiver_window_start_at);
+    }
+
+    if (currentLeague.waiver_window_end_at) {
+      query = query.lt("created_at", currentLeague.waiver_window_end_at);
+    }
+
+    const { data, error } = await query.order("created_at", { ascending: false });
+
+    if (error) {
+      console.warn("Waiver acquisition tracking unavailable:", error);
+      myWaiverAcquisitionRows = [];
+      return;
+    }
+
+    myWaiverAcquisitionRows = data || [];
+  } catch (error) {
+    console.warn("Waiver acquisition tracking skipped:", error);
+    myWaiverAcquisitionRows = [];
+  }
+}
+
 function renderWaiverPage() {
-  const waiversOpen = Boolean(currentLeague.waiver_open);
+  const waiversOpen = isWaiverWindowOpen();
+  const waiverStatusDetails = getWaiverStatusDetails();
+  const limitText = getWaiverLimitText();
+  const myAcquisitionCount = getMyWaiverAcquisitionCount();
 
   waiverStatusText.textContent = waiversOpen
-    ? "Waivers are currently open."
-    : "Waiver period is currently closed. Ask a league administrator to open.";
+    ? `Waivers are open. ${waiverStatusDetails} ${limitText}`
+    : `Waiver period is closed. ${waiverStatusDetails}`;
 
   if (waiverHeaderStatus) {
     waiverHeaderStatus.textContent = waiversOpen ? "Open" : "Closed";
@@ -184,11 +231,13 @@ function renderWaiverPage() {
   if (isAdmin) {
     waiverAdminPanel.classList.remove("hidden");
     waiverAdminText.textContent = waiversOpen
-      ? "Waivers are open. You can close them at any time."
-      : "Waivers are closed. Open them when managers are allowed to make changes.";
+      ? `Waivers are open. ${limitText}`
+      : `Waivers are closed or outside the scheduled window. ${waiverStatusDetails}`;
 
-    openWaiversButton.disabled = waiversOpen;
-    closeWaiversButton.disabled = !waiversOpen;
+    renderWaiverSettingsControls();
+
+    openWaiversButton.disabled = Boolean(currentLeague.waiver_open);
+    closeWaiversButton.disabled = !currentLeague.waiver_open;
   } else {
     waiverAdminPanel.classList.add("hidden");
   }
@@ -218,7 +267,77 @@ function renderWaiverPage() {
   renderRosterList();
   renderAvailablePokemonGrid();
 
-  waiverPageStatus.textContent = "Waivers open.";
+  waiverPageStatus.textContent = isWaiverAcquisitionLimitReached()
+    ? `Waivers open. Your team has used ${myAcquisitionCount}/${currentLeague.waiver_acquisition_limit} pickups for this period.`
+    : "Waivers open.";
+}
+
+function renderWaiverSettingsControls() {
+  if (!waiverWindowStartInput || !waiverWindowEndInput || !waiverAcquisitionLimitSelect) {
+    return;
+  }
+
+  waiverWindowStartInput.value = toDateTimeLocalValue(currentLeague.waiver_window_start_at);
+  waiverWindowEndInput.value = toDateTimeLocalValue(currentLeague.waiver_window_end_at);
+  waiverAcquisitionLimitSelect.value = currentLeague.waiver_acquisition_limit
+    ? String(currentLeague.waiver_acquisition_limit)
+    : "unlimited";
+}
+
+async function saveWaiverSettings() {
+  if (!isAdmin) {
+    waiverPageStatus.textContent = "Only admins can change waiver settings.";
+    return;
+  }
+
+  const startValue = waiverWindowStartInput?.value || "";
+  const endValue = waiverWindowEndInput?.value || "";
+  const limitValue = waiverAcquisitionLimitSelect?.value || "unlimited";
+  const startDate = startValue ? new Date(startValue) : null;
+  const endDate = endValue ? new Date(endValue) : null;
+
+  if ((startDate && Number.isNaN(startDate.getTime())) || (endDate && Number.isNaN(endDate.getTime()))) {
+    waiverPageStatus.textContent = "Choose valid waiver start and end times.";
+    return;
+  }
+
+  if (startDate && endDate && endDate.getTime() <= startDate.getTime()) {
+    waiverPageStatus.textContent = "Waiver close time must be after the open time.";
+    return;
+  }
+
+  const startIso = startDate ? startDate.toISOString() : null;
+  const endIso = endDate ? endDate.toISOString() : null;
+  const acquisitionLimit = limitValue === "unlimited" ? null : Number(limitValue);
+
+  if (acquisitionLimit !== null && ![1, 2, 3, 4].includes(acquisitionLimit)) {
+    waiverPageStatus.textContent = "Pickup limit must be 1, 2, 3, 4, or unlimited.";
+    return;
+  }
+
+  saveWaiverSettingsButton.disabled = true;
+  waiverPageStatus.textContent = "Saving waiver settings...";
+
+  const { error } = await supabaseClient
+    .from("leagues")
+    .update({
+      waiver_open: true,
+      waiver_window_start_at: startIso,
+      waiver_window_end_at: endIso,
+      waiver_acquisition_limit: acquisitionLimit
+    })
+    .eq("id", selectedLeagueId);
+
+  if (error) {
+    console.error("Waiver settings update error:", error);
+    waiverPageStatus.textContent = "Could not save waiver settings.";
+    saveWaiverSettingsButton.disabled = false;
+    return;
+  }
+
+  waiverPageStatus.textContent = "Waiver settings saved.";
+  saveWaiverSettingsButton.disabled = false;
+  await refreshWaiverData();
 }
 
 async function setWaiversOpen(open) {
@@ -245,6 +364,107 @@ async function setWaiversOpen(open) {
 
   waiverPageStatus.textContent = open ? "Waivers opened." : "Waivers closed.";
   await refreshWaiverData();
+}
+
+function isWaiverWindowOpen() {
+  if (!currentLeague?.waiver_open) {
+    return false;
+  }
+
+  const now = Date.now();
+  const startsAt = currentLeague.waiver_window_start_at
+    ? new Date(currentLeague.waiver_window_start_at).getTime()
+    : null;
+  const endsAt = currentLeague.waiver_window_end_at
+    ? new Date(currentLeague.waiver_window_end_at).getTime()
+    : null;
+
+  if (startsAt && now < startsAt) {
+    return false;
+  }
+
+  if (endsAt && now >= endsAt) {
+    return false;
+  }
+
+  return true;
+}
+
+function getWaiverStatusDetails() {
+  const startsAt = currentLeague?.waiver_window_start_at;
+  const endsAt = currentLeague?.waiver_window_end_at;
+
+  if (startsAt && endsAt) {
+    return `Window: ${formatDateTime(startsAt)} to ${formatDateTime(endsAt)}.`;
+  }
+
+  if (startsAt) {
+    return `Window opens ${formatDateTime(startsAt)}.`;
+  }
+
+  if (endsAt) {
+    return `Window closes ${formatDateTime(endsAt)}.`;
+  }
+
+  return currentLeague?.waiver_open
+    ? "No scheduled close time is set."
+    : "No waiver window is currently scheduled.";
+}
+
+function getWaiverLimitText() {
+  const limit = currentLeague?.waiver_acquisition_limit;
+
+  if (!limit) {
+    return "Pickup limit: unlimited.";
+  }
+
+  const used = getMyWaiverAcquisitionCount();
+  return `Pickup limit: ${used}/${limit} used this period.`;
+}
+
+function getMyWaiverAcquisitionCount() {
+  return myWaiverAcquisitionRows.length;
+}
+
+function isWaiverAcquisitionLimitReached() {
+  const limit = Number(currentLeague?.waiver_acquisition_limit || 0);
+
+  return limit > 0 && getMyWaiverAcquisitionCount() >= limit;
+}
+
+function toDateTimeLocalValue(isoValue) {
+  if (!isoValue) {
+    return "";
+  }
+
+  const date = new Date(isoValue);
+
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
+
+  const offsetMs = date.getTimezoneOffset() * 60 * 1000;
+  return new Date(date.getTime() - offsetMs).toISOString().slice(0, 16);
+}
+
+function formatDateTime(isoValue) {
+  if (!isoValue) {
+    return "";
+  }
+
+  const date = new Date(isoValue);
+
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
+
+  return date.toLocaleString([], {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit"
+  });
 }
 
 async function logLeagueActivityEvent({ eventType, pokemonName, pokemonSlug, title, description }) {
@@ -463,6 +683,7 @@ function renderWaiverAvailablePokemonPagination(totalCount) {
 
 function renderAvailablePokemonGrid() {
   let availablePokemon = getFilteredAvailablePokemon();
+  const acquisitionLimitReached = isWaiverAcquisitionLimitReached();
 
   const activeFilterSignature = getWaiverAvailablePokemonFilterSignature();
 
@@ -520,8 +741,8 @@ function renderAvailablePokemonGrid() {
             </select>
           </div>
 
-          <button class="pkmn-button small waiver-add-button" data-slug="${pokemon.slug}">
-            Add
+          <button class="pkmn-button small waiver-add-button" data-slug="${pokemon.slug}" ${acquisitionLimitReached ? "disabled" : ""}>
+            ${acquisitionLimitReached ? "Limit Reached" : "Add"}
           </button>
         </div>
       </article>
@@ -536,13 +757,18 @@ function renderAvailablePokemonGrid() {
 }
 
 async function addWaiverPokemon(pokemonSlug) {
-  if (!currentLeague.waiver_open) {
-    waiverPageStatus.textContent = "Waiver period is currently closed. Ask a league administrator to open.";
+  if (!isWaiverWindowOpen()) {
+    waiverPageStatus.textContent = `Waiver period is currently closed. ${getWaiverStatusDetails()}`;
     return;
   }
 
   if (!myTeam) {
     waiverPageStatus.textContent = "No team assigned.";
+    return;
+  }
+
+  if (isWaiverAcquisitionLimitReached()) {
+    waiverPageStatus.textContent = `Your team has already used ${getMyWaiverAcquisitionCount()}/${currentLeague.waiver_acquisition_limit} pickups for this waiver period.`;
     return;
   }
 
@@ -622,6 +848,8 @@ async function addWaiverPokemon(pokemonSlug) {
     return;
   }
 
+  await recordWaiverAcquisition(pokemon);
+
   await logLeagueActivityEvent({
     eventType: dropPokemon ? "add_drop" : "add",
     pokemonName: pokemon.name,
@@ -639,6 +867,26 @@ async function addWaiverPokemon(pokemonSlug) {
     : `Added ${pokemon.name}.`;
 
   await refreshWaiverData();
+}
+
+async function recordWaiverAcquisition(pokemon) {
+  try {
+    const { error } = await supabaseClient
+      .from("league_waiver_acquisitions")
+      .insert({
+        id: makeId(),
+        league_id: selectedLeagueId,
+        team_id: myTeam.id,
+        pokemon_slug: pokemon.slug,
+        waiver_window_start_at: currentLeague.waiver_window_start_at || null
+      });
+
+    if (error) {
+      console.warn("Waiver acquisition tracking skipped:", error);
+    }
+  } catch (error) {
+    console.warn("Waiver acquisition tracking failed:", error);
+  }
 }
 
 function getNextRosterSlot() {
@@ -910,6 +1158,14 @@ function renderMegaBadge(pokemon) {
   }
 
   return `<img class="mega-badge-overlay" src="images/MegaEvolution.png" alt="Mega Evolution">`;
+}
+
+function makeId() {
+  if (crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+
+  return `id-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 }
 
 function escapeHtml(value) {

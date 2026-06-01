@@ -8,8 +8,14 @@ const weeklyAdminStatus = document.getElementById("weeklyAdminStatus");
 const leagueActivityFeed = document.getElementById("leagueActivityFeed");
 
 const generateScheduleButton = document.getElementById("generateScheduleButton");
+const editScheduleButton = document.getElementById("editScheduleButton");
 const saveScoresButton = document.getElementById("saveScoresButton");
 const advanceMatchupButton = document.getElementById("advanceMatchupButton");
+const manualScheduleEditor = document.getElementById("manualScheduleEditor");
+const manualScheduleWeeks = document.getElementById("manualScheduleWeeks");
+const saveManualScheduleButton = document.getElementById("saveManualScheduleButton");
+const cancelManualScheduleButton = document.getElementById("cancelManualScheduleButton");
+const manualScheduleStatus = document.getElementById("manualScheduleStatus");
 
 const selectedLeagueId = localStorage.getItem("selected-league-id");
 
@@ -19,10 +25,14 @@ let leagueTeams = [];
 let leagueMatchups = [];
 let isAdmin = false;
 let leagueActivityEvents = [];
+let manualScheduleOpen = false;
 
 generateScheduleButton.addEventListener("click", generateSchedule);
+editScheduleButton.addEventListener("click", toggleManualScheduleEditor);
 saveScoresButton.addEventListener("click", saveCurrentScores);
 advanceMatchupButton.addEventListener("click", advanceMatchup);
+saveManualScheduleButton.addEventListener("click", saveManualSchedule);
+cancelManualScheduleButton.addEventListener("click", closeManualScheduleEditor);
 
 loadWeeklyMatchesPage();
 
@@ -169,13 +179,16 @@ function renderLeagueActivity() {
   // Automatic league status alerts go underneath real activity.
   if (currentLeague) {
     if (typeof currentLeague.waiver_open === "boolean") {
+      const waiverCurrentlyOpen = isLeagueWaiverWindowOpen(currentLeague);
+      const waiverWindowText = getLeagueWaiverWindowText(currentLeague);
+
       feedItems.push({
         type: "alert",
         icon: "W",
-        title: currentLeague.waiver_open ? "Waivers are open" : "Waivers are closed",
-        description: currentLeague.waiver_open
+        title: waiverCurrentlyOpen ? "Waivers are open" : "Waivers are closed",
+        description: waiverCurrentlyOpen
           ? "Teams can currently add and drop Pokémon through Waiver Wire."
-          : "Waiver Wire is currently closed."
+          : waiverWindowText || "Waiver Wire is currently closed."
       });
     }
 
@@ -262,6 +275,58 @@ function buildActivityDescription(event) {
   return event.message || "League activity was recorded.";
 }
 
+function isLeagueWaiverWindowOpen(league) {
+  if (!league?.waiver_open) {
+    return false;
+  }
+
+  const now = Date.now();
+  const startsAt = league.waiver_window_start_at ? new Date(league.waiver_window_start_at).getTime() : null;
+  const endsAt = league.waiver_window_end_at ? new Date(league.waiver_window_end_at).getTime() : null;
+
+  if (startsAt && now < startsAt) {
+    return false;
+  }
+
+  if (endsAt && now >= endsAt) {
+    return false;
+  }
+
+  return true;
+}
+
+function getLeagueWaiverWindowText(league) {
+  if (!league?.waiver_open) {
+    return "Waiver Wire is currently closed.";
+  }
+
+  if (league.waiver_window_start_at && new Date(league.waiver_window_start_at).getTime() > Date.now()) {
+    return `Waiver Wire opens ${formatLeagueActivityDateTime(league.waiver_window_start_at)}.`;
+  }
+
+  if (league.waiver_window_end_at && new Date(league.waiver_window_end_at).getTime() <= Date.now()) {
+    return `Waiver Wire closed ${formatLeagueActivityDateTime(league.waiver_window_end_at)}.`;
+  }
+
+  return "Waiver Wire is currently closed.";
+}
+
+function formatLeagueActivityDateTime(isoValue) {
+  const date = new Date(isoValue);
+
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
+
+  return date.toLocaleString([], {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit"
+  });
+}
+
 function renderWeeklyMatches() {
   if (!currentLeague) {
     return;
@@ -270,8 +335,11 @@ function renderWeeklyMatches() {
   const scheduleGenerated = currentLeague.schedule_generated && leagueMatchups.length > 0;
 
   generateScheduleButton.style.display = scheduleGenerated ? "none" : "flex";
+  editScheduleButton.style.display = isAdmin ? "flex" : "none";
+  editScheduleButton.textContent = manualScheduleOpen ? "Hide Schedule Editor" : "Edit Schedule";
   saveScoresButton.style.display = scheduleGenerated ? "flex" : "none";
   advanceMatchupButton.style.display = scheduleGenerated ? "flex" : "none";
+  renderManualScheduleEditor();
 
   if (!scheduleGenerated) {
     weeklyRoundTitle.textContent = "No Schedule Yet";
@@ -370,6 +438,336 @@ function renderTeamSide(team, side) {
       </div>
     </div>
   `;
+}
+
+function toggleManualScheduleEditor() {
+  manualScheduleOpen = !manualScheduleOpen;
+  renderWeeklyMatches();
+}
+
+function closeManualScheduleEditor() {
+  manualScheduleOpen = false;
+  renderWeeklyMatches();
+}
+
+function renderManualScheduleEditor() {
+  if (!manualScheduleEditor || !manualScheduleWeeks) {
+    return;
+  }
+
+  manualScheduleEditor.style.display = isAdmin && manualScheduleOpen ? "block" : "none";
+
+  if (!isAdmin || !manualScheduleOpen) {
+    manualScheduleWeeks.innerHTML = "";
+    return;
+  }
+
+  const matchupCount = getRegularSeasonMatchCount();
+  const matchupsPerRound = getMatchupsPerRound();
+
+  if (leagueTeams.length < 2 || matchupsPerRound < 1) {
+    manualScheduleWeeks.innerHTML = `
+      <div class="empty-state">
+        <p>Need at least two teams before creating a schedule.</p>
+      </div>
+    `;
+    return;
+  }
+
+  const fallbackRows = buildRegularSeasonSchedule(leagueTeams, matchupCount);
+  const fallbackBySlot = new Map(fallbackRows.map(row => [getScheduleSlotKey(row.matchup_number, row.display_order), row]));
+
+  manualScheduleWeeks.innerHTML = Array.from({ length: matchupCount }, (_, weekIndex) => {
+    const matchupNumber = weekIndex + 1;
+
+    const rows = Array.from({ length: matchupsPerRound }, (_, slotIndex) => {
+      const displayOrder = slotIndex + 1;
+      const existingMatchup = getExistingMatchup(matchupNumber, displayOrder);
+      const fallbackMatchup = fallbackBySlot.get(getScheduleSlotKey(matchupNumber, displayOrder));
+      return renderManualScheduleRow(matchupNumber, displayOrder, existingMatchup, fallbackMatchup);
+    }).join("");
+
+    return `
+      <section class="manual-schedule-week">
+        <h3>Matchup ${matchupNumber}</h3>
+        ${rows}
+      </section>
+    `;
+  }).join("");
+
+  if (manualScheduleStatus) {
+    manualScheduleStatus.textContent = "Each team must appear exactly once per matchup.";
+  }
+}
+
+function renderManualScheduleRow(matchupNumber, displayOrder, existingMatchup, fallbackMatchup) {
+  const locked = existingMatchup && isMatchupLocked(existingMatchup);
+  const team1Value = existingMatchup?.team1_id || fallbackMatchup?.team1_id || "";
+  const team2Value = existingMatchup?.team2_id || fallbackMatchup?.team2_id || "";
+  const lockNote = locked ? `<p class="manual-schedule-lock-note">${escapeHtml(getMatchupLockReason(existingMatchup))}</p>` : "";
+
+  return `
+    <div
+      class="manual-schedule-row ${locked ? "locked" : ""}"
+      data-matchup-number="${matchupNumber}"
+      data-display-order="${displayOrder}"
+      data-matchup-id="${escapeHtml(existingMatchup?.id || "")}">
+      <span class="manual-schedule-label">Game ${displayOrder}</span>
+      <select
+        id="manualTeam1-${matchupNumber}-${displayOrder}"
+        class="manual-schedule-select"
+        ${locked ? "disabled" : ""}>
+        ${renderTeamOptions(team1Value)}
+      </select>
+      <span class="manual-schedule-vs">vs</span>
+      <select
+        id="manualTeam2-${matchupNumber}-${displayOrder}"
+        class="manual-schedule-select"
+        ${locked ? "disabled" : ""}>
+        ${renderTeamOptions(team2Value)}
+      </select>
+      ${lockNote}
+    </div>
+  `;
+}
+
+function renderTeamOptions(selectedTeamId) {
+  const options = [`<option value="">Select team</option>`];
+
+  leagueTeams.forEach(team => {
+    const selected = team.id === selectedTeamId ? "selected" : "";
+    options.push(`<option value="${escapeHtml(team.id)}" ${selected}>${escapeHtml(team.team_name)}</option>`);
+  });
+
+  return options.join("");
+}
+
+async function saveManualSchedule() {
+  if (!isAdmin) {
+    weeklyAdminStatus.textContent = "Only admins can edit the schedule.";
+    return;
+  }
+
+  const scheduleRows = collectManualScheduleRows();
+  const validationError = validateManualScheduleRows(scheduleRows);
+
+  if (validationError) {
+    manualScheduleStatus.textContent = validationError;
+    return;
+  }
+
+  saveManualScheduleButton.disabled = true;
+  weeklyAdminStatus.textContent = "Saving manual schedule...";
+  manualScheduleStatus.textContent = "Saving schedule...";
+
+  const rowIdsToKeep = new Set(scheduleRows.map(row => row.existingMatchup?.id).filter(Boolean));
+
+  for (const row of scheduleRows) {
+    if (row.locked) {
+      continue;
+    }
+
+    const payload = {
+      league_id: selectedLeagueId,
+      phase: "regular",
+      matchup_number: row.matchupNumber,
+      display_order: row.displayOrder,
+      team1_id: row.team1Id,
+      team2_id: row.team2Id,
+      team1_score: null,
+      team2_score: null,
+      winner_team_id: null,
+      completed: false
+    };
+
+    if (row.existingMatchup) {
+      const { error } = await supabaseClient
+        .from("league_matchups")
+        .update(payload)
+        .eq("id", row.existingMatchup.id);
+
+      if (error) {
+        console.error("Update manual schedule error:", error);
+        manualScheduleStatus.textContent = "Could not update schedule. Check console.";
+        weeklyAdminStatus.textContent = "Manual schedule save failed.";
+        saveManualScheduleButton.disabled = false;
+        return;
+      }
+    } else {
+      const { error } = await supabaseClient
+        .from("league_matchups")
+        .insert({
+          id: makeId(),
+          ...payload
+        });
+
+      if (error) {
+        console.error("Insert manual schedule error:", error);
+        manualScheduleStatus.textContent = "Could not create schedule. Check console.";
+        weeklyAdminStatus.textContent = "Manual schedule save failed.";
+        saveManualScheduleButton.disabled = false;
+        return;
+      }
+    }
+  }
+
+  const editableExtras = leagueMatchups.filter(matchup => {
+    return matchup.phase === "regular" &&
+      !rowIdsToKeep.has(matchup.id) &&
+      !isMatchupLocked(matchup);
+  });
+
+  for (const matchup of editableExtras) {
+    const { error } = await supabaseClient
+      .from("league_matchups")
+      .delete()
+      .eq("id", matchup.id);
+
+    if (error) {
+      console.error("Delete extra manual schedule row error:", error);
+      manualScheduleStatus.textContent = "Schedule saved, but an extra old matchup could not be removed.";
+      weeklyAdminStatus.textContent = "Manual schedule partially saved.";
+      saveManualScheduleButton.disabled = false;
+      return;
+    }
+  }
+
+  const leagueUpdate = {
+    schedule_generated: true
+  };
+
+  if (!currentLeague.schedule_generated) {
+    leagueUpdate.current_matchup_number = 1;
+    leagueUpdate.season_phase = "regular";
+  }
+
+  const { error: leagueUpdateError } = await supabaseClient
+    .from("leagues")
+    .update(leagueUpdate)
+    .eq("id", selectedLeagueId);
+
+  if (leagueUpdateError) {
+    console.error("Manual schedule league update error:", leagueUpdateError);
+    manualScheduleStatus.textContent = "Schedule saved, but league status failed.";
+    weeklyAdminStatus.textContent = "Manual schedule partially saved.";
+    saveManualScheduleButton.disabled = false;
+    return;
+  }
+
+  manualScheduleStatus.textContent = "Manual schedule saved.";
+  weeklyAdminStatus.textContent = "Manual schedule saved.";
+  saveManualScheduleButton.disabled = false;
+
+  await loadLeagueData();
+  renderLeagueActivity();
+  renderWeeklyMatches();
+}
+
+function collectManualScheduleRows() {
+  const matchupCount = getRegularSeasonMatchCount();
+  const matchupsPerRound = getMatchupsPerRound();
+  const rows = [];
+
+  for (let matchupNumber = 1; matchupNumber <= matchupCount; matchupNumber++) {
+    for (let displayOrder = 1; displayOrder <= matchupsPerRound; displayOrder++) {
+      const existingMatchup = getExistingMatchup(matchupNumber, displayOrder);
+      const team1Input = document.getElementById(`manualTeam1-${matchupNumber}-${displayOrder}`);
+      const team2Input = document.getElementById(`manualTeam2-${matchupNumber}-${displayOrder}`);
+
+      rows.push({
+        matchupNumber,
+        displayOrder,
+        existingMatchup,
+        locked: existingMatchup ? isMatchupLocked(existingMatchup) : false,
+        team1Id: team1Input?.value || existingMatchup?.team1_id || "",
+        team2Id: team2Input?.value || existingMatchup?.team2_id || ""
+      });
+    }
+  }
+
+  return rows;
+}
+
+function validateManualScheduleRows(rows) {
+  if (leagueTeams.length % 2 !== 0) {
+    return "Manual schedules require an even number of teams.";
+  }
+
+  for (const row of rows) {
+    if (!row.team1Id || !row.team2Id) {
+      return `Choose both teams for Matchup ${row.matchupNumber}, Game ${row.displayOrder}.`;
+    }
+
+    if (row.team1Id === row.team2Id) {
+      return `A team cannot play itself in Matchup ${row.matchupNumber}, Game ${row.displayOrder}.`;
+    }
+  }
+
+  const rowsByMatchup = {};
+
+  rows.forEach(row => {
+    if (!rowsByMatchup[row.matchupNumber]) {
+      rowsByMatchup[row.matchupNumber] = [];
+    }
+
+    rowsByMatchup[row.matchupNumber].push(row);
+  });
+
+  for (const [matchupNumber, matchupRows] of Object.entries(rowsByMatchup)) {
+    const usedTeamIds = new Set();
+
+    for (const row of matchupRows) {
+      if (usedTeamIds.has(row.team1Id) || usedTeamIds.has(row.team2Id)) {
+        return `Each team can appear only once in Matchup ${matchupNumber}.`;
+      }
+
+      usedTeamIds.add(row.team1Id);
+      usedTeamIds.add(row.team2Id);
+    }
+
+    if (usedTeamIds.size !== leagueTeams.length) {
+      return `Matchup ${matchupNumber} must include every team exactly once.`;
+    }
+  }
+
+  return "";
+}
+
+function getExistingMatchup(matchupNumber, displayOrder) {
+  return leagueMatchups.find(matchup => {
+    return matchup.matchup_number === matchupNumber &&
+      matchup.display_order === displayOrder;
+  });
+}
+
+function getScheduleSlotKey(matchupNumber, displayOrder) {
+  return `${matchupNumber}-${displayOrder}`;
+}
+
+function getRegularSeasonMatchCount() {
+  return Number(currentLeague?.regular_season_matches || 10);
+}
+
+function getMatchupsPerRound() {
+  return Math.floor(leagueTeams.length / 2);
+}
+
+function isMatchupLocked(matchup) {
+  return Boolean(matchup?.completed) ||
+    matchup?.team1_score !== null ||
+    matchup?.team2_score !== null;
+}
+
+function getMatchupLockReason(matchup) {
+  if (matchup?.completed) {
+    return "Locked because scores were reported.";
+  }
+
+  if (matchup?.team1_score !== null || matchup?.team2_score !== null) {
+    return "Locked because this matchup has saved score data.";
+  }
+
+  return "Locked.";
 }
 
 async function generateSchedule() {
