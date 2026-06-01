@@ -100,6 +100,8 @@ let currentMembership = null;
 let myTeam = null;
 let opponentTeam = null;
 let currentMatchup = null;
+let leagueTeams = [];
+let regularSeasonMatchups = [];
 let championsPokemon = [];
 let myRosterRows = [];
 let opponentRosterRows = [];
@@ -179,7 +181,8 @@ async function loadMatchupData() {
   const { data: teams, error: teamsError } = await supabaseClient
     .from("league_teams")
     .select("*")
-    .eq("league_id", selectedLeagueId);
+    .eq("league_id", selectedLeagueId)
+    .order("team_number", { ascending: true });
 
   if (teamsError) {
     console.error("Teams error:", teamsError);
@@ -187,21 +190,21 @@ async function loadMatchupData() {
     return;
   }
 
-  myTeam = teams.find(team => team.id === currentMembership.league_team_id);
+  leagueTeams = teams || [];
+  myTeam = leagueTeams.find(team => team.id === currentMembership.league_team_id);
 
   if (!myTeam) {
     myMatchupStatus.textContent = "Could not find your assigned team.";
     return;
   }
 
-  const matchupNumber = currentLeague.current_matchup_number || 1;
-
   const { data: matchups, error: matchupsError } = await supabaseClient
     .from("league_matchups")
     .select("*")
     .eq("league_id", selectedLeagueId)
     .eq("phase", "regular")
-    .eq("matchup_number", matchupNumber);
+    .order("matchup_number", { ascending: true })
+    .order("display_order", { ascending: true });
 
   if (matchupsError) {
     console.error("Matchups error:", matchupsError);
@@ -209,8 +212,13 @@ async function loadMatchupData() {
     return;
   }
 
-  currentMatchup = (matchups || []).find(matchup =>
-    matchup.team1_id === myTeam.id || matchup.team2_id === myTeam.id
+  regularSeasonMatchups = matchups || [];
+
+  const matchupNumber = currentLeague.current_matchup_number || 1;
+
+  currentMatchup = regularSeasonMatchups.find(matchup =>
+    matchup.matchup_number === matchupNumber &&
+    (matchup.team1_id === myTeam.id || matchup.team2_id === myTeam.id)
   );
 
   if (!currentMatchup) {
@@ -221,7 +229,7 @@ async function loadMatchupData() {
     ? currentMatchup.team2_id
     : currentMatchup.team1_id;
 
-  opponentTeam = teams.find(team => team.id === opponentId);
+  opponentTeam = leagueTeams.find(team => team.id === opponentId);
 }
 
 async function loadRosterAndLineupData() {
@@ -360,6 +368,7 @@ function renderMyMatchup() {
       <div class="empty-state">
         <p>No matchup found for your team this round.</p>
       </div>
+      ${renderMySchedule()}
     `;
     myMatchupStatus.textContent = "No current matchup.";
     return;
@@ -397,6 +406,8 @@ function renderMyMatchup() {
 
       ${renderUsagePanel()}
     </section>
+
+    ${renderMySchedule()}
   `;
 
   bindLineupControls();
@@ -410,6 +421,81 @@ function renderMyMatchup() {
   } else {
     myMatchupStatus.textContent = "Pick your six Pokémon for this matchup.";
   }
+}
+
+function renderMySchedule() {
+  if (!myTeam || !regularSeasonMatchups.length) {
+    return "";
+  }
+
+  const myMatchups = regularSeasonMatchups.filter(matchup => isMyTeamMatchup(matchup));
+
+  if (!myMatchups.length) {
+    return "";
+  }
+
+  const currentNumber = currentLeague.current_matchup_number || 1;
+
+  return `
+    <section class="my-schedule-panel">
+      <div class="my-schedule-header">
+        <div>
+          <span class="matchup-usage-kicker">My Schedule</span>
+          <h3>${escapeHtml(myTeam.team_name)} regular season</h3>
+        </div>
+        <span>${myMatchups.length} matchups</span>
+      </div>
+
+      <div class="my-schedule-list">
+        ${myMatchups.map(matchup => renderMyScheduleRow(matchup, currentNumber)).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderMyScheduleRow(matchup, currentNumber) {
+  const isCurrent = matchup.matchup_number === currentNumber && currentLeague.season_phase !== "complete";
+  const isTeam1 = matchup.team1_id === myTeam.id;
+  const opponent = getTeamById(isTeam1 ? matchup.team2_id : matchup.team1_id);
+  const myScore = isTeam1 ? matchup.team1_score : matchup.team2_score;
+  const opponentScore = isTeam1 ? matchup.team2_score : matchup.team1_score;
+  const result = getScheduleResult(matchup, isTeam1);
+  const score = matchup.completed ? `${myScore} - ${opponentScore}` : "Pending";
+
+  return `
+    <article class="my-schedule-row ${isCurrent ? "current" : ""} ${matchup.completed ? "complete" : "upcoming"}">
+      <div>
+        <span class="my-schedule-week">Matchup ${matchup.matchup_number}</span>
+        <strong>${escapeHtml(opponent ? opponent.team_name : "Unknown opponent")}</strong>
+        <small>${escapeHtml(opponent?.owner_name || "Unassigned")}</small>
+      </div>
+      <div class="my-schedule-score">
+        <strong>${escapeHtml(score)}</strong>
+        <span>${escapeHtml(isCurrent ? "Current" : result)}</span>
+      </div>
+    </article>
+  `;
+}
+
+function isMyTeamMatchup(matchup) {
+  return matchup.team1_id === myTeam.id || matchup.team2_id === myTeam.id;
+}
+
+function getTeamById(teamId) {
+  return leagueTeams.find(team => team.id === teamId);
+}
+
+function getScheduleResult(matchup, isTeam1) {
+  if (!matchup.completed) {
+    return "Upcoming";
+  }
+
+  const myScore = Number(isTeam1 ? matchup.team1_score : matchup.team2_score);
+  const opponentScore = Number(isTeam1 ? matchup.team2_score : matchup.team1_score);
+
+  if (myScore > opponentScore) return "Win";
+  if (myScore < opponentScore) return "Loss";
+  return "Tie";
 }
 
 function renderFeaturedTeam(team, label, canEditLineup) {
