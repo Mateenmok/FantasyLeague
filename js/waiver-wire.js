@@ -244,12 +244,10 @@ function renderWaiverPage() {
 
   if (!waiversOpen) {
     waiverClosedMessage.classList.remove("hidden");
-    waiverContent.classList.add("hidden");
-    waiverPageStatus.textContent = "Waivers closed.";
-    return;
+  } else {
+    waiverClosedMessage.classList.add("hidden");
   }
 
-  waiverClosedMessage.classList.add("hidden");
   waiverContent.classList.remove("hidden");
 
   if (!myTeam) {
@@ -266,6 +264,11 @@ function renderWaiverPage() {
   renderPointStatus();
   renderRosterList();
   renderAvailablePokemonGrid();
+
+  if (!waiversOpen) {
+    waiverPageStatus.textContent = "Waivers closed. Available Pokémon are visible, but pickups are disabled.";
+    return;
+  }
 
   waiverPageStatus.textContent = isWaiverAcquisitionLimitReached()
     ? `Waivers open. Your team has used ${myAcquisitionCount}/${currentLeague.waiver_acquisition_limit} pickups for this period.`
@@ -566,7 +569,7 @@ function renderRosterList() {
           <span class="waiver-roster-meta">${pokemon ? escapeHtml((pokemon.types || []).join(" / ")) : "Unknown"}</span>
         </span>
         <span class="waiver-roster-points">${points} pts</span>
-        <button class="waiver-roster-drop-button" type="button" data-roster-id="${escapeHtml(row.id)}" data-pokemon-name="${escapeHtml(name)}">Drop</button>
+        <button class="waiver-roster-drop-button" type="button" data-roster-id="${escapeHtml(row.id)}" data-pokemon-name="${escapeHtml(name)}" ${isWaiverWindowOpen() ? "" : "disabled"}>Drop</button>
       </div>
     `;
   }).join("");
@@ -579,6 +582,11 @@ function renderRosterList() {
 }
 
 async function dropWaiverRosterPokemon(rosterId, pokemonName) {
+  if (!isWaiverWindowOpen()) {
+    waiverPageStatus.textContent = `Waiver period is currently closed. ${getWaiverStatusDetails()}`;
+    return;
+  }
+
   if (!rosterId || !myTeam) {
     waiverPageStatus.textContent = "Could not identify that roster slot.";
     return;
@@ -683,6 +691,7 @@ function renderWaiverAvailablePokemonPagination(totalCount) {
 
 function renderAvailablePokemonGrid() {
   let availablePokemon = getFilteredAvailablePokemon();
+  const waiversOpen = isWaiverWindowOpen();
   const acquisitionLimitReached = isWaiverAcquisitionLimitReached();
 
   const activeFilterSignature = getWaiverAvailablePokemonFilterSignature();
@@ -741,8 +750,8 @@ function renderAvailablePokemonGrid() {
             </select>
           </div>
 
-          <button class="pkmn-button small waiver-add-button" data-slug="${pokemon.slug}" ${acquisitionLimitReached ? "disabled" : ""}>
-            ${acquisitionLimitReached ? "Limit Reached" : "Add"}
+          <button class="pkmn-button small waiver-add-button" data-slug="${pokemon.slug}" ${(!waiversOpen || acquisitionLimitReached) ? "disabled" : ""}>
+            ${!waiversOpen ? "Closed" : acquisitionLimitReached ? "Limit Reached" : "Add"}
           </button>
         </div>
       </article>
@@ -935,7 +944,15 @@ function getFilteredAvailablePokemon() {
     availablePokemon = availablePokemon.filter(pokemon => (pokemon.types || []).includes(typeFilter));
   }
 
-  return availablePokemon;
+  return availablePokemon.sort((a, b) => {
+    const pointDiff = getPokemonPoints(b) - getPokemonPoints(a);
+
+    if (pointDiff !== 0) {
+      return pointDiff;
+    }
+
+    return getPokemonLabel(a).localeCompare(getPokemonLabel(b));
+  });
 }
 
 function renderTypeFilterOptions() {
