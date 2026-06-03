@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;500;600;700;800&family=VT323&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/pokemon-ui.css?v=global-black-dark1">
+  <link rel="stylesheet" href="css/pokemon-details-modal.css?v=champions-details2">
 
   <style>
     body.standings-theme-page {
@@ -1508,6 +1509,15 @@
     box-shadow:
       0 8px 18px rgba(0, 0, 0, 0.18),
       0 0 0 3px rgba(105, 166, 240, 0.10) inset;
+  }
+
+  body.standings-theme-page .standings-roster-pokemon-card {
+    cursor: pointer;
+  }
+
+  body.standings-theme-page .standings-roster-pokemon-card:focus-visible {
+    outline: 3px solid rgba(255, 230, 107, 0.78);
+    outline-offset: 3px;
   }
 
   body.standings-theme-page .standings-roster-empty {
@@ -3824,6 +3834,7 @@
   <script src="js/theme-settings.js?v=global-theme1"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
-  <script src="js/standings.js?v=garchomp9"></script>
+  <script src="js/pokemon-details-modal.js?v=champions-details2"></script>
+  <script src="js/standings.js?v=standings-details1"></script>
 </body>
 </html>

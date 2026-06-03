@@ -305,6 +305,10 @@ function setupRosterModal() {
   });
 
   document.addEventListener("keydown", event => {
+    if (document.getElementById("pokemonDetailsModal")?.classList.contains("open")) {
+      return;
+    }
+
     if (event.key === "Escape" && !rosterModal.hidden) {
       closeTeamRoster();
     }
@@ -335,6 +339,7 @@ function openTeamRoster(teamId) {
     rosterModalGrid.innerHTML = `<div class="standings-roster-empty">No Pokémon drafted yet.</div>`;
   } else {
     rosterModalGrid.innerHTML = rosterRows.map(row => renderRosterPokemonCard(row)).join("");
+    bindRosterPokemonCards();
   }
 
   rosterModal.hidden = false;
@@ -369,7 +374,13 @@ function renderRosterPokemonCard(row) {
   }
 
   return `
-    <article class="standings-roster-pokemon-card">
+    <article
+      class="standings-roster-pokemon-card standings-roster-pokemon-detail-card"
+      role="button"
+      tabindex="0"
+      data-pokemon-slug="${escapeHtml(pokemon.slug)}"
+      aria-label="View ${escapeHtml(pokemon.name)} details"
+    >
       <img src="${escapeHtml(getPokemonImage(pokemon))}" alt="${escapeHtml(pokemon.name)}">
       <div>
         <div class="standings-roster-pokemon-name">${escapeHtml(pokemon.name)}</div>
@@ -380,6 +391,31 @@ function renderRosterPokemonCard(row) {
       </div>
     </article>
   `;
+}
+
+function bindRosterPokemonCards() {
+  document.querySelectorAll(".standings-roster-pokemon-detail-card").forEach(card => {
+    card.addEventListener("click", function () {
+      openStandingsPokemonDetails(this.dataset.pokemonSlug);
+    });
+
+    card.addEventListener("keydown", function (event) {
+      if (event.key !== "Enter" && event.key !== " ") {
+        return;
+      }
+
+      event.preventDefault();
+      openStandingsPokemonDetails(this.dataset.pokemonSlug);
+    });
+  });
+}
+
+function openStandingsPokemonDetails(slug) {
+  if (window.PokemonDetailsModal) {
+    window.PokemonDetailsModal.openBySlug(slug);
+  } else {
+    standingsStatus.textContent = "Pokemon details are not available right now.";
+  }
 }
 
 function getPokemonBySlug(slug) {
