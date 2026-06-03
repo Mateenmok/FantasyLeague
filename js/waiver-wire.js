@@ -25,6 +25,7 @@ const waiverTypeFilterSelect = document.getElementById("waiverTypeFilterSelect")
 
 const selectedLeagueId = localStorage.getItem("selected-league-id");
 const DEFAULT_ROSTER_SIZE = 10;
+const CHAMPIONS_DETAILS_URL = "data/champions-details.json?v=champions-details2";
 const WAIVER_STAT_ROWS = [
   ["hp", "HP"],
   ["attack", "ATK"],
@@ -43,6 +44,7 @@ let myRosterRows = [];
 let myWaiverAcquisitionRows = [];
 let championsPokemon = [];
 let pokemonBstBySlug = {};
+let pokemonMoveSearchBySlug = {};
 let isAdmin = false;
 const WAIVER_AVAILABLE_POKEMON_PAGE_SIZE = 12;
 let waiverAvailablePokemonPage = 0;
@@ -114,6 +116,20 @@ async function loadWaiverPage() {
   } catch (error) {
     console.warn("Pokémon BST data unavailable:", error);
     pokemonBstBySlug = {};
+  }
+
+  try {
+    const championsDetails = await fetch(CHAMPIONS_DETAILS_URL).then(response => {
+      if (!response.ok) {
+        throw new Error(`Champions details returned ${response.status}`);
+      }
+
+      return response.json();
+    });
+    pokemonMoveSearchBySlug = buildPokemonMoveSearchIndex(championsDetails.pokemon || {});
+  } catch (error) {
+    console.warn("Champions move search data unavailable:", error);
+    pokemonMoveSearchBySlug = {};
   }
 
   renderTypeFilterOptions();
@@ -948,7 +964,7 @@ function getAvailablePokemon() {
 }
 
 function getFilteredAvailablePokemon() {
-  const searchTerm = waiverPokemonSearch.value.trim().toLowerCase();
+  const searchTerm = normalizeWaiverSearchTerm(waiverPokemonSearch.value);
   const megaFilter = waiverMegaFilterSelect.value;
   const tierFilter = waiverTierFilterSelect.value;
   const typeFilter = waiverTypeFilterSelect.value;
@@ -957,10 +973,11 @@ function getFilteredAvailablePokemon() {
 
   if (searchTerm) {
     availablePokemon = availablePokemon.filter(pokemon =>
-      pokemon.name.toLowerCase().includes(searchTerm) ||
-      pokemon.slug.toLowerCase().includes(searchTerm) ||
-      (pokemon.types || []).join(" ").toLowerCase().includes(searchTerm) ||
-      getPokemonLabel(pokemon).toLowerCase().includes(searchTerm)
+      normalizeWaiverSearchTerm(pokemon.name).includes(searchTerm) ||
+      normalizeWaiverSearchTerm(pokemon.slug).includes(searchTerm) ||
+      normalizeWaiverSearchTerm((pokemon.types || []).join(" ")).includes(searchTerm) ||
+      normalizeWaiverSearchTerm(getPokemonLabel(pokemon)).includes(searchTerm) ||
+      pokemonCanLearnSearchedMove(pokemon, searchTerm)
     );
   }
 
@@ -989,6 +1006,28 @@ function getFilteredAvailablePokemon() {
 
     return getPokemonLabel(a).localeCompare(getPokemonLabel(b));
   });
+}
+
+function buildPokemonMoveSearchIndex(detailsBySlug) {
+  return Object.fromEntries(Object.entries(detailsBySlug).map(([slug, details]) => {
+    const moveText = (details.moves || [])
+      .map(move => move.name)
+      .filter(Boolean)
+      .join(" ");
+
+    return [slug, normalizeWaiverSearchTerm(moveText)];
+  }));
+}
+
+function pokemonCanLearnSearchedMove(pokemon, normalizedSearchTerm) {
+  return Boolean(pokemonMoveSearchBySlug[pokemon.slug]?.includes(normalizedSearchTerm));
+}
+
+function normalizeWaiverSearchTerm(value) {
+  return String(value || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
 }
 
 function renderTypeFilterOptions() {
