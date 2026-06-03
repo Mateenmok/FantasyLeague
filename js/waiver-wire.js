@@ -730,7 +730,16 @@ function renderAvailablePokemonGrid() {
     const secondaryType = getPokemonSecondaryType(pokemon);
 
     return `
-      <article class="draft-pokemon-card waiver-pokemon-card draft-type-card draft-primary-${primaryType} draft-secondary-${secondaryType}" data-slug="${pokemon.slug}" data-primary-type="${primaryType}" data-secondary-type="${secondaryType}">
+      <article
+        class="draft-pokemon-card waiver-pokemon-card draft-type-card draft-primary-${primaryType} draft-secondary-${secondaryType}"
+        data-slug="${pokemon.slug}"
+        data-pokemon-detail-slug="${pokemon.slug}"
+        data-primary-type="${primaryType}"
+        data-secondary-type="${secondaryType}"
+        role="button"
+        tabindex="0"
+        aria-label="View ${escapeHtml(pokemon.name)} details"
+      >
         ${renderPokemonTypeIconBadge(pokemon)}
         <img src="${escapeHtml(pokemon.image)}" alt="${escapeHtml(pokemon.name)}">
         ${renderMegaBadge(pokemon)}
@@ -763,6 +772,33 @@ function renderAvailablePokemonGrid() {
       addWaiverPokemon(this.dataset.slug);
     });
   });
+
+  document.querySelectorAll(".waiver-pokemon-card").forEach(card => {
+    card.addEventListener("click", function (event) {
+      if (event.target.closest(".waiver-card-actions, button, select, input, label, a")) {
+        return;
+      }
+
+      openWaiverPokemonDetails(this.dataset.slug);
+    });
+
+    card.addEventListener("keydown", function (event) {
+      if (event.target !== this || (event.key !== "Enter" && event.key !== " ")) {
+        return;
+      }
+
+      event.preventDefault();
+      openWaiverPokemonDetails(this.dataset.slug);
+    });
+  });
+}
+
+function openWaiverPokemonDetails(slug) {
+  if (window.PokemonDetailsModal) {
+    window.PokemonDetailsModal.openBySlug(slug);
+  } else {
+    waiverPageStatus.textContent = "Pokemon details are not available right now.";
+  }
 }
 
 async function addWaiverPokemon(pokemonSlug) {

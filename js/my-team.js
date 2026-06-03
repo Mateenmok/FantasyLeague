@@ -392,6 +392,7 @@ function showMyTeamPokemonActionMenu({ rosterId, pokemonName, pokemonSlug }) {
       <p class="small-note">Choose what you want to do with this Pokémon.</p>
 
       <div class="my-team-action-menu-buttons">
+        <button id="myTeamViewPokemonDetailsButton" class="my-team-action-button details" type="button">Details</button>
         <button id="myTeamTradePokemonButton" class="my-team-action-button trade" type="button">Trade</button>
         <button id="myTeamDropPokemonButton" class="my-team-action-button drop" type="button">Drop</button>
         <button id="myTeamCancelPokemonButton" class="my-team-action-button cancel" type="button">Cancel</button>
@@ -402,6 +403,16 @@ function showMyTeamPokemonActionMenu({ rosterId, pokemonName, pokemonSlug }) {
   document.body.appendChild(menu);
 
   document.getElementById("myTeamCancelPokemonButton").addEventListener("click", closeMyTeamPokemonActionMenu);
+
+  document.getElementById("myTeamViewPokemonDetailsButton").addEventListener("click", function () {
+    closeMyTeamPokemonActionMenu();
+
+    if (window.PokemonDetailsModal) {
+      window.PokemonDetailsModal.openBySlug(safeSlug);
+    } else {
+      myTeamStatus.textContent = "Pokemon details are not available right now.";
+    }
+  });
 
   document.getElementById("myTeamTradePokemonButton").addEventListener("click", function () {
     localStorage.setItem("pokeleague_trade_target_pokemon_slug", safeSlug);

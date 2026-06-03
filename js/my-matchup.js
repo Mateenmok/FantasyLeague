@@ -92,11 +92,8 @@ function getFixedPokemonImage(pokemon) {
 const myMatchupSubtitle = document.getElementById("myMatchupSubtitle");
 const myMatchupContent = document.getElementById("myMatchupContent");
 const myMatchupStatus = document.getElementById("myMatchupStatus");
-const pokemonDetailModal = document.getElementById("pokemonDetailModal");
-const pokemonDetailShell = document.getElementById("pokemonDetailShell");
 
 const selectedLeagueId = localStorage.getItem("selected-league-id");
-const CHAMPIONS_DETAILS_URL = "data/champions-details.json?v=champions-details1";
 
 let currentLeague = null;
 let currentMembership = null;
@@ -111,8 +108,6 @@ let opponentRosterRows = [];
 let matchupLineups = [];
 let lineupSubmissionCounts = {};
 let pokemonUsageRows = [];
-let pokemonDetailCache = {};
-let championsDetailData = null;
 
 loadMyMatchupPage();
 
@@ -416,7 +411,6 @@ function renderMyMatchup() {
   `;
 
   bindLineupControls();
-  bindPokemonDetailControls();
 
   if (currentMatchup.completed) {
     myMatchupStatus.textContent = "This matchup has been reported.";
@@ -564,7 +558,6 @@ function renderMatchupLineup(team, canEditLineup) {
                   <strong>${escapeHtml(name)}</strong>
                   <small>${formatUsageLabel(usage)}</small>
                 </span>
-                ${pokemon ? `<button class="pokemon-detail-button" type="button" data-pokemon-detail-slug="${escapeHtml(row.pokemon_slug)}">Details</button>` : ""}
               </div>
             `;
           }).join("")}
@@ -636,7 +629,6 @@ function renderMatchupLineup(team, canEditLineup) {
                 <strong>${escapeHtml(name)}</strong>
                 <small>Slot ${row.slot_number}</small>
               </span>
-              ${pokemon ? `<button class="pokemon-detail-button" type="button" data-pokemon-detail-slug="${escapeHtml(row.pokemon_slug)}">Details</button>` : ""}
             </div>
           `;
         }).join("")}
@@ -651,11 +643,7 @@ function bindLineupControls() {
   const status = document.getElementById("matchupLineupStatus");
 
   choices.forEach(choice => {
-    choice.addEventListener("click", function (event) {
-      if (event.target.closest(".pokemon-detail-button")) {
-        return;
-      }
-
+    choice.addEventListener("click", function () {
       toggleLineupChoice(this, status);
     });
 
@@ -672,15 +660,6 @@ function bindLineupControls() {
   if (saveButton) {
     saveButton.addEventListener("click", saveMatchupLineup);
   }
-}
-
-function bindPokemonDetailControls() {
-  document.querySelectorAll(".pokemon-detail-button").forEach(button => {
-    button.addEventListener("click", function (event) {
-      event.stopPropagation();
-      openPokemonDetailModal(this.dataset.pokemonDetailSlug);
-    });
-  });
 }
 
 function toggleLineupChoice(choice, status) {
@@ -829,334 +808,6 @@ async function saveMatchupLineup() {
   await loadRosterAndLineupData();
   renderMyMatchup();
   myMatchupStatus.textContent = "Matchup lineup saved.";
-}
-
-async function openPokemonDetailModal(slug) {
-  const pokemon = getPokemonBySlug(slug);
-
-  if (!pokemon || !pokemonDetailModal || !pokemonDetailShell) {
-    myMatchupStatus.textContent = "Could not open Pokémon details.";
-    return;
-  }
-
-  pokemonDetailModal.classList.add("open");
-  pokemonDetailModal.setAttribute("aria-hidden", "false");
-  pokemonDetailShell.innerHTML = renderPokemonDetailLoading(pokemon);
-  bindPokemonDetailModalClose();
-
-  try {
-    const detail = await loadPokemonDetail(pokemon);
-    pokemonDetailShell.innerHTML = renderPokemonDetail(pokemon, detail);
-    bindPokemonDetailModalClose();
-    bindPokemonMoveFilters(detail);
-  } catch (error) {
-    console.error("Pokemon detail load error:", error);
-    pokemonDetailShell.innerHTML = renderPokemonDetailError(pokemon);
-    bindPokemonDetailModalClose();
-  }
-}
-
-async function loadPokemonDetail(pokemon) {
-  const cacheKey = pokemon.slug;
-
-  if (pokemonDetailCache[cacheKey]) {
-    return pokemonDetailCache[cacheKey];
-  }
-
-  const details = await loadChampionsDetailData();
-  const detail = details.pokemon?.[pokemon.slug];
-
-  if (!detail) {
-    throw new Error(`No Champions details found for ${pokemon.slug}`);
-  }
-
-  pokemonDetailCache[cacheKey] = {
-    source: details.source || {},
-    sourceUrl: detail.source_url || details.source?.url || "",
-    abilities: detail.abilities || [],
-    formes: detail.formes || [],
-    moves: detail.moves || [],
-    sets: detail.sets || []
-  };
-
-  return pokemonDetailCache[cacheKey];
-}
-
-async function loadChampionsDetailData() {
-  if (championsDetailData) {
-    return championsDetailData;
-  }
-
-  const response = await fetch(CHAMPIONS_DETAILS_URL);
-
-  if (!response.ok) {
-    throw new Error(`Champions details returned ${response.status}`);
-  }
-
-  championsDetailData = await response.json();
-  return championsDetailData;
-}
-
-function renderPokemonDetailLoading(pokemon) {
-  return `
-    ${renderPokemonDetailHeader(pokemon)}
-    <div class="pokemon-detail-body">
-      <div class="pokemon-detail-section">
-        <h3>Loading Champions data...</h3>
-        <p class="matchup-lineup-note">Opening the local Champions moves and abilities file.</p>
-      </div>
-    </div>
-  `;
-}
-
-function renderPokemonDetailError(pokemon) {
-  return `
-    ${renderPokemonDetailHeader(pokemon)}
-    <div class="pokemon-detail-body">
-      <div class="pokemon-detail-section">
-        <h3>Could not load details</h3>
-        <p class="matchup-lineup-note">Champions data was not found for this Pokémon.</p>
-      </div>
-    </div>
-  `;
-}
-
-function renderPokemonDetail(pokemon, detail) {
-  return `
-    ${renderPokemonDetailHeader(pokemon)}
-    <div class="pokemon-detail-body">
-      <div class="pokemon-detail-grid">
-        <section class="pokemon-detail-section">
-          <h3>Abilities</h3>
-          <div class="pokemon-detail-list">
-            ${renderPokemonAbilityPills(detail.abilities)}
-          </div>
-        </section>
-
-        ${detail.formes.length > 1 ? `
-          <section class="pokemon-detail-section">
-            <h3>In-Battle Formes</h3>
-            <div class="pokemon-detail-list">
-              ${detail.formes.map(forme => `
-                <div class="pokemon-detail-pill">
-                  ${escapeHtml(forme.name)}
-                  <small>${escapeHtml(formatPokemonFormeMeta(forme))}</small>
-                  ${forme.abilities?.length ? `<small>${escapeHtml(forme.abilities.map(ability => ability.name).join(", "))}</small>` : ""}
-                </div>
-              `).join("")}
-            </div>
-          </section>
-        ` : ""}
-
-        ${detail.sets.length ? `
-          <section class="pokemon-detail-section pokemon-detail-wide-section">
-            <h3>Champions Sets</h3>
-            <div class="pokemon-detail-list">
-              ${detail.sets.map(set => `
-                <div class="pokemon-detail-pill">
-                  ${escapeHtml(set.name)}
-                  <small>${escapeHtml(formatPokemonSetMeta(set))}</small>
-                  ${set.moveslots?.length ? `<small>${escapeHtml(set.moveslots.map(slot => slot.join(" / ")).join(" | "))}</small>` : ""}
-                </div>
-              `).join("")}
-              ${detail.sourceUrl ? `<a class="pokemon-detail-source" href="${escapeHtml(detail.sourceUrl)}" target="_blank" rel="noopener">View source</a>` : ""}
-            </div>
-          </section>
-        ` : ""}
-
-        <section class="pokemon-detail-section">
-          <h3>Champions Moves</h3>
-          <div class="pokemon-move-tools">
-            <input id="pokemonMoveSearchInput" type="search" placeholder="Search moves">
-            <select id="pokemonMoveCategorySelect">
-              <option value="all">All categories</option>
-              ${getPokemonMoveCategories(detail.moves).map(category => `
-                <option value="${escapeHtml(category)}">${escapeHtml(category)}</option>
-              `).join("")}
-            </select>
-          </div>
-          <div id="pokemonMoveList" class="pokemon-move-list">
-            ${renderPokemonMoveRows(detail.moves)}
-          </div>
-        </section>
-      </div>
-    </div>
-  `;
-}
-
-function renderPokemonDetailHeader(pokemon) {
-  return `
-    <header class="pokemon-detail-header">
-      <img src="${escapeHtml(getFixedPokemonImage(pokemon))}" alt="${escapeHtml(pokemon.name)}">
-      <div>
-        <h2 id="pokemonDetailTitle">${escapeHtml(pokemon.name)}</h2>
-        <p>${escapeHtml((pokemon.types || []).join(" / "))} • ${escapeHtml(pokemon.tier_label || `${pokemon.tier || ""} ${pokemon.points || ""}`.trim())}</p>
-      </div>
-      <button class="pokemon-detail-close" type="button" aria-label="Close Pokémon details">×</button>
-    </header>
-  `;
-}
-
-function bindPokemonMoveFilters(detail) {
-  const searchInput = document.getElementById("pokemonMoveSearchInput");
-  const categorySelect = document.getElementById("pokemonMoveCategorySelect");
-  const moveList = document.getElementById("pokemonMoveList");
-
-  if (!searchInput || !categorySelect || !moveList) {
-    return;
-  }
-
-  function renderFilteredMoves() {
-    const searchTerm = searchInput.value.trim().toLowerCase();
-    const category = categorySelect.value;
-    const filteredMoves = detail.moves.filter(move => {
-      const searchText = [move.name, move.type, move.category, move.description].join(" ").toLowerCase();
-      const matchesSearch = !searchTerm || searchText.includes(searchTerm);
-      const matchesCategory = category === "all" || move.category === category;
-      return matchesSearch && matchesCategory;
-    });
-
-    moveList.innerHTML = renderPokemonMoveRows(filteredMoves);
-  }
-
-  searchInput.addEventListener("input", renderFilteredMoves);
-  categorySelect.addEventListener("change", renderFilteredMoves);
-}
-
-function renderPokemonMoveRows(moves) {
-  if (!moves.length) {
-    return `<div class="pokemon-move-row">No moves found.</div>`;
-  }
-
-  return moves.map(move => `
-    <div class="pokemon-move-row">
-      <strong>${escapeHtml(move.name)}</strong>
-      <small>${escapeHtml(formatPokemonMoveMeta(move))}</small>
-      ${move.description ? `<p>${escapeHtml(cleanPokemonApiText(move.description))}</p>` : ""}
-    </div>
-  `).join("");
-}
-
-function formatPokemonMoveMeta(move) {
-  const parts = [];
-
-  if (move.type) {
-    parts.push(move.type);
-  }
-
-  if (move.category) {
-    parts.push(move.category);
-  }
-
-  if (move.power) {
-    parts.push(`${move.power} BP`);
-  } else {
-    parts.push("Status");
-  }
-
-  parts.push(move.accuracy ? `${move.accuracy}% Acc` : "No accuracy check");
-
-  if (move.pp) {
-    parts.push(`${move.pp} PP`);
-  }
-
-  if (move.priority) {
-    parts.push(`Priority ${move.priority}`);
-  }
-
-  return parts.join(" • ") || "Champions move";
-}
-
-function renderPokemonAbilityPills(abilities) {
-  if (!abilities.length) {
-    return `<div class="pokemon-detail-pill">No abilities listed.</div>`;
-  }
-
-  return abilities.map(ability => `
-    <div class="pokemon-detail-pill">
-      ${escapeHtml(ability.name)}
-      ${ability.description ? `<small>${escapeHtml(cleanPokemonApiText(ability.description))}</small>` : ""}
-    </div>
-  `).join("");
-}
-
-function formatPokemonFormeMeta(forme) {
-  const parts = [];
-
-  if (forme.types?.length) {
-    parts.push(forme.types.join(" / "));
-  }
-
-  if (forme.tier) {
-    parts.push(forme.tier);
-  }
-
-  if (forme.bst) {
-    parts.push(`BST ${forme.bst}`);
-  }
-
-  return parts.join(" • ");
-}
-
-function formatPokemonSetMeta(set) {
-  const parts = [];
-
-  if (set.format) {
-    parts.push(set.format);
-  }
-
-  if (set.abilities?.length) {
-    parts.push(`Ability: ${set.abilities.join(" / ")}`);
-  }
-
-  if (set.items?.length) {
-    parts.push(`Item: ${set.items.join(" / ")}`);
-  }
-
-  if (set.natures?.length) {
-    parts.push(`Nature: ${set.natures.join(" / ")}`);
-  }
-
-  return parts.join(" • ") || "Champions set";
-}
-
-function getPokemonMoveCategories(moves) {
-  return Array.from(new Set(moves.map(move => move.category).filter(Boolean))).sort();
-}
-
-function bindPokemonDetailModalClose() {
-  document.querySelectorAll(".pokemon-detail-close").forEach(button => {
-    button.addEventListener("click", closePokemonDetailModal);
-  });
-
-  if (pokemonDetailModal) {
-    pokemonDetailModal.addEventListener("click", function (event) {
-      if (event.target === pokemonDetailModal) {
-        closePokemonDetailModal();
-      }
-    }, { once: true });
-  }
-}
-
-function closePokemonDetailModal() {
-  if (!pokemonDetailModal) {
-    return;
-  }
-
-  pokemonDetailModal.classList.remove("open");
-  pokemonDetailModal.setAttribute("aria-hidden", "true");
-}
-
-function formatApiName(value) {
-  return String(value || "")
-    .split("-")
-    .filter(Boolean)
-    .map(part => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ");
-}
-
-function cleanPokemonApiText(value) {
-  return String(value || "").replace(/\s+/g, " ").trim();
 }
 
 function getPokemonBySlug(slug) {

@@ -699,8 +699,7 @@
           "target": "Normal",
           "description": "The target's Ability becomes Insomnia."
         }
-      ],
-      "sets": []
+      ]
     },
     "charizard": {
       "name": "Charizard",
@@ -1584,39 +1583,6 @@
           "target": "Normal",
           "description": "Burns the target."
         }
-      ],
-      "sets": [
-        {
-          "name": "Drought Offense",
-          "format": "Battle Stadium Singles",
-          "abilities": [
-            "Blaze",
-            "Solar Power"
-          ],
-          "items": [
-            "Charizardite Y"
-          ],
-          "natures": [
-            "Timid",
-            "Modest"
-          ],
-          "moveslots": [
-            [
-              "Flamethrower",
-              "Weather Ball"
-            ],
-            [
-              "Solar Beam"
-            ],
-            [
-              "Overheat"
-            ],
-            [
-              "Flame Charge",
-              "Air Slash"
-            ]
-          ]
-        }
       ]
     },
     "blastoise": {
@@ -2487,8 +2453,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "beedrill": {
       "name": "Beedrill",
@@ -3140,8 +3105,7 @@
           "target": "Normal",
           "description": "No additional effect."
         }
-      ],
-      "sets": []
+      ]
     },
     "pidgeot": {
       "name": "Pidgeot",
@@ -3559,8 +3523,7 @@
           "target": "Normal",
           "description": "Forces the target to switch to a random ally."
         }
-      ],
-      "sets": []
+      ]
     },
     "arbok": {
       "name": "Arbok",
@@ -4383,8 +4346,7 @@
           "target": "Normal",
           "description": "Traps and damages the target for 4-5 turns."
         }
-      ],
-      "sets": []
+      ]
     },
     "pikachu": {
       "name": "Pikachu",
@@ -5089,8 +5051,7 @@
           "target": "Normal",
           "description": "100% chance to paralyze the target."
         }
-      ],
-      "sets": []
+      ]
     },
     "raichu": {
       "name": "Raichu",
@@ -5861,8 +5822,7 @@
           "target": "Normal",
           "description": "100% chance to paralyze the target."
         }
-      ],
-      "sets": []
+      ]
     },
     "alolan-raichu": {
       "name": "Alolan Raichu",
@@ -6714,8 +6674,7 @@
           "target": "Normal",
           "description": "100% chance to paralyze the target."
         }
-      ],
-      "sets": []
+      ]
     },
     "clefable": {
       "name": "Clefable",
@@ -7792,8 +7751,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "ninetales": {
       "name": "Ninetales",
@@ -8575,8 +8533,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "alolan-ninetales": {
       "name": "Alolan Ninetales",
@@ -9326,8 +9283,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "arcanine": {
       "name": "Arcanine",
@@ -10007,8 +9963,7 @@
           "target": "Normal",
           "description": "Burns the target."
         }
-      ],
-      "sets": []
+      ]
     },
     "hisuian-arcanine": {
       "name": "Hisuian Arcanine",
@@ -10766,8 +10721,7 @@
           "target": "Normal",
           "description": "Burns the target."
         }
-      ],
-      "sets": []
+      ]
     },
     "alakazam": {
       "name": "Alakazam",
@@ -11502,8 +11456,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "machamp": {
       "name": "Machamp",
@@ -12282,8 +12235,7 @@
           "target": "AllySide",
           "description": "Protects allies from multi-target moves this turn."
         }
-      ],
-      "sets": []
+      ]
     },
     "victreebel": {
       "name": "Victreebel",
@@ -13001,8 +12953,7 @@
           "target": "Normal",
           "description": "Traps and damages the target for 4-5 turns."
         }
-      ],
-      "sets": []
+      ]
     },
     "slowbro": {
       "name": "Slowbro",
@@ -13937,8 +13888,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "galarian-slowbro": {
       "name": "Galarian Slowbro",
@@ -15004,8 +14954,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "gengar": {
       "name": "Gengar",
@@ -15902,8 +15851,7 @@
           "target": "All",
           "description": "For 5 turns, all Defense and Sp. Def stats switch."
         }
-      ],
-      "sets": []
+      ]
     },
     "kangaskhan": {
       "name": "Kangaskhan",
@@ -16715,8 +16663,7 @@
           "target": "Normal",
           "description": "Traps and damages the target for 4-5 turns."
         }
-      ],
-      "sets": []
+      ]
     },
     "starmie": {
       "name": "Starmie",
@@ -17475,8 +17422,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "pinsir": {
       "name": "Pinsir",
@@ -18124,8 +18070,7 @@
           "target": "Normal",
           "description": "No additional effect."
         }
-      ],
-      "sets": []
+      ]
     },
     "tauros": {
       "name": "Tauros",
@@ -18805,8 +18750,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "paldean-tauros-fighting": {
       "name": "Paldean Tauros",
@@ -19387,8 +19331,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "gyarados": {
       "name": "Gyarados",
@@ -20194,38 +20137,6 @@
           "target": "Normal",
           "description": "Traps and damages the target for 4-5 turns."
         }
-      ],
-      "sets": [
-        {
-          "name": "Sweeper",
-          "format": "Battle Stadium Singles",
-          "abilities": [
-            "Intimidate"
-          ],
-          "items": [
-            "Gyaradosite"
-          ],
-          "natures": [
-            "Jolly"
-          ],
-          "moveslots": [
-            [
-              "Dragon Dance"
-            ],
-            [
-              "Waterfall"
-            ],
-            [
-              "Earthquake",
-              "Power Whip"
-            ],
-            [
-              "Ice Fang",
-              "Crunch",
-              "Taunt"
-            ]
-          ]
-        }
       ]
     },
     "ditto": {
@@ -20282,8 +20193,7 @@
           "target": "Normal",
           "description": "Copies target's stats, moves, types, and Ability."
         }
-      ],
-      "sets": []
+      ]
     },
     "vaporeon": {
       "name": "Vaporeon",
@@ -20977,8 +20887,7 @@
           "target": "Normal",
           "description": "Puts the target to sleep after 1 turn."
         }
-      ],
-      "sets": []
+      ]
     },
     "jolteon": {
       "name": "Jolteon",
@@ -21672,8 +21581,7 @@
           "target": "Normal",
           "description": "Puts the target to sleep after 1 turn."
         }
-      ],
-      "sets": []
+      ]
     },
     "flareon": {
       "name": "Flareon",
@@ -22345,8 +22253,7 @@
           "target": "Normal",
           "description": "Puts the target to sleep after 1 turn."
         }
-      ],
-      "sets": []
+      ]
     },
     "aerodactyl": {
       "name": "Aerodactyl",
@@ -23061,8 +22968,7 @@
           "target": "AllySide",
           "description": "Protects allies from multi-target moves this turn."
         }
-      ],
-      "sets": []
+      ]
     },
     "snorlax": {
       "name": "Snorlax",
@@ -24028,8 +23934,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "dragonite": {
       "name": "Dragonite",
@@ -25011,8 +24916,7 @@
           "target": "Normal",
           "description": "Traps and damages the target for 4-5 turns."
         }
-      ],
-      "sets": []
+      ]
     },
     "meganium": {
       "name": "Meganium",
@@ -25750,35 +25654,6 @@
           "priority": 0,
           "target": "Normal",
           "description": "20% chance to make the target flinch."
-        }
-      ],
-      "sets": [
-        {
-          "name": "Bulky Attacker",
-          "format": "Battle Stadium Singles",
-          "abilities": [
-            "Overgrow"
-          ],
-          "items": [
-            "Meganiumite"
-          ],
-          "natures": [
-            "Modest"
-          ],
-          "moveslots": [
-            [
-              "Solar Beam"
-            ],
-            [
-              "Weather Ball"
-            ],
-            [
-              "Dazzling Gleam"
-            ],
-            [
-              "Synthesis"
-            ]
-          ]
         }
       ]
     },
@@ -26518,8 +26393,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "hisuian-typhlosion": {
       "name": "Hisuian Typhlosion",
@@ -27291,8 +27165,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "feraligatr": {
       "name": "Feraligatr",
@@ -28262,8 +28135,7 @@
           "target": "Normal",
           "description": "Traps and damages the target for 4-5 turns."
         }
-      ],
-      "sets": []
+      ]
     },
     "ariados": {
       "name": "Ariados",
@@ -29021,8 +28893,7 @@
           "target": "Normal",
           "description": "No additional effect."
         }
-      ],
-      "sets": []
+      ]
     },
     "ampharos": {
       "name": "Ampharos",
@@ -29827,8 +29698,7 @@
           "target": "Normal",
           "description": "100% chance to paralyze the target."
         }
-      ],
-      "sets": []
+      ]
     },
     "azumarill": {
       "name": "Azumarill",
@@ -30608,8 +30478,7 @@
           "target": "Normal",
           "description": "Traps and damages the target for 4-5 turns."
         }
-      ],
-      "sets": []
+      ]
     },
     "politoed": {
       "name": "Politoed",
@@ -31289,8 +31158,7 @@
           "target": "Normal",
           "description": "Traps and damages the target for 4-5 turns."
         }
-      ],
-      "sets": []
+      ]
     },
     "espeon": {
       "name": "Espeon",
@@ -32072,8 +31940,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "umbreon": {
       "name": "Umbreon",
@@ -32854,37 +32721,6 @@
           "priority": 0,
           "target": "Normal",
           "description": "Puts the target to sleep after 1 turn."
-        }
-      ],
-      "sets": [
-        {
-          "name": "That's Amore! (Defensive Wish Passer)",
-          "format": "Battle Stadium Singles",
-          "abilities": [
-            "Inner Focus",
-            "Synchronize"
-          ],
-          "items": [
-            "Leftovers"
-          ],
-          "natures": [
-            "Bold",
-            "Calm"
-          ],
-          "moveslots": [
-            [
-              "Foul Play"
-            ],
-            [
-              "Yawn"
-            ],
-            [
-              "Wish"
-            ],
-            [
-              "Protect"
-            ]
-          ]
         }
       ]
     },
@@ -33875,8 +33711,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "galarian-slowking": {
       "name": "Galarian Slowking",
@@ -34975,8 +34810,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "forretress": {
       "name": "Forretress",
@@ -35781,8 +35615,7 @@
           "target": "Normal",
           "description": "100% chance to paralyze the target."
         }
-      ],
-      "sets": []
+      ]
     },
     "steelix": {
       "name": "Steelix",
@@ -36585,8 +36418,7 @@
           "target": "AllySide",
           "description": "Protects allies from multi-target moves this turn."
         }
-      ],
-      "sets": []
+      ]
     },
     "scizor": {
       "name": "Scizor",
@@ -37366,40 +37198,6 @@
           "priority": 0,
           "target": "Normal",
           "description": "No additional effect."
-        }
-      ],
-      "sets": [
-        {
-          "name": "Swords Dance",
-          "format": "Battle Stadium Singles",
-          "abilities": [
-            "Technician",
-            "Light Metal"
-          ],
-          "items": [
-            "Scizorite",
-            "Lum Berry"
-          ],
-          "natures": [
-            "Adamant"
-          ],
-          "moveslots": [
-            [
-              "Swords Dance"
-            ],
-            [
-              "Bullet Punch"
-            ],
-            [
-              "Close Combat",
-              "Knock Off"
-            ],
-            [
-              "Knock Off",
-              "U-turn",
-              "Roost"
-            ]
-          ]
         }
       ]
     },
@@ -38204,8 +38002,7 @@
           "target": "Normal",
           "description": "Usually goes first."
         }
-      ],
-      "sets": []
+      ]
     },
     "skarmory": {
       "name": "Skarmory",
@@ -38843,8 +38640,7 @@
           "target": "Normal",
           "description": "No additional effect."
         }
-      ],
-      "sets": []
+      ]
     },
     "houndoom": {
       "name": "Houndoom",
@@ -39658,8 +39454,7 @@
           "target": "Normal",
           "description": "Burns the target."
         }
-      ],
-      "sets": []
+      ]
     },
     "tyranitar": {
       "name": "Tyranitar",
@@ -40740,8 +40535,7 @@
           "target": "RandomNormal",
           "description": "Lasts 3 turns. Active Pokemon cannot fall asleep."
         }
-      ],
-      "sets": []
+      ]
     },
     "pelipper": {
       "name": "Pelipper",
@@ -41378,8 +41172,7 @@
           "target": "AllySide",
           "description": "Protects allies from multi-target moves this turn."
         }
-      ],
-      "sets": []
+      ]
     },
     "gardevoir": {
       "name": "Gardevoir",
@@ -42336,8 +42129,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "sableye": {
       "name": "Sableye",
@@ -43382,8 +43174,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "aggron": {
       "name": "Aggron",
@@ -44372,8 +44163,7 @@
           "target": "Normal",
           "description": "Traps and damages the target for 4-5 turns."
         }
-      ],
-      "sets": []
+      ]
     },
     "medicham": {
       "name": "Medicham",
@@ -45289,8 +45079,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "manectric": {
       "name": "Manectric",
@@ -45904,8 +45693,7 @@
           "target": "Normal",
           "description": "Has 1/4 recoil."
         }
-      ],
-      "sets": []
+      ]
     },
     "sharpedo": {
       "name": "Sharpedo",
@@ -46590,8 +46378,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "camerupt": {
       "name": "Camerupt",
@@ -47405,8 +47192,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "torkoal": {
       "name": "Torkoal",
@@ -48086,8 +47872,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "altaria": {
       "name": "Altaria",
@@ -48871,8 +48656,7 @@
           "target": "All",
           "description": "For 5 turns, all Defense and Sp. Def stats switch."
         }
-      ],
-      "sets": []
+      ]
     },
     "milotic": {
       "name": "Milotic",
@@ -49596,8 +49380,7 @@
           "target": "Normal",
           "description": "Traps and damages the target for 4-5 turns."
         }
-      ],
-      "sets": []
+      ]
     },
     "castform": {
       "name": "Castform",
@@ -50107,8 +49890,7 @@
           "target": "Normal",
           "description": "Power doubles and type varies in each weather."
         }
-      ],
-      "sets": []
+      ]
     },
     "banette": {
       "name": "Banette",
@@ -50909,8 +50691,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "chimecho": {
       "name": "Chimecho",
@@ -51685,8 +51466,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "absol": {
       "name": "Absol",
@@ -52542,8 +52322,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "glalie": {
       "name": "Glalie",
@@ -53212,8 +52991,7 @@
           "target": "Normal",
           "description": "Power doubles and type varies in each weather."
         }
-      ],
-      "sets": []
+      ]
     },
     "torterra": {
       "name": "Torterra",
@@ -54051,8 +53829,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "infernape": {
       "name": "Infernape",
@@ -55066,8 +54843,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "empoleon": {
       "name": "Empoleon",
@@ -55927,8 +55703,7 @@
           "target": "Normal",
           "description": "Puts the target to sleep after 1 turn."
         }
-      ],
-      "sets": []
+      ]
     },
     "luxray": {
       "name": "Luxray",
@@ -56564,8 +56339,7 @@
           "target": "Normal",
           "description": "Has 1/4 recoil."
         }
-      ],
-      "sets": []
+      ]
     },
     "roserade": {
       "name": "Roserade",
@@ -57180,8 +56954,7 @@
           "target": "Normal",
           "description": "The target's Ability becomes Insomnia."
         }
-      ],
-      "sets": []
+      ]
     },
     "rampardos": {
       "name": "Rampardos",
@@ -58040,8 +57813,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "bastiodon": {
       "name": "Bastiodon",
@@ -58835,8 +58607,7 @@
           "target": "AllySide",
           "description": "Protects allies from multi-target moves this turn."
         }
-      ],
-      "sets": []
+      ]
     },
     "lopunny": {
       "name": "Lopunny",
@@ -59748,65 +59519,6 @@
           "target": "Normal",
           "description": "User switches out after damaging the target."
         }
-      ],
-      "sets": [
-        {
-          "name": "All-out Attacker",
-          "format": "Battle Stadium Singles",
-          "abilities": [
-            "Scrappy"
-          ],
-          "items": [
-            "Lopunnite"
-          ],
-          "natures": [
-            "Jolly"
-          ],
-          "moveslots": [
-            [
-              "Fake Out"
-            ],
-            [
-              "Close Combat"
-            ],
-            [
-              "Triple Axel"
-            ],
-            [
-              "U-turn"
-            ]
-          ]
-        },
-        {
-          "name": "Swords Dance",
-          "format": "Battle Stadium Singles",
-          "abilities": [
-            "Scrappy"
-          ],
-          "items": [
-            "Lopunnite"
-          ],
-          "natures": [
-            "Jolly"
-          ],
-          "moveslots": [
-            [
-              "Swords Dance"
-            ],
-            [
-              "Close Combat"
-            ],
-            [
-              "Fake Out",
-              "Mach Punch"
-            ],
-            [
-              "Triple Axel",
-              "Facade",
-              "Mach Punch"
-            ]
-          ]
-        }
       ]
     },
     "spiritomb": {
@@ -60447,8 +60159,7 @@
           "target": "All",
           "description": "For 5 turns, all Defense and Sp. Def stats switch."
         }
-      ],
-      "sets": []
+      ]
     },
     "garchomp": {
       "name": "Garchomp",
@@ -61154,122 +60865,6 @@
           "priority": 0,
           "target": "Normal",
           "description": "10% chance to paralyze. 10% chance to flinch."
-        }
-      ],
-      "sets": [
-        {
-          "name": "Choice Scarf",
-          "format": "Battle Stadium Singles",
-          "abilities": [
-            "Rough Skin"
-          ],
-          "items": [
-            "Choice Scarf"
-          ],
-          "natures": [
-            "Jolly",
-            "Adamant"
-          ],
-          "moveslots": [
-            [
-              "Earthquake"
-            ],
-            [
-              "Outrage"
-            ],
-            [
-              "Poison Jab"
-            ],
-            [
-              "Rock Tomb",
-              "Dragon Claw"
-            ]
-          ]
-        },
-        {
-          "name": "Offensive Stealth Rock",
-          "format": "Battle Stadium Singles",
-          "abilities": [
-            "Rough Skin"
-          ],
-          "items": [
-            "Focus Sash"
-          ],
-          "natures": [
-            "Jolly"
-          ],
-          "moveslots": [
-            [
-              "Stealth Rock"
-            ],
-            [
-              "Earthquake"
-            ],
-            [
-              "Outrage"
-            ],
-            [
-              "Rock Tomb",
-              "Poison Jab"
-            ]
-          ]
-        },
-        {
-          "name": "Swords Dance",
-          "format": "Battle Stadium Singles",
-          "abilities": [
-            "Rough Skin"
-          ],
-          "items": [
-            "Focus Sash",
-            "Lum Berry"
-          ],
-          "natures": [
-            "Jolly"
-          ],
-          "moveslots": [
-            [
-              "Swords Dance"
-            ],
-            [
-              "Earthquake"
-            ],
-            [
-              "Scale Shot"
-            ],
-            [
-              "Poison Jab",
-              "Fire Fang"
-            ]
-          ]
-        },
-        {
-          "name": "Chonky Chomp (Phazer)",
-          "format": "Battle Stadium Singles",
-          "abilities": [
-            "Rough Skin"
-          ],
-          "items": [
-            "Sitrus Berry"
-          ],
-          "natures": [
-            "Jolly"
-          ],
-          "moveslots": [
-            [
-              "Stealth Rock"
-            ],
-            [
-              "Dragon Tail"
-            ],
-            [
-              "Earthquake"
-            ],
-            [
-              "Spikes",
-              "Rock Slide"
-            ]
-          ]
         }
       ]
     },
@@ -62261,8 +61856,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "hippowdon": {
       "name": "Hippowdon",
@@ -62867,38 +62461,6 @@
           "priority": 0,
           "target": "Normal",
           "description": "Puts the target to sleep after 1 turn."
-        }
-      ],
-      "sets": [
-        {
-          "name": "Stealth Rock",
-          "format": "Battle Stadium Singles",
-          "abilities": [
-            "Sand Stream"
-          ],
-          "items": [
-            "Sitrus Berry",
-            "Leftovers"
-          ],
-          "natures": [
-            "Impish",
-            "Careful"
-          ],
-          "moveslots": [
-            [
-              "Stealth Rock"
-            ],
-            [
-              "Earthquake"
-            ],
-            [
-              "Yawn"
-            ],
-            [
-              "Slack Off",
-              "Whirlwind"
-            ]
-          ]
         }
       ]
     },
@@ -63845,8 +63407,7 @@
           "target": "Normal",
           "description": "No additional effect."
         }
-      ],
-      "sets": []
+      ]
     },
     "abomasnow": {
       "name": "Abomasnow",
@@ -64630,8 +64191,7 @@
           "target": "Normal",
           "description": "Has 33% recoil."
         }
-      ],
-      "sets": []
+      ]
     },
     "weavile": {
       "name": "Weavile",
@@ -65469,8 +65029,7 @@
           "target": "Normal",
           "description": "No additional effect."
         }
-      ],
-      "sets": []
+      ]
     },
     "rhyperior": {
       "name": "Rhyperior",
@@ -66525,8 +66084,7 @@
           "target": "RandomNormal",
           "description": "Lasts 3 turns. Active Pokemon cannot fall asleep."
         }
-      ],
-      "sets": []
+      ]
     },
     "leafeon": {
       "name": "Leafeon",
@@ -67209,8 +66767,7 @@
           "target": "Normal",
           "description": "Puts the target to sleep after 1 turn."
         }
-      ],
-      "sets": []
+      ]
     },
     "glaceon": {
       "name": "Glaceon",
@@ -67893,8 +67450,7 @@
           "target": "Normal",
           "description": "Puts the target to sleep after 1 turn."
         }
-      ],
-      "sets": []
+      ]
     },
     "gliscor": {
       "name": "Gliscor",
@@ -68762,8 +68318,7 @@
           "target": "Normal",
           "description": "No additional effect."
         }
-      ],
-      "sets": []
+      ]
     },
     "mamoswine": {
       "name": "Mamoswine",
@@ -69510,8 +69065,7 @@
           "target": "Normal",
           "description": "100% chance to raise the user's Speed by 1."
         }
-      ],
-      "sets": []
+      ]
     },
     "gallade": {
       "name": "Gallade",
@@ -70743,8 +70297,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "froslass": {
       "name": "Froslass",
@@ -71561,8 +71114,7 @@
           "target": "Normal",
           "description": "Burns the target."
         }
-      ],
-      "sets": []
+      ]
     },
     "rotom": {
       "name": "Rotom",
@@ -72062,8 +71614,7 @@
           "target": "Normal",
           "description": "Burns the target."
         }
-      ],
-      "sets": []
+      ]
     },
     "serperior": {
       "name": "Serperior",
@@ -72691,8 +72242,7 @@
           "target": "Normal",
           "description": "Traps and damages the target for 4-5 turns."
         }
-      ],
-      "sets": []
+      ]
     },
     "emboar": {
       "name": "Emboar",
@@ -73630,8 +73180,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "samurott": {
       "name": "Samurott",
@@ -74347,8 +73896,7 @@
           "target": "Normal",
           "description": "No additional effect."
         }
-      ],
-      "sets": []
+      ]
     },
     "hisuian-samurott": {
       "name": "Hisuian Samurott",
@@ -75131,8 +74679,7 @@
           "target": "Normal",
           "description": "No additional effect."
         }
-      ],
-      "sets": []
+      ]
     },
     "watchog": {
       "name": "Watchog",
@@ -75757,8 +75304,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "liepard": {
       "name": "Liepard",
@@ -76471,8 +76017,7 @@
           "target": "Normal",
           "description": "Puts the target to sleep after 1 turn."
         }
-      ],
-      "sets": []
+      ]
     },
     "simisage": {
       "name": "Simisage",
@@ -77067,8 +76612,7 @@
           "target": "RandomNormal",
           "description": "Lasts 3 turns. Active Pokemon cannot fall asleep."
         }
-      ],
-      "sets": []
+      ]
     },
     "simisear": {
       "name": "Simisear",
@@ -77718,8 +77262,7 @@
           "target": "Normal",
           "description": "Puts the target to sleep after 1 turn."
         }
-      ],
-      "sets": []
+      ]
     },
     "simipour": {
       "name": "Simipour",
@@ -78336,8 +77879,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "excadrill": {
       "name": "Excadrill",
@@ -78997,8 +78539,7 @@
           "target": "Normal",
           "description": "No additional effect."
         }
-      ],
-      "sets": []
+      ]
     },
     "audino": {
       "name": "Audino",
@@ -79833,8 +79374,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "conkeldurr": {
       "name": "Conkeldurr",
@@ -80558,8 +80098,7 @@
           "target": "AllySide",
           "description": "Protects allies from multi-target moves this turn."
         }
-      ],
-      "sets": []
+      ]
     },
     "whimsicott": {
       "name": "Whimsicott",
@@ -81163,8 +80702,7 @@
           "target": "Normal",
           "description": "The target's Ability becomes Insomnia."
         }
-      ],
-      "sets": []
+      ]
     },
     "krookodile": {
       "name": "Krookodile",
@@ -82131,8 +81669,7 @@
           "target": "RandomNormal",
           "description": "Lasts 3 turns. Active Pokemon cannot fall asleep."
         }
-      ],
-      "sets": []
+      ]
     },
     "cofagrigus": {
       "name": "Cofagrigus",
@@ -82763,8 +82300,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "garbodor": {
       "name": "Garbodor",
@@ -83400,8 +82936,7 @@
           "target": "Normal",
           "description": "Power doubles if the target is poisoned."
         }
-      ],
-      "sets": []
+      ]
     },
     "zoroark": {
       "name": "Zoroark",
@@ -84208,8 +83743,7 @@
           "target": "Normal",
           "description": "User switches out after damaging the target."
         }
-      ],
-      "sets": []
+      ]
     },
     "hisuian-zoroark": {
       "name": "Hisuian Zoroark",
@@ -85050,8 +84584,7 @@
           "target": "Normal",
           "description": "Burns the target."
         }
-      ],
-      "sets": []
+      ]
     },
     "reuniclus": {
       "name": "Reuniclus",
@@ -85830,8 +85363,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "vanilluxe": {
       "name": "Vanilluxe",
@@ -86335,8 +85867,7 @@
           "target": "Normal",
           "description": "Power doubles and type varies in each weather."
         }
-      ],
-      "sets": []
+      ]
     },
     "emolga": {
       "name": "Emolga",
@@ -86888,8 +86419,7 @@
           "target": "Normal",
           "description": "Has 1/4 recoil."
         }
-      ],
-      "sets": []
+      ]
     },
     "chandelure": {
       "name": "Chandelure",
@@ -87560,8 +87090,7 @@
           "target": "Normal",
           "description": "Burns the target."
         }
-      ],
-      "sets": []
+      ]
     },
     "beartic": {
       "name": "Beartic",
@@ -88439,8 +87968,7 @@
           "target": "Normal",
           "description": "Puts the target to sleep after 1 turn."
         }
-      ],
-      "sets": []
+      ]
     },
     "stunfisk": {
       "name": "Stunfisk",
@@ -89022,8 +88550,7 @@
           "target": "Normal",
           "description": "Puts the target to sleep after 1 turn."
         }
-      ],
-      "sets": []
+      ]
     },
     "galarian-stunfisk": {
       "name": "Galarian Stunfisk",
@@ -89633,8 +89160,7 @@
           "target": "Normal",
           "description": "Puts the target to sleep after 1 turn."
         }
-      ],
-      "sets": []
+      ]
     },
     "golurk": {
       "name": "Golurk",
@@ -90569,8 +90095,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "hydreigon": {
       "name": "Hydreigon",
@@ -91466,8 +90991,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "volcarona": {
       "name": "Volcarona",
@@ -92140,8 +91664,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "chesnaught": {
       "name": "Chesnaught",
@@ -93167,8 +92690,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "delphox": {
       "name": "Delphox",
@@ -94029,40 +93551,6 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": [
-        {
-          "name": "Crimson Maiden (Offensive Mega)",
-          "format": "Battle Stadium Singles",
-          "abilities": [
-            "Blaze"
-          ],
-          "items": [
-            "Delphoxite"
-          ],
-          "natures": [
-            "Timid"
-          ],
-          "moveslots": [
-            [
-              "Flamethrower"
-            ],
-            [
-              "Psychic",
-              "Psyshock",
-              "Psychic Noise"
-            ],
-            [
-              "Encore",
-              "Dazzling Gleam"
-            ],
-            [
-              "Dazzling Gleam",
-              "Nasty Plot",
-              "Substitute"
-            ]
-          ]
-        }
       ]
     },
     "greninja": {
@@ -94844,8 +94332,7 @@
           "target": "Normal",
           "description": "Power doubles and type varies in each weather."
         }
-      ],
-      "sets": []
+      ]
     },
     "diggersby": {
       "name": "Diggersby",
@@ -95537,8 +95024,7 @@
           "target": "Normal",
           "description": "Has 1/4 recoil."
         }
-      ],
-      "sets": []
+      ]
     },
     "talonflame": {
       "name": "Talonflame",
@@ -96134,8 +95620,7 @@
           "target": "Normal",
           "description": "Burns the target."
         }
-      ],
-      "sets": []
+      ]
     },
     "vivillon": {
       "name": "Vivillon",
@@ -96662,8 +96147,7 @@
           "target": "Normal",
           "description": "Forces the target to switch to a random ally."
         }
-      ],
-      "sets": []
+      ]
     },
     "eternal-flower-floette": {
       "name": "Eternal Flower Floette",
@@ -97158,67 +96642,6 @@
           "priority": 0,
           "target": "Self",
           "description": "Next turn, 50% of the user's max HP is restored."
-        }
-      ],
-      "sets": [
-        {
-          "name": "X: Life Giver (Bulky Setup)",
-          "format": "Battle Stadium Singles",
-          "abilities": [
-            "Flower Veil"
-          ],
-          "items": [
-            "Floettite"
-          ],
-          "natures": [
-            "Modest"
-          ],
-          "moveslots": [
-            [
-              "Calm Mind"
-            ],
-            [
-              "Draining Kiss"
-            ],
-            [
-              "Moonblast",
-              "Light of Ruin"
-            ],
-            [
-              "Synthesis"
-            ]
-          ]
-        },
-        {
-          "name": "Y: Life Taker (Offensive)",
-          "format": "Battle Stadium Singles",
-          "abilities": [
-            "Flower Veil"
-          ],
-          "items": [
-            "Floettite"
-          ],
-          "natures": [
-            "Timid"
-          ],
-          "moveslots": [
-            [
-              "Calm Mind"
-            ],
-            [
-              "Moonblast",
-              "Draining Kiss"
-            ],
-            [
-              "Light of Ruin",
-              "Psychic"
-            ],
-            [
-              "Synthesis",
-              "Substitute",
-              "Psychic"
-            ]
-          ]
         }
       ]
     },
@@ -97771,8 +97194,7 @@
           "target": "Self",
           "description": "Next turn, 50% of the user's max HP is restored."
         }
-      ],
-      "sets": []
+      ]
     },
     "pangoro": {
       "name": "Pangoro",
@@ -98706,8 +98128,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "furfrou": {
       "name": "Furfrou",
@@ -99184,8 +98605,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "meowstic": {
       "name": "Meowstic",
@@ -99961,8 +99381,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "aegislash": {
       "name": "Aegislash",
@@ -100518,8 +99937,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "aromatisse": {
       "name": "Aromatisse",
@@ -101092,8 +100510,7 @@
           "target": "Self",
           "description": "Next turn, 50% of the user's max HP is restored."
         }
-      ],
-      "sets": []
+      ]
     },
     "slurpuff": {
       "name": "Slurpuff",
@@ -101600,8 +101017,7 @@
           "target": "Normal",
           "description": "Puts the target to sleep after 1 turn."
         }
-      ],
-      "sets": []
+      ]
     },
     "clawitzer": {
       "name": "Clawitzer",
@@ -102210,8 +101626,7 @@
           "target": "Normal",
           "description": "Power doubles and type varies in each weather."
         }
-      ],
-      "sets": []
+      ]
     },
     "heliolisk": {
       "name": "Heliolisk",
@@ -102958,8 +102373,7 @@
           "target": "Normal",
           "description": "Has 1/4 recoil."
         }
-      ],
-      "sets": []
+      ]
     },
     "tyrantrum": {
       "name": "Tyrantrum",
@@ -103709,8 +103123,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "aurorus": {
       "name": "Aurorus",
@@ -104372,8 +103785,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "sylveon": {
       "name": "Sylveon",
@@ -105023,8 +104435,7 @@
           "target": "Normal",
           "description": "Puts the target to sleep after 1 turn."
         }
-      ],
-      "sets": []
+      ]
     },
     "hawlucha": {
       "name": "Hawlucha",
@@ -105915,8 +105326,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "dedenne": {
       "name": "Dedenne",
@@ -106520,8 +105930,7 @@
           "target": "Normal",
           "description": "Has 1/4 recoil."
         }
-      ],
-      "sets": []
+      ]
     },
     "goodra": {
       "name": "Goodra",
@@ -107289,8 +106698,7 @@
           "target": "Normal",
           "description": "Power doubles and type varies in each weather."
         }
-      ],
-      "sets": []
+      ]
     },
     "klefki": {
       "name": "Klefki",
@@ -107820,8 +107228,7 @@
           "target": "All",
           "description": "Goes last. For 5 turns, turn order is reversed."
         }
-      ],
-      "sets": []
+      ]
     },
     "trevenant": {
       "name": "Trevenant",
@@ -108678,8 +108085,7 @@
           "target": "Normal",
           "description": "No additional effect."
         }
-      ],
-      "sets": []
+      ]
     },
     "gourgeist": {
       "name": "Gourgeist",
@@ -109393,8 +108799,7 @@
           "target": "Normal",
           "description": "The target's Ability becomes Insomnia."
         }
-      ],
-      "sets": []
+      ]
     },
     "avalugg": {
       "name": "Avalugg",
@@ -109986,8 +109391,7 @@
           "target": "AllySide",
           "description": "Protects allies from multi-target moves this turn."
         }
-      ],
-      "sets": []
+      ]
     },
     "hisuian-avalugg": {
       "name": "Hisuian Avalugg",
@@ -110580,8 +109984,7 @@
           "target": "AllySide",
           "description": "Protects allies from multi-target moves this turn."
         }
-      ],
-      "sets": []
+      ]
     },
     "noivern": {
       "name": "Noivern",
@@ -111339,8 +110742,7 @@
           "target": "Normal",
           "description": "No additional effect."
         }
-      ],
-      "sets": []
+      ]
     },
     "decidueye": {
       "name": "Decidueye",
@@ -112112,8 +111514,7 @@
           "target": "Normal",
           "description": "User switches out after damaging the target."
         }
-      ],
-      "sets": []
+      ]
     },
     "hisuian-decidueye": {
       "name": "Hisuian Decidueye",
@@ -112885,8 +112286,7 @@
           "target": "Normal",
           "description": "User switches out after damaging the target."
         }
-      ],
-      "sets": []
+      ]
     },
     "incineroar": {
       "name": "Incineroar",
@@ -113779,37 +113179,6 @@
           "target": "Normal",
           "description": "Burns the target."
         }
-      ],
-      "sets": [
-        {
-          "name": "Fake Out Pivot",
-          "format": "VGC 2026 Regulation M-A",
-          "abilities": [
-            "Intimidate"
-          ],
-          "items": [
-            "Sitrus Berry",
-            "Chople Berry"
-          ],
-          "natures": [
-            "Careful"
-          ],
-          "moveslots": [
-            [
-              "Fake Out"
-            ],
-            [
-              "Flare Blitz"
-            ],
-            [
-              "Throat Chop",
-              "Darkest Lariat"
-            ],
-            [
-              "Parting Shot"
-            ]
-          ]
-        }
       ]
     },
     "primarina": {
@@ -114549,39 +113918,6 @@
           "target": "All",
           "description": "For 5 turns, all Defense and Sp. Def stats switch."
         }
-      ],
-      "sets": [
-        {
-          "name": "Offensive Utility",
-          "format": "Battle Stadium Singles",
-          "abilities": [
-            "Torrent"
-          ],
-          "items": [
-            "Sitrus Berry",
-            "Mystic Water",
-            "Leftovers"
-          ],
-          "natures": [
-            "Modest",
-            "Quiet"
-          ],
-          "moveslots": [
-            [
-              "Moonblast"
-            ],
-            [
-              "Sparkling Aria"
-            ],
-            [
-              "Aqua Jet"
-            ],
-            [
-              "Flip Turn",
-              "Encore"
-            ]
-          ]
-        }
       ]
     },
     "toucannon": {
@@ -115219,8 +114555,7 @@
           "target": "Normal",
           "description": "User switches out after damaging the target."
         }
-      ],
-      "sets": []
+      ]
     },
     "crabominable": {
       "name": "Crabominable",
@@ -115990,8 +115325,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "lycanroc": {
       "name": "Lycanroc",
@@ -116682,8 +116016,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "toxapex": {
       "name": "Toxapex",
@@ -117298,8 +116631,7 @@
           "target": "AllySide",
           "description": "Protects allies from multi-target moves this turn."
         }
-      ],
-      "sets": []
+      ]
     },
     "mudsdale": {
       "name": "Mudsdale",
@@ -117847,8 +117179,7 @@
           "target": "Normal",
           "description": "Lowers the user's Attack and Defense by 1."
         }
-      ],
-      "sets": []
+      ]
     },
     "araquanid": {
       "name": "Araquanid",
@@ -118455,8 +117786,7 @@
           "target": "Normal",
           "description": "No additional effect."
         }
-      ],
-      "sets": []
+      ]
     },
     "salazzle": {
       "name": "Salazzle",
@@ -119272,8 +118602,7 @@
           "target": "Normal",
           "description": "Burns the target."
         }
-      ],
-      "sets": []
+      ]
     },
     "tsareena": {
       "name": "Tsareena",
@@ -119920,8 +119249,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "oranguru": {
       "name": "Oranguru",
@@ -120679,8 +120007,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "passimian": {
       "name": "Passimian",
@@ -121451,8 +120778,7 @@
           "target": "Normal",
           "description": "Usually goes first."
         }
-      ],
-      "sets": []
+      ]
     },
     "mimikyu": {
       "name": "Mimikyu",
@@ -122172,40 +121498,6 @@
           "priority": 0,
           "target": "Normal",
           "description": "No additional effect."
-        }
-      ],
-      "sets": [
-        {
-          "name": "Swords Dance",
-          "format": "Battle Stadium Singles",
-          "abilities": [
-            "Disguise"
-          ],
-          "items": [
-            "Spell Tag",
-            "Lum Berry",
-            "Fairy Feather"
-          ],
-          "natures": [
-            "Adamant",
-            "Jolly"
-          ],
-          "moveslots": [
-            [
-              "Swords Dance"
-            ],
-            [
-              "Play Rough"
-            ],
-            [
-              "Shadow Sneak"
-            ],
-            [
-              "Shadow Claw",
-              "Curse",
-              "Drain Punch"
-            ]
-          ]
         }
       ]
     },
@@ -123010,8 +122302,7 @@
           "target": "Normal",
           "description": "Forces the target to switch to a random ally."
         }
-      ],
-      "sets": []
+      ]
     },
     "kommo-o": {
       "name": "Kommo-o",
@@ -123923,8 +123214,7 @@
           "target": "Normal",
           "description": "No additional effect."
         }
-      ],
-      "sets": []
+      ]
     },
     "corviknight": {
       "name": "Corviknight",
@@ -124583,73 +123873,6 @@
           "target": "Normal",
           "description": "User switches out after damaging the target."
         }
-      ],
-      "sets": [
-        {
-          "name": "Physically Defensive",
-          "format": "Battle Stadium Singles",
-          "abilities": [
-            "Pressure",
-            "Mirror Armor"
-          ],
-          "items": [
-            "Leftovers",
-            "Sitrus Berry"
-          ],
-          "natures": [
-            "Impish",
-            "Relaxed"
-          ],
-          "moveslots": [
-            [
-              "Roost"
-            ],
-            [
-              "Body Press"
-            ],
-            [
-              "U-turn",
-              "Iron Head"
-            ],
-            [
-              "Iron Defense",
-              "Iron Head",
-              "Taunt"
-            ]
-          ]
-        },
-        {
-          "name": "Specially Defensive",
-          "format": "Battle Stadium Singles",
-          "abilities": [
-            "Pressure",
-            "Mirror Armor"
-          ],
-          "items": [
-            "Leftovers",
-            "Sitrus Berry"
-          ],
-          "natures": [
-            "Careful",
-            "Sassy"
-          ],
-          "moveslots": [
-            [
-              "Roost"
-            ],
-            [
-              "U-turn"
-            ],
-            [
-              "Body Press",
-              "Brave Bird"
-            ],
-            [
-              "Iron Defense",
-              "Taunt"
-            ]
-          ]
-        }
       ]
     },
     "flapple": {
@@ -125188,8 +124411,7 @@
           "target": "Normal",
           "description": "User switches out after damaging the target."
         }
-      ],
-      "sets": []
+      ]
     },
     "appletun": {
       "name": "Appletun",
@@ -125804,8 +125026,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "sandaconda": {
       "name": "Sandaconda",
@@ -126386,8 +125607,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "polteageist": {
       "name": "Polteageist",
@@ -126938,8 +126158,7 @@
           "target": "All",
           "description": "For 5 turns, all Defense and Sp. Def stats switch."
         }
-      ],
-      "sets": []
+      ]
     },
     "hatterene": {
       "name": "Hatterene",
@@ -127642,8 +126861,7 @@
           "target": "All",
           "description": "For 5 turns, all Defense and Sp. Def stats switch."
         }
-      ],
-      "sets": []
+      ]
     },
     "mr-rime": {
       "name": "Mr. Rime",
@@ -128720,8 +127938,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "runerigus": {
       "name": "Runerigus",
@@ -129518,8 +128735,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "alcremie": {
       "name": "Alcremie",
@@ -130103,8 +129319,7 @@
           "target": "All",
           "description": "For 5 turns, all Defense and Sp. Def stats switch."
         }
-      ],
-      "sets": []
+      ]
     },
     "morpeko": {
       "name": "Morpeko",
@@ -130880,8 +130095,7 @@
           "target": "Normal",
           "description": "Has 1/4 recoil."
         }
-      ],
-      "sets": []
+      ]
     },
     "dragapult": {
       "name": "Dragapult",
@@ -131628,8 +130842,7 @@
           "target": "Normal",
           "description": "Burns the target."
         }
-      ],
-      "sets": []
+      ]
     },
     "wyrdeer": {
       "name": "Wyrdeer",
@@ -132354,8 +131567,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "kleavor": {
       "name": "Kleavor",
@@ -133025,8 +132237,7 @@
           "target": "Normal",
           "description": "No additional effect."
         }
-      ],
-      "sets": []
+      ]
     },
     "basculegion": {
       "name": "Basculegion",
@@ -133618,64 +132829,6 @@
           "priority": 0,
           "target": "Normal",
           "description": "20% chance to make the target flinch."
-        }
-      ],
-      "sets": [
-        {
-          "name": "Choice Scarf",
-          "format": "Battle Stadium Singles",
-          "abilities": [
-            "Adaptability"
-          ],
-          "items": [
-            "Choice Scarf"
-          ],
-          "natures": [
-            "Jolly"
-          ],
-          "moveslots": [
-            [
-              "Wave Crash"
-            ],
-            [
-              "Last Respects"
-            ],
-            [
-              "Flip Turn"
-            ],
-            [
-              "Aqua Jet"
-            ]
-          ]
-        },
-        {
-          "name": "Offensive",
-          "format": "Battle Stadium Singles",
-          "abilities": [
-            "Adaptability"
-          ],
-          "items": [
-            "Mystic Water",
-            "Spell Tag",
-            "Focus Sash"
-          ],
-          "natures": [
-            "Adamant"
-          ],
-          "moveslots": [
-            [
-              "Wave Crash"
-            ],
-            [
-              "Last Respects"
-            ],
-            [
-              "Aqua Jet"
-            ],
-            [
-              "Agility"
-            ]
-          ]
         }
       ]
     },
@@ -134401,39 +133554,6 @@
           "priority": 0,
           "target": "Normal",
           "description": "No additional effect."
-        }
-      ],
-      "sets": [
-        {
-          "name": "Unburden Sweeper",
-          "format": "Battle Stadium Singles",
-          "abilities": [
-            "Unburden"
-          ],
-          "items": [
-            "White Herb",
-            "Sitrus Berry"
-          ],
-          "natures": [
-            "Adamant",
-            "Jolly"
-          ],
-          "moveslots": [
-            [
-              "Dire Claw"
-            ],
-            [
-              "Close Combat"
-            ],
-            [
-              "Throat Chop",
-              "Shadow Claw"
-            ],
-            [
-              "Swords Dance",
-              "Fake Out"
-            ]
-          ]
         }
       ]
     },
@@ -135196,8 +134316,7 @@
           "target": "Normal",
           "description": "The target's Ability becomes Insomnia."
         }
-      ],
-      "sets": []
+      ]
     },
     "skeledirge": {
       "name": "Skeledirge",
@@ -135859,8 +134978,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "quaquaval": {
       "name": "Quaquaval",
@@ -136555,8 +135673,7 @@
           "target": "Normal",
           "description": "Traps and damages the target for 4-5 turns."
         }
-      ],
-      "sets": []
+      ]
     },
     "maushold": {
       "name": "Maushold",
@@ -137159,8 +136276,7 @@
           "target": "Any",
           "description": "20% chance to confuse the target."
         }
-      ],
-      "sets": []
+      ]
     },
     "garganacl": {
       "name": "Garganacl",
@@ -137807,8 +136923,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "armarouge": {
       "name": "Armarouge",
@@ -138459,8 +137574,7 @@
           "target": "Normal",
           "description": "Burns the target."
         }
-      ],
-      "sets": []
+      ]
     },
     "ceruledge": {
       "name": "Ceruledge",
@@ -139111,8 +138225,7 @@
           "target": "Normal",
           "description": "No additional effect."
         }
-      ],
-      "sets": []
+      ]
     },
     "bellibolt": {
       "name": "Bellibolt",
@@ -139593,39 +138706,6 @@
           "priority": 0,
           "target": "Normal",
           "description": "100% chance to paralyze the target."
-        }
-      ],
-      "sets": [
-        {
-          "name": "Special Wall",
-          "format": "Battle Stadium Singles",
-          "abilities": [
-            "Electromorphosis"
-          ],
-          "items": [
-            "Sitrus Berry",
-            "Magnet",
-            "Leftovers"
-          ],
-          "natures": [
-            "Calm"
-          ],
-          "moveslots": [
-            [
-              "Volt Switch"
-            ],
-            [
-              "Parabolic Charge"
-            ],
-            [
-              "Soak",
-              "Toxic",
-              "Acid Spray"
-            ],
-            [
-              "Slack Off"
-            ]
-          ]
         }
       ]
     },
@@ -140232,8 +139312,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "espathra": {
       "name": "Espathra",
@@ -140913,8 +139992,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "tinkaton": {
       "name": "Tinkaton",
@@ -141485,8 +140563,7 @@
           "target": "Normal",
           "description": "Has 33% recoil."
         }
-      ],
-      "sets": []
+      ]
     },
     "palafin": {
       "name": "Palafin",
@@ -142183,8 +141260,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "orthworm": {
       "name": "Orthworm",
@@ -142669,8 +141745,7 @@
           "target": "Normal",
           "description": "Traps and damages the target for 4-5 turns."
         }
-      ],
-      "sets": []
+      ]
     },
     "glimmora": {
       "name": "Glimmora",
@@ -143245,8 +142320,7 @@
           "target": "Normal",
           "description": "Power doubles if the target is poisoned."
         }
-      ],
-      "sets": []
+      ]
     },
     "farigiraf": {
       "name": "Farigiraf",
@@ -144070,8 +143144,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "kingambit": {
       "name": "Kingambit",
@@ -144697,65 +143770,6 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": [
-        {
-          "name": "Swords Dance",
-          "format": "Battle Stadium Singles",
-          "abilities": [
-            "Supreme Overlord"
-          ],
-          "items": [
-            "Black Glasses"
-          ],
-          "natures": [
-            "Adamant"
-          ],
-          "moveslots": [
-            [
-              "Sucker Punch"
-            ],
-            [
-              "Kowtow Cleave"
-            ],
-            [
-              "Swords Dance"
-            ],
-            [
-              "Iron Head",
-              "Low Kick"
-            ]
-          ]
-        },
-        {
-          "name": "Bulky Attacker",
-          "format": "VGC 2026 Regulation M-A",
-          "abilities": [
-            "Defiant"
-          ],
-          "items": [
-            "Chople Berry",
-            "Black Glasses"
-          ],
-          "natures": [
-            "Adamant"
-          ],
-          "moveslots": [
-            [
-              "Kowtow Cleave"
-            ],
-            [
-              "Sucker Punch"
-            ],
-            [
-              "Iron Head",
-              "Low Kick"
-            ],
-            [
-              "Protect"
-            ]
-          ]
-        }
       ]
     },
     "sinistcha": {
@@ -145187,8 +144201,7 @@
           "target": "RandomNormal",
           "description": "Lasts 3 turns. Active Pokemon cannot fall asleep."
         }
-      ],
-      "sets": []
+      ]
     },
     "archaludon": {
       "name": "Archaludon",
@@ -145803,8 +144816,7 @@
           "target": "Normal",
           "description": "Paralyzes the target."
         }
-      ],
-      "sets": []
+      ]
     },
     "hydrapple": {
       "name": "Hydrapple",
@@ -146419,8 +145431,7 @@
           "target": "Normal",
           "description": "Puts the target to sleep after 1 turn."
         }
-      ],
-      "sets": []
+      ]
     },
     "rotom-wash": {
       "name": "Rotom-Wash",
@@ -146930,67 +145941,6 @@
           "priority": 0,
           "target": "Normal",
           "description": "Burns the target."
-        }
-      ],
-      "sets": [
-        {
-          "name": "Pivot",
-          "format": "Battle Stadium Singles",
-          "abilities": [
-            "Levitate"
-          ],
-          "items": [
-            "Sitrus Berry",
-            "Leftovers"
-          ],
-          "natures": [
-            "Modest",
-            "Bold"
-          ],
-          "moveslots": [
-            [
-              "Volt Switch"
-            ],
-            [
-              "Hydro Pump"
-            ],
-            [
-              "Will-O-Wisp"
-            ],
-            [
-              "Thunderbolt",
-              "Discharge"
-            ]
-          ]
-        },
-        {
-          "name": "Choice Scarf",
-          "format": "Battle Stadium Singles",
-          "abilities": [
-            "Levitate"
-          ],
-          "items": [
-            "Choice Scarf"
-          ],
-          "natures": [
-            "Timid"
-          ],
-          "moveslots": [
-            [
-              "Volt Switch"
-            ],
-            [
-              "Hydro Pump"
-            ],
-            [
-              "Trick"
-            ],
-            [
-              "Thunderbolt",
-              "Discharge",
-              "Will-O-Wisp"
-            ]
-          ]
         }
       ]
     },
@@ -147503,8 +146453,7 @@
           "target": "Normal",
           "description": "Burns the target."
         }
-      ],
-      "sets": []
+      ]
     },
     "rotom-mow": {
       "name": "Rotom-Mow",
@@ -148015,8 +146964,7 @@
           "target": "Normal",
           "description": "Burns the target."
         }
-      ],
-      "sets": []
+      ]
     },
     "rotom-fan": {
       "name": "Rotom-Fan",
@@ -148527,8 +147475,7 @@
           "target": "Normal",
           "description": "Burns the target."
         }
-      ],
-      "sets": []
+      ]
     },
     "rotom-heat": {
       "name": "Rotom-Heat",
@@ -149038,37 +147985,6 @@
           "priority": 0,
           "target": "Normal",
           "description": "Burns the target."
-        }
-      ],
-      "sets": [
-        {
-          "name": "Offensive Pivot",
-          "format": "Battle Stadium Singles",
-          "abilities": [
-            "Levitate"
-          ],
-          "items": [
-            "Choice Scarf"
-          ],
-          "natures": [
-            "Modest",
-            "Timid"
-          ],
-          "moveslots": [
-            [
-              "Thunderbolt",
-              "Discharge"
-            ],
-            [
-              "Volt Switch"
-            ],
-            [
-              "Overheat"
-            ],
-            [
-              "Trick"
-            ]
-          ]
         }
       ]
     },
@@ -149817,8 +148733,7 @@
           "target": "Normal",
           "description": "Power doubles and type varies in each weather."
         }
-      ],
-      "sets": []
+      ]
     },
     "tauros-aqua": {
       "name": "Tauros-Aqua",
@@ -150444,8 +149359,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     },
     "tauros-blaze": {
       "name": "Tauros-Blaze",
@@ -151082,8 +149996,7 @@
           "target": "Normal",
           "description": "20% chance to make the target flinch."
         }
-      ],
-      "sets": []
+      ]
     }
   }
 }

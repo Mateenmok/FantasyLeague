@@ -192,32 +192,6 @@ function formatMove(name, moveLookup) {
   };
 }
 
-function formatSet(moveset) {
-  return {
-    name: moveset.name || "Set",
-    format: moveset.format || "",
-    abilities: moveset.abilities || [],
-    items: moveset.items || [],
-    natures: moveset.natures || [],
-    moveslots: (moveset.moveslots || []).map(slot => slot.map(move => move.move).filter(Boolean))
-  };
-}
-
-function collectSets(dump) {
-  const sets = [];
-
-  for (const strategy of dump.strategies || []) {
-    for (const moveset of strategy.movesets || []) {
-      sets.push(formatSet({
-        ...moveset,
-        format: strategy.format || ""
-      }));
-    }
-  }
-
-  return sets;
-}
-
 function getRelatedFormes(basePokemon, pokemonLookup) {
   const names = [basePokemon.name, ...(basePokemon.oob?.alts || [])];
 
@@ -275,8 +249,7 @@ async function main() {
       source_url: sourceUrl,
       abilities: (smogonMon.abilities || []).map(name => formatAbility(name, abilityLookup)),
       formes: getRelatedFormes(smogonMon, pokemonLookup).map(form => formatForm(form, abilityLookup)),
-      moves: (dump.learnset || []).map(name => formatMove(name, moveLookup)),
-      sets: collectSets(dump)
+      moves: (dump.learnset || []).map(name => formatMove(name, moveLookup))
     };
   }
 
