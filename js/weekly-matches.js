@@ -16,13 +16,22 @@ const manualScheduleWeeks = document.getElementById("manualScheduleWeeks");
 const saveManualScheduleButton = document.getElementById("saveManualScheduleButton");
 const cancelManualScheduleButton = document.getElementById("cancelManualScheduleButton");
 const manualScheduleStatus = document.getElementById("manualScheduleStatus");
+const weeklyPickemPanel = document.getElementById("weeklyPickemPanel");
+const weeklyPickemAdmin = document.getElementById("weeklyPickemAdmin");
+const weeklyPickemLockInput = document.getElementById("weeklyPickemLockInput");
+const savePickemLockButton = document.getElementById("savePickemLockButton");
+const weeklyPickemStatus = document.getElementById("weeklyPickemStatus");
+const weeklyPickemList = document.getElementById("weeklyPickemList");
 
 const selectedLeagueId = localStorage.getItem("selected-league-id");
 
 let currentLeague = null;
 let currentMembership = null;
+let currentUserId = "";
 let leagueTeams = [];
 let leagueMatchups = [];
+let matchupPicks = [];
+let matchupPicksAvailable = false;
 let isAdmin = false;
 let leagueActivityEvents = [];
 let manualScheduleOpen = false;
@@ -33,6 +42,9 @@ saveScoresButton.addEventListener("click", saveCurrentScores);
 advanceMatchupButton.addEventListener("click", advanceMatchup);
 saveManualScheduleButton.addEventListener("click", saveManualSchedule);
 cancelManualScheduleButton.addEventListener("click", closeManualScheduleEditor);
+if (savePickemLockButton) {
+  savePickemLockButton.addEventListener("click", savePickemLockTime);
+}
 
 loadWeeklyMatchesPage();
 
@@ -55,6 +67,7 @@ async function loadWeeklyMatchesPage() {
   }
 
   const userId = sessionData.session.user.id;
+  currentUserId = userId;
 
   const { data: membership, error: membershipError } = await supabaseClient
     .from("league_memberships")
@@ -130,7 +143,30 @@ async function loadLeagueData() {
 
   leagueMatchups = matchups || [];
 
+  await loadMatchupPicks();
   await loadLeagueActivityEvents();
+}
+
+async function loadMatchupPicks() {
+  matchupPicks = [];
+  matchupPicksAvailable = false;
+
+  try {
+    const { data, error } = await supabaseClient
+      .from("league_matchup_picks")
+      .select("*")
+      .eq("league_id", selectedLeagueId);
+
+    if (error) {
+      console.warn("Matchup picks table not available yet:", error);
+      return;
+    }
+
+    matchupPicks = data || [];
+    matchupPicksAvailable = true;
+  } catch (error) {
+    console.warn("Matchup picks load skipped:", error);
+  }
 }
 
 async function loadLeagueActivityEvents() {
@@ -342,6 +378,7 @@ function renderWeeklyMatches() {
   renderManualScheduleEditor();
 
   if (!scheduleGenerated) {
+    renderWeeklyPickem([]);
     weeklyRoundTitle.textContent = "No Schedule Yet";
     weeklyRoundStatus.textContent = isAdmin
       ? "Click Generate Schedule to create regular-season weekly matchups."
@@ -370,6 +407,7 @@ function renderWeeklyMatches() {
   }
 
   if (!currentMatchups.length) {
+    renderWeeklyPickem([]);
     weeklyMatchesList.innerHTML = `
       <div class="empty-state">
         <p>No matchups found for this matchup number.</p>
@@ -378,6 +416,8 @@ function renderWeeklyMatches() {
     weeklyStatus.textContent = "No current matchups found.";
     return;
   }
+
+  renderWeeklyPickem(currentMatchups);
 
   weeklyMatchesList.innerHTML = currentMatchups.map(matchup => {
     const team1 = getTeamById(matchup.team1_id);
@@ -438,6 +478,323 @@ function renderTeamSide(team, side) {
       </div>
     </div>
   `;
+}
+
+function renderWeeklyPickem(currentMatchups) {
+  if (!weeklyPickemPanel || !weeklyPickemStatus || !weeklyPickemList) {
+    return;
+  }
+
+  if (!currentLeague?.schedule_generated || !currentMatchups.length) {
+    weeklyPickemPanel.hidden = true;
+    weeklyPickemList.innerHTML = "";
+    return;
+  }
+
+  weeklyPickemPanel.hidden = false;
+
+  const lockAt = getCurrentPickemLockAt(currentMatchups);
+  const locked = isPickemLocked(currentMatchups);
+  const anyCompleted = currentMatchups.some(matchup => matchup.completed);
+  const mySubmittedCount = currentMatchups.filter(matchup => getMyPickForMatchup(matchup.id)).length;
+  const totalPickCount = currentMatchups.reduce((total, matchup) => total + getPicksForMatchup(matchup.id).length, 0);
+
+  if (weeklyPickemAdmin) {
+    weeklyPickemAdmin.style.display = isAdmin ? "grid" : "none";
+  }
+
+  if (weeklyPickemLockInput) {
+    weeklyPickemLockInput.value = lockAt ? toDateTimeLocalValue(lockAt) : "";
+  }
+
+  if (!matchupPicksAvailable) {
+    weeklyPickemStatus.textContent = "Pick'em database is not connected yet. Run the latest Supabase migration.";
+  } else if (!lockAt) {
+    weeklyPickemStatus.textContent = isAdmin
+      ? "Set a lock time to open picks for this matchup."
+      : "Picks are waiting for the league owner to set a lock time.";
+  } else if (anyCompleted) {
+    weeklyPickemStatus.textContent = `Results are live. ${formatPickemAccuracy(currentMatchups)}`;
+  } else if (locked) {
+    weeklyPickemStatus.textContent = `Picks locked ${formatDateTime(lockAt)}. ${totalPickCount} picks submitted.`;
+  } else {
+    weeklyPickemStatus.textContent = `Picks lock ${formatDateTime(lockAt)}. You picked ${mySubmittedCount}/${currentMatchups.length}.`;
+  }
+
+  weeklyPickemList.innerHTML = currentMatchups.map(matchup => renderPickemMatchup(matchup, locked, lockAt)).join("");
+  bindPickemButtons();
+}
+
+function renderPickemMatchup(matchup, locked, lockAt) {
+  const team1 = getTeamById(matchup.team1_id);
+  const team2 = getTeamById(matchup.team2_id);
+
+  if (!team1 || !team2) {
+    return "";
+  }
+
+  const picks = getPicksForMatchup(matchup.id);
+  const myPick = getMyPickForMatchup(matchup.id);
+  const canPick = canSubmitPick(matchup, lockAt);
+  const team1Picks = picks.filter(pick => pick.picked_team_id === team1.id).length;
+  const team2Picks = picks.filter(pick => pick.picked_team_id === team2.id).length;
+  const resultText = getPickemResultText(matchup, picks);
+
+  return `
+    <article class="weekly-pickem-card ${matchup.completed ? "completed" : locked ? "locked" : "open"}">
+      <div class="weekly-pickem-matchup-meta">
+        <span>Game ${matchup.display_order}</span>
+        <strong>${escapeHtml(resultText)}</strong>
+      </div>
+
+      <div class="weekly-pickem-actions">
+        ${renderPickemTeamButton(matchup, team1, myPick, team1Picks, canPick)}
+        <div class="weekly-pickem-vs">vs</div>
+        ${renderPickemTeamButton(matchup, team2, myPick, team2Picks, canPick)}
+      </div>
+    </article>
+  `;
+}
+
+function renderPickemTeamButton(matchup, team, myPick, pickCount, canPick) {
+  const selected = myPick?.picked_team_id === team.id;
+  const winner = matchup.completed && matchup.winner_team_id === team.id;
+  const showCount = matchup.completed || isPickemLocked([matchup]);
+
+  return `
+    <button
+      class="weekly-pickem-team ${selected ? "selected" : ""} ${winner ? "winner" : ""}"
+      type="button"
+      data-matchup-id="${escapeHtml(matchup.id)}"
+      data-team-id="${escapeHtml(team.id)}"
+      ${canPick ? "" : "disabled"}>
+      <span>${escapeHtml(team.team_name)}</span>
+      <small>${selected ? "Your pick" : canPick ? "Pick winner" : "Locked"}${showCount ? ` - ${pickCount} picks` : ""}</small>
+    </button>
+  `;
+}
+
+function bindPickemButtons() {
+  document.querySelectorAll(".weekly-pickem-team").forEach(button => {
+    button.addEventListener("click", function () {
+      submitPickemPick(this.dataset.matchupId, this.dataset.teamId);
+    });
+  });
+}
+
+async function savePickemLockTime() {
+  if (!isAdmin) {
+    weeklyAdminStatus.textContent = "Only admins can set the Pick'em lock time.";
+    return;
+  }
+
+  const currentNumber = currentLeague.current_matchup_number || 1;
+  const currentMatchups = leagueMatchups.filter(matchup => matchup.matchup_number === currentNumber);
+  const lockValue = weeklyPickemLockInput?.value || "";
+
+  if (!currentMatchups.length) {
+    weeklyAdminStatus.textContent = "No current matchups found.";
+    return;
+  }
+
+  if (!lockValue) {
+    weeklyAdminStatus.textContent = "Choose a Pick'em lock time first.";
+    return;
+  }
+
+  const lockDate = new Date(lockValue);
+
+  if (Number.isNaN(lockDate.getTime())) {
+    weeklyAdminStatus.textContent = "Choose a valid Pick'em lock time.";
+    return;
+  }
+
+  savePickemLockButton.disabled = true;
+  weeklyAdminStatus.textContent = "Saving Pick'em lock time...";
+
+  const { error } = await supabaseClient
+    .from("league_matchups")
+    .update({ pick_lock_at: lockDate.toISOString() })
+    .in("id", currentMatchups.map(matchup => matchup.id));
+
+  if (error) {
+    console.error("Save Pick'em lock error:", error);
+    weeklyAdminStatus.textContent = "Could not save Pick'em lock time.";
+    savePickemLockButton.disabled = false;
+    return;
+  }
+
+  weeklyAdminStatus.textContent = "Pick'em lock time saved.";
+  savePickemLockButton.disabled = false;
+
+  await loadLeagueData();
+  renderLeagueActivity();
+  renderWeeklyMatches();
+}
+
+async function submitPickemPick(matchupId, teamId) {
+  const matchup = leagueMatchups.find(row => String(row.id) === String(matchupId));
+  const lockAt = getCurrentPickemLockAt([matchup]);
+
+  if (!matchup || !teamId || !canSubmitPick(matchup, lockAt)) {
+    weeklyPickemStatus.textContent = "Picks are locked for this matchup.";
+    return;
+  }
+
+  const existingPick = getMyPickForMatchup(matchup.id);
+
+  if (existingPick?.picked_team_id === teamId) {
+    weeklyPickemStatus.textContent = "That pick is already saved.";
+    return;
+  }
+
+  const payload = {
+    league_id: selectedLeagueId,
+    matchup_id: matchup.id,
+    user_id: currentUserId,
+    picked_team_id: teamId,
+    updated_at: new Date().toISOString()
+  };
+
+  let error;
+
+  if (existingPick) {
+    ({ error } = await supabaseClient
+      .from("league_matchup_picks")
+      .update(payload)
+      .eq("id", existingPick.id));
+  } else {
+    ({ error } = await supabaseClient
+      .from("league_matchup_picks")
+      .insert({
+        id: makeId(),
+        ...payload
+      }));
+  }
+
+  if (error) {
+    console.error("Save Pick'em pick error:", error);
+    weeklyPickemStatus.textContent = "Could not save your pick. Check the lock time.";
+    return;
+  }
+
+  weeklyPickemStatus.textContent = "Pick saved.";
+  await loadMatchupPicks();
+  renderWeeklyPickem(leagueMatchups.filter(row => row.matchup_number === (currentLeague.current_matchup_number || 1)));
+}
+
+function canSubmitPick(matchup, lockAt) {
+  return Boolean(matchup) &&
+    matchupPicksAvailable &&
+    !matchup.completed &&
+    Boolean(lockAt) &&
+    Date.now() < new Date(lockAt).getTime();
+}
+
+function isPickemLocked(matchups) {
+  if (!matchups.length) {
+    return true;
+  }
+
+  return matchups.some(matchup => {
+    if (matchup.completed) {
+      return true;
+    }
+
+    if (!matchup.pick_lock_at) {
+      return true;
+    }
+
+    return Date.now() >= new Date(matchup.pick_lock_at).getTime();
+  });
+}
+
+function getCurrentPickemLockAt(matchups) {
+  const lockTimes = matchups
+    .map(matchup => matchup?.pick_lock_at)
+    .filter(Boolean)
+    .sort();
+
+  return lockTimes[0] || "";
+}
+
+function getPicksForMatchup(matchupId) {
+  return matchupPicks.filter(pick => String(pick.matchup_id) === String(matchupId));
+}
+
+function getMyPickForMatchup(matchupId) {
+  return matchupPicks.find(pick =>
+    String(pick.matchup_id) === String(matchupId) &&
+    String(pick.user_id) === String(currentUserId)
+  );
+}
+
+function getPickemResultText(matchup, picks) {
+  if (!matchup.completed) {
+    if (!isPickemLocked([matchup])) {
+      return "Picks open";
+    }
+
+    return `${picks.length} picks`;
+  }
+
+  if (!matchup.winner_team_id) {
+    return `Tie - ${picks.length} picks, no winning pick`;
+  }
+
+  const correctCount = picks.filter(pick => pick.picked_team_id === matchup.winner_team_id).length;
+  return `${correctCount}/${picks.length} correct`;
+}
+
+function formatPickemAccuracy(matchups) {
+  let totalPicks = 0;
+  let correctPicks = 0;
+
+  matchups.forEach(matchup => {
+    if (!matchup.completed || !matchup.winner_team_id) {
+      return;
+    }
+
+    const picks = getPicksForMatchup(matchup.id);
+    totalPicks += picks.length;
+    correctPicks += picks.filter(pick => pick.picked_team_id === matchup.winner_team_id).length;
+  });
+
+  if (!totalPicks) {
+    return "No winning picks yet.";
+  }
+
+  return `${correctPicks}/${totalPicks} picks were correct.`;
+}
+
+function formatDateTime(isoValue) {
+  if (!isoValue) {
+    return "";
+  }
+
+  const date = new Date(isoValue);
+
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
+
+  return date.toLocaleString([], {
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit"
+  });
+}
+
+function toDateTimeLocalValue(isoValue) {
+  const date = new Date(isoValue);
+
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
+
+  const offsetMs = date.getTimezoneOffset() * 60000;
+  return new Date(date.getTime() - offsetMs).toISOString().slice(0, 16);
 }
 
 function toggleManualScheduleEditor() {
@@ -567,6 +924,7 @@ async function saveManualSchedule() {
       continue;
     }
 
+    const teamsChanged = didManualScheduleTeamsChange(row);
     const payload = {
       league_id: selectedLeagueId,
       phase: "regular",
@@ -580,7 +938,15 @@ async function saveManualSchedule() {
       completed: false
     };
 
+    if (!row.existingMatchup || teamsChanged) {
+      payload.pick_lock_at = null;
+    }
+
     if (row.existingMatchup) {
+      if (teamsChanged) {
+        await clearPicksForMatchup(row.existingMatchup.id);
+      }
+
       const { error } = await supabaseClient
         .from("league_matchups")
         .update(payload)
@@ -661,6 +1027,30 @@ async function saveManualSchedule() {
   await loadLeagueData();
   renderLeagueActivity();
   renderWeeklyMatches();
+}
+
+function didManualScheduleTeamsChange(row) {
+  return Boolean(row.existingMatchup) &&
+    (
+      row.existingMatchup.team1_id !== row.team1Id ||
+      row.existingMatchup.team2_id !== row.team2Id
+    );
+}
+
+async function clearPicksForMatchup(matchupId) {
+  try {
+    const { error } = await supabaseClient
+      .from("league_matchup_picks")
+      .delete()
+      .eq("league_id", selectedLeagueId)
+      .eq("matchup_id", matchupId);
+
+    if (error) {
+      console.warn("Could not clear old Pick'em picks:", error);
+    }
+  } catch (error) {
+    console.warn("Pick'em pick cleanup skipped:", error);
+  }
 }
 
 function collectManualScheduleRows() {

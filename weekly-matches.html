@@ -440,6 +440,195 @@
       box-shadow: 0 8px 18px rgba(0, 0, 0, 0.20);
     }
 
+    body.weekly-theme-page .weekly-pickem-panel {
+      padding: 18px;
+      margin-bottom: 16px;
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at top left, rgba(255, 230, 107, 0.18), transparent 36%),
+        rgba(5, 18, 43, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(255, 230, 107, 0.10) inset;
+      box-sizing: border-box;
+    }
+
+    body.weekly-theme-page .weekly-pickem-header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    body.weekly-theme-page .weekly-pickem-header h2 {
+      margin: 0;
+      color: #ffffff;
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      text-shadow:
+        0 2px 0 rgba(0, 0, 0, 0.55),
+        0 0 10px rgba(255, 230, 107, 0.42);
+    }
+
+    body.weekly-theme-page .weekly-pickem-header p {
+      margin: 5px 0 0;
+      color: rgba(255, 255, 255, 0.74);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    body.weekly-theme-page .weekly-pickem-pill {
+      min-height: 32px;
+      padding: 0 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: rgba(255, 230, 107, 0.18);
+      border: 1px solid rgba(255, 230, 107, 0.34);
+      color: #fff4bb;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    body.weekly-theme-page .weekly-pickem-admin {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: end;
+      margin-bottom: 12px;
+    }
+
+    body.weekly-theme-page .weekly-pickem-admin label {
+      display: grid;
+      gap: 5px;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    body.weekly-theme-page .weekly-pickem-admin input {
+      min-height: 44px;
+      padding: 8px 11px;
+      border-radius: 13px;
+      border: 2px solid rgba(255, 255, 255, 0.32);
+      background: rgba(255, 255, 255, 0.94);
+      color: #162642;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      box-sizing: border-box;
+    }
+
+    body.weekly-theme-page .weekly-pickem-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    body.weekly-theme-page .weekly-pickem-card {
+      padding: 12px;
+      display: grid;
+      gap: 10px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    body.weekly-theme-page .weekly-pickem-matchup-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      color: rgba(255, 255, 255, 0.70);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    body.weekly-theme-page .weekly-pickem-matchup-meta strong {
+      color: #fff4bb;
+      font-size: 12px;
+      text-align: right;
+    }
+
+    body.weekly-theme-page .weekly-pickem-actions {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      gap: 9px;
+      align-items: stretch;
+    }
+
+    body.weekly-theme-page .weekly-pickem-vs {
+      display: flex;
+      align-items: center;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    body.weekly-theme-page .weekly-pickem-team {
+      min-height: 58px;
+      padding: 8px 10px;
+      border-radius: 13px;
+      border: 2px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.88);
+      color: #102844;
+      font-family: "Oxanium", Arial, sans-serif;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+    }
+
+    body.weekly-theme-page .weekly-pickem-team span,
+    body.weekly-theme-page .weekly-pickem-team small {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    body.weekly-theme-page .weekly-pickem-team span {
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    body.weekly-theme-page .weekly-pickem-team small {
+      margin-top: 4px;
+      color: rgba(16, 40, 68, 0.68);
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    body.weekly-theme-page .weekly-pickem-team.selected {
+      border-color: rgba(255, 230, 107, 0.92);
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.18),
+        0 0 0 3px rgba(255, 230, 107, 0.24) inset;
+    }
+
+    body.weekly-theme-page .weekly-pickem-team.winner {
+      border-color: rgba(65, 217, 133, 0.86);
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.18),
+        0 0 0 3px rgba(65, 217, 133, 0.22) inset;
+    }
+
+    body.weekly-theme-page .weekly-pickem-team:disabled {
+      cursor: default;
+      opacity: 0.82;
+    }
+
     #weeklyStatus {
       margin-top: 16px;
       padding: 10px 14px;
@@ -491,6 +680,16 @@
 
       body.weekly-theme-page .manual-schedule-row {
         grid-template-columns: 1fr;
+      }
+
+      body.weekly-theme-page .weekly-pickem-header,
+      body.weekly-theme-page .weekly-pickem-admin,
+      body.weekly-theme-page .weekly-pickem-actions {
+        grid-template-columns: 1fr;
+      }
+
+      body.weekly-theme-page .weekly-pickem-vs {
+        justify-content: center;
       }
 
       body.weekly-theme-page .manual-schedule-vs {
@@ -842,6 +1041,27 @@
         </div>
       </section>
 
+      <section id="weeklyPickemPanel" class="weekly-pickem-panel" hidden>
+        <div class="weekly-pickem-header">
+          <div>
+            <h2>Weekly Pick'em</h2>
+            <p>Pick who you think will win each current matchup before picks lock.</p>
+          </div>
+          <div class="weekly-pickem-pill">Predictions</div>
+        </div>
+
+        <div id="weeklyPickemAdmin" class="weekly-pickem-admin">
+          <label>
+            <span>Lock picks at</span>
+            <input id="weeklyPickemLockInput" type="datetime-local">
+          </label>
+          <button id="savePickemLockButton" class="pkmn-button small" type="button">Save Pick'em Lock</button>
+        </div>
+
+        <p id="weeklyPickemStatus" class="small-note">Loading Pick'em...</p>
+        <div id="weeklyPickemList" class="weekly-pickem-list"></div>
+      </section>
+
       <div id="weeklyMatchesList" class="weekly-matches-list"></div>
 
       <div id="weeklyStatus">Loading...</div>
@@ -851,6 +1071,6 @@
   <script src="js/theme-settings.js?v=global-theme1"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
-  <script src="js/weekly-matches.js?v=manual-schedule1"></script>
+  <script src="js/weekly-matches.js?v=pickem1"></script>
 </body>
 </html>
