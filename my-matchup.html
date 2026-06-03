@@ -870,6 +870,221 @@
       color: rgba(27, 37, 49, 0.62) !important;
     }
 
+    body.my-matchup-theme-page .pokemon-detail-button {
+      min-height: 30px !important;
+      margin-top: 8px !important;
+      padding: 0 10px !important;
+      border-radius: 7px !important;
+      border: 1px solid rgba(255, 255, 255, 0.16) !important;
+      background: rgba(255, 255, 255, 0.09) !important;
+      color: rgba(245, 247, 251, 0.86) !important;
+      font-family: "Oxanium", Arial, sans-serif !important;
+      font-size: 10px !important;
+      font-weight: 900 !important;
+      letter-spacing: 0.6px !important;
+      text-transform: uppercase !important;
+      cursor: pointer !important;
+    }
+
+    body.league-light-mode.my-matchup-theme-page .pokemon-detail-button {
+      background: rgba(255, 255, 255, 0.70) !important;
+      border-color: rgba(34, 45, 59, 0.12) !important;
+      color: rgba(27, 37, 49, 0.78) !important;
+    }
+
+    body.my-matchup-theme-page .pokemon-detail-modal {
+      position: fixed !important;
+      inset: 0 !important;
+      z-index: 40 !important;
+      display: none !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 18px !important;
+      background: rgba(0, 0, 0, 0.62) !important;
+      box-sizing: border-box !important;
+    }
+
+    body.my-matchup-theme-page .pokemon-detail-modal.open {
+      display: flex !important;
+    }
+
+    body.my-matchup-theme-page .pokemon-detail-dialog {
+      width: min(940px, 96vw) !important;
+      max-height: min(760px, 92vh) !important;
+      display: grid !important;
+      grid-template-rows: auto minmax(0, 1fr) !important;
+      overflow: hidden !important;
+      border-radius: 10px !important;
+      background:
+        linear-gradient(145deg, rgba(27, 34, 46, 0.98), rgba(9, 12, 18, 0.98)) !important;
+      border: 1px solid rgba(255, 255, 255, 0.16) !important;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55) !important;
+    }
+
+    body.league-light-mode.my-matchup-theme-page .pokemon-detail-dialog {
+      background:
+        linear-gradient(145deg, rgba(248, 250, 252, 0.98), rgba(220, 226, 234, 0.98)) !important;
+      border-color: rgba(34, 45, 59, 0.14) !important;
+    }
+
+    body.my-matchup-theme-page .pokemon-detail-header {
+      display: grid !important;
+      grid-template-columns: 86px minmax(0, 1fr) auto !important;
+      gap: 14px !important;
+      align-items: center !important;
+      padding: 16px !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.10) !important;
+    }
+
+    body.my-matchup-theme-page .pokemon-detail-header img {
+      width: 78px !important;
+      height: 78px !important;
+      object-fit: contain !important;
+      border-radius: 8px !important;
+      background: rgba(255, 255, 255, 0.08) !important;
+    }
+
+    body.my-matchup-theme-page .pokemon-detail-header h2 {
+      margin: 0 !important;
+      color: #f5f7fb !important;
+      font-size: 26px !important;
+      font-weight: 900 !important;
+      letter-spacing: 0 !important;
+    }
+
+    body.league-light-mode.my-matchup-theme-page .pokemon-detail-header h2 {
+      color: #182231 !important;
+    }
+
+    body.my-matchup-theme-page .pokemon-detail-header p {
+      margin: 5px 0 0 !important;
+      color: rgba(226, 232, 240, 0.66) !important;
+      font-size: 12px !important;
+      font-weight: 800 !important;
+    }
+
+    body.league-light-mode.my-matchup-theme-page .pokemon-detail-header p {
+      color: rgba(27, 37, 49, 0.62) !important;
+    }
+
+    body.my-matchup-theme-page .pokemon-detail-close {
+      width: 38px !important;
+      height: 38px !important;
+      border-radius: 50% !important;
+      border: 1px solid rgba(255, 255, 255, 0.18) !important;
+      background: rgba(255, 255, 255, 0.08) !important;
+      color: #f5f7fb !important;
+      font-size: 22px !important;
+      font-weight: 900 !important;
+      cursor: pointer !important;
+    }
+
+    body.league-light-mode.my-matchup-theme-page .pokemon-detail-close {
+      color: #182231 !important;
+      background: rgba(255, 255, 255, 0.72) !important;
+      border-color: rgba(34, 45, 59, 0.12) !important;
+    }
+
+    body.my-matchup-theme-page .pokemon-detail-body {
+      min-height: 0 !important;
+      overflow: auto !important;
+      padding: 16px !important;
+    }
+
+    body.my-matchup-theme-page .pokemon-detail-grid {
+      display: grid !important;
+      grid-template-columns: minmax(220px, 0.7fr) minmax(0, 1.3fr) !important;
+      gap: 14px !important;
+    }
+
+    body.my-matchup-theme-page .pokemon-detail-section {
+      padding: 14px !important;
+      border-radius: 8px !important;
+      background: rgba(255, 255, 255, 0.07) !important;
+      border: 1px solid rgba(255, 255, 255, 0.10) !important;
+    }
+
+    body.league-light-mode.my-matchup-theme-page .pokemon-detail-section {
+      background: rgba(255, 255, 255, 0.62) !important;
+      border-color: rgba(34, 45, 59, 0.12) !important;
+    }
+
+    body.my-matchup-theme-page .pokemon-detail-section h3 {
+      margin: 0 0 10px !important;
+      color: #f5f7fb !important;
+      font-size: 16px !important;
+      font-weight: 900 !important;
+      letter-spacing: 0 !important;
+    }
+
+    body.league-light-mode.my-matchup-theme-page .pokemon-detail-section h3 {
+      color: #182231 !important;
+    }
+
+    body.my-matchup-theme-page .pokemon-detail-list {
+      display: grid !important;
+      gap: 8px !important;
+    }
+
+    body.my-matchup-theme-page .pokemon-detail-pill,
+    body.my-matchup-theme-page .pokemon-move-row {
+      padding: 9px 10px !important;
+      border-radius: 7px !important;
+      background: rgba(255, 255, 255, 0.08) !important;
+      color: rgba(245, 247, 251, 0.90) !important;
+      font-size: 12px !important;
+      font-weight: 900 !important;
+    }
+
+    body.league-light-mode.my-matchup-theme-page .pokemon-detail-pill,
+    body.league-light-mode.my-matchup-theme-page .pokemon-move-row {
+      background: rgba(255, 255, 255, 0.68) !important;
+      color: rgba(27, 37, 49, 0.84) !important;
+    }
+
+    body.my-matchup-theme-page .pokemon-detail-pill small,
+    body.my-matchup-theme-page .pokemon-move-row small {
+      display: block !important;
+      margin-top: 4px !important;
+      color: rgba(226, 232, 240, 0.58) !important;
+      font-size: 10px !important;
+      font-weight: 800 !important;
+      line-height: 1.25 !important;
+    }
+
+    body.league-light-mode.my-matchup-theme-page .pokemon-detail-pill small,
+    body.league-light-mode.my-matchup-theme-page .pokemon-move-row small {
+      color: rgba(27, 37, 49, 0.58) !important;
+    }
+
+    body.my-matchup-theme-page .pokemon-move-tools {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) 170px !important;
+      gap: 10px !important;
+      margin-bottom: 10px !important;
+    }
+
+    body.my-matchup-theme-page .pokemon-move-tools input,
+    body.my-matchup-theme-page .pokemon-move-tools select {
+      min-height: 42px !important;
+      padding: 8px 11px !important;
+      border-radius: 8px !important;
+      border: 1px solid rgba(255, 255, 255, 0.22) !important;
+      background: rgba(255, 255, 255, 0.92) !important;
+      color: #182231 !important;
+      font-family: "Oxanium", Arial, sans-serif !important;
+      font-size: 12px !important;
+      font-weight: 800 !important;
+      box-sizing: border-box !important;
+    }
+
+    body.my-matchup-theme-page .pokemon-move-list {
+      max-height: 390px !important;
+      overflow: auto !important;
+      display: grid !important;
+      gap: 8px !important;
+    }
+
     body.my-matchup-theme-page .matchup-usage-panel {
       display: grid !important;
       grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr) !important;
@@ -1156,8 +1371,19 @@
       body.my-matchup-theme-page .matchup-lineup-grid,
       body.my-matchup-theme-page .matchup-usage-list,
       body.my-matchup-theme-page .matchup-usage-panel,
-      body.my-matchup-theme-page .my-schedule-list {
+      body.my-matchup-theme-page .my-schedule-list,
+      body.my-matchup-theme-page .pokemon-detail-grid,
+      body.my-matchup-theme-page .pokemon-move-tools {
         grid-template-columns: 1fr !important;
+      }
+
+      body.my-matchup-theme-page .pokemon-detail-header {
+        grid-template-columns: 62px minmax(0, 1fr) auto !important;
+      }
+
+      body.my-matchup-theme-page .pokemon-detail-header img {
+        width: 58px !important;
+        height: 58px !important;
       }
     }
   </style>
@@ -1175,6 +1401,12 @@
       </div>
 
       <div id="myMatchupContent"></div>
+
+      <div id="pokemonDetailModal" class="pokemon-detail-modal" aria-hidden="true">
+        <div class="pokemon-detail-dialog" role="dialog" aria-modal="true" aria-labelledby="pokemonDetailTitle">
+          <div id="pokemonDetailShell"></div>
+        </div>
+      </div>
 
       <div id="myMatchupStatus">Loading matchup...</div>
     </section>
