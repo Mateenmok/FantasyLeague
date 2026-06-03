@@ -528,6 +528,39 @@
       box-sizing: border-box;
     }
 
+    body.weekly-theme-page #savePickemLockButton {
+      min-height: 44px;
+      padding: 0 16px;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, #294b77, #102844);
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      color: #ffffff;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95);
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(105, 166, 240, 0.16) inset;
+      transition: transform 0.12s ease, filter 0.12s ease;
+      white-space: nowrap;
+    }
+
+    body.weekly-theme-page #savePickemLockButton:hover,
+    body.weekly-theme-page #savePickemLockButton:focus-visible {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+      outline: none;
+    }
+
+    body.weekly-theme-page #savePickemLockButton:disabled {
+      opacity: 0.62;
+      cursor: default;
+      transform: none;
+    }
+
     body.weekly-theme-page .weekly-pickem-list {
       display: grid;
       gap: 10px;
@@ -544,9 +577,9 @@
     }
 
     body.weekly-theme-page .weekly-pickem-matchup-meta {
-      display: flex;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
       align-items: center;
-      justify-content: space-between;
       gap: 10px;
       color: rgba(255, 255, 255, 0.70);
       font-size: 11px;
@@ -554,10 +587,47 @@
       text-transform: uppercase;
     }
 
+    body.weekly-theme-page .weekly-pickem-matchup-tools {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      min-width: 0;
+    }
+
     body.weekly-theme-page .weekly-pickem-matchup-meta strong {
       color: #fff4bb;
       font-size: 12px;
       text-align: right;
+      white-space: nowrap;
+    }
+
+    body.weekly-theme-page .weekly-pickem-roster-button {
+      min-height: 32px;
+      padding: 0 12px;
+      border-radius: 999px;
+      border: 2px solid rgba(255, 255, 255, 0.34);
+      background: linear-gradient(to bottom, #294b77, #102844);
+      color: #ffffff;
+      cursor: pointer;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.80);
+      box-shadow:
+        0 6px 14px rgba(0, 0, 0, 0.22),
+        0 0 0 3px rgba(105, 166, 240, 0.12) inset;
+      transition: transform 0.12s ease, filter 0.12s ease;
+      white-space: nowrap;
+    }
+
+    body.weekly-theme-page .weekly-pickem-roster-button:hover,
+    body.weekly-theme-page .weekly-pickem-roster-button:focus-visible {
+      transform: translateY(-1px);
+      filter: brightness(1.08);
+      outline: none;
     }
 
     body.weekly-theme-page .weekly-pickem-actions {
@@ -577,9 +647,13 @@
     }
 
     body.weekly-theme-page .weekly-pickem-team {
-      min-height: 58px;
-      padding: 8px 10px;
-      border-radius: 13px;
+      min-height: 96px;
+      padding: 10px 12px;
+      display: grid;
+      grid-template-columns: 78px minmax(0, 1fr);
+      gap: 12px;
+      align-items: center;
+      border-radius: 18px;
       border: 2px solid rgba(255, 255, 255, 0.22);
       background: rgba(255, 255, 255, 0.88);
       color: #102844;
@@ -589,7 +663,35 @@
       box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
     }
 
-    body.weekly-theme-page .weekly-pickem-team span,
+    body.weekly-theme-page .weekly-pickem-team-logo {
+      width: 74px;
+      height: 74px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(16, 40, 68, 0.10);
+      border: 2px solid rgba(16, 40, 68, 0.16);
+      color: #102844;
+      font-size: 19px;
+      font-weight: 900;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    body.weekly-theme-page .weekly-pickem-team-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    body.weekly-theme-page .weekly-pickem-team-copy {
+      min-width: 0;
+      display: block;
+    }
+
+    body.weekly-theme-page .weekly-pickem-team-name,
     body.weekly-theme-page .weekly-pickem-team small {
       display: block;
       overflow: hidden;
@@ -597,15 +699,16 @@
       white-space: nowrap;
     }
 
-    body.weekly-theme-page .weekly-pickem-team span {
-      font-size: 14px;
+    body.weekly-theme-page .weekly-pickem-team-name {
+      font-size: 18px;
       font-weight: 900;
+      line-height: 1.08;
     }
 
     body.weekly-theme-page .weekly-pickem-team small {
-      margin-top: 4px;
+      margin-top: 7px;
       color: rgba(16, 40, 68, 0.68);
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 900;
       text-transform: uppercase;
     }
@@ -627,6 +730,279 @@
     body.weekly-theme-page .weekly-pickem-team:disabled {
       cursor: default;
       opacity: 0.82;
+    }
+
+    body.weekly-pickem-roster-open {
+      overflow: hidden;
+    }
+
+    body.weekly-theme-page .weekly-pickem-roster-modal[hidden] {
+      display: none !important;
+    }
+
+    body.weekly-theme-page .weekly-pickem-roster-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      box-sizing: border-box;
+    }
+
+    body.weekly-theme-page .weekly-pickem-roster-backdrop {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at center, rgba(69, 163, 255, 0.20), transparent 36%),
+        rgba(0, 0, 0, 0.72);
+      backdrop-filter: blur(3px);
+    }
+
+    body.weekly-theme-page .weekly-pickem-roster-dialog {
+      position: relative;
+      width: min(1020px, calc(100vw - 32px));
+      max-height: min(780px, calc(100vh - 48px));
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      overflow: hidden;
+      border-radius: 24px;
+      background: linear-gradient(to bottom, rgba(3, 13, 32, 0.96), rgba(0, 0, 0, 0.88));
+      border: 2px solid rgba(255, 255, 255, 0.26);
+      box-shadow:
+        0 22px 60px rgba(0, 0, 0, 0.58),
+        0 0 0 3px rgba(105, 166, 240, 0.10) inset;
+    }
+
+    body.weekly-theme-page .weekly-pickem-roster-modal-header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+      padding: 22px 22px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    body.weekly-theme-page .weekly-pickem-roster-modal-title {
+      margin: 0;
+      color: #ffffff;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      text-shadow:
+        0 2px 0 rgba(0, 0, 0, 0.55),
+        0 0 10px rgba(30, 160, 255, 0.48);
+    }
+
+    body.weekly-theme-page .weekly-pickem-roster-modal-meta {
+      margin: 6px 0 0;
+      color: rgba(255, 255, 255, 0.76);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    body.weekly-theme-page .weekly-pickem-roster-close {
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 2px solid rgba(255, 255, 255, 0.32);
+      background: linear-gradient(to bottom, #294b77, #102844);
+      color: #ffffff;
+      cursor: pointer;
+      font-family: "Oxanium", Arial, sans-serif;
+      font-size: 20px;
+      font-weight: 900;
+      line-height: 1;
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.28),
+        0 0 0 3px rgba(105, 166, 240, 0.16) inset;
+    }
+
+    body.weekly-theme-page .weekly-pickem-roster-content {
+      min-height: 0;
+      padding: 18px 22px 22px;
+      overflow-y: auto;
+    }
+
+    body.weekly-theme-page .weekly-pickem-roster-teams {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    body.weekly-theme-page .weekly-pickem-roster-team {
+      min-width: 0;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    body.weekly-theme-page .weekly-pickem-roster-team-header {
+      display: grid;
+      grid-template-columns: 64px minmax(0, 1fr);
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    body.weekly-theme-page .weekly-pickem-roster-team-logo {
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
+      object-fit: contain;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.92);
+      border: 2px solid rgba(255, 255, 255, 0.38);
+      color: #102844;
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    body.weekly-theme-page .weekly-pickem-roster-team-header h3 {
+      margin: 0;
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 900;
+      line-height: 1.08;
+      text-transform: uppercase;
+    }
+
+    body.weekly-theme-page .weekly-pickem-roster-team-header p {
+      margin: 5px 0 0;
+      color: rgba(255, 255, 255, 0.74);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    body.weekly-theme-page .weekly-pickem-roster-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 10px;
+    }
+
+    body.weekly-theme-page .weekly-pickem-roster-pokemon-card,
+    body.weekly-theme-page .weekly-pickem-roster-empty {
+      min-height: 92px;
+      padding: 10px;
+      display: grid;
+      grid-template-columns: 56px minmax(0, 1fr);
+      gap: 10px;
+      align-items: center;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.90);
+      border: 2px solid rgba(255, 255, 255, 0.42);
+      color: #102844;
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.18),
+        0 0 0 3px rgba(105, 166, 240, 0.10) inset;
+    }
+
+    body.weekly-theme-page .weekly-pickem-roster-empty {
+      grid-column: 1 / -1;
+      grid-template-columns: 1fr;
+      text-align: center;
+      align-items: center;
+      justify-items: center;
+      font-weight: 900;
+    }
+
+    body.weekly-theme-page .weekly-pickem-roster-pokemon-card img,
+    body.weekly-theme-page .weekly-pickem-roster-pokemon-missing {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      object-fit: contain;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.76);
+      border: 1px solid rgba(16, 40, 68, 0.12);
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    body.weekly-theme-page .weekly-pickem-roster-pokemon-name {
+      color: #102844;
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 1.08;
+    }
+
+    body.weekly-theme-page .weekly-pickem-roster-pokemon-meta {
+      margin-top: 4px;
+      color: rgba(16, 40, 68, 0.68);
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    body.weekly-theme-page .weekly-pickem-roster-type-strip {
+      width: 104px !important;
+      height: 23px !important;
+      margin: 7px 0 0 !important;
+      display: grid !important;
+      overflow: hidden !important;
+      border: 2px solid rgba(0, 0, 0, 0.45) !important;
+      border-radius: 8px !important;
+      background: #dddddd !important;
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.45) inset,
+        0 2px 0 rgba(0, 0, 0, 0.22) !important;
+    }
+
+    body.weekly-theme-page .weekly-pickem-roster-type-strip.single {
+      width: 76px !important;
+      grid-template-columns: 1fr !important;
+    }
+
+    body.weekly-theme-page .weekly-pickem-roster-type-strip.dual {
+      width: 112px !important;
+      grid-template-columns: 1fr 1fr !important;
+    }
+
+    body.weekly-theme-page .weekly-pickem-roster-type-strip .pokemon-type-segment {
+      min-width: 0 !important;
+      width: auto !important;
+      height: 100% !important;
+      padding: 0 3px !important;
+      margin: 0 !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-family: "VT323", monospace !important;
+      font-size: 15px !important;
+      line-height: 1 !important;
+      color: #ffffff !important;
+      text-decoration: none !important;
+      text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.55) !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: clip !important;
+    }
+
+    body.weekly-theme-page .weekly-pickem-roster-type-strip.single .pokemon-type-segment {
+      font-size: 16px !important;
+      padding: 0 6px !important;
+    }
+
+    body.weekly-theme-page .weekly-pickem-roster-type-strip.dual .pokemon-type-segment:first-child {
+      border-right: 2px solid rgba(0, 0, 0, 0.35) !important;
+    }
+
+    body.weekly-theme-page .weekly-pickem-roster-type-strip .pokemon-type-segment.type-electric,
+    body.weekly-theme-page .weekly-pickem-roster-type-strip .pokemon-type-segment.type-ice,
+    body.weekly-theme-page .weekly-pickem-roster-type-strip .pokemon-type-segment.type-ground,
+    body.weekly-theme-page .weekly-pickem-roster-type-strip .pokemon-type-segment.type-steel {
+      color: #222222 !important;
+      text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.60) !important;
     }
 
     #weeklyStatus {
@@ -690,6 +1066,32 @@
 
       body.weekly-theme-page .weekly-pickem-vs {
         justify-content: center;
+      }
+
+      body.weekly-theme-page .weekly-pickem-matchup-meta,
+      body.weekly-theme-page .weekly-pickem-matchup-tools,
+      body.weekly-theme-page .weekly-pickem-roster-teams {
+        grid-template-columns: 1fr;
+      }
+
+      body.weekly-theme-page .weekly-pickem-matchup-tools {
+        justify-content: stretch;
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      body.weekly-theme-page .weekly-pickem-roster-button {
+        width: 100%;
+      }
+
+      body.weekly-theme-page .weekly-pickem-roster-modal {
+        padding: 14px;
+      }
+
+      body.weekly-theme-page .weekly-pickem-roster-modal-header,
+      body.weekly-theme-page .weekly-pickem-roster-content {
+        padding-left: 16px;
+        padding-right: 16px;
       }
 
       body.weekly-theme-page .manual-schedule-vs {
@@ -1068,9 +1470,23 @@
       </section>
   </div>
 
+  <div id="weeklyPickemRosterModal" class="weekly-pickem-roster-modal" hidden>
+    <div class="weekly-pickem-roster-backdrop" data-close-pickem-roster></div>
+    <section class="weekly-pickem-roster-dialog" role="dialog" aria-modal="true" aria-labelledby="weeklyPickemRosterTitle">
+      <div class="weekly-pickem-roster-modal-header">
+        <div>
+          <h2 id="weeklyPickemRosterTitle" class="weekly-pickem-roster-modal-title">Rosters</h2>
+          <p id="weeklyPickemRosterMeta" class="weekly-pickem-roster-modal-meta"></p>
+        </div>
+        <button type="button" class="weekly-pickem-roster-close" data-close-pickem-roster aria-label="Close rosters">&times;</button>
+      </div>
+      <div id="weeklyPickemRosterContent" class="weekly-pickem-roster-content"></div>
+    </section>
+  </div>
+
   <script src="js/theme-settings.js?v=global-theme1"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabaseClient.js"></script>
-  <script src="js/weekly-matches.js?v=pickem1"></script>
+  <script src="js/weekly-matches.js?v=pickem-rosters1"></script>
 </body>
 </html>

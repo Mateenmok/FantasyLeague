@@ -22,6 +22,10 @@ const weeklyPickemLockInput = document.getElementById("weeklyPickemLockInput");
 const savePickemLockButton = document.getElementById("savePickemLockButton");
 const weeklyPickemStatus = document.getElementById("weeklyPickemStatus");
 const weeklyPickemList = document.getElementById("weeklyPickemList");
+const weeklyPickemRosterModal = document.getElementById("weeklyPickemRosterModal");
+const weeklyPickemRosterTitle = document.getElementById("weeklyPickemRosterTitle");
+const weeklyPickemRosterMeta = document.getElementById("weeklyPickemRosterMeta");
+const weeklyPickemRosterContent = document.getElementById("weeklyPickemRosterContent");
 
 const selectedLeagueId = localStorage.getItem("selected-league-id");
 
@@ -32,6 +36,9 @@ let leagueTeams = [];
 let leagueMatchups = [];
 let matchupPicks = [];
 let matchupPicksAvailable = false;
+let teamRosterRows = [];
+let championsPokemon = [];
+let rosterLoadError = "";
 let isAdmin = false;
 let leagueActivityEvents = [];
 let manualScheduleOpen = false;
@@ -45,6 +52,7 @@ cancelManualScheduleButton.addEventListener("click", closeManualScheduleEditor);
 if (savePickemLockButton) {
   savePickemLockButton.addEventListener("click", savePickemLockTime);
 }
+setupPickemRosterModal();
 
 loadWeeklyMatchesPage();
 
@@ -143,8 +151,42 @@ async function loadLeagueData() {
 
   leagueMatchups = matchups || [];
 
+  await loadPickemRosterData();
   await loadMatchupPicks();
   await loadLeagueActivityEvents();
+}
+
+async function loadPickemRosterData() {
+  rosterLoadError = "";
+
+  try {
+    championsPokemon = await fetch("data/champions-pokemon.json?v=garchomp9")
+      .then(response => response.json());
+  } catch (error) {
+    console.error("Could not load Champions Pokemon data:", error);
+    championsPokemon = [];
+  }
+
+  try {
+    const { data: rosterRows, error: rosterError } = await supabaseClient
+      .from("team_rosters")
+      .select("*")
+      .eq("league_id", selectedLeagueId)
+      .order("slot_number", { ascending: true });
+
+    if (rosterError) {
+      console.error("Pick'em roster load error:", rosterError);
+      rosterLoadError = "Could not load rosters.";
+      teamRosterRows = [];
+      return;
+    }
+
+    teamRosterRows = rosterRows || [];
+  } catch (error) {
+    console.error("Pick'em roster load skipped:", error);
+    rosterLoadError = "Could not load rosters.";
+    teamRosterRows = [];
+  }
 }
 
 async function loadMatchupPicks() {
@@ -544,7 +586,17 @@ function renderPickemMatchup(matchup, locked, lockAt) {
     <article class="weekly-pickem-card ${matchup.completed ? "completed" : locked ? "locked" : "open"}">
       <div class="weekly-pickem-matchup-meta">
         <span>Game ${matchup.display_order}</span>
-        <strong>${escapeHtml(resultText)}</strong>
+        <div class="weekly-pickem-matchup-tools">
+          <button
+            type="button"
+            class="weekly-pickem-roster-button"
+            data-team1-id="${escapeHtml(team1.id)}"
+            data-team2-id="${escapeHtml(team2.id)}"
+          >
+            Check Rosters
+          </button>
+          <strong>${escapeHtml(resultText)}</strong>
+        </div>
       </div>
 
       <div class="weekly-pickem-actions">
@@ -568,10 +620,25 @@ function renderPickemTeamButton(matchup, team, myPick, pickCount, canPick) {
       data-matchup-id="${escapeHtml(matchup.id)}"
       data-team-id="${escapeHtml(team.id)}"
       ${canPick ? "" : "disabled"}>
-      <span>${escapeHtml(team.team_name)}</span>
-      <small>${selected ? "Your pick" : canPick ? "Pick winner" : "Locked"}${showCount ? ` - ${pickCount} picks` : ""}</small>
+      ${renderPickemTeamLogo(team)}
+      <span class="weekly-pickem-team-copy">
+        <span class="weekly-pickem-team-name">${escapeHtml(team.team_name)}</span>
+        <small>${selected ? "Your pick" : canPick ? "Pick winner" : "Locked"}${showCount ? ` - ${pickCount} picks` : ""}</small>
+      </span>
     </button>
   `;
+}
+
+function renderPickemTeamLogo(team) {
+  if (team.logo_url) {
+    return `
+      <span class="weekly-pickem-team-logo">
+        <img src="${escapeHtml(team.logo_url)}" alt="${escapeHtml(team.team_name)} logo">
+      </span>
+    `;
+  }
+
+  return `<span class="weekly-pickem-team-logo placeholder">T${escapeHtml(team.team_number || "")}</span>`;
 }
 
 function bindPickemButtons() {
@@ -580,6 +647,169 @@ function bindPickemButtons() {
       submitPickemPick(this.dataset.matchupId, this.dataset.teamId);
     });
   });
+
+  document.querySelectorAll(".weekly-pickem-roster-button").forEach(button => {
+    button.addEventListener("click", function () {
+      openPickemRosters(this.dataset.team1Id, this.dataset.team2Id);
+    });
+  });
+}
+
+function setupPickemRosterModal() {
+  if (!weeklyPickemRosterModal) {
+    return;
+  }
+
+  weeklyPickemRosterModal.querySelectorAll("[data-close-pickem-roster]").forEach(button => {
+    button.addEventListener("click", closePickemRosters);
+  });
+
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && !weeklyPickemRosterModal.hidden) {
+      closePickemRosters();
+    }
+  });
+}
+
+function openPickemRosters(team1Id, team2Id) {
+  if (!weeklyPickemRosterModal || !weeklyPickemRosterTitle || !weeklyPickemRosterMeta || !weeklyPickemRosterContent) {
+    return;
+  }
+
+  const team1 = getTeamById(team1Id);
+  const team2 = getTeamById(team2Id);
+
+  if (!team1 || !team2) {
+    return;
+  }
+
+  weeklyPickemRosterTitle.textContent = `${team1.team_name} vs ${team2.team_name}`;
+  weeklyPickemRosterMeta.textContent = "Current matchup rosters";
+  weeklyPickemRosterContent.innerHTML = `
+    <div class="weekly-pickem-roster-teams">
+      ${renderPickemRosterTeam(team1)}
+      ${renderPickemRosterTeam(team2)}
+    </div>
+  `;
+
+  weeklyPickemRosterModal.hidden = false;
+  document.body.classList.add("weekly-pickem-roster-open");
+
+  const closeButton = weeklyPickemRosterModal.querySelector(".weekly-pickem-roster-close");
+  if (closeButton) {
+    closeButton.focus();
+  }
+}
+
+function closePickemRosters() {
+  if (!weeklyPickemRosterModal) {
+    return;
+  }
+
+  weeklyPickemRosterModal.hidden = true;
+  document.body.classList.remove("weekly-pickem-roster-open");
+}
+
+function renderPickemRosterTeam(team) {
+  const rosterRows = teamRosterRows
+    .filter(row => String(row.team_id) === String(team.id))
+    .sort((a, b) => Number(a.slot_number || 0) - Number(b.slot_number || 0));
+
+  return `
+    <section class="weekly-pickem-roster-team">
+      <div class="weekly-pickem-roster-team-header">
+        ${renderPickemRosterTeamLogo(team)}
+        <div>
+          <h3>${escapeHtml(team.team_name || `Team ${team.team_number}`)}</h3>
+          <p>${escapeHtml(team.owner_name || "Unassigned")} - ${formatTeamRecord(team)} - ${rosterRows.length} Pokemon</p>
+        </div>
+      </div>
+      <div class="weekly-pickem-roster-grid">
+        ${renderPickemRosterGrid(rosterRows)}
+      </div>
+    </section>
+  `;
+}
+
+function renderPickemRosterTeamLogo(team) {
+  if (team.logo_url) {
+    return `<img class="weekly-pickem-roster-team-logo" src="${escapeHtml(team.logo_url)}" alt="${escapeHtml(team.team_name)} logo">`;
+  }
+
+  return `<div class="weekly-pickem-roster-team-logo placeholder">T${escapeHtml(team.team_number || "")}</div>`;
+}
+
+function renderPickemRosterGrid(rosterRows) {
+  if (rosterLoadError) {
+    return `<div class="weekly-pickem-roster-empty">${escapeHtml(rosterLoadError)}</div>`;
+  }
+
+  if (!rosterRows.length) {
+    return `<div class="weekly-pickem-roster-empty">No Pokemon drafted yet.</div>`;
+  }
+
+  return rosterRows.map(row => renderPickemRosterPokemon(row)).join("");
+}
+
+function renderPickemRosterPokemon(row) {
+  const pokemon = getPokemonBySlug(row.pokemon_slug);
+
+  if (!pokemon) {
+    return `
+      <article class="weekly-pickem-roster-pokemon-card missing">
+        <div class="weekly-pickem-roster-pokemon-missing">?</div>
+        <div>
+          <div class="weekly-pickem-roster-pokemon-name">${escapeHtml(row.pokemon_slug)}</div>
+          <div class="weekly-pickem-roster-pokemon-meta">Roster slot ${escapeHtml(row.slot_number || "")}</div>
+        </div>
+      </article>
+    `;
+  }
+
+  return `
+    <article class="weekly-pickem-roster-pokemon-card">
+      <img src="${escapeHtml(getPokemonImage(pokemon))}" alt="${escapeHtml(pokemon.name)}">
+      <div>
+        <div class="weekly-pickem-roster-pokemon-name">${escapeHtml(pokemon.name)}</div>
+        <div class="weekly-pickem-roster-pokemon-meta">
+          ${escapeHtml(pokemon.tier || "Tier")} - ${escapeHtml(pokemon.points || 1)} pts
+        </div>
+        ${renderPickemRosterTypeBadges(pokemon)}
+      </div>
+    </article>
+  `;
+}
+
+function getPokemonBySlug(slug) {
+  return championsPokemon.find(pokemon => pokemon.slug === slug);
+}
+
+function getPokemonImage(pokemon) {
+  return pokemon.image || pokemon.img || pokemon.icon || pokemon.sprite || pokemon.artwork || "";
+}
+
+function renderPickemRosterTypeBadges(pokemon) {
+  const types = pokemon.types || [];
+
+  if (!types.length) {
+    return "";
+  }
+
+  const typeClass = types.length === 1 ? "single" : "dual";
+
+  return `
+    <div class="pokemon-type-strip weekly-pickem-roster-type-strip ${typeClass}">
+      ${types.map(type => `
+        <span class="pokemon-type-segment ${getTypeClass(type)}">
+          ${escapeHtml(type)}
+        </span>
+      `).join("")}
+    </div>
+  `;
+}
+
+function getTypeClass(type) {
+  return `type-${String(type || "").toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
 }
 
 async function savePickemLockTime() {
