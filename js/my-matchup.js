@@ -219,7 +219,7 @@ async function loadMatchupData() {
     : "regular";
   regularSeasonMatchups = availableMatchups.filter(matchup => matchup.phase === activePhase);
 
-  const matchupNumber = currentLeague.current_matchup_number || 1;
+  const matchupNumber = getActiveMyMatchupNumber();
 
   currentMatchup = regularSeasonMatchups.find(matchup =>
     matchup.matchup_number === matchupNumber &&
@@ -357,6 +357,22 @@ async function loadRosterAndLineupData() {
   }
 }
 
+function getActiveMyMatchupNumber() {
+  const playoffView = regularSeasonMatchups.some(matchup => matchup.phase === "playoff");
+  if (!playoffView) return Number(currentLeague?.current_matchup_number || 1);
+
+  const roundNumbers = [...new Set(regularSeasonMatchups.map(matchup => Number(matchup.matchup_number)))]
+    .filter(Number.isFinite)
+    .sort((a, b) => a - b);
+  const firstIncompleteRound = roundNumbers.find(roundNumber => {
+    return regularSeasonMatchups
+      .filter(matchup => Number(matchup.matchup_number) === roundNumber)
+      .some(matchup => !matchup.completed);
+  });
+
+  return firstIncompleteRound || roundNumbers[roundNumbers.length - 1] || 1;
+}
+
 function renderMyMatchup() {
   if (!currentLeague.schedule_generated) {
     myMatchupContent.innerHTML = `
@@ -379,7 +395,7 @@ function renderMyMatchup() {
     return;
   }
 
-  const matchupNumber = currentLeague.current_matchup_number || 1;
+  const matchupNumber = getActiveMyMatchupNumber();
   const isTeam1 = currentMatchup.team1_id === myTeam.id;
 
   const myScore = isTeam1 ? currentMatchup.team1_score : currentMatchup.team2_score;
@@ -439,7 +455,7 @@ function renderMySchedule() {
     return "";
   }
 
-  const currentNumber = currentLeague.current_matchup_number || 1;
+  const currentNumber = getActiveMyMatchupNumber();
 
   return `
     <section class="my-schedule-panel">
@@ -459,7 +475,8 @@ function renderMySchedule() {
 }
 
 function renderMyScheduleRow(matchup, currentNumber) {
-  const isCurrent = matchup.matchup_number === currentNumber && currentLeague.season_phase !== "complete";
+  const isCurrent = matchup.matchup_number === currentNumber &&
+    !(currentLeague.season_phase === "complete" && matchup.completed);
   const isTeam1 = matchup.team1_id === myTeam.id;
   const opponent = getTeamById(isTeam1 ? matchup.team2_id : matchup.team1_id);
   const myScore = isTeam1 ? matchup.team1_score : matchup.team2_score;
