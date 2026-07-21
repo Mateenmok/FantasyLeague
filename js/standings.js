@@ -485,28 +485,58 @@ function renderPlayoffBracket() {
 }
 
 function buildSavedPlayoffRounds(seededTeams, savedMatchups) {
-  const teamsById = new Map(leagueTeams.map(team => [String(team.id), team]));
+  const teamsById = new Map(seededTeams.map(team => [String(team.id), team]));
   const savedOpeningRound = savedMatchups
     .filter(matchup => Number(matchup.matchup_number) === 1)
     .map(matchup => ({
       team1: teamsById.get(String(matchup.team1_id)) || null,
       team2: teamsById.get(String(matchup.team2_id)) || null,
-      bye: false
+      bye: false,
+      sourceMatchup: matchup
     }));
   const playingIds = new Set(savedMatchups
     .filter(matchup => Number(matchup.matchup_number) === 1)
     .flatMap(matchup => [String(matchup.team1_id), String(matchup.team2_id)]));
   const byeTeams = seededTeams.filter(team => !playingIds.has(String(team.id)));
-  const openingRound = [
-    ...byeTeams.map(team => ({ team1: team, team2: null, bye: true })),
-    ...savedOpeningRound
-  ];
-  const rounds = [openingRound];
-  let remainingGames = openingRound.length;
+  let bracketSize = 1;
+  while (bracketSize < seededTeams.length) bracketSize *= 2;
 
-  while (remainingGames > 1) {
-    remainingGames = Math.floor(remainingGames / 2);
-    rounds.push(Array.from({ length: remainingGames }, () => ({ team1: null, team2: null, bye: false })));
+  const totalRounds = Math.log2(bracketSize);
+  const rounds = [savedOpeningRound];
+  const nextRoundEntrants = [
+    ...byeTeams.map(team => ({ team, seed: team.playoffSeed })),
+    ...savedOpeningRound.map(matchup => ({
+      team: null,
+      seed: Math.min(matchup.team1?.playoffSeed || Infinity, matchup.team2?.playoffSeed || Infinity)
+    }))
+  ].sort((a, b) => a.seed - b.seed);
+
+  if (totalRounds > 1) {
+    const projectedNextRound = [];
+    for (let index = 0; index < nextRoundEntrants.length / 2; index++) {
+      const top = nextRoundEntrants[index];
+      const bottom = nextRoundEntrants[nextRoundEntrants.length - 1 - index];
+      projectedNextRound.push({ team1: top.team, team2: bottom.team, bye: false });
+    }
+    rounds.push(projectedNextRound);
+  }
+
+  for (let roundNumber = 2; roundNumber <= totalRounds; roundNumber++) {
+    const savedRound = savedMatchups
+      .filter(matchup => Number(matchup.matchup_number) === roundNumber)
+      .map(matchup => ({
+        team1: teamsById.get(String(matchup.team1_id)) || null,
+        team2: teamsById.get(String(matchup.team2_id)) || null,
+        bye: false,
+        sourceMatchup: matchup
+      }));
+
+    if (savedRound.length) {
+      rounds[roundNumber - 1] = savedRound;
+    } else if (!rounds[roundNumber - 1]) {
+      const gameCount = Math.max(1, bracketSize / (2 ** roundNumber));
+      rounds[roundNumber - 1] = Array.from({ length: gameCount }, () => ({ team1: null, team2: null, bye: false }));
+    }
   }
 
   return rounds;
@@ -514,7 +544,10 @@ function buildSavedPlayoffRounds(seededTeams, savedMatchups) {
 
 function renderBracketRound(round, roundIndex, totalRounds) {
   const roundLabel = getRoundLabel(roundIndex, totalRounds);
-  const roundStatus = roundIndex === 0 ? "Projected" : "TBD";
+  const savedRows = round.filter(matchup => matchup.sourceMatchup);
+  const roundStatus = savedRows.length
+    ? savedRows.every(matchup => matchup.sourceMatchup.completed) ? "Final" : "Saved"
+    : roundIndex === 0 && !playoffMatchups.length ? "Projected" : "TBD";
   const finalClass = roundIndex === totalRounds - 1 ? "final-round" : "";
 
   return `
@@ -576,10 +609,11 @@ function renderBracketMatchup(matchup) {
   }
 
   if (matchup.team1 && matchup.team2) {
+    const saved = matchup.sourceMatchup;
     return `
       <div class="bracket-matchup">
-        ${renderBracketTeam(matchup.team1)}
-        ${renderBracketTeam(matchup.team2)}
+        ${renderBracketTeam(matchup.team1, saved?.team1_score, saved?.winner_team_id === matchup.team1.id)}
+        ${renderBracketTeam(matchup.team2, saved?.team2_score, saved?.winner_team_id === matchup.team2.id)}
       </div>
     `;
   }
@@ -618,21 +652,21 @@ function renderBracketPlaceholderTeam() {
   `;
 }
 
-function renderBracketTeam(team) {
+function renderBracketTeam(team, score = null, isWinner = false) {
   const logoHtml = team.logo_url
     ? `<img class="bracket-team-logo" src="${escapeHtml(team.logo_url)}" alt="${escapeHtml(team.team_name)} logo">`
     : `<div class="bracket-team-logo-placeholder">T${team.team_number}</div>`;
 
   return `
-    <div class="bracket-team-row">
-      <div class="bracket-seed">#${team.playoffSeed}</div>
+    <div class="bracket-team-row ${isWinner ? "bracket-team-winner" : ""}">
+      <div class="bracket-seed">#${team.playoffSeed || "-"}</div>
 
       ${logoHtml}
 
       <div class="bracket-team-info">
         <div class="bracket-team-name">${escapeHtml(team.team_name)}</div>
         <div class="bracket-team-meta">
-          ${getRecordString(team)} • GW: ${team.gamesWon}
+          ${getRecordString(team)} • GW: ${team.gamesWon}${score === null || score === undefined ? "" : ` • Score: ${escapeHtml(score)}`}
         </div>
       </div>
     </div>

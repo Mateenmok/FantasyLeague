@@ -198,11 +198,10 @@ async function loadMatchupData() {
     return;
   }
 
-  const { data: matchups, error: matchupsError } = await supabaseClient
+  const { data: allMatchups, error: matchupsError } = await supabaseClient
     .from("league_matchups")
     .select("*")
     .eq("league_id", selectedLeagueId)
-    .eq("phase", currentLeague.season_phase === "playoff" ? "playoff" : "regular")
     .order("matchup_number", { ascending: true })
     .order("display_order", { ascending: true });
 
@@ -212,7 +211,13 @@ async function loadMatchupData() {
     return;
   }
 
-  regularSeasonMatchups = matchups || [];
+  const availableMatchups = allMatchups || [];
+  const hasPlayoffMatchups = availableMatchups.some(matchup => matchup.phase === "playoff");
+  const activePhase = currentLeague.season_phase === "playoff" ||
+    (currentLeague.season_phase === "complete" && hasPlayoffMatchups)
+    ? "playoff"
+    : "regular";
+  regularSeasonMatchups = availableMatchups.filter(matchup => matchup.phase === activePhase);
 
   const matchupNumber = currentLeague.current_matchup_number || 1;
 
@@ -389,7 +394,7 @@ function renderMyMatchup() {
   myMatchupContent.innerHTML = `
     <section class="my-matchup-feature" data-lineups-revealed="${bothLineupsSubmitted ? "true" : "false"}">
       <div class="my-matchup-round-label">
-        ${currentLeague.season_phase === "playoff" ? "Playoff Round" : "Matchup"} ${matchupNumber}
+        ${currentMatchup.phase === "playoff" ? "Playoff Round" : "Matchup"} ${matchupNumber}
       </div>
 
       <div class="my-matchup-teams">

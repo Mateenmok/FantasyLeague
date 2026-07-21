@@ -135,11 +135,10 @@ async function loadLeagueData() {
 
   leagueTeams = teams || [];
 
-  const { data: matchups, error: matchupsError } = await supabaseClient
+  const { data: allMatchups, error: matchupsError } = await supabaseClient
     .from("league_matchups")
     .select("*")
     .eq("league_id", selectedLeagueId)
-    .eq("phase", currentLeague.season_phase === "playoff" ? "playoff" : "regular")
     .order("matchup_number", { ascending: true })
     .order("display_order", { ascending: true });
 
@@ -149,7 +148,13 @@ async function loadLeagueData() {
     return;
   }
 
-  leagueMatchups = matchups || [];
+  const availableMatchups = allMatchups || [];
+  const hasPlayoffMatchups = availableMatchups.some(matchup => matchup.phase === "playoff");
+  const activePhase = currentLeague.season_phase === "playoff" ||
+    (currentLeague.season_phase === "complete" && hasPlayoffMatchups)
+    ? "playoff"
+    : "regular";
+  leagueMatchups = availableMatchups.filter(matchup => matchup.phase === activePhase);
 
   await loadPickemRosterData();
   await loadMatchupPicks();
@@ -411,13 +416,14 @@ function renderWeeklyMatches() {
   }
 
   const scheduleGenerated = currentLeague.schedule_generated && leagueMatchups.length > 0;
-  const playoffPhase = currentLeague.season_phase === "playoff";
+  const playoffPhase = leagueMatchups.some(matchup => matchup.phase === "playoff");
+  const seasonComplete = currentLeague.season_phase === "complete";
 
   generateScheduleButton.style.display = scheduleGenerated || playoffPhase ? "none" : "flex";
   editScheduleButton.style.display = isAdmin && !playoffPhase ? "flex" : "none";
   editScheduleButton.textContent = manualScheduleOpen ? "Hide Schedule Editor" : "Edit Schedule";
-  saveScoresButton.style.display = scheduleGenerated ? "flex" : "none";
-  advanceMatchupButton.style.display = scheduleGenerated ? "flex" : "none";
+  saveScoresButton.style.display = scheduleGenerated && !seasonComplete ? "flex" : "none";
+  advanceMatchupButton.style.display = scheduleGenerated && !seasonComplete ? "flex" : "none";
   renderManualScheduleEditor();
 
   if (!scheduleGenerated) {
@@ -441,7 +447,10 @@ function renderWeeklyMatches() {
   const regularSeasonMatches = currentLeague.regular_season_matches || 10;
   const currentMatchups = leagueMatchups.filter(matchup => matchup.matchup_number === currentNumber);
 
-  if (playoffPhase) {
+  if (playoffPhase && seasonComplete) {
+    weeklyRoundTitle.textContent = "Playoffs Complete";
+    weeklyRoundStatus.textContent = "The championship result is final.";
+  } else if (playoffPhase) {
     weeklyRoundTitle.textContent = `Playoffs — Round ${currentNumber}`;
     weeklyRoundStatus.textContent = `${currentMatchups.filter(m => m.completed).length}/${currentMatchups.length} playoff scores reported.`;
   } else if (currentLeague.season_phase === "complete") {
@@ -1693,6 +1702,11 @@ async function saveCurrentScores() {
       return;
     }
 
+    if (currentLeague.season_phase === "playoff" && team1Score === team2Score) {
+      weeklyAdminStatus.textContent = "Playoff matchups cannot end in a tie.";
+      return;
+    }
+
     let winnerTeamId = null;
 
     if (team1Score > team2Score) {
@@ -1733,7 +1747,9 @@ async function saveCurrentScores() {
 
   await recalculateLeagueRecords();
 
-  weeklyAdminStatus.textContent = "Scores saved and records updated.";
+  weeklyAdminStatus.textContent = currentLeague.season_phase === "playoff"
+    ? "Playoff scores saved. Advance when every result is final."
+    : "Scores saved and records updated.";
   saveScoresButton.disabled = false;
 
   await loadLeagueData();
@@ -1915,6 +1931,25 @@ async function advancePlayoffRound(currentNumber, currentMatchups) {
     .sort(compareTeamsForPlayoffSeeding);
   const nextRoundNumber = currentNumber + 1;
   const nextRows = [];
+
+  const { data: existingNextRound, error: existingRoundError } = await supabaseClient
+    .from("league_matchups")
+    .select("id")
+    .eq("league_id", selectedLeagueId)
+    .eq("phase", "playoff")
+    .eq("matchup_number", nextRoundNumber)
+    .limit(1);
+
+  if (existingRoundError) {
+    console.error("Next playoff round check error:", existingRoundError);
+    return "Could not check the next playoff round.";
+  }
+
+  if (existingNextRound?.length) {
+    const { error: updateError } = await supabaseClient.from("leagues")
+      .update({ current_matchup_number: nextRoundNumber }).eq("id", selectedLeagueId);
+    return updateError ? "Could not advance to the existing playoff round." : "";
+  }
 
   for (let index = 0; index < advancingTeams.length / 2; index++) {
     nextRows.push({
