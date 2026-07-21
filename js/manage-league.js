@@ -11,6 +11,9 @@ const mascotAssignmentList = document.getElementById("mascotAssignmentList");
 const mascotPokemonOptions = document.getElementById("mascotPokemonOptions");
 const saveMascotsButton = document.getElementById("saveMascotsButton");
 const mascotStatus = document.getElementById("mascotStatus");
+const playoffBracketEditor = document.getElementById("playoffBracketEditor");
+const savePlayoffBracketButton = document.getElementById("savePlayoffBracketButton");
+const playoffBracketStatus = document.getElementById("playoffBracketStatus");
 
 const deleteLeagueButton = document.getElementById("deleteLeagueButton");
 const deleteLeagueConfirmInput = document.getElementById("deleteLeagueConfirmInput");
@@ -26,11 +29,19 @@ let draftState = null;
 let draftPicks = [];
 let mascotRows = [];
 let championsPokemon = [];
+let playoffMatchups = [];
 
 saveManagersButton.addEventListener("click", saveLeagueSettings);
+if (playoffTeamCountSelect) {
+  playoffTeamCountSelect.addEventListener("change", renderPlayoffBracketEditor);
+}
 
 if (saveMascotsButton) {
   saveMascotsButton.addEventListener("click", saveMascotAssignments);
+}
+
+if (savePlayoffBracketButton) {
+  savePlayoffBracketButton.addEventListener("click", savePlayoffBracket);
 }
 
 if (deleteLeagueButton) {
@@ -105,13 +116,217 @@ async function loadManageLeaguePage() {
   await ensureLeagueDivisions();
   await loadDraftSettings();
   await loadMascotRows();
+  await loadPlayoffMatchups();
 
   renderDivisionEditor();
   renderDraftSettings();
   renderMascotAssignments();
   renderTeamManagerRows();
+  renderPlayoffBracketEditor();
 
   manageLeagueStatus.textContent = "Edit divisions, draft settings, teams, manager emails, and admin status.";
+}
+
+async function loadPlayoffMatchups() {
+  const { data, error } = await supabaseClient
+    .from("league_matchups")
+    .select("*")
+    .eq("league_id", selectedLeagueId)
+    .eq("phase", "playoff")
+    .order("matchup_number", { ascending: true })
+    .order("display_order", { ascending: true });
+
+  if (error) {
+    console.error("Playoff matchups load error:", error);
+    playoffMatchups = [];
+    if (playoffBracketStatus) playoffBracketStatus.textContent = "Could not load playoff matchups.";
+    return;
+  }
+
+  playoffMatchups = data || [];
+}
+
+function renderPlayoffBracketEditor() {
+  if (!playoffBracketEditor) return;
+
+  const playoffCount = Number(playoffTeamCountSelect?.value || currentLeague.playoff_team_count || getDefaultPlayoffTeamCount(leagueTeams.length));
+  const seededTeams = [...leagueTeams].sort(compareTeamsForPlayoffs).slice(0, playoffCount);
+  const defaultPairs = buildOpeningPlayoffPairs(seededTeams);
+  const existingOpeningRound = playoffMatchups.filter(matchup => Number(matchup.matchup_number) === 1);
+  const pairs = defaultPairs.map((pair, index) => {
+    const saved = existingOpeningRound.find(matchup => Number(matchup.display_order) === index + 1);
+    return saved ? [saved.team1_id, saved.team2_id] : [pair[0].id, pair[1].id];
+  });
+  const usedIds = new Set(pairs.flat());
+  const byeTeams = seededTeams.filter(team => !usedIds.has(team.id));
+
+  if (!pairs.length) {
+    playoffBracketEditor.innerHTML = `<p class="small-note">At least two playoff teams are required.</p>`;
+    return;
+  }
+
+  playoffBracketEditor.innerHTML = `
+    ${byeTeams.length ? `
+      <div class="playoff-bye-editor">
+        <span class="playoff-bracket-editor-label">Bye Teams</span>
+        <div class="playoff-bye-grid">
+          ${byeTeams.map((team, index) => renderPlayoffTeamPicker(`playoffBye-${index + 1}`, team.id, seededTeams, "bye")).join("")}
+        </div>
+      </div>
+    ` : ""}
+    <div class="draft-settings-grid">
+      ${pairs.map((pair, index) => `
+        <div class="draft-clock-setting">
+          <span>Opening Game ${index + 1}</span>
+          ${renderPlayoffTeamPicker(`playoffTeam1-${index + 1}`, pair[0], seededTeams, "game")}
+          ${renderPlayoffTeamPicker(`playoffTeam2-${index + 1}`, pair[1], seededTeams, "game")}
+        </div>
+      `).join("")}
+    </div>
+  `;
+
+  bindPlayoffTeamSelects(seededTeams);
+}
+
+function renderPlayoffTeamPicker(id, selectedId, teams, slotType) {
+  const selectedTeam = teams.find(team => String(team.id) === String(selectedId)) || teams[0];
+  const selectedIndex = Math.max(teams.findIndex(team => team.id === selectedTeam?.id), 0);
+
+  return `
+    <div id="${id}" class="playoff-team-picker" data-team-id="${escapeHtml(selectedTeam?.id || "")}" data-slot-type="${slotType}">
+      <button type="button" class="playoff-team-picker-button" aria-expanded="false">
+        ${renderPlayoffTeamLabel(selectedTeam, selectedIndex)}
+      </button>
+      <div class="playoff-team-picker-menu" hidden>
+        ${teams.map((team, index) => `
+          <button type="button" class="playoff-team-option" data-team-id="${escapeHtml(team.id)}">
+            ${renderPlayoffTeamLabel(team, index)}
+          </button>
+        `).join("")}
+      </div>
+    </div>
+  `;
+}
+
+function renderPlayoffTeamLabel(team, index) {
+  return team ? `#${index + 1} ${escapeHtml(team.team_name || `Team ${team.team_number}`)}` : "Choose team";
+}
+
+function bindPlayoffTeamSelects(seededTeams) {
+  const pickers = [...playoffBracketEditor.querySelectorAll(".playoff-team-picker")];
+
+  pickers.forEach(picker => {
+    const toggleButton = picker.querySelector(".playoff-team-picker-button");
+    const menu = picker.querySelector(".playoff-team-picker-menu");
+
+    toggleButton.addEventListener("click", () => {
+      const willOpen = menu.hidden;
+      pickers.forEach(otherPicker => closePlayoffTeamPicker(otherPicker));
+      menu.hidden = !willOpen;
+      toggleButton.setAttribute("aria-expanded", String(willOpen));
+    });
+
+    picker.querySelectorAll(".playoff-team-option").forEach(option => {
+      option.addEventListener("click", () => {
+        const previousValue = picker.dataset.teamId;
+        const nextValue = option.dataset.teamId;
+        const duplicatePicker = pickers.find(candidate => candidate !== picker && candidate.dataset.teamId === nextValue);
+
+        if (duplicatePicker) setPlayoffTeamPickerValue(duplicatePicker, previousValue, seededTeams);
+
+        setPlayoffTeamPickerValue(picker, nextValue, seededTeams);
+        closePlayoffTeamPicker(picker);
+        playoffBracketStatus.textContent = "Bracket changed. Click Save Playoff Matchups to apply it.";
+      });
+    });
+  });
+}
+
+function closePlayoffTeamPicker(picker) {
+  const menu = picker.querySelector(".playoff-team-picker-menu");
+  const button = picker.querySelector(".playoff-team-picker-button");
+  menu.hidden = true;
+  button.setAttribute("aria-expanded", "false");
+}
+
+function setPlayoffTeamPickerValue(picker, teamId, seededTeams) {
+  const teamIndex = seededTeams.findIndex(team => String(team.id) === String(teamId));
+  if (teamIndex < 0) return;
+  picker.dataset.teamId = seededTeams[teamIndex].id;
+  picker.querySelector(".playoff-team-picker-button").innerHTML = renderPlayoffTeamLabel(seededTeams[teamIndex], teamIndex);
+}
+
+function buildOpeningPlayoffPairs(seededTeams) {
+  let bracketSize = 1;
+  while (bracketSize < seededTeams.length) bracketSize *= 2;
+  const byeCount = bracketSize - seededTeams.length;
+  const playingTeams = seededTeams.slice(byeCount);
+  const pairs = [];
+
+  for (let index = 0; index < playingTeams.length / 2; index++) {
+    pairs.push([playingTeams[index], playingTeams[playingTeams.length - 1 - index]]);
+  }
+
+  return pairs;
+}
+
+function compareTeamsForPlayoffs(a, b) {
+  const aGames = Number(a.wins || 0) + Number(a.losses || 0) + Number(a.ties || 0);
+  const bGames = Number(b.wins || 0) + Number(b.losses || 0) + Number(b.ties || 0);
+  const aPct = aGames ? (Number(a.wins || 0) + Number(a.ties || 0) / 2) / aGames : 0;
+  const bPct = bGames ? (Number(b.wins || 0) + Number(b.ties || 0) / 2) / bGames : 0;
+  return bPct - aPct || Number(b.games_won || 0) - Number(a.games_won || 0) || Number(a.team_number) - Number(b.team_number);
+}
+
+async function savePlayoffBracket() {
+  if (!currentMembership || currentMembership.role !== "admin") return;
+
+  const pickers = [...playoffBracketEditor.querySelectorAll('.playoff-team-picker[data-slot-type="game"]')];
+  const teamIds = pickers.map(picker => picker.dataset.teamId);
+
+  if (!teamIds.length || new Set(teamIds).size !== teamIds.length) {
+    playoffBracketStatus.textContent = "Each playoff team can appear only once in the opening round.";
+    return;
+  }
+
+  if (playoffMatchups.some(matchup => matchup.completed || matchup.team1_score !== null || matchup.team2_score !== null)) {
+    playoffBracketStatus.textContent = "The bracket is locked because playoff scores have been saved.";
+    return;
+  }
+
+  savePlayoffBracketButton.disabled = true;
+  playoffBracketStatus.textContent = "Saving playoff matchups...";
+
+  const { error: deleteError } = await supabaseClient.from("league_matchups").delete()
+    .eq("league_id", selectedLeagueId).eq("phase", "playoff");
+
+  if (deleteError) {
+    console.error("Playoff bracket delete error:", deleteError);
+    playoffBracketStatus.textContent = "Could not replace the playoff bracket.";
+    savePlayoffBracketButton.disabled = false;
+    return;
+  }
+
+  const rows = [];
+  for (let index = 0; index < teamIds.length; index += 2) {
+    rows.push({
+      id: makeId(), league_id: selectedLeagueId, phase: "playoff", matchup_number: 1,
+      display_order: index / 2 + 1, team1_id: teamIds[index], team2_id: teamIds[index + 1], completed: false
+    });
+  }
+
+  const { error: insertError } = await supabaseClient.from("league_matchups").insert(rows);
+  if (insertError) {
+    console.error("Playoff bracket insert error:", insertError);
+    playoffBracketStatus.textContent = "Could not create playoff matchups.";
+    savePlayoffBracketButton.disabled = false;
+    return;
+  }
+
+  playoffBracketStatus.textContent = "Playoff matchups saved.";
+  savePlayoffBracketButton.disabled = false;
+  await loadPlayoffMatchups();
+  renderPlayoffBracketEditor();
 }
 
 async function loadTeamsAndDivisions() {
@@ -580,6 +795,7 @@ async function saveLeagueSettings() {
   currentLeague.draft_pick_seconds = clockSeconds;
   currentLeague.playoff_team_count = playoffTeamCount;
   currentLeague.roster_pokemon_cap = rosterPokemonCap;
+  renderPlayoffBracketEditor();
 
   for (const division of leagueDivisions) {
     const divisionName = document.getElementById(`divisionName-${division.id}`).value.trim() || `Division ${division.division_number}`;

@@ -202,7 +202,7 @@ async function loadMatchupData() {
     .from("league_matchups")
     .select("*")
     .eq("league_id", selectedLeagueId)
-    .eq("phase", "regular")
+    .eq("phase", currentLeague.season_phase === "playoff" ? "playoff" : "regular")
     .order("matchup_number", { ascending: true })
     .order("display_order", { ascending: true });
 
@@ -389,7 +389,7 @@ function renderMyMatchup() {
   myMatchupContent.innerHTML = `
     <section class="my-matchup-feature" data-lineups-revealed="${bothLineupsSubmitted ? "true" : "false"}">
       <div class="my-matchup-round-label">
-        Matchup ${matchupNumber}
+        ${currentLeague.season_phase === "playoff" ? "Playoff Round" : "Matchup"} ${matchupNumber}
       </div>
 
       <div class="my-matchup-teams">

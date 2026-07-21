@@ -139,7 +139,7 @@ async function loadLeagueData() {
     .from("league_matchups")
     .select("*")
     .eq("league_id", selectedLeagueId)
-    .eq("phase", "regular")
+    .eq("phase", currentLeague.season_phase === "playoff" ? "playoff" : "regular")
     .order("matchup_number", { ascending: true })
     .order("display_order", { ascending: true });
 
@@ -411,9 +411,10 @@ function renderWeeklyMatches() {
   }
 
   const scheduleGenerated = currentLeague.schedule_generated && leagueMatchups.length > 0;
+  const playoffPhase = currentLeague.season_phase === "playoff";
 
-  generateScheduleButton.style.display = scheduleGenerated ? "none" : "flex";
-  editScheduleButton.style.display = isAdmin ? "flex" : "none";
+  generateScheduleButton.style.display = scheduleGenerated || playoffPhase ? "none" : "flex";
+  editScheduleButton.style.display = isAdmin && !playoffPhase ? "flex" : "none";
   editScheduleButton.textContent = manualScheduleOpen ? "Hide Schedule Editor" : "Edit Schedule";
   saveScoresButton.style.display = scheduleGenerated ? "flex" : "none";
   advanceMatchupButton.style.display = scheduleGenerated ? "flex" : "none";
@@ -440,7 +441,10 @@ function renderWeeklyMatches() {
   const regularSeasonMatches = currentLeague.regular_season_matches || 10;
   const currentMatchups = leagueMatchups.filter(matchup => matchup.matchup_number === currentNumber);
 
-  if (currentLeague.season_phase === "complete") {
+  if (playoffPhase) {
+    weeklyRoundTitle.textContent = `Playoffs — Round ${currentNumber}`;
+    weeklyRoundStatus.textContent = `${currentMatchups.filter(m => m.completed).length}/${currentMatchups.length} playoff scores reported.`;
+  } else if (currentLeague.season_phase === "complete") {
     weeklyRoundTitle.textContent = "Regular Season Complete";
     weeklyRoundStatus.textContent = "Playoffs can be generated next.";
   } else {
@@ -1042,7 +1046,7 @@ function renderManualScheduleEditor() {
     return;
   }
 
-  manualScheduleEditor.style.display = isAdmin && manualScheduleOpen ? "block" : "none";
+  manualScheduleEditor.style.display = isAdmin && manualScheduleOpen && currentLeague?.season_phase !== "playoff" ? "block" : "none";
 
   if (!isAdmin || !manualScheduleOpen) {
     manualScheduleWeeks.innerHTML = "";
@@ -1835,12 +1839,30 @@ async function advanceMatchup() {
 
   advanceMatchupButton.disabled = true;
 
+  if (currentLeague.season_phase === "playoff") {
+    const advanceError = await advancePlayoffRound(currentNumber, currentMatchups);
+    weeklyAdminStatus.textContent = advanceError || "Playoff round advanced.";
+    advanceMatchupButton.disabled = false;
+    await loadLeagueData();
+    renderLeagueActivity();
+    renderWeeklyMatches();
+    return;
+  }
+
   const updateData = {};
 
   if (currentNumber >= regularSeasonMatches) {
-    updateData.season_phase = "complete";
-    updateData.current_matchup_number = currentNumber;
-    weeklyAdminStatus.textContent = "Regular season complete.";
+    const playoffError = await ensureOpeningPlayoffMatchups();
+
+    if (playoffError) {
+      weeklyAdminStatus.textContent = playoffError;
+      advanceMatchupButton.disabled = false;
+      return;
+    }
+
+    updateData.season_phase = "playoff";
+    updateData.current_matchup_number = 1;
+    weeklyAdminStatus.textContent = "Regular season complete. Playoff matchups created.";
   } else {
     updateData.current_matchup_number = currentNumber + 1;
     weeklyAdminStatus.textContent = `Advanced to Matchup ${currentNumber + 1}.`;
@@ -1863,6 +1885,108 @@ async function advanceMatchup() {
   await loadLeagueData();
   renderLeagueActivity();
   renderWeeklyMatches();
+}
+
+async function advancePlayoffRound(currentNumber, currentMatchups) {
+  const winners = currentMatchups.map(matchup => matchup.winner_team_id).filter(Boolean);
+
+  if (winners.length !== currentMatchups.length) {
+    return "Playoff games cannot end in a tie.";
+  }
+
+  let advancingTeamIds = winners;
+
+  if (currentNumber === 1) {
+    const playoffCount = Math.min(Number(currentLeague.playoff_team_count || 2), leagueTeams.length);
+    const seededTeams = [...leagueTeams].sort(compareTeamsForPlayoffSeeding).slice(0, playoffCount);
+    const playingIds = new Set(currentMatchups.flatMap(matchup => [matchup.team1_id, matchup.team2_id]));
+    const byeIds = seededTeams.filter(team => !playingIds.has(team.id)).map(team => team.id);
+    advancingTeamIds = [...byeIds, ...winners];
+  }
+
+  if (advancingTeamIds.length === 1) {
+    const { error } = await supabaseClient.from("leagues").update({ season_phase: "complete" }).eq("id", selectedLeagueId);
+    return error ? "Could not finish the playoff bracket." : "Playoffs complete.";
+  }
+
+  const advancingTeams = advancingTeamIds
+    .map(teamId => leagueTeams.find(team => team.id === teamId))
+    .filter(Boolean)
+    .sort(compareTeamsForPlayoffSeeding);
+  const nextRoundNumber = currentNumber + 1;
+  const nextRows = [];
+
+  for (let index = 0; index < advancingTeams.length / 2; index++) {
+    nextRows.push({
+      id: makeId(), league_id: selectedLeagueId, phase: "playoff", matchup_number: nextRoundNumber,
+      display_order: index + 1, team1_id: advancingTeams[index].id,
+      team2_id: advancingTeams[advancingTeams.length - 1 - index].id, completed: false
+    });
+  }
+
+  const { error: insertError } = await supabaseClient.from("league_matchups").insert(nextRows);
+  if (insertError) {
+    console.error("Next playoff round error:", insertError);
+    return "Could not create the next playoff round.";
+  }
+
+  const { error: updateError } = await supabaseClient.from("leagues")
+    .update({ current_matchup_number: nextRoundNumber }).eq("id", selectedLeagueId);
+  return updateError ? "Next playoff round was created, but the league could not advance." : "";
+}
+
+async function ensureOpeningPlayoffMatchups() {
+  const { data: existing, error: loadError } = await supabaseClient
+    .from("league_matchups")
+    .select("id")
+    .eq("league_id", selectedLeagueId)
+    .eq("phase", "playoff")
+    .limit(1);
+
+  if (loadError) {
+    console.error("Playoff matchup check error:", loadError);
+    return "Could not check existing playoff matchups.";
+  }
+
+  if (existing?.length) return "";
+
+  const playoffCount = Math.min(Number(currentLeague.playoff_team_count || 2), leagueTeams.length);
+  const seededTeams = [...leagueTeams].sort(compareTeamsForPlayoffSeeding).slice(0, playoffCount);
+  let bracketSize = 1;
+  while (bracketSize < seededTeams.length) bracketSize *= 2;
+  const playingTeams = seededTeams.slice(bracketSize - seededTeams.length);
+  const rows = [];
+
+  for (let index = 0; index < playingTeams.length / 2; index++) {
+    rows.push({
+      id: makeId(),
+      league_id: selectedLeagueId,
+      phase: "playoff",
+      matchup_number: 1,
+      display_order: index + 1,
+      team1_id: playingTeams[index].id,
+      team2_id: playingTeams[playingTeams.length - 1 - index].id,
+      completed: false
+    });
+  }
+
+  if (!rows.length) return "Could not build the opening playoff round.";
+
+  const { error: insertError } = await supabaseClient.from("league_matchups").insert(rows);
+  if (insertError) {
+    console.error("Playoff matchup creation error:", insertError);
+    return "Could not create playoff matchups.";
+  }
+
+  return "";
+}
+
+function compareTeamsForPlayoffSeeding(a, b) {
+  const aGames = Number(a.wins || 0) + Number(a.losses || 0) + Number(a.ties || 0);
+  const bGames = Number(b.wins || 0) + Number(b.losses || 0) + Number(b.ties || 0);
+  const aPct = aGames ? (Number(a.wins || 0) + Number(a.ties || 0) / 2) / aGames : 0;
+  const bPct = bGames ? (Number(b.wins || 0) + Number(b.ties || 0) / 2) / bGames : 0;
+  return bPct - aPct || Number(b.games_won || 0) - Number(a.games_won || 0) || Number(a.team_number) - Number(b.team_number);
 }
 
 function getTeamById(teamId) {

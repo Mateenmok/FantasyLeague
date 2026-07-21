@@ -16,6 +16,7 @@ let leagueDivisions = [];
 let teamRosterRows = [];
 let championsPokemon = [];
 let rosterLoadError = "";
+let playoffMatchups = [];
 
 setupRosterModal();
 loadStandingsPage();
@@ -94,6 +95,17 @@ async function loadStandingsPage() {
 
   leagueDivisions = divisions || [];
   leagueTeams = normalizeTeams(teams || []);
+
+  const { data: savedPlayoffMatchups, error: playoffError } = await supabaseClient
+    .from("league_matchups")
+    .select("*")
+    .eq("league_id", selectedLeagueId)
+    .eq("phase", "playoff")
+    .order("matchup_number", { ascending: true })
+    .order("display_order", { ascending: true });
+
+  if (playoffError) console.error("Playoff matchups error:", playoffError);
+  playoffMatchups = savedPlayoffMatchups || [];
 
   await loadRosterData();
   renderStandingsSummary();
@@ -463,11 +475,41 @@ function renderPlayoffBracket() {
       playoffSeed: index + 1
     }));
 
-  const rounds = buildPlayoffRounds(seededTeams);
+  const rounds = playoffMatchups.length
+    ? buildSavedPlayoffRounds(seededTeams, playoffMatchups)
+    : buildPlayoffRounds(seededTeams);
 
   playoffBracket.innerHTML = rounds.map((round, roundIndex) => {
     return renderBracketRound(round, roundIndex, rounds.length);
   }).join("");
+}
+
+function buildSavedPlayoffRounds(seededTeams, savedMatchups) {
+  const teamsById = new Map(leagueTeams.map(team => [String(team.id), team]));
+  const savedOpeningRound = savedMatchups
+    .filter(matchup => Number(matchup.matchup_number) === 1)
+    .map(matchup => ({
+      team1: teamsById.get(String(matchup.team1_id)) || null,
+      team2: teamsById.get(String(matchup.team2_id)) || null,
+      bye: false
+    }));
+  const playingIds = new Set(savedMatchups
+    .filter(matchup => Number(matchup.matchup_number) === 1)
+    .flatMap(matchup => [String(matchup.team1_id), String(matchup.team2_id)]));
+  const byeTeams = seededTeams.filter(team => !playingIds.has(String(team.id)));
+  const openingRound = [
+    ...byeTeams.map(team => ({ team1: team, team2: null, bye: true })),
+    ...savedOpeningRound
+  ];
+  const rounds = [openingRound];
+  let remainingGames = openingRound.length;
+
+  while (remainingGames > 1) {
+    remainingGames = Math.floor(remainingGames / 2);
+    rounds.push(Array.from({ length: remainingGames }, () => ({ team1: null, team2: null, bye: false })));
+  }
+
+  return rounds;
 }
 
 function renderBracketRound(round, roundIndex, totalRounds) {
