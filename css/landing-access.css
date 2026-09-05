@@ -40,8 +40,8 @@ body.access-page {
   position: relative;
   flex: none;
   container-type: inline-size;
-  width: min(100vw, 180vh, 1728px);
-  width: min(100vw, 180dvh, 1728px);
+  width: min(100vw, 154.7vh, 1728px);
+  width: min(100vw, 154.7dvh, 1728px);
   aspect-ratio: 1728 / 1117;
   min-height: 0;
   overflow: hidden;
