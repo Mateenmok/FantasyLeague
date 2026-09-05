@@ -283,16 +283,11 @@ body.detail-open {
 
 .detail-mega-sigil {
   flex: none;
-  display: grid;
-  place-items: center;
-  width: 28px;
-  height: 28px;
-  transform: rotate(-4deg);
-  border: 2px solid #111;
-  border-radius: 50%;
-  background: #f251bd;
-  font-family: "Jersey 25", Impact, sans-serif;
-  font-size: 20px;
+  display: block;
+  width: 34px;
+  height: 35px;
+  object-fit: contain;
+  filter: drop-shadow(1px 2px 0 rgba(17, 17, 17, 0.78));
 }
 
 .detail-mega-card {
