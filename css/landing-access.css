@@ -469,9 +469,52 @@ body.access-page {
 }
 
 @media (max-width: 640px) {
+  .landing-viewport {
+    place-items: start stretch;
+  }
+
   .landing-canvas {
-    width: 1080px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
     max-width: none;
+    min-height: 100vh;
+    min-height: 100dvh;
+    aspect-ratio: auto;
+    overflow: visible;
+  }
+
+  .access-region {
+    position: relative;
+    left: auto;
+    top: auto;
+    order: -1;
+    grid-column: 1 / -1;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1691 / 930;
+  }
+
+  .poster {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2 / 3;
+  }
+
+  .poster img {
+    object-position: center;
+  }
+
+  .access-form input,
+  .access-form button {
+    min-height: 0;
+  }
+
+  .access-form button {
+    font-size: 0;
   }
 }
 
