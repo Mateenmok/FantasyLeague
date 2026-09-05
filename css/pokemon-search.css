@@ -333,6 +333,43 @@ h1 {
   opacity: 0.54;
 }
 
+.card-halftone::after {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  content: "";
+  pointer-events: none;
+}
+
+.pokemon-card[data-tier="Diamond"] .card-halftone::after {
+  background:
+    repeating-linear-gradient(45deg, transparent 0 17px, rgba(43, 157, 197, 0.2) 17px 18px, transparent 18px 35px),
+    repeating-linear-gradient(-45deg, transparent 0 17px, rgba(255, 255, 255, 0.72) 17px 18px, transparent 18px 35px);
+  opacity: 0.58;
+}
+
+.pokemon-card[data-tier="Gold"] .card-halftone::after {
+  background:
+    radial-gradient(circle at 20% 25%, rgba(154, 105, 7, 0.28) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 75% 65%, rgba(255, 255, 255, 0.82) 0 1.2px, transparent 1.8px);
+  background-size: 13px 13px, 19px 19px;
+  opacity: 0.62;
+}
+
+.pokemon-card[data-tier="Silver"] .card-halftone::after {
+  background: repeating-linear-gradient(102deg, transparent 0 7px, rgba(73, 84, 101, 0.18) 7px 8px, rgba(255, 255, 255, 0.55) 8px 9px, transparent 9px 15px);
+  opacity: 0.55;
+}
+
+.pokemon-card[data-tier="Bronze"] .card-halftone::after {
+  background:
+    radial-gradient(circle at center, transparent 0 3px, rgba(119, 59, 25, 0.2) 3.5px 4px, transparent 4.5px),
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.55) 0 1px, transparent 1.5px);
+  background-position: 0 0, 9px 9px;
+  background-size: 18px 18px;
+  opacity: 0.58;
+}
+
 .tier-label {
   position: absolute;
   left: 0;
