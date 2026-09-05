@@ -72,13 +72,6 @@ const cardFor = (pokemon) => {
     typeList.append(badge);
   }
 
-  const note = card.querySelector(".condition-note");
-  if (pokemon.note) {
-    note.textContent = pokemon.note;
-  } else {
-    note.remove();
-  }
-
   return card;
 };
 
@@ -92,7 +85,6 @@ const matchesSearch = (pokemon, query) => {
     pokemon.points,
     `${pokemon.points} pts`,
     ...pokemon.types,
-    pokemon.note,
   ].join(" "));
 
   return query.split(/\s+/).every((term) => searchable.includes(term));
@@ -134,7 +126,7 @@ for (const button of tierButtons) {
   });
 }
 
-fetch("data/pokemon-catalog.json?v=season-1-2")
+fetch("data/pokemon-catalog.json?v=season-1-3")
   .then((response) => {
     if (!response.ok) throw new Error("Could not load the Pokemon roster.");
     return response.json();

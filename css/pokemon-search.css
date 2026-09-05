@@ -251,7 +251,7 @@ h1 {
   color: #111;
 }
 
-.tier-diamond span { color: #48bfe3; }
+.tier-diamond span { color: #8fddf4; }
 .tier-gold span { color: #d8a51f; }
 .tier-silver span { color: #89919f; }
 .tier-bronze span { color: #bf6c34; }
@@ -277,19 +277,6 @@ h1 {
   text-transform: uppercase;
 }
 
-.source-note {
-  max-width: 280px;
-  margin-bottom: 3px;
-  color: rgba(255, 247, 222, 0.56);
-  font-size: 13px;
-  line-height: 1.35;
-  text-align: right;
-}
-
-.source-note a {
-  color: var(--cream);
-}
-
 .pokemon-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
@@ -297,7 +284,7 @@ h1 {
 }
 
 .pokemon-card {
-  --tier-color: #54c8ef;
+  --tier-color: #8fddf4;
   --type-one: #9fa19f;
   --type-two: var(--type-one);
   position: relative;
@@ -479,16 +466,6 @@ h1 {
   object-fit: cover;
 }
 
-.condition-note {
-  margin: 11px 0 0;
-  padding: 7px 8px;
-  border-left: 4px solid var(--type-one);
-  background: rgba(255, 255, 255, 0.68);
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1.25;
-}
-
 .loading-state,
 .empty-state {
   grid-column: 1 / -1;
@@ -614,11 +591,6 @@ h1 {
 
   .results-heading-row {
     display: block;
-  }
-
-  .source-note {
-    margin-top: 9px;
-    text-align: left;
   }
 
   .pokemon-grid {
