@@ -196,9 +196,8 @@ a {
 }
 
 .league-button--waivers > img {
-  max-width: 210px;
-  max-height: 180px;
-  mix-blend-mode: multiply;
+  max-width: 190px;
+  max-height: 190px;
 }
 
 .league-button:hover,
