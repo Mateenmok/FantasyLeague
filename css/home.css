@@ -152,7 +152,8 @@ a {
 
 .league-menu {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 620px);
+  justify-content: center;
   gap: clamp(20px, 3vw, 34px);
 }
 
@@ -189,14 +190,15 @@ a {
   content: "";
 }
 
-.league-button--points {
-  --button-accent: #8c62e8;
-  transform: rotate(-0.5deg);
-}
-
 .league-button--waivers {
   --button-accent: #c9e94b;
   transform: rotate(0.55deg);
+}
+
+.league-button--waivers > img {
+  max-width: 210px;
+  max-height: 180px;
+  mix-blend-mode: multiply;
 }
 
 .league-button:hover,

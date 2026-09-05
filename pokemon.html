@@ -2,95 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="refresh" content="0; url=waivers.html">
+  <link rel="canonical" href="https://www.pokeleague.org/waivers.html">
   <link rel="icon" type="image/webp" href="images/favicon.webp">
-  <title>Pokemon Point Search | PokeLeague</title>
-  <meta name="description" content="Search every Pokemon on the PokeLeague Season 1 point board by name, type, tier, or point value.">
-  <meta property="og:title" content="PokeLeague Pokemon Point Search">
-  <meta property="og:description" content="Search the PokeLeague Season 1 roster by name, type, tier, or point value.">
-  <meta property="og:image" content="https://www.pokeleague.org/images/og.png">
-  <meta property="og:url" content="https://www.pokeleague.org/pokemon.html">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="PokeLeague Pokemon Point Search">
-  <meta name="twitter:description" content="Search the PokeLeague Season 1 roster by name, type, tier, or point value.">
-  <meta name="twitter:image" content="https://www.pokeleague.org/images/og.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Jersey+25&amp;family=Roboto+Condensed:wght@500;700;900&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/pokemon-search.css?v=point-search-10">
-  <link rel="stylesheet" href="css/pokemon-details.css?v=pokemon-details-2">
+  <title>Waivers | PokeLeague</title>
 </head>
 <body>
-  <header class="site-header">
-    <a class="back-link" href="home.html" aria-label="Back to League Home">
-      <span aria-hidden="true">←</span>
-      League Home
-    </a>
-    <div class="brand-lockup">
-      <img src="images/favicon.webp" alt="" width="52" height="52">
-      <span>PokeLeague</span>
-    </div>
-    <span class="season-stamp">Season 1</span>
-  </header>
-
-  <main class="catalog-shell">
-    <section class="search-intro" aria-labelledby="pageTitle">
-      <p class="eyebrow">Official point board</p>
-      <h1 id="pageTitle">Find your fighter!</h1>
-      <p class="intro-copy">Search by Pokemon, type, tier, or point value.</p>
-
-      <div class="search-box">
-        <span class="search-icon" aria-hidden="true">⌕</span>
-        <label class="visually-hidden" for="pokemonSearch">Search the Pokemon point board</label>
-        <input
-          id="pokemonSearch"
-          type="search"
-          placeholder="Try Gengar, Water, or 7 pts..."
-          autocomplete="off"
-          spellcheck="false"
-        >
-        <button id="clearSearch" type="button" aria-label="Clear search" hidden>Clear</button>
-      </div>
-
-      <div class="tier-filters" role="group" aria-label="Filter by tier">
-        <button class="tier-filter is-active" type="button" data-tier="All" aria-pressed="true">All tiers</button>
-        <button class="tier-filter tier-diamond" type="button" data-tier="Diamond" aria-pressed="false"><span aria-hidden="true">◆</span> Diamond</button>
-        <button class="tier-filter tier-gold" type="button" data-tier="Gold" aria-pressed="false"><span aria-hidden="true">●</span> Gold</button>
-        <button class="tier-filter tier-silver" type="button" data-tier="Silver" aria-pressed="false"><span aria-hidden="true">●</span> Silver</button>
-        <button class="tier-filter tier-bronze" type="button" data-tier="Bronze" aria-pressed="false"><span aria-hidden="true">●</span> Bronze</button>
-      </div>
-    </section>
-
-    <section class="results-section" aria-labelledby="resultsHeading">
-      <div class="results-heading-row">
-        <div>
-          <p class="results-kicker">Search results</p>
-          <h2 id="resultsHeading"><span id="resultCount">0</span> Pokemon</h2>
-        </div>
-      </div>
-
-      <div id="pokemonGrid" class="pokemon-grid" aria-live="polite" aria-busy="true">
-        <p class="loading-state">Loading the roster...</p>
-      </div>
-      <p id="emptyState" class="empty-state" hidden>No match! Try another Pokemon, type, or tier.</p>
-    </section>
-  </main>
-
-  <template id="pokemonCardTemplate">
-    <article class="pokemon-card">
-      <div class="card-halftone" aria-hidden="true"></div>
-      <div class="tier-label"><span class="tier-symbol" aria-hidden="true"></span><span class="tier-name"></span></div>
-      <div class="point-badge"><strong class="point-value"></strong><span>PTS</span></div>
-      <span class="mega-mark" title="Mega Evolution available" hidden><img src="images/icons/mega-evolution-v2.webp?v=mega2" alt="" width="36" height="36"><span class="visually-hidden">Mega Evolution available</span></span>
-      <div class="sprite-stage"><img class="pokemon-sprite" alt="" width="128" height="128" loading="lazy" decoding="async"></div>
-      <div class="card-copy">
-        <h3 class="pokemon-name"></h3>
-        <div class="type-list"></div>
-      </div>
-    </article>
-  </template>
-
-  <script src="js/pokemon-details.js?v=pokemon-details-3" defer></script>
-  <script src="js/pokemon-search.js?v=point-search-6" defer></script>
+  <p><a href="waivers.html">Continue to Waivers</a></p>
+  <script>window.location.replace(`waivers.html${window.location.search}${window.location.hash}`);</script>
 </body>
 </html>
