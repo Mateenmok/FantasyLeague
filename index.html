@@ -1,267 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <link rel="icon" type="image/png" href="images/favicon.png">
-  <title>PokeLeague</title>
-
+  <title>PokeLeague | Access</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background-image: url("images/backgrounds/VictoryRoad.png");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      color: white;
-      font-family: "Oxanium", Arial, sans-serif;
-      overflow-x: hidden;
-    }
-
-    .home-overlay {
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at center 18%, rgba(36, 151, 255, 0.22), transparent 34%),
-        linear-gradient(to bottom, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.58));
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 34px 24px 28px;
-      box-sizing: border-box;
-    }
-
-    .home-content {
-      width: min(1120px, 100%);
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .hero-card {
-      width: min(980px, 96vw);
-      padding: 18px 22px 22px;
-      border-radius: 28px;
-      background: linear-gradient(
-        to bottom,
-        rgba(4, 18, 48, 0.50),
-        rgba(4, 18, 48, 0.18)
-      );
-      border: 2px solid rgba(255, 255, 255, 0.20);
-      box-shadow:
-        0 18px 50px rgba(0, 0, 0, 0.38),
-        0 0 42px rgba(29, 150, 255, 0.20) inset;
-      backdrop-filter: blur(2px);
-    }
-
-    .title-image {
-      width: min(900px, 92vw);
-      height: auto;
-      display: block;
-      margin: 0 auto;
-      filter:
-        drop-shadow(0 8px 0 rgba(0, 26, 70, 0.65))
-        drop-shadow(0 18px 28px rgba(0, 0, 0, 0.55));
-    }
-
-    .home-tagline {
-      margin: 8px auto 0;
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: 1.4px;
-      text-transform: uppercase;
-      color: #ffffff;
-      text-shadow:
-        0 2px 0 rgba(0, 0, 0, 0.7),
-        0 0 12px rgba(30, 160, 255, 0.7);
-    }
-
-    .home-buttons {
-      margin-top: 36px;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      gap: 46px;
-      flex-wrap: nowrap;
-      width: 100%;
-    }
-
-    .pokeball-link {
-      width: 190px;
-      min-height: 230px;
-      text-decoration: none;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-end;
-      transition: transform 0.16s ease, filter 0.16s ease;
-      position: relative;
-    }
-
-    .pokeball-link::before {
-      content: "";
-      position: absolute;
-      bottom: 34px;
-      width: 138px;
-      height: 34px;
-      border-radius: 50%;
-      background: rgba(0, 0, 0, 0.34);
-      filter: blur(6px);
-      z-index: 0;
-    }
-
-    .pokeball-link:hover {
-      transform: translateY(-8px) scale(1.04);
-      filter: brightness(1.08);
-    }
-
-    .pokeball-button {
-      width: 175px;
-      height: 175px;
-      object-fit: contain;
-      filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.78));
-      position: relative;
-      z-index: 1;
-    }
-
-    .character-button {
-      object-fit: contain;
-    }
-
-    .button-caption {
-      min-width: 178px;
-      margin-top: -4px;
-      padding: 6px 10px 7px;
-      font-size: 24px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      line-height: 1;
-      color: #ffffff;
-      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95);
-      background: linear-gradient(to bottom, rgba(12, 41, 86, 0.70), rgba(3, 17, 40, 0.72));
-      border: 2px solid rgba(255, 255, 255, 0.32);
-      border-radius: 999px;
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.30);
-      box-sizing: border-box;
-      position: relative;
-      z-index: 2;
-    }
-
-    @media (max-width: 900px) {
-      .home-overlay {
-        padding-top: 28px;
-      }
-
-      .hero-card {
-        padding: 14px 14px 18px;
-      }
-
-      .home-buttons {
-        gap: 24px;
-      }
-
-      .pokeball-link {
-        width: 145px;
-        min-height: 190px;
-      }
-
-      .pokeball-button {
-        width: 130px;
-        height: 130px;
-      }
-
-      .button-caption {
-        min-width: 138px;
-        font-size: 19px;
-      }
-
-      .home-tagline {
-        font-size: 18px;
-      }
-    }
-
-    @media (max-width: 650px) {
-      .home-buttons {
-        flex-wrap: wrap;
-        gap: 20px;
-      }
-
-      .title-image {
-        width: min(760px, 98vw);
-      }
-    }
-
-    /* Final homepage button alignment fixes */
-
-    .home-buttons {
-      align-items: flex-end;
-    }
-
-    .pokeball-link {
-      width: 220px;
-      min-height: 245px;
-      justify-content: flex-end;
-    }
-
-    .pokeball-button {
-      width: 165px;
-      height: 165px;
-      object-fit: contain;
-      object-position: center bottom;
-      margin-bottom: 10px;
-    }
-
-    .revive-button-image {
-      transform: translateY(-8px);
-    }
-
-    .button-caption {
-      width: 210px;
-      min-width: 210px;
-      height: 66px;
-      min-height: 66px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      line-height: 1.05;
-      padding: 6px 14px 8px;
-      box-sizing: border-box;
-    }
-
-  </style>
-
+  <link href="https://fonts.googleapis.com/css2?family=Jersey+25&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/landing-access.css?v=figma-v2-7">
 </head>
-<body>
-  <div class="home-overlay">
-    <div class="home-content">
-      <section class="hero-card">
-        <img class="title-image" src="images/ui/LeagueLogo.png" alt="PokeLeague">
-        <p class="home-tagline">Build your roster. Battle your league.</p>
+<body class="access-page">
+  <main class="landing-viewport">
+    <div class="landing-canvas" aria-labelledby="landingTitle">
+      <figure class="poster poster-heliopt" aria-hidden="true"><img src="images/posters/heliopt-heliolisk.png" alt=""></figure>
+      <figure class="poster poster-infinity" aria-hidden="true"><img src="images/posters/infinity-aegislash.png" alt=""></figure>
+      <figure class="poster poster-grim-shady" aria-hidden="true"><img src="images/posters/grim-shady-sableye.png" alt=""></figure>
+      <figure class="poster poster-freemont" aria-hidden="true"><img src="images/posters/freemont-ash-greninja.png" alt=""></figure>
+      <figure class="poster poster-nine-points" aria-hidden="true"><img src="images/posters/nine-points-incineroar.png" alt=""></figure>
+      <figure class="poster poster-mcky" aria-hidden="true"><img src="images/posters/micky-maushold.png" alt=""></figure>
+      <figure class="poster poster-pokopia" aria-hidden="true"><img src="images/posters/pokopia-froslass.png" alt=""></figure>
+      <figure class="poster poster-pick-me" aria-hidden="true"><img src="images/posters/pick-me-whimsicott.png" alt=""></figure>
+      <figure class="poster poster-leaky-p" aria-hidden="true"><img src="images/posters/leaky-p-goodra.png" alt=""></figure>
+      <figure class="poster poster-hawktuey" aria-hidden="true"><img src="images/posters/hawktuey-decidueye.png" alt=""></figure>
+      <figure class="poster poster-asta" aria-hidden="true"><img src="images/posters/asta-paldean-tauros.png" alt=""></figure>
+      <figure class="poster poster-lil-fear" aria-hidden="true"><img src="images/posters/lil-fear-mega-gengar.png" alt=""></figure>
 
-        <div class="home-buttons">
-          <a class="pokeball-link" href="create-account.html?v=create-theme1">
-            <img class="pokeball-button character-button" src="images/buttons/CharChar.png" alt="Create Account">
-            <div class="button-caption">Create Account</div>
-          </a>
+      <section class="access-region" aria-label="PokeLeague access">
+        <img class="access-art" src="images/landing/access-panel-figma.png" alt="" aria-hidden="true">
+        <div class="access-wordmark-interaction" aria-hidden="true">
+          <img class="access-wordmark-accent" src="images/landing/access-wordmark-accent.png" alt="">
+        </div>
+        <h1 id="landingTitle" class="access-title">PokeLeague</h1>
+        <p class="access-season">Season 1</p>
 
-          <a class="pokeball-link" href="sign-in.html?v=auth3">
-            <img class="pokeball-button character-button" src="images/buttons/Squirt.png" alt="Sign In">
-            <div class="button-caption">Sign In</div>
-          </a>
-
-          <a class="pokeball-link" href="join-league.html?guest=1&v=join-theme1">
-            <img class="pokeball-button character-button revive-button-image" src="images/buttons/BulbBulb.webp" alt="Continue as Guest">
-            <div class="button-caption">Continue as Guest</div>
-          </a>
+        <div class="access-form">
+          <label class="visually-hidden" for="accessCodeInput">Access Code</label>
+          <input
+            id="accessCodeInput"
+            name="accessCode"
+            type="text"
+            placeholder="Access Code"
+            autocomplete="off"
+            autocapitalize="none"
+            spellcheck="false"
+          >
+          <button type="button">Enter League</button>
         </div>
       </section>
     </div>
-  </div>
+  </main>
+
 </body>
 </html>

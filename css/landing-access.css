@@ -1,0 +1,500 @@
+:root {
+  color-scheme: dark;
+  --access-coral: #b7654a;
+  --access-blue: #168bd2;
+  --access-cyan: #52dcf5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+  background: #000;
+}
+
+body.access-page {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  background: #000;
+  color: #fff;
+  font-family: "Jersey 25", Impact, sans-serif;
+}
+
+.landing-viewport {
+  display: grid;
+  place-items: start center;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  background: #000;
+}
+
+.landing-canvas {
+  position: relative;
+  flex: none;
+  container-type: inline-size;
+  width: min(100vw, 180vh, 1728px);
+  width: min(100vw, 180dvh, 1728px);
+  aspect-ratio: 1728 / 1117;
+  min-height: 0;
+  overflow: hidden;
+  background: #000;
+}
+
+.poster {
+  --poster-glow: 255, 184, 42;
+  --poster-spot-x: 50%;
+  --poster-spot-y: 50%;
+  --poster-tilt-x: 0deg;
+  --poster-tilt-y: 0deg;
+  position: absolute;
+  z-index: 1;
+  margin: 0;
+  overflow: hidden;
+  background: #000;
+  isolation: isolate;
+  perspective: 650px;
+}
+
+.poster::after {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at var(--poster-spot-x) var(--poster-spot-y),
+      rgba(var(--poster-glow), 0.42) 0,
+      rgba(var(--poster-glow), 0.14) 22%,
+      transparent 48%
+    ),
+    linear-gradient(125deg, rgba(255, 255, 255, 0.14), transparent 42%);
+  box-shadow: inset 0 0 max(8px, 1.1cqw) rgba(var(--poster-glow), 0.32);
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 220ms ease-out;
+}
+
+.poster img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1);
+  transform-origin: var(--poster-spot-x) var(--poster-spot-y);
+  filter: brightness(1) saturate(1) contrast(1);
+  will-change: transform, filter;
+  transition: transform 280ms cubic-bezier(0.2, 0.75, 0.25, 1),
+    filter 240ms ease-out;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .poster:hover::after {
+    opacity: 1;
+  }
+
+  .poster:hover img {
+    transform: scale(1.035) rotateX(var(--poster-tilt-x)) rotateY(var(--poster-tilt-y));
+    filter: brightness(1.11) saturate(1.2) contrast(1.035);
+  }
+}
+
+.poster-heliopt {
+  --poster-glow: 255, 171, 20;
+  left: 0;
+  top: 0;
+  width: 15.798611%;
+  height: 36.705461%;
+}
+
+.poster-infinity {
+  --poster-glow: 190, 119, 255;
+  left: 15.393519%;
+  top: 0;
+  width: 10.474537%;
+  height: 24.350940%;
+}
+
+.poster-grim-shady {
+  --poster-glow: 176, 88, 255;
+  left: 25.868056%;
+  top: 0;
+  width: 10.474537%;
+  height: 24.350940%;
+}
+
+.poster-freemont {
+  --poster-glow: 255, 91, 72;
+  left: 15.625%;
+  top: 24.350940%;
+  width: 20.717593%;
+  height: 32.050134%;
+}
+
+.poster-nine-points {
+  --poster-glow: 255, 91, 30;
+  left: 0;
+  top: 36.705461%;
+  width: 15.914352%;
+  height: 36.884512%;
+}
+
+.poster-mcky {
+  --poster-glow: 160, 221, 255;
+  left: 0;
+  top: 71.978514%;
+  width: 15.914352%;
+  height: 30.796777%;
+}
+
+.poster-pokopia {
+  --poster-glow: 57, 225, 255;
+  left: 15.740741%;
+  top: 56.401074%;
+  width: 20.601852%;
+  height: 47.806625%;
+}
+
+.poster-hawktuey {
+  --poster-glow: 255, 156, 38;
+  left: 36.342593%;
+  top: 35.720680%;
+  width: 15.509259%;
+  height: 35.989257%;
+}
+
+.poster-asta {
+  --poster-glow: 255, 45, 39;
+  left: 36.342593%;
+  top: 70.008953%;
+  width: 15.509259%;
+  height: 29.991047%;
+}
+
+.poster-lil-fear {
+  --poster-glow: 136, 66, 255;
+  left: 51.851852%;
+  top: 35.720680%;
+  width: 26.678241%;
+  height: 66.159355%;
+}
+
+.poster-lil-fear img {
+  object-position: left center;
+}
+
+.poster-pick-me {
+  --poster-glow: 255, 220, 77;
+  left: 78.587963%;
+  top: 0;
+  width: 21.585648%;
+  height: 50.044763%;
+}
+
+.poster-leaky-p {
+  --poster-glow: 110, 216, 255;
+  left: 78.530093%;
+  top: 50.044763%;
+  width: 21.701389%;
+  height: 50.402865%;
+}
+
+.access-region {
+  container-type: inline-size;
+  position: absolute;
+  z-index: 2;
+  left: 36.342593%;
+  top: 0;
+  width: 42.1875%;
+  height: 35.720680%;
+  overflow: hidden;
+  background: #000;
+}
+
+.access-art {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.access-wordmark-interaction {
+  --wordmark-shift-x: 0px;
+  --wordmark-shift-y: 0px;
+  --wordmark-glow-x: 0px;
+  --wordmark-glow-y: max(2px, 0.16cqw);
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 51%;
+  overflow: visible;
+  touch-action: pan-y;
+}
+
+.access-wordmark-interaction::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 34%,
+    rgba(255, 255, 255, 0.72) 48%,
+    transparent 62%
+  );
+  background-position: 145% 0;
+  background-size: 42% 100%;
+  background-repeat: no-repeat;
+  -webkit-mask: url("../images/landing/access-wordmark-accent.png") top center / 100% 196.078431% no-repeat;
+  mask: url("../images/landing/access-wordmark-accent.png") top center / 100% 196.078431% no-repeat;
+  opacity: 0;
+}
+
+.access-wordmark-accent {
+  display: block;
+  width: 100%;
+  height: 196.078431%;
+  object-fit: cover;
+  pointer-events: none;
+  transform: translate3d(var(--wordmark-shift-x), var(--wordmark-shift-y), 0);
+  transform-origin: 50% 22%;
+  filter: brightness(1) saturate(1)
+    drop-shadow(var(--wordmark-glow-x) var(--wordmark-glow-y) 0 rgba(255, 115, 0, 0));
+  will-change: transform, filter;
+  animation: wordmark-arrive 560ms cubic-bezier(0.2, 0.85, 0.25, 1);
+  transition: transform 150ms ease-out, filter 180ms ease-out;
+}
+
+.access-wordmark-interaction:hover .access-wordmark-accent {
+  filter: brightness(1.13) saturate(1.14)
+    drop-shadow(
+      var(--wordmark-glow-x)
+      var(--wordmark-glow-y)
+      max(2px, 0.24cqw)
+      rgba(255, 115, 0, 0.52)
+    );
+}
+
+.access-wordmark-interaction:hover::after {
+  animation: wordmark-sheen 720ms cubic-bezier(0.2, 0.7, 0.25, 1) both;
+}
+
+@keyframes wordmark-arrive {
+  0% {
+    opacity: 0.15;
+    transform: translate3d(0, max(2px, 0.45cqw), 0) scale(0.985);
+    filter: brightness(1.55) saturate(1.25)
+      drop-shadow(0 max(2px, 0.4cqw) max(2px, 0.35cqw) rgba(255, 115, 0, 0.54));
+  }
+
+  68% {
+    opacity: 1;
+    transform: translate3d(0, min(-1px, -0.08cqw), 0) scale(1.004);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes wordmark-sheen {
+  0% {
+    background-position: 145% 0;
+    opacity: 0;
+  }
+
+  18% {
+    opacity: 0.58;
+  }
+
+  82% {
+    opacity: 0.38;
+  }
+
+  100% {
+    background-position: -70% 0;
+    opacity: 0;
+  }
+}
+
+.access-title,
+.access-season {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.access-title {
+  left: 0;
+  top: 0;
+}
+
+.access-season {
+  left: 0;
+  top: 0;
+}
+
+.access-form {
+  position: static;
+  margin: 0;
+}
+
+.access-form input,
+.access-form button {
+  position: absolute;
+  z-index: 2;
+  margin: 0;
+  font-family: "Jersey 25", Impact, sans-serif;
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+}
+
+.access-form input {
+  left: 14.1%;
+  top: 59.65%;
+  width: 68.88%;
+  height: 19.05%;
+  padding: 0 4%;
+  border: 0;
+  border-radius: 999px;
+  outline: none;
+  background: transparent;
+  box-shadow: none;
+  color: #fff;
+  caret-color: #fff;
+  font-size: 5.6cqw;
+}
+
+.access-form input::placeholder {
+  color: transparent;
+}
+
+.access-form input:not(:placeholder-shown) {
+  background: #111;
+}
+
+.access-form input:focus-visible {
+  outline: max(2px, 0.116cqw) solid var(--access-blue);
+  outline-offset: max(2px, 0.116cqw);
+}
+
+.access-form button {
+  left: 36.79%;
+  top: 81.95%;
+  width: 22.96%;
+  height: 16.54%;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: transparent;
+  font-size: 0;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.access-form button:focus-visible {
+  outline: max(2px, 0.116cqw) solid #fff;
+  outline-offset: max(2px, 0.116cqw);
+}
+
+.access-form button:active {
+  transform: translateY(1px);
+}
+
+.access-status {
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  bottom: 1.5%;
+  width: min(84%, 640px);
+  margin: 0;
+  transform: translateX(-50%);
+  color: #fff7df;
+  font-family: "Jersey 25", Impact, sans-serif;
+  font-size: clamp(16px, 1.3cqw, 24px);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-align: center;
+  text-shadow: 0 2px 0 #000, 0 0 8px #000;
+  pointer-events: none;
+}
+
+.access-form[aria-busy="true"] input,
+.access-form[aria-busy="true"] button {
+  cursor: wait;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+@media (max-width: 1100px) {
+  .access-form input {
+    min-height: 44px;
+    font-size: max(16px, 6.859cqw);
+  }
+
+  .access-form button {
+    min-height: 44px;
+    font-size: max(16px, 3.840878cqw);
+  }
+}
+
+@media (max-width: 640px) {
+  .landing-canvas {
+    width: 1080px;
+    max-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .poster::after,
+  .poster img {
+    transition: none;
+  }
+
+  .poster:hover img {
+    transform: none;
+  }
+
+  .access-wordmark-accent {
+    animation: none;
+    transition: none;
+  }
+
+  .access-wordmark-interaction:hover::after {
+    animation: none;
+  }
+
+  .access-form button:active {
+    transform: none;
+  }
+}
