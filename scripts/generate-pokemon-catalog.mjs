@@ -20,10 +20,13 @@ const normalize = (value) => value
   .trim();
 
 const typeLookup = new Map();
+const dexLookup = new Map();
 
 for (const pokemon of basePokemon) {
   typeLookup.set(normalize(pokemon.name), pokemon.types);
   typeLookup.set(normalize(pokemon.slug), pokemon.types);
+  dexLookup.set(normalize(pokemon.name), pokemon.id);
+  dexLookup.set(normalize(pokemon.slug), pokemon.id);
 }
 
 for (const [key, pokemon] of Object.entries(detailedPokemon)) {
@@ -57,6 +60,63 @@ const aliases = {
   tauroscombat: "taurospaldeacombat",
 };
 
+const dexAliases = {
+  aegislash: "aegislashshield",
+  basculegion: "basculegionmale",
+  alolanraichu: "raichu",
+  alolanninetales: "ninetales",
+  eternalfloette: "floette",
+  galarianslowbro: "slowbro",
+  galarianslowking: "slowking",
+  galarianstunfisk: "stunfisk",
+  hisuianarcanine: "arcanine",
+  hisuianavalugg: "avalugg",
+  hisuiandecidueye: "decidueye",
+  hisuiangoodra: "goodra",
+  hisuiansamurott: "samurott",
+  hisuiantyphlosion: "typhlosion",
+  hisuianzoroark: "zoroark",
+  gourgeist: "gourgeistaverage",
+  lycanroc: "lycanrocmidday",
+  maushold: "mausholdfamilyoffour",
+  meowstic: "meowsticmale",
+  mimikyu: "mimikyudisguised",
+  morpeko: "morpekofullbelly",
+  palafin: "palafinzero",
+  pyroar: "pyroarmale",
+  rotomfan: "rotom",
+  rotomfrost: "rotom",
+  rotomheat: "rotom",
+  rotommow: "rotom",
+  rotomwash: "rotom",
+  taurosaqua: "tauros",
+  taurosblaze: "tauros",
+  tauroscombat: "tauros",
+};
+
+const spriteSuffixes = {
+  alolanraichu: "Alola",
+  alolanninetales: "Alola",
+  eternalfloette: "Eternal",
+  galarianslowbro: "Galar",
+  galarianslowking: "Galar",
+  hisuianarcanine: "Hisui",
+  hisuianavalugg: "Hisui",
+  hisuiandecidueye: "Hisui",
+  hisuiangoodra: "Hisui",
+  hisuiansamurott: "Hisui",
+  hisuiantyphlosion: "Hisui",
+  hisuianzoroark: "Hisui",
+  rotomfan: "Fan",
+  rotomfrost: "Frost",
+  rotomheat: "Heat",
+  rotommow: "Mow",
+  rotomwash: "Wash",
+  taurosaqua: "Paldea Aqua",
+  taurosblaze: "Paldea Blaze",
+  tauroscombat: "Paldea Combat",
+};
+
 const corrections = {
   Annhilape: "Annihilape",
   Elektross: "Eelektross",
@@ -78,14 +138,14 @@ const buckets = [
 
 const conditionalValues = {
   Archaludon: {
-    points: "9-10",
-    sortPoints: 10,
-    note: "9 pts without Assault Vest · 10 pts with Assault Vest",
+    points: "9",
+    sortPoints: 9,
+    note: "",
   },
   Tyranitar: {
-    points: "9-10",
-    sortPoints: 10,
-    note: "9 pts without Assault Vest · 10 pts with Assault Vest",
+    points: "9",
+    sortPoints: 9,
+    note: "",
   },
   Armarouge: {
     points: "5-7",
@@ -115,6 +175,7 @@ const conditionalValues = {
 };
 
 const catalog = new Map();
+const missingCatalogData = [];
 
 for (const [tier, points, names] of buckets) {
   for (const sourceName of names.split(";").map((name) => name.trim()).filter(Boolean)) {
@@ -122,9 +183,11 @@ for (const [tier, points, names] of buckets) {
     const searchKey = normalize(sourceName);
     const lookupKey = aliases[searchKey] || normalize(displayName);
     const types = typeLookup.get(lookupKey);
+    const dex = dexLookup.get(dexAliases[searchKey] || normalize(displayName));
 
-    if (!types) {
-      throw new Error(`Missing type data for ${sourceName} (${lookupKey})`);
+    if (!types || !dex) {
+      missingCatalogData.push(`${sourceName} (${lookupKey}, dex ${dex})`);
+      continue;
     }
 
     const existing = catalog.get(displayName);
@@ -141,8 +204,14 @@ for (const [tier, points, names] of buckets) {
       sortPoints: conditional.sortPoints || points,
       note: conditional.note || "",
       types,
+      dex,
+      sprite: `images/sprites/champions/Menu CP ${String(dex).padStart(4, "0")}${spriteSuffixes[searchKey] ? `-${spriteSuffixes[searchKey]}` : ""}.png`,
     });
   }
+}
+
+if (missingCatalogData.length) {
+  throw new Error(`Missing catalog data:\n${missingCatalogData.join("\n")}`);
 }
 
 const tierOrder = { Diamond: 0, Gold: 1, Silver: 2, Bronze: 3 };

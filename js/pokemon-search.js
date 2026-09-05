@@ -1,24 +1,3 @@
-const TYPE_STYLES = {
-  Normal: { icon: "○", color: "#949494" },
-  Fighting: { icon: "✊", color: "#e3982d" },
-  Flying: { icon: "➶", color: "#80b4d1" },
-  Poison: { icon: "●", color: "#8658c4" },
-  Ground: { icon: "▰", color: "#a9793f" },
-  Rock: { icon: "◆", color: "#b2aa8e" },
-  Bug: { icon: "⌘", color: "#9b9818" },
-  Ghost: { icon: "◕", color: "#6b416e" },
-  Steel: { icon: "◇", color: "#7cb6cc" },
-  Fire: { icon: "♨", color: "#dd6c45" },
-  Water: { icon: "●", color: "#3796d8" },
-  Grass: { icon: "///", color: "#4f9138" },
-  Electric: { icon: "ϟ", color: "#e3ba2d" },
-  Psychic: { icon: "✦", color: "#dd829a" },
-  Ice: { icon: "❄", color: "#62c5c8" },
-  Dragon: { icon: "♜", color: "#5575b8" },
-  Dark: { icon: "◉", color: "#494342" },
-  Fairy: { icon: "✤", color: "#cd90dd" },
-};
-
 const TIER_SYMBOLS = {
   Diamond: "◆",
   Gold: "●",
@@ -50,14 +29,23 @@ const cardFor = (pokemon) => {
   card.querySelector(".tier-name").textContent = pokemon.tier;
   card.querySelector(".point-value").textContent = pokemon.points;
   card.querySelector(".pokemon-name").textContent = pokemon.name;
+  const sprite = card.querySelector(".pokemon-sprite");
+  sprite.src = pokemon.sprite;
+  sprite.alt = `${pokemon.name} menu sprite`;
 
   const typeList = card.querySelector(".type-list");
   for (const type of pokemon.types) {
-    const style = TYPE_STYLES[type] || TYPE_STYLES.Normal;
     const badge = document.createElement("span");
     badge.className = "type-badge";
-    badge.style.setProperty("--type-color", style.color);
-    badge.innerHTML = `<span class="type-icon" aria-hidden="true">${style.icon}</span><span>${type}</span>`;
+    const icon = document.createElement("img");
+    icon.src = `images/types/${type.toLowerCase()}.png`;
+    icon.alt = "";
+    icon.width = 28;
+    icon.height = 28;
+    icon.setAttribute("aria-hidden", "true");
+    const label = document.createElement("span");
+    label.textContent = type;
+    badge.append(icon, label);
     typeList.append(badge);
   }
 
@@ -123,7 +111,7 @@ for (const button of tierButtons) {
   });
 }
 
-fetch("data/pokemon-catalog.json?v=season-1")
+fetch("data/pokemon-catalog.json?v=season-1-2")
   .then((response) => {
     if (!response.ok) throw new Error("Could not load the Pokemon roster.");
     return response.json();

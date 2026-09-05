@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jersey+25&amp;family=Roboto+Condensed:wght@500;700;900&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/pokemon-search.css?v=point-search-1">
+  <link rel="stylesheet" href="css/pokemon-search.css?v=point-search-2">
 </head>
 <body>
   <header class="site-header">
@@ -66,7 +66,7 @@
           <p class="results-kicker">Search results</p>
           <h2 id="resultsHeading"><span id="resultCount">0</span> Pokemon</h2>
         </div>
-        <p class="source-note">Points from the supplied Season 1 point sheet</p>
+        <p class="source-note">Points from the supplied Season 1 point sheet · Sprites from <a href="https://archives.bulbagarden.net/wiki/Category:Champions_menu_sprites" target="_blank" rel="noreferrer">Bulbagarden Archives</a></p>
       </div>
 
       <div id="pokemonGrid" class="pokemon-grid" aria-live="polite" aria-busy="true">
@@ -81,6 +81,7 @@
       <div class="card-halftone" aria-hidden="true"></div>
       <div class="tier-label"><span class="tier-symbol" aria-hidden="true"></span><span class="tier-name"></span></div>
       <div class="point-badge"><strong class="point-value"></strong><span>PTS</span></div>
+      <div class="sprite-stage"><img class="pokemon-sprite" alt="" width="128" height="128" loading="lazy" decoding="async"></div>
       <div class="card-copy">
         <h3 class="pokemon-name"></h3>
         <div class="type-list"></div>
@@ -89,6 +90,6 @@
     </article>
   </template>
 
-  <script src="js/pokemon-search.js?v=point-search-1" defer></script>
+  <script src="js/pokemon-search.js?v=point-search-2" defer></script>
 </body>
 </html>

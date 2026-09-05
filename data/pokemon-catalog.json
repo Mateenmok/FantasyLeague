@@ -1,17 +1,5 @@
 [
   {
-    "name": "Archaludon",
-    "aliases": [],
-    "tier": "Diamond",
-    "points": "9-10",
-    "sortPoints": 10,
-    "note": "9 pts without Assault Vest · 10 pts with Assault Vest",
-    "types": [
-      "Steel",
-      "Dragon"
-    ]
-  },
-  {
     "name": "Basculegion",
     "aliases": [],
     "tier": "Diamond",
@@ -21,7 +9,9 @@
     "types": [
       "Water",
       "Ghost"
-    ]
+    ],
+    "dex": 902,
+    "sprite": "images/sprites/champions/Menu CP 0902.png"
   },
   {
     "name": "Charizard",
@@ -33,7 +23,9 @@
     "types": [
       "Fire",
       "Flying"
-    ]
+    ],
+    "dex": 6,
+    "sprite": "images/sprites/champions/Menu CP 0006.png"
   },
   {
     "name": "Eternal Floette",
@@ -44,7 +36,9 @@
     "note": "",
     "types": [
       "Fairy"
-    ]
+    ],
+    "dex": 670,
+    "sprite": "images/sprites/champions/Menu CP 0670-Eternal.png"
   },
   {
     "name": "Garchomp",
@@ -56,7 +50,9 @@
     "types": [
       "Dragon",
       "Ground"
-    ]
+    ],
+    "dex": 445,
+    "sprite": "images/sprites/champions/Menu CP 0445.png"
   },
   {
     "name": "Metagross",
@@ -68,7 +64,9 @@
     "types": [
       "Steel",
       "Psychic"
-    ]
+    ],
+    "dex": 376,
+    "sprite": "images/sprites/champions/Menu CP 0376.png"
   },
   {
     "name": "Salamence",
@@ -80,7 +78,9 @@
     "types": [
       "Dragon",
       "Flying"
-    ]
+    ],
+    "dex": 373,
+    "sprite": "images/sprites/champions/Menu CP 0373.png"
   },
   {
     "name": "Sneasler",
@@ -92,7 +92,9 @@
     "types": [
       "Fighting",
       "Poison"
-    ]
+    ],
+    "dex": 903,
+    "sprite": "images/sprites/champions/Menu CP 0903.png"
   },
   {
     "name": "Staraptor",
@@ -106,19 +108,9 @@
     "types": [
       "Normal",
       "Flying"
-    ]
-  },
-  {
-    "name": "Tyranitar",
-    "aliases": [],
-    "tier": "Diamond",
-    "points": "9-10",
-    "sortPoints": 10,
-    "note": "9 pts without Assault Vest · 10 pts with Assault Vest",
-    "types": [
-      "Rock",
-      "Dark"
-    ]
+    ],
+    "dex": 398,
+    "sprite": "images/sprites/champions/Menu CP 0398.png"
   },
   {
     "name": "Aerodactyl",
@@ -130,7 +122,23 @@
     "types": [
       "Rock",
       "Flying"
-    ]
+    ],
+    "dex": 142,
+    "sprite": "images/sprites/champions/Menu CP 0142.png"
+  },
+  {
+    "name": "Archaludon",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "9",
+    "sortPoints": 9,
+    "note": "",
+    "types": [
+      "Steel",
+      "Dragon"
+    ],
+    "dex": 1018,
+    "sprite": "images/sprites/champions/Menu CP 1018.png"
   },
   {
     "name": "Farigiraf",
@@ -142,7 +150,9 @@
     "types": [
       "Normal",
       "Psychic"
-    ]
+    ],
+    "dex": 981,
+    "sprite": "images/sprites/champions/Menu CP 0981.png"
   },
   {
     "name": "Gengar",
@@ -154,7 +164,9 @@
     "types": [
       "Ghost",
       "Poison"
-    ]
+    ],
+    "dex": 94,
+    "sprite": "images/sprites/champions/Menu CP 0094.png"
   },
   {
     "name": "Gholdengo",
@@ -166,7 +178,9 @@
     "types": [
       "Steel",
       "Ghost"
-    ]
+    ],
+    "dex": 1000,
+    "sprite": "images/sprites/champions/Menu CP 1000.png"
   },
   {
     "name": "Grimmsnarl",
@@ -178,7 +192,9 @@
     "types": [
       "Dark",
       "Fairy"
-    ]
+    ],
+    "dex": 861,
+    "sprite": "images/sprites/champions/Menu CP 0861.png"
   },
   {
     "name": "Incineroar",
@@ -190,7 +206,9 @@
     "types": [
       "Fire",
       "Dark"
-    ]
+    ],
+    "dex": 727,
+    "sprite": "images/sprites/champions/Menu CP 0727.png"
   },
   {
     "name": "Kangaskhan",
@@ -201,7 +219,9 @@
     "note": "",
     "types": [
       "Normal"
-    ]
+    ],
+    "dex": 115,
+    "sprite": "images/sprites/champions/Menu CP 0115.png"
   },
   {
     "name": "Kingambit",
@@ -213,7 +233,9 @@
     "types": [
       "Dark",
       "Steel"
-    ]
+    ],
+    "dex": 983,
+    "sprite": "images/sprites/champions/Menu CP 0983.png"
   },
   {
     "name": "Pelipper",
@@ -225,7 +247,9 @@
     "types": [
       "Water",
       "Flying"
-    ]
+    ],
+    "dex": 279,
+    "sprite": "images/sprites/champions/Menu CP 0279.png"
   },
   {
     "name": "Raichu",
@@ -236,7 +260,9 @@
     "note": "",
     "types": [
       "Electric"
-    ]
+    ],
+    "dex": 26,
+    "sprite": "images/sprites/champions/Menu CP 0026.png"
   },
   {
     "name": "Rillaboom",
@@ -247,7 +273,9 @@
     "note": "",
     "types": [
       "Grass"
-    ]
+    ],
+    "dex": 812,
+    "sprite": "images/sprites/champions/Menu CP 0812.png"
   },
   {
     "name": "Sableye",
@@ -259,7 +287,9 @@
     "types": [
       "Dark",
       "Ghost"
-    ]
+    ],
+    "dex": 302,
+    "sprite": "images/sprites/champions/Menu CP 0302.png"
   },
   {
     "name": "Sinistcha",
@@ -271,7 +301,9 @@
     "types": [
       "Grass",
       "Ghost"
-    ]
+    ],
+    "dex": 1013,
+    "sprite": "images/sprites/champions/Menu CP 1013.png"
   },
   {
     "name": "Swampert",
@@ -283,7 +315,23 @@
     "types": [
       "Water",
       "Ground"
-    ]
+    ],
+    "dex": 260,
+    "sprite": "images/sprites/champions/Menu CP 0260.png"
+  },
+  {
+    "name": "Tyranitar",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "9",
+    "sortPoints": 9,
+    "note": "",
+    "types": [
+      "Rock",
+      "Dark"
+    ],
+    "dex": 248,
+    "sprite": "images/sprites/champions/Menu CP 0248.png"
   },
   {
     "name": "Whimsicott",
@@ -295,7 +343,9 @@
     "types": [
       "Grass",
       "Fairy"
-    ]
+    ],
+    "dex": 547,
+    "sprite": "images/sprites/champions/Menu CP 0547.png"
   },
   {
     "name": "Annihilape",
@@ -309,7 +359,9 @@
     "types": [
       "Fighting",
       "Ghost"
-    ]
+    ],
+    "dex": 979,
+    "sprite": "images/sprites/champions/Menu CP 0979.png"
   },
   {
     "name": "Blastoise",
@@ -320,7 +372,9 @@
     "note": "",
     "types": [
       "Water"
-    ]
+    ],
+    "dex": 9,
+    "sprite": "images/sprites/champions/Menu CP 0009.png"
   },
   {
     "name": "Blaziken",
@@ -332,7 +386,9 @@
     "types": [
       "Fire",
       "Fighting"
-    ]
+    ],
+    "dex": 257,
+    "sprite": "images/sprites/champions/Menu CP 0257.png"
   },
   {
     "name": "Delphox",
@@ -344,7 +400,9 @@
     "types": [
       "Fire",
       "Psychic"
-    ]
+    ],
+    "dex": 655,
+    "sprite": "images/sprites/champions/Menu CP 0655.png"
   },
   {
     "name": "Dragonite",
@@ -356,7 +414,9 @@
     "types": [
       "Dragon",
       "Flying"
-    ]
+    ],
+    "dex": 149,
+    "sprite": "images/sprites/champions/Menu CP 0149.png"
   },
   {
     "name": "Froslass",
@@ -368,7 +428,9 @@
     "types": [
       "Ice",
       "Ghost"
-    ]
+    ],
+    "dex": 478,
+    "sprite": "images/sprites/champions/Menu CP 0478.png"
   },
   {
     "name": "Gardevoir",
@@ -380,7 +442,9 @@
     "types": [
       "Psychic",
       "Fairy"
-    ]
+    ],
+    "dex": 282,
+    "sprite": "images/sprites/champions/Menu CP 0282.png"
   },
   {
     "name": "Glimmora",
@@ -392,7 +456,9 @@
     "types": [
       "Rock",
       "Poison"
-    ]
+    ],
+    "dex": 970,
+    "sprite": "images/sprites/champions/Menu CP 0970.png"
   },
   {
     "name": "Lucario",
@@ -404,7 +470,9 @@
     "types": [
       "Fighting",
       "Steel"
-    ]
+    ],
+    "dex": 448,
+    "sprite": "images/sprites/champions/Menu CP 0448.png"
   },
   {
     "name": "Maushold",
@@ -415,7 +483,9 @@
     "note": "",
     "types": [
       "Normal"
-    ]
+    ],
+    "dex": 925,
+    "sprite": "images/sprites/champions/Menu CP 0925.png"
   },
   {
     "name": "Mawile",
@@ -427,7 +497,9 @@
     "types": [
       "Steel",
       "Fairy"
-    ]
+    ],
+    "dex": 303,
+    "sprite": "images/sprites/champions/Menu CP 0303.png"
   },
   {
     "name": "Politoed",
@@ -438,7 +510,9 @@
     "note": "",
     "types": [
       "Water"
-    ]
+    ],
+    "dex": 186,
+    "sprite": "images/sprites/champions/Menu CP 0186.png"
   },
   {
     "name": "Sylveon",
@@ -449,7 +523,9 @@
     "note": "",
     "types": [
       "Fairy"
-    ]
+    ],
+    "dex": 700,
+    "sprite": "images/sprites/champions/Menu CP 0700.png"
   },
   {
     "name": "Talonflame",
@@ -461,7 +537,9 @@
     "types": [
       "Fire",
       "Flying"
-    ]
+    ],
+    "dex": 663,
+    "sprite": "images/sprites/champions/Menu CP 0663.png"
   },
   {
     "name": "Torkoal",
@@ -472,7 +550,9 @@
     "note": "",
     "types": [
       "Fire"
-    ]
+    ],
+    "dex": 324,
+    "sprite": "images/sprites/champions/Menu CP 0324.png"
   },
   {
     "name": "Venusaur",
@@ -484,7 +564,9 @@
     "types": [
       "Grass",
       "Poison"
-    ]
+    ],
+    "dex": 3,
+    "sprite": "images/sprites/champions/Menu CP 0003.png"
   },
   {
     "name": "Absol",
@@ -495,7 +577,9 @@
     "note": "",
     "types": [
       "Dark"
-    ]
+    ],
+    "dex": 359,
+    "sprite": "images/sprites/champions/Menu CP 0359.png"
   },
   {
     "name": "Aegislash",
@@ -507,7 +591,9 @@
     "types": [
       "Steel",
       "Ghost"
-    ]
+    ],
+    "dex": 681,
+    "sprite": "images/sprites/champions/Menu CP 0681.png"
   },
   {
     "name": "Alolan Ninetales",
@@ -519,7 +605,9 @@
     "types": [
       "Ice",
       "Fairy"
-    ]
+    ],
+    "dex": 38,
+    "sprite": "images/sprites/champions/Menu CP 0038-Alola.png"
   },
   {
     "name": "Armarouge",
@@ -531,7 +619,9 @@
     "types": [
       "Fire",
       "Psychic"
-    ]
+    ],
+    "dex": 936,
+    "sprite": "images/sprites/champions/Menu CP 0936.png"
   },
   {
     "name": "Clefable",
@@ -542,7 +632,9 @@
     "note": "",
     "types": [
       "Fairy"
-    ]
+    ],
+    "dex": 36,
+    "sprite": "images/sprites/champions/Menu CP 0036.png"
   },
   {
     "name": "Corviknight",
@@ -554,7 +646,9 @@
     "types": [
       "Flying",
       "Steel"
-    ]
+    ],
+    "dex": 823,
+    "sprite": "images/sprites/champions/Menu CP 0823.png"
   },
   {
     "name": "Dragapult",
@@ -566,7 +660,9 @@
     "types": [
       "Dragon",
       "Ghost"
-    ]
+    ],
+    "dex": 887,
+    "sprite": "images/sprites/champions/Menu CP 0887.png"
   },
   {
     "name": "Excadrill",
@@ -578,7 +674,9 @@
     "types": [
       "Ground",
       "Steel"
-    ]
+    ],
+    "dex": 530,
+    "sprite": "images/sprites/champions/Menu CP 0530.png"
   },
   {
     "name": "Gyarados",
@@ -590,7 +688,9 @@
     "types": [
       "Water",
       "Flying"
-    ]
+    ],
+    "dex": 130,
+    "sprite": "images/sprites/champions/Menu CP 0130.png"
   },
   {
     "name": "Hisuian Arcanine",
@@ -602,7 +702,9 @@
     "types": [
       "Fire",
       "Rock"
-    ]
+    ],
+    "dex": 59,
+    "sprite": "images/sprites/champions/Menu CP 0059-Hisui.png"
   },
   {
     "name": "Hydreigon",
@@ -614,7 +716,9 @@
     "types": [
       "Dark",
       "Dragon"
-    ]
+    ],
+    "dex": 635,
+    "sprite": "images/sprites/champions/Menu CP 0635.png"
   },
   {
     "name": "Kommo-o",
@@ -626,7 +730,9 @@
     "types": [
       "Dragon",
       "Fighting"
-    ]
+    ],
+    "dex": 784,
+    "sprite": "images/sprites/champions/Menu CP 0784.png"
   },
   {
     "name": "Lopunny",
@@ -637,7 +743,9 @@
     "note": "",
     "types": [
       "Normal"
-    ]
+    ],
+    "dex": 428,
+    "sprite": "images/sprites/champions/Menu CP 0428.png"
   },
   {
     "name": "Meowscarada",
@@ -649,7 +757,9 @@
     "types": [
       "Grass",
       "Dark"
-    ]
+    ],
+    "dex": 908,
+    "sprite": "images/sprites/champions/Menu CP 0908.png"
   },
   {
     "name": "Milotic",
@@ -660,7 +770,9 @@
     "note": "",
     "types": [
       "Water"
-    ]
+    ],
+    "dex": 350,
+    "sprite": "images/sprites/champions/Menu CP 0350.png"
   },
   {
     "name": "Primarina",
@@ -672,7 +784,9 @@
     "types": [
       "Water",
       "Fairy"
-    ]
+    ],
+    "dex": 730,
+    "sprite": "images/sprites/champions/Menu CP 0730.png"
   },
   {
     "name": "Rotom-Wash",
@@ -684,7 +798,9 @@
     "types": [
       "Electric",
       "Water"
-    ]
+    ],
+    "dex": 479,
+    "sprite": "images/sprites/champions/Menu CP 0479-Wash.png"
   },
   {
     "name": "Scizor",
@@ -696,7 +812,9 @@
     "types": [
       "Bug",
       "Steel"
-    ]
+    ],
+    "dex": 212,
+    "sprite": "images/sprites/champions/Menu CP 0212.png"
   },
   {
     "name": "Scovillain",
@@ -708,7 +826,9 @@
     "types": [
       "Grass",
       "Fire"
-    ]
+    ],
+    "dex": 952,
+    "sprite": "images/sprites/champions/Menu CP 0952.png"
   },
   {
     "name": "Vivillon",
@@ -720,7 +840,9 @@
     "types": [
       "Bug",
       "Flying"
-    ]
+    ],
+    "dex": 666,
+    "sprite": "images/sprites/champions/Menu CP 0666.png"
   },
   {
     "name": "Aggron",
@@ -732,7 +854,9 @@
     "types": [
       "Steel",
       "Rock"
-    ]
+    ],
+    "dex": 306,
+    "sprite": "images/sprites/champions/Menu CP 0306.png"
   },
   {
     "name": "Arcanine",
@@ -743,7 +867,9 @@
     "note": "",
     "types": [
       "Fire"
-    ]
+    ],
+    "dex": 59,
+    "sprite": "images/sprites/champions/Menu CP 0059.png"
   },
   {
     "name": "Ceruledge",
@@ -755,7 +881,9 @@
     "types": [
       "Fire",
       "Ghost"
-    ]
+    ],
+    "dex": 937,
+    "sprite": "images/sprites/champions/Menu CP 0937.png"
   },
   {
     "name": "Feraligatr",
@@ -766,7 +894,9 @@
     "note": "",
     "types": [
       "Water"
-    ]
+    ],
+    "dex": 160,
+    "sprite": "images/sprites/champions/Menu CP 0160.png"
   },
   {
     "name": "Greninja",
@@ -778,7 +908,9 @@
     "types": [
       "Water",
       "Dark"
-    ]
+    ],
+    "dex": 658,
+    "sprite": "images/sprites/champions/Menu CP 0658.png"
   },
   {
     "name": "Hisuian Typhlosion",
@@ -790,7 +922,9 @@
     "types": [
       "Fire",
       "Ghost"
-    ]
+    ],
+    "dex": 157,
+    "sprite": "images/sprites/champions/Menu CP 0157-Hisui.png"
   },
   {
     "name": "Hisuian Zoroark",
@@ -802,7 +936,9 @@
     "types": [
       "Normal",
       "Ghost"
-    ]
+    ],
+    "dex": 571,
+    "sprite": "images/sprites/champions/Menu CP 0571-Hisui.png"
   },
   {
     "name": "Houndstone",
@@ -813,7 +949,9 @@
     "note": "",
     "types": [
       "Ghost"
-    ]
+    ],
+    "dex": 972,
+    "sprite": "images/sprites/champions/Menu CP 0972.png"
   },
   {
     "name": "Klefki",
@@ -825,7 +963,9 @@
     "types": [
       "Steel",
       "Fairy"
-    ]
+    ],
+    "dex": 707,
+    "sprite": "images/sprites/champions/Menu CP 0707.png"
   },
   {
     "name": "Meowstic",
@@ -836,7 +976,9 @@
     "note": "",
     "types": [
       "Psychic"
-    ]
+    ],
+    "dex": 678,
+    "sprite": "images/sprites/champions/Menu CP 0678.png"
   },
   {
     "name": "Oranguru",
@@ -848,7 +990,9 @@
     "types": [
       "Normal",
       "Psychic"
-    ]
+    ],
+    "dex": 765,
+    "sprite": "images/sprites/champions/Menu CP 0765.png"
   },
   {
     "name": "Palafin",
@@ -859,7 +1003,9 @@
     "note": "5 pts normally · 6 pts if Band is added",
     "types": [
       "Water"
-    ]
+    ],
+    "dex": 964,
+    "sprite": "images/sprites/champions/Menu CP 0964.png"
   },
   {
     "name": "Pyroar",
@@ -871,7 +1017,9 @@
     "types": [
       "Fire",
       "Normal"
-    ]
+    ],
+    "dex": 668,
+    "sprite": "images/sprites/champions/Menu CP 0668.png"
   },
   {
     "name": "Rotom-Heat",
@@ -883,7 +1031,9 @@
     "types": [
       "Electric",
       "Fire"
-    ]
+    ],
+    "dex": 479,
+    "sprite": "images/sprites/champions/Menu CP 0479-Heat.png"
   },
   {
     "name": "Sceptile",
@@ -894,7 +1044,9 @@
     "note": "",
     "types": [
       "Grass"
-    ]
+    ],
+    "dex": 254,
+    "sprite": "images/sprites/champions/Menu CP 0254.png"
   },
   {
     "name": "Scrafty",
@@ -906,7 +1058,9 @@
     "types": [
       "Dark",
       "Fighting"
-    ]
+    ],
+    "dex": 560,
+    "sprite": "images/sprites/champions/Menu CP 0560.png"
   },
   {
     "name": "Starmie",
@@ -918,7 +1072,9 @@
     "types": [
       "Water",
       "Psychic"
-    ]
+    ],
+    "dex": 121,
+    "sprite": "images/sprites/champions/Menu CP 0121.png"
   },
   {
     "name": "Tauros-Aqua",
@@ -930,7 +1086,9 @@
     "types": [
       "Fighting",
       "Water"
-    ]
+    ],
+    "dex": 128,
+    "sprite": "images/sprites/champions/Menu CP 0128-Paldea Aqua.png"
   },
   {
     "name": "Tinkaton",
@@ -942,7 +1100,9 @@
     "types": [
       "Fairy",
       "Steel"
-    ]
+    ],
+    "dex": 959,
+    "sprite": "images/sprites/champions/Menu CP 0959.png"
   },
   {
     "name": "Tsareena",
@@ -953,7 +1113,9 @@
     "note": "",
     "types": [
       "Grass"
-    ]
+    ],
+    "dex": 763,
+    "sprite": "images/sprites/champions/Menu CP 0763.png"
   },
   {
     "name": "Volcarona",
@@ -965,7 +1127,9 @@
     "types": [
       "Bug",
       "Fire"
-    ]
+    ],
+    "dex": 637,
+    "sprite": "images/sprites/champions/Menu CP 0637.png"
   },
   {
     "name": "Weavile",
@@ -977,7 +1141,9 @@
     "types": [
       "Dark",
       "Ice"
-    ]
+    ],
+    "dex": 461,
+    "sprite": "images/sprites/champions/Menu CP 0461.png"
   },
   {
     "name": "Chandelure",
@@ -989,7 +1155,9 @@
     "types": [
       "Ghost",
       "Fire"
-    ]
+    ],
+    "dex": 609,
+    "sprite": "images/sprites/champions/Menu CP 0609.png"
   },
   {
     "name": "Crabominable",
@@ -1001,7 +1169,9 @@
     "types": [
       "Fighting",
       "Ice"
-    ]
+    ],
+    "dex": 740,
+    "sprite": "images/sprites/champions/Menu CP 0740.png"
   },
   {
     "name": "Empoleon",
@@ -1013,7 +1183,9 @@
     "types": [
       "Water",
       "Steel"
-    ]
+    ],
+    "dex": 395,
+    "sprite": "images/sprites/champions/Menu CP 0395.png"
   },
   {
     "name": "Espathra",
@@ -1024,7 +1196,9 @@
     "note": "",
     "types": [
       "Psychic"
-    ]
+    ],
+    "dex": 956,
+    "sprite": "images/sprites/champions/Menu CP 0956.png"
   },
   {
     "name": "Gallade",
@@ -1036,7 +1210,9 @@
     "types": [
       "Psychic",
       "Fighting"
-    ]
+    ],
+    "dex": 475,
+    "sprite": "images/sprites/champions/Menu CP 0475.png"
   },
   {
     "name": "Golurk",
@@ -1048,7 +1224,9 @@
     "types": [
       "Ground",
       "Ghost"
-    ]
+    ],
+    "dex": 623,
+    "sprite": "images/sprites/champions/Menu CP 0623.png"
   },
   {
     "name": "Hatterene",
@@ -1060,7 +1238,9 @@
     "types": [
       "Psychic",
       "Fairy"
-    ]
+    ],
+    "dex": 858,
+    "sprite": "images/sprites/champions/Menu CP 0858.png"
   },
   {
     "name": "Hawlucha",
@@ -1072,7 +1252,9 @@
     "types": [
       "Fighting",
       "Flying"
-    ]
+    ],
+    "dex": 701,
+    "sprite": "images/sprites/champions/Menu CP 0701.png"
   },
   {
     "name": "Hisuian Goodra",
@@ -1084,7 +1266,9 @@
     "types": [
       "Steel",
       "Dragon"
-    ]
+    ],
+    "dex": 706,
+    "sprite": "images/sprites/champions/Menu CP 0706-Hisui.png"
   },
   {
     "name": "Infernape",
@@ -1096,7 +1280,9 @@
     "types": [
       "Fire",
       "Fighting"
-    ]
+    ],
+    "dex": 392,
+    "sprite": "images/sprites/champions/Menu CP 0392.png"
   },
   {
     "name": "Krookodile",
@@ -1108,7 +1294,9 @@
     "types": [
       "Ground",
       "Dark"
-    ]
+    ],
+    "dex": 553,
+    "sprite": "images/sprites/champions/Menu CP 0553.png"
   },
   {
     "name": "Liepard",
@@ -1119,7 +1307,9 @@
     "note": "",
     "types": [
       "Dark"
-    ]
+    ],
+    "dex": 510,
+    "sprite": "images/sprites/champions/Menu CP 0510.png"
   },
   {
     "name": "Mamoswine",
@@ -1131,7 +1321,9 @@
     "types": [
       "Ice",
       "Ground"
-    ]
+    ],
+    "dex": 473,
+    "sprite": "images/sprites/champions/Menu CP 0473.png"
   },
   {
     "name": "Meganium",
@@ -1142,7 +1334,9 @@
     "note": "",
     "types": [
       "Grass"
-    ]
+    ],
+    "dex": 154,
+    "sprite": "images/sprites/champions/Menu CP 0154.png"
   },
   {
     "name": "Mimikyu",
@@ -1154,7 +1348,9 @@
     "types": [
       "Ghost",
       "Fairy"
-    ]
+    ],
+    "dex": 778,
+    "sprite": "images/sprites/champions/Menu CP 0778.png"
   },
   {
     "name": "Rotom-Frost",
@@ -1166,7 +1362,9 @@
     "types": [
       "Electric",
       "Ice"
-    ]
+    ],
+    "dex": 479,
+    "sprite": "images/sprites/champions/Menu CP 0479-Frost.png"
   },
   {
     "name": "Sharpedo",
@@ -1178,7 +1376,9 @@
     "types": [
       "Water",
       "Dark"
-    ]
+    ],
+    "dex": 319,
+    "sprite": "images/sprites/champions/Menu CP 0319.png"
   },
   {
     "name": "Tauros-Blaze",
@@ -1190,7 +1390,9 @@
     "types": [
       "Fighting",
       "Fire"
-    ]
+    ],
+    "dex": 128,
+    "sprite": "images/sprites/champions/Menu CP 0128-Paldea Blaze.png"
   },
   {
     "name": "Vileplume",
@@ -1202,7 +1404,9 @@
     "types": [
       "Grass",
       "Poison"
-    ]
+    ],
+    "dex": 45,
+    "sprite": "images/sprites/champions/Menu CP 0045.png"
   },
   {
     "name": "Conkeldurr",
@@ -1213,7 +1417,9 @@
     "note": "3 pts normally · 4 or 5 pts if Flame Orb is added",
     "types": [
       "Fighting"
-    ]
+    ],
+    "dex": 534,
+    "sprite": "images/sprites/champions/Menu CP 0534.png"
   },
   {
     "name": "Altaria",
@@ -1225,7 +1431,9 @@
     "types": [
       "Dragon",
       "Flying"
-    ]
+    ],
+    "dex": 334,
+    "sprite": "images/sprites/champions/Menu CP 0334.png"
   },
   {
     "name": "Ampharos",
@@ -1236,7 +1444,9 @@
     "note": "",
     "types": [
       "Electric"
-    ]
+    ],
+    "dex": 181,
+    "sprite": "images/sprites/champions/Menu CP 0181.png"
   },
   {
     "name": "Araquanid",
@@ -1248,7 +1458,9 @@
     "types": [
       "Water",
       "Bug"
-    ]
+    ],
+    "dex": 752,
+    "sprite": "images/sprites/champions/Menu CP 0752.png"
   },
   {
     "name": "Azumarill",
@@ -1260,7 +1472,9 @@
     "types": [
       "Water",
       "Fairy"
-    ]
+    ],
+    "dex": 184,
+    "sprite": "images/sprites/champions/Menu CP 0184.png"
   },
   {
     "name": "Bellibolt",
@@ -1271,7 +1485,9 @@
     "note": "",
     "types": [
       "Electric"
-    ]
+    ],
+    "dex": 939,
+    "sprite": "images/sprites/champions/Menu CP 0939.png"
   },
   {
     "name": "Camerupt",
@@ -1283,7 +1499,9 @@
     "types": [
       "Fire",
       "Ground"
-    ]
+    ],
+    "dex": 323,
+    "sprite": "images/sprites/champions/Menu CP 0323.png"
   },
   {
     "name": "Chesnaught",
@@ -1295,7 +1513,9 @@
     "types": [
       "Grass",
       "Fighting"
-    ]
+    ],
+    "dex": 652,
+    "sprite": "images/sprites/champions/Menu CP 0652.png"
   },
   {
     "name": "Dragalge",
@@ -1307,7 +1527,9 @@
     "types": [
       "Poison",
       "Dragon"
-    ]
+    ],
+    "dex": 691,
+    "sprite": "images/sprites/champions/Menu CP 0691.png"
   },
   {
     "name": "Drampa",
@@ -1319,7 +1541,9 @@
     "types": [
       "Normal",
       "Dragon"
-    ]
+    ],
+    "dex": 780,
+    "sprite": "images/sprites/champions/Menu CP 0780.png"
   },
   {
     "name": "Eelektross",
@@ -1332,7 +1556,9 @@
     "note": "",
     "types": [
       "Electric"
-    ]
+    ],
+    "dex": 604,
+    "sprite": "images/sprites/champions/Menu CP 0604.png"
   },
   {
     "name": "Falinks",
@@ -1343,7 +1569,9 @@
     "note": "",
     "types": [
       "Fighting"
-    ]
+    ],
+    "dex": 870,
+    "sprite": "images/sprites/champions/Menu CP 0870.png"
   },
   {
     "name": "Galarian Slowking",
@@ -1355,7 +1583,9 @@
     "types": [
       "Poison",
       "Psychic"
-    ]
+    ],
+    "dex": 199,
+    "sprite": "images/sprites/champions/Menu CP 0199-Galar.png"
   },
   {
     "name": "Gliscor",
@@ -1367,7 +1597,9 @@
     "types": [
       "Ground",
       "Flying"
-    ]
+    ],
+    "dex": 472,
+    "sprite": "images/sprites/champions/Menu CP 0472.png"
   },
   {
     "name": "Heliolisk",
@@ -1379,7 +1611,9 @@
     "types": [
       "Electric",
       "Normal"
-    ]
+    ],
+    "dex": 695,
+    "sprite": "images/sprites/champions/Menu CP 0695.png"
   },
   {
     "name": "Hisuian Decidueye",
@@ -1391,7 +1625,9 @@
     "types": [
       "Grass",
       "Fighting"
-    ]
+    ],
+    "dex": 724,
+    "sprite": "images/sprites/champions/Menu CP 0724-Hisui.png"
   },
   {
     "name": "Hisuian Samurott",
@@ -1403,7 +1639,9 @@
     "types": [
       "Water",
       "Dark"
-    ]
+    ],
+    "dex": 503,
+    "sprite": "images/sprites/champions/Menu CP 0503-Hisui.png"
   },
   {
     "name": "Kleavor",
@@ -1415,7 +1653,9 @@
     "types": [
       "Bug",
       "Rock"
-    ]
+    ],
+    "dex": 900,
+    "sprite": "images/sprites/champions/Menu CP 0900.png"
   },
   {
     "name": "Lycanroc",
@@ -1426,7 +1666,9 @@
     "note": "",
     "types": [
       "Rock"
-    ]
+    ],
+    "dex": 745,
+    "sprite": "images/sprites/champions/Menu CP 0745.png"
   },
   {
     "name": "Manectric",
@@ -1437,7 +1679,9 @@
     "note": "",
     "types": [
       "Electric"
-    ]
+    ],
+    "dex": 310,
+    "sprite": "images/sprites/champions/Menu CP 0310.png"
   },
   {
     "name": "Noivern",
@@ -1449,7 +1693,9 @@
     "types": [
       "Flying",
       "Dragon"
-    ]
+    ],
+    "dex": 715,
+    "sprite": "images/sprites/champions/Menu CP 0715.png"
   },
   {
     "name": "Rotom-Mow",
@@ -1461,7 +1707,9 @@
     "types": [
       "Electric",
       "Grass"
-    ]
+    ],
+    "dex": 479,
+    "sprite": "images/sprites/champions/Menu CP 0479-Mow.png"
   },
   {
     "name": "Skarmory",
@@ -1473,7 +1721,9 @@
     "types": [
       "Steel",
       "Flying"
-    ]
+    ],
+    "dex": 227,
+    "sprite": "images/sprites/champions/Menu CP 0227.png"
   },
   {
     "name": "Slowbro",
@@ -1485,7 +1735,9 @@
     "types": [
       "Water",
       "Psychic"
-    ]
+    ],
+    "dex": 80,
+    "sprite": "images/sprites/champions/Menu CP 0080.png"
   },
   {
     "name": "Snorlax",
@@ -1496,7 +1748,9 @@
     "note": "",
     "types": [
       "Normal"
-    ]
+    ],
+    "dex": 143,
+    "sprite": "images/sprites/champions/Menu CP 0143.png"
   },
   {
     "name": "Steelix",
@@ -1508,7 +1762,9 @@
     "types": [
       "Steel",
       "Ground"
-    ]
+    ],
+    "dex": 208,
+    "sprite": "images/sprites/champions/Menu CP 0208.png"
   },
   {
     "name": "Toxapex",
@@ -1520,7 +1776,9 @@
     "types": [
       "Poison",
       "Water"
-    ]
+    ],
+    "dex": 748,
+    "sprite": "images/sprites/champions/Menu CP 0748.png"
   },
   {
     "name": "Umbreon",
@@ -1531,7 +1789,9 @@
     "note": "",
     "types": [
       "Dark"
-    ]
+    ],
+    "dex": 197,
+    "sprite": "images/sprites/champions/Menu CP 0197.png"
   },
   {
     "name": "Alakazam",
@@ -1542,7 +1802,9 @@
     "note": "3 pts; the PDF notes a higher value if Indeedee is added",
     "types": [
       "Psychic"
-    ]
+    ],
+    "dex": 65,
+    "sprite": "images/sprites/champions/Menu CP 0065.png"
   },
   {
     "name": "Alolan Raichu",
@@ -1554,7 +1816,9 @@
     "types": [
       "Electric",
       "Psychic"
-    ]
+    ],
+    "dex": 26,
+    "sprite": "images/sprites/champions/Menu CP 0026-Alola.png"
   },
   {
     "name": "Banette",
@@ -1565,7 +1829,9 @@
     "note": "",
     "types": [
       "Ghost"
-    ]
+    ],
+    "dex": 354,
+    "sprite": "images/sprites/champions/Menu CP 0354.png"
   },
   {
     "name": "Galarian Slowbro",
@@ -1577,7 +1843,9 @@
     "types": [
       "Poison",
       "Psychic"
-    ]
+    ],
+    "dex": 80,
+    "sprite": "images/sprites/champions/Menu CP 0080-Galar.png"
   },
   {
     "name": "Goodra",
@@ -1588,7 +1856,9 @@
     "note": "",
     "types": [
       "Dragon"
-    ]
+    ],
+    "dex": 706,
+    "sprite": "images/sprites/champions/Menu CP 0706.png"
   },
   {
     "name": "Hippowdon",
@@ -1599,7 +1869,9 @@
     "note": "",
     "types": [
       "Ground"
-    ]
+    ],
+    "dex": 450,
+    "sprite": "images/sprites/champions/Menu CP 0450.png"
   },
   {
     "name": "Jolteon",
@@ -1610,7 +1882,9 @@
     "note": "",
     "types": [
       "Electric"
-    ]
+    ],
+    "dex": 135,
+    "sprite": "images/sprites/champions/Menu CP 0135.png"
   },
   {
     "name": "Malamar",
@@ -1622,7 +1896,9 @@
     "types": [
       "Dark",
       "Psychic"
-    ]
+    ],
+    "dex": 687,
+    "sprite": "images/sprites/champions/Menu CP 0687.png"
   },
   {
     "name": "Medicham",
@@ -1634,7 +1910,9 @@
     "types": [
       "Fighting",
       "Psychic"
-    ]
+    ],
+    "dex": 308,
+    "sprite": "images/sprites/champions/Menu CP 0308.png"
   },
   {
     "name": "Mudsdale",
@@ -1645,7 +1923,9 @@
     "note": "",
     "types": [
       "Ground"
-    ]
+    ],
+    "dex": 750,
+    "sprite": "images/sprites/champions/Menu CP 0750.png"
   },
   {
     "name": "Ninetales",
@@ -1656,7 +1936,9 @@
     "note": "",
     "types": [
       "Fire"
-    ]
+    ],
+    "dex": 38,
+    "sprite": "images/sprites/champions/Menu CP 0038.png"
   },
   {
     "name": "Orthworm",
@@ -1667,7 +1949,9 @@
     "note": "",
     "types": [
       "Steel"
-    ]
+    ],
+    "dex": 968,
+    "sprite": "images/sprites/champions/Menu CP 0968.png"
   },
   {
     "name": "Overqwil",
@@ -1679,7 +1963,9 @@
     "types": [
       "Dark",
       "Poison"
-    ]
+    ],
+    "dex": 904,
+    "sprite": "images/sprites/champions/Menu CP 0904.png"
   },
   {
     "name": "Rampardos",
@@ -1690,7 +1976,9 @@
     "note": "",
     "types": [
       "Rock"
-    ]
+    ],
+    "dex": 409,
+    "sprite": "images/sprites/champions/Menu CP 0409.png"
   },
   {
     "name": "Rotom-Fan",
@@ -1702,7 +1990,9 @@
     "types": [
       "Electric",
       "Flying"
-    ]
+    ],
+    "dex": 479,
+    "sprite": "images/sprites/champions/Menu CP 0479-Fan.png"
   },
   {
     "name": "Runerigus",
@@ -1714,7 +2004,9 @@
     "types": [
       "Ground",
       "Ghost"
-    ]
+    ],
+    "dex": 867,
+    "sprite": "images/sprites/champions/Menu CP 0867.png"
   },
   {
     "name": "Scolipede",
@@ -1726,7 +2018,9 @@
     "types": [
       "Bug",
       "Poison"
-    ]
+    ],
+    "dex": 545,
+    "sprite": "images/sprites/champions/Menu CP 0545.png"
   },
   {
     "name": "Spiritomb",
@@ -1738,7 +2032,9 @@
     "types": [
       "Ghost",
       "Dark"
-    ]
+    ],
+    "dex": 442,
+    "sprite": "images/sprites/champions/Menu CP 0442.png"
   },
   {
     "name": "Tauros-Combat",
@@ -1749,7 +2045,9 @@
     "note": "",
     "types": [
       "Fighting"
-    ]
+    ],
+    "dex": 128,
+    "sprite": "images/sprites/champions/Menu CP 0128-Paldea Combat.png"
   },
   {
     "name": "Toxicroak",
@@ -1761,7 +2059,9 @@
     "types": [
       "Poison",
       "Fighting"
-    ]
+    ],
+    "dex": 454,
+    "sprite": "images/sprites/champions/Menu CP 0454.png"
   },
   {
     "name": "Vanilluxe",
@@ -1772,7 +2072,9 @@
     "note": "",
     "types": [
       "Ice"
-    ]
+    ],
+    "dex": 584,
+    "sprite": "images/sprites/champions/Menu CP 0584.png"
   },
   {
     "name": "Zoroark",
@@ -1783,7 +2085,9 @@
     "note": "",
     "types": [
       "Dark"
-    ]
+    ],
+    "dex": 571,
+    "sprite": "images/sprites/champions/Menu CP 0571.png"
   },
   {
     "name": "Abomasnow",
@@ -1795,7 +2099,9 @@
     "types": [
       "Grass",
       "Ice"
-    ]
+    ],
+    "dex": 460,
+    "sprite": "images/sprites/champions/Menu CP 0460.png"
   },
   {
     "name": "Alcremie",
@@ -1806,7 +2112,9 @@
     "note": "",
     "types": [
       "Fairy"
-    ]
+    ],
+    "dex": 869,
+    "sprite": "images/sprites/champions/Menu CP 0869.png"
   },
   {
     "name": "Ariados",
@@ -1818,7 +2126,9 @@
     "types": [
       "Bug",
       "Poison"
-    ]
+    ],
+    "dex": 168,
+    "sprite": "images/sprites/champions/Menu CP 0168.png"
   },
   {
     "name": "Aurorus",
@@ -1830,7 +2140,9 @@
     "types": [
       "Rock",
       "Ice"
-    ]
+    ],
+    "dex": 699,
+    "sprite": "images/sprites/champions/Menu CP 0699.png"
   },
   {
     "name": "Barbaracle",
@@ -1842,7 +2154,9 @@
     "types": [
       "Rock",
       "Water"
-    ]
+    ],
+    "dex": 689,
+    "sprite": "images/sprites/champions/Menu CP 0689.png"
   },
   {
     "name": "Beartic",
@@ -1853,7 +2167,9 @@
     "note": "",
     "types": [
       "Ice"
-    ]
+    ],
+    "dex": 614,
+    "sprite": "images/sprites/champions/Menu CP 0614.png"
   },
   {
     "name": "Beedrill",
@@ -1865,7 +2181,9 @@
     "types": [
       "Bug",
       "Poison"
-    ]
+    ],
+    "dex": 15,
+    "sprite": "images/sprites/champions/Menu CP 0015.png"
   },
   {
     "name": "Cofagrigus",
@@ -1876,7 +2194,9 @@
     "note": "",
     "types": [
       "Ghost"
-    ]
+    ],
+    "dex": 563,
+    "sprite": "images/sprites/champions/Menu CP 0563.png"
   },
   {
     "name": "Ditto",
@@ -1887,7 +2207,9 @@
     "note": "",
     "types": [
       "Normal"
-    ]
+    ],
+    "dex": 132,
+    "sprite": "images/sprites/champions/Menu CP 0132.png"
   },
   {
     "name": "Espeon",
@@ -1898,7 +2220,9 @@
     "note": "",
     "types": [
       "Psychic"
-    ]
+    ],
+    "dex": 196,
+    "sprite": "images/sprites/champions/Menu CP 0196.png"
   },
   {
     "name": "Florges",
@@ -1909,7 +2233,9 @@
     "note": "",
     "types": [
       "Fairy"
-    ]
+    ],
+    "dex": 671,
+    "sprite": "images/sprites/champions/Menu CP 0671.png"
   },
   {
     "name": "Garganacl",
@@ -1920,7 +2246,9 @@
     "note": "",
     "types": [
       "Rock"
-    ]
+    ],
+    "dex": 934,
+    "sprite": "images/sprites/champions/Menu CP 0934.png"
   },
   {
     "name": "Heracross",
@@ -1932,7 +2260,9 @@
     "types": [
       "Bug",
       "Fighting"
-    ]
+    ],
+    "dex": 214,
+    "sprite": "images/sprites/champions/Menu CP 0214.png"
   },
   {
     "name": "Houndoom",
@@ -1944,7 +2274,9 @@
     "types": [
       "Dark",
       "Fire"
-    ]
+    ],
+    "dex": 229,
+    "sprite": "images/sprites/champions/Menu CP 0229.png"
   },
   {
     "name": "Mr. Rime",
@@ -1956,7 +2288,9 @@
     "types": [
       "Ice",
       "Psychic"
-    ]
+    ],
+    "dex": 866,
+    "sprite": "images/sprites/champions/Menu CP 0866.png"
   },
   {
     "name": "Pinsir",
@@ -1967,7 +2301,9 @@
     "note": "",
     "types": [
       "Bug"
-    ]
+    ],
+    "dex": 127,
+    "sprite": "images/sprites/champions/Menu CP 0127.png"
   },
   {
     "name": "Polteageist",
@@ -1978,7 +2314,9 @@
     "note": "",
     "types": [
       "Ghost"
-    ]
+    ],
+    "dex": 855,
+    "sprite": "images/sprites/champions/Menu CP 0855.png"
   },
   {
     "name": "Quaquaval",
@@ -1990,7 +2328,9 @@
     "types": [
       "Water",
       "Fighting"
-    ]
+    ],
+    "dex": 914,
+    "sprite": "images/sprites/champions/Menu CP 0914.png"
   },
   {
     "name": "Qwilfish",
@@ -2002,7 +2342,9 @@
     "types": [
       "Water",
       "Poison"
-    ]
+    ],
+    "dex": 211,
+    "sprite": "images/sprites/champions/Menu CP 0211.png"
   },
   {
     "name": "Reuniclus",
@@ -2013,7 +2355,9 @@
     "note": "",
     "types": [
       "Psychic"
-    ]
+    ],
+    "dex": 579,
+    "sprite": "images/sprites/champions/Menu CP 0579.png"
   },
   {
     "name": "Rhyperior",
@@ -2025,7 +2369,9 @@
     "types": [
       "Ground",
       "Rock"
-    ]
+    ],
+    "dex": 464,
+    "sprite": "images/sprites/champions/Menu CP 0464.png"
   },
   {
     "name": "Slowking",
@@ -2037,7 +2383,9 @@
     "types": [
       "Water",
       "Psychic"
-    ]
+    ],
+    "dex": 199,
+    "sprite": "images/sprites/champions/Menu CP 0199.png"
   },
   {
     "name": "Toucannon",
@@ -2049,7 +2397,9 @@
     "types": [
       "Normal",
       "Flying"
-    ]
+    ],
+    "dex": 733,
+    "sprite": "images/sprites/champions/Menu CP 0733.png"
   },
   {
     "name": "Trevenant",
@@ -2061,7 +2411,9 @@
     "types": [
       "Ghost",
       "Grass"
-    ]
+    ],
+    "dex": 709,
+    "sprite": "images/sprites/champions/Menu CP 0709.png"
   },
   {
     "name": "Victreebel",
@@ -2073,7 +2425,9 @@
     "types": [
       "Grass",
       "Poison"
-    ]
+    ],
+    "dex": 71,
+    "sprite": "images/sprites/champions/Menu CP 0071.png"
   },
   {
     "name": "Watchog",
@@ -2084,7 +2438,9 @@
     "note": "",
     "types": [
       "Normal"
-    ]
+    ],
+    "dex": 505,
+    "sprite": "images/sprites/champions/Menu CP 0505.png"
   },
   {
     "name": "Wyrdeer",
@@ -2096,7 +2452,9 @@
     "types": [
       "Normal",
       "Psychic"
-    ]
+    ],
+    "dex": 899,
+    "sprite": "images/sprites/champions/Menu CP 0899.png"
   },
   {
     "name": "Appletun",
@@ -2108,7 +2466,9 @@
     "types": [
       "Grass",
       "Dragon"
-    ]
+    ],
+    "dex": 842,
+    "sprite": "images/sprites/champions/Menu CP 0842.png"
   },
   {
     "name": "Arbok",
@@ -2119,7 +2479,9 @@
     "note": "",
     "types": [
       "Poison"
-    ]
+    ],
+    "dex": 24,
+    "sprite": "images/sprites/champions/Menu CP 0024.png"
   },
   {
     "name": "Aromatisse",
@@ -2130,7 +2492,9 @@
     "note": "",
     "types": [
       "Fairy"
-    ]
+    ],
+    "dex": 683,
+    "sprite": "images/sprites/champions/Menu CP 0683.png"
   },
   {
     "name": "Audino",
@@ -2141,7 +2505,9 @@
     "note": "",
     "types": [
       "Normal"
-    ]
+    ],
+    "dex": 531,
+    "sprite": "images/sprites/champions/Menu CP 0531.png"
   },
   {
     "name": "Avalugg",
@@ -2152,7 +2518,9 @@
     "note": "",
     "types": [
       "Ice"
-    ]
+    ],
+    "dex": 713,
+    "sprite": "images/sprites/champions/Menu CP 0713.png"
   },
   {
     "name": "Bastiodon",
@@ -2164,7 +2532,9 @@
     "types": [
       "Rock",
       "Steel"
-    ]
+    ],
+    "dex": 411,
+    "sprite": "images/sprites/champions/Menu CP 0411.png"
   },
   {
     "name": "Castform",
@@ -2175,7 +2545,9 @@
     "note": "",
     "types": [
       "Normal"
-    ]
+    ],
+    "dex": 351,
+    "sprite": "images/sprites/champions/Menu CP 0351.png"
   },
   {
     "name": "Chimecho",
@@ -2186,7 +2558,9 @@
     "note": "",
     "types": [
       "Psychic"
-    ]
+    ],
+    "dex": 358,
+    "sprite": "images/sprites/champions/Menu CP 0358.png"
   },
   {
     "name": "Clawitzer",
@@ -2197,7 +2571,9 @@
     "note": "",
     "types": [
       "Water"
-    ]
+    ],
+    "dex": 693,
+    "sprite": "images/sprites/champions/Menu CP 0693.png"
   },
   {
     "name": "Decidueye",
@@ -2209,7 +2585,9 @@
     "types": [
       "Grass",
       "Ghost"
-    ]
+    ],
+    "dex": 724,
+    "sprite": "images/sprites/champions/Menu CP 0724.png"
   },
   {
     "name": "Dedenne",
@@ -2221,7 +2599,9 @@
     "types": [
       "Electric",
       "Fairy"
-    ]
+    ],
+    "dex": 702,
+    "sprite": "images/sprites/champions/Menu CP 0702.png"
   },
   {
     "name": "Diggersby",
@@ -2233,7 +2613,9 @@
     "types": [
       "Normal",
       "Ground"
-    ]
+    ],
+    "dex": 660,
+    "sprite": "images/sprites/champions/Menu CP 0660.png"
   },
   {
     "name": "Emboar",
@@ -2245,7 +2627,9 @@
     "types": [
       "Fire",
       "Fighting"
-    ]
+    ],
+    "dex": 500,
+    "sprite": "images/sprites/champions/Menu CP 0500.png"
   },
   {
     "name": "Emolga",
@@ -2257,7 +2641,9 @@
     "types": [
       "Electric",
       "Flying"
-    ]
+    ],
+    "dex": 587,
+    "sprite": "images/sprites/champions/Menu CP 0587.png"
   },
   {
     "name": "Flapple",
@@ -2269,7 +2655,9 @@
     "types": [
       "Grass",
       "Dragon"
-    ]
+    ],
+    "dex": 841,
+    "sprite": "images/sprites/champions/Menu CP 0841.png"
   },
   {
     "name": "Flareon",
@@ -2280,7 +2668,9 @@
     "note": "",
     "types": [
       "Fire"
-    ]
+    ],
+    "dex": 136,
+    "sprite": "images/sprites/champions/Menu CP 0136.png"
   },
   {
     "name": "Forretress",
@@ -2292,7 +2682,9 @@
     "types": [
       "Bug",
       "Steel"
-    ]
+    ],
+    "dex": 205,
+    "sprite": "images/sprites/champions/Menu CP 0205.png"
   },
   {
     "name": "Furfrou",
@@ -2303,7 +2695,9 @@
     "note": "",
     "types": [
       "Normal"
-    ]
+    ],
+    "dex": 676,
+    "sprite": "images/sprites/champions/Menu CP 0676.png"
   },
   {
     "name": "Galarian Stunfisk",
@@ -2315,7 +2709,9 @@
     "types": [
       "Ground",
       "Steel"
-    ]
+    ],
+    "dex": 618,
+    "sprite": "images/sprites/champions/Menu CP 0618.png"
   },
   {
     "name": "Garbodor",
@@ -2326,7 +2722,9 @@
     "note": "",
     "types": [
       "Poison"
-    ]
+    ],
+    "dex": 569,
+    "sprite": "images/sprites/champions/Menu CP 0569.png"
   },
   {
     "name": "Glaceon",
@@ -2337,7 +2735,9 @@
     "note": "",
     "types": [
       "Ice"
-    ]
+    ],
+    "dex": 471,
+    "sprite": "images/sprites/champions/Menu CP 0471.png"
   },
   {
     "name": "Glalie",
@@ -2348,7 +2748,9 @@
     "note": "",
     "types": [
       "Ice"
-    ]
+    ],
+    "dex": 362,
+    "sprite": "images/sprites/champions/Menu CP 0362.png"
   },
   {
     "name": "Gourgeist",
@@ -2360,7 +2762,9 @@
     "types": [
       "Ghost",
       "Grass"
-    ]
+    ],
+    "dex": 711,
+    "sprite": "images/sprites/champions/Menu CP 0711.png"
   },
   {
     "name": "Hisuian Avalugg",
@@ -2372,7 +2776,9 @@
     "types": [
       "Ice",
       "Rock"
-    ]
+    ],
+    "dex": 713,
+    "sprite": "images/sprites/champions/Menu CP 0713-Hisui.png"
   },
   {
     "name": "Hydrapple",
@@ -2384,7 +2790,9 @@
     "types": [
       "Grass",
       "Dragon"
-    ]
+    ],
+    "dex": 1019,
+    "sprite": "images/sprites/champions/Menu CP 1019.png"
   },
   {
     "name": "Leafeon",
@@ -2395,7 +2803,9 @@
     "note": "",
     "types": [
       "Grass"
-    ]
+    ],
+    "dex": 470,
+    "sprite": "images/sprites/champions/Menu CP 0470.png"
   },
   {
     "name": "Luxray",
@@ -2406,7 +2816,9 @@
     "note": "",
     "types": [
       "Electric"
-    ]
+    ],
+    "dex": 405,
+    "sprite": "images/sprites/champions/Menu CP 0405.png"
   },
   {
     "name": "Machamp",
@@ -2417,7 +2829,9 @@
     "note": "",
     "types": [
       "Fighting"
-    ]
+    ],
+    "dex": 68,
+    "sprite": "images/sprites/champions/Menu CP 0068.png"
   },
   {
     "name": "Morpeko",
@@ -2429,7 +2843,9 @@
     "types": [
       "Electric",
       "Dark"
-    ]
+    ],
+    "dex": 877,
+    "sprite": "images/sprites/champions/Menu CP 0877.png"
   },
   {
     "name": "Pangoro",
@@ -2441,7 +2857,9 @@
     "types": [
       "Fighting",
       "Dark"
-    ]
+    ],
+    "dex": 675,
+    "sprite": "images/sprites/champions/Menu CP 0675.png"
   },
   {
     "name": "Passimian",
@@ -2452,7 +2870,9 @@
     "note": "",
     "types": [
       "Fighting"
-    ]
+    ],
+    "dex": 766,
+    "sprite": "images/sprites/champions/Menu CP 0766.png"
   },
   {
     "name": "Pidgeot",
@@ -2464,7 +2884,9 @@
     "types": [
       "Normal",
       "Flying"
-    ]
+    ],
+    "dex": 18,
+    "sprite": "images/sprites/champions/Menu CP 0018.png"
   },
   {
     "name": "Pikachu",
@@ -2475,7 +2897,9 @@
     "note": "",
     "types": [
       "Electric"
-    ]
+    ],
+    "dex": 25,
+    "sprite": "images/sprites/champions/Menu CP 0025.png"
   },
   {
     "name": "Roserade",
@@ -2487,7 +2911,9 @@
     "types": [
       "Grass",
       "Poison"
-    ]
+    ],
+    "dex": 407,
+    "sprite": "images/sprites/champions/Menu CP 0407.png"
   },
   {
     "name": "Rotom",
@@ -2499,7 +2925,9 @@
     "types": [
       "Electric",
       "Ghost"
-    ]
+    ],
+    "dex": 479,
+    "sprite": "images/sprites/champions/Menu CP 0479.png"
   },
   {
     "name": "Salazzle",
@@ -2511,7 +2939,9 @@
     "types": [
       "Poison",
       "Fire"
-    ]
+    ],
+    "dex": 758,
+    "sprite": "images/sprites/champions/Menu CP 0758.png"
   },
   {
     "name": "Samurott",
@@ -2522,7 +2952,9 @@
     "note": "",
     "types": [
       "Water"
-    ]
+    ],
+    "dex": 503,
+    "sprite": "images/sprites/champions/Menu CP 0503.png"
   },
   {
     "name": "Sandaconda",
@@ -2533,7 +2965,9 @@
     "note": "",
     "types": [
       "Ground"
-    ]
+    ],
+    "dex": 844,
+    "sprite": "images/sprites/champions/Menu CP 0844.png"
   },
   {
     "name": "Serperior",
@@ -2544,7 +2978,9 @@
     "note": "",
     "types": [
       "Grass"
-    ]
+    ],
+    "dex": 497,
+    "sprite": "images/sprites/champions/Menu CP 0497.png"
   },
   {
     "name": "Simipour",
@@ -2555,7 +2991,9 @@
     "note": "",
     "types": [
       "Water"
-    ]
+    ],
+    "dex": 516,
+    "sprite": "images/sprites/champions/Menu CP 0516.png"
   },
   {
     "name": "Simisage",
@@ -2566,7 +3004,9 @@
     "note": "",
     "types": [
       "Grass"
-    ]
+    ],
+    "dex": 512,
+    "sprite": "images/sprites/champions/Menu CP 0512.png"
   },
   {
     "name": "Simisear",
@@ -2577,7 +3017,9 @@
     "note": "",
     "types": [
       "Fire"
-    ]
+    ],
+    "dex": 514,
+    "sprite": "images/sprites/champions/Menu CP 0514.png"
   },
   {
     "name": "Skeledirge",
@@ -2589,7 +3031,9 @@
     "types": [
       "Fire",
       "Ghost"
-    ]
+    ],
+    "dex": 911,
+    "sprite": "images/sprites/champions/Menu CP 0911.png"
   },
   {
     "name": "Slurpuff",
@@ -2600,7 +3044,9 @@
     "note": "",
     "types": [
       "Fairy"
-    ]
+    ],
+    "dex": 685,
+    "sprite": "images/sprites/champions/Menu CP 0685.png"
   },
   {
     "name": "Stunfisk",
@@ -2612,7 +3058,9 @@
     "types": [
       "Ground",
       "Electric"
-    ]
+    ],
+    "dex": 618,
+    "sprite": "images/sprites/champions/Menu CP 0618.png"
   },
   {
     "name": "Tauros",
@@ -2623,7 +3071,9 @@
     "note": "",
     "types": [
       "Normal"
-    ]
+    ],
+    "dex": 128,
+    "sprite": "images/sprites/champions/Menu CP 0128.png"
   },
   {
     "name": "Torterra",
@@ -2635,7 +3085,9 @@
     "types": [
       "Grass",
       "Ground"
-    ]
+    ],
+    "dex": 389,
+    "sprite": "images/sprites/champions/Menu CP 0389.png"
   },
   {
     "name": "Typhlosion",
@@ -2646,7 +3098,9 @@
     "note": "",
     "types": [
       "Fire"
-    ]
+    ],
+    "dex": 157,
+    "sprite": "images/sprites/champions/Menu CP 0157.png"
   },
   {
     "name": "Tyrantrum",
@@ -2658,7 +3112,9 @@
     "types": [
       "Rock",
       "Dragon"
-    ]
+    ],
+    "dex": 697,
+    "sprite": "images/sprites/champions/Menu CP 0697.png"
   },
   {
     "name": "Vaporeon",
@@ -2669,6 +3125,8 @@
     "note": "",
     "types": [
       "Water"
-    ]
+    ],
+    "dex": 134,
+    "sprite": "images/sprites/champions/Menu CP 0134.png"
   }
 ]

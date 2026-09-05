@@ -286,6 +286,10 @@ h1 {
   text-align: right;
 }
 
+.source-note a {
+  color: var(--cream);
+}
+
 .pokemon-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -293,10 +297,10 @@ h1 {
 }
 
 .pokemon-card {
-  --tier-color: #48bfe3;
+  --tier-color: #54c8ef;
   position: relative;
   display: flex;
-  min-height: 245px;
+  min-height: 340px;
   overflow: hidden;
   border: 4px solid var(--line);
   background: var(--paper);
@@ -320,9 +324,9 @@ h1 {
   box-shadow: 8px 10px 0 var(--tier-color);
 }
 
-.pokemon-card[data-tier="Gold"] { --tier-color: #d8a51f; }
-.pokemon-card[data-tier="Silver"] { --tier-color: #89919f; }
-.pokemon-card[data-tier="Bronze"] { --tier-color: #bf6c34; }
+.pokemon-card[data-tier="Gold"] { --tier-color: #f0c133; }
+.pokemon-card[data-tier="Silver"] { --tier-color: #aeb7c5; }
+.pokemon-card[data-tier="Bronze"] { --tier-color: #cf7439; }
 
 .card-halftone {
   position: absolute;
@@ -385,10 +389,31 @@ h1 {
   letter-spacing: 0.08em;
 }
 
+.sprite-stage {
+  position: absolute;
+  left: 14px;
+  top: 45px;
+  display: grid;
+  place-items: center;
+  width: 145px;
+  height: 145px;
+  transform: rotate(-2deg);
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--tier-color) 44%, #fff) 0 28%, transparent 70%);
+}
+
+.pokemon-sprite {
+  display: block;
+  width: 128px;
+  height: 128px;
+  object-fit: contain;
+  filter: drop-shadow(3px 4px 0 rgba(0, 0, 0, 0.2));
+}
+
 .card-copy {
   align-self: end;
   width: 100%;
-  padding: 62px 15px 15px;
+  padding: 198px 15px 15px;
 }
 
 .pokemon-name {
@@ -422,19 +447,12 @@ h1 {
   letter-spacing: 0.02em;
 }
 
-.type-icon {
-  display: grid;
-  place-items: center;
-  width: 21px;
-  height: 21px;
-  overflow: hidden;
+.type-badge img {
+  display: block;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
-  background: var(--type-color);
-  color: #fff;
-  font-family: Arial, sans-serif;
-  font-size: 12px;
-  font-weight: 900;
-  line-height: 1;
+  object-fit: cover;
 }
 
 .condition-note {
@@ -595,7 +613,7 @@ h1 {
   }
 
   .pokemon-card {
-    min-height: 220px;
+    min-height: 320px;
   }
 
   .pokemon-name {
