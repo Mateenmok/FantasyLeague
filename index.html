@@ -5,6 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <link rel="icon" type="image/webp" href="images/favicon.webp">
   <title>PokeLeague | Access</title>
+  <meta name="description" content="Enter PokeLeague Season 1 and search the official Pokemon point board.">
+  <meta property="og:title" content="PokeLeague">
+  <meta property="og:description" content="PokeLeague Season 1 point board.">
+  <meta property="og:image" content="https://www.pokeleague.org/images/og.png">
+  <meta property="og:url" content="https://www.pokeleague.org/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="PokeLeague">
+  <meta name="twitter:description" content="PokeLeague Season 1 point board.">
+  <meta name="twitter:image" content="https://www.pokeleague.org/images/og.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jersey+25&amp;display=swap" rel="stylesheet">
@@ -34,19 +43,18 @@
         <h1 id="landingTitle" class="access-title">PokeLeague</h1>
         <p class="access-season">Season 1</p>
 
-        <div class="access-form">
+        <form class="access-form" action="pokemon.html">
           <label class="visually-hidden" for="accessCodeInput">Access Code</label>
           <input
             id="accessCodeInput"
-            name="accessCode"
             type="text"
             placeholder="Access Code"
             autocomplete="off"
             autocapitalize="none"
             spellcheck="false"
           >
-          <button type="button">Enter League</button>
-        </div>
+          <button type="submit">Enter League</button>
+        </form>
       </section>
     </div>
   </main>

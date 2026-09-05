@@ -1,0 +1,2674 @@
+[
+  {
+    "name": "Archaludon",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "9-10",
+    "sortPoints": 10,
+    "note": "9 pts without Assault Vest · 10 pts with Assault Vest",
+    "types": [
+      "Steel",
+      "Dragon"
+    ]
+  },
+  {
+    "name": "Basculegion",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "10",
+    "sortPoints": 10,
+    "note": "",
+    "types": [
+      "Water",
+      "Ghost"
+    ]
+  },
+  {
+    "name": "Charizard",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "10",
+    "sortPoints": 10,
+    "note": "",
+    "types": [
+      "Fire",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Eternal Floette",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "10",
+    "sortPoints": 10,
+    "note": "",
+    "types": [
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Garchomp",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "10",
+    "sortPoints": 10,
+    "note": "",
+    "types": [
+      "Dragon",
+      "Ground"
+    ]
+  },
+  {
+    "name": "Metagross",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "10",
+    "sortPoints": 10,
+    "note": "",
+    "types": [
+      "Steel",
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Salamence",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "10",
+    "sortPoints": 10,
+    "note": "",
+    "types": [
+      "Dragon",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Sneasler",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "10",
+    "sortPoints": 10,
+    "note": "",
+    "types": [
+      "Fighting",
+      "Poison"
+    ]
+  },
+  {
+    "name": "Staraptor",
+    "aliases": [
+      "Starraptor"
+    ],
+    "tier": "Diamond",
+    "points": "10",
+    "sortPoints": 10,
+    "note": "",
+    "types": [
+      "Normal",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Tyranitar",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "9-10",
+    "sortPoints": 10,
+    "note": "9 pts without Assault Vest · 10 pts with Assault Vest",
+    "types": [
+      "Rock",
+      "Dark"
+    ]
+  },
+  {
+    "name": "Aerodactyl",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "9",
+    "sortPoints": 9,
+    "note": "",
+    "types": [
+      "Rock",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Farigiraf",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "9",
+    "sortPoints": 9,
+    "note": "",
+    "types": [
+      "Normal",
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Gengar",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "9",
+    "sortPoints": 9,
+    "note": "",
+    "types": [
+      "Ghost",
+      "Poison"
+    ]
+  },
+  {
+    "name": "Gholdengo",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "9",
+    "sortPoints": 9,
+    "note": "",
+    "types": [
+      "Steel",
+      "Ghost"
+    ]
+  },
+  {
+    "name": "Grimmsnarl",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "9",
+    "sortPoints": 9,
+    "note": "",
+    "types": [
+      "Dark",
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Incineroar",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "9",
+    "sortPoints": 9,
+    "note": "",
+    "types": [
+      "Fire",
+      "Dark"
+    ]
+  },
+  {
+    "name": "Kangaskhan",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "9",
+    "sortPoints": 9,
+    "note": "",
+    "types": [
+      "Normal"
+    ]
+  },
+  {
+    "name": "Kingambit",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "9",
+    "sortPoints": 9,
+    "note": "",
+    "types": [
+      "Dark",
+      "Steel"
+    ]
+  },
+  {
+    "name": "Pelipper",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "9",
+    "sortPoints": 9,
+    "note": "",
+    "types": [
+      "Water",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Raichu",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "9",
+    "sortPoints": 9,
+    "note": "",
+    "types": [
+      "Electric"
+    ]
+  },
+  {
+    "name": "Rillaboom",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "9",
+    "sortPoints": 9,
+    "note": "",
+    "types": [
+      "Grass"
+    ]
+  },
+  {
+    "name": "Sableye",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "9",
+    "sortPoints": 9,
+    "note": "",
+    "types": [
+      "Dark",
+      "Ghost"
+    ]
+  },
+  {
+    "name": "Sinistcha",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "9",
+    "sortPoints": 9,
+    "note": "",
+    "types": [
+      "Grass",
+      "Ghost"
+    ]
+  },
+  {
+    "name": "Swampert",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "9",
+    "sortPoints": 9,
+    "note": "",
+    "types": [
+      "Water",
+      "Ground"
+    ]
+  },
+  {
+    "name": "Whimsicott",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "9",
+    "sortPoints": 9,
+    "note": "",
+    "types": [
+      "Grass",
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Annihilape",
+    "aliases": [
+      "Annhilape"
+    ],
+    "tier": "Diamond",
+    "points": "8",
+    "sortPoints": 8,
+    "note": "",
+    "types": [
+      "Fighting",
+      "Ghost"
+    ]
+  },
+  {
+    "name": "Blastoise",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "8",
+    "sortPoints": 8,
+    "note": "",
+    "types": [
+      "Water"
+    ]
+  },
+  {
+    "name": "Blaziken",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "8",
+    "sortPoints": 8,
+    "note": "",
+    "types": [
+      "Fire",
+      "Fighting"
+    ]
+  },
+  {
+    "name": "Delphox",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "8",
+    "sortPoints": 8,
+    "note": "",
+    "types": [
+      "Fire",
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Dragonite",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "8",
+    "sortPoints": 8,
+    "note": "",
+    "types": [
+      "Dragon",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Froslass",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "8",
+    "sortPoints": 8,
+    "note": "",
+    "types": [
+      "Ice",
+      "Ghost"
+    ]
+  },
+  {
+    "name": "Gardevoir",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "8",
+    "sortPoints": 8,
+    "note": "",
+    "types": [
+      "Psychic",
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Glimmora",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "8",
+    "sortPoints": 8,
+    "note": "",
+    "types": [
+      "Rock",
+      "Poison"
+    ]
+  },
+  {
+    "name": "Lucario",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "8",
+    "sortPoints": 8,
+    "note": "",
+    "types": [
+      "Fighting",
+      "Steel"
+    ]
+  },
+  {
+    "name": "Maushold",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "8",
+    "sortPoints": 8,
+    "note": "",
+    "types": [
+      "Normal"
+    ]
+  },
+  {
+    "name": "Mawile",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "8",
+    "sortPoints": 8,
+    "note": "",
+    "types": [
+      "Steel",
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Politoed",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "8",
+    "sortPoints": 8,
+    "note": "",
+    "types": [
+      "Water"
+    ]
+  },
+  {
+    "name": "Sylveon",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "8",
+    "sortPoints": 8,
+    "note": "",
+    "types": [
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Talonflame",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "8",
+    "sortPoints": 8,
+    "note": "",
+    "types": [
+      "Fire",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Torkoal",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "8",
+    "sortPoints": 8,
+    "note": "",
+    "types": [
+      "Fire"
+    ]
+  },
+  {
+    "name": "Venusaur",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "8",
+    "sortPoints": 8,
+    "note": "",
+    "types": [
+      "Grass",
+      "Poison"
+    ]
+  },
+  {
+    "name": "Absol",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "7",
+    "sortPoints": 7,
+    "note": "",
+    "types": [
+      "Dark"
+    ]
+  },
+  {
+    "name": "Aegislash",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "7",
+    "sortPoints": 7,
+    "note": "",
+    "types": [
+      "Steel",
+      "Ghost"
+    ]
+  },
+  {
+    "name": "Alolan Ninetales",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "7",
+    "sortPoints": 7,
+    "note": "",
+    "types": [
+      "Ice",
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Armarouge",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "5-7",
+    "sortPoints": 7,
+    "note": "5 pts without Indeedee · 7 pts with Indeedee",
+    "types": [
+      "Fire",
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Clefable",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "7",
+    "sortPoints": 7,
+    "note": "",
+    "types": [
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Corviknight",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "7",
+    "sortPoints": 7,
+    "note": "",
+    "types": [
+      "Flying",
+      "Steel"
+    ]
+  },
+  {
+    "name": "Dragapult",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "7",
+    "sortPoints": 7,
+    "note": "",
+    "types": [
+      "Dragon",
+      "Ghost"
+    ]
+  },
+  {
+    "name": "Excadrill",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "7",
+    "sortPoints": 7,
+    "note": "",
+    "types": [
+      "Ground",
+      "Steel"
+    ]
+  },
+  {
+    "name": "Gyarados",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "7",
+    "sortPoints": 7,
+    "note": "",
+    "types": [
+      "Water",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Hisuian Arcanine",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "7",
+    "sortPoints": 7,
+    "note": "",
+    "types": [
+      "Fire",
+      "Rock"
+    ]
+  },
+  {
+    "name": "Hydreigon",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "7",
+    "sortPoints": 7,
+    "note": "",
+    "types": [
+      "Dark",
+      "Dragon"
+    ]
+  },
+  {
+    "name": "Kommo-o",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "7",
+    "sortPoints": 7,
+    "note": "",
+    "types": [
+      "Dragon",
+      "Fighting"
+    ]
+  },
+  {
+    "name": "Lopunny",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "7",
+    "sortPoints": 7,
+    "note": "",
+    "types": [
+      "Normal"
+    ]
+  },
+  {
+    "name": "Meowscarada",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "7",
+    "sortPoints": 7,
+    "note": "",
+    "types": [
+      "Grass",
+      "Dark"
+    ]
+  },
+  {
+    "name": "Milotic",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "7",
+    "sortPoints": 7,
+    "note": "",
+    "types": [
+      "Water"
+    ]
+  },
+  {
+    "name": "Primarina",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "7",
+    "sortPoints": 7,
+    "note": "",
+    "types": [
+      "Water",
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Rotom-Wash",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "7",
+    "sortPoints": 7,
+    "note": "",
+    "types": [
+      "Electric",
+      "Water"
+    ]
+  },
+  {
+    "name": "Scizor",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "7",
+    "sortPoints": 7,
+    "note": "",
+    "types": [
+      "Bug",
+      "Steel"
+    ]
+  },
+  {
+    "name": "Scovillain",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "7",
+    "sortPoints": 7,
+    "note": "",
+    "types": [
+      "Grass",
+      "Fire"
+    ]
+  },
+  {
+    "name": "Vivillon",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "7",
+    "sortPoints": 7,
+    "note": "",
+    "types": [
+      "Bug",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Aggron",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "6",
+    "sortPoints": 6,
+    "note": "",
+    "types": [
+      "Steel",
+      "Rock"
+    ]
+  },
+  {
+    "name": "Arcanine",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "6",
+    "sortPoints": 6,
+    "note": "",
+    "types": [
+      "Fire"
+    ]
+  },
+  {
+    "name": "Ceruledge",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "6",
+    "sortPoints": 6,
+    "note": "",
+    "types": [
+      "Fire",
+      "Ghost"
+    ]
+  },
+  {
+    "name": "Feraligatr",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "6",
+    "sortPoints": 6,
+    "note": "",
+    "types": [
+      "Water"
+    ]
+  },
+  {
+    "name": "Greninja",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "6",
+    "sortPoints": 6,
+    "note": "",
+    "types": [
+      "Water",
+      "Dark"
+    ]
+  },
+  {
+    "name": "Hisuian Typhlosion",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "6",
+    "sortPoints": 6,
+    "note": "",
+    "types": [
+      "Fire",
+      "Ghost"
+    ]
+  },
+  {
+    "name": "Hisuian Zoroark",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "6",
+    "sortPoints": 6,
+    "note": "",
+    "types": [
+      "Normal",
+      "Ghost"
+    ]
+  },
+  {
+    "name": "Houndstone",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "6",
+    "sortPoints": 6,
+    "note": "",
+    "types": [
+      "Ghost"
+    ]
+  },
+  {
+    "name": "Klefki",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "6",
+    "sortPoints": 6,
+    "note": "",
+    "types": [
+      "Steel",
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Meowstic",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "6",
+    "sortPoints": 6,
+    "note": "",
+    "types": [
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Oranguru",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "6",
+    "sortPoints": 6,
+    "note": "",
+    "types": [
+      "Normal",
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Palafin",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "5-6",
+    "sortPoints": 6,
+    "note": "5 pts normally · 6 pts if Band is added",
+    "types": [
+      "Water"
+    ]
+  },
+  {
+    "name": "Pyroar",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "6",
+    "sortPoints": 6,
+    "note": "",
+    "types": [
+      "Fire",
+      "Normal"
+    ]
+  },
+  {
+    "name": "Rotom-Heat",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "6",
+    "sortPoints": 6,
+    "note": "",
+    "types": [
+      "Electric",
+      "Fire"
+    ]
+  },
+  {
+    "name": "Sceptile",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "6",
+    "sortPoints": 6,
+    "note": "",
+    "types": [
+      "Grass"
+    ]
+  },
+  {
+    "name": "Scrafty",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "6",
+    "sortPoints": 6,
+    "note": "",
+    "types": [
+      "Dark",
+      "Fighting"
+    ]
+  },
+  {
+    "name": "Starmie",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "6",
+    "sortPoints": 6,
+    "note": "",
+    "types": [
+      "Water",
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Tauros-Aqua",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "6",
+    "sortPoints": 6,
+    "note": "",
+    "types": [
+      "Fighting",
+      "Water"
+    ]
+  },
+  {
+    "name": "Tinkaton",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "6",
+    "sortPoints": 6,
+    "note": "",
+    "types": [
+      "Fairy",
+      "Steel"
+    ]
+  },
+  {
+    "name": "Tsareena",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "6",
+    "sortPoints": 6,
+    "note": "",
+    "types": [
+      "Grass"
+    ]
+  },
+  {
+    "name": "Volcarona",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "6",
+    "sortPoints": 6,
+    "note": "",
+    "types": [
+      "Bug",
+      "Fire"
+    ]
+  },
+  {
+    "name": "Weavile",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "6",
+    "sortPoints": 6,
+    "note": "",
+    "types": [
+      "Dark",
+      "Ice"
+    ]
+  },
+  {
+    "name": "Chandelure",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "5",
+    "sortPoints": 5,
+    "note": "",
+    "types": [
+      "Ghost",
+      "Fire"
+    ]
+  },
+  {
+    "name": "Crabominable",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "5",
+    "sortPoints": 5,
+    "note": "",
+    "types": [
+      "Fighting",
+      "Ice"
+    ]
+  },
+  {
+    "name": "Empoleon",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "5",
+    "sortPoints": 5,
+    "note": "",
+    "types": [
+      "Water",
+      "Steel"
+    ]
+  },
+  {
+    "name": "Espathra",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "5",
+    "sortPoints": 5,
+    "note": "",
+    "types": [
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Gallade",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "5",
+    "sortPoints": 5,
+    "note": "",
+    "types": [
+      "Psychic",
+      "Fighting"
+    ]
+  },
+  {
+    "name": "Golurk",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "5",
+    "sortPoints": 5,
+    "note": "",
+    "types": [
+      "Ground",
+      "Ghost"
+    ]
+  },
+  {
+    "name": "Hatterene",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "5+",
+    "sortPoints": 5,
+    "note": "5 pts; the PDF notes a higher value if Indeedee is added",
+    "types": [
+      "Psychic",
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Hawlucha",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "5",
+    "sortPoints": 5,
+    "note": "",
+    "types": [
+      "Fighting",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Hisuian Goodra",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "5",
+    "sortPoints": 5,
+    "note": "",
+    "types": [
+      "Steel",
+      "Dragon"
+    ]
+  },
+  {
+    "name": "Infernape",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "5",
+    "sortPoints": 5,
+    "note": "",
+    "types": [
+      "Fire",
+      "Fighting"
+    ]
+  },
+  {
+    "name": "Krookodile",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "5",
+    "sortPoints": 5,
+    "note": "",
+    "types": [
+      "Ground",
+      "Dark"
+    ]
+  },
+  {
+    "name": "Liepard",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "5",
+    "sortPoints": 5,
+    "note": "",
+    "types": [
+      "Dark"
+    ]
+  },
+  {
+    "name": "Mamoswine",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "5",
+    "sortPoints": 5,
+    "note": "",
+    "types": [
+      "Ice",
+      "Ground"
+    ]
+  },
+  {
+    "name": "Meganium",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "5",
+    "sortPoints": 5,
+    "note": "",
+    "types": [
+      "Grass"
+    ]
+  },
+  {
+    "name": "Mimikyu",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "5",
+    "sortPoints": 5,
+    "note": "",
+    "types": [
+      "Ghost",
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Rotom-Frost",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "5",
+    "sortPoints": 5,
+    "note": "",
+    "types": [
+      "Electric",
+      "Ice"
+    ]
+  },
+  {
+    "name": "Sharpedo",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "5",
+    "sortPoints": 5,
+    "note": "",
+    "types": [
+      "Water",
+      "Dark"
+    ]
+  },
+  {
+    "name": "Tauros-Blaze",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "5",
+    "sortPoints": 5,
+    "note": "",
+    "types": [
+      "Fighting",
+      "Fire"
+    ]
+  },
+  {
+    "name": "Vileplume",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "5",
+    "sortPoints": 5,
+    "note": "",
+    "types": [
+      "Grass",
+      "Poison"
+    ]
+  },
+  {
+    "name": "Conkeldurr",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "3-5",
+    "sortPoints": 5,
+    "note": "3 pts normally · 4 or 5 pts if Flame Orb is added",
+    "types": [
+      "Fighting"
+    ]
+  },
+  {
+    "name": "Altaria",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "4",
+    "sortPoints": 4,
+    "note": "",
+    "types": [
+      "Dragon",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Ampharos",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "4",
+    "sortPoints": 4,
+    "note": "",
+    "types": [
+      "Electric"
+    ]
+  },
+  {
+    "name": "Araquanid",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "4",
+    "sortPoints": 4,
+    "note": "",
+    "types": [
+      "Water",
+      "Bug"
+    ]
+  },
+  {
+    "name": "Azumarill",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "4",
+    "sortPoints": 4,
+    "note": "",
+    "types": [
+      "Water",
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Bellibolt",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "4",
+    "sortPoints": 4,
+    "note": "",
+    "types": [
+      "Electric"
+    ]
+  },
+  {
+    "name": "Camerupt",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "4",
+    "sortPoints": 4,
+    "note": "",
+    "types": [
+      "Fire",
+      "Ground"
+    ]
+  },
+  {
+    "name": "Chesnaught",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "4",
+    "sortPoints": 4,
+    "note": "",
+    "types": [
+      "Grass",
+      "Fighting"
+    ]
+  },
+  {
+    "name": "Dragalge",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "4",
+    "sortPoints": 4,
+    "note": "",
+    "types": [
+      "Poison",
+      "Dragon"
+    ]
+  },
+  {
+    "name": "Drampa",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "4",
+    "sortPoints": 4,
+    "note": "",
+    "types": [
+      "Normal",
+      "Dragon"
+    ]
+  },
+  {
+    "name": "Eelektross",
+    "aliases": [
+      "Elektross"
+    ],
+    "tier": "Silver",
+    "points": "4",
+    "sortPoints": 4,
+    "note": "",
+    "types": [
+      "Electric"
+    ]
+  },
+  {
+    "name": "Falinks",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "4",
+    "sortPoints": 4,
+    "note": "",
+    "types": [
+      "Fighting"
+    ]
+  },
+  {
+    "name": "Galarian Slowking",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "4",
+    "sortPoints": 4,
+    "note": "",
+    "types": [
+      "Poison",
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Gliscor",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "4",
+    "sortPoints": 4,
+    "note": "",
+    "types": [
+      "Ground",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Heliolisk",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "4",
+    "sortPoints": 4,
+    "note": "",
+    "types": [
+      "Electric",
+      "Normal"
+    ]
+  },
+  {
+    "name": "Hisuian Decidueye",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "4",
+    "sortPoints": 4,
+    "note": "",
+    "types": [
+      "Grass",
+      "Fighting"
+    ]
+  },
+  {
+    "name": "Hisuian Samurott",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "4",
+    "sortPoints": 4,
+    "note": "",
+    "types": [
+      "Water",
+      "Dark"
+    ]
+  },
+  {
+    "name": "Kleavor",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "4",
+    "sortPoints": 4,
+    "note": "",
+    "types": [
+      "Bug",
+      "Rock"
+    ]
+  },
+  {
+    "name": "Lycanroc",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "4",
+    "sortPoints": 4,
+    "note": "",
+    "types": [
+      "Rock"
+    ]
+  },
+  {
+    "name": "Manectric",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "4",
+    "sortPoints": 4,
+    "note": "",
+    "types": [
+      "Electric"
+    ]
+  },
+  {
+    "name": "Noivern",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "4",
+    "sortPoints": 4,
+    "note": "",
+    "types": [
+      "Flying",
+      "Dragon"
+    ]
+  },
+  {
+    "name": "Rotom-Mow",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "4",
+    "sortPoints": 4,
+    "note": "",
+    "types": [
+      "Electric",
+      "Grass"
+    ]
+  },
+  {
+    "name": "Skarmory",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "4",
+    "sortPoints": 4,
+    "note": "",
+    "types": [
+      "Steel",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Slowbro",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "4",
+    "sortPoints": 4,
+    "note": "",
+    "types": [
+      "Water",
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Snorlax",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "4",
+    "sortPoints": 4,
+    "note": "",
+    "types": [
+      "Normal"
+    ]
+  },
+  {
+    "name": "Steelix",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "4",
+    "sortPoints": 4,
+    "note": "",
+    "types": [
+      "Steel",
+      "Ground"
+    ]
+  },
+  {
+    "name": "Toxapex",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "4",
+    "sortPoints": 4,
+    "note": "",
+    "types": [
+      "Poison",
+      "Water"
+    ]
+  },
+  {
+    "name": "Umbreon",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "4",
+    "sortPoints": 4,
+    "note": "",
+    "types": [
+      "Dark"
+    ]
+  },
+  {
+    "name": "Alakazam",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "3+",
+    "sortPoints": 3,
+    "note": "3 pts; the PDF notes a higher value if Indeedee is added",
+    "types": [
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Alolan Raichu",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "3",
+    "sortPoints": 3,
+    "note": "",
+    "types": [
+      "Electric",
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Banette",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "3",
+    "sortPoints": 3,
+    "note": "",
+    "types": [
+      "Ghost"
+    ]
+  },
+  {
+    "name": "Galarian Slowbro",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "3",
+    "sortPoints": 3,
+    "note": "",
+    "types": [
+      "Poison",
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Goodra",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "3",
+    "sortPoints": 3,
+    "note": "",
+    "types": [
+      "Dragon"
+    ]
+  },
+  {
+    "name": "Hippowdon",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "3",
+    "sortPoints": 3,
+    "note": "",
+    "types": [
+      "Ground"
+    ]
+  },
+  {
+    "name": "Jolteon",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "3",
+    "sortPoints": 3,
+    "note": "",
+    "types": [
+      "Electric"
+    ]
+  },
+  {
+    "name": "Malamar",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "3",
+    "sortPoints": 3,
+    "note": "",
+    "types": [
+      "Dark",
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Medicham",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "3",
+    "sortPoints": 3,
+    "note": "",
+    "types": [
+      "Fighting",
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Mudsdale",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "3",
+    "sortPoints": 3,
+    "note": "",
+    "types": [
+      "Ground"
+    ]
+  },
+  {
+    "name": "Ninetales",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "3",
+    "sortPoints": 3,
+    "note": "",
+    "types": [
+      "Fire"
+    ]
+  },
+  {
+    "name": "Orthworm",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "3",
+    "sortPoints": 3,
+    "note": "",
+    "types": [
+      "Steel"
+    ]
+  },
+  {
+    "name": "Overqwil",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "3",
+    "sortPoints": 3,
+    "note": "",
+    "types": [
+      "Dark",
+      "Poison"
+    ]
+  },
+  {
+    "name": "Rampardos",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "3",
+    "sortPoints": 3,
+    "note": "",
+    "types": [
+      "Rock"
+    ]
+  },
+  {
+    "name": "Rotom-Fan",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "3",
+    "sortPoints": 3,
+    "note": "",
+    "types": [
+      "Electric",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Runerigus",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "3",
+    "sortPoints": 3,
+    "note": "",
+    "types": [
+      "Ground",
+      "Ghost"
+    ]
+  },
+  {
+    "name": "Scolipede",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "3",
+    "sortPoints": 3,
+    "note": "",
+    "types": [
+      "Bug",
+      "Poison"
+    ]
+  },
+  {
+    "name": "Spiritomb",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "3",
+    "sortPoints": 3,
+    "note": "",
+    "types": [
+      "Ghost",
+      "Dark"
+    ]
+  },
+  {
+    "name": "Tauros-Combat",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "3",
+    "sortPoints": 3,
+    "note": "",
+    "types": [
+      "Fighting"
+    ]
+  },
+  {
+    "name": "Toxicroak",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "3",
+    "sortPoints": 3,
+    "note": "",
+    "types": [
+      "Poison",
+      "Fighting"
+    ]
+  },
+  {
+    "name": "Vanilluxe",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "3",
+    "sortPoints": 3,
+    "note": "",
+    "types": [
+      "Ice"
+    ]
+  },
+  {
+    "name": "Zoroark",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "3",
+    "sortPoints": 3,
+    "note": "",
+    "types": [
+      "Dark"
+    ]
+  },
+  {
+    "name": "Abomasnow",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Grass",
+      "Ice"
+    ]
+  },
+  {
+    "name": "Alcremie",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Ariados",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Bug",
+      "Poison"
+    ]
+  },
+  {
+    "name": "Aurorus",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Rock",
+      "Ice"
+    ]
+  },
+  {
+    "name": "Barbaracle",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Rock",
+      "Water"
+    ]
+  },
+  {
+    "name": "Beartic",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Ice"
+    ]
+  },
+  {
+    "name": "Beedrill",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Bug",
+      "Poison"
+    ]
+  },
+  {
+    "name": "Cofagrigus",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Ghost"
+    ]
+  },
+  {
+    "name": "Ditto",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Normal"
+    ]
+  },
+  {
+    "name": "Espeon",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Florges",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Garganacl",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Rock"
+    ]
+  },
+  {
+    "name": "Heracross",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Bug",
+      "Fighting"
+    ]
+  },
+  {
+    "name": "Houndoom",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Dark",
+      "Fire"
+    ]
+  },
+  {
+    "name": "Mr. Rime",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Ice",
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Pinsir",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Bug"
+    ]
+  },
+  {
+    "name": "Polteageist",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Ghost"
+    ]
+  },
+  {
+    "name": "Quaquaval",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Water",
+      "Fighting"
+    ]
+  },
+  {
+    "name": "Qwilfish",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Water",
+      "Poison"
+    ]
+  },
+  {
+    "name": "Reuniclus",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Rhyperior",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Ground",
+      "Rock"
+    ]
+  },
+  {
+    "name": "Slowking",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Water",
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Toucannon",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Normal",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Trevenant",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Ghost",
+      "Grass"
+    ]
+  },
+  {
+    "name": "Victreebel",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Grass",
+      "Poison"
+    ]
+  },
+  {
+    "name": "Watchog",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Normal"
+    ]
+  },
+  {
+    "name": "Wyrdeer",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Normal",
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Appletun",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Grass",
+      "Dragon"
+    ]
+  },
+  {
+    "name": "Arbok",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Poison"
+    ]
+  },
+  {
+    "name": "Aromatisse",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Audino",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Normal"
+    ]
+  },
+  {
+    "name": "Avalugg",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Ice"
+    ]
+  },
+  {
+    "name": "Bastiodon",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Rock",
+      "Steel"
+    ]
+  },
+  {
+    "name": "Castform",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Normal"
+    ]
+  },
+  {
+    "name": "Chimecho",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Psychic"
+    ]
+  },
+  {
+    "name": "Clawitzer",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Water"
+    ]
+  },
+  {
+    "name": "Decidueye",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Grass",
+      "Ghost"
+    ]
+  },
+  {
+    "name": "Dedenne",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Electric",
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Diggersby",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Normal",
+      "Ground"
+    ]
+  },
+  {
+    "name": "Emboar",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Fire",
+      "Fighting"
+    ]
+  },
+  {
+    "name": "Emolga",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Electric",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Flapple",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Grass",
+      "Dragon"
+    ]
+  },
+  {
+    "name": "Flareon",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Fire"
+    ]
+  },
+  {
+    "name": "Forretress",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Bug",
+      "Steel"
+    ]
+  },
+  {
+    "name": "Furfrou",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Normal"
+    ]
+  },
+  {
+    "name": "Galarian Stunfisk",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Ground",
+      "Steel"
+    ]
+  },
+  {
+    "name": "Garbodor",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Poison"
+    ]
+  },
+  {
+    "name": "Glaceon",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Ice"
+    ]
+  },
+  {
+    "name": "Glalie",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Ice"
+    ]
+  },
+  {
+    "name": "Gourgeist",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Ghost",
+      "Grass"
+    ]
+  },
+  {
+    "name": "Hisuian Avalugg",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Ice",
+      "Rock"
+    ]
+  },
+  {
+    "name": "Hydrapple",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Grass",
+      "Dragon"
+    ]
+  },
+  {
+    "name": "Leafeon",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Grass"
+    ]
+  },
+  {
+    "name": "Luxray",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Electric"
+    ]
+  },
+  {
+    "name": "Machamp",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Fighting"
+    ]
+  },
+  {
+    "name": "Morpeko",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Electric",
+      "Dark"
+    ]
+  },
+  {
+    "name": "Pangoro",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Fighting",
+      "Dark"
+    ]
+  },
+  {
+    "name": "Passimian",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Fighting"
+    ]
+  },
+  {
+    "name": "Pidgeot",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Normal",
+      "Flying"
+    ]
+  },
+  {
+    "name": "Pikachu",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Electric"
+    ]
+  },
+  {
+    "name": "Roserade",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Grass",
+      "Poison"
+    ]
+  },
+  {
+    "name": "Rotom",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Electric",
+      "Ghost"
+    ]
+  },
+  {
+    "name": "Salazzle",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Poison",
+      "Fire"
+    ]
+  },
+  {
+    "name": "Samurott",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Water"
+    ]
+  },
+  {
+    "name": "Sandaconda",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Ground"
+    ]
+  },
+  {
+    "name": "Serperior",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Grass"
+    ]
+  },
+  {
+    "name": "Simipour",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Water"
+    ]
+  },
+  {
+    "name": "Simisage",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Grass"
+    ]
+  },
+  {
+    "name": "Simisear",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Fire"
+    ]
+  },
+  {
+    "name": "Skeledirge",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Fire",
+      "Ghost"
+    ]
+  },
+  {
+    "name": "Slurpuff",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Fairy"
+    ]
+  },
+  {
+    "name": "Stunfisk",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Ground",
+      "Electric"
+    ]
+  },
+  {
+    "name": "Tauros",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Normal"
+    ]
+  },
+  {
+    "name": "Torterra",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Grass",
+      "Ground"
+    ]
+  },
+  {
+    "name": "Typhlosion",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Fire"
+    ]
+  },
+  {
+    "name": "Tyrantrum",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Rock",
+      "Dragon"
+    ]
+  },
+  {
+    "name": "Vaporeon",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Water"
+    ]
+  }
+]
