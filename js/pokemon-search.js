@@ -5,6 +5,27 @@ const TIER_SYMBOLS = {
   Bronze: "●",
 };
 
+const TYPE_COLORS = {
+  Bug: "#91a119",
+  Dark: "#50413f",
+  Dragon: "#5060e1",
+  Electric: "#fac000",
+  Fairy: "#ef70ef",
+  Fighting: "#ff8000",
+  Fire: "#e62829",
+  Flying: "#81b9ef",
+  Ghost: "#704170",
+  Grass: "#3fa129",
+  Ground: "#915121",
+  Ice: "#3fd8ff",
+  Normal: "#9fa19f",
+  Poison: "#9141cb",
+  Psychic: "#ef4179",
+  Rock: "#afa981",
+  Steel: "#60a1b8",
+  Water: "#2980ef",
+};
+
 const searchInput = document.querySelector("#pokemonSearch");
 const clearButton = document.querySelector("#clearSearch");
 const grid = document.querySelector("#pokemonGrid");
@@ -25,6 +46,8 @@ const normalize = (value) => value
 const cardFor = (pokemon) => {
   const card = template.content.firstElementChild.cloneNode(true);
   card.dataset.tier = pokemon.tier;
+  card.style.setProperty("--type-one", TYPE_COLORS[pokemon.types[0]]);
+  card.style.setProperty("--type-two", TYPE_COLORS[pokemon.types[1] || pokemon.types[0]]);
   card.querySelector(".tier-symbol").textContent = TIER_SYMBOLS[pokemon.tier];
   card.querySelector(".tier-name").textContent = pokemon.tier;
   card.querySelector(".point-value").textContent = pokemon.points;
