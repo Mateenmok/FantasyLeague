@@ -148,29 +148,29 @@ const conditionalValues = {
     note: "",
   },
   Armarouge: {
-    points: "5-7",
-    sortPoints: 7,
-    note: "5 pts without Indeedee · 7 pts with Indeedee",
+    points: "5",
+    sortPoints: 5,
+    note: "",
   },
   Hatterene: {
-    points: "5+",
+    points: "5",
     sortPoints: 5,
-    note: "5 pts; the PDF notes a higher value if Indeedee is added",
+    note: "",
   },
   Palafin: {
-    points: "5-6",
-    sortPoints: 6,
-    note: "5 pts normally · 6 pts if Band is added",
+    points: "5",
+    sortPoints: 5,
+    note: "",
   },
   Alakazam: {
-    points: "3+",
+    points: "3",
     sortPoints: 3,
-    note: "3 pts; the PDF notes a higher value if Indeedee is added",
+    note: "",
   },
   Conkeldurr: {
-    points: "3-5",
-    sortPoints: 5,
-    note: "3 pts normally · 4 or 5 pts if Flame Orb is added",
+    points: "3",
+    sortPoints: 3,
+    note: "",
   },
 };
 
