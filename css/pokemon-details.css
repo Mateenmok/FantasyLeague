@@ -285,7 +285,7 @@ body.detail-open {
   flex: none;
   display: block;
   width: 34px;
-  height: 35px;
+  height: 34px;
   object-fit: contain;
   filter: drop-shadow(1px 2px 0 rgba(17, 17, 17, 0.78));
 }

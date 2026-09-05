@@ -122,7 +122,7 @@
     if (!formes.length) return "";
     return `
       <section class="detail-panel detail-mega-panel">
-        <div class="detail-section-title"><img class="detail-mega-sigil" src="images/icons/mega-evolution.webp" alt="" width="34" height="35"><h3>Mega Evolutions</h3></div>
+        <div class="detail-section-title"><img class="detail-mega-sigil" src="images/icons/mega-evolution-v2.webp?v=mega2" alt="" width="34" height="34"><h3>Mega Evolutions</h3></div>
         <div class="detail-mega-list">
           ${formes.map((forme) => `
             <article class="detail-mega-card">
