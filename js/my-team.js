@@ -160,12 +160,13 @@
     fetch("data/teams.json?v=teams5", { cache: "no-store" }),
     fetch("data/league-teams.json?v=league-teams1", { cache: "no-store" }),
     fetch("data/pokemon-catalog.json?v=season-1-3"),
+    window.PokeLeagueRosters.read().catch(() => null),
   ])
-    .then(async ([teamsResponse, leagueTeamsResponse, catalogResponse]) => {
+    .then(async ([teamsResponse, leagueTeamsResponse, catalogResponse, savedRosters]) => {
       if (!teamsResponse.ok || !leagueTeamsResponse.ok || !catalogResponse.ok) throw new Error("Team unavailable");
-      return Promise.all([teamsResponse.json(), leagueTeamsResponse.json(), catalogResponse.json()]);
+      return Promise.all([teamsResponse.json(), leagueTeamsResponse.json(), catalogResponse.json(), savedRosters]);
     })
-    .then(([teamData, leagueTeamData, baseCatalog]) => {
+    .then(([teamData, leagueTeamData, baseCatalog, savedRosters]) => {
       const account = teamData.accounts?.[accessCode];
       if (!account) {
         showGate();
@@ -175,6 +176,9 @@
       const leagueState = window.PokeLeagueState?.read();
       const catalog = window.PokeLeagueState?.applyCatalog(baseCatalog, leagueState) || baseCatalog;
       const leagueTeams = leagueTeamData.teams || [];
+      const permanentRosters = savedRosters
+        ? window.PokeLeagueRosters.namesFromSlugs(savedRosters, baseCatalog, leagueTeams.map((team) => team.id))
+        : null;
       const profile = readLocalProfile(account);
       applyTheme(account);
       renderIdentity(account, profile);
@@ -197,8 +201,11 @@
       document.querySelector("[data-matchup-note]").textContent = opponent
         ? "Your next battle is set."
         : "Your opponent will appear here.";
+      const hasPermanentRoster = permanentRosters && account.teamId && Object.prototype.hasOwnProperty.call(permanentRosters, account.teamId);
       const hasManagedRoster = account.teamId && Object.prototype.hasOwnProperty.call(leagueState?.rosters || {}, account.teamId);
-      renderRoster(hasManagedRoster ? leagueState.rosters[account.teamId] : account.roster || [], catalog);
+      renderRoster(hasPermanentRoster
+        ? permanentRosters[account.teamId]
+        : hasManagedRoster ? leagueState.rosters[account.teamId] : account.roster || [], catalog);
       bindEditor(account);
       gate.hidden = true;
       dashboard.hidden = false;

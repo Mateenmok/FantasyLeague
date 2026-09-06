@@ -48,6 +48,8 @@
   let catalog = [];
   let leagueState = window.PokeLeagueState.read();
   let selectedTeamId = "boston-eeltics";
+  let adminAccessCode = "";
+  let rosterWritePending = false;
   let statusTimer;
 
   const findTeam = (teamId) => teams.find((team) => team.id === teamId);
@@ -271,20 +273,38 @@
     }).join("") || `<p>No Pokémon match that search.</p>`;
   };
 
-  const addPokemon = (name) => {
+  const persistRoster = async (teamId, roster, message) => {
+    if (rosterWritePending) return false;
+    rosterWritePending = true;
+    announce("Saving roster…");
+    try {
+      await window.PokeLeagueRosters.replace(teamId, roster, adminAccessCode);
+      leagueState.rosters[teamId] = roster;
+      saveState(message);
+      return true;
+    } catch (error) {
+      announce(error.message || "Roster could not be saved.", true);
+      return false;
+    } finally {
+      rosterWritePending = false;
+    }
+  };
+
+  const addPokemon = async (name) => {
     const pokemon = findPokemon(name);
     const roster = [...rosterFor(selectedTeamId)];
     if (!pokemon || ownerMap().has(name) || roster.length >= 10 || rosterPoints(selectedTeamId) + pointValue(pokemon) > leagueState.pointCap) return;
     roster.push(name);
-    leagueState.rosters[selectedTeamId] = roster;
-    saveState(`${name} added to ${findTeam(selectedTeamId)?.name}.`);
-    renderRosterManager();
+    if (await persistRoster(selectedTeamId, roster, `${name} added to ${findTeam(selectedTeamId)?.name}.`)) {
+      renderRosterManager();
+    }
   };
 
-  const removePokemon = (name) => {
-    leagueState.rosters[selectedTeamId] = rosterFor(selectedTeamId).filter((pokemonName) => pokemonName !== name);
-    saveState(`${name} removed from ${findTeam(selectedTeamId)?.name}.`);
-    renderRosterManager();
+  const removePokemon = async (name) => {
+    const roster = rosterFor(selectedTeamId).filter((pokemonName) => pokemonName !== name);
+    if (await persistRoster(selectedTeamId, roster, `${name} removed from ${findTeam(selectedTeamId)?.name}.`)) {
+      renderRosterManager();
+    }
   };
 
   const saveSchedule = () => {
@@ -407,15 +427,18 @@
 
   const initialize = async () => {
     try {
-      const [accountResponse, teamResponse, catalogResponse] = await Promise.all([
+      const [accountResponse, teamResponse, catalogResponse, savedRosters] = await Promise.all([
         fetch("data/teams.json?v=teams5", { cache: "no-store" }),
         fetch("data/league-teams.json?v=league-teams1", { cache: "no-store" }),
         fetch("data/pokemon-catalog.json?v=season-1-3"),
+        window.PokeLeagueRosters.read(),
       ]);
       if (!accountResponse.ok || !teamResponse.ok || !catalogResponse.ok) throw new Error("League data could not be loaded.");
       accounts = (await accountResponse.json()).accounts || {};
       teams = (await teamResponse.json()).teams || [];
       baseCatalog = await catalogResponse.json();
+      leagueState.rosters = window.PokeLeagueRosters.namesFromSlugs(savedRosters, baseCatalog, teams.map((team) => team.id));
+      window.PokeLeagueState.write(leagueState);
       catalog = window.PokeLeagueState.applyCatalog(baseCatalog, leagueState);
 
       const accessCode = localStorage.getItem("pokeleague.accessCode") || sessionStorage.getItem("pokeleague.accessCode") || "";
@@ -426,6 +449,7 @@
       elements.gate.hidden = authorized;
       elements.workspace.hidden = !authorized;
       if (!authorized) return;
+      adminAccessCode = String(accessCode).trim().toUpperCase();
 
       leagueState.rosters ||= {};
       leagueState.schedules ||= {};
