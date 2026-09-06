@@ -222,6 +222,7 @@
 
 :root[data-theme="dark"] .admin-theme-art--dark {
   display: block;
+  mix-blend-mode: multiply;
 }
 
 :root[data-theme="dark"] .admin-controls-button {
@@ -247,7 +248,7 @@
 }
 
 :root[data-theme="dark"] .admin-mew {
-  filter: drop-shadow(8px 10px 0 rgba(6, 67, 105, 0.25));
+  filter: none;
 }
 
 :root[data-theme="dark"] .admin-tabs button.is-active {
