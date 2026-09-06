@@ -4,20 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <link rel="icon" type="image/webp" href="images/favicon.webp">
-  <title>League Home | PokeLeague</title>
-  <meta name="description" content="Choose a PokeLeague Season 1 tool.">
-  <meta property="og:title" content="PokeLeague League Home">
-  <meta property="og:description" content="The home of PokeLeague Season 1 tools.">
+  <title>Week 0 | Flash Family League</title>
+  <meta name="description" content="Flash Family League Season 1 — Week 0.">
+  <meta property="og:title" content="Flash Family League — Week 0">
+  <meta property="og:description" content="Flash Family League Season 1 tools.">
   <meta property="og:image" content="https://www.pokeleague.org/images/og.png">
   <meta property="og:url" content="https://www.pokeleague.org/home.html">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="PokeLeague League Home">
-  <meta name="twitter:description" content="The home of PokeLeague Season 1 tools.">
+  <meta name="twitter:title" content="Flash Family League — Week 0">
+  <meta name="twitter:description" content="Flash Family League Season 1 tools.">
   <meta name="twitter:image" content="https://www.pokeleague.org/images/og.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jersey+25&amp;family=Roboto+Condensed:wght@700;900&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/home.css?v=league-home-6">
+  <link rel="stylesheet" href="css/home.css?v=league-home-7">
+  <script src="js/home-status.js?v=league-status1" defer></script>
 </head>
 <body>
   <div class="home-silhouettes" aria-hidden="true">
@@ -36,13 +37,25 @@
         <img src="images/favicon.webp" alt="" width="50" height="50">
         <span>PokeLeague</span>
       </a>
-      <span class="season-mark">Season 1</span>
+      <div class="season-controls">
+        <span class="season-mark">Season <span data-league-season>1</span></span>
+        <button
+          class="admin-controls-button"
+          type="button"
+          data-admin-controls
+          disabled
+          title="Admin access codes have not been configured yet"
+        >
+          <img src="images/navigation/mew-admin.png?v=mew-admin1" alt="" width="30" height="30">
+          <span>Admin Controls</span>
+        </button>
+      </div>
     </header>
 
     <main class="home-main">
       <section class="home-intro" aria-labelledby="homeTitle">
-        <p class="home-eyebrow">Choose your destination</p>
-        <h1 id="homeTitle">League Home</h1>
+        <p class="home-eyebrow">Flash Family League</p>
+        <h1 id="homeTitle">Week <span data-league-week>0</span></h1>
         <p>Pick a panel and jump into the action.</p>
       </section>
 

@@ -181,7 +181,6 @@ a {
 }
 
 .season-mark {
-  justify-self: end;
   padding: 6px 10px 5px;
   transform: rotate(2deg);
   border: 2px solid var(--orange);
@@ -190,6 +189,46 @@ a {
   font-size: 18px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+}
+
+.season-controls {
+  display: grid;
+  justify-items: end;
+  justify-self: end;
+  gap: 7px;
+}
+
+.admin-controls-button {
+  display: inline-grid;
+  grid-template-columns: 28px auto;
+  align-items: center;
+  gap: 5px;
+  min-height: 34px;
+  padding: 2px 8px 2px 3px;
+  transform: rotate(-1deg);
+  border: 2px solid #111;
+  border-radius: 7px;
+  background-color: #f5bfd7;
+  background-image: radial-gradient(rgba(130, 69, 108, 0.18) 1px, transparent 1.2px);
+  background-size: 6px 6px;
+  color: #171117;
+  font-family: "Jersey 25", Impact, sans-serif;
+  font-size: 15px;
+  line-height: 1;
+  text-transform: uppercase;
+  box-shadow: 3px 3px 0 #111;
+}
+
+.admin-controls-button img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.admin-controls-button:disabled {
+  cursor: not-allowed;
+  filter: saturate(0.7);
+  opacity: 0.72;
 }
 
 .home-main {
@@ -502,7 +541,7 @@ a {
   }
 
   .title-link,
-  .season-mark {
+  .season-controls {
     grid-row: 2;
     margin-bottom: 10px;
   }
