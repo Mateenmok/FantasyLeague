@@ -64,18 +64,18 @@ body::before {
 
 .home-silhouette--swampert {
   --silhouette-image: url("../images/backgrounds/swampert-outline.png?v=home-outlines1");
-  left: -4vw;
-  top: 24%;
-  width: clamp(210px, 23vw, 390px);
+  left: 3vw;
+  top: 30%;
+  width: clamp(190px, 18vw, 300px);
   transform: rotate(-7deg);
 }
 
 .home-silhouette--blaziken {
   --silhouette-color: rgba(244, 155, 33, 0.9);
   --silhouette-image: url("../images/backgrounds/blaziken-outline.png?v=home-outlines1");
-  right: 1.5vw;
-  top: 5%;
-  width: clamp(180px, 17vw, 290px);
+  right: 5vw;
+  top: 24%;
+  width: clamp(170px, 14vw, 240px);
   aspect-ratio: 0.76;
   transform: rotate(8deg);
   opacity: 0.1;
@@ -83,9 +83,9 @@ body::before {
 
 .home-silhouette--sceptile {
   --silhouette-image: url("../images/backgrounds/sceptile-outline.png?v=home-outlines1");
-  left: -1vw;
-  bottom: -18%;
-  width: clamp(220px, 25vw, 410px);
+  left: 4vw;
+  bottom: -4%;
+  width: clamp(190px, 18vw, 300px);
   aspect-ratio: 0.94;
   transform: rotate(5deg);
   opacity: 0.09;
@@ -94,33 +94,33 @@ body::before {
 .home-silhouette--rillaboom {
   --silhouette-color: rgba(255, 247, 222, 0.8);
   --silhouette-image: url("../images/backgrounds/rillaboom-outline.png?v=home-outlines1");
-  left: 27%;
-  top: 10%;
-  width: clamp(140px, 13vw, 210px);
-  transform: rotate(-4deg);
-  opacity: 0.07;
+  left: 50%;
+  top: 18%;
+  width: clamp(140px, 11vw, 190px);
+  transform: translateX(-50%) rotate(-4deg);
+  opacity: 0.09;
 }
 
 .home-silhouette--luxray {
   --silhouette-color: rgba(244, 155, 33, 0.92);
   --silhouette-image: url("../images/backgrounds/luxray-outline.png?v=home-outlines2");
-  right: -2vw;
-  bottom: -9%;
-  width: clamp(220px, 22vw, 360px);
+  left: 50%;
+  bottom: -2%;
+  width: clamp(190px, 16vw, 275px);
   aspect-ratio: 1.08;
-  transform: rotate(-5deg);
+  transform: translateX(-50%) rotate(-5deg);
   opacity: 0.11;
 }
 
 .home-silhouette--staraptor {
   --silhouette-color: rgba(255, 247, 222, 0.78);
   --silhouette-image: url("../images/backgrounds/staraptor-outline.png?v=home-outlines1");
-  right: 3vw;
-  top: 39%;
-  width: clamp(175px, 16vw, 255px);
+  right: 4vw;
+  bottom: 4%;
+  width: clamp(175px, 14vw, 230px);
   aspect-ratio: 0.84;
   transform: rotate(6deg);
-  opacity: 0.12;
+  opacity: 0.115;
 }
 
 a {
@@ -467,18 +467,22 @@ a {
   .home-silhouette--rillaboom {
     left: 7%;
     top: 67%;
+    transform: rotate(-4deg);
     opacity: 0.045;
   }
 
   .home-silhouette--luxray {
+    left: auto;
     right: -90px;
     bottom: 0;
+    transform: rotate(-5deg);
     opacity: 0.07;
   }
 
   .home-silhouette--staraptor {
     right: -42px;
     top: 47%;
+    bottom: auto;
     opacity: 0.07;
   }
 
