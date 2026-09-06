@@ -25,14 +25,41 @@
 .team-profile-card {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(180px, 0.32fr) minmax(0, 0.68fr);
+  grid-template-columns: minmax(390px, 0.46fr) minmax(0, 0.54fr);
   align-items: center;
-  min-height: 270px;
+  min-height: 390px;
   overflow: hidden;
   background-color: #eff8dc;
   background-image: radial-gradient(rgba(34, 117, 73, 0.2) 1.2px, transparent 1.5px);
   background-size: 8px 8px;
   box-shadow: 9px 10px 0 #91bf2b, 15px 16px 0 #000;
+}
+
+.team-profile-card::before {
+  position: absolute;
+  z-index: 0;
+  left: -104px;
+  top: 50%;
+  width: 570px;
+  aspect-ratio: 1;
+  transform: translateY(-50%);
+  border: 5px solid #111;
+  border-radius: 50%;
+  background: #d8f37c;
+  content: "";
+}
+
+.team-profile-card::after {
+  position: absolute;
+  z-index: 0;
+  left: 40px;
+  top: 29px;
+  width: 338px;
+  height: 326px;
+  transform: rotate(-4deg);
+  border: 3px dashed rgba(17, 17, 17, 0.32);
+  border-radius: 50%;
+  content: "";
 }
 
 .team-profile-stripe {
@@ -43,28 +70,32 @@
 }
 
 .team-logo-frame {
+  position: relative;
+  z-index: 1;
   display: grid;
   place-items: center;
-  width: 210px;
-  height: 210px;
-  margin-left: 42px;
+  width: 320px;
+  height: 320px;
+  margin-left: 48px;
   overflow: hidden;
-  transform: rotate(-2deg);
-  border: 4px solid #111;
-  border-radius: 18px;
+  transform: rotate(-1.25deg);
+  border: 5px solid #111;
+  border-radius: 24px;
   background: #fff;
-  box-shadow: 6px 6px 0 #0b493e;
+  box-shadow: 9px 10px 0 #0b493e, 14px 15px 0 rgba(17, 17, 17, 0.28);
 }
 
 .team-logo-frame img {
   width: 100%;
   height: 100%;
-  padding: 6px;
+  padding: 4px;
   object-fit: contain;
 }
 
 .team-profile-copy {
-  padding: 36px 52px 36px 40px;
+  position: relative;
+  z-index: 1;
+  padding: 42px 60px 42px 34px;
 }
 
 .team-eyebrow {
@@ -88,9 +119,10 @@
 }
 
 .team-profile-copy h1 {
-  max-width: 700px;
-  font-size: clamp(58px, 8vw, 96px);
-  text-shadow: 4px 4px 0 #c1e34d;
+  max-width: 520px;
+  font-size: clamp(46px, 5vw, 66px);
+  line-height: 0.9;
+  text-shadow: 3px 3px 0 #c1e34d;
 }
 
 .edit-team-button,
@@ -105,11 +137,13 @@
 }
 
 .edit-team-button {
-  margin-top: 24px;
-  padding: 9px 13px 8px;
-  background: #fff;
+  margin-top: 20px;
+  padding: 7px 10px 6px;
+  border-width: 2px;
+  background: rgba(255, 255, 255, 0.82);
   color: #111;
-  font-size: 18px;
+  font-size: 15px;
+  box-shadow: 2px 2px 0 #111;
   cursor: pointer;
 }
 
@@ -451,18 +485,34 @@
 
   .team-profile-card {
     grid-template-columns: 1fr;
-    padding-top: 30px;
+    min-height: 0;
+    padding-top: 42px;
     text-align: center;
   }
 
+  .team-profile-card::before {
+    left: 50%;
+    top: -70px;
+    width: 390px;
+    transform: translateX(-50%);
+  }
+
+  .team-profile-card::after {
+    left: 50%;
+    top: 25px;
+    width: 264px;
+    height: 252px;
+    transform: translateX(-50%) rotate(-4deg);
+  }
+
   .team-logo-frame {
-    width: 170px;
-    height: 170px;
+    width: 250px;
+    height: 250px;
     margin: 0 auto;
   }
 
   .team-profile-copy {
-    padding: 28px 22px 34px;
+    padding: 38px 22px 38px;
   }
 
   .team-summary-grid {
@@ -480,7 +530,7 @@
   }
 
   .team-profile-copy h1 {
-    font-size: 54px;
+    font-size: 48px;
   }
 
   .roster-panel {
