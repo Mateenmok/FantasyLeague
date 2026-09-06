@@ -18,6 +18,25 @@
         "opponentLogo": null
       },
       "roster": []
+    },
+    "NETO": {
+      "id": "neto",
+      "teamId": "miami-dragapults",
+      "isAdmin": true,
+      "accountName": "Neto",
+      "teamName": "Miami Dragapults",
+      "logo": "images/teams/miami-dragapults.webp?v=dragapults1",
+      "record": {
+        "wins": 0,
+        "losses": 0,
+        "ties": 0
+      },
+      "weeklyMatchup": {
+        "week": 0,
+        "opponent": null,
+        "opponentLogo": null
+      },
+      "roster": []
     }
   }
 }
