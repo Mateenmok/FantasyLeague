@@ -117,7 +117,7 @@
   const state = {
     catalog: [], details: {}, detailIndex: {}, byName: new Map(), moveIndex: [], roleCache: new Map(),
     started: false, mode: "practice", userTeam: 8, pickIndex: 0, teams: {}, available: new Set(),
-    log: [], cpuTimer: null, cpuPaused: false, pointCap: DEFAULT_POINT_CAP,
+    log: [], cpuTimer: null, cpuPaused: false, pointCap: DEFAULT_POINT_CAP, ai: null,
   };
 
   const teamForPick = (index) => {
@@ -349,13 +349,15 @@
     .map((name) => state.byName.get(name))
     .filter((pokemon) => pokemon && canAfford(team, pokemon));
 
-  const recommendationFor = (team) => {
-    const legal = legalPicksFor(team);
-    const highestLegalPoints = Math.max(0, ...legal.map(pointValue));
-    return legal
-      .map((pokemon) => ({ pokemon, score: scorePokemon(team, pokemon, highestLegalPoints) }))
-      .sort((a, b) => b.score - a.score || pointValue(b.pokemon) - pointValue(a.pokemon))[0]?.pokemon;
-  };
+  const draftContext = () => ({
+    available: state.available,
+    teams: state.teams,
+    pickIndex: state.pickIndex,
+    log: state.log,
+    humanTeamId: state.mode === "practice" ? state.userTeam : null,
+  });
+
+  const recommendationFor = (team, isCpu = false) => state.ai.choose(team, draftContext(), { isCpu });
 
   const filterMatchesMove = (pokemon, query) => {
     if (!query) return true;
@@ -502,14 +504,11 @@
     }).join("");
   };
 
-  const recommendationReason = (team, pokemon) => {
-    const currentRoles = new Set(team.picks.flatMap(rolesFor));
-    const strategicReasons = strategicFitFor(team, pokemon).reasons;
-    const useful = strategicReasons.length
-      ? strategicReasons.slice(0, 2)
-      : rolesFor(pokemon).filter((role) => !currentRoles.has(role)).slice(0, 2).map((role) => `adds ${role}`);
+  const recommendationReason = (team, choice) => {
+    const pokemon = choice.pokemon;
+    const useful = choice.reasons || [];
     const pieces = [`adds a ${pointValue(pokemon)}-point ${pokemon.tier.toLowerCase()} pick`];
-    if (useful.length) pieces.push(useful.join(" + "));
+    if (useful.length) pieces.push(useful.slice(0, 3).join(" + "));
     pieces.push(`${state.pointCap - teamPoints(team) - pointValue(pokemon)} points remain`);
     return pieces.join(" · ");
   };
@@ -524,7 +523,8 @@
       return;
     }
 
-    const pokemon = recommendationFor(team);
+    const choice = recommendationFor(team, false);
+    const pokemon = choice.pokemon;
     if (!pokemon) {
       elements.recommendationName.textContent = "No legal pick available";
       elements.recommendationReason.textContent = "The current roster cannot be completed within the point cap.";
@@ -533,7 +533,7 @@
     }
 
     elements.recommendationName.textContent = `${pokemon.name} · ${pointValue(pokemon)} PTS`;
-    elements.recommendationReason.textContent = recommendationReason(team, pokemon);
+    elements.recommendationReason.textContent = recommendationReason(team, choice);
     elements.recommendationPick.innerHTML = `<img src="${escapeHtml(pokemon.sprite)}" alt=""><button class="comic-button comic-button--primary" type="button">Draft pick</button>`;
     elements.recommendationPick.querySelector("button").addEventListener("click", () => makePick(state.userTeam, pokemon.name, false));
   };
@@ -589,7 +589,8 @@
     if (!shouldCpuPick) return;
     state.cpuTimer = window.setTimeout(() => {
       const team = state.teams[current];
-      const pick = recommendationFor(team);
+      const choice = recommendationFor(team, true);
+      const pick = choice.pokemon;
       if (!pick) {
         state.pickIndex += 1;
         advancePastCompleteTeams();
@@ -603,11 +604,13 @@
 
   const buildInitialTeams = () => {
     const teams = {};
+    const plans = state.ai.assignTeamPlans(Array.from({ length: TEAM_COUNT }, (_, index) => index + 1));
     for (let teamNumber = 1; teamNumber <= TEAM_COUNT; teamNumber += 1) {
       const mascot = state.byName.get(TEAM_CONFIG[teamNumber].mascot);
       teams[teamNumber] = {
         id: teamNumber,
-        draftStyle: WELL_ROUNDED_TEAM_IDS.has(teamNumber) ? "well-rounded" : "value",
+        ...plans[teamNumber],
+        draftStyle: plans[teamNumber].draftStrategy === "balanced" ? "well-rounded" : "value",
         picks: mascot ? [{ ...mascot, mascot: true, overall: null }] : [],
       };
     }
@@ -748,6 +751,13 @@
       state.details = detailData.pokemon || {};
       state.detailIndex = detailIndex;
       state.byName = new Map(state.catalog.map((pokemon) => [pokemon.name, pokemon]));
+      state.ai = window.PokeLeagueDraftAI.create({
+        catalog: state.catalog,
+        rolesFor,
+        pointCap: state.pointCap,
+        teamCount: TEAM_COUNT,
+        rosterSize: ROSTER_SIZE,
+      });
       buildMoveIndex();
       elements.start.disabled = false;
     } catch (error) {
