@@ -42,6 +42,87 @@ body::before {
   opacity: 0.24;
 }
 
+.home-silhouettes {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.home-silhouette {
+  --silhouette-color: rgba(112, 227, 255, 0.9);
+  position: absolute;
+  display: block;
+  width: clamp(170px, 20vw, 330px);
+  aspect-ratio: 1;
+  background: var(--silhouette-color);
+  opacity: 0.12;
+  -webkit-mask: var(--silhouette-image) center / contain no-repeat;
+  mask: var(--silhouette-image) center / contain no-repeat;
+}
+
+.home-silhouette--swampert {
+  --silhouette-image: url("../images/backgrounds/swampert-outline.png?v=home-outlines1");
+  left: -2.5vw;
+  top: 20%;
+  width: clamp(210px, 23vw, 390px);
+  transform: rotate(-7deg);
+}
+
+.home-silhouette--blaziken {
+  --silhouette-color: rgba(244, 155, 33, 0.9);
+  --silhouette-image: url("../images/backgrounds/blaziken-outline.png?v=home-outlines1");
+  right: 1.5vw;
+  top: 5%;
+  width: clamp(180px, 17vw, 290px);
+  aspect-ratio: 0.76;
+  transform: rotate(8deg);
+  opacity: 0.1;
+}
+
+.home-silhouette--sceptile {
+  --silhouette-image: url("../images/backgrounds/sceptile-outline.png?v=home-outlines1");
+  left: 4vw;
+  bottom: -15%;
+  width: clamp(220px, 25vw, 410px);
+  aspect-ratio: 0.94;
+  transform: rotate(5deg);
+  opacity: 0.09;
+}
+
+.home-silhouette--rillaboom {
+  --silhouette-color: rgba(255, 247, 222, 0.8);
+  --silhouette-image: url("../images/backgrounds/rillaboom-outline.png?v=home-outlines1");
+  left: 21%;
+  top: 62%;
+  width: clamp(140px, 13vw, 210px);
+  transform: rotate(-4deg);
+  opacity: 0.07;
+}
+
+.home-silhouette--mega-raichu {
+  --silhouette-color: rgba(244, 155, 33, 0.92);
+  --silhouette-image: url("../images/backgrounds/mega-raichu-outline.png?v=home-outlines1");
+  right: 4vw;
+  bottom: -4%;
+  width: clamp(220px, 24vw, 390px);
+  aspect-ratio: 1.15;
+  transform: rotate(-6deg);
+  opacity: 0.11;
+}
+
+.home-silhouette--staraptor {
+  --silhouette-color: rgba(255, 247, 222, 0.78);
+  --silhouette-image: url("../images/backgrounds/staraptor-outline.png?v=home-outlines1");
+  right: 20%;
+  top: 46%;
+  width: clamp(150px, 14vw, 220px);
+  aspect-ratio: 0.84;
+  transform: rotate(6deg);
+  opacity: 0.065;
+}
+
 a {
   -webkit-tap-highlight-color: transparent;
 }
@@ -362,6 +443,45 @@ a {
 }
 
 @media (max-width: 760px) {
+  .home-silhouette {
+    opacity: 0.075;
+  }
+
+  .home-silhouette--swampert {
+    left: -100px;
+    top: 29%;
+  }
+
+  .home-silhouette--blaziken {
+    right: -58px;
+    top: 18%;
+    opacity: 0.065;
+  }
+
+  .home-silhouette--sceptile {
+    left: -95px;
+    bottom: -6%;
+    opacity: 0.06;
+  }
+
+  .home-silhouette--rillaboom {
+    left: 7%;
+    top: 67%;
+    opacity: 0.045;
+  }
+
+  .home-silhouette--mega-raichu {
+    right: -90px;
+    bottom: 0;
+    opacity: 0.07;
+  }
+
+  .home-silhouette--staraptor {
+    right: 4%;
+    top: 53%;
+    opacity: 0.045;
+  }
+
   .home-shell {
     width: min(100% - 28px, 1180px);
   }
