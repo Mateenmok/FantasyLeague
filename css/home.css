@@ -64,8 +64,8 @@ body::before {
 
 .home-silhouette--swampert {
   --silhouette-image: url("../images/backgrounds/swampert-outline.png?v=home-outlines1");
-  left: -2.5vw;
-  top: 20%;
+  left: -4vw;
+  top: 24%;
   width: clamp(210px, 23vw, 390px);
   transform: rotate(-7deg);
 }
@@ -83,8 +83,8 @@ body::before {
 
 .home-silhouette--sceptile {
   --silhouette-image: url("../images/backgrounds/sceptile-outline.png?v=home-outlines1");
-  left: 4vw;
-  bottom: -15%;
+  left: -1vw;
+  bottom: -18%;
   width: clamp(220px, 25vw, 410px);
   aspect-ratio: 0.94;
   transform: rotate(5deg);
@@ -94,33 +94,33 @@ body::before {
 .home-silhouette--rillaboom {
   --silhouette-color: rgba(255, 247, 222, 0.8);
   --silhouette-image: url("../images/backgrounds/rillaboom-outline.png?v=home-outlines1");
-  left: 21%;
-  top: 62%;
+  left: 27%;
+  top: 10%;
   width: clamp(140px, 13vw, 210px);
   transform: rotate(-4deg);
   opacity: 0.07;
 }
 
-.home-silhouette--mega-raichu {
+.home-silhouette--luxray {
   --silhouette-color: rgba(244, 155, 33, 0.92);
-  --silhouette-image: url("../images/backgrounds/mega-raichu-outline.png?v=home-outlines1");
-  right: 4vw;
-  bottom: -4%;
-  width: clamp(220px, 24vw, 390px);
-  aspect-ratio: 1.15;
-  transform: rotate(-6deg);
+  --silhouette-image: url("../images/backgrounds/luxray-outline.png?v=home-outlines2");
+  right: -2vw;
+  bottom: -9%;
+  width: clamp(220px, 22vw, 360px);
+  aspect-ratio: 1.08;
+  transform: rotate(-5deg);
   opacity: 0.11;
 }
 
 .home-silhouette--staraptor {
   --silhouette-color: rgba(255, 247, 222, 0.78);
   --silhouette-image: url("../images/backgrounds/staraptor-outline.png?v=home-outlines1");
-  right: 20%;
-  top: 46%;
-  width: clamp(150px, 14vw, 220px);
+  right: 3vw;
+  top: 39%;
+  width: clamp(175px, 16vw, 255px);
   aspect-ratio: 0.84;
   transform: rotate(6deg);
-  opacity: 0.065;
+  opacity: 0.12;
 }
 
 a {
@@ -470,16 +470,16 @@ a {
     opacity: 0.045;
   }
 
-  .home-silhouette--mega-raichu {
+  .home-silhouette--luxray {
     right: -90px;
     bottom: 0;
     opacity: 0.07;
   }
 
   .home-silhouette--staraptor {
-    right: 4%;
-    top: 53%;
-    opacity: 0.045;
+    right: -42px;
+    top: 47%;
+    opacity: 0.07;
   }
 
   .home-shell {
