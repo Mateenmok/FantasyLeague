@@ -1,0 +1,21 @@
+{
+  "accounts": {
+    "PUFF1": {
+      "id": "pufferz",
+      "accountName": "Pufferz",
+      "teamName": "Boston Eeltics",
+      "logo": "images/teams/boston-eeltics.webp?v=eeltics1",
+      "record": {
+        "wins": 0,
+        "losses": 0,
+        "ties": 0
+      },
+      "weeklyMatchup": {
+        "week": 0,
+        "opponent": null,
+        "opponentLogo": null
+      },
+      "roster": []
+    }
+  }
+}

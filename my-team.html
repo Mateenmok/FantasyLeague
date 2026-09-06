@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="icon" type="image/webp" href="images/favicon.webp">
+  <title>My Team | PokeLeague</title>
+  <meta name="description" content="View your PokeLeague roster, weekly matchup, record, and team identity.">
+  <meta property="og:title" content="My Team | PokeLeague">
+  <meta property="og:description" content="Your PokeLeague clubhouse for rosters, matchups, and team records.">
+  <meta property="og:image" content="https://www.pokeleague.org/images/og.png">
+  <meta property="og:url" content="https://www.pokeleague.org/my-team.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="My Team | PokeLeague">
+  <meta name="twitter:description" content="Your PokeLeague clubhouse for rosters, matchups, and team records.">
+  <meta name="twitter:image" content="https://www.pokeleague.org/images/og.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jersey+25&amp;family=Roboto+Condensed:wght@700;900&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/home.css?v=league-home-9">
+  <link rel="stylesheet" href="css/my-team.css?v=my-team1">
+  <script src="js/my-team.js?v=my-team1" defer></script>
+</head>
+<body>
+  <div class="home-silhouettes" aria-hidden="true">
+    <span class="home-silhouette home-silhouette--swampert"></span>
+    <span class="home-silhouette home-silhouette--blaziken"></span>
+    <span class="home-silhouette home-silhouette--sceptile"></span>
+    <span class="home-silhouette home-silhouette--rillaboom"></span>
+    <span class="home-silhouette home-silhouette--luxray"></span>
+    <span class="home-silhouette home-silhouette--staraptor"></span>
+  </div>
+
+  <div class="home-shell team-shell">
+    <header class="home-header">
+      <a class="title-link" href="home.html"><span aria-hidden="true">←</span> League Home</a>
+      <a class="home-brand" href="home.html" aria-label="PokeLeague home">
+        <img src="images/favicon.webp" alt="" width="50" height="50">
+        <span>PokeLeague</span>
+      </a>
+      <span class="season-mark">Season 1</span>
+    </header>
+
+    <main class="team-main">
+      <section class="team-gate" data-team-gate hidden>
+        <p class="team-eyebrow">Manager pass required</p>
+        <h1>Who goes there?</h1>
+        <p>Enter your league access code on the title screen to open your clubhouse.</p>
+        <a href="index.html">Enter access code</a>
+      </section>
+
+      <section class="team-dashboard" data-team-dashboard hidden>
+        <div class="team-profile-card">
+          <div class="team-profile-stripe" aria-hidden="true"></div>
+          <div class="team-logo-frame">
+            <img data-team-logo src="images/teams/boston-eeltics.webp?v=eeltics1" alt="Boston Eeltics logo">
+          </div>
+          <div class="team-profile-copy">
+            <p class="team-eyebrow"><span data-account-name>Pufferz</span>'s clubhouse</p>
+            <h1 data-team-name>Boston Eeltics</h1>
+            <button class="edit-team-button" type="button" data-edit-team>Edit team identity</button>
+          </div>
+        </div>
+
+        <div class="team-summary-grid">
+          <article class="team-stat-card team-stat-card--record">
+            <span>Overall record</span>
+            <strong data-team-record>0–0</strong>
+            <small>Season 1</small>
+          </article>
+          <article class="team-stat-card team-stat-card--matchup">
+            <span>Week <b data-matchup-week>0</b> matchup</span>
+            <strong data-matchup-opponent>Schedule pending</strong>
+            <small data-matchup-note>Your opponent will appear here.</small>
+          </article>
+        </div>
+
+        <section class="roster-panel" aria-labelledby="rosterTitle">
+          <div class="roster-heading">
+            <div>
+              <p class="team-eyebrow">The squad</p>
+              <h2 id="rosterTitle">My roster</h2>
+            </div>
+            <span class="roster-count" data-roster-count>0 Pokémon</span>
+          </div>
+          <div class="team-roster" data-team-roster></div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <dialog class="team-editor" data-team-editor aria-labelledby="teamEditorTitle">
+    <form method="dialog" data-team-form>
+      <button class="team-editor-close" type="button" data-close-editor aria-label="Close team editor">×</button>
+      <p class="team-eyebrow">Make it yours</p>
+      <h2 id="teamEditorTitle">Edit team identity</h2>
+
+      <div class="team-editor-preview">
+        <img data-editor-preview src="images/teams/boston-eeltics.webp?v=eeltics1" alt="Team logo preview">
+      </div>
+
+      <label for="teamNameInput">Team name</label>
+      <input id="teamNameInput" data-team-name-input type="text" maxlength="36" required>
+
+      <label class="team-upload" for="teamLogoInput">
+        <span>Upload a new logo</span>
+        <small>PNG, JPG, or WebP · up to 2 MB</small>
+      </label>
+      <input id="teamLogoInput" data-team-logo-input type="file" accept="image/png,image/jpeg,image/webp">
+      <p class="team-editor-status" data-editor-status role="status" aria-live="polite"></p>
+      <p class="team-editor-note">For now, identity changes are saved on this device.</p>
+
+      <div class="team-editor-actions">
+        <button type="button" class="team-editor-cancel" data-close-editor>Cancel</button>
+        <button type="submit" class="team-editor-save">Save changes</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>
