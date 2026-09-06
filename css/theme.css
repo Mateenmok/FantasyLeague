@@ -1,0 +1,264 @@
+:root {
+  --dark-surface: #2d3036;
+  --dark-surface-raised: #383c43;
+  --dark-surface-muted: #24272c;
+  --dark-copy: #fff7de;
+  --dark-copy-muted: #c9c4b9;
+}
+
+/* The Litwick switch changes cream/white paper surfaces only. The surrounding
+   page, team colors, type colors, and existing comic accents stay untouched. */
+:root[data-theme="dark"] .league-button,
+:root[data-theme="dark"] .coming-soon-card,
+:root[data-theme="dark"] .comic-panel,
+:root[data-theme="dark"] .pokemon-detail-shell,
+:root[data-theme="dark"] .detail-loading,
+:root[data-theme="dark"] .detail-error,
+:root[data-theme="dark"] .team-stat-card,
+:root[data-theme="dark"] .draft-stats > div,
+:root[data-theme="dark"] .roster-panel,
+:root[data-theme="dark"] .team-pokemon-card,
+:root[data-theme="dark"] .team-gate,
+:root[data-theme="dark"] .team-editor,
+:root[data-theme="dark"] .admin-panel:not(.admin-hero),
+:root[data-theme="dark"] .admin-tool {
+  background-color: var(--dark-surface);
+  color: var(--dark-copy);
+}
+
+:root[data-theme="dark"] .league-button,
+:root[data-theme="dark"] .coming-soon-card,
+:root[data-theme="dark"] .comic-panel,
+:root[data-theme="dark"] .team-stat-card,
+:root[data-theme="dark"] .roster-panel {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.09) 1.1px, transparent 1.5px);
+}
+
+:root[data-theme="dark"] .button-kicker,
+:root[data-theme="dark"] .button-copy > span:last-child,
+:root[data-theme="dark"] .coming-soon-card p:not(.home-eyebrow),
+:root[data-theme="dark"] .setup-fields label,
+:root[data-theme="dark"] .filter-grid label,
+:root[data-theme="dark"] .clear-filters,
+:root[data-theme="dark"] .detail-kicker,
+:root[data-theme="dark"] .detail-ability p,
+:root[data-theme="dark"] .detail-mega-card p,
+:root[data-theme="dark"] .detail-move p,
+:root[data-theme="dark"] .detail-stat span,
+:root[data-theme="dark"] .detail-bst,
+:root[data-theme="dark"] .detail-count,
+:root[data-theme="dark"] .detail-no-results,
+:root[data-theme="dark"] .clock-copy > p:last-child,
+:root[data-theme="dark"] .draft-stats span,
+:root[data-theme="dark"] .recommendation-heading > p:last-child,
+:root[data-theme="dark"] .filter-note,
+:root[data-theme="dark"] .move-suggestion span,
+:root[data-theme="dark"] .roster-slot small,
+:root[data-theme="dark"] .roster-slot--empty,
+:root[data-theme="dark"] .draft-log > p,
+:root[data-theme="dark"] .league-roster-card > p,
+:root[data-theme="dark"] .team-stat-card > span,
+:root[data-theme="dark"] .team-stat-card small,
+:root[data-theme="dark"] .roster-empty span,
+:root[data-theme="dark"] .team-pokemon-card p,
+:root[data-theme="dark"] .team-gate p:not(.team-eyebrow),
+:root[data-theme="dark"] .team-editor-note,
+:root[data-theme="dark"] .team-editor-status,
+:root[data-theme="dark"] .managed-slot small,
+:root[data-theme="dark"] .pokemon-result small,
+:root[data-theme="dark"] .point-row small {
+  color: var(--dark-copy-muted);
+}
+
+:root[data-theme="dark"] .button-arrow,
+:root[data-theme="dark"] .coming-soon-card a,
+:root[data-theme="dark"] .setup-rule,
+:root[data-theme="dark"] input,
+:root[data-theme="dark"] select,
+:root[data-theme="dark"] .comic-button:not(.comic-button--primary):not(.comic-button--danger),
+:root[data-theme="dark"] .type-badge,
+:root[data-theme="dark"] .detail-type-pill,
+:root[data-theme="dark"] .detail-stat,
+:root[data-theme="dark"] .detail-move-tools input,
+:root[data-theme="dark"] .detail-move-tools select,
+:root[data-theme="dark"] .team-editor-close,
+:root[data-theme="dark"] .team-editor-cancel,
+:root[data-theme="dark"] .edit-team-button,
+:root[data-theme="dark"] .move-suggestions,
+:root[data-theme="dark"] .move-suggestion,
+:root[data-theme="dark"] .roster-slot,
+:root[data-theme="dark"] .admin-button--advance,
+:root[data-theme="dark"] .admin-team-button,
+:root[data-theme="dark"] .managed-slot,
+:root[data-theme="dark"] .pokemon-result,
+:root[data-theme="dark"] .point-row,
+:root[data-theme="dark"] .matchup-row,
+:root[data-theme="dark"] .bracket-game,
+:root[data-theme="dark"] .point-tier {
+  background: var(--dark-surface-raised);
+  color: var(--dark-copy);
+}
+
+:root[data-theme="dark"] input::placeholder {
+  color: #aaa69d;
+}
+
+:root[data-theme="dark"] .search-box {
+  background: var(--dark-surface);
+  outline-color: #5b6069;
+}
+
+:root[data-theme="dark"] .search-box input,
+:root[data-theme="dark"] .search-icon,
+:root[data-theme="dark"] #clearSearch {
+  color: var(--dark-copy);
+}
+
+:root[data-theme="dark"] .tier-filter.is-active,
+:root[data-theme="dark"] .tier-filter:hover,
+:root[data-theme="dark"] .draft-view-tabs button.is-active {
+  background: var(--dark-surface-raised);
+  color: var(--dark-copy);
+}
+
+:root[data-theme="dark"] .pokemon-card,
+:root[data-theme="dark"] .draft-card {
+  background:
+    linear-gradient(var(--dark-surface), var(--dark-surface)) padding-box,
+    linear-gradient(135deg, var(--type-one) 0 49.8%, var(--type-two) 50.2% 100%) border-box;
+  color: var(--dark-copy);
+}
+
+:root[data-theme="dark"] .draft-card .card-info {
+  color: #fff;
+}
+
+:root[data-theme="dark"] .draft-card .tier-label,
+:root[data-theme="dark"] .draft-card .pokemon-name,
+:root[data-theme="dark"] .draft-card .type-badge {
+  color: #fff;
+}
+
+:root[data-theme="dark"] .draft-card .point-badge,
+:root[data-theme="dark"] .draft-card .point-badge strong,
+:root[data-theme="dark"] .draft-card .point-badge span {
+  color: #111;
+}
+
+:root[data-theme="dark"] .draft-card {
+  background:
+    linear-gradient(var(--dark-surface), var(--dark-surface)) padding-box,
+    linear-gradient(135deg, var(--type-one) 0 49.8%, var(--type-two) 50.2% 100%) border-box;
+}
+
+:root[data-theme="dark"] .team-track-card,
+:root[data-theme="dark"] .team-round-pick,
+:root[data-theme="dark"] .team-round-pick.is-filled,
+:root[data-theme="dark"] .recommendation,
+:root[data-theme="dark"] .filter-panel,
+:root[data-theme="dark"] .roster-pick,
+:root[data-theme="dark"] .league-roster-pick {
+  background-color: var(--dark-surface-raised);
+  color: var(--dark-copy);
+}
+
+:root[data-theme="dark"] .draft-stats > div {
+  background: var(--dark-surface-raised);
+  color: var(--dark-copy);
+}
+
+:root[data-theme="dark"] .team-track-card.is-on-clock {
+  background-color: #45433a;
+}
+
+:root[data-theme="dark"] .detail-header,
+:root[data-theme="dark"] .detail-panel,
+:root[data-theme="dark"] .detail-ability,
+:root[data-theme="dark"] .detail-mega-card,
+:root[data-theme="dark"] .detail-move,
+:root[data-theme="dark"] .detail-mega-panel,
+:root[data-theme="dark"] .team-editor-preview {
+  background: var(--dark-surface-raised);
+  color: var(--dark-copy);
+}
+
+:root[data-theme="dark"] .detail-portrait {
+  background: color-mix(in srgb, var(--detail-type-one) 20%, var(--dark-surface-raised));
+}
+
+:root[data-theme="dark"] .detail-bst strong,
+:root[data-theme="dark"] .detail-mega-ability strong {
+  color: var(--dark-copy);
+}
+
+:root[data-theme="dark"] .team-logo-frame {
+  background: var(--dark-surface-raised);
+}
+
+:root[data-theme="dark"] .empty-roster,
+:root[data-theme="dark"] .team-empty-state,
+:root[data-theme="dark"] .week-zero-lock {
+  background: var(--dark-surface-muted);
+  color: var(--dark-copy-muted);
+}
+
+:root[data-theme="dark"] .admin-hero-stats > div,
+:root[data-theme="dark"] .admin-tabs button:not(.is-active) {
+  background: var(--dark-surface-raised);
+  color: var(--dark-copy);
+}
+
+:root[data-theme="dark"] .admin-team-button.is-active {
+  background: #263e47;
+}
+
+.theme-toggle {
+  position: fixed;
+  z-index: 20;
+  left: max(16px, env(safe-area-inset-left));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  padding: 5px;
+  border: 3px solid #111;
+  border-radius: 50%;
+  background: #fff7de;
+  box-shadow: 4px 5px 0 #111, 7px 8px 0 #766de8;
+  cursor: pointer;
+  transition: transform 150ms ease, background-color 180ms ease, box-shadow 150ms ease;
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+  transform: translateY(-3px) rotate(-3deg);
+  outline: 3px solid #fff7de;
+  outline-offset: 3px;
+  box-shadow: 5px 7px 0 #111, 9px 11px 0 #766de8;
+}
+
+.theme-toggle img {
+  display: block;
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  filter: drop-shadow(1px 2px 0 rgba(0, 0, 0, 0.24));
+}
+
+:root[data-theme="dark"] .theme-toggle {
+  background: var(--dark-surface-raised);
+  box-shadow: 4px 5px 0 #111, 7px 8px 0 #f3c93d;
+}
+
+@media (max-width: 500px) {
+  .theme-toggle {
+    width: 54px;
+    height: 54px;
+  }
+
+  .theme-toggle img {
+    width: 41px;
+    height: 41px;
+  }
+}
