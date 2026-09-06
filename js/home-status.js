@@ -28,7 +28,7 @@
 
   if (adminButton) {
     const accessCode = localStorage.getItem("pokeleague.accessCode")?.trim().toUpperCase();
-    fetch("data/teams.json?v=teams4", { cache: "no-store" })
+    fetch("data/teams.json?v=teams5", { cache: "no-store" })
       .then((response) => response.ok ? response.json() : Promise.reject())
       .then((data) => {
         if (data.accounts?.[accessCode]?.isAdmin !== true) return;

@@ -408,7 +408,7 @@
   const initialize = async () => {
     try {
       const [accountResponse, teamResponse, catalogResponse] = await Promise.all([
-        fetch("data/teams.json?v=teams4", { cache: "no-store" }),
+        fetch("data/teams.json?v=teams5", { cache: "no-store" }),
         fetch("data/league-teams.json?v=league-teams1", { cache: "no-store" }),
         fetch("data/pokemon-catalog.json?v=season-1-3"),
       ]);

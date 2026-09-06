@@ -8,6 +8,14 @@
 }
 
 .team-dashboard {
+  --team-surface: #eff8dc;
+  --team-panel: #d8f37c;
+  --team-accent: #c1e34d;
+  --team-deep: #0b493e;
+  --team-ink: #1d7753;
+  --team-highlight: #c1e34d;
+  --team-dots: rgba(34, 117, 73, 0.2);
+  --team-panel-dots: rgba(11, 73, 62, 0.28);
   display: grid;
   gap: 24px;
 }
@@ -29,10 +37,10 @@
   align-items: center;
   min-height: 390px;
   overflow: hidden;
-  background-color: #eff8dc;
-  background-image: radial-gradient(rgba(34, 117, 73, 0.2) 1.2px, transparent 1.5px);
+  background-color: var(--team-surface);
+  background-image: radial-gradient(var(--team-dots) 1.2px, transparent 1.5px);
   background-size: 8px 8px;
-  box-shadow: 9px 10px 0 #91bf2b, 15px 16px 0 #000;
+  box-shadow: 9px 10px 0 var(--team-accent), 15px 16px 0 #000;
 }
 
 .team-profile-card::before {
@@ -42,9 +50,9 @@
   top: 0;
   width: 46%;
   height: 100%;
-  background-color: #d8f37c;
+  background-color: var(--team-panel);
   background-image:
-    radial-gradient(rgba(11, 73, 62, 0.28) 1.3px, transparent 1.6px),
+    radial-gradient(var(--team-panel-dots) 1.3px, transparent 1.6px),
     repeating-linear-gradient(-45deg, transparent 0 24px, rgba(255, 255, 255, 0.2) 24px 27px);
   background-size: 8px 8px, auto;
   clip-path: polygon(0 0, 84% 0, 100% 50%, 84% 100%, 0 100%);
@@ -60,7 +68,7 @@
   height: 136%;
   transform: rotate(8deg);
   background: #111;
-  box-shadow: 11px 0 0 rgba(29, 119, 83, 0.24);
+  box-shadow: 11px 0 0 color-mix(in srgb, var(--team-ink) 24%, transparent);
   content: "";
 }
 
@@ -68,7 +76,7 @@
   position: absolute;
   inset: 0 auto 0 0;
   width: 13px;
-  background: #0b493e;
+  background: var(--team-deep);
 }
 
 .team-logo-frame {
@@ -84,7 +92,7 @@
   border: 5px solid #111;
   border-radius: 24px;
   background: #fff;
-  box-shadow: 9px 10px 0 #0b493e, 14px 15px 0 rgba(17, 17, 17, 0.28);
+  box-shadow: 9px 10px 0 var(--team-deep), 14px 15px 0 rgba(17, 17, 17, 0.28);
 }
 
 .team-logo-frame img {
@@ -102,7 +110,7 @@
 
 .team-eyebrow {
   margin: 0 0 7px;
-  color: #1d7753;
+  color: var(--team-ink);
   font-size: 12px;
   font-weight: 900;
   letter-spacing: 0.15em;
@@ -124,7 +132,7 @@
   max-width: 520px;
   font-size: clamp(46px, 5vw, 66px);
   line-height: 0.9;
-  text-shadow: 3px 3px 0 #c1e34d;
+  text-shadow: 3px 3px 0 var(--team-highlight);
 }
 
 .edit-team-button,
@@ -152,7 +160,7 @@
 .edit-team-button:hover,
 .edit-team-button:focus-visible {
   transform: translate(-1px, -1px);
-  outline: 3px solid #1d7753;
+  outline: 3px solid var(--team-ink);
   outline-offset: 3px;
 }
 
@@ -199,7 +207,7 @@
 }
 
 .team-stat-card--record {
-  --stat-accent: #c1e34d;
+  --stat-accent: var(--team-accent);
 }
 
 .team-stat-card--record::after {
@@ -528,7 +536,7 @@
     width: 110%;
     height: 6px;
     transform: rotate(-2deg);
-    box-shadow: 0 9px 0 rgba(29, 119, 83, 0.24);
+    box-shadow: 0 9px 0 color-mix(in srgb, var(--team-ink) 24%, transparent);
   }
 
   .team-logo-frame {

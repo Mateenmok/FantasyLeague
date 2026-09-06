@@ -7,6 +7,16 @@
       "accountName": "Pufferz",
       "teamName": "Boston Eeltics",
       "logo": "images/teams/boston-eeltics.webp?v=eeltics1",
+      "theme": {
+        "surface": "#eff8dc",
+        "panel": "#d8f37c",
+        "accent": "#c1e34d",
+        "deep": "#0b493e",
+        "ink": "#1d7753",
+        "highlight": "#c1e34d",
+        "dots": "rgba(34, 117, 73, 0.2)",
+        "panelDots": "rgba(11, 73, 62, 0.28)"
+      },
       "record": {
         "wins": 0,
         "losses": 0,
@@ -26,6 +36,16 @@
       "accountName": "Neto",
       "teamName": "Miami Dragapults",
       "logo": "images/teams/miami-dragapults.webp?v=dragapults1",
+      "theme": {
+        "surface": "#e6f7f6",
+        "panel": "#42bdc1",
+        "accent": "#1e9ea5",
+        "deep": "#07565f",
+        "ink": "#087b82",
+        "highlight": "#f68a35",
+        "dots": "rgba(8, 123, 130, 0.2)",
+        "panelDots": "rgba(7, 86, 95, 0.3)"
+      },
       "record": {
         "wins": 0,
         "losses": 0,

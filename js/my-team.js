@@ -73,6 +73,23 @@
     document.title = `${name} | PokeLeague`;
   };
 
+  const applyTheme = (account) => {
+    const theme = account.theme || {};
+    const properties = {
+      surface: "--team-surface",
+      panel: "--team-panel",
+      accent: "--team-accent",
+      deep: "--team-deep",
+      ink: "--team-ink",
+      highlight: "--team-highlight",
+      dots: "--team-dots",
+      panelDots: "--team-panel-dots",
+    };
+    Object.entries(properties).forEach(([key, property]) => {
+      if (theme[key]) dashboard.style.setProperty(property, theme[key]);
+    });
+  };
+
   const bindEditor = (account) => {
     const form = editor.querySelector("[data-team-form]");
     const nameInput = editor.querySelector("[data-team-name-input]");
@@ -140,7 +157,7 @@
   }
 
   Promise.all([
-    fetch("data/teams.json?v=teams4", { cache: "no-store" }),
+    fetch("data/teams.json?v=teams5", { cache: "no-store" }),
     fetch("data/league-teams.json?v=league-teams1", { cache: "no-store" }),
     fetch("data/pokemon-catalog.json?v=season-1-3"),
   ])
@@ -159,6 +176,7 @@
       const catalog = window.PokeLeagueState?.applyCatalog(baseCatalog, leagueState) || baseCatalog;
       const leagueTeams = leagueTeamData.teams || [];
       const profile = readLocalProfile(account);
+      applyTheme(account);
       renderIdentity(account, profile);
       const record = account.teamId && leagueState
         ? window.PokeLeagueState.recordsFor(leagueTeams, leagueState)[account.teamId] || account.record || {}
