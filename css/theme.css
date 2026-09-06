@@ -212,6 +212,53 @@
   background: #263e47;
 }
 
+.admin-theme-art--dark {
+  display: none;
+}
+
+:root[data-theme="dark"] .admin-theme-art--light {
+  display: none;
+}
+
+:root[data-theme="dark"] .admin-theme-art--dark {
+  display: block;
+}
+
+:root[data-theme="dark"] .admin-controls-button {
+  background-color: #83d9fa;
+  background-image: radial-gradient(rgba(10, 89, 138, 0.23) 1px, transparent 1.2px);
+  color: #092238;
+  box-shadow: 3px 3px 0 #111, 5px 5px 0 #318fc5;
+}
+
+:root[data-theme="dark"] .admin-hero {
+  background:
+    linear-gradient(122deg, transparent 0 58%, rgba(255, 255, 255, 0.3) 58.2% 59.2%, transparent 59.4%),
+    radial-gradient(circle at 68% 46%, rgba(255, 255, 255, 0.66) 0 3px, transparent 3.5px) 0 0 / 15px 15px,
+    linear-gradient(135deg, #bfeeff, #6dccf3 60%, #318fc5);
+}
+
+:root[data-theme="dark"] .admin-kicker {
+  color: #75d9ff;
+}
+
+:root[data-theme="dark"] .admin-hero .admin-kicker {
+  color: #075781;
+}
+
+:root[data-theme="dark"] .admin-mew {
+  filter: drop-shadow(8px 10px 0 rgba(6, 67, 105, 0.25));
+}
+
+:root[data-theme="dark"] .admin-tabs button.is-active {
+  background: #70cff5;
+  color: #092238;
+}
+
+:root[data-theme="dark"] .admin-tool {
+  box-shadow: 8px 9px 0 #318fc5, 13px 14px 0 #000;
+}
+
 .theme-toggle {
   position: fixed;
   z-index: 20;
