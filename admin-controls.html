@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="icon" type="image/webp" href="images/favicon.webp">
+  <title>Admin Controls | PokeLeague</title>
+  <meta name="description" content="Manage the Flash Family League season, schedules, rosters, scores, playoffs, and point values.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jersey+25&amp;family=Roboto+Condensed:wght@500;700;900&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/home.css?v=league-home-10">
+  <link rel="stylesheet" href="css/admin-controls.css?v=admin-controls-2">
+  <script src="js/league-state.js?v=league-state-1" defer></script>
+  <script src="js/admin-controls.js?v=admin-controls-1" defer></script>
+</head>
+<body>
+  <div class="home-silhouettes" aria-hidden="true">
+    <span class="home-silhouette home-silhouette--swampert"></span>
+    <span class="home-silhouette home-silhouette--blaziken"></span>
+    <span class="home-silhouette home-silhouette--sceptile"></span>
+    <span class="home-silhouette home-silhouette--rillaboom"></span>
+    <span class="home-silhouette home-silhouette--luxray"></span>
+    <span class="home-silhouette home-silhouette--staraptor"></span>
+  </div>
+
+  <div class="home-shell admin-shell">
+    <header class="home-header">
+      <a class="title-link" href="home.html"><span aria-hidden="true">←</span> League Home</a>
+      <a class="home-brand" href="home.html" aria-label="PokeLeague home">
+        <img src="images/favicon.webp" alt="" width="50" height="50">
+        <span>PokeLeague</span>
+      </a>
+      <span class="season-mark">Season <span data-admin-season>1</span></span>
+    </header>
+
+    <main class="admin-main">
+      <section class="admin-gate admin-panel" data-admin-gate hidden>
+        <img src="images/navigation/mew-admin.png?v=mew-admin1" alt="" width="120" height="120">
+        <p class="admin-kicker">Restricted panel</p>
+        <h1>Admin pass required</h1>
+        <p>This account is not assigned league-admin access.</p>
+        <a class="admin-button admin-button--dark" href="home.html">Return to League Home</a>
+      </section>
+
+      <section class="admin-workspace" data-admin-workspace hidden>
+        <section class="admin-hero admin-panel" aria-labelledby="adminTitle">
+          <div class="admin-hero-copy">
+            <p class="admin-kicker">League command center</p>
+            <h1 id="adminTitle">Admin Controls</h1>
+            <p>Manage every roster, matchup, score, and season rule from one board.</p>
+            <button class="admin-button admin-button--advance" type="button" data-advance-week>
+              Advance to Week <span data-next-week>1</span>
+            </button>
+          </div>
+          <img class="admin-mew" src="images/navigation/mew-admin.png?v=mew-admin1" alt="" width="190" height="190">
+          <div class="admin-hero-stats" aria-label="League status">
+            <div><span>Current week</span><strong data-current-week>0</strong></div>
+            <div><span>Season length</span><strong><span data-total-weeks>10</span> weeks</strong></div>
+            <div><span>Point cap</span><strong data-point-cap>50</strong></div>
+          </div>
+        </section>
+
+        <nav class="admin-tabs" aria-label="Admin tools">
+          <button class="is-active" type="button" data-admin-tab="rosters">Manage Rosters</button>
+          <button type="button" data-admin-tab="scores" data-score-tab>Input Scores</button>
+          <button type="button" data-admin-tab="schedule">Schedule</button>
+          <button type="button" data-admin-tab="season">Season Settings</button>
+          <button type="button" data-admin-tab="playoffs">Playoffs</button>
+          <button type="button" data-admin-tab="points">Point Values</button>
+        </nav>
+
+        <section class="admin-tool" data-admin-panel="rosters">
+          <div class="admin-section-heading">
+            <div><p class="admin-kicker">Team builder</p><h2>Manage Rosters</h2></div>
+            <p>Choose a team, then add or remove Pokémon. A Pokémon can only belong to one team.</p>
+          </div>
+          <div class="admin-team-picker" data-roster-teams></div>
+          <div class="roster-admin-grid">
+            <section class="admin-panel roster-editor" aria-labelledby="selectedTeamName">
+              <div class="selected-team-heading">
+                <img data-selected-team-logo src="images/teams/draft/boston-eeltics.png" alt="" width="92" height="92">
+                <div>
+                  <p class="admin-kicker">Selected team</p>
+                  <h3 id="selectedTeamName" data-selected-team-name>Boston Eeltics</h3>
+                  <span data-selected-team-budget>0 / 50 points</span>
+                </div>
+              </div>
+              <div class="managed-roster" data-managed-roster></div>
+            </section>
+            <section class="admin-panel pokemon-picker" aria-labelledby="pokemonPickerTitle">
+              <p class="admin-kicker">Available pool</p>
+              <h3 id="pokemonPickerTitle">Add Pokémon</h3>
+              <label for="adminPokemonSearch">Search by Pokémon name</label>
+              <input id="adminPokemonSearch" data-roster-search type="search" placeholder="Try Swampert…" autocomplete="off">
+              <div class="pokemon-picker-results" data-roster-results></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="admin-tool" data-admin-panel="scores" hidden>
+          <div class="admin-section-heading">
+            <div><p class="admin-kicker">Weekly results</p><h2>Input Scores</h2></div>
+            <p>Enter the result for every matchup in the current week.</p>
+          </div>
+          <div class="week-zero-lock admin-panel" data-score-lock hidden>
+            <strong>Scores unlock in Week 1</strong>
+            <span>Week 0 is reserved for setup and drafting.</span>
+          </div>
+          <form class="admin-panel matchup-form" data-score-form>
+            <div class="matchup-rows" data-score-rows></div>
+            <button class="admin-button admin-button--primary" type="submit">Save Scores</button>
+          </form>
+        </section>
+
+        <section class="admin-tool" data-admin-panel="schedule" hidden>
+          <div class="admin-section-heading">
+            <div><p class="admin-kicker">Weekly pairings</p><h2>Week <span data-schedule-week>0</span> Schedule</h2></div>
+            <p>Each team must appear exactly once across the seven matchups.</p>
+          </div>
+          <form class="admin-panel matchup-form" data-schedule-form>
+            <div class="matchup-rows" data-schedule-rows></div>
+            <button class="admin-button admin-button--primary" type="submit">Save Week Schedule</button>
+          </form>
+        </section>
+
+        <section class="admin-tool" data-admin-panel="season" hidden>
+          <div class="admin-section-heading">
+            <div><p class="admin-kicker">League rules</p><h2>Season Settings</h2></div>
+            <p>Change the regular-season length and roster point budget.</p>
+          </div>
+          <form class="settings-grid" data-season-form>
+            <label class="admin-panel setting-card" for="seasonWeeks">
+              <span>Regular-season weeks</span>
+              <input id="seasonWeeks" data-season-weeks type="number" min="1" max="52" required>
+              <small>Cannot be shorter than the current week.</small>
+            </label>
+            <label class="admin-panel setting-card" for="seasonPointCap">
+              <span>Team point cap</span>
+              <input id="seasonPointCap" data-season-point-cap type="number" min="1" max="500" required>
+              <small>Draft Room and roster totals use this value.</small>
+            </label>
+            <button class="admin-button admin-button--primary" type="submit">Save Season Rules</button>
+          </form>
+        </section>
+
+        <section class="admin-tool" data-admin-panel="playoffs" hidden>
+          <div class="admin-section-heading">
+            <div><p class="admin-kicker">Postseason builder</p><h2>Set Playoffs</h2></div>
+            <p>Choose the field size and assign every seed. The first-round bracket updates below.</p>
+          </div>
+          <form class="admin-panel playoff-form" data-playoff-form>
+            <label for="playoffCount">Teams in playoffs</label>
+            <select id="playoffCount" data-playoff-count>
+              <option value="2">2 teams</option><option value="4">4 teams</option><option value="6">6 teams</option>
+              <option value="8">8 teams</option><option value="10">10 teams</option><option value="12">12 teams</option><option value="14">14 teams</option>
+            </select>
+            <div class="playoff-seeds" data-playoff-seeds></div>
+            <div class="bracket-preview" data-bracket-preview></div>
+            <button class="admin-button admin-button--primary" type="submit">Save Playoff Bracket</button>
+          </form>
+        </section>
+
+        <section class="admin-tool" data-admin-panel="points" hidden>
+          <div class="admin-section-heading">
+            <div><p class="admin-kicker">Tier editor</p><h2>Modify Point Values</h2></div>
+            <p>New values immediately recalculate the Pokémon’s tier everywhere cards are shown.</p>
+          </div>
+          <section class="admin-panel point-editor">
+            <label for="pointPokemonSearch">Search Pokémon</label>
+            <input id="pointPokemonSearch" data-point-search type="search" placeholder="Search by name…" autocomplete="off">
+            <div class="point-results" data-point-results></div>
+          </section>
+        </section>
+
+        <p class="admin-status" data-admin-status role="status" aria-live="polite"></p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "teams": [
+    { "id": "daytona-torterras", "name": "Daytona Torterras", "logo": "images/teams/draft/daytona-torterras.png", "mascot": "Torterra" },
+    { "id": "kansas-krooks", "name": "Kansas Krooks", "logo": "images/teams/draft/kansas-krooks.png", "mascot": "Krookodile" },
+    { "id": "south-jersey-hounds", "name": "South Jersey Hounds", "logo": "images/teams/draft/south-jersey-hounds.png", "mascot": "Houndoom" },
+    { "id": "chicago-conkquerers", "name": "Chicago Conkquerers", "logo": "images/teams/draft/chicago-conkquerers.png", "mascot": "Conkeldurr" },
+    { "id": "las-vegas-gatrs", "name": "Las Vegas Gatrs", "logo": "images/teams/draft/las-vegas-gatrs.png", "mascot": "Feraligatr" },
+    { "id": "north-carolina-ceruledge", "name": "North Carolina Ceruledge", "logo": "images/teams/draft/north-carolina-ceruledge.png", "mascot": "Ceruledge" },
+    { "id": "uconn-arcanines", "name": "UConn Arcanines", "logo": "images/teams/draft/uconn-arcanines.png", "mascot": "Hisuian Arcanine" },
+    { "id": "boston-eeltics", "name": "Boston Eeltics", "logo": "images/teams/draft/boston-eeltics.png", "mascot": "Eelektross" },
+    { "id": "sunnyshore-city-shelter", "name": "Sunnyshore City Shelter", "logo": "images/teams/draft/sunnyshore-city-shelter.png", "mascot": "Hisuian Goodra" },
+    { "id": "massachusetts-midnight", "name": "Massachusetts Midnight", "logo": "images/teams/draft/massachusetts-midnight.png", "mascot": "Umbreon" },
+    { "id": "miami-dragapults", "name": "Miami Dragapults", "logo": "images/teams/draft/miami-dragapults.png", "mascot": "Dragapult" },
+    { "id": "san-francisco-soulfire", "name": "San Francisco Soulfire", "logo": "images/teams/draft/san-francisco-soulfire.png", "mascot": "Chandelure" },
+    { "id": "stockholm-spin-cycles", "name": "Stockholm Spin Cycles", "logo": "images/teams/draft/stockholm-spin-cycles.png", "mascot": "Rotom-Wash" },
+    { "id": "dallas-disguises", "name": "Dallas Disguises", "logo": "images/teams/draft/dallas-disguises.png", "mascot": "Mimikyu" }
+  ]
+}

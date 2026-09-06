@@ -19,7 +19,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Jersey+25&amp;family=Roboto+Condensed:wght@700;900&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/home.css?v=league-home-9">
   <link rel="stylesheet" href="css/my-team.css?v=my-team3">
-  <script src="js/my-team.js?v=my-team1" defer></script>
+  <script src="js/league-state.js?v=league-state-1" defer></script>
+  <script src="js/my-team.js?v=my-team2" defer></script>
 </head>
 <body>
   <div class="home-silhouettes" aria-hidden="true">
@@ -38,7 +39,7 @@
         <img src="images/favicon.webp" alt="" width="50" height="50">
         <span>PokeLeague</span>
       </a>
-      <span class="season-mark">Season 1</span>
+      <span class="season-mark">Season <span data-team-season>1</span></span>
     </header>
 
     <main class="team-main">
@@ -66,7 +67,7 @@
           <article class="team-stat-card team-stat-card--record">
             <span>Overall record</span>
             <strong data-team-record>0–0</strong>
-            <small>Season 1</small>
+            <small>Season <span data-record-season>1</span></small>
           </article>
           <article class="team-stat-card team-stat-card--matchup">
             <span>Week <b data-matchup-week>0</b> matchup</span>

@@ -89,6 +89,18 @@
     </article>
   `).join("");
 
+  const renderDraftRoles = (roles = []) => {
+    if (!roles.length) return "";
+    return `
+      <section class="detail-panel detail-role-panel">
+        <h3>Draft Roles</h3>
+        <div class="detail-role-list">
+          ${roles.map((role) => `<span class="detail-role-chip">${escapeHtml(role)}</span>`).join("")}
+        </div>
+      </section>
+    `;
+  };
+
   const moveMeta = (move) => {
     const pieces = [move.category];
     if (move.power) pieces.push(`${move.power} power`);
@@ -159,6 +171,7 @@
 
       <div class="detail-content">
         <aside class="detail-sidebar">
+          ${renderDraftRoles(pokemon.draftRoles)}
           <section class="detail-panel">
             <h3>Abilities</h3>
             <div class="detail-ability-list">${renderAbilities(baseForme?.abilities || detail.abilities)}</div>

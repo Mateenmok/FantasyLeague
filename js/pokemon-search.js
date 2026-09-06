@@ -35,6 +35,7 @@ const template = document.querySelector("#pokemonCardTemplate");
 const tierButtons = [...document.querySelectorAll(".tier-filter")];
 
 let catalog = [];
+let baseCatalog = [];
 let detailIndex = {};
 let activeTier = "All";
 
@@ -155,7 +156,8 @@ Promise.all([
     return Promise.all([catalogResponse.json(), indexResponse.json()]);
   })
   .then(([catalogData, indexData]) => {
-    catalog = catalogData;
+    baseCatalog = catalogData;
+    catalog = window.PokeLeagueState?.applyCatalog(baseCatalog) || baseCatalog;
     detailIndex = indexData;
     render();
   })
@@ -163,3 +165,15 @@ Promise.all([
     grid.setAttribute("aria-busy", "false");
     grid.innerHTML = '<p class="loading-state">The roster could not load. Please refresh and try again.</p>';
   });
+
+window.addEventListener("pokeleague:statechange", (event) => {
+  if (!baseCatalog.length) return;
+  catalog = window.PokeLeagueState?.applyCatalog(baseCatalog, event.detail) || baseCatalog;
+  render();
+});
+
+window.addEventListener("storage", (event) => {
+  if (event.key !== window.PokeLeagueState?.storageKey || !baseCatalog.length) return;
+  catalog = window.PokeLeagueState.applyCatalog(baseCatalog);
+  render();
+});

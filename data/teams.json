@@ -2,6 +2,8 @@
   "accounts": {
     "PUFF1": {
       "id": "pufferz",
+      "teamId": "boston-eeltics",
+      "isAdmin": true,
       "accountName": "Pufferz",
       "teamName": "Boston Eeltics",
       "logo": "images/teams/boston-eeltics.webp?v=eeltics1",

@@ -271,10 +271,10 @@ a {
 
 .league-menu {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   justify-content: center;
-  gap: clamp(20px, 3vw, 34px);
-  width: min(1040px, 100%);
+  gap: clamp(16px, 2vw, 24px);
+  width: min(1180px, 100%);
   margin: 0 auto;
 }
 
@@ -282,7 +282,7 @@ a {
   --button-accent: var(--cyan);
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 42%;
+  grid-template-columns: minmax(0, 60%) minmax(0, 40%);
   align-items: center;
   min-height: 250px;
   overflow: hidden;
@@ -301,9 +301,9 @@ a {
 .league-button::before {
   position: absolute;
   z-index: -1;
-  right: -9%;
+  right: -6%;
   bottom: -34%;
-  width: 64%;
+  width: 46%;
   aspect-ratio: 1;
   border: 5px solid var(--line);
   border-radius: 50%;
@@ -336,6 +336,21 @@ a {
   transform: rotate(2deg);
 }
 
+.league-button--draft-room {
+  --button-accent: #e9c74d;
+  transform: rotate(0.35deg);
+}
+
+.league-button--draft-room::before {
+  background: #dfbc42;
+}
+
+.league-button--draft-room > img {
+  max-width: 154px;
+  max-height: 190px;
+  transform: rotate(-2deg);
+}
+
 .league-button:hover,
 .league-button:focus-visible {
   z-index: 2;
@@ -364,14 +379,14 @@ a {
 
 .button-copy strong {
   font-family: "Jersey 25", Impact, sans-serif;
-  font-size: clamp(42px, 5vw, 62px);
+  font-size: clamp(40px, 3.6vw, 52px);
   font-weight: 400;
   line-height: 0.84;
   text-transform: uppercase;
 }
 
 .button-copy > span:last-child {
-  max-width: 220px;
+  max-width: 185px;
   margin-top: 5px;
   color: #4f4a41;
   font-size: 13px;
@@ -572,6 +587,14 @@ a {
   }
 }
 
+@media (min-width: 761px) and (max-width: 1040px) {
+  .league-menu { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  .league-button--draft-room {
+    grid-column: 1 / -1;
+  }
+}
+
 @media (max-width: 500px) {
   .home-main {
     align-content: start;
@@ -589,6 +612,11 @@ a {
   .league-button {
     grid-template-columns: minmax(0, 1fr) 39%;
     min-height: 190px;
+  }
+
+  .league-button--draft-room {
+    grid-column: auto;
+    grid-template-columns: minmax(0, 1fr) 39%;
   }
 
   .button-copy {

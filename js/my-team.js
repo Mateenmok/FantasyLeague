@@ -140,31 +140,47 @@
   }
 
   Promise.all([
-    fetch("data/teams.json?v=teams1", { cache: "no-store" }),
+    fetch("data/teams.json?v=teams2", { cache: "no-store" }),
+    fetch("data/league-teams.json?v=league-teams1", { cache: "no-store" }),
     fetch("data/pokemon-catalog.json?v=season-1-3"),
   ])
-    .then(async ([teamsResponse, catalogResponse]) => {
-      if (!teamsResponse.ok || !catalogResponse.ok) throw new Error("Team unavailable");
-      return Promise.all([teamsResponse.json(), catalogResponse.json()]);
+    .then(async ([teamsResponse, leagueTeamsResponse, catalogResponse]) => {
+      if (!teamsResponse.ok || !leagueTeamsResponse.ok || !catalogResponse.ok) throw new Error("Team unavailable");
+      return Promise.all([teamsResponse.json(), leagueTeamsResponse.json(), catalogResponse.json()]);
     })
-    .then(([teamData, catalog]) => {
+    .then(([teamData, leagueTeamData, baseCatalog]) => {
       const account = teamData.accounts?.[accessCode];
       if (!account) {
         showGate();
         return;
       }
 
+      const leagueState = window.PokeLeagueState?.read();
+      const catalog = window.PokeLeagueState?.applyCatalog(baseCatalog, leagueState) || baseCatalog;
+      const leagueTeams = leagueTeamData.teams || [];
       const profile = readLocalProfile(account);
       renderIdentity(account, profile);
-      const record = account.record || {};
+      const record = account.teamId && leagueState
+        ? window.PokeLeagueState.recordsFor(leagueTeams, leagueState)[account.teamId] || account.record || {}
+        : account.record || {};
       const recordText = `${record.wins || 0}–${record.losses || 0}${record.ties ? `–${record.ties}` : ""}`;
       document.querySelector("[data-team-record]").textContent = recordText;
-      document.querySelector("[data-matchup-week]").textContent = account.weeklyMatchup?.week ?? 0;
-      document.querySelector("[data-matchup-opponent]").textContent = account.weeklyMatchup?.opponent || "Schedule pending";
-      document.querySelector("[data-matchup-note]").textContent = account.weeklyMatchup?.opponent
+      const currentWeek = leagueState?.currentWeek ?? account.weeklyMatchup?.week ?? 0;
+      const matchup = (leagueState?.schedules?.[currentWeek] || []).find((candidate) => (
+        candidate.home === account.teamId || candidate.away === account.teamId
+      ));
+      const opponentId = matchup ? (matchup.home === account.teamId ? matchup.away : matchup.home) : null;
+      const opponent = leagueTeams.find((team) => team.id === opponentId);
+      const opponentName = opponent?.name || account.weeklyMatchup?.opponent || "Schedule pending";
+      document.querySelector("[data-team-season]").textContent = leagueState?.season || 1;
+      document.querySelector("[data-record-season]").textContent = leagueState?.season || 1;
+      document.querySelector("[data-matchup-week]").textContent = currentWeek;
+      document.querySelector("[data-matchup-opponent]").textContent = opponentName;
+      document.querySelector("[data-matchup-note]").textContent = opponent
         ? "Your next battle is set."
         : "Your opponent will appear here.";
-      renderRoster(account.roster || [], catalog);
+      const hasManagedRoster = account.teamId && Object.prototype.hasOwnProperty.call(leagueState?.rosters || {}, account.teamId);
+      renderRoster(hasManagedRoster ? leagueState.rosters[account.teamId] : account.roster || [], catalog);
       bindEditor(account);
       gate.hidden = true;
       dashboard.hidden = false;

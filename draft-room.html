@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="icon" type="image/webp" href="images/favicon.webp">
+  <title>Draft Room | PokeLeague</title>
+  <meta name="description" content="Run a Flash Family League mock draft with the official point board, roles, typings, and Pokémon Champions moves.">
+  <meta property="og:title" content="PokeLeague Draft Room">
+  <meta property="og:description" content="Build a roster in the Flash Family League mock draft room.">
+  <meta property="og:image" content="https://www.pokeleague.org/images/og.png">
+  <meta property="og:url" content="https://www.pokeleague.org/draft-room.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jersey+25&amp;family=Roboto+Condensed:wght@500;700;900&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/pokemon-details.css?v=pokemon-details-2">
+  <link rel="stylesheet" href="css/draft-room.css?v=draft-room-4">
+</head>
+<body>
+  <header class="site-header">
+    <a class="back-link" href="home.html"><span aria-hidden="true">←</span> League Home</a>
+    <a class="brand-lockup" href="home.html" aria-label="PokeLeague home">
+      <img src="images/favicon.webp" alt="" width="52" height="52">
+      <span>PokeLeague</span>
+    </a>
+    <span class="season-stamp">Season 1</span>
+  </header>
+
+  <main class="draft-shell">
+    <section class="draft-intro" aria-labelledby="pageTitle">
+      <div class="draft-intro-copy">
+        <p class="eyebrow">Flash Family League</p>
+        <h1 id="pageTitle">Draft Room</h1>
+        <p>Build a 10-Pokémon roster without breaking the <span data-draft-point-cap>50</span>-point cap.</p>
+      </div>
+      <img src="images/navigation/draft-room-kingambit.webp?v=draft-room1" alt="" width="250" height="375">
+      <span class="intro-callout" aria-hidden="true">Your move!</span>
+    </section>
+
+    <section class="draft-setup comic-panel" data-draft-setup aria-labelledby="setupTitle">
+      <div class="panel-title-row">
+        <div>
+          <p class="panel-kicker">Mock draft setup</p>
+          <h2 id="setupTitle">Choose your seat</h2>
+        </div>
+        <span class="setup-rule">14 teams · 10 rounds · snake order</span>
+      </div>
+      <div class="setup-fields">
+        <label>
+          <span>Your team</span>
+          <select data-team-select></select>
+        </label>
+        <label>
+          <span>Draft mode</span>
+          <select data-mode-select>
+            <option value="practice">Practice — control one team</option>
+            <option value="cpu">CPU mock — watch all teams</option>
+          </select>
+        </label>
+        <button class="comic-button comic-button--primary" type="button" data-start-draft>Start mock draft</button>
+      </div>
+    </section>
+
+    <section class="draft-app" data-draft-app hidden>
+      <section class="draft-team-stage comic-panel" aria-labelledby="clockTeamName">
+        <div class="draft-command">
+          <div class="clock-copy">
+            <p class="panel-kicker" data-clock-kicker>On the clock</p>
+            <h2 id="clockTeamName" data-clock-team>Boston Eeltics</h2>
+            <p data-clock-detail>Round 1 · Pick 8</p>
+          </div>
+          <div class="command-actions">
+            <button class="comic-button" type="button" data-auto-pick>Sim to my pick</button>
+            <button class="comic-button comic-button--danger" type="button" data-new-draft>New mock</button>
+          </div>
+        </div>
+        <div class="team-board-scroll" tabindex="0" aria-label="All fourteen teams and their draft picks">
+          <div class="team-board" data-team-board></div>
+        </div>
+      </section>
+
+      <div class="draft-stats" aria-label="Draft status">
+        <div><span>Overall pick</span><strong data-overall-pick>1 / 140</strong></div>
+        <div><span>Round</span><strong data-round>1</strong></div>
+        <div><span>Points used</span><strong data-points-used>0 / 50</strong></div>
+        <div><span>Your roster</span><strong data-roster-count>0 / 10</strong></div>
+      </div>
+
+      <section class="recommendation comic-panel" aria-labelledby="recommendTitle">
+        <div class="recommendation-heading">
+          <p class="panel-kicker">Recommended pick</p>
+          <h2 id="recommendTitle" data-recommendation-name>Waiting for your turn…</h2>
+          <p data-recommendation-reason>The room is evaluating the board.</p>
+        </div>
+        <div class="recommendation-pick" data-recommendation-pick></div>
+      </section>
+
+      <div class="draft-view-tabs" role="tablist" aria-label="Draft Room views">
+        <button class="is-active" type="button" role="tab" aria-selected="true" data-view-button="board">Draft board</button>
+        <button type="button" role="tab" aria-selected="false" data-view-button="rosters">League rosters</button>
+      </div>
+
+      <section data-view="board">
+        <div class="draft-layout">
+          <div class="board-column">
+            <section class="draft-filters comic-panel" aria-labelledby="filterTitle">
+              <div class="filter-heading">
+                <div>
+                  <p class="panel-kicker">Available Pokémon</p>
+                  <h2 id="filterTitle"><span data-result-count>0</span> on the board</h2>
+                </div>
+                <button class="clear-filters" type="button" data-clear-filters>Clear filters</button>
+              </div>
+              <div class="filter-grid">
+                <label class="filter-search filter-wide">
+                  <span>Pokémon search</span>
+                  <input type="search" placeholder="Search by name…" data-name-filter autocomplete="off">
+                </label>
+                <label>
+                  <span>Points</span>
+                  <select data-point-filter><option value="">All points</option></select>
+                </label>
+                <label>
+                  <span>Type</span>
+                  <select data-type-filter><option value="">All types</option></select>
+                </label>
+                <label>
+                  <span>Role</span>
+                  <select data-role-filter><option value="">All roles</option></select>
+                </label>
+                <label class="move-filter filter-wide">
+                  <span>Search by Champions move</span>
+                  <input type="search" placeholder="Try Tailwind or Fake Out…" data-move-filter autocomplete="off" aria-expanded="false" aria-controls="moveSuggestions">
+                  <div class="move-suggestions" id="moveSuggestions" data-move-suggestions hidden></div>
+                </label>
+              </div>
+              <p class="filter-note">Filters combine. Drafted Pokémon and picks you cannot legally afford are hidden automatically.</p>
+            </section>
+
+            <div class="pokemon-draft-grid" data-pokemon-grid aria-live="polite" aria-busy="true">
+              <p class="loading-state">Opening the draft board…</p>
+            </div>
+            <p class="empty-state" data-empty-state hidden>No legal Pokémon match all five filters.</p>
+          </div>
+
+          <aside class="draft-sidebar">
+            <section class="roster-panel comic-panel">
+              <div class="sidebar-heading">
+                <div><p class="panel-kicker">Your picks</p><h2 data-user-team-name>Boston Eeltics</h2></div>
+                <span data-budget-left>50 left</span>
+              </div>
+              <div class="roster-slots" data-user-roster></div>
+            </section>
+            <section class="draft-log-panel comic-panel">
+              <div class="sidebar-heading"><div><p class="panel-kicker">Latest action</p><h2>Draft log</h2></div></div>
+              <div class="draft-log" data-draft-log><p>No picks yet.</p></div>
+            </section>
+          </aside>
+        </div>
+      </section>
+
+      <section data-view="rosters" hidden>
+        <div class="league-rosters" data-league-rosters></div>
+      </section>
+    </section>
+  </main>
+
+  <template id="draftCardTemplate">
+    <article class="draft-card">
+      <div class="card-halftone" aria-hidden="true"></div>
+      <span class="tier-label"><span class="tier-symbol" aria-hidden="true"></span><span class="tier-name"></span></span>
+      <span class="point-badge"><strong class="point-value"></strong><span>PTS</span></span>
+      <span class="mega-mark" title="Mega Evolution available" hidden><img src="images/icons/mega-evolution-v2.webp?v=mega2" alt="" width="32" height="32"><span class="visually-hidden">Mega Evolution available</span></span>
+      <button class="card-info" type="button" aria-label="View Pokémon details">
+        <span class="sprite-stage"><img class="pokemon-sprite" alt="" width="112" height="112" loading="lazy" decoding="async"></span>
+        <span class="pokemon-name"></span>
+        <span class="type-list"></span>
+      </button>
+      <button class="draft-pick-button" type="button">Draft</button>
+    </article>
+  </template>
+
+  <script src="js/league-state.js?v=league-state-1" defer></script>
+  <script src="js/pokemon-details.js?v=pokemon-details-4" defer></script>
+  <script src="js/draft-room.js?v=draft-room-7" defer></script>
+</body>
+</html>
