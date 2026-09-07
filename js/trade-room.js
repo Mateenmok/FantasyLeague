@@ -205,7 +205,7 @@
       accessCode = (localStorage.getItem("pokeleague.accessCode") || sessionStorage.getItem("pokeleague.accessCode") || "").trim().toUpperCase();
       const [teamResponse, accountResponse, catalogResponse, savedRosters, competition] = await Promise.all([
         fetch("data/league-teams.json?v=league-teams1", { cache: "no-store" }),
-        fetch("data/teams.json?v=teams7", { cache: "no-store" }),
+        fetch("data/teams.json?v=teams8", { cache: "no-store" }),
         fetch("data/pokemon-catalog.json?v=season-1-3"),
         window.PokeLeagueRosters.read(),
         window.PokeLeagueCompetition.read(),
