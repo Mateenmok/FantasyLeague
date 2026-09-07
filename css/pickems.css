@@ -18,15 +18,15 @@
 .pickems-hero {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 245px;
+  grid-template-columns: minmax(0, 1fr) 330px;
   align-items: center;
   min-height: 250px;
   padding: 32px 44px;
   overflow: hidden;
   background:
-    radial-gradient(rgba(27, 129, 112, .18) 1.2px, transparent 1.55px) 0 0 / 8px 8px,
-    linear-gradient(125deg, #fff3f7 0 53%, #d7f0e6 53% 76%, #91d1bd 76%);
-  box-shadow: 9px 10px 0 #e8a8c5, 15px 16px 0 #000;
+    radial-gradient(rgba(45, 101, 130, .2) 1.2px, transparent 1.55px) 0 0 / 8px 8px,
+    linear-gradient(125deg, #fff4f1 0 53%, #d9eaf2 53% 76%, #83b9d1 76%);
+  box-shadow: 9px 10px 0 #cf5665, 15px 16px 0 #000;
 }
 
 .pickems-hero::before {
@@ -45,15 +45,15 @@
 
 .pickems-hero > img {
   justify-self: center;
-  width: 230px;
-  height: 230px;
+  width: 320px;
+  height: 205px;
   object-fit: contain;
   filter: drop-shadow(6px 8px 0 rgba(17, 17, 17, .2));
 }
 
 .pickems-kicker {
   margin: 0 0 6px;
-  color: #12806d;
+  color: #b73549;
   font-size: 12px;
   font-weight: 900;
   letter-spacing: .15em;
@@ -72,7 +72,7 @@
 
 .pickems-hero h1 {
   font-size: clamp(78px, 10vw, 118px);
-  text-shadow: 5px 5px 0 #8cd3be;
+  text-shadow: 5px 5px 0 #8ebed3;
 }
 
 .pickems-hero > div > p:last-child {
@@ -86,10 +86,10 @@
   background-color: #fff7de;
   background-image: radial-gradient(rgba(17, 17, 17, .13) 1.1px, transparent 1.45px);
   background-size: 8px 8px;
-  box-shadow: 8px 9px 0 #8cd3be, 14px 15px 0 #000;
+  box-shadow: 8px 9px 0 #7fb6cf, 14px 15px 0 #000;
 }
 
-.leaderboard-panel { box-shadow: 8px 9px 0 #e8a8c5, 14px 15px 0 #000; }
+.leaderboard-panel { box-shadow: 8px 9px 0 #cf5665, 14px 15px 0 #000; }
 
 .pickems-section-heading {
   display: flex;
@@ -107,7 +107,7 @@
   padding: 8px 12px 7px;
   border: 2px solid #111;
   border-radius: 7px;
-  background: #c7eadf;
+  background: #d5eaf3;
   font-size: 12px;
   font-weight: 900;
   text-transform: uppercase;
@@ -125,14 +125,14 @@
   padding: 10px 13px;
   border: 3px solid #111;
   border-radius: 9px;
-  background: #dff5ee;
+  background: #dcecf3;
   box-shadow: 3px 3px 0 #111;
   font-size: 12px;
   font-weight: 900;
   text-transform: uppercase;
 }
 
-.pickems-deadline span { color: #167c6b; letter-spacing: .08em; }
+.pickems-deadline span { color: #255f7b; letter-spacing: .08em; }
 .pickems-deadline.is-locked { background: #f3c4d7; }
 .pickems-deadline.is-locked span { color: #9b244e; }
 
@@ -161,7 +161,7 @@
   border: 3px solid #111;
   border-radius: 13px;
   background:
-    linear-gradient(105deg, rgba(140, 211, 190, .22), transparent 42%, rgba(232, 168, 197, .23)),
+    linear-gradient(105deg, rgba(127, 182, 207, .24), transparent 42%, rgba(207, 86, 101, .19)),
     #fff;
   box-shadow: 5px 6px 0 #111;
   cursor: pointer;
@@ -171,7 +171,7 @@
 .pickem-matchup:hover,
 .pickem-matchup:focus-visible {
   transform: translateY(-3px);
-  outline: 3px solid #62cdb4;
+  outline: 3px solid #79b9d4;
   outline-offset: 3px;
   box-shadow: 7px 9px 0 #111;
 }
@@ -205,16 +205,16 @@
   padding: 10px 7px 9px;
   border: 3px solid #111;
   border-radius: 10px;
-  background: #eefaf6;
+  background: #edf7fb;
   color: #111;
   box-shadow: 3px 3px 0 #111;
   cursor: pointer;
 }
 
 .matchup-team:hover:not(:disabled),
-.matchup-team:focus-visible:not(:disabled) { background: #c9eee3; transform: translate(-1px, -1px); }
+.matchup-team:focus-visible:not(:disabled) { background: #d0eaf4; transform: translate(-1px, -1px); }
 .matchup-team:disabled { cursor: default; opacity: .76; }
-.matchup-team.is-picked { background: #a9e1d1; box-shadow: 4px 4px 0 #147c69, 7px 7px 0 #111; opacity: 1; }
+.matchup-team.is-picked { background: #baddea; box-shadow: 4px 4px 0 #386f8b, 7px 7px 0 #111; opacity: 1; }
 
 .matchup-team img {
   align-self: center;
@@ -233,7 +233,7 @@
 }
 
 .matchup-team span {
-  color: #167c6b;
+  color: #286783;
   font-size: 9px;
   font-weight: 900;
   letter-spacing: .07em;
@@ -247,7 +247,7 @@
   height: 42px;
   border: 3px solid #111;
   border-radius: 50%;
-  background: #f3b8d0;
+  background: #e9929e;
   font-family: "Jersey 25", Impact, sans-serif;
   font-size: 21px;
   box-shadow: 3px 3px 0 #111;
@@ -361,8 +361,8 @@
 
 :root[data-theme="dark"] .pickems-hero {
   background:
-    radial-gradient(rgba(140, 211, 190, .16) 1.2px, transparent 1.55px) 0 0 / 8px 8px,
-    linear-gradient(125deg, #272b33 0 53%, #234139 53% 76%, #276957 76%);
+    radial-gradient(rgba(131, 185, 209, .16) 1.2px, transparent 1.55px) 0 0 / 8px 8px,
+    linear-gradient(125deg, #272b33 0 53%, #263b49 53% 76%, #315e75 76%);
   color: #fff7de;
 }
 :root[data-theme="dark"] .pickems-hero > div > p:last-child,
@@ -377,8 +377,8 @@
 :root[data-theme="dark"] .pickems-pokemon { background-color: #262b32; color: #fff7de; }
 :root[data-theme="dark"] .pickems-deadline { background: #2a3d39; color: #fff7de; }
 :root[data-theme="dark"] .pickems-deadline.is-locked { background: #563242; }
-:root[data-theme="dark"] .matchup-team { background: #2a3d39; color: #fff7de; }
-:root[data-theme="dark"] .matchup-team.is-picked { background: #315f54; }
+:root[data-theme="dark"] .matchup-team { background: #293c48; color: #fff7de; }
+:root[data-theme="dark"] .matchup-team.is-picked { background: #345d70; }
 
 @media (max-width: 900px) {
   .matchup-grid { grid-template-columns: 1fr; }
@@ -388,8 +388,8 @@
 @media (max-width: 620px) {
   .pickems-shell { width: min(100% - 24px, 1180px); }
   .pickems-main { padding-top: 28px; }
-  .pickems-hero { grid-template-columns: minmax(0, 1fr) 120px; min-height: 190px; padding: 25px 20px; }
-  .pickems-hero > img { width: 120px; height: 140px; }
+  .pickems-hero { grid-template-columns: minmax(0, 1fr) 145px; min-height: 190px; padding: 25px 20px; }
+  .pickems-hero > img { width: 145px; height: 120px; }
   .pickems-hero h1 { font-size: 64px; }
   .pickems-panel { padding: 20px 14px; }
   .pickems-section-heading { align-items: flex-start; flex-direction: column; }

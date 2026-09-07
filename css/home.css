@@ -367,25 +367,27 @@ a {
 }
 
 .league-button--pickems {
-  --button-accent: #77cdb6;
-  grid-column: 1 / -1;
-  grid-template-columns: minmax(0, 72%) minmax(0, 28%);
-  min-height: 220px;
+  --button-accent: #6faecb;
   transform: rotate(0.18deg);
 }
 
 .league-button--pickems::before {
-  right: 4%;
-  bottom: -62%;
-  width: 32%;
-  background: #bde8dc;
+  background: #b9d9e8;
 }
 
 .league-button--pickems > img {
-  max-width: 205px;
-  max-height: 205px;
+  max-width: 220px;
+  max-height: 165px;
   transform: rotate(-1deg);
 }
+
+.league-button--trade-room {
+  --button-accent: #ec7b32;
+  transform: rotate(-0.24deg);
+}
+
+.league-button--trade-room::before { background: #f6c36e; }
+.league-button--trade-room > img { max-width: 190px; max-height: 198px; transform: rotate(1deg); }
 
 .league-button:hover,
 .league-button:focus-visible {
@@ -648,7 +650,8 @@ a {
 
   .league-button--draft-room,
   .league-button--standings,
-  .league-button--pickems {
+  .league-button--pickems,
+  .league-button--trade-room {
     grid-column: auto;
     grid-template-columns: minmax(0, 1fr) 39%;
   }

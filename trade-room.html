@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="icon" type="image/webp" href="images/favicon.webp">
+  <title>Trade Room | PokeLeague</title>
+  <meta name="description" content="Propose and manage weekly Flash Family League trades.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jersey+25&amp;family=Roboto+Condensed:wght@500;700;900&amp;display=swap" rel="stylesheet">
+  <script src="js/theme.js?v=dark-mode3"></script>
+  <link rel="stylesheet" href="css/home.css?v=league-home-14">
+  <link rel="stylesheet" href="css/theme.css?v=dark-mode6">
+  <link rel="stylesheet" href="css/trade-room.css?v=trade-room1">
+  <script src="js/league-state.js?v=league-state-1" defer></script>
+  <script src="js/league-rosters.js?v=league-rosters-1" defer></script>
+  <script src="js/league-competition.js?v=competition3" defer></script>
+  <script src="js/league-trades.js?v=trade-room1" defer></script>
+  <script src="js/trade-room.js?v=trade-room1" defer></script>
+</head>
+<body>
+  <div class="home-silhouettes" aria-hidden="true">
+    <span class="home-silhouette home-silhouette--blaziken"></span>
+    <span class="home-silhouette home-silhouette--luxray"></span>
+    <span class="home-silhouette home-silhouette--staraptor"></span>
+  </div>
+
+  <div class="home-shell trade-shell">
+    <header class="home-header">
+      <a class="title-link" href="home.html"><span aria-hidden="true">←</span> League Home</a>
+      <a class="home-brand" href="home.html" aria-label="PokeLeague home">
+        <img src="images/favicon.webp" alt="" width="50" height="50">
+        <span>PokeLeague</span>
+      </a>
+      <span class="season-mark">Season 1</span>
+    </header>
+
+    <main class="trade-main">
+      <section class="trade-hero" aria-labelledby="tradeTitle">
+        <div>
+          <p class="trade-kicker">Make an offer</p>
+          <h1 id="tradeTitle">Trade Room</h1>
+          <p>Swap up to two Pokémon per side. Every completed deal must keep both rosters legal.</p>
+        </div>
+        <img src="images/navigation/trade-room-arcanine.png?v=arcanine1" alt="" width="250" height="231">
+      </section>
+
+      <section class="trade-panel trade-gate" data-trade-gate hidden>
+        <p class="trade-kicker">League pass required</p>
+        <h2>Sign in to negotiate</h2>
+        <p>Return to the title screen and use your team access code before entering the Trade Room.</p>
+        <a class="trade-button" href="index.html">Go to sign in</a>
+      </section>
+
+      <div class="trade-workspace" data-trade-workspace hidden>
+        <div class="trade-week-bar">
+          <div><span>Current week</span><strong>Week <span data-trade-week>0</span></strong></div>
+          <div><span>Your team</span><strong data-trade-team>Loading…</strong></div>
+          <div><span>Weekly trade</span><strong data-trade-limit>Checking…</strong></div>
+        </div>
+
+        <p class="trade-status" data-trade-status aria-live="polite"></p>
+
+        <form class="trade-panel trade-builder" data-trade-form>
+          <header class="trade-section-heading">
+            <div><p class="trade-kicker">Build the deal</p><h2>New Trade Offer</h2></div>
+            <label>Trade partner
+              <select data-trade-partner aria-label="Trade partner"></select>
+            </label>
+          </header>
+
+          <div class="trade-sides">
+            <section>
+              <div class="trade-side-heading"><span>You send</span><strong data-send-count>0 / 2</strong></div>
+              <div class="trade-roster" data-sender-roster></div>
+            </section>
+            <span class="trade-swap" aria-hidden="true">⇄</span>
+            <section>
+              <div class="trade-side-heading"><span>You receive</span><strong data-receive-count>0 / 2</strong></div>
+              <div class="trade-roster" data-receiver-roster></div>
+            </section>
+          </div>
+
+          <div class="trade-budget" data-trade-budget></div>
+          <button class="trade-button trade-button--send" type="submit" data-send-trade disabled>Send Trade Offer</button>
+        </form>
+
+        <section class="trade-panel" aria-labelledby="offersTitle">
+          <header class="trade-section-heading">
+            <div><p class="trade-kicker">Negotiation desk</p><h2 id="offersTitle">Your Offers</h2></div>
+            <span class="trade-refresh-note">One accepted trade per team each week</span>
+          </header>
+          <div class="trade-offers" data-trade-offers></div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch to dark mode" title="Switch to dark mode">
+    <img src="images/navigation/dark-mode-litwick.webp?v=dark-mode1" alt="" width="48" height="48">
+  </button>
+</body>
+</html>
