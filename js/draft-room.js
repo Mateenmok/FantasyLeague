@@ -7,7 +7,7 @@
   const FULL_MOCK_CPU_DELAY = 45;
 
   const TEAM_CONFIG = {
-    1: { name: "Daytona Torterras", short: "Torterras", mascot: "Torterra", color: "#3fa129", logo: "images/teams/draft/daytona-torterras.png" },
+    1: { name: "Daytona Torterras", short: "Torterras", mascot: "Torterra", color: "#3fa129", logo: "images/teams/daytona-torterras.webp?v=daytona2" },
     2: { name: "Kansas Krooks", short: "Krooks", mascot: "Krookodile", color: "#d8443e", logo: "images/teams/draft/kansas-krooks.png" },
     3: { name: "South Jersey Hounds", short: "Hounds", mascot: "Houndoom", color: "#ef554f", logo: "images/teams/draft/south-jersey-hounds.png" },
     4: { name: "Chicago Conkquerers", short: "Conkquerers", mascot: "Conkeldurr", color: "#ef6f45", logo: "images/teams/draft/chicago-conkquerers.png" },

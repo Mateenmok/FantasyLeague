@@ -1,6 +1,6 @@
 {
   "teams": [
-    { "id": "daytona-torterras", "name": "Daytona Torterras", "logo": "images/teams/draft/daytona-torterras.png", "mascot": "Torterra" },
+    { "id": "daytona-torterras", "name": "Daytona Torterras", "logo": "images/teams/daytona-torterras.webp?v=daytona2", "mascot": "Torterra" },
     { "id": "kansas-krooks", "name": "Kansas Krooks", "logo": "images/teams/draft/kansas-krooks.png", "mascot": "Krookodile" },
     { "id": "south-jersey-hounds", "name": "South Jersey Hounds", "logo": "images/teams/draft/south-jersey-hounds.png", "mascot": "Houndoom" },
     { "id": "chicago-conkquerers", "name": "Chicago Conkquerers", "logo": "images/teams/draft/chicago-conkquerers.png", "mascot": "Conkeldurr" },

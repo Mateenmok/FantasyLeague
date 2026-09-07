@@ -134,7 +134,7 @@
   season.textContent = state.season;
 
   Promise.all([
-    fetch("data/league-teams.json?v=league-teams1", { cache: "no-store" }),
+    fetch("data/league-teams.json?v=league-teams2", { cache: "no-store" }),
     fetch("data/pokemon-catalog.json?v=season-1-3"),
     window.PokeLeagueRosters.read().catch(() => null),
     window.PokeLeagueCompetition.read().catch(() => null),
