@@ -13,12 +13,21 @@
   const localState = window.PokeLeagueState?.read();
   if (localState) showStatus(localState);
 
+  let competitionLoaded = false;
+  window.PokeLeagueCompetition?.read()
+    .then((competition) => {
+      competitionLoaded = true;
+      showStatus({ season: localState?.season || 1, currentWeek: competition.currentWeek });
+    })
+    .catch(() => {});
+
   fetch("data/league-status.json", { cache: "no-store" })
     .then((response) => {
       if (!response.ok) throw new Error("League status unavailable");
       return response.json();
     })
     .then(({ season, week }) => {
+      if (competitionLoaded) return;
       if (localStorage.getItem(window.PokeLeagueState?.storageKey || "pokeleague.leagueState.v1")) return;
       showStatus({ season, currentWeek: week });
     })

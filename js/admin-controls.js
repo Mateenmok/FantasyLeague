@@ -251,7 +251,7 @@
       const home = findTeam(matchup.home);
       const away = findTeam(matchup.away);
       return `
-        <div class="matchup-row score-matchup" data-score-row data-home="${escapeHtml(matchup.home)}" data-away="${escapeHtml(matchup.away)}">
+        <div class="matchup-row score-matchup" data-score-row data-display-order="${index + 1}" data-home="${escapeHtml(matchup.home)}" data-away="${escapeHtml(matchup.away)}">
           <div class="score-team"><img src="${escapeHtml(home?.logo || "")}" alt=""><span>${escapeHtml(home?.name || matchup.home)}</span><input class="score-input" data-home-score type="number" min="0" step="1" aria-label="${escapeHtml(home?.name)} score" value="${result.homeScore ?? ""}"></div>
           <span class="matchup-versus">–</span>
           <div class="score-team"><img src="${escapeHtml(away?.logo || "")}" alt=""><span>${escapeHtml(away?.name || matchup.away)}</span><input class="score-input" data-away-score type="number" min="0" step="1" aria-label="${escapeHtml(away?.name)} score" value="${result.awayScore ?? ""}"></div>
@@ -338,7 +338,7 @@
     }
   };
 
-  const saveSchedule = () => {
+  const saveSchedule = async () => {
     const matchups = $$("[data-schedule-row]", elements.scheduleRows).map((row) => ({
       home: $("[data-home-team]", row).value,
       away: $("[data-away-team]", row).value,
@@ -348,19 +348,33 @@
       announce("Every team must appear exactly once, with no team playing itself.", true);
       return false;
     }
-    leagueState.schedules[scheduleWeek()] = matchups;
-    saveState(`Week ${scheduleWeek()} schedule saved.`);
-    return true;
+    try {
+      await window.PokeLeagueCompetition.saveSchedule(adminAccessCode, scheduleWeek(), matchups);
+      leagueState.schedules[scheduleWeek()] = matchups;
+      saveState(`Week ${scheduleWeek()} schedule saved.`);
+      return true;
+    } catch (error) {
+      announce(error.message || "The schedule could not be saved.", true);
+      return false;
+    }
   };
 
-  const advanceWeek = () => {
+  const advanceWeek = async () => {
     if (leagueState.currentWeek >= leagueState.totalWeeks) return;
-    leagueState.currentWeek += 1;
-    const week = leagueState.currentWeek;
-    if (!leagueState.schedules[week]) leagueState.schedules[week] = defaultSchedule(week);
-    saveState(`Advanced to Week ${week}. Review and save the matchups below.`);
-    setActiveTab("schedule");
-    $("[data-admin-panel='schedule']")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    const week = leagueState.currentWeek + 1;
+    elements.advanceWeek.disabled = true;
+    try {
+      await window.PokeLeagueCompetition.setCurrentWeek(adminAccessCode, week);
+      leagueState.currentWeek = week;
+      if (!leagueState.schedules[week]) leagueState.schedules[week] = defaultSchedule(week);
+      saveState(`Advanced to Week ${week}. Review and save the matchups below.`);
+      setActiveTab("schedule");
+      $("[data-admin-panel='schedule']")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    } catch (error) {
+      announce(error.message || "The league week could not be advanced.", true);
+    } finally {
+      elements.advanceWeek.disabled = leagueState.currentWeek >= leagueState.totalWeeks;
+    }
   };
 
   const bindEvents = () => {
@@ -381,8 +395,8 @@
       const button = event.target.closest("[data-remove-pokemon]");
       if (button) removePokemon(button.dataset.removePokemon);
     });
-    elements.scheduleForm.addEventListener("submit", (event) => { event.preventDefault(); saveSchedule(); });
-    elements.scoreForm.addEventListener("submit", (event) => {
+    elements.scheduleForm.addEventListener("submit", async (event) => { event.preventDefault(); await saveSchedule(); });
+    elements.scoreForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       if (leagueState.currentWeek === 0) return;
       const results = [];
@@ -394,10 +408,19 @@
           announce("Enter both scores for a matchup, or leave both blank.", true);
           return;
         }
-        results.push({ home: row.dataset.home, away: row.dataset.away, homeScore: Number(homeValue), awayScore: Number(awayValue) });
+        results.push({ displayOrder: Number(row.dataset.displayOrder), home: row.dataset.home, away: row.dataset.away, homeScore: Number(homeValue), awayScore: Number(awayValue) });
       }
-      leagueState.scores[leagueState.currentWeek] = results;
-      saveState(`Week ${leagueState.currentWeek} scores saved.`);
+      const submit = $("button[type='submit']", elements.scoreForm);
+      submit.disabled = true;
+      try {
+        await window.PokeLeagueCompetition.saveScores(adminAccessCode, leagueState.currentWeek, results);
+        leagueState.scores[leagueState.currentWeek] = results;
+        saveState(`Week ${leagueState.currentWeek} scores saved.`);
+      } catch (error) {
+        announce(error.message || "Scores could not be saved.", true);
+      } finally {
+        submit.disabled = false;
+      }
     });
     elements.seasonForm.addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -491,12 +514,13 @@
 
   const initialize = async () => {
     try {
-      const [accountResponse, teamResponse, catalogResponse, savedRosters, savedWaiverSettings] = await Promise.all([
+      const [accountResponse, teamResponse, catalogResponse, savedRosters, savedWaiverSettings, competition] = await Promise.all([
         fetch("data/teams.json?v=teams7", { cache: "no-store" }),
         fetch("data/league-teams.json?v=league-teams1", { cache: "no-store" }),
         fetch("data/pokemon-catalog.json?v=season-1-3"),
         window.PokeLeagueRosters.read(),
         window.PokeLeagueWaivers.readSettings(),
+        window.PokeLeagueCompetition.read().catch(() => null),
       ]);
       if (!accountResponse.ok || !teamResponse.ok || !catalogResponse.ok) throw new Error("League data could not be loaded.");
       accounts = (await accountResponse.json()).accounts || {};
@@ -506,6 +530,26 @@
       waiverSettings = savedWaiverSettings;
       leagueState.totalWeeks = savedWaiverSettings.totalWeeks;
       leagueState.pointCap = savedWaiverSettings.pointCap;
+      if (competition) {
+        leagueState.currentWeek = competition.currentWeek;
+        leagueState.totalWeeks = competition.totalWeeks;
+        leagueState.pointCap = competition.pointCap;
+        leagueState.playoffs.teamCount = competition.playoffTeamCount;
+        leagueState.schedules = {};
+        leagueState.scores = {};
+        competition.matchups.forEach((matchup) => {
+          (leagueState.schedules[matchup.week] ||= []).push({ home: matchup.home_team_id, away: matchup.away_team_id });
+          if (matchup.home_score != null && matchup.away_score != null) {
+            (leagueState.scores[matchup.week] ||= []).push({
+              displayOrder: matchup.display_order,
+              home: matchup.home_team_id,
+              away: matchup.away_team_id,
+              homeScore: matchup.home_score,
+              awayScore: matchup.away_score,
+            });
+          }
+        });
+      }
       window.PokeLeagueState.write(leagueState);
       catalog = window.PokeLeagueState.applyCatalog(baseCatalog, leagueState);
 

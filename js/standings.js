@@ -137,7 +137,8 @@
     fetch("data/league-teams.json?v=league-teams1", { cache: "no-store" }),
     fetch("data/pokemon-catalog.json?v=season-1-3"),
     window.PokeLeagueRosters.read().catch(() => null),
-  ]).then(async ([teamResponse, catalogResponse, savedRosters]) => {
+    window.PokeLeagueCompetition.read().catch(() => null),
+  ]).then(async ([teamResponse, catalogResponse, savedRosters, competition]) => {
     if (!teamResponse.ok || !catalogResponse.ok) throw new Error("Standings data could not be loaded.");
     const [teamData, baseCatalog] = await Promise.all([teamResponse.json(), catalogResponse.json()]);
     teams = teamData.teams || [];
@@ -145,6 +146,20 @@
     rosters = savedRosters
       ? window.PokeLeagueRosters.namesFromSlugs(savedRosters, baseCatalog, teams.map((team) => team.id))
       : state.rosters || {};
+    if (competition) {
+      state.currentWeek = competition.currentWeek;
+      state.playoffs.teamCount = competition.playoffTeamCount;
+      state.scores = {};
+      competition.matchups.forEach((matchup) => {
+        if (matchup.home_score == null || matchup.away_score == null) return;
+        (state.scores[matchup.week] ||= []).push({
+          home: matchup.home_team_id,
+          away: matchup.away_team_id,
+          homeScore: matchup.home_score,
+          awayScore: matchup.away_score,
+        });
+      });
+    }
     standings = buildStandings(state);
     renderTable();
     renderPlayoffs(state);

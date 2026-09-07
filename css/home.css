@@ -366,6 +366,27 @@ a {
   transform: rotate(1deg);
 }
 
+.league-button--pickems {
+  --button-accent: #77cdb6;
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(0, 72%) minmax(0, 28%);
+  min-height: 220px;
+  transform: rotate(0.18deg);
+}
+
+.league-button--pickems::before {
+  right: 4%;
+  bottom: -62%;
+  width: 32%;
+  background: #bde8dc;
+}
+
+.league-button--pickems > img {
+  max-width: 205px;
+  max-height: 205px;
+  transform: rotate(-1deg);
+}
+
 .league-button:hover,
 .league-button:focus-visible {
   z-index: 2;
@@ -626,7 +647,8 @@ a {
   }
 
   .league-button--draft-room,
-  .league-button--standings {
+  .league-button--standings,
+  .league-button--pickems {
     grid-column: auto;
     grid-template-columns: minmax(0, 1fr) 39%;
   }

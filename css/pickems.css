@@ -1,0 +1,388 @@
+.pickems-shell { width: min(100% - 40px, 1180px); }
+
+.pickems-main {
+  display: grid;
+  gap: 28px;
+  padding: 44px 0 72px;
+}
+
+.pickems-hero,
+.pickems-panel,
+.matchup-rosters-dialog {
+  border: 4px solid #111;
+  border-radius: 16px;
+  color: #111;
+  box-shadow: 8px 9px 0 #000;
+}
+
+.pickems-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 245px;
+  align-items: center;
+  min-height: 250px;
+  padding: 32px 44px;
+  overflow: hidden;
+  background:
+    radial-gradient(rgba(27, 129, 112, .18) 1.2px, transparent 1.55px) 0 0 / 8px 8px,
+    linear-gradient(125deg, #fff3f7 0 53%, #d7f0e6 53% 76%, #91d1bd 76%);
+  box-shadow: 9px 10px 0 #e8a8c5, 15px 16px 0 #000;
+}
+
+.pickems-hero::before {
+  position: absolute;
+  right: 100px;
+  top: -170px;
+  width: 440px;
+  height: 440px;
+  border: 6px solid rgba(17, 17, 17, .12);
+  background: repeating-conic-gradient(from 12deg, rgba(255, 255, 255, .55) 0 5deg, transparent 5deg 14deg);
+  clip-path: polygon(50% 0, 60% 35%, 82% 9%, 72% 42%, 100% 38%, 73% 53%, 95% 73%, 65% 63%, 64% 100%, 51% 67%, 34% 95%, 41% 62%, 5% 78%, 34% 53%, 0 37%, 39% 42%);
+  content: "";
+}
+
+.pickems-hero > * { position: relative; z-index: 1; }
+
+.pickems-hero > img {
+  justify-self: center;
+  width: 230px;
+  height: 230px;
+  object-fit: contain;
+  filter: drop-shadow(6px 8px 0 rgba(17, 17, 17, .2));
+}
+
+.pickems-kicker {
+  margin: 0 0 6px;
+  color: #12806d;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+.pickems-hero h1,
+.pickems-section-heading h2,
+.matchup-dialog-heading h2 {
+  margin: 0;
+  font-family: "Jersey 25", Impact, sans-serif;
+  font-weight: 400;
+  line-height: .86;
+  text-transform: uppercase;
+}
+
+.pickems-hero h1 {
+  font-size: clamp(78px, 10vw, 118px);
+  text-shadow: 5px 5px 0 #8cd3be;
+}
+
+.pickems-hero > div > p:last-child {
+  margin: 18px 0 0;
+  color: #535c58;
+  font-weight: 900;
+}
+
+.pickems-panel {
+  padding: 28px;
+  background-color: #fff7de;
+  background-image: radial-gradient(rgba(17, 17, 17, .13) 1.1px, transparent 1.45px);
+  background-size: 8px 8px;
+  box-shadow: 8px 9px 0 #8cd3be, 14px 15px 0 #000;
+}
+
+.leaderboard-panel { box-shadow: 8px 9px 0 #e8a8c5, 14px 15px 0 #000; }
+
+.pickems-section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 14px;
+}
+
+.pickems-section-heading h2,
+.matchup-dialog-heading h2 { font-size: clamp(43px, 6vw, 66px); }
+
+.picker-identity,
+.leaderboard-note {
+  padding: 8px 12px 7px;
+  border: 2px solid #111;
+  border-radius: 7px;
+  background: #c7eadf;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  box-shadow: 3px 3px 0 #111;
+}
+
+.leaderboard-note { background: #f0bdd2; }
+
+.pickems-status {
+  margin: 0 0 20px;
+  color: #645d52;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.pickems-status.is-error { color: #a92a35; }
+
+.matchup-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.pickem-matchup {
+  position: relative;
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  padding: 15px;
+  overflow: hidden;
+  border: 3px solid #111;
+  border-radius: 13px;
+  background:
+    linear-gradient(105deg, rgba(140, 211, 190, .22), transparent 42%, rgba(232, 168, 197, .23)),
+    #fff;
+  box-shadow: 5px 6px 0 #111;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.pickem-matchup:hover,
+.pickem-matchup:focus-visible {
+  transform: translateY(-3px);
+  outline: 3px solid #62cdb4;
+  outline-offset: 3px;
+  box-shadow: 7px 9px 0 #111;
+}
+
+.matchup-number {
+  justify-self: center;
+  padding: 4px 9px 3px;
+  transform: rotate(-1deg);
+  background: #111;
+  color: #fff7de;
+  font-family: "Jersey 25", Impact, sans-serif;
+  font-size: 18px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.matchup-teams {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 42px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+}
+
+.matchup-team {
+  display: grid;
+  grid-template-rows: 108px auto auto;
+  justify-items: center;
+  align-self: stretch;
+  gap: 5px;
+  min-width: 0;
+  padding: 10px 7px 9px;
+  border: 3px solid #111;
+  border-radius: 10px;
+  background: #eefaf6;
+  color: #111;
+  box-shadow: 3px 3px 0 #111;
+  cursor: pointer;
+}
+
+.matchup-team:hover:not(:disabled),
+.matchup-team:focus-visible:not(:disabled) { background: #c9eee3; transform: translate(-1px, -1px); }
+.matchup-team:disabled { cursor: default; opacity: .76; }
+.matchup-team.is-picked { background: #a9e1d1; box-shadow: 4px 4px 0 #147c69, 7px 7px 0 #111; opacity: 1; }
+
+.matchup-team img {
+  align-self: center;
+  width: 104px;
+  height: 104px;
+  object-fit: contain;
+  filter: drop-shadow(2px 3px 0 rgba(17, 17, 17, .17));
+}
+
+.matchup-team strong {
+  max-width: 100%;
+  font-size: 13px;
+  line-height: 1.05;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.matchup-team span {
+  color: #167c6b;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.matchup-versus {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 3px solid #111;
+  border-radius: 50%;
+  background: #f3b8d0;
+  font-family: "Jersey 25", Impact, sans-serif;
+  font-size: 21px;
+  box-shadow: 3px 3px 0 #111;
+}
+
+.view-rosters {
+  justify-self: end;
+  color: #5f5a51;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.pickems-leaderboard { display: grid; gap: 11px; }
+
+.leaderboard-row {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) 86px;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 15px;
+  border: 3px solid #111;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 4px 4px 0 #111;
+}
+
+.leaderboard-place {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  background: #111;
+  color: #fff7de;
+  clip-path: polygon(50% 0, 63% 14%, 82% 7%, 83% 27%, 100% 37%, 86% 52%, 96% 74%, 73% 75%, 61% 96%, 45% 83%, 24% 96%, 20% 72%, 0 63%, 14% 45%, 3% 23%, 29% 22%);
+  font-family: "Jersey 25", Impact, sans-serif;
+  font-size: 30px;
+}
+
+.leaderboard-user strong,
+.leaderboard-user small,
+.leaderboard-score strong,
+.leaderboard-score small { display: block; }
+.leaderboard-user strong { font-size: 17px; text-transform: uppercase; }
+.leaderboard-user small { margin-top: 2px; color: #6b6459; font-size: 11px; font-weight: 900; }
+.leaderboard-score { text-align: center; }
+.leaderboard-score strong { font: 38px/1 "Jersey 25", Impact, sans-serif; }
+.leaderboard-score small { color: #16806d; font-size: 9px; font-weight: 900; text-transform: uppercase; }
+
+.pickems-empty {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 28px;
+  border: 3px dashed rgba(17, 17, 17, .35);
+  border-radius: 10px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.matchup-rosters-dialog {
+  width: min(1060px, calc(100% - 28px));
+  max-height: min(820px, calc(100dvh - 30px));
+  padding: 0;
+  background-color: #fff7de;
+  background-image: radial-gradient(rgba(17, 17, 17, .13) 1.1px, transparent 1.45px);
+  background-size: 8px 8px;
+  box-shadow: 9px 10px 0 #8cd3be, 15px 16px 0 #000;
+}
+.matchup-rosters-dialog::backdrop { background: rgba(2, 6, 12, .86); }
+.matchup-rosters-dialog form { position: relative; padding: 28px; }
+
+.pickems-dialog-close {
+  position: absolute;
+  z-index: 3;
+  right: 14px;
+  top: 14px;
+  width: 42px;
+  height: 42px;
+  border: 3px solid #111;
+  border-radius: 50%;
+  background: #fff;
+  color: #111;
+  font-size: 26px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.matchup-dialog-heading { padding: 0 54px 20px 0; border-bottom: 3px solid #111; }
+.matchup-dialog-heading h2 { font-size: clamp(35px, 5vw, 55px); line-height: .95; }
+
+.matchup-roster-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 54px minmax(0, 1fr);
+  align-items: start;
+  gap: 14px;
+  padding-top: 22px;
+}
+
+.matchup-roster-team { min-width: 0; }
+.matchup-roster-team > header { display: grid; grid-template-columns: 74px minmax(0, 1fr); align-items: center; gap: 12px; margin-bottom: 13px; }
+.matchup-roster-team > header img { width: 74px; height: 74px; border: 3px solid #111; border-radius: 10px; background: #fff; object-fit: contain; box-shadow: 3px 3px 0 #111; }
+.matchup-roster-team h3 { margin: 0; font: 31px/.9 "Jersey 25", Impact, sans-serif; text-transform: uppercase; }
+.roster-vs { align-self: center; justify-self: center; font: 35px/1 "Jersey 25", Impact, sans-serif; }
+
+.matchup-roster-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+.pickems-pokemon { display: grid; grid-template-columns: 58px minmax(0, 1fr); align-items: center; column-gap: 8px; min-width: 0; padding: 7px; border: 2px solid #111; border-radius: 8px; background: #fff; box-shadow: 2px 2px 0 #111; }
+.pickems-pokemon img { grid-row: 1 / 3; width: 58px; height: 58px; object-fit: contain; }
+.pickems-pokemon strong { align-self: end; overflow-wrap: anywhere; font: 19px/.9 "Jersey 25", Impact, sans-serif; text-transform: uppercase; }
+.pickems-pokemon small { align-self: start; color: #675f54; font-size: 9px; font-weight: 900; text-transform: uppercase; }
+
+:root[data-theme="dark"] .pickems-hero {
+  background:
+    radial-gradient(rgba(140, 211, 190, .16) 1.2px, transparent 1.55px) 0 0 / 8px 8px,
+    linear-gradient(125deg, #272b33 0 53%, #234139 53% 76%, #276957 76%);
+  color: #fff7de;
+}
+:root[data-theme="dark"] .pickems-hero > div > p:last-child,
+:root[data-theme="dark"] .pickems-status,
+:root[data-theme="dark"] .view-rosters,
+:root[data-theme="dark"] .leaderboard-user small,
+:root[data-theme="dark"] .pickems-pokemon small { color: #cbc4b7; }
+:root[data-theme="dark"] .pickems-panel,
+:root[data-theme="dark"] .matchup-rosters-dialog { background-color: #353941; background-image: radial-gradient(rgba(255, 255, 255, .1) 1.1px, transparent 1.45px); color: #fff7de; }
+:root[data-theme="dark"] .pickem-matchup,
+:root[data-theme="dark"] .leaderboard-row,
+:root[data-theme="dark"] .pickems-pokemon { background-color: #262b32; color: #fff7de; }
+:root[data-theme="dark"] .matchup-team { background: #2a3d39; color: #fff7de; }
+:root[data-theme="dark"] .matchup-team.is-picked { background: #315f54; }
+
+@media (max-width: 900px) {
+  .matchup-grid { grid-template-columns: 1fr; }
+  .matchup-roster-list { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 620px) {
+  .pickems-shell { width: min(100% - 24px, 1180px); }
+  .pickems-main { padding-top: 28px; }
+  .pickems-hero { grid-template-columns: minmax(0, 1fr) 120px; min-height: 190px; padding: 25px 20px; }
+  .pickems-hero > img { width: 120px; height: 140px; }
+  .pickems-hero h1 { font-size: 64px; }
+  .pickems-panel { padding: 20px 14px; }
+  .pickems-section-heading { align-items: flex-start; flex-direction: column; }
+  .matchup-teams { grid-template-columns: minmax(0, 1fr) 34px minmax(0, 1fr); gap: 5px; }
+  .matchup-team { grid-template-rows: 82px auto auto; padding-inline: 4px; }
+  .matchup-team img { width: 80px; height: 80px; }
+  .matchup-versus { width: 34px; height: 34px; font-size: 17px; }
+  .leaderboard-row { grid-template-columns: 44px minmax(0, 1fr) 62px; gap: 8px; padding-inline: 9px; }
+  .leaderboard-place { width: 42px; height: 42px; }
+  .matchup-rosters-dialog form { padding: 22px 15px; }
+  .matchup-roster-columns { grid-template-columns: 1fr; }
+  .roster-vs { padding: 8px; }
+  .matchup-roster-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 430px) {
+  .matchup-roster-list { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="icon" type="image/webp" href="images/favicon.webp">
+  <title>Pick'ems | PokeLeague</title>
+  <meta name="description" content="Make weekly Flash Family League predictions and follow the Pick'ems leaderboard.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jersey+25&amp;family=Roboto+Condensed:wght@500;700;900&amp;display=swap" rel="stylesheet">
+  <script src="js/theme.js?v=dark-mode3"></script>
+  <link rel="stylesheet" href="css/home.css?v=league-home-13">
+  <link rel="stylesheet" href="css/theme.css?v=dark-mode6">
+  <link rel="stylesheet" href="css/pickems.css?v=pickems1">
+  <script src="js/league-state.js?v=league-state-1" defer></script>
+  <script src="js/league-rosters.js?v=league-rosters-1" defer></script>
+  <script src="js/league-competition.js?v=competition1" defer></script>
+  <script src="js/pickems.js?v=pickems1" defer></script>
+</head>
+<body>
+  <div class="home-silhouettes" aria-hidden="true">
+    <span class="home-silhouette home-silhouette--swampert"></span>
+    <span class="home-silhouette home-silhouette--blaziken"></span>
+    <span class="home-silhouette home-silhouette--sceptile"></span>
+    <span class="home-silhouette home-silhouette--luxray"></span>
+  </div>
+
+  <div class="home-shell pickems-shell">
+    <header class="home-header">
+      <a class="title-link" href="home.html"><span aria-hidden="true">←</span> League Home</a>
+      <a class="home-brand" href="home.html" aria-label="PokeLeague home">
+        <img src="images/favicon.webp" alt="" width="50" height="50">
+        <span>PokeLeague</span>
+      </a>
+      <span class="season-mark">Season 1</span>
+    </header>
+
+    <main class="pickems-main">
+      <section class="pickems-hero" aria-labelledby="pickemsTitle">
+        <div>
+          <p class="pickems-kicker">Call your shot</p>
+          <h1 id="pickemsTitle">Pick'ems</h1>
+          <p>Choose each winner. Climb the weekly prediction board.</p>
+        </div>
+        <img src="images/navigation/pickems-florges.webp?v=pickems1" alt="" width="240" height="240">
+      </section>
+
+      <section class="pickems-panel" aria-labelledby="weeklyPicksTitle">
+        <header class="pickems-section-heading">
+          <div>
+            <p class="pickems-kicker">This week's card</p>
+            <h2 id="weeklyPicksTitle">Week <span data-pickems-week>1</span> Matchups</h2>
+          </div>
+          <div class="picker-identity" data-picker-identity>Loading your league pass…</div>
+        </header>
+        <p class="pickems-status" data-pickems-status aria-live="polite">Loading matchups…</p>
+        <div class="matchup-grid" data-matchup-grid></div>
+      </section>
+
+      <section class="pickems-panel leaderboard-panel" aria-labelledby="leaderboardTitle">
+        <header class="pickems-section-heading">
+          <div>
+            <p class="pickems-kicker">Prediction race</p>
+            <h2 id="leaderboardTitle">Leaderboard</h2>
+          </div>
+          <span class="leaderboard-note">Most correct picks</span>
+        </header>
+        <div class="pickems-leaderboard" data-pickems-leaderboard></div>
+      </section>
+    </main>
+  </div>
+
+  <dialog class="matchup-rosters-dialog" data-matchup-dialog aria-labelledby="matchupDialogTitle">
+    <form method="dialog">
+      <button class="pickems-dialog-close" type="submit" value="cancel" aria-label="Close matchup rosters">×</button>
+      <header class="matchup-dialog-heading">
+        <p class="pickems-kicker">Matchup rosters</p>
+        <h2 id="matchupDialogTitle" data-matchup-dialog-title>Team vs Team</h2>
+      </header>
+      <div class="matchup-roster-columns" data-matchup-roster-columns></div>
+    </form>
+  </dialog>
+
+  <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch to dark mode" title="Switch to dark mode">
+    <img src="images/navigation/dark-mode-litwick.webp?v=dark-mode1" alt="" width="48" height="48">
+  </button>
+</body>
+</html>
