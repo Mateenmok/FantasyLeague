@@ -271,7 +271,7 @@ a {
 
 .league-menu {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   justify-content: center;
   gap: clamp(16px, 2vw, 24px);
   width: min(1180px, 100%);
@@ -349,6 +349,21 @@ a {
   max-width: 154px;
   max-height: 190px;
   transform: rotate(-2deg);
+}
+
+.league-button--standings {
+  --button-accent: #80d6f4;
+  transform: rotate(-0.3deg);
+}
+
+.league-button--standings::before {
+  background: #cdeeff;
+}
+
+.league-button--standings > img {
+  max-width: 160px;
+  max-height: 196px;
+  transform: rotate(1deg);
 }
 
 .league-button:hover,
@@ -589,10 +604,6 @@ a {
 
 @media (min-width: 761px) and (max-width: 1040px) {
   .league-menu { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-
-  .league-button--draft-room {
-    grid-column: 1 / -1;
-  }
 }
 
 @media (max-width: 500px) {
@@ -614,7 +625,8 @@ a {
     min-height: 190px;
   }
 
-  .league-button--draft-room {
+  .league-button--draft-room,
+  .league-button--standings {
     grid-column: auto;
     grid-template-columns: minmax(0, 1fr) 39%;
   }

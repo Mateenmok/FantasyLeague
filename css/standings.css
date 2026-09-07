@@ -1,0 +1,472 @@
+.standings-shell {
+  width: min(100% - 40px, 1180px);
+}
+
+.standings-main {
+  display: grid;
+  gap: 28px;
+  padding: 44px 0 72px;
+}
+
+.standings-hero,
+.standings-panel,
+.playoff-panel,
+.standings-roster-dialog {
+  border: 4px solid #111;
+  border-radius: 16px;
+  color: #111;
+  box-shadow: 8px 9px 0 #000;
+}
+
+.standings-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 210px;
+  align-items: center;
+  min-height: 238px;
+  padding: 34px 44px;
+  overflow: hidden;
+  background:
+    radial-gradient(rgba(38, 114, 164, .2) 1.2px, transparent 1.5px) 0 0 / 8px 8px,
+    linear-gradient(125deg, #f5fbff 0 54%, #c9ebfb 54% 75%, #96d8f3 75%);
+  box-shadow: 9px 10px 0 #72cfee, 15px 16px 0 #000;
+}
+
+.standings-hero::before {
+  position: absolute;
+  right: 115px;
+  top: -80px;
+  width: 360px;
+  height: 360px;
+  border: 5px solid rgba(17, 17, 17, .14);
+  transform: rotate(18deg);
+  background: repeating-linear-gradient(-45deg, transparent 0 18px, rgba(255, 255, 255, .45) 18px 22px);
+  content: "";
+}
+
+.standings-hero > div,
+.standings-hero > img {
+  position: relative;
+  z-index: 1;
+}
+
+.standings-hero > img {
+  justify-self: center;
+  width: auto;
+  max-width: 182px;
+  max-height: 204px;
+  filter: drop-shadow(5px 7px 0 rgba(17, 17, 17, .22));
+}
+
+.standings-kicker {
+  margin: 0 0 6px;
+  color: #257aa9;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+.standings-hero h1,
+.standings-section-heading h2,
+.standings-roster-header h2 {
+  margin: 0;
+  font-family: "Jersey 25", Impact, sans-serif;
+  font-weight: 400;
+  line-height: .86;
+  text-transform: uppercase;
+}
+
+.standings-hero h1 {
+  font-size: clamp(72px, 10vw, 118px);
+  text-shadow: 5px 5px 0 #78cce9;
+}
+
+.standings-hero > div > p:last-child {
+  margin: 18px 0 0;
+  color: #4d5960;
+  font-weight: 900;
+}
+
+.standings-panel,
+.playoff-panel {
+  padding: 28px;
+  background-color: #fff7de;
+  background-image: radial-gradient(rgba(17, 17, 17, .13) 1.1px, transparent 1.45px);
+  background-size: 8px 8px;
+}
+
+.standings-panel {
+  box-shadow: 8px 9px 0 #72cfee, 14px 15px 0 #000;
+}
+
+.playoff-panel {
+  box-shadow: 8px 9px 0 #b5dff1, 14px 15px 0 #000;
+}
+
+.standings-section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 22px;
+}
+
+.standings-section-heading h2,
+.standings-roster-header h2 {
+  font-size: clamp(42px, 6vw, 64px);
+}
+
+.standings-section-heading > p {
+  margin: 0 0 3px;
+  color: #655e53;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.standings-table-scroll {
+  overflow-x: auto;
+  border: 3px solid #111;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, .7);
+}
+
+.standings-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.standings-table th,
+.standings-table td {
+  padding: 10px 14px;
+  border-bottom: 2px solid rgba(17, 17, 17, .2);
+  text-align: center;
+}
+
+.standings-table th {
+  background: #111;
+  color: #fff7de;
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.standings-table th:nth-child(2),
+.standings-table td:nth-child(2) {
+  width: 100%;
+  text-align: left;
+}
+
+.standings-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.standings-table tbody tr:hover {
+  background: #e5f6ff;
+}
+
+.standing-rank {
+  font-family: "Jersey 25", Impact, sans-serif;
+  font-size: 27px;
+}
+
+.standing-team-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 2px 0;
+  border: 0;
+  background: transparent;
+  color: #111;
+  font: 900 16px "Roboto Condensed", Arial, sans-serif;
+  text-align: left;
+  cursor: pointer;
+}
+
+.standing-team-button:hover strong,
+.standing-team-button:focus-visible strong {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.standing-team-button:focus-visible {
+  outline: 3px solid #2b78f6;
+  outline-offset: 3px;
+}
+
+.standing-team-button img {
+  flex: none;
+  width: 50px;
+  height: 50px;
+  border: 2px solid #111;
+  border-radius: 9px;
+  background: #fff;
+  object-fit: contain;
+}
+
+.standing-stat {
+  font-family: "Jersey 25", Impact, sans-serif;
+  font-size: 25px;
+}
+
+.playoff-count {
+  padding: 7px 11px 6px;
+  transform: rotate(1deg);
+  border: 2px solid #111;
+  background: #9bddf5;
+  font-family: "Jersey 25", Impact, sans-serif;
+  font-size: 21px;
+  text-transform: uppercase;
+  box-shadow: 3px 3px 0 #111;
+}
+
+.playoff-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 13px;
+}
+
+.playoff-team {
+  position: relative;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 11px;
+  border: 3px solid #111;
+  border-radius: 10px;
+  background: #eefaff;
+  color: #111;
+  text-align: left;
+  box-shadow: 4px 4px 0 #111;
+  cursor: pointer;
+}
+
+.playoff-team:hover,
+.playoff-team:focus-visible {
+  transform: translate(-1px, -1px);
+  outline: 3px solid #70d8f5;
+  outline-offset: 2px;
+  box-shadow: 6px 6px 0 #111;
+}
+
+.playoff-team img {
+  width: 42px;
+  height: 42px;
+  border-radius: 7px;
+  background: #fff;
+  object-fit: contain;
+}
+
+.playoff-team strong,
+.playoff-team span {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.playoff-team strong {
+  font-size: 13px;
+}
+
+.playoff-team span {
+  margin-top: 3px;
+  color: #625d54;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.playoff-seed {
+  position: absolute;
+  right: 5px;
+  top: 4px;
+  color: rgba(37, 122, 169, .25);
+  font-family: "Jersey 25", Impact, sans-serif;
+  font-size: 31px;
+  line-height: 1;
+}
+
+.standings-roster-dialog {
+  width: min(900px, calc(100% - 28px));
+  max-height: min(760px, calc(100dvh - 32px));
+  padding: 0;
+  background-color: #fff7de;
+  background-image: radial-gradient(rgba(17, 17, 17, .13) 1.1px, transparent 1.45px);
+  background-size: 8px 8px;
+  box-shadow: 9px 10px 0 #72cfee, 15px 16px 0 #000;
+}
+
+.standings-roster-dialog::backdrop {
+  background: rgba(2, 6, 12, .84);
+}
+
+.standings-roster-dialog form {
+  position: relative;
+  padding: 28px;
+}
+
+.standings-dialog-close {
+  position: absolute;
+  z-index: 2;
+  right: 14px;
+  top: 14px;
+  width: 39px;
+  height: 39px;
+  border: 3px solid #111;
+  border-radius: 50%;
+  background: #fff;
+  color: #111;
+  font-size: 25px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.standings-roster-header {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  align-items: center;
+  gap: 22px;
+  padding: 0 50px 22px 0;
+  border-bottom: 3px solid #111;
+}
+
+.standings-roster-header > img {
+  width: 112px;
+  height: 112px;
+  border: 3px solid #111;
+  border-radius: 14px;
+  background: #fff;
+  object-fit: contain;
+  box-shadow: 4px 4px 0 #111;
+}
+
+.standings-roster-header > div > p:last-child {
+  margin: 9px 0 0;
+  color: #5f594f;
+  font-weight: 900;
+}
+
+.standings-roster-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  padding-top: 22px;
+}
+
+.standings-pokemon-card {
+  display: grid;
+  justify-items: center;
+  min-width: 0;
+  padding: 12px 7px;
+  border: 3px solid #111;
+  border-radius: 9px;
+  background: #fff;
+  text-align: center;
+  box-shadow: 3px 3px 0 #111;
+}
+
+.standings-pokemon-card img {
+  width: 82px;
+  height: 82px;
+  object-fit: contain;
+}
+
+.standings-pokemon-card strong,
+.standings-pokemon-card small {
+  display: block;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+}
+
+.standings-pokemon-card strong {
+  font-family: "Jersey 25", Impact, sans-serif;
+  font-size: 21px;
+  font-weight: 400;
+}
+
+.standings-pokemon-card small {
+  margin-top: 2px;
+  color: #625c52;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.standings-roster-empty {
+  grid-column: 1 / -1;
+  padding: 34px;
+  border: 3px dashed rgba(17, 17, 17, .4);
+  border-radius: 10px;
+  font-weight: 900;
+  text-align: center;
+}
+
+:root[data-theme="dark"] .standings-hero {
+  background:
+    radial-gradient(rgba(146, 217, 247, .16) 1.2px, transparent 1.5px) 0 0 / 8px 8px,
+    linear-gradient(125deg, #252a32 0 54%, #263f4d 54% 75%, #285f75 75%);
+  color: #fff7de;
+}
+
+:root[data-theme="dark"] .standings-hero > div > p:last-child,
+:root[data-theme="dark"] .standings-section-heading > p,
+:root[data-theme="dark"] .playoff-team span,
+:root[data-theme="dark"] .standings-roster-header > div > p:last-child,
+:root[data-theme="dark"] .standings-pokemon-card small {
+  color: #c7c1b4;
+}
+
+:root[data-theme="dark"] .standings-panel,
+:root[data-theme="dark"] .playoff-panel,
+:root[data-theme="dark"] .standings-roster-dialog {
+  background-color: #353941;
+  background-image: radial-gradient(rgba(255, 255, 255, .1) 1.1px, transparent 1.45px);
+  color: #fff7de;
+}
+
+:root[data-theme="dark"] .standings-table-scroll {
+  background: rgba(19, 21, 25, .55);
+}
+
+:root[data-theme="dark"] .standings-table tbody tr:hover {
+  background: #263f4d;
+}
+
+:root[data-theme="dark"] .standing-team-button,
+:root[data-theme="dark"] .playoff-team {
+  color: #fff7de;
+}
+
+:root[data-theme="dark"] .playoff-team,
+:root[data-theme="dark"] .standings-pokemon-card {
+  background: #272b32;
+}
+
+@media (max-width: 900px) {
+  .playoff-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .standings-roster-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 620px) {
+  .standings-shell { width: min(100% - 24px, 1180px); }
+  .standings-main { padding-top: 28px; }
+  .standings-hero { grid-template-columns: minmax(0, 1fr) 110px; min-height: 190px; padding: 26px 22px; }
+  .standings-hero > img { max-width: 110px; max-height: 135px; }
+  .standings-hero h1 { font-size: 64px; }
+  .standings-panel, .playoff-panel { padding: 20px 14px; }
+  .standings-section-heading { align-items: flex-start; flex-direction: column; gap: 10px; }
+  .standings-table th, .standings-table td { padding: 8px 9px; }
+  .standing-team-button { font-size: 14px; }
+  .standing-team-button img { width: 42px; height: 42px; }
+  .playoff-grid { grid-template-columns: 1fr; }
+  .standings-roster-dialog form { padding: 22px 16px; }
+  .standings-roster-header { grid-template-columns: 82px minmax(0, 1fr); gap: 14px; }
+  .standings-roster-header > img { width: 82px; height: 82px; }
+  .standings-roster-header h2 { font-size: 37px; }
+  .standings-roster-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

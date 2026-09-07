@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="icon" type="image/webp" href="images/favicon.webp">
+  <title>Standings | PokeLeague</title>
+  <meta name="description" content="Flash Family League standings, playoff picture, and team rosters.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jersey+25&amp;family=Roboto+Condensed:wght@700;900&amp;display=swap" rel="stylesheet">
+  <script src="js/theme.js?v=dark-mode3"></script>
+  <link rel="stylesheet" href="css/home.css?v=league-home-12">
+  <link rel="stylesheet" href="css/theme.css?v=dark-mode5">
+  <link rel="stylesheet" href="css/standings.css?v=standings1">
+  <script src="js/league-state.js?v=league-state-1" defer></script>
+  <script src="js/league-rosters.js?v=league-rosters-1" defer></script>
+  <script src="js/standings.js?v=standings1" defer></script>
+</head>
+<body>
+  <div class="home-silhouettes" aria-hidden="true">
+    <span class="home-silhouette home-silhouette--swampert"></span>
+    <span class="home-silhouette home-silhouette--blaziken"></span>
+    <span class="home-silhouette home-silhouette--sceptile"></span>
+    <span class="home-silhouette home-silhouette--luxray"></span>
+  </div>
+
+  <div class="home-shell standings-shell">
+    <header class="home-header">
+      <a class="title-link" href="home.html"><span aria-hidden="true">←</span> League Home</a>
+      <a class="home-brand" href="home.html" aria-label="PokeLeague home">
+        <img src="images/favicon.webp" alt="" width="50" height="50">
+        <span>PokeLeague</span>
+      </a>
+      <span class="season-mark">Season <span data-standings-season>1</span></span>
+    </header>
+
+    <main class="standings-main">
+      <section class="standings-hero" aria-labelledby="standingsTitle">
+        <div>
+          <p class="standings-kicker">Flash Family League</p>
+          <h1 id="standingsTitle">Standings</h1>
+          <p>Fourteen teams. One climb to the top.</p>
+        </div>
+        <img src="images/navigation/standings-vanilluxe.png?v=standings1" alt="" width="182" height="204">
+      </section>
+
+      <section class="standings-panel" aria-labelledby="leagueTableTitle">
+        <header class="standings-section-heading">
+          <div>
+            <p class="standings-kicker">League table</p>
+            <h2 id="leagueTableTitle">Season standings</h2>
+          </div>
+          <p>Select a team to inspect its roster.</p>
+        </header>
+        <div class="standings-table-scroll">
+          <table class="standings-table">
+            <thead>
+              <tr><th scope="col">#</th><th scope="col">Team</th><th scope="col">W</th><th scope="col">L</th><th scope="col">GW</th><th scope="col">WinPct</th></tr>
+            </thead>
+            <tbody data-standings-body><tr><td colspan="6">Loading standings…</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="playoff-panel" aria-labelledby="playoffPictureTitle">
+        <header class="standings-section-heading">
+          <div>
+            <p class="standings-kicker">If the season ended today</p>
+            <h2 id="playoffPictureTitle">Playoff picture</h2>
+          </div>
+          <span class="playoff-count" data-playoff-count>Top 8</span>
+        </header>
+        <div class="playoff-grid" data-playoff-grid></div>
+      </section>
+    </main>
+  </div>
+
+  <dialog class="standings-roster-dialog" data-roster-dialog aria-labelledby="rosterDialogTitle">
+    <form method="dialog">
+      <button class="standings-dialog-close" type="submit" value="cancel" aria-label="Close roster">×</button>
+      <header class="standings-roster-header">
+        <img data-roster-team-logo src="" alt="" width="112" height="112">
+        <div><p class="standings-kicker">Team roster</p><h2 id="rosterDialogTitle" data-roster-team-name>Roster</h2><p data-roster-team-record></p></div>
+      </header>
+      <div class="standings-roster-grid" data-roster-grid></div>
+    </form>
+  </dialog>
+
+  <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch to dark mode" title="Switch to dark mode">
+    <img src="images/navigation/dark-mode-litwick.webp?v=dark-mode1" alt="" width="48" height="48">
+  </button>
+</body>
+</html>
