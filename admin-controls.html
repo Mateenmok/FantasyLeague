@@ -11,11 +11,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Jersey+25&amp;family=Roboto+Condensed:wght@500;700;900&amp;display=swap" rel="stylesheet">
   <script src="js/theme.js?v=dark-mode3"></script>
   <link rel="stylesheet" href="css/home.css?v=league-home-10">
-  <link rel="stylesheet" href="css/admin-controls.css?v=admin-controls-2">
-  <link rel="stylesheet" href="css/theme.css?v=dark-mode5">
+  <link rel="stylesheet" href="css/admin-controls.css?v=admin-controls-3">
+  <link rel="stylesheet" href="css/theme.css?v=dark-mode6">
   <script src="js/league-state.js?v=league-state-1" defer></script>
   <script src="js/league-rosters.js?v=league-rosters-1" defer></script>
-  <script src="js/admin-controls.js?v=admin-controls-5" defer></script>
+  <script src="js/league-waivers.js?v=league-waivers-1" defer></script>
+  <script src="js/admin-controls.js?v=admin-controls-6" defer></script>
 </head>
 <body>
   <div class="home-silhouettes" aria-hidden="true">
@@ -71,6 +72,7 @@
           <button type="button" data-admin-tab="scores" data-score-tab>Input Scores</button>
           <button type="button" data-admin-tab="schedule">Schedule</button>
           <button type="button" data-admin-tab="season">Season Settings</button>
+          <button type="button" data-admin-tab="waivers">Waiver Period</button>
           <button type="button" data-admin-tab="playoffs">Playoffs</button>
           <button type="button" data-admin-tab="points">Point Values</button>
         </nav>
@@ -146,6 +148,25 @@
               <small>Draft Room and roster totals use this value.</small>
             </label>
             <button class="admin-button admin-button--primary" type="submit">Save Season Rules</button>
+          </form>
+        </section>
+
+        <section class="admin-tool" data-admin-panel="waivers" hidden>
+          <div class="admin-section-heading">
+            <div><p class="admin-kicker">Transaction window</p><h2>Waiver Period</h2></div>
+            <p>Choose the exact local date and time when roster adds and drops open and close.</p>
+          </div>
+          <form class="admin-panel waiver-window-form" data-waiver-window-form>
+            <label for="waiverWindowStart">
+              <span>Waivers open</span>
+              <input id="waiverWindowStart" data-waiver-window-start type="datetime-local" required>
+            </label>
+            <label for="waiverWindowEnd">
+              <span>Waivers close</span>
+              <input id="waiverWindowEnd" data-waiver-window-end type="datetime-local" required>
+            </label>
+            <div class="waiver-window-preview" data-waiver-window-preview>Waiver period not scheduled.</div>
+            <button class="admin-button admin-button--primary" type="submit">Save Waiver Period</button>
           </form>
         </section>
 

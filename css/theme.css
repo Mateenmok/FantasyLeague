@@ -260,6 +260,42 @@
   box-shadow: 8px 9px 0 #318fc5, 13px 14px 0 #000;
 }
 
+:root[data-theme="dark"] .waiver-roster-panel,
+:root[data-theme="dark"] .waiver-swap-dialog {
+  background-color: var(--dark-surface);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.09) 1.1px, transparent 1.5px);
+  color: var(--dark-copy);
+}
+
+:root[data-theme="dark"] .waiver-window-banner {
+  background: var(--dark-surface-raised);
+  color: var(--dark-copy);
+}
+
+:root[data-theme="dark"] .waiver-window-banner.is-open {
+  background: #33472f;
+}
+
+:root[data-theme="dark"] .waiver-window-banner.is-closed {
+  background: #493337;
+}
+
+:root[data-theme="dark"] .waiver-window-banner span,
+:root[data-theme="dark"] .waiver-roster-card p,
+:root[data-theme="dark"] .waiver-swap-dialog > form > p:not(.results-kicker) {
+  color: var(--dark-copy-muted);
+}
+
+:root[data-theme="dark"] .waiver-roster-empty {
+  border-color: rgba(255, 247, 222, 0.4);
+  color: var(--dark-copy-muted);
+}
+
+:root[data-theme="dark"] .waiver-swap-option {
+  background: var(--dark-surface-raised);
+  color: var(--dark-copy);
+}
+
 .theme-toggle {
   position: fixed;
   z-index: 20;

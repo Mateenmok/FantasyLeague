@@ -18,9 +18,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jersey+25&amp;family=Roboto+Condensed:wght@500;700;900&amp;display=swap" rel="stylesheet">
   <script src="js/theme.js?v=dark-mode3"></script>
-  <link rel="stylesheet" href="css/pokemon-search.css?v=point-search-10">
+  <link rel="stylesheet" href="css/pokemon-search.css?v=point-search-11">
   <link rel="stylesheet" href="css/pokemon-details.css?v=pokemon-details-2">
-  <link rel="stylesheet" href="css/theme.css?v=dark-mode5">
+  <link rel="stylesheet" href="css/theme.css?v=dark-mode6">
 </head>
 <body>
   <header class="site-header">
@@ -63,6 +63,27 @@
       </div>
     </section>
 
+    <section class="waiver-roster-panel" aria-labelledby="waiverRosterTitle">
+      <div class="waiver-window-banner" data-waiver-window-banner>
+        <div>
+          <p class="results-kicker">Waiver status</p>
+          <strong data-waiver-window-status>Checking waiver period…</strong>
+          <span data-waiver-window-copy></span>
+        </div>
+        <div class="waiver-budget" data-waiver-budget>0 / 50 points</div>
+      </div>
+      <div class="waiver-roster-heading">
+        <div>
+          <p class="results-kicker">Your current squad</p>
+          <h2 id="waiverRosterTitle"><span data-waiver-team-name>Your roster</span></h2>
+        </div>
+        <span data-waiver-roster-count>0 / 10 Pokémon</span>
+      </div>
+      <div class="waiver-roster" data-waiver-roster>
+        <p class="loading-state">Loading your roster…</p>
+      </div>
+    </section>
+
     <section class="results-section" aria-labelledby="resultsHeading">
       <div class="results-heading-row">
         <div>
@@ -89,11 +110,27 @@
         <h3 class="pokemon-name"></h3>
         <div class="type-list"></div>
       </div>
+      <button class="waiver-add-button" type="button">Add</button>
     </article>
   </template>
 
+  <dialog class="waiver-swap-dialog" data-waiver-swap-dialog>
+    <form method="dialog">
+      <button class="waiver-dialog-close" type="submit" value="cancel" aria-label="Close">×</button>
+      <p class="results-kicker">One-for-one transaction</p>
+      <h2>Choose a Pokémon to drop</h2>
+      <p data-waiver-swap-copy>Your roster is full. Select who leaves to complete this add.</p>
+      <div class="waiver-swap-options" data-waiver-swap-options></div>
+      <button class="waiver-dialog-cancel" type="submit" value="cancel">Cancel</button>
+    </form>
+  </dialog>
+
+  <p class="waiver-toast" data-waiver-toast role="status" aria-live="polite"></p>
+
   <script src="js/league-state.js?v=league-state-1" defer></script>
+  <script src="js/league-rosters.js?v=league-rosters-1" defer></script>
+  <script src="js/league-waivers.js?v=league-waivers-1" defer></script>
   <script src="js/pokemon-details.js?v=pokemon-details-3" defer></script>
-  <script src="js/pokemon-search.js?v=point-search-7" defer></script>
+  <script src="js/pokemon-search.js?v=waivers-1" defer></script>
 </body>
 </html>

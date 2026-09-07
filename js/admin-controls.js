@@ -33,6 +33,10 @@
     seasonForm: $("[data-season-form]"),
     seasonWeeks: $("[data-season-weeks]"),
     seasonPointCap: $("[data-season-point-cap]"),
+    waiverWindowForm: $("[data-waiver-window-form]"),
+    waiverWindowStart: $("[data-waiver-window-start]"),
+    waiverWindowEnd: $("[data-waiver-window-end]"),
+    waiverWindowPreview: $("[data-waiver-window-preview]"),
     playoffForm: $("[data-playoff-form]"),
     playoffCount: $("[data-playoff-count]"),
     playoffSeeds: $("[data-playoff-seeds]"),
@@ -47,6 +51,7 @@
   let baseCatalog = [];
   let catalog = [];
   let leagueState = window.PokeLeagueState.read();
+  let waiverSettings = { startAt: null, endAt: null, pointCap: 50, rosterCap: 10, totalWeeks: 10 };
   let selectedTeamId = "boston-eeltics";
   let adminAccessCode = "";
   let rosterWritePending = false;
@@ -71,6 +76,31 @@
     catalog = window.PokeLeagueState.applyCatalog(baseCatalog, leagueState);
     renderStatus();
     if (message) announce(message);
+  };
+
+  const formatDateTime = (value) => value
+    ? new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(new Date(value))
+    : "Not set";
+
+  const toLocalInputValue = (value) => {
+    if (!value) return "";
+    const date = new Date(value);
+    const local = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    return local.toISOString().slice(0, 16);
+  };
+
+  const renderWaiverSettings = () => {
+    elements.waiverWindowStart.value = toLocalInputValue(waiverSettings.startAt);
+    elements.waiverWindowEnd.value = toLocalInputValue(waiverSettings.endAt);
+    if (!waiverSettings.startAt || !waiverSettings.endAt) {
+      elements.waiverWindowPreview.textContent = "Waiver period not scheduled. Transactions are closed.";
+      return;
+    }
+    const now = Date.now();
+    const start = new Date(waiverSettings.startAt).getTime();
+    const end = new Date(waiverSettings.endAt).getTime();
+    const status = now < start ? "Scheduled" : now <= end ? "Open now" : "Closed";
+    elements.waiverWindowPreview.textContent = `${status} · ${formatDateTime(waiverSettings.startAt)} to ${formatDateTime(waiverSettings.endAt)}`;
   };
 
   const renderStatus = () => {
@@ -99,6 +129,7 @@
     if (name === "rosters") renderRosterManager();
     if (name === "scores") renderScores();
     if (name === "schedule") renderSchedule();
+    if (name === "waivers") renderWaiverSettings();
     if (name === "playoffs") renderPlayoffs();
     if (name === "points") renderPointResults();
   };
@@ -368,7 +399,7 @@
       leagueState.scores[leagueState.currentWeek] = results;
       saveState(`Week ${leagueState.currentWeek} scores saved.`);
     });
-    elements.seasonForm.addEventListener("submit", (event) => {
+    elements.seasonForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       const totalWeeks = Number(elements.seasonWeeks.value);
       const pointCap = Number(elements.seasonPointCap.value);
@@ -376,10 +407,43 @@
         announce("Enter a valid season length and point cap. Season length cannot be before the current week.", true);
         return;
       }
-      leagueState.totalWeeks = totalWeeks;
-      leagueState.pointCap = pointCap;
-      saveState("Season rules saved. Draft and roster budgets are updated.");
-      renderRosterManager();
+      const submit = $("button[type='submit']", elements.seasonForm);
+      submit.disabled = true;
+      try {
+        await window.PokeLeagueWaivers.setSeasonRules(adminAccessCode, totalWeeks, pointCap);
+        leagueState.totalWeeks = totalWeeks;
+        leagueState.pointCap = pointCap;
+        waiverSettings.totalWeeks = totalWeeks;
+        waiverSettings.pointCap = pointCap;
+        saveState("Season rules saved. Draft and roster budgets are updated.");
+        renderRosterManager();
+      } catch (error) {
+        announce(error.message || "Season rules could not be saved.", true);
+      } finally {
+        submit.disabled = false;
+      }
+    });
+    elements.waiverWindowForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const start = new Date(elements.waiverWindowStart.value);
+      const end = new Date(elements.waiverWindowEnd.value);
+      if (!Number.isFinite(start.getTime()) || !Number.isFinite(end.getTime()) || end <= start) {
+        announce("Choose a closing time after the waiver opening time.", true);
+        return;
+      }
+      const submit = $("button[type='submit']", elements.waiverWindowForm);
+      submit.disabled = true;
+      try {
+        await window.PokeLeagueWaivers.setWindow(adminAccessCode, start.toISOString(), end.toISOString());
+        waiverSettings.startAt = start.toISOString();
+        waiverSettings.endAt = end.toISOString();
+        renderWaiverSettings();
+        announce("Waiver period saved for every team.");
+      } catch (error) {
+        announce(error.message || "Waiver period could not be saved.", true);
+      } finally {
+        submit.disabled = false;
+      }
     });
     elements.playoffCount.addEventListener("change", () => {
       const count = Number(elements.playoffCount.value);
@@ -427,17 +491,21 @@
 
   const initialize = async () => {
     try {
-      const [accountResponse, teamResponse, catalogResponse, savedRosters] = await Promise.all([
+      const [accountResponse, teamResponse, catalogResponse, savedRosters, savedWaiverSettings] = await Promise.all([
         fetch("data/teams.json?v=teams5", { cache: "no-store" }),
         fetch("data/league-teams.json?v=league-teams1", { cache: "no-store" }),
         fetch("data/pokemon-catalog.json?v=season-1-3"),
         window.PokeLeagueRosters.read(),
+        window.PokeLeagueWaivers.readSettings(),
       ]);
       if (!accountResponse.ok || !teamResponse.ok || !catalogResponse.ok) throw new Error("League data could not be loaded.");
       accounts = (await accountResponse.json()).accounts || {};
       teams = (await teamResponse.json()).teams || [];
       baseCatalog = await catalogResponse.json();
       leagueState.rosters = window.PokeLeagueRosters.namesFromSlugs(savedRosters, baseCatalog, teams.map((team) => team.id));
+      waiverSettings = savedWaiverSettings;
+      leagueState.totalWeeks = savedWaiverSettings.totalWeeks;
+      leagueState.pointCap = savedWaiverSettings.pointCap;
       window.PokeLeagueState.write(leagueState);
       catalog = window.PokeLeagueState.applyCatalog(baseCatalog, leagueState);
 
@@ -458,6 +526,7 @@
       selectedTeamId = account?.teamId || teams.find((team) => team.id === selectedTeamId)?.id || teams[0]?.id;
       bindEvents();
       renderStatus();
+      renderWaiverSettings();
       renderRosterManager();
       renderPlayoffs();
       setActiveTab("rosters");

@@ -124,7 +124,7 @@
 
 .admin-tabs {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 8px;
 }
 .admin-tabs button { min-height: 58px; padding: 9px; background: rgba(255, 248, 223, .9); box-shadow: 3px 4px 0 var(--admin-ink); }
@@ -228,6 +228,34 @@
 .setting-card input { padding: 8px 12px; font-size: 1.3rem; }
 .settings-grid > button { justify-self: start; }
 
+.waiver-window-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  padding: 24px;
+  box-shadow: 5px 6px 0 rgba(16, 17, 19, .65);
+}
+.waiver-window-form label { display: grid; gap: 8px; }
+.waiver-window-form label > span { font-weight: 900; text-transform: uppercase; }
+.waiver-window-form input {
+  width: 100%;
+  min-height: 50px;
+  padding: 8px 12px;
+  border: 3px solid var(--admin-ink);
+  border-radius: 9px;
+  background: #fff;
+  color: var(--admin-ink);
+  font: 800 1rem "Roboto Condensed", sans-serif;
+}
+.waiver-window-preview {
+  grid-column: 1 / -1;
+  padding: 14px 16px;
+  border: 3px dashed var(--admin-ink);
+  border-radius: 10px;
+  font-weight: 900;
+}
+.waiver-window-form > button { justify-self: start; }
+
 .playoff-form { display: grid; gap: 18px; }
 .playoff-form > select { max-width: 260px; padding: 7px 10px; }
 .playoff-seeds { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
@@ -270,6 +298,8 @@
   .admin-section-heading { display: block; }
   .admin-section-heading > p { margin-top: 12px; text-align: left; }
   .admin-team-picker { grid-template-columns: repeat(2, 1fr); }
+  .waiver-window-form { grid-template-columns: 1fr; }
+  .waiver-window-preview { grid-column: 1; }
   .roster-admin-grid,
   .settings-grid,
   .playoff-seeds,

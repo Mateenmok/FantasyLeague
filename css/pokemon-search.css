@@ -260,6 +260,217 @@ h1 {
   margin-top: clamp(46px, 7vw, 82px);
 }
 
+.waiver-roster-panel {
+  margin-top: clamp(40px, 6vw, 66px);
+  padding: 22px;
+  border: 4px solid var(--line);
+  border-radius: 18px;
+  background-color: var(--paper);
+  background-image: radial-gradient(rgba(17, 17, 17, 0.13) 1.1px, transparent 1.4px);
+  background-size: 8px 8px;
+  color: #111;
+  box-shadow: 8px 9px 0 var(--cyan), 14px 15px 0 #000;
+}
+
+.waiver-window-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin: -6px -6px 22px;
+  padding: 15px 18px;
+  border: 3px solid #111;
+  border-radius: 12px;
+  background: #dff5ff;
+  box-shadow: 4px 4px 0 #111;
+}
+
+.waiver-window-banner strong,
+.waiver-window-banner span {
+  display: block;
+}
+
+.waiver-window-banner strong {
+  font-family: "Jersey 25", Impact, sans-serif;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.waiver-window-banner span {
+  margin-top: 5px;
+  color: #5e5a53;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.waiver-window-banner.is-open {
+  background: #dff2a0;
+}
+
+.waiver-window-banner.is-closed {
+  background: #f0d6d6;
+}
+
+.waiver-budget {
+  flex: none;
+  padding: 9px 12px 8px;
+  transform: rotate(1deg);
+  border: 3px solid #111;
+  background: var(--cyan);
+  font-family: "Jersey 25", Impact, sans-serif;
+  font-size: 24px;
+  text-transform: uppercase;
+  box-shadow: 3px 3px 0 #111;
+}
+
+.waiver-roster-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 14px;
+  border-bottom: 3px solid #111;
+}
+
+.waiver-roster-heading h2 {
+  margin: 0;
+  font-family: "Jersey 25", Impact, sans-serif;
+  font-size: clamp(38px, 5vw, 58px);
+  font-weight: 400;
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+.waiver-roster-heading > span {
+  padding: 6px 9px;
+  border: 2px solid #111;
+  border-radius: 7px;
+  background: var(--cyan);
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.waiver-roster {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(138px, 1fr));
+  gap: 16px;
+  padding-top: 20px;
+}
+
+.waiver-roster .loading-state {
+  color: #5e5a53;
+  border-color: rgba(17, 17, 17, 0.35);
+}
+
+.waiver-roster-card {
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  min-width: 0;
+  padding: 8px 6px 10px;
+  text-align: center;
+}
+
+.waiver-roster-orb,
+.waiver-swap-orb {
+  display: grid;
+  place-items: center;
+  width: 112px;
+  height: 112px;
+  padding: 7px;
+  border: 4px solid #111;
+  border-radius: 50%;
+  background: conic-gradient(from -35deg, var(--type-one) 0 50%, var(--type-two) 50% 100%);
+  box-shadow: 4px 5px 0 #111;
+}
+
+.waiver-roster-orb img,
+.waiver-swap-orb img {
+  width: 100%;
+  height: 100%;
+  padding: 7px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.35) 58%, transparent 60%);
+  object-fit: contain;
+}
+
+.waiver-roster-card h3 {
+  margin: 12px 0 2px;
+  font-family: "Jersey 25", Impact, sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 0.9;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+}
+
+.waiver-roster-card p {
+  margin: 0 0 8px;
+  color: #605b52;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.waiver-drop-button,
+.waiver-add-button,
+.waiver-dialog-cancel {
+  border: 3px solid #111;
+  border-radius: 7px;
+  color: #111;
+  font-family: "Jersey 25", Impact, sans-serif;
+  text-transform: uppercase;
+  box-shadow: 3px 3px 0 #111;
+  cursor: pointer;
+}
+
+.waiver-drop-button {
+  min-width: 92px;
+  padding: 6px 10px 5px;
+  background: #f2a9b3;
+  font-size: 17px;
+}
+
+.waiver-add-button {
+  position: absolute;
+  z-index: 3;
+  right: 12px;
+  bottom: 11px;
+  left: 12px;
+  min-height: 38px;
+  background: #f4cf45;
+  font-size: 21px;
+}
+
+.waiver-drop-button:hover,
+.waiver-add-button:hover:not(:disabled),
+.waiver-dialog-cancel:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 #111;
+}
+
+.waiver-drop-button:disabled,
+.waiver-add-button:disabled {
+  cursor: not-allowed;
+  filter: grayscale(0.4);
+  opacity: 0.48;
+}
+
+.waiver-roster-empty {
+  grid-column: 1 / -1;
+  padding: 30px 20px;
+  border: 3px dashed rgba(17, 17, 17, 0.4);
+  border-radius: 12px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.results-section {
+  margin-top: clamp(40px, 6vw, 66px);
+}
+
 .results-heading-row {
   display: flex;
   align-items: end;
@@ -289,7 +500,7 @@ h1 {
   --type-two: var(--type-one);
   position: relative;
   display: flex;
-  min-height: 300px;
+  min-height: 350px;
   overflow: hidden;
   border: 7px solid transparent;
   border-radius: 11px;
@@ -453,7 +664,118 @@ h1 {
 .card-copy {
   align-self: end;
   width: 100%;
-  padding: 181px 12px 12px;
+  padding: 181px 12px 62px;
+}
+
+.waiver-swap-dialog {
+  width: min(720px, calc(100% - 30px));
+  padding: 0;
+  border: 4px solid #111;
+  border-radius: 16px;
+  background-color: var(--paper);
+  background-image: radial-gradient(rgba(17, 17, 17, 0.13) 1.1px, transparent 1.4px);
+  background-size: 8px 8px;
+  color: #111;
+  box-shadow: 9px 10px 0 var(--cyan), 15px 16px 0 #000;
+}
+
+.waiver-swap-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.82);
+}
+
+.waiver-swap-dialog form {
+  position: relative;
+  padding: 28px;
+}
+
+.waiver-swap-dialog h2 {
+  margin: 0 0 8px;
+  font-family: "Jersey 25", Impact, sans-serif;
+  font-size: clamp(42px, 7vw, 68px);
+  font-weight: 400;
+  line-height: 0.88;
+  text-transform: uppercase;
+}
+
+.waiver-dialog-close {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  width: 38px;
+  height: 38px;
+  border: 3px solid #111;
+  border-radius: 50%;
+  background: #fff;
+  color: #111;
+  font-size: 25px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.waiver-swap-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+  gap: 12px;
+  margin: 22px 0;
+}
+
+.waiver-swap-option {
+  display: grid;
+  justify-items: center;
+  min-width: 0;
+  padding: 12px 7px;
+  border: 3px solid #111;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.82);
+  color: #111;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.waiver-swap-option strong,
+.waiver-swap-option small {
+  display: block;
+  margin-top: 9px;
+  overflow-wrap: anywhere;
+  text-align: center;
+}
+
+.waiver-swap-option small {
+  margin-top: 2px;
+}
+
+.waiver-swap-orb {
+  width: 88px;
+  height: 88px;
+}
+
+.waiver-dialog-cancel {
+  padding: 8px 13px 7px;
+  background: #fff;
+  font-size: 18px;
+}
+
+.waiver-toast {
+  position: fixed;
+  z-index: 30;
+  right: 18px;
+  bottom: 18px;
+  max-width: min(420px, calc(100% - 36px));
+  margin: 0;
+  padding: 0;
+  border-radius: 999px;
+  background: #111;
+  color: #fff;
+  font-weight: 900;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.45);
+}
+
+.waiver-toast:not(:empty) {
+  padding: 11px 18px;
+}
+
+.waiver-toast.is-error {
+  background: #8b1f2c;
 }
 
 .pokemon-name {
@@ -624,13 +946,23 @@ h1 {
     display: block;
   }
 
+  .waiver-window-banner,
+  .waiver-roster-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .waiver-budget {
+    align-self: flex-start;
+  }
+
   .pokemon-grid {
     grid-template-columns: 1fr;
     gap: 16px;
   }
 
   .pokemon-card {
-    min-height: 294px;
+    min-height: 342px;
   }
 
   .pokemon-name {
