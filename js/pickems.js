@@ -3,6 +3,7 @@
   const weekTarget = document.querySelector("[data-pickems-week]");
   const status = document.querySelector("[data-pickems-status]");
   const identity = document.querySelector("[data-picker-identity]");
+  const deadline = document.querySelector("[data-pickems-deadline]");
   const leaderboard = document.querySelector("[data-pickems-leaderboard]");
   const dialog = document.querySelector("[data-matchup-dialog]");
   const dialogTitle = document.querySelector("[data-matchup-dialog-title]");
@@ -17,7 +18,9 @@
   let account = null;
   let accessCode = "";
   let week = 1;
+  let pickemsLockAt = null;
   let serverBacked = true;
+  let lockRefreshTimer;
 
   const escapeHtml = (value) => String(value ?? "")
     .replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;")
@@ -53,6 +56,32 @@
   ));
 
   const matchupComplete = (matchup) => matchup.home_score != null && matchup.away_score != null;
+  const pickemsLocked = () => Boolean(pickemsLockAt && Date.now() >= new Date(pickemsLockAt).getTime());
+  const formatDeadline = (value) => new Intl.DateTimeFormat(undefined, {
+    dateStyle: "medium",
+    timeStyle: "short",
+  }).format(new Date(value));
+
+  const renderDeadline = () => {
+    const label = deadline.querySelector("strong");
+    deadline.classList.toggle("is-locked", pickemsLocked());
+    if (!pickemsLockAt) {
+      label.textContent = "Waiver close not scheduled";
+      return;
+    }
+    label.textContent = `${pickemsLocked() ? "Locked" : "Locks"} ${formatDeadline(pickemsLockAt)}`;
+  };
+
+  const scheduleLockRefresh = () => {
+    clearTimeout(lockRefreshTimer);
+    if (!pickemsLockAt || pickemsLocked()) return;
+    const remaining = new Date(pickemsLockAt).getTime() - Date.now();
+    lockRefreshTimer = setTimeout(() => {
+      renderDeadline();
+      renderMatchups();
+      announce("Pick'ems are locked because the waiver period has closed.", true);
+    }, Math.min(remaining + 100, 2147483000));
+  };
   const matchupWinner = (matchup) => {
     if (!matchupComplete(matchup) || Number(matchup.home_score) === Number(matchup.away_score)) return null;
     return Number(matchup.home_score) > Number(matchup.away_score) ? matchup.home_team_id : matchup.away_team_id;
@@ -68,14 +97,15 @@
       const away = teamFor(matchup.away_team_id);
       const selected = currentPick(matchup.display_order)?.picked_team_id;
       const complete = matchupComplete(matchup);
+      const locked = pickemsLocked();
       const result = complete ? `${matchup.home_score} – ${matchup.away_score}` : "VS";
       const teamButton = (team) => `
         <button class="matchup-team${selected === team.id ? " is-picked" : ""}" type="button"
           data-pick-team="${escapeHtml(team.id)}" data-display-order="${matchup.display_order}"
-          aria-pressed="${selected === team.id}" ${!account || complete ? "disabled" : ""}>
+          aria-pressed="${selected === team.id}" ${!account || complete || locked ? "disabled" : ""}>
           <img src="${escapeHtml(team.logo)}" alt="" loading="lazy">
           <strong>${escapeHtml(team.name)}</strong>
-          <span>${selected === team.id ? "Your pick" : "Pick winner"}</span>
+          <span>${selected === team.id ? "Your pick" : locked ? "Picks locked" : "Pick winner"}</span>
         </button>`;
       return `
         <article class="pickem-matchup" data-open-matchup="${matchup.display_order}" tabindex="0" role="button" aria-label="View ${escapeHtml(home.name)} versus ${escapeHtml(away.name)} rosters">
@@ -119,6 +149,7 @@
 
   const submitPick = async (displayOrder, teamId) => {
     if (!account) return announce("Sign in with a league access code to make picks.", true);
+    if (pickemsLocked()) return announce("Pick'ems are locked because the waiver period has closed.", true);
     const button = grid.querySelector(`[data-display-order="${displayOrder}"][data-pick-team="${CSS.escape(teamId)}"]`);
     grid.setAttribute("aria-busy", "true");
     if (button) button.disabled = true;
@@ -208,10 +239,11 @@
       } catch {
         serverBacked = false;
         const state = window.PokeLeagueState.read();
-        competition = { currentWeek: state.currentWeek, matchups: [] };
+        competition = { currentWeek: state.currentWeek, pickemsLockAt: null, matchups: [] };
         picks = readLocalPicks();
       }
       week = Math.max(1, Number(competition.currentWeek) || 0);
+      pickemsLockAt = competition.pickemsLockAt || null;
       allMatchups = competition.matchups || [];
       matchups = allMatchups.filter((matchup) => Number(matchup.week) === week);
       if (!matchups.length) {
@@ -220,7 +252,13 @@
       }
       weekTarget.textContent = week;
       identity.textContent = account ? `Picking as ${account.accountName}` : "Sign in to make picks";
-      announce(account ? "Select a team to lock in your prediction. Tap a matchup card to compare rosters." : "You can browse matchups, but must sign in to submit predictions.");
+      renderDeadline();
+      scheduleLockRefresh();
+      announce(pickemsLocked()
+        ? "Pick'ems are locked because the waiver period has closed. Matchup rosters remain available."
+        : account
+          ? "Select a team to lock in your prediction. Picks close with waivers."
+          : "You can browse matchups, but must sign in to submit predictions.", pickemsLocked());
       renderMatchups();
       renderLeaderboard();
     } catch (error) {

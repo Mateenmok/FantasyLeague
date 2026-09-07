@@ -27,7 +27,7 @@
   const read = async () => {
     const leagueQuery = new URLSearchParams({
       id: `eq.${LEAGUE_ID}`,
-      select: "current_matchup_number,regular_season_matches,roster_point_cap,playoff_team_count",
+      select: "current_matchup_number,regular_season_matches,roster_point_cap,playoff_team_count,waiver_window_end_at",
       limit: "1",
     });
     const matchupQuery = new URLSearchParams({
@@ -46,6 +46,7 @@
       totalWeeks: Number(league.regular_season_matches) || 10,
       pointCap: Number(league.roster_point_cap) || 50,
       playoffTeamCount: Number(league.playoff_team_count) || 8,
+      pickemsLockAt: league.waiver_window_end_at,
       matchups: matchups || [],
     };
   };

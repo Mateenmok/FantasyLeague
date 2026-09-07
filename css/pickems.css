@@ -116,6 +116,26 @@
 
 .leaderboard-note { background: #f0bdd2; }
 
+.pickems-deadline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin: 0 0 14px;
+  padding: 10px 13px;
+  border: 3px solid #111;
+  border-radius: 9px;
+  background: #dff5ee;
+  box-shadow: 3px 3px 0 #111;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.pickems-deadline span { color: #167c6b; letter-spacing: .08em; }
+.pickems-deadline.is-locked { background: #f3c4d7; }
+.pickems-deadline.is-locked span { color: #9b244e; }
+
 .pickems-status {
   margin: 0 0 20px;
   color: #645d52;
@@ -355,6 +375,8 @@
 :root[data-theme="dark"] .pickem-matchup,
 :root[data-theme="dark"] .leaderboard-row,
 :root[data-theme="dark"] .pickems-pokemon { background-color: #262b32; color: #fff7de; }
+:root[data-theme="dark"] .pickems-deadline { background: #2a3d39; color: #fff7de; }
+:root[data-theme="dark"] .pickems-deadline.is-locked { background: #563242; }
 :root[data-theme="dark"] .matchup-team { background: #2a3d39; color: #fff7de; }
 :root[data-theme="dark"] .matchup-team.is-picked { background: #315f54; }
 
@@ -371,6 +393,7 @@
   .pickems-hero h1 { font-size: 64px; }
   .pickems-panel { padding: 20px 14px; }
   .pickems-section-heading { align-items: flex-start; flex-direction: column; }
+  .pickems-deadline { align-items: flex-start; flex-direction: column; gap: 3px; }
   .matchup-teams { grid-template-columns: minmax(0, 1fr) 34px minmax(0, 1fr); gap: 5px; }
   .matchup-team { grid-template-rows: 82px auto auto; padding-inline: 4px; }
   .matchup-team img { width: 80px; height: 80px; }
