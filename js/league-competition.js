@@ -91,5 +91,9 @@
     p_week: week,
   });
 
-  window.PokeLeagueCompetition = { read, readPicks, submitPick, saveSchedule, saveScores, setCurrentWeek };
+  const rewindWeek = (accessCode) => rpc("rewind_flash_family_current_week", {
+    p_access_code: String(accessCode || "").trim().toUpperCase(),
+  });
+
+  window.PokeLeagueCompetition = { read, readPicks, submitPick, saveSchedule, saveScores, setCurrentWeek, rewindWeek };
 })();

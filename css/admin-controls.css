@@ -118,9 +118,11 @@
 }
 .admin-button:hover:not(:disabled) { transform: translate(-1px, -1px); box-shadow: 6px 6px 0 var(--admin-ink); }
 .admin-button:active:not(:disabled) { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--admin-ink); }
+.admin-week-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.admin-button--previous { background: #d5d7da; }
 .admin-button--advance { background: #fff; }
 .admin-button--dark { background: var(--admin-ink); color: #fff; }
-.admin-button:disabled { cursor: not-allowed; opacity: .48; }
+.admin-button:disabled { cursor: not-allowed; opacity: .48; box-shadow: 2px 2px 0 var(--admin-ink); }
 
 .admin-tabs {
   display: grid;
@@ -291,6 +293,7 @@
   .admin-main { padding-top: 20px; }
   .admin-hero { grid-template-columns: 1fr; padding: 24px; text-align: center; }
   .admin-hero-copy { margin: 0 auto; }
+  .admin-week-actions { justify-content: center; }
   .admin-mew { grid-row: 1; justify-self: center; width: 150px; height: 150px; }
   .admin-hero-stats { grid-column: 1; grid-template-columns: 1fr; width: 100%; }
   .admin-tabs { grid-template-columns: repeat(2, 1fr); }

@@ -14,6 +14,7 @@
     totalWeeks: $("[data-total-weeks]"),
     pointCap: $("[data-point-cap]"),
     advanceWeek: $("[data-advance-week]"),
+    previousWeek: $("[data-previous-week]"),
     tabs: $$("[data-admin-tab]"),
     panels: $$("[data-admin-panel]"),
     scoreTab: $("[data-score-tab]"),
@@ -112,9 +113,13 @@
     elements.seasonWeeks.value = leagueState.totalWeeks;
     elements.seasonPointCap.value = leagueState.pointCap;
     elements.advanceWeek.disabled = leagueState.currentWeek >= leagueState.totalWeeks;
+    elements.previousWeek.disabled = leagueState.currentWeek === 0;
+    elements.previousWeek.title = leagueState.currentWeek === 0 ? "Already at Week 0" : `Return to Week ${leagueState.currentWeek - 1} and clear its saved scores`;
     elements.advanceWeek.lastChild.textContent = leagueState.currentWeek >= leagueState.totalWeeks ? " Season Complete" : "";
     const nextWeekNode = $("[data-next-week]", elements.advanceWeek);
     if (nextWeekNode) nextWeekNode.textContent = Math.min(leagueState.currentWeek + 1, leagueState.totalWeeks);
+    const previousWeekNode = $("[data-previous-week-number]", elements.previousWeek);
+    if (previousWeekNode) previousWeekNode.textContent = Math.max(0, leagueState.currentWeek - 1);
     elements.scoreTab.disabled = leagueState.currentWeek === 0;
     elements.scoreTab.title = leagueState.currentWeek === 0 ? "Scores unlock in Week 1" : "";
   };
@@ -377,8 +382,34 @@
     }
   };
 
+  const returnToPreviousWeek = async () => {
+    if (leagueState.currentWeek === 0) return;
+    const reopenedWeek = leagueState.currentWeek - 1;
+    const warning = reopenedWeek > 0
+      ? `Return to Week ${reopenedWeek}? Its saved scores will be cleared so they can be corrected.`
+      : "Return to Week 0?";
+    if (!window.confirm(warning)) return;
+    elements.previousWeek.disabled = true;
+    elements.advanceWeek.disabled = true;
+    try {
+      const previousWeek = await window.PokeLeagueCompetition.rewindWeek(adminAccessCode);
+      leagueState.currentWeek = Number(previousWeek);
+      if (reopenedWeek > 0) delete leagueState.scores[reopenedWeek];
+      saveState(reopenedWeek > 0
+        ? `Returned to Week ${previousWeek}. Week ${reopenedWeek} scores were cleared for correction.`
+        : "Returned to Week 0.");
+      renderScores();
+      renderSchedule();
+    } catch (error) {
+      announce(error.message || "The previous week could not be restored.", true);
+    } finally {
+      renderStatus();
+    }
+  };
+
   const bindEvents = () => {
     elements.tabs.forEach((tab) => tab.addEventListener("click", () => setActiveTab(tab.dataset.adminTab)));
+    elements.previousWeek.addEventListener("click", returnToPreviousWeek);
     elements.advanceWeek.addEventListener("click", advanceWeek);
     elements.rosterTeams.addEventListener("click", (event) => {
       const button = event.target.closest("[data-team-id]");
