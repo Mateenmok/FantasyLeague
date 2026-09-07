@@ -376,8 +376,8 @@ a {
 }
 
 .league-button--pickems > img {
-  max-width: 220px;
-  max-height: 165px;
+  max-width: 250px;
+  max-height: 188px;
   transform: rotate(-1deg);
 }
 
