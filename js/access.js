@@ -7,7 +7,7 @@
   let accountsPromise;
   const loadAccounts = () => {
     if (!accountsPromise) {
-      accountsPromise = fetch("data/teams.json?v=teams5", { cache: "no-store" })
+      accountsPromise = fetch("data/teams.json?v=teams6", { cache: "no-store" })
         .then((response) => {
           if (!response.ok) throw new Error("Accounts unavailable");
           return response.json();

@@ -84,9 +84,15 @@
       highlight: "--team-highlight",
       dots: "--team-dots",
       panelDots: "--team-panel-dots",
+      matchupAccent: "--team-matchup-accent",
+      rosterSurface: "--team-roster-surface",
+      rosterAccent: "--team-roster-accent",
+      rosterDots: "--team-roster-dots",
     };
     Object.entries(properties).forEach(([key, property]) => {
-      if (theme[key]) dashboard.style.setProperty(property, theme[key]);
+      if (!theme[key]) return;
+      dashboard.style.setProperty(property, theme[key]);
+      editor.style.setProperty(property, theme[key]);
     });
   };
 
@@ -157,7 +163,7 @@
   }
 
   Promise.all([
-    fetch("data/teams.json?v=teams5", { cache: "no-store" }),
+    fetch("data/teams.json?v=teams6", { cache: "no-store" }),
     fetch("data/league-teams.json?v=league-teams1", { cache: "no-store" }),
     fetch("data/pokemon-catalog.json?v=season-1-3"),
     window.PokeLeagueRosters.read().catch(() => null),

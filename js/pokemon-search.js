@@ -338,7 +338,7 @@ swapDialog.addEventListener("close", () => { pendingAdd = null; swapOptionsTarge
 Promise.all([
   fetch("data/pokemon-catalog.json?v=season-1-3"),
   fetch("data/pokemon-detail-index.json?v=pokemon-details-1"),
-  fetch("data/teams.json?v=teams-2"),
+  fetch("data/teams.json?v=teams-3"),
   window.PokeLeagueRosters.read(),
   window.PokeLeagueWaivers.readSettings(),
 ]).then(async ([catalogResponse, indexResponse, teamsResponse, savedRosters, settings]) => {

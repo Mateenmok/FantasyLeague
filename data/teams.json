@@ -57,6 +57,72 @@
         "opponentLogo": null
       },
       "roster": []
+    },
+    "MOON4": {
+      "id": "kirbbles",
+      "teamId": "massachusetts-midnight",
+      "isAdmin": false,
+      "accountName": "Kirbbles",
+      "teamName": "Massachusetts Midnight",
+      "logo": "images/teams/massachusetts-midnight.webp?v=midnight1",
+      "theme": {
+        "surface": "#e8f3ff",
+        "panel": "#101d35",
+        "accent": "#59baf2",
+        "deep": "#07101f",
+        "ink": "#25689b",
+        "highlight": "#a9d9ff",
+        "dots": "rgba(37, 104, 155, 0.2)",
+        "panelDots": "rgba(113, 196, 255, 0.3)",
+        "matchupAccent": "#477fb8",
+        "rosterSurface": "#e5f2ff",
+        "rosterAccent": "#59baf2",
+        "rosterDots": "rgba(37, 104, 155, 0.2)"
+      },
+      "record": {
+        "wins": 0,
+        "losses": 0,
+        "ties": 0
+      },
+      "weeklyMatchup": {
+        "week": 0,
+        "opponent": null,
+        "opponentLogo": null
+      },
+      "roster": []
+    },
+    "FORMIDABLE": {
+      "id": "fear",
+      "teamId": "sunnyshore-city-shelter",
+      "isAdmin": false,
+      "accountName": "Fear",
+      "teamName": "Sunnyshore City Shelter",
+      "logo": "images/teams/sunnyshore-city-shelter.png?v=shelter1",
+      "theme": {
+        "surface": "#f1f0f8",
+        "panel": "#c5c2dc",
+        "accent": "#9185c4",
+        "deep": "#252b38",
+        "ink": "#62588f",
+        "highlight": "#cfc8ee",
+        "dots": "rgba(98, 88, 143, 0.18)",
+        "panelDots": "rgba(37, 43, 56, 0.2)",
+        "matchupAccent": "#7cbde5",
+        "rosterSurface": "#eef3fa",
+        "rosterAccent": "#9185c4",
+        "rosterDots": "rgba(98, 88, 143, 0.17)"
+      },
+      "record": {
+        "wins": 0,
+        "losses": 0,
+        "ties": 0
+      },
+      "weeklyMatchup": {
+        "week": 0,
+        "opponent": null,
+        "opponentLogo": null
+      },
+      "roster": []
     }
   }
 }
