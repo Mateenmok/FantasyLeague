@@ -110,6 +110,7 @@ begin
     when 'NETO' then 'miami-dragapults'
     when 'MOON4' then 'massachusetts-midnight'
     when 'FORMIDABLE' then 'sunnyshore-city-shelter'
+    when 'NC50' then 'north-carolina-ceruledge'
     else null
   end;
 

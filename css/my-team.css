@@ -20,6 +20,8 @@
   --team-roster-surface: #eaf6ff;
   --team-roster-accent: #70e3ff;
   --team-roster-dots: rgba(43, 120, 246, 0.19);
+  --team-surface-gradient: linear-gradient(var(--team-surface), var(--team-surface));
+  --team-panel-gradient: linear-gradient(var(--team-panel), var(--team-panel));
   display: grid;
   gap: 24px;
 }
@@ -42,7 +44,9 @@
   min-height: 390px;
   overflow: hidden;
   background-color: var(--team-surface);
-  background-image: radial-gradient(var(--team-dots) 1.2px, transparent 1.5px);
+  background-image:
+    radial-gradient(var(--team-dots) 1.2px, transparent 1.5px),
+    var(--team-surface-gradient);
   background-size: 8px 8px;
   box-shadow: 9px 10px 0 var(--team-accent), 15px 16px 0 #000;
 }
@@ -57,7 +61,8 @@
   background-color: var(--team-panel);
   background-image:
     radial-gradient(var(--team-panel-dots) 1.3px, transparent 1.6px),
-    repeating-linear-gradient(-45deg, transparent 0 24px, rgba(255, 255, 255, 0.2) 24px 27px);
+    repeating-linear-gradient(-45deg, transparent 0 24px, rgba(255, 255, 255, 0.2) 24px 27px),
+    var(--team-panel-gradient);
   background-size: 8px 8px, auto;
   clip-path: polygon(0 0, 84% 0, 100% 50%, 84% 100%, 0 100%);
   content: "";

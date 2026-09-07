@@ -88,6 +88,8 @@
       rosterSurface: "--team-roster-surface",
       rosterAccent: "--team-roster-accent",
       rosterDots: "--team-roster-dots",
+      surfaceGradient: "--team-surface-gradient",
+      panelGradient: "--team-panel-gradient",
     };
     Object.entries(properties).forEach(([key, property]) => {
       if (!theme[key]) return;
@@ -163,7 +165,7 @@
   }
 
   Promise.all([
-    fetch("data/teams.json?v=teams6", { cache: "no-store" }),
+    fetch("data/teams.json?v=teams7", { cache: "no-store" }),
     fetch("data/league-teams.json?v=league-teams1", { cache: "no-store" }),
     fetch("data/pokemon-catalog.json?v=season-1-3"),
     window.PokeLeagueRosters.read().catch(() => null),

@@ -492,7 +492,7 @@
   const initialize = async () => {
     try {
       const [accountResponse, teamResponse, catalogResponse, savedRosters, savedWaiverSettings] = await Promise.all([
-        fetch("data/teams.json?v=teams6", { cache: "no-store" }),
+        fetch("data/teams.json?v=teams7", { cache: "no-store" }),
         fetch("data/league-teams.json?v=league-teams1", { cache: "no-store" }),
         fetch("data/pokemon-catalog.json?v=season-1-3"),
         window.PokeLeagueRosters.read(),

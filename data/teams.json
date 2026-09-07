@@ -123,6 +123,41 @@
         "opponentLogo": null
       },
       "roster": []
+    },
+    "NC50": {
+      "id": "shdwemp",
+      "teamId": "north-carolina-ceruledge",
+      "isAdmin": false,
+      "accountName": "Shdwemp",
+      "teamName": "North Carolina Ceruledge",
+      "logo": "images/teams/north-carolina-ceruledge.webp?v=ceruledge1",
+      "theme": {
+        "surface": "#eee8ff",
+        "panel": "#24205e",
+        "accent": "#a33cf0",
+        "deep": "#111238",
+        "ink": "#5a35a4",
+        "highlight": "#ef58d6",
+        "dots": "rgba(90, 53, 164, 0.2)",
+        "panelDots": "rgba(79, 196, 255, 0.3)",
+        "surfaceGradient": "linear-gradient(135deg, #dff4ff 0%, #e2d6ff 47%, #ffd4f2 100%)",
+        "panelGradient": "linear-gradient(145deg, #11163f 0%, #32216d 48%, #8a277d 100%)",
+        "matchupAccent": "#4fc4ff",
+        "rosterSurface": "#eee9ff",
+        "rosterAccent": "#a33cf0",
+        "rosterDots": "rgba(90, 53, 164, 0.2)"
+      },
+      "record": {
+        "wins": 0,
+        "losses": 0,
+        "ties": 0
+      },
+      "weeklyMatchup": {
+        "week": 0,
+        "opponent": null,
+        "opponentLogo": null
+      },
+      "roster": []
     }
   }
 }
