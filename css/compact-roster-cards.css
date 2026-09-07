@@ -1,0 +1,201 @@
+.compact-pokemon-card {
+  --tier-color: #79d3ed;
+  --type-one: #9fa19f;
+  --type-two: var(--type-one);
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 184px;
+  overflow: hidden;
+  border: 4px solid transparent;
+  border-radius: 9px;
+  background:
+    linear-gradient(#fff7de, #fff7de) padding-box,
+    linear-gradient(135deg, var(--type-one) 0 49.8%, var(--type-two) 50.2% 100%) border-box;
+  color: #111;
+  box-shadow: inset 0 0 0 2px #111, 3px 4px 0 #111;
+  isolation: isolate;
+}
+
+.compact-pokemon-card[data-tier="Gold"] { --tier-color: #f0c133; }
+.compact-pokemon-card[data-tier="Silver"] { --tier-color: #aeb7c5; }
+.compact-pokemon-card[data-tier="Bronze"] { --tier-color: #cf7439; }
+
+.compact-card-halftone {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background:
+    radial-gradient(circle, color-mix(in srgb, var(--type-one) 34%, transparent) 0 1px, transparent 1.3px) left top / 6px 6px,
+    linear-gradient(135deg,
+      color-mix(in srgb, var(--type-one) 14%, transparent) 0 49.8%,
+      color-mix(in srgb, var(--type-two) 14%, transparent) 50.2% 100%);
+  opacity: .57;
+}
+
+.compact-tier-label {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  max-width: calc(100% - 38px);
+  padding: 5px 7px 4px;
+  border-radius: 3px 0 7px 0;
+  background: #111;
+  color: #fff7de;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+}
+
+.compact-tier-label > span { color: var(--tier-color); }
+
+.compact-point-badge {
+  position: absolute;
+  z-index: 3;
+  right: 5px;
+  top: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 33px;
+  height: 30px;
+  transform: rotate(1.5deg);
+  border: 2px solid #111;
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--tier-color) 82%, #fff);
+  color: #111;
+  box-shadow: 1px 1px 0 #111;
+}
+
+.compact-point-badge strong {
+  font: 18px/.72 "Jersey 25", Impact, sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+.compact-point-badge > span {
+  font-size: 6px;
+  font-weight: 900;
+  letter-spacing: .09em;
+  line-height: 1;
+}
+
+.compact-mega-mark {
+  position: absolute;
+  z-index: 3;
+  right: 7px;
+  top: 41px;
+  width: 23px;
+  height: 23px;
+  filter: drop-shadow(1px 1px 0 #111);
+}
+
+.compact-mega-mark img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.compact-sprite-stage {
+  position: absolute;
+  left: 50%;
+  top: 27px;
+  display: grid;
+  place-items: center;
+  width: 92px;
+  height: 92px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255,255,255,.75) 0 25%, color-mix(in srgb, var(--type-one) 19%, transparent) 58%, transparent 74%);
+}
+
+.compact-sprite-stage img {
+  display: block;
+  max-width: 78px;
+  max-height: 78px;
+  object-fit: contain;
+  filter: drop-shadow(2px 3px 0 rgba(0,0,0,.19));
+}
+
+.compact-card-copy {
+  align-self: end;
+  display: grid;
+  gap: 5px;
+  width: 100%;
+  min-width: 0;
+  padding: 119px 6px 8px;
+  text-align: center;
+}
+
+.compact-card-copy > strong {
+  overflow-wrap: anywhere;
+  font: 16px/.86 "Jersey 25", Impact, sans-serif;
+  text-transform: uppercase;
+}
+
+.compact-type-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3px;
+}
+
+.compact-type-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+  padding: 2px 4px 2px 2px;
+  border: 1px solid #111;
+  border-radius: 999px;
+  background: rgba(255,255,255,.82);
+  font-size: 7px;
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.compact-type-badge img {
+  width: 13px;
+  height: 13px;
+  object-fit: contain;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+:root[data-theme="dark"] .compact-pokemon-card {
+  background:
+    linear-gradient(#2d3036, #2d3036) padding-box,
+    linear-gradient(135deg, var(--type-one) 0 49.8%, var(--type-two) 50.2% 100%) border-box;
+  color: #fff7de;
+}
+
+:root[data-theme="dark"] .compact-type-badge {
+  background: #3b3f47;
+  color: #fff7de;
+}
+
+@media (max-width: 520px) {
+  .compact-pokemon-card { min-height: 170px; }
+  .compact-sprite-stage { width: 80px; height: 80px; }
+  .compact-sprite-stage img { max-width: 68px; max-height: 68px; }
+  .compact-card-copy { padding-top: 107px; }
+  .compact-card-copy > strong { font-size: 15px; }
+}

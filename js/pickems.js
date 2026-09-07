@@ -11,6 +11,7 @@
 
   let teams = [];
   let catalog = [];
+  let detailIndex = {};
   let rosters = {};
   let matchups = [];
   let allMatchups = [];
@@ -172,12 +173,7 @@
     }
   };
 
-  const rosterCard = (pokemon) => `
-    <article class="pickems-pokemon">
-      <img src="${escapeHtml(pokemon.sprite)}" alt="" loading="lazy">
-      <strong>${escapeHtml(pokemon.name)}</strong>
-      <small>${escapeHtml(pokemon.points)} pts</small>
-    </article>`;
+  const rosterCard = (pokemon) => window.PokeLeagueRosterCards.render(pokemon, detailIndex);
 
   const openMatchup = (displayOrder) => {
     const matchup = matchups.find((candidate) => Number(candidate.display_order) === Number(displayOrder));
@@ -217,20 +213,22 @@
   const initialize = async () => {
     try {
       accessCode = (localStorage.getItem("pokeleague.accessCode") || sessionStorage.getItem("pokeleague.accessCode") || "").trim().toUpperCase();
-      const [teamResponse, accountResponse, catalogResponse, savedRosters] = await Promise.all([
+      const [teamResponse, accountResponse, catalogResponse, detailResponse, savedRosters] = await Promise.all([
         fetch("data/league-teams.json?v=league-teams2", { cache: "no-store" }),
         fetch("data/teams.json?v=teams8", { cache: "no-store" }),
         fetch("data/pokemon-catalog.json?v=season-1-3"),
+        fetch("data/pokemon-detail-index.json?v=pokemon-details-1"),
         window.PokeLeagueRosters.read().catch(() => null),
       ]);
-      if (!teamResponse.ok || !accountResponse.ok || !catalogResponse.ok) throw new Error("Pick'ems data could not be loaded.");
+      if (!teamResponse.ok || !accountResponse.ok || !catalogResponse.ok || !detailResponse.ok) throw new Error("Pick'ems data could not be loaded.");
       const teamData = await teamResponse.json();
       const accountData = await accountResponse.json();
       const baseCatalog = await catalogResponse.json();
+      detailIndex = await detailResponse.json();
       teams = teamData.teams || [];
       account = accountData.accounts?.[accessCode] || null;
       catalog = window.PokeLeagueState.applyCatalog(baseCatalog);
-      rosters = savedRosters ? window.PokeLeagueRosters.namesFromSlugs(savedRosters, baseCatalog, teams.map((team) => team.id)) : {};
+      rosters = savedRosters ? window.PokeLeagueRosters.namesFromSlugs(savedRosters, catalog, teams.map((team) => team.id)) : {};
 
       let competition;
       try {

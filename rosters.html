@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="icon" type="image/webp" href="images/favicon.webp">
+  <title>Rosters | PokeLeague</title>
+  <meta name="description" content="Browse every Flash Family League team and its complete roster.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jersey+25&amp;family=Roboto+Condensed:wght@500;700;900&amp;display=swap" rel="stylesheet">
+  <script src="js/theme.js?v=dark-mode3"></script>
+  <link rel="stylesheet" href="css/home.css?v=league-home-16">
+  <link rel="stylesheet" href="css/theme.css?v=dark-mode6">
+  <link rel="stylesheet" href="css/compact-roster-cards.css?v=compact-rosters1">
+  <link rel="stylesheet" href="css/rosters.css?v=rosters1">
+  <script src="js/league-state.js?v=league-state-1" defer></script>
+  <script src="js/league-rosters.js?v=league-rosters-1" defer></script>
+  <script src="js/league-competition.js?v=competition3" defer></script>
+  <script src="js/compact-roster-cards.js?v=compact-rosters1" defer></script>
+  <script src="js/rosters.js?v=rosters1" defer></script>
+</head>
+<body>
+  <div class="home-silhouettes" aria-hidden="true">
+    <span class="home-silhouette home-silhouette--swampert"></span>
+    <span class="home-silhouette home-silhouette--blaziken"></span>
+    <span class="home-silhouette home-silhouette--sceptile"></span>
+    <span class="home-silhouette home-silhouette--staraptor"></span>
+  </div>
+
+  <div class="home-shell rosters-shell">
+    <header class="home-header">
+      <a class="title-link" href="home.html"><span aria-hidden="true">←</span> League Home</a>
+      <a class="home-brand" href="home.html" aria-label="PokeLeague home">
+        <img src="images/favicon.webp" alt="" width="50" height="50">
+        <span>PokeLeague</span>
+      </a>
+      <span class="season-mark">Season <span data-rosters-season>1</span></span>
+    </header>
+
+    <main class="rosters-main">
+      <section class="rosters-hero" aria-labelledby="rostersTitle">
+        <div>
+          <p class="rosters-kicker">Every clubhouse</p>
+          <h1 id="rostersTitle">Rosters</h1>
+          <p>Scout all fourteen squads, their point totals, types, tiers, and Mega options.</p>
+        </div>
+        <img src="images/navigation/rosters-clefable.webp?v=clefable1" alt="" width="300" height="290">
+      </section>
+
+      <section class="rosters-summary" aria-label="League roster summary">
+        <span><strong data-rosters-team-count>14</strong> Teams</span>
+        <span><strong data-rosters-pokemon-count>0</strong> Drafted Pokémon</span>
+        <span><strong data-rosters-point-cap>50</strong> Point cap</span>
+      </section>
+
+      <p class="rosters-status" data-rosters-status aria-live="polite">Loading every clubhouse…</p>
+      <section class="rosters-grid" data-rosters-grid aria-label="League team rosters"></section>
+    </main>
+  </div>
+
+  <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch to dark mode" title="Switch to dark mode">
+    <img src="images/navigation/dark-mode-litwick.webp?v=dark-mode1" alt="" width="48" height="48">
+  </button>
+</body>
+</html>

@@ -1,0 +1,215 @@
+.rosters-shell { width: min(100% - 40px, 1320px); }
+.rosters-main { padding: clamp(30px, 5vw, 58px) 0 90px; }
+
+.rosters-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(210px, 34%);
+  align-items: center;
+  min-height: 300px;
+  overflow: hidden;
+  padding: clamp(28px, 5vw, 58px);
+  border: 5px solid #111;
+  border-radius: 18px;
+  background:
+    radial-gradient(rgba(170, 52, 105, .18) 1.2px, transparent 1.55px) 0 0 / 8px 8px,
+    linear-gradient(125deg, #fff7de 0 53%, #ffc0cf 53% 76%, #ef70a0 76%);
+  color: #111;
+  box-shadow: 9px 10px 0 #ef70a0, 15px 16px 0 #000;
+}
+
+.rosters-hero h1 {
+  margin: 0;
+  font: clamp(72px, 10vw, 126px)/.72 "Jersey 25", Impact, sans-serif;
+  text-transform: uppercase;
+  text-shadow: 5px 5px 0 #ef70a0, 9px 9px 0 #fff;
+}
+
+.rosters-hero > div > p:last-child {
+  max-width: 590px;
+  margin: 24px 0 0;
+  color: #594f52;
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.rosters-kicker {
+  margin: 0 0 9px;
+  color: #b02963;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.rosters-hero > img {
+  justify-self: center;
+  width: min(300px, 100%);
+  height: auto;
+  max-height: 275px;
+  object-fit: contain;
+  filter: drop-shadow(5px 7px 0 rgba(17,17,17,.22));
+}
+
+.rosters-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin: 38px 0 18px;
+}
+
+.rosters-summary > span {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px;
+  border: 3px solid #111;
+  border-radius: 10px;
+  background: #fff7de;
+  color: #111;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  box-shadow: 4px 4px 0 #ef70a0, 7px 7px 0 #111;
+}
+
+.rosters-summary strong { font: 31px/1 "Jersey 25", Impact, sans-serif; }
+
+.rosters-status {
+  margin: 28px 0 16px;
+  color: rgba(255,247,222,.7);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+.rosters-status.is-error { color: #ff8e9d; }
+
+.rosters-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.team-roster-board {
+  --team-accent: #ef70a0;
+  --team-deep: #301844;
+  min-width: 0;
+  padding: 18px;
+  border: 4px solid #111;
+  border-radius: 16px;
+  background:
+    radial-gradient(color-mix(in srgb, var(--team-accent) 25%, transparent) 1.15px, transparent 1.5px) 0 0 / 8px 8px,
+    linear-gradient(145deg, #fff7de 0 73%, color-mix(in srgb, var(--team-accent) 31%, #fff) 100%);
+  color: #111;
+  box-shadow: 7px 8px 0 var(--team-accent), 12px 13px 0 #000;
+}
+
+.team-roster-heading {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr);
+  align-items: center;
+  gap: 17px;
+  min-height: 140px;
+  margin-bottom: 18px;
+  padding-bottom: 17px;
+  border-bottom: 3px solid #111;
+}
+
+.team-roster-heading > img {
+  width: 132px;
+  height: 132px;
+  padding: 5px;
+  border: 3px solid #111;
+  border-radius: 13px;
+  background: #fff;
+  object-fit: contain;
+  box-shadow: 4px 4px 0 var(--team-accent), 7px 7px 0 #111;
+}
+
+.team-roster-heading p {
+  margin: 0 0 5px;
+  color: var(--team-deep);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.team-roster-heading h2 {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font: clamp(30px, 3vw, 42px)/.82 "Jersey 25", Impact, sans-serif;
+  text-transform: uppercase;
+}
+
+.team-roster-heading > div > span {
+  display: block;
+  margin-top: 10px;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.compact-roster-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.rosters-empty,
+.rosters-page-empty {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 32px 16px;
+  border: 3px dashed rgba(17,17,17,.4);
+  border-radius: 10px;
+  font-weight: 900;
+  text-align: center;
+}
+
+:root[data-theme="dark"] .rosters-hero {
+  background:
+    radial-gradient(rgba(255,255,255,.09) 1.2px, transparent 1.55px) 0 0 / 8px 8px,
+    linear-gradient(125deg, #292c33 0 53%, #49323f 53% 76%, #76354f 76%);
+  color: #fff7de;
+}
+:root[data-theme="dark"] .rosters-hero > div > p:last-child { color: #d3c8c5; }
+:root[data-theme="dark"] .rosters-summary > span { background: #353941; color: #fff7de; }
+:root[data-theme="dark"] .team-roster-board {
+  background:
+    radial-gradient(color-mix(in srgb, var(--team-accent) 29%, transparent) 1.15px, transparent 1.5px) 0 0 / 8px 8px,
+    linear-gradient(145deg, #2d3036 0 72%, color-mix(in srgb, var(--team-accent) 27%, #24272c) 100%);
+  color: #fff7de;
+}
+:root[data-theme="dark"] .team-roster-heading p { color: color-mix(in srgb, var(--team-accent) 80%, #fff); }
+:root[data-theme="dark"] .team-roster-heading > img { background: #3b3f47; }
+:root[data-theme="dark"] .rosters-empty { border-color: rgba(255,247,222,.4); color: #c9c4b9; }
+
+@media (max-width: 1080px) {
+  .rosters-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 690px) {
+  .rosters-shell { width: min(100% - 24px, 1320px); }
+  .rosters-hero { grid-template-columns: minmax(0, 1fr) 130px; min-height: 210px; padding: 26px 18px; }
+  .rosters-hero h1 { font-size: 66px; }
+  .rosters-hero > div > p:last-child { margin-top: 17px; font-size: 13px; }
+  .rosters-hero > img { max-height: 150px; }
+  .rosters-summary { grid-template-columns: 1fr; }
+  .team-roster-heading { grid-template-columns: 96px minmax(0, 1fr); min-height: 104px; }
+  .team-roster-heading > img { width: 96px; height: 96px; }
+  .compact-roster-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 420px) {
+  .rosters-hero { grid-template-columns: 1fr; text-align: center; }
+  .rosters-hero > img { grid-row: 1; max-height: 118px; }
+  .team-roster-board { padding: 14px; }
+  .team-roster-heading { grid-template-columns: 78px minmax(0, 1fr); gap: 12px; }
+  .team-roster-heading > img { width: 78px; height: 78px; }
+  .team-roster-heading h2 { font-size: 29px; }
+  .compact-roster-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
