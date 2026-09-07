@@ -124,64 +124,95 @@
   font-weight: 900;
 }
 
-.standings-table-scroll {
-  overflow-x: auto;
-  border: 3px solid #111;
-  border-radius: 11px;
-  background: rgba(255, 255, 255, .7);
+.standings-gallery {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
 }
 
-.standings-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-variant-numeric: tabular-nums;
-}
-
-.standings-table th,
-.standings-table td {
-  padding: 10px 14px;
-  border-bottom: 2px solid rgba(17, 17, 17, .2);
+.standings-loading {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 42px;
+  border: 3px dashed rgba(17, 17, 17, .35);
+  border-radius: 12px;
+  font-weight: 900;
   text-align: center;
 }
 
-.standings-table th {
-  background: #111;
+.standing-card {
+  position: relative;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  min-width: 0;
+  min-height: 300px;
+  overflow: hidden;
+  border: 3px solid #111;
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 50% 38%, rgba(114, 207, 238, .27) 0 34%, transparent 34.5%),
+    linear-gradient(145deg, rgba(255, 255, 255, .94), rgba(230, 247, 255, .94));
+  box-shadow: 6px 7px 0 #111;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.standing-card::before {
+  position: absolute;
+  inset: 0;
+  opacity: .12;
+  background: radial-gradient(#111 1px, transparent 1.4px) 0 0 / 7px 7px;
+  content: "";
+  pointer-events: none;
+}
+
+.standing-card:hover {
+  z-index: 2;
+  transform: translateY(-5px) rotate(-.3deg);
+  box-shadow: 9px 11px 0 #111;
+}
+
+.standing-card--place-1 { background-color: #ffe878; }
+.standing-card--place-2 { background-color: #d9e8ef; }
+.standing-card--place-3 { background-color: #efbd83; }
+
+.standing-place {
+  position: absolute;
+  z-index: 3;
+  left: 9px;
+  top: 8px;
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  padding: 3px 7px 7px 3px;
   color: #fff7de;
-  font-size: 12px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-
-.standings-table th:nth-child(2),
-.standings-table td:nth-child(2) {
-  width: 100%;
-  text-align: left;
-}
-
-.standings-table tbody tr:last-child td {
-  border-bottom: 0;
-}
-
-.standings-table tbody tr:hover {
-  background: #e5f6ff;
-}
-
-.standing-rank {
+  background: #111;
+  clip-path: polygon(50% 0, 62% 14%, 80% 6%, 83% 25%, 100% 32%, 88% 50%, 100% 68%, 80% 74%, 77% 95%, 59% 85%, 45% 100%, 35% 82%, 14% 90%, 15% 68%, 0 56%, 14% 42%, 4% 22%, 27% 20%);
   font-family: "Jersey 25", Impact, sans-serif;
-  font-size: 27px;
+  font-size: 39px;
+  line-height: 1;
+  text-shadow: 2px 2px 0 #2678a4;
+  transform: rotate(-8deg);
 }
+
+.standing-card--place-1 .standing-place { color: #111; background: #ffd326; text-shadow: 2px 2px 0 #fff7de; }
+.standing-card--place-2 .standing-place { color: #111; background: #d7e2e8; text-shadow: 2px 2px 0 #fff; }
+.standing-card--place-3 .standing-place { color: #111; background: #d98c43; text-shadow: 2px 2px 0 #ffe2b6; }
 
 .standing-team-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: 175px auto;
+  justify-items: center;
+  gap: 5px;
   min-width: 0;
-  padding: 2px 0;
+  padding: 20px 12px 10px;
   border: 0;
   background: transparent;
   color: #111;
-  font: 900 16px "Roboto Condensed", Arial, sans-serif;
-  text-align: left;
+  font: 900 17px "Roboto Condensed", Arial, sans-serif;
+  text-align: center;
   cursor: pointer;
 }
 
@@ -193,23 +224,53 @@
 }
 
 .standing-team-button:focus-visible {
-  outline: 3px solid #2b78f6;
-  outline-offset: 3px;
+  outline: 4px solid #2b78f6;
+  outline-offset: -5px;
 }
 
 .standing-team-button img {
-  flex: none;
-  width: 50px;
-  height: 50px;
-  border: 2px solid #111;
-  border-radius: 9px;
-  background: #fff;
+  align-self: center;
+  width: 165px;
+  height: 165px;
   object-fit: contain;
+  filter: drop-shadow(3px 5px 0 rgba(17, 17, 17, .18));
 }
 
-.standing-stat {
+.standing-card-stats {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+  border-top: 3px solid #111;
+  background: #111;
+  color: #fff7de;
+  font-variant-numeric: tabular-nums;
+}
+
+.standing-card-stats div {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  padding: 7px 2px 8px;
+  border-right: 1px solid rgba(255, 247, 222, .28);
+}
+
+.standing-card-stats div:last-child { border-right: 0; }
+
+.standing-card-stats dt {
+  color: #83d6f3;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.standing-card-stats dd {
+  margin: 0;
   font-family: "Jersey 25", Impact, sans-serif;
-  font-size: 25px;
+  font-size: 24px;
+  line-height: 1;
 }
 
 .playoff-count {
@@ -429,18 +490,20 @@
   color: #fff7de;
 }
 
-:root[data-theme="dark"] .standings-table-scroll {
-  background: rgba(19, 21, 25, .55);
-}
-
-:root[data-theme="dark"] .standings-table tbody tr:hover {
-  background: #263f4d;
-}
-
 :root[data-theme="dark"] .standing-team-button,
 :root[data-theme="dark"] .playoff-team {
   color: #fff7de;
 }
+
+:root[data-theme="dark"] .standing-card {
+  background:
+    radial-gradient(circle at 50% 38%, rgba(100, 199, 235, .18) 0 34%, transparent 34.5%),
+    linear-gradient(145deg, #292e36, #20262d);
+}
+
+:root[data-theme="dark"] .standing-card--place-1 { background-color: #66571a; }
+:root[data-theme="dark"] .standing-card--place-2 { background-color: #3d4a52; }
+:root[data-theme="dark"] .standing-card--place-3 { background-color: #66401f; }
 
 :root[data-theme="dark"] .playoff-team,
 :root[data-theme="dark"] .standings-pokemon-card {
@@ -448,6 +511,7 @@
 }
 
 @media (max-width: 900px) {
+  .standings-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .playoff-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .standings-roster-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
@@ -460,9 +524,10 @@
   .standings-hero h1 { font-size: 64px; }
   .standings-panel, .playoff-panel { padding: 20px 14px; }
   .standings-section-heading { align-items: flex-start; flex-direction: column; gap: 10px; }
-  .standings-table th, .standings-table td { padding: 8px 9px; }
-  .standing-team-button { font-size: 14px; }
-  .standing-team-button img { width: 42px; height: 42px; }
+  .standings-gallery { grid-template-columns: 1fr; gap: 18px; }
+  .standing-card { min-height: 290px; }
+  .standing-team-button { grid-template-rows: 170px auto; font-size: 17px; }
+  .standing-team-button img { width: 160px; height: 160px; }
   .playoff-grid { grid-template-columns: 1fr; }
   .standings-roster-dialog form { padding: 22px 16px; }
   .standings-roster-header { grid-template-columns: 82px minmax(0, 1fr); gap: 14px; }

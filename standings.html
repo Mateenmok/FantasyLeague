@@ -12,10 +12,10 @@
   <script src="js/theme.js?v=dark-mode3"></script>
   <link rel="stylesheet" href="css/home.css?v=league-home-12">
   <link rel="stylesheet" href="css/theme.css?v=dark-mode5">
-  <link rel="stylesheet" href="css/standings.css?v=standings1">
+  <link rel="stylesheet" href="css/standings.css?v=standings2">
   <script src="js/league-state.js?v=league-state-1" defer></script>
   <script src="js/league-rosters.js?v=league-rosters-1" defer></script>
-  <script src="js/standings.js?v=standings1" defer></script>
+  <script src="js/standings.js?v=standings2" defer></script>
 </head>
 <body>
   <div class="home-silhouettes" aria-hidden="true">
@@ -53,13 +53,8 @@
           </div>
           <p>Select a team to inspect its roster.</p>
         </header>
-        <div class="standings-table-scroll">
-          <table class="standings-table">
-            <thead>
-              <tr><th scope="col">#</th><th scope="col">Team</th><th scope="col">W</th><th scope="col">L</th><th scope="col">GW</th><th scope="col">WinPct</th></tr>
-            </thead>
-            <tbody data-standings-body><tr><td colspan="6">Loading standings…</td></tr></tbody>
-          </table>
+        <div class="standings-gallery" data-standings-body role="list">
+          <p class="standings-loading">Loading standings…</p>
         </div>
       </section>
 

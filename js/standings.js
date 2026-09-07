@@ -77,14 +77,16 @@
 
   const renderTable = () => {
     body.innerHTML = standings.map((entry, index) => `
-      <tr>
-        <td class="standing-rank">${index + 1}</td>
-        <td>${teamButton(entry)}</td>
-        <td class="standing-stat">${entry.wins}</td>
-        <td class="standing-stat">${entry.losses}</td>
-        <td class="standing-stat">${entry.gameWins}</td>
-        <td class="standing-stat">${winPctLabel(entry)}</td>
-      </tr>`).join("");
+      <article class="standing-card${index < 3 ? ` standing-card--place-${index + 1}` : ""}" role="listitem">
+        <span class="standing-place" aria-label="Place ${index + 1}">${index + 1}</span>
+        ${teamButton(entry)}
+        <dl class="standing-card-stats">
+          <div><dt>W</dt><dd>${entry.wins}</dd></div>
+          <div><dt>L</dt><dd>${entry.losses}</dd></div>
+          <div><dt>GW</dt><dd>${entry.gameWins}</dd></div>
+          <div><dt>WinPct</dt><dd>${winPctLabel(entry)}</dd></div>
+        </dl>
+      </article>`).join("");
   };
 
   const renderPlayoffs = (state) => {
@@ -147,7 +149,7 @@
     renderTable();
     renderPlayoffs(state);
   }).catch((error) => {
-    body.innerHTML = `<tr><td colspan="6">${escapeHtml(error.message || "Standings are unavailable.")}</td></tr>`;
+    body.innerHTML = `<p class="standings-roster-empty">${escapeHtml(error.message || "Standings are unavailable.")}</p>`;
     playoffGrid.innerHTML = '<p class="standings-roster-empty">Playoff picture unavailable.</p>';
   });
 })();
