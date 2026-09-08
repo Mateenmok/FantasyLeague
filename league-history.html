@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="icon" type="image/webp" href="images/favicon.webp">
+  <title>League History | PokeLeague</title>
+  <meta name="description" content="Explore Flash Family League scores, champions, and MVPs across every season.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jersey+25&amp;family=Roboto+Condensed:wght@500;700;900&amp;display=swap" rel="stylesheet">
+  <script src="js/theme.js?v=dark-mode3"></script>
+  <link rel="stylesheet" href="css/home.css?v=league-home-17">
+  <link rel="stylesheet" href="css/theme.css?v=dark-mode6">
+  <link rel="stylesheet" href="css/league-history.css?v=history1">
+  <script src="js/league-state.js?v=league-state-1" defer></script>
+  <script src="js/league-competition.js?v=competition3" defer></script>
+  <script src="js/league-history.js?v=history1" defer></script>
+</head>
+<body>
+  <div class="home-silhouettes" aria-hidden="true">
+    <span class="home-silhouette home-silhouette--swampert"></span>
+    <span class="home-silhouette home-silhouette--blaziken"></span>
+    <span class="home-silhouette home-silhouette--sceptile"></span>
+    <span class="home-silhouette home-silhouette--luxray"></span>
+  </div>
+
+  <div class="home-shell history-shell">
+    <header class="home-header">
+      <a class="title-link" href="home.html"><span aria-hidden="true">←</span> League Home</a>
+      <a class="home-brand" href="home.html" aria-label="PokeLeague home">
+        <img src="images/favicon.webp" alt="" width="50" height="50">
+        <span>PokeLeague</span>
+      </a>
+      <span class="season-mark">The Archives</span>
+    </header>
+
+    <main class="history-main">
+      <section class="history-hero" aria-labelledby="historyTitle">
+        <div>
+          <p class="history-kicker">Scores &amp; champions</p>
+          <h1 id="historyTitle">League History</h1>
+          <p>Flip through every matchup, then celebrate the managers and MVPs who made history.</p>
+        </div>
+        <img src="images/navigation/league-history-greninja.png?v=history1" alt="" width="499" height="990">
+      </section>
+
+      <div class="history-tabs" role="tablist" aria-label="League seasons">
+        <button type="button" role="tab" aria-selected="true" aria-controls="season1Panel" id="season1Tab" data-season-tab="1">Season 1</button>
+        <button type="button" role="tab" aria-selected="false" aria-controls="season0Panel" id="season0Tab" data-season-tab="0" tabindex="-1">Season 0</button>
+      </div>
+
+      <section class="history-season-panel" id="season1Panel" role="tabpanel" aria-labelledby="season1Tab" data-season-panel="1">
+        <header class="history-panel-heading">
+          <div>
+            <p class="history-kicker">The current campaign</p>
+            <h2>Season 1 Scorebook</h2>
+          </div>
+          <label class="history-team-filter">
+            <span>Filter by team</span>
+            <select data-history-team-filter>
+              <option value="">All teams</option>
+            </select>
+          </label>
+        </header>
+
+        <div class="history-week-bar" data-history-week-bar>
+          <button type="button" data-history-week-prev aria-label="Previous week">←</button>
+          <div>
+            <span data-history-week-mode>League week</span>
+            <strong data-history-week>Week 0</strong>
+          </div>
+          <button type="button" data-history-week-next aria-label="Next week">→</button>
+        </div>
+
+        <p class="history-status" data-history-status aria-live="polite">Loading the Season 1 scorebook…</p>
+        <div class="history-score-grid" data-history-scores></div>
+      </section>
+
+      <section class="history-season-panel" id="season0Panel" role="tabpanel" aria-labelledby="season0Tab" data-season-panel="0" hidden>
+        <header class="history-panel-heading history-panel-heading--past">
+          <div>
+            <p class="history-kicker">The inaugural final four</p>
+            <h2>Season 0 Honors</h2>
+          </div>
+          <p>Four teams. One unforgettable finish.</p>
+        </header>
+        <div class="history-honors" data-season-zero-honors aria-label="Season 0 final standings"></div>
+      </section>
+    </main>
+  </div>
+
+  <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch to dark mode" title="Switch to dark mode">
+    <img src="images/navigation/dark-mode-litwick.webp?v=dark-mode1" alt="" width="48" height="48">
+  </button>
+</body>
+</html>

@@ -1,0 +1,459 @@
+.history-shell { width: min(100% - 40px, 1240px); }
+.history-main { display: grid; gap: 30px; padding: 44px 0 86px; }
+
+.history-hero,
+.history-season-panel {
+  border: 4px solid #111;
+  border-radius: 17px;
+  color: #111;
+}
+
+.history-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  align-items: center;
+  min-height: 274px;
+  overflow: hidden;
+  padding: 34px 48px;
+  background:
+    radial-gradient(rgba(27, 103, 151, .19) 1.2px, transparent 1.55px) 0 0 / 8px 8px,
+    linear-gradient(124deg, #fff7de 0 53%, #8bdef6 53% 76%, #2a90ce 76%);
+  box-shadow: 9px 10px 0 #e94343, 15px 16px 0 #000;
+}
+
+.history-hero::before {
+  position: absolute;
+  right: 76px;
+  top: -88px;
+  width: 350px;
+  height: 420px;
+  transform: rotate(15deg);
+  border: 6px solid rgba(17,17,17,.12);
+  background: repeating-linear-gradient(-45deg, transparent 0 20px, rgba(255,255,255,.35) 20px 24px);
+  content: "";
+}
+
+.history-hero > div,
+.history-hero > img { position: relative; z-index: 1; }
+
+.history-hero h1,
+.history-panel-heading h2,
+.history-honor-copy h3 {
+  margin: 0;
+  font-family: "Jersey 25", Impact, sans-serif;
+  font-weight: 400;
+  line-height: .82;
+  text-transform: uppercase;
+}
+
+.history-hero h1 {
+  max-width: 760px;
+  font-size: clamp(67px, 9.5vw, 116px);
+  text-shadow: 5px 5px 0 #4fc8ef, 9px 9px 0 #e34a4a;
+}
+
+.history-kicker {
+  margin: 0 0 8px;
+  color: #186fa8;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.history-hero > div > p:last-child {
+  max-width: 620px;
+  margin: 22px 0 0;
+  color: #485968;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.history-hero > img {
+  justify-self: center;
+  width: auto;
+  max-width: 185px;
+  max-height: 235px;
+  object-fit: contain;
+  filter: drop-shadow(5px 7px 0 rgba(17,17,17,.22));
+}
+
+.history-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 8px 0 -12px;
+}
+
+.history-tabs button {
+  min-width: 180px;
+  padding: 12px 24px;
+  border: 3px solid #111;
+  border-radius: 999px;
+  background: #252930;
+  color: #fff7de;
+  box-shadow: 4px 5px 0 #111;
+  font: 31px/1 "Jersey 25", Impact, sans-serif;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.history-tabs button[aria-selected="true"] {
+  transform: translateY(-3px) rotate(-1deg);
+  background: #73d4f3;
+  color: #111;
+  box-shadow: 4px 5px 0 #e84848, 7px 8px 0 #111;
+}
+
+.history-tabs button:focus-visible { outline: 4px solid #fff7de; outline-offset: 4px; }
+
+.history-season-panel {
+  padding: clamp(20px, 3.2vw, 38px);
+  background-color: #fff7de;
+  background-image: radial-gradient(rgba(17,17,17,.13) 1.1px, transparent 1.45px);
+  background-size: 8px 8px;
+  box-shadow: 8px 9px 0 #58c6e9, 14px 15px 0 #000;
+}
+
+.history-season-panel[hidden] { display: none; }
+
+.history-panel-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 22px;
+  padding-bottom: 23px;
+  border-bottom: 4px solid #111;
+}
+
+.history-panel-heading h2 { font-size: clamp(48px, 6.5vw, 76px); }
+
+.history-panel-heading--past > p {
+  margin: 0 0 5px;
+  color: #625d53;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.history-team-filter {
+  display: grid;
+  gap: 6px;
+  width: min(100%, 300px);
+}
+
+.history-team-filter > span {
+  color: #555149;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.history-team-filter select {
+  width: 100%;
+  min-height: 48px;
+  padding: 8px 38px 8px 13px;
+  border: 3px solid #111;
+  border-radius: 8px;
+  background: #fff;
+  color: #111;
+  box-shadow: 3px 4px 0 #e84a4a;
+  font: 900 15px "Roboto Condensed", Arial, sans-serif;
+}
+
+.history-week-bar {
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr) 54px;
+  align-items: center;
+  gap: 14px;
+  width: min(100%, 520px);
+  margin: 26px auto 18px;
+}
+
+.history-week-bar > button {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border: 3px solid #111;
+  border-radius: 50%;
+  background: #73d4f3;
+  color: #111;
+  box-shadow: 3px 4px 0 #111;
+  font-size: 25px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.history-week-bar > button:disabled { opacity: .28; cursor: not-allowed; }
+.history-week-bar > button:not(:disabled):hover { transform: translateY(-2px); }
+
+.history-week-bar > div {
+  display: grid;
+  justify-items: center;
+  padding: 8px 18px;
+  border: 3px solid #111;
+  border-radius: 10px;
+  background: #252930;
+  color: #fff7de;
+  box-shadow: 4px 5px 0 #e84848;
+}
+
+.history-week-bar > div > span {
+  color: #8fdcf4;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.history-week-bar strong { font: 37px/.9 "Jersey 25", Impact, sans-serif; text-transform: uppercase; }
+.history-week-bar.is-team-history { grid-template-columns: minmax(0, 1fr); }
+.history-week-bar.is-team-history > button { display: none; }
+
+.history-status {
+  margin: 0 0 16px;
+  color: #5e584f;
+  font-size: 12px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.history-score-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+
+.history-score-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 76px minmax(0, 1fr);
+  align-items: center;
+  min-width: 0;
+  min-height: 170px;
+  padding: 26px 16px 18px;
+  border: 3px solid #111;
+  border-radius: 13px;
+  background:
+    radial-gradient(rgba(42,144,206,.13) 1px, transparent 1.4px) 0 0 / 7px 7px,
+    linear-gradient(135deg, #fff 0 49.7%, #eef9ff 50.3%);
+  box-shadow: 5px 6px 0 #111;
+}
+
+.history-score-week {
+  position: absolute;
+  left: 10px;
+  top: 9px;
+  color: #1a76ad;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.history-score-team { display: grid; justify-items: center; gap: 7px; min-width: 0; text-align: center; }
+.history-score-team img { width: 86px; height: 86px; object-fit: contain; filter: drop-shadow(3px 4px 0 rgba(17,17,17,.18)); }
+.history-score-team strong { overflow-wrap: anywhere; font: 19px/.9 "Jersey 25", Impact, sans-serif; text-transform: uppercase; }
+
+.history-score-value { display: grid; place-items: center; }
+.history-score-value > strong {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  width: 72px;
+  height: 58px;
+  transform: rotate(-2deg);
+  border: 3px solid #111;
+  border-radius: 10px;
+  background: #111;
+  color: #fff7de;
+  box-shadow: 3px 4px 0 #e84848;
+  font: 34px/.8 "Jersey 25", Impact, sans-serif;
+}
+
+.history-pending {
+  padding: 7px 9px;
+  transform: rotate(-2deg);
+  border: 2px dashed #111;
+  border-radius: 7px;
+  color: #686158;
+  font-size: 9px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.history-empty {
+  grid-column: 1 / -1;
+  display: grid;
+  justify-items: center;
+  gap: 7px;
+  padding: 54px 20px;
+  border: 3px dashed rgba(17,17,17,.36);
+  border-radius: 12px;
+  text-align: center;
+}
+.history-empty strong { font: 43px/.9 "Jersey 25", Impact, sans-serif; text-transform: uppercase; }
+.history-empty span { max-width: 560px; color: #655f56; font-weight: 900; }
+
+.history-honors { display: grid; gap: 24px; margin-top: 28px; }
+
+.history-honor-card {
+  --medal: #7e55bd;
+  position: relative;
+  display: grid;
+  grid-template-columns: 82px 165px 320px minmax(0, 1fr);
+  align-items: center;
+  gap: 20px;
+  min-height: 210px;
+  overflow: hidden;
+  padding: 19px 24px 19px 14px;
+  border: 4px solid #111;
+  border-radius: 15px;
+  background:
+    radial-gradient(color-mix(in srgb, var(--medal) 26%, transparent) 1.2px, transparent 1.55px) 0 0 / 8px 8px,
+    linear-gradient(118deg, color-mix(in srgb, var(--medal) 20%, #fff) 0 58%, #fff7de 58%);
+  box-shadow: 7px 8px 0 var(--medal), 12px 13px 0 #111;
+}
+
+.history-honor-card--1 { --medal: #f5c72c; }
+.history-honor-card--2 { --medal: #aebdca; }
+.history-honor-card--3 { --medal: #c5783d; }
+.history-honor-card--4 { --medal: #8c59c4; }
+
+.history-rank {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  width: 82px;
+  height: 82px;
+  padding-top: 16px;
+  transform: rotate(-7deg);
+  background: var(--medal);
+  color: #111;
+  clip-path: polygon(50% 0, 62% 14%, 80% 6%, 83% 25%, 100% 32%, 88% 50%, 100% 68%, 80% 74%, 77% 95%, 59% 85%, 45% 100%, 35% 82%, 14% 90%, 15% 68%, 0 56%, 14% 42%, 4% 22%, 27% 20%);
+  filter: drop-shadow(3px 4px 0 #111);
+}
+
+.history-rank strong { font: 52px/.8 "Jersey 25", Impact, sans-serif; }
+.history-rank small { font: 12px/1 "Jersey 25", Impact, sans-serif; }
+.history-crown { position: absolute; left: 24px; top: -3px; transform: rotate(-12deg); font-size: 27px; }
+
+.history-honor-logo {
+  width: 160px;
+  height: 160px;
+  padding: 6px;
+  border: 3px solid #111;
+  border-radius: 13px;
+  background: #fff;
+  object-fit: contain;
+  box-shadow: 4px 5px 0 var(--medal), 7px 8px 0 #111;
+}
+
+.history-honor-copy p,
+.history-mvps > p {
+  margin: 0 0 5px;
+  color: color-mix(in srgb, var(--medal) 70%, #111);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.history-honor-copy { min-width: 0; }
+.history-honor-copy h3 { font-size: clamp(35px, 3.5vw, 45px); }
+.history-honor-copy > span { display: block; margin-top: 8px; font-weight: 900; text-transform: uppercase; }
+
+.history-mvps { min-width: 0; }
+.history-mvps > div { display: flex; flex-wrap: wrap; gap: 9px; }
+.history-mvp {
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr);
+  align-items: center;
+  gap: 5px;
+  min-width: 118px;
+  padding: 5px 9px 5px 5px;
+  border: 2px solid #111;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 2px 3px 0 #111;
+}
+.history-mvp img { width: 54px; height: 54px; object-fit: contain; }
+.history-mvp strong { overflow-wrap: anywhere; font: 17px/.88 "Jersey 25", Impact, sans-serif; text-transform: uppercase; }
+
+:root[data-theme="dark"] .history-hero {
+  background:
+    radial-gradient(rgba(255,255,255,.09) 1.2px, transparent 1.55px) 0 0 / 8px 8px,
+    linear-gradient(124deg, #292d34 0 53%, #284c5d 53% 76%, #1f6c98 76%);
+  color: #fff7de;
+}
+:root[data-theme="dark"] .history-hero > div > p:last-child { color: #c4d3db; }
+:root[data-theme="dark"] .history-season-panel { background-color: #353941; background-image: radial-gradient(rgba(255,255,255,.1) 1.1px, transparent 1.45px); color: #fff7de; }
+:root[data-theme="dark"] .history-panel-heading--past > p,
+:root[data-theme="dark"] .history-team-filter > span,
+:root[data-theme="dark"] .history-status,
+:root[data-theme="dark"] .history-empty span { color: #c9c4b9; }
+:root[data-theme="dark"] .history-score-card {
+  background:
+    radial-gradient(rgba(115,212,243,.13) 1px, transparent 1.4px) 0 0 / 7px 7px,
+    linear-gradient(135deg, #282c33 0 49.7%, #303a43 50.3%);
+  color: #fff7de;
+}
+:root[data-theme="dark"] .history-pending { border-color: #fff7de; color: #c9c4b9; }
+:root[data-theme="dark"] .history-honor-card {
+  background:
+    radial-gradient(color-mix(in srgb, var(--medal) 29%, transparent) 1.2px, transparent 1.55px) 0 0 / 8px 8px,
+    linear-gradient(118deg, color-mix(in srgb, var(--medal) 24%, #272a30) 0 58%, #30343b 58%);
+  color: #fff7de;
+}
+:root[data-theme="dark"] .history-honor-logo,
+:root[data-theme="dark"] .history-mvp { background: #3c4149; color: #fff7de; }
+:root[data-theme="dark"] .history-honor-copy p,
+:root[data-theme="dark"] .history-mvps > p { color: color-mix(in srgb, var(--medal) 75%, #fff); }
+
+@media (max-width: 1180px) {
+  .history-score-grid { grid-template-columns: 1fr; }
+  .history-honor-card { grid-template-columns: 82px 150px minmax(170px, 1fr); }
+  .history-honor-logo { width: 144px; height: 144px; }
+  .history-mvps { grid-column: 2 / -1; }
+}
+
+@media (max-width: 680px) {
+  .history-shell { width: min(100% - 24px, 1240px); }
+  .history-main { padding-top: 28px; }
+  .history-hero { grid-template-columns: minmax(0, 1fr) 115px; min-height: 220px; padding: 28px 18px; }
+  .history-hero h1 { font-size: 63px; }
+  .history-hero > div > p:last-child { margin-top: 17px; font-size: 12px; }
+  .history-hero > img { max-width: 100px; max-height: 180px; }
+  .history-tabs { gap: 7px; }
+  .history-tabs button { min-width: 0; flex: 1; padding-inline: 12px; }
+  .history-panel-heading { align-items: stretch; flex-direction: column; }
+  .history-team-filter { width: 100%; }
+  .history-score-card { grid-template-columns: minmax(0, 1fr) 64px minmax(0, 1fr); padding-inline: 8px; }
+  .history-score-team img { width: 72px; height: 72px; }
+  .history-score-team strong { font-size: 17px; }
+  .history-score-value > strong { width: 58px; font-size: 29px; }
+  .history-honor-card { grid-template-columns: 70px minmax(0, 1fr); gap: 13px; padding: 15px; }
+  .history-rank { width: 68px; height: 68px; }
+  .history-rank strong { font-size: 43px; }
+  .history-crown { left: 20px; font-size: 23px; }
+  .history-honor-logo { width: 124px; height: 124px; justify-self: center; }
+  .history-honor-copy { grid-column: 1 / -1; text-align: center; }
+  .history-mvps { grid-column: 1 / -1; }
+  .history-mvps > p { text-align: center; }
+  .history-mvps > div { justify-content: center; }
+}
+
+@media (max-width: 430px) {
+  .history-hero { grid-template-columns: 1fr; text-align: center; }
+  .history-hero > img { grid-row: 1; max-height: 118px; }
+  .history-week-bar { grid-template-columns: 46px minmax(0, 1fr) 46px; gap: 8px; }
+  .history-week-bar > button { width: 46px; height: 46px; }
+  .history-score-card { grid-template-columns: minmax(0, 1fr) 56px minmax(0, 1fr); }
+  .history-score-team img { width: 61px; height: 61px; }
+  .history-score-team strong { font-size: 15px; }
+  .history-score-value > strong { width: 51px; height: 49px; font-size: 25px; }
+  .history-honor-card { grid-template-columns: 64px minmax(0, 1fr); }
+  .history-honor-logo { width: 108px; height: 108px; }
+  .history-mvp { min-width: 104px; grid-template-columns: 45px minmax(0, 1fr); }
+  .history-mvp img { width: 45px; height: 45px; }
+}

@@ -397,6 +397,14 @@ a {
 .league-button--rosters::before { background: #ffc7d0; }
 .league-button--rosters > img { max-width: 184px; max-height: 190px; transform: rotate(-2deg); }
 
+.league-button--history {
+  --button-accent: #30b7ed;
+  transform: rotate(-0.14deg);
+}
+
+.league-button--history::before { background: #89ddf8; }
+.league-button--history > img { max-width: 154px; max-height: 210px; transform: rotate(1deg); }
+
 .league-button:hover,
 .league-button:focus-visible {
   z-index: 2;
@@ -660,7 +668,8 @@ a {
   .league-button--standings,
   .league-button--pickems,
   .league-button--trade-room,
-  .league-button--rosters {
+  .league-button--rosters,
+  .league-button--history {
     grid-column: auto;
     grid-template-columns: minmax(0, 1fr) 39%;
   }
