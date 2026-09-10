@@ -1863,7 +1863,7 @@
     "sprite": "images/sprites/champions/Menu CP 0748.png"
   },
   {
-    "name": "Toxtricity-Amped",
+    "name": "Toxtricity",
     "aliases": [],
     "tier": "Silver",
     "points": "4",
@@ -1875,20 +1875,6 @@
     ],
     "dex": 849,
     "sprite": "images/sprites/champions/Menu CP 0849.png"
-  },
-  {
-    "name": "Toxtricity-Low-Key",
-    "aliases": [],
-    "tier": "Silver",
-    "points": "4",
-    "sortPoints": 4,
-    "note": "",
-    "types": [
-      "Electric",
-      "Poison"
-    ],
-    "dex": 849,
-    "sprite": "images/sprites/champions/Menu CP 0849-Low Key.png"
   },
   {
     "name": "Umbreon",
@@ -2604,21 +2590,7 @@
     "sprite": "images/sprites/champions/Menu CP 0199.png"
   },
   {
-    "name": "Squawkabilly-Blue",
-    "aliases": [],
-    "tier": "Bronze",
-    "points": "2",
-    "sortPoints": 2,
-    "note": "",
-    "types": [
-      "Normal",
-      "Flying"
-    ],
-    "dex": 931,
-    "sprite": "images/sprites/champions/Menu CP 0931-Blue.png"
-  },
-  {
-    "name": "Squawkabilly-Green",
+    "name": "Squawkabilly",
     "aliases": [],
     "tier": "Bronze",
     "points": "2",
@@ -2630,34 +2602,6 @@
     ],
     "dex": 931,
     "sprite": "images/sprites/champions/Menu CP 0931.png"
-  },
-  {
-    "name": "Squawkabilly-White",
-    "aliases": [],
-    "tier": "Bronze",
-    "points": "2",
-    "sortPoints": 2,
-    "note": "",
-    "types": [
-      "Normal",
-      "Flying"
-    ],
-    "dex": 931,
-    "sprite": "images/sprites/champions/Menu CP 0931-White.png"
-  },
-  {
-    "name": "Squawkabilly-Yellow",
-    "aliases": [],
-    "tier": "Bronze",
-    "points": "2",
-    "sortPoints": 2,
-    "note": "",
-    "types": [
-      "Normal",
-      "Flying"
-    ],
-    "dex": 931,
-    "sprite": "images/sprites/champions/Menu CP 0931-Yellow.png"
   },
   {
     "name": "Toucannon",

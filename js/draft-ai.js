@@ -17,7 +17,7 @@
     Kingambit: 7, Grimmsnarl: 5, Pelipper: 5, Kangaskhan: 5, Sableye: -18, Sinistcha: -18,
   };
   const PREMIUM_TAILWIND = new Set(["Whimsicott", "Talonflame"]);
-  const RELIABLE_TAILWIND = new Set(["Aerodactyl", "Skarmory", "Noivern", "Altaria", "Corviknight", "Vivillon", "Salamence", "Dragonite", "Squawkabilly-Green", "Squawkabilly-Blue", "Squawkabilly-Yellow", "Squawkabilly-White"]);
+  const RELIABLE_TAILWIND = new Set(["Aerodactyl", "Skarmory", "Noivern", "Altaria", "Corviknight", "Vivillon", "Salamence", "Dragonite", "Squawkabilly"]);
   const RELIABLE_TR = new Set(["Musharna", "Farigiraf", "Mimikyu", "Oranguru", "Hatterene", "Meowstic", "Sinistcha", "Gallade", "Mr. Mime", "Indeedee"]);
   const DEDICATED_TR = ["Farigiraf", "Oranguru", "Gallade"];
   const TR_PAYOFF = new Set(["Torkoal", "Crabominable", "Camerupt", "Golurk", "Mawile", "Hatterene", "Sylveon", "Kingambit", "Snorlax", "Mudsdale", "Hisuian Goodra"]);
@@ -29,7 +29,7 @@
     sand: { setters: ["Tyranitar", "Hippowdon", "Sandaconda"], roles: ["Sand Setter"], abuserRole: "Sand Abuser" },
     snow: { setters: ["Alolan Ninetales", "Abomasnow", "Vanilluxe", "Aurorus"], roles: ["Snow Setter"], abuserRole: "Snow Abuser" },
   };
-  const ELECTRIC_TERRAIN_ABUSERS = new Set(["Ampharos", "Jolteon", "Toxtricity-Amped", "Toxtricity-Low-Key"]);
+  const ELECTRIC_TERRAIN_ABUSERS = new Set(["Ampharos", "Jolteon", "Toxtricity"]);
   const PSYCHIC_TERRAIN_PREMIUM = new Set(["Alakazam", "Hatterene", "Armarouge"]);
   const PSYCHIC_TERRAIN_SLIGHT = new Set(["Slowbro", "Galarian Slowbro", "Starmie", "Mr. Mime", "Espeon", "Slowking", "Galarian Slowking", "Gardevoir", "Musharna", "Reuniclus", "Delphox", "Mr. Rime", "Wyrdeer", "Espathra", "Farigiraf", "Meowstic"]);
   const CONTRARY_PRANKSTER = { Whimsicott: 3, Grimmsnarl: 3, Meowstic: 2, Liepard: 1 };

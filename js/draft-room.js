@@ -58,12 +58,12 @@
 
   const names = (value) => value.split(",").map((name) => name.trim()).filter(Boolean);
   const ROLE_GROUPS = {
-    Support: names("Musharna,Farfetch'd,Farigiraf,Grimmsnarl,Incineroar,Pelipper,Raichu,Rillaboom,Sableye,Sinistcha,Whimsicott,Maushold,Politoed,Talonflame,Clefable,Corviknight,Hisuian Arcanine,Milotic,Scrafty,Vivillon,Arcanine,Klefki,Meowstic,Oranguru,Tinkaton,Tsareena,Hatterene,Liepard,Mimikyu,Altaria,Bellibolt,Galarian Slowking,Skarmory,Slowbro,Toxapex,Umbreon,Ninetales,Orthworm,Spiritomb,Alcremie,Cofagrigus,Ditto,Slowking,Wyrdeer,Audino,Aromatisse,Dedenne,Florges,Forretress,Gourgeist,Polteageist,Roserade,Slurpuff,Wigglytuff,Persian,Persian-Alola,Mr. Mime,Swalot,Thievul,Perrserker,Pincurchin,Indeedee,Arboliva,Pawmot,Mabosstiff,Squawkabilly-Green,Squawkabilly-Blue,Squawkabilly-Yellow,Squawkabilly-White"),
+    Support: names("Musharna,Farfetch'd,Farigiraf,Grimmsnarl,Incineroar,Pelipper,Raichu,Rillaboom,Sableye,Sinistcha,Whimsicott,Maushold,Politoed,Talonflame,Clefable,Corviknight,Hisuian Arcanine,Milotic,Scrafty,Vivillon,Arcanine,Klefki,Meowstic,Oranguru,Tinkaton,Tsareena,Hatterene,Liepard,Mimikyu,Altaria,Bellibolt,Galarian Slowking,Skarmory,Slowbro,Toxapex,Umbreon,Ninetales,Orthworm,Spiritomb,Alcremie,Cofagrigus,Ditto,Slowking,Wyrdeer,Audino,Aromatisse,Dedenne,Florges,Forretress,Gourgeist,Polteageist,Roserade,Slurpuff,Wigglytuff,Persian,Persian-Alola,Mr. Mime,Swalot,Thievul,Perrserker,Pincurchin,Indeedee,Arboliva,Pawmot,Mabosstiff,Squawkabilly"),
     "Fake Out": names("Blastoise,Grimmsnarl,Incineroar,Kangaskhan,Lopunny,Meowstic,Morpeko,Mr. Rime,Pikachu,Raichu,Alolan Raichu,Rillaboom,Sableye,Salazzle,Scrafty,Simipour,Simisage,Simisear,Sneasler,Tinkaton,Toxicroak,Weavile,Infernape,Persian,Persian-Alola,Mr. Mime,Perrserker,Indeedee,Pawmot"),
     Prankster: names("Whimsicott,Grimmsnarl,Sableye,Klefki,Liepard,Meowstic,Banette"),
-    Intimidate: names("Incineroar,Gyarados,Arcanine,Hisuian Arcanine,Scrafty,Overqwil,Qwilfish,Wyrdeer,Luxray,Staraptor,Salamence,Manectric,Mabosstiff,Squawkabilly-Green,Squawkabilly-Blue,Squawkabilly-Yellow,Squawkabilly-White"),
+    Intimidate: names("Incineroar,Gyarados,Arcanine,Hisuian Arcanine,Scrafty,Overqwil,Qwilfish,Wyrdeer,Luxray,Staraptor,Salamence,Manectric,Mabosstiff,Squawkabilly"),
     "Priority Tailwind": names("Whimsicott,Talonflame"),
-    Tailwind: names("Aerodactyl,Skarmory,Noivern,Altaria,Corviknight,Vivillon,Salamence,Dragonite,Squawkabilly-Green,Squawkabilly-Blue,Squawkabilly-Yellow,Squawkabilly-White"),
+    Tailwind: names("Aerodactyl,Skarmory,Noivern,Altaria,Corviknight,Vivillon,Salamence,Dragonite,Squawkabilly"),
     "TR Setter": names("Musharna,Farigiraf,Mimikyu,Oranguru,Hatterene,Meowstic,Sinistcha,Gallade,Mr. Mime,Indeedee"),
     "TR Sweeper": names("Torkoal,Crabominable,Camerupt,Golurk,Hatterene,Drampa,Mawile,Sylveon,Gardevoir,Golisopod,Snorlax"),
     Redirection: names("Maushold,Clefable,Ariados,Volcarona,Vivillon,Scovillain,Sinistcha,Indeedee"),
@@ -76,7 +76,7 @@
     "Snow Setter": names("Alolan Ninetales,Abomasnow,Vanilluxe,Aurorus"),
     "Snow Abuser": names("Beartic,Glaceon"),
     "Terrain Setter": names("Raichu,Rillaboom,Pincurchin,Indeedee,Arboliva"),
-    "Terrain Abuser": names("Sneasler,Hawlucha,Ampharos,Jolteon,Toxtricity-Amped,Toxtricity-Low-Key,Alakazam,Armarouge,Delphox,Espathra,Espeon,Farigiraf,Galarian Slowbro,Galarian Slowking,Gardevoir,Hatterene,Meowstic,Mr. Rime,Reuniclus,Slowbro,Slowking,Starmie,Wyrdeer,Mr. Mime,Musharna"),
+    "Terrain Abuser": names("Sneasler,Hawlucha,Ampharos,Jolteon,Toxtricity,Alakazam,Armarouge,Delphox,Espathra,Espeon,Farigiraf,Galarian Slowbro,Galarian Slowking,Gardevoir,Hatterene,Meowstic,Mr. Rime,Reuniclus,Slowbro,Slowking,Starmie,Wyrdeer,Mr. Mime,Musharna"),
     "Value Pick": names("Alakazam,Alolan Raichu,Ditto,Espeon,Heracross,Pinsir,Reuniclus,Wyrdeer,Audino,Beedrill,Chimecho,Pidgeot"),
     "Dual Mega": names("Charizard,Raichu,Absol,Garchomp,Lucario"),
     Mega: names("Venusaur,Charizard,Blastoise,Beedrill,Pidgeot,Raichu,Clefable,Alakazam,Victreebel,Slowbro,Gengar,Kangaskhan,Starmie,Pinsir,Gyarados,Aerodactyl,Dragonite,Meganium,Feraligatr,Ampharos,Steelix,Scizor,Heracross,Skarmory,Houndoom,Tyranitar,Sceptile,Blaziken,Swampert,Gardevoir,Sableye,Mawile,Aggron,Medicham,Manectric,Sharpedo,Camerupt,Altaria,Banette,Chimecho,Absol,Glalie,Salamence,Metagross,Staraptor,Lopunny,Garchomp,Lucario,Abomasnow,Gallade,Froslass,Emboar,Excadrill,Audino,Scolipede,Scrafty,Eelektross,Chandelure,Golurk,Chesnaught,Delphox,Greninja,Pyroar,Eternal Floette,Meowstic,Malamar,Barbaracle,Dragalge,Hawlucha,Crabominable,Drampa,Falinks,Scovillain,Glimmora,Golisopod,Baxcalibur"),
@@ -95,8 +95,7 @@
     perrserker: { hp: 70, attack: 110, defense: 100, sp_atk: 50, sp_def: 60, speed: 50 },
     pincurchin: { hp: 48, attack: 101, defense: 95, sp_atk: 91, sp_def: 85, speed: 15 },
     sirfetchd: { hp: 62, attack: 135, defense: 95, sp_atk: 68, sp_def: 82, speed: 65 },
-    toxtricityamped: { hp: 75, attack: 98, defense: 70, sp_atk: 114, sp_def: 70, speed: 75 },
-    toxtricitylowkey: { hp: 75, attack: 98, defense: 70, sp_atk: 114, sp_def: 70, speed: 75 },
+    toxtricity: { hp: 75, attack: 98, defense: 70, sp_atk: 114, sp_def: 70, speed: 75 },
   };
 
   const ROLE_MEMBERSHIP = Object.fromEntries(
@@ -668,7 +667,7 @@
       const actual = ROLE_MEMBERSHIP[role] || new Set();
       if (actual.size !== names.length || names.some((name) => !actual.has(name))) failures.push(`${role} membership is out of sync with v113`);
     };
-    if (state.catalog.length !== 256) failures.push(`expected 256 draft assets, found ${state.catalog.length}`);
+    if (state.catalog.length !== 252) failures.push(`expected 252 draft assets, found ${state.catalog.length}`);
     for (const [name, expected] of [["Alakazam", 6], ["Armarouge", 7], ["Hatterene", 7], ["Indeedee", 9]]) {
       if (pointValue(state.byName.get(name)) !== expected) failures.push(`${name} should cost ${expected}`);
     }
@@ -812,9 +811,9 @@
     if (pointCapCopy) pointCapCopy.textContent = state.pointCap;
     try {
       const [catalogResponse, detailsResponse, indexResponse] = await Promise.all([
-        fetch("data/pokemon-catalog.json?v=draft-v113"),
-        fetch("data/pokemon-details.json?v=draft-v113"),
-        fetch("data/pokemon-detail-index.json?v=draft-v113"),
+        fetch("data/pokemon-catalog.json?v=consolidated-forms1"),
+        fetch("data/pokemon-details.json?v=consolidated-forms1"),
+        fetch("data/pokemon-detail-index.json?v=consolidated-forms1"),
       ]);
       if (!catalogResponse.ok || !detailsResponse.ok || !indexResponse.ok) throw new Error("Draft data unavailable");
       const [catalog, detailData, detailIndex] = await Promise.all([

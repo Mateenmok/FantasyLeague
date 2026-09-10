@@ -71,14 +71,16 @@ let invalidForms = 0;
 let invalidDependencies = 0;
 const dependencyExamples = [];
 let strategyMixFailures = 0;
-const requiredV113Additions = ["Arboliva", "Baxcalibur", "Cinderace", "Farfetch'd", "Gogoat", "Golisopod", "Grapploct", "Indeedee", "Inteleon", "Mabosstiff", "Mr. Mime", "Musharna", "Pawmot", "Perrserker", "Persian", "Persian-Alola", "Pincurchin", "Sirfetch'd", "Squawkabilly-Blue", "Squawkabilly-Green", "Squawkabilly-White", "Squawkabilly-Yellow", "Swalot", "Thievul", "Toxtricity-Amped", "Toxtricity-Low-Key", "Wigglytuff"];
+const requiredV113Additions = ["Arboliva", "Baxcalibur", "Cinderace", "Farfetch'd", "Gogoat", "Golisopod", "Grapploct", "Indeedee", "Inteleon", "Mabosstiff", "Mr. Mime", "Musharna", "Pawmot", "Perrserker", "Persian", "Persian-Alola", "Pincurchin", "Sirfetch'd", "Squawkabilly", "Swalot", "Thievul", "Toxtricity", "Wigglytuff"];
+const removedDuplicateForms = ["Squawkabilly-Blue", "Squawkabilly-Green", "Squawkabilly-White", "Squawkabilly-Yellow", "Toxtricity-Amped", "Toxtricity-Low-Key"];
 const sameMembers = (role, expected) => {
   const actual = memberships[role] || new Set();
   return actual.size === expected.length && expected.every((name) => actual.has(name));
 };
 const catalogDataFailures = [];
-if (catalog.length !== 256) catalogDataFailures.push(`Expected 256 board entries, found ${catalog.length}`);
+if (catalog.length !== 252) catalogDataFailures.push(`Expected 252 board entries, found ${catalog.length}`);
 requiredV113Additions.forEach((name) => { if (!byName.has(name)) catalogDataFailures.push(`Missing ${name}`); });
+removedDuplicateForms.forEach((name) => { if (byName.has(name)) catalogDataFailures.push(`${name} should be consolidated into its base draft asset`); });
 catalog.forEach((pokemon) => {
   if (!pokemon.sprite?.startsWith("images/sprites/champions/Menu CP ")) catalogDataFailures.push(`${pokemon.name} is not using a static Champions sprite`);
   else if (!fs.existsSync(path.join(ROOT, pokemon.sprite))) catalogDataFailures.push(`Missing static Champions sprite for ${pokemon.name}`);

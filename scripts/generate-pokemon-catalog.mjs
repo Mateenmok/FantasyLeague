@@ -97,12 +97,8 @@ const dexAliases = {
   taurosblaze: "tauros",
   tauroscombat: "tauros",
   persianalola: "persian",
-  squawkabillyblue: "squawkabilly",
-  squawkabillygreen: "squawkabilly",
-  squawkabillywhite: "squawkabilly",
-  squawkabillyyellow: "squawkabilly",
-  toxtricityamped: "toxtricity",
-  toxtricitylowkey: "toxtricity",
+  squawkabilly: "squawkabilly",
+  toxtricity: "toxtricity",
 };
 
 const spriteSuffixes = {
@@ -128,10 +124,6 @@ const spriteSuffixes = {
   tauroscombat: "Paldea Combat",
   persianalola: "Alola",
   indeedee: "Female",
-  squawkabillyblue: "Blue",
-  squawkabillywhite: "White",
-  squawkabillyyellow: "Yellow",
-  toxtricitylowkey: "Low Key",
 };
 
 // Regulation M-C additions are embedded so rebuilding the catalog never depends on an older git snapshot.
@@ -142,10 +134,8 @@ const embeddedCatalog = {
   Mabosstiff: [943, ["Dark"]], "Mr. Mime": [122, ["Psychic", "Fairy"]], Musharna: [518, ["Psychic"]],
   Pawmot: [923, ["Electric", "Fighting"]], Perrserker: [863, ["Steel"]], Persian: [53, ["Normal"]],
   "Persian-Alola": [53, ["Dark"]], Pincurchin: [871, ["Electric"]], "Sirfetch'd": [865, ["Fighting"]],
-  "Squawkabilly-Blue": [931, ["Normal", "Flying"]], "Squawkabilly-Green": [931, ["Normal", "Flying"]],
-  "Squawkabilly-White": [931, ["Normal", "Flying"]], "Squawkabilly-Yellow": [931, ["Normal", "Flying"]],
-  Swalot: [317, ["Poison"]], Thievul: [828, ["Dark"]], "Toxtricity-Amped": [849, ["Electric", "Poison"]],
-  "Toxtricity-Low-Key": [849, ["Electric", "Poison"]], Wigglytuff: [40, ["Normal", "Fairy"]],
+  Squawkabilly: [931, ["Normal", "Flying"]], Swalot: [317, ["Poison"]], Thievul: [828, ["Dark"]],
+  Toxtricity: [849, ["Electric", "Poison"]], Wigglytuff: [40, ["Normal", "Fairy"]],
 };
 
 for (const [name, [dex, types]] of Object.entries(embeddedCatalog)) {
@@ -166,9 +156,9 @@ const buckets = [
   ["Gold", 7, "Absol; Aegislash; Alolan Ninetales; Armarouge; Clefable; Corviknight; Dragapult; Excadrill; Gyarados; Hatterene; Hisuian Arcanine; Hydreigon; Kommo-o; Lopunny; Meowscarada; Milotic; Primarina; Rotom-Wash; Scizor; Scovillain; Vivillon"],
   ["Gold", 6, "Aggron; Alakazam; Arcanine; Ceruledge; Feraligatr; Greninja; Hisuian Typhlosion; Hisuian Zoroark; Houndstone; Klefki; Meowstic; Oranguru; Pawmot; Pyroar; Rotom-Heat; Sceptile; Scrafty; Starmie; Tauros-Aqua; Tinkaton; Tsareena; Volcarona; Weavile"],
   ["Gold", 5, "Chandelure; Cinderace; Crabominable; Empoleon; Espathra; Gallade; Golurk; Hawlucha; Hisuian Goodra; Infernape; Krookodile; Liepard; Mamoswine; Meganium; Mimikyu; Palafin; Rotom-Frost; Sharpedo; Tauros-Blaze; Vileplume"],
-  ["Silver", 4, "Altaria; Ampharos; Araquanid; Azumarill; Bellibolt; Camerupt; Chesnaught; Dragalge; Drampa; Elektross; Falinks; Galarian Slowking; Gliscor; Heliolisk; Hisuian Decidueye; Hisuian Samurott; Inteleon; Kleavor; Lycanroc; Manectric; Noivern; Rotom-Mow; Skarmory; Slowbro; Snorlax; Steelix; Toxapex; Toxtricity-Amped; Toxtricity-Low-Key; Umbreon"],
+  ["Silver", 4, "Altaria; Ampharos; Araquanid; Azumarill; Bellibolt; Camerupt; Chesnaught; Dragalge; Drampa; Elektross; Falinks; Galarian Slowking; Gliscor; Heliolisk; Hisuian Decidueye; Hisuian Samurott; Inteleon; Kleavor; Lycanroc; Manectric; Noivern; Rotom-Mow; Skarmory; Slowbro; Snorlax; Steelix; Toxapex; Toxtricity; Umbreon"],
   ["Silver", 3, "Alolan Raichu; Arboliva; Banette; Conkeldurr; Galarian Slowbro; Goodra; Hippowdon; Jolteon; Malamar; Medicham; Mudsdale; Ninetales; Orthworm; Overqwil; Persian-Alola; Rampardos; Rotom-Fan; Runerigus; Scolipede; Spiritomb; Tauros-Combat; Toxicroak; Vanilluxe; Zoroark"],
-  ["Bronze", 2, "Abomasnow; Alcremie; Ariados; Aurorus; Barbaracle; Beartic; Beedrill; Cofagrigus; Ditto; Espeon; Florges; Garganacl; Gogoat; Heracross; Houndoom; Mr. Mime; Mr. Rime; Musharna; Perrserker; Pincurchin; Pinsir; Polteageist; Quaquaval; Qwilfish; Reuniclus; Rhyperior; Sirfetch'd; Slowking; Squawkabilly-Blue; Squawkabilly-Green; Squawkabilly-White; Squawkabilly-Yellow; Toucannon; Trevenant; Victreebel; Watchog; Wigglytuff; Wyrdeer"],
+  ["Bronze", 2, "Abomasnow; Alcremie; Ariados; Aurorus; Barbaracle; Beartic; Beedrill; Cofagrigus; Ditto; Espeon; Florges; Garganacl; Gogoat; Heracross; Houndoom; Mr. Mime; Mr. Rime; Musharna; Perrserker; Pincurchin; Pinsir; Polteageist; Quaquaval; Qwilfish; Reuniclus; Rhyperior; Sirfetch'd; Slowking; Squawkabilly; Toucannon; Trevenant; Victreebel; Watchog; Wigglytuff; Wyrdeer"],
   ["Bronze", 1, "Appletun; Arbok; Aromatisse; Audino; Avalugg; Bastiodon; Castform; Chimecho; Clawitzer; Decidueye; Dedenne; Diggersby; Emboar; Emolga; Farfetch'd; Flapple; Flareon; Forretress; Furfrou; Galarian Stunfisk; Garbodor; Glaceon; Glalie; Gourgeist; Grapploct; Hisuian Avalugg; Hydrapple; Leafeon; Luxray; Mabosstiff; Machamp; Morpeko; Pangoro; Passimian; Persian; Pidgeot; Pikachu; Roserade; Rotom; Salazzle; Samurott; Sandaconda; Serperior; Simipour; Simisage; Simisear; Skeledirge; Slurpuff; Stunfisk; Swalot; Tauros; Thievul; Torterra; Typhlosion; Tyrantrum; Vaporeon"],
 ];
 

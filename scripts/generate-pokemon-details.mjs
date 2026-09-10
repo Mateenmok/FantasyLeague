@@ -64,7 +64,6 @@ const championsBaseOverrides = {
 const apiSlugOverrides = {
   Indeedee: "indeedee-female",
   "Persian-Alola": "persian-alola",
-  "Toxtricity-Low-Key": "toxtricity-low-key",
 };
 
 const championsDexBase = "https://www.smogon.com/dex/champions/pokemon";
