@@ -763,7 +763,12 @@ select:focus { box-shadow: 0 0 0 4px var(--cyan); }
 
 .league-rosters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .league-roster-card { padding: 16px; }
+.league-roster-heading { display: flex; align-items: start; justify-content: space-between; gap: 10px; }
 .league-roster-card h2 { margin: 0; font-family: "Jersey 25", Impact, sans-serif; font-size: 28px; font-weight: 400; text-transform: uppercase; }
+.draft-grade { display: grid; place-items: center; flex: 0 0 auto; min-width: 52px; min-height: 52px; padding: 4px; border: 3px solid #111; border-radius: 50%; background: var(--gold); color: #111; box-shadow: 2px 3px 0 #111; line-height: 0.75; transform: rotate(3deg); }
+.draft-grade strong { font-family: "Jersey 25", Impact, sans-serif; font-size: 27px; font-weight: 400; }
+.draft-grade small { font-size: 8px; font-weight: 900; }
+.draft-grade--locked { min-width: 86px; min-height: 0; padding: 5px 7px; border-radius: 6px; background: #ded7c8; font-size: 8px; font-weight: 900; line-height: 1; text-align: center; transform: none; }
 .league-roster-card > p { margin: 4px 0 12px; color: #5e574d; font-size: 11px; font-weight: 900; }
 .league-roster-picks { display: flex; flex-wrap: wrap; gap: 6px; }
 .league-roster-pick { display: grid; place-items: center; width: 50px; min-width: 50px; min-height: 59px; padding: 3px; border: 2px solid #111; border-radius: 7px; background: #fff; text-align: center; }

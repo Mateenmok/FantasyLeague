@@ -50,6 +50,14 @@ test("Archaludon forces the Pelipper rain hierarchy", () => {
   assert.equal(ai.choose(roster, context(13, available), { isCpu: true }).pokemon.name, "Pelipper");
 });
 
+test("an existing dependency outranks an unrelated premium deadline", () => {
+  const roster = team(5, [pick("Archaludon")]);
+  const available = ["Basculegion", "Pelipper", "Politoed", "Sableye"];
+  const result = ai.choose(roster, context(4, available), { isCpu: true });
+  assert.equal(result.pokemon.name, "Pelipper");
+  assert.equal(result.forcedRule, "Archaludon rain partner");
+});
+
 test("Tyranitar forces Excadrill before fallback sand partners", () => {
   const roster = team(14, [pick("Tyranitar")]);
   const available = allNames.filter((name) => !["Tyranitar", ...DraftAI.constants.OPENING_ELITE].includes(name));
@@ -75,6 +83,13 @@ test("Charizard, Talonflame and Dragonite cannot form the forbidden trio", () =>
 test("Excadrill and Houndstone are mutually exclusive", () => {
   const roster = team(8, [pick("Excadrill")]);
   assert.equal(ai.isLegal(roster, byName.get("Houndstone"), context(7, ["Houndstone"]), false), false);
+});
+
+test("CPU only opens an unsupported Mawile core on a back-to-back pick", () => {
+  const mawile = byName.get("Mawile");
+  const available = ["Mawile", "Farigiraf"];
+  assert.equal(ai.isLegal(team(8), mawile, context(7, available), true), false);
+  assert.equal(ai.isLegal(team(14), mawile, context(13, available), true), true);
 });
 
 test("strategy room mix is exactly 5/6/2/1 with distinct cores", () => {

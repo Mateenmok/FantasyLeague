@@ -20,7 +20,7 @@
         fetch("data/league-teams.json?v=league-teams2", { cache: "no-store" }),
         fetch("data/teams.json?v=teams8", { cache: "no-store" }),
         fetch("data/pokemon-catalog.json?v=season-1-3"),
-        fetch("data/pokemon-detail-index.json?v=pokemon-details-1"),
+        fetch("data/pokemon-detail-index.json?v=draft-v113"),
         window.PokeLeagueRosters.read().catch(() => null),
         window.PokeLeagueCompetition.read().catch(() => null),
       ]);

@@ -211,6 +211,20 @@
     "sprite": "images/sprites/champions/Menu CP 0727.png"
   },
   {
+    "name": "Indeedee",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "9",
+    "sortPoints": 9,
+    "note": "",
+    "types": [
+      "Psychic",
+      "Normal"
+    ],
+    "dex": 876,
+    "sprite": "images/sprites/champions/Menu CP 0876-Female.png"
+  },
+  {
     "name": "Kangaskhan",
     "aliases": [],
     "tier": "Diamond",
@@ -364,6 +378,20 @@
     "sprite": "images/sprites/champions/Menu CP 0979.png"
   },
   {
+    "name": "Baxcalibur",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "8",
+    "sortPoints": 8,
+    "note": "",
+    "types": [
+      "Dragon",
+      "Ice"
+    ],
+    "dex": 998,
+    "sprite": "images/sprites/champions/Menu CP 0998.png"
+  },
+  {
     "name": "Blastoise",
     "aliases": [],
     "tier": "Diamond",
@@ -459,6 +487,20 @@
     ],
     "dex": 970,
     "sprite": "images/sprites/champions/Menu CP 0970.png"
+  },
+  {
+    "name": "Golisopod",
+    "aliases": [],
+    "tier": "Diamond",
+    "points": "8",
+    "sortPoints": 8,
+    "note": "",
+    "types": [
+      "Bug",
+      "Water"
+    ],
+    "dex": 768,
+    "sprite": "images/sprites/champions/Menu CP 0768.png"
   },
   {
     "name": "Lucario",
@@ -613,8 +655,8 @@
     "name": "Armarouge",
     "aliases": [],
     "tier": "Gold",
-    "points": "5",
-    "sortPoints": 5,
+    "points": "7",
+    "sortPoints": 7,
     "note": "",
     "types": [
       "Fire",
@@ -691,6 +733,20 @@
     ],
     "dex": 130,
     "sprite": "images/sprites/champions/Menu CP 0130.png"
+  },
+  {
+    "name": "Hatterene",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "7",
+    "sortPoints": 7,
+    "note": "",
+    "types": [
+      "Psychic",
+      "Fairy"
+    ],
+    "dex": 858,
+    "sprite": "images/sprites/champions/Menu CP 0858.png"
   },
   {
     "name": "Hisuian Arcanine",
@@ -859,6 +915,19 @@
     "sprite": "images/sprites/champions/Menu CP 0306.png"
   },
   {
+    "name": "Alakazam",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "6",
+    "sortPoints": 6,
+    "note": "",
+    "types": [
+      "Psychic"
+    ],
+    "dex": 65,
+    "sprite": "images/sprites/champions/Menu CP 0065.png"
+  },
+  {
     "name": "Arcanine",
     "aliases": [],
     "tier": "Gold",
@@ -995,17 +1064,18 @@
     "sprite": "images/sprites/champions/Menu CP 0765.png"
   },
   {
-    "name": "Palafin",
+    "name": "Pawmot",
     "aliases": [],
     "tier": "Gold",
-    "points": "5",
-    "sortPoints": 5,
+    "points": "6",
+    "sortPoints": 6,
     "note": "",
     "types": [
-      "Water"
+      "Electric",
+      "Fighting"
     ],
-    "dex": 964,
-    "sprite": "images/sprites/champions/Menu CP 0964.png"
+    "dex": 923,
+    "sprite": "images/sprites/champions/Menu CP 0923.png"
   },
   {
     "name": "Pyroar",
@@ -1160,6 +1230,19 @@
     "sprite": "images/sprites/champions/Menu CP 0609.png"
   },
   {
+    "name": "Cinderace",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "5",
+    "sortPoints": 5,
+    "note": "",
+    "types": [
+      "Fire"
+    ],
+    "dex": 815,
+    "sprite": "images/sprites/champions/Menu CP 0815.png"
+  },
+  {
     "name": "Crabominable",
     "aliases": [],
     "tier": "Gold",
@@ -1227,20 +1310,6 @@
     ],
     "dex": 623,
     "sprite": "images/sprites/champions/Menu CP 0623.png"
-  },
-  {
-    "name": "Hatterene",
-    "aliases": [],
-    "tier": "Gold",
-    "points": "5",
-    "sortPoints": 5,
-    "note": "",
-    "types": [
-      "Psychic",
-      "Fairy"
-    ],
-    "dex": 858,
-    "sprite": "images/sprites/champions/Menu CP 0858.png"
   },
   {
     "name": "Hawlucha",
@@ -1353,6 +1422,19 @@
     "sprite": "images/sprites/champions/Menu CP 0778.png"
   },
   {
+    "name": "Palafin",
+    "aliases": [],
+    "tier": "Gold",
+    "points": "5",
+    "sortPoints": 5,
+    "note": "",
+    "types": [
+      "Water"
+    ],
+    "dex": 964,
+    "sprite": "images/sprites/champions/Menu CP 0964.png"
+  },
+  {
     "name": "Rotom-Frost",
     "aliases": [],
     "tier": "Gold",
@@ -1407,19 +1489,6 @@
     ],
     "dex": 45,
     "sprite": "images/sprites/champions/Menu CP 0045.png"
-  },
-  {
-    "name": "Conkeldurr",
-    "aliases": [],
-    "tier": "Silver",
-    "points": "3",
-    "sortPoints": 3,
-    "note": "",
-    "types": [
-      "Fighting"
-    ],
-    "dex": 534,
-    "sprite": "images/sprites/champions/Menu CP 0534.png"
   },
   {
     "name": "Altaria",
@@ -1644,6 +1713,19 @@
     "sprite": "images/sprites/champions/Menu CP 0503-Hisui.png"
   },
   {
+    "name": "Inteleon",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "4",
+    "sortPoints": 4,
+    "note": "",
+    "types": [
+      "Water"
+    ],
+    "dex": 818,
+    "sprite": "images/sprites/champions/Menu CP 0818.png"
+  },
+  {
     "name": "Kleavor",
     "aliases": [],
     "tier": "Silver",
@@ -1781,6 +1863,34 @@
     "sprite": "images/sprites/champions/Menu CP 0748.png"
   },
   {
+    "name": "Toxtricity-Amped",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "4",
+    "sortPoints": 4,
+    "note": "",
+    "types": [
+      "Electric",
+      "Poison"
+    ],
+    "dex": 849,
+    "sprite": "images/sprites/champions/Menu CP 0849.png"
+  },
+  {
+    "name": "Toxtricity-Low-Key",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "4",
+    "sortPoints": 4,
+    "note": "",
+    "types": [
+      "Electric",
+      "Poison"
+    ],
+    "dex": 849,
+    "sprite": "images/sprites/champions/Menu CP 0849-Low Key.png"
+  },
+  {
     "name": "Umbreon",
     "aliases": [],
     "tier": "Silver",
@@ -1792,19 +1902,6 @@
     ],
     "dex": 197,
     "sprite": "images/sprites/champions/Menu CP 0197.png"
-  },
-  {
-    "name": "Alakazam",
-    "aliases": [],
-    "tier": "Silver",
-    "points": "3",
-    "sortPoints": 3,
-    "note": "",
-    "types": [
-      "Psychic"
-    ],
-    "dex": 65,
-    "sprite": "images/sprites/champions/Menu CP 0065.png"
   },
   {
     "name": "Alolan Raichu",
@@ -1821,6 +1918,20 @@
     "sprite": "images/sprites/champions/Menu CP 0026-Alola.png"
   },
   {
+    "name": "Arboliva",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "3",
+    "sortPoints": 3,
+    "note": "",
+    "types": [
+      "Grass",
+      "Normal"
+    ],
+    "dex": 930,
+    "sprite": "images/sprites/champions/Menu CP 0930.png"
+  },
+  {
     "name": "Banette",
     "aliases": [],
     "tier": "Silver",
@@ -1832,6 +1943,19 @@
     ],
     "dex": 354,
     "sprite": "images/sprites/champions/Menu CP 0354.png"
+  },
+  {
+    "name": "Conkeldurr",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "3",
+    "sortPoints": 3,
+    "note": "",
+    "types": [
+      "Fighting"
+    ],
+    "dex": 534,
+    "sprite": "images/sprites/champions/Menu CP 0534.png"
   },
   {
     "name": "Galarian Slowbro",
@@ -1966,6 +2090,19 @@
     ],
     "dex": 904,
     "sprite": "images/sprites/champions/Menu CP 0904.png"
+  },
+  {
+    "name": "Persian-Alola",
+    "aliases": [],
+    "tier": "Silver",
+    "points": "3",
+    "sortPoints": 3,
+    "note": "",
+    "types": [
+      "Dark"
+    ],
+    "dex": 53,
+    "sprite": "images/sprites/champions/Menu CP 0053-Alola.png"
   },
   {
     "name": "Rampardos",
@@ -2251,6 +2388,19 @@
     "sprite": "images/sprites/champions/Menu CP 0934.png"
   },
   {
+    "name": "Gogoat",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Grass"
+    ],
+    "dex": 673,
+    "sprite": "images/sprites/champions/Menu CP 0673.png"
+  },
+  {
     "name": "Heracross",
     "aliases": [],
     "tier": "Bronze",
@@ -2279,6 +2429,20 @@
     "sprite": "images/sprites/champions/Menu CP 0229.png"
   },
   {
+    "name": "Mr. Mime",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Psychic",
+      "Fairy"
+    ],
+    "dex": 122,
+    "sprite": "images/sprites/champions/Menu CP 0122.png"
+  },
+  {
     "name": "Mr. Rime",
     "aliases": [],
     "tier": "Bronze",
@@ -2291,6 +2455,45 @@
     ],
     "dex": 866,
     "sprite": "images/sprites/champions/Menu CP 0866.png"
+  },
+  {
+    "name": "Musharna",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Psychic"
+    ],
+    "dex": 518,
+    "sprite": "images/sprites/champions/Menu CP 0518.png"
+  },
+  {
+    "name": "Perrserker",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Steel"
+    ],
+    "dex": 863,
+    "sprite": "images/sprites/champions/Menu CP 0863.png"
+  },
+  {
+    "name": "Pincurchin",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Electric"
+    ],
+    "dex": 871,
+    "sprite": "images/sprites/champions/Menu CP 0871.png"
   },
   {
     "name": "Pinsir",
@@ -2374,6 +2577,19 @@
     "sprite": "images/sprites/champions/Menu CP 0464.png"
   },
   {
+    "name": "Sirfetch'd",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Fighting"
+    ],
+    "dex": 865,
+    "sprite": "images/sprites/champions/Menu CP 0865.png"
+  },
+  {
     "name": "Slowking",
     "aliases": [],
     "tier": "Bronze",
@@ -2386,6 +2602,62 @@
     ],
     "dex": 199,
     "sprite": "images/sprites/champions/Menu CP 0199.png"
+  },
+  {
+    "name": "Squawkabilly-Blue",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Normal",
+      "Flying"
+    ],
+    "dex": 931,
+    "sprite": "images/sprites/champions/Menu CP 0931-Blue.png"
+  },
+  {
+    "name": "Squawkabilly-Green",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Normal",
+      "Flying"
+    ],
+    "dex": 931,
+    "sprite": "images/sprites/champions/Menu CP 0931.png"
+  },
+  {
+    "name": "Squawkabilly-White",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Normal",
+      "Flying"
+    ],
+    "dex": 931,
+    "sprite": "images/sprites/champions/Menu CP 0931-White.png"
+  },
+  {
+    "name": "Squawkabilly-Yellow",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Normal",
+      "Flying"
+    ],
+    "dex": 931,
+    "sprite": "images/sprites/champions/Menu CP 0931-Yellow.png"
   },
   {
     "name": "Toucannon",
@@ -2441,6 +2713,20 @@
     ],
     "dex": 505,
     "sprite": "images/sprites/champions/Menu CP 0505.png"
+  },
+  {
+    "name": "Wigglytuff",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "2",
+    "sortPoints": 2,
+    "note": "",
+    "types": [
+      "Normal",
+      "Fairy"
+    ],
+    "dex": 40,
+    "sprite": "images/sprites/champions/Menu CP 0040.png"
   },
   {
     "name": "Wyrdeer",
@@ -2646,6 +2932,20 @@
     "sprite": "images/sprites/champions/Menu CP 0587.png"
   },
   {
+    "name": "Farfetch'd",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Normal",
+      "Flying"
+    ],
+    "dex": 83,
+    "sprite": "images/sprites/champions/Menu CP 0083.png"
+  },
+  {
     "name": "Flapple",
     "aliases": [],
     "tier": "Bronze",
@@ -2767,6 +3067,19 @@
     "sprite": "images/sprites/champions/Menu CP 0711.png"
   },
   {
+    "name": "Grapploct",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Fighting"
+    ],
+    "dex": 853,
+    "sprite": "images/sprites/champions/Menu CP 0853.png"
+  },
+  {
     "name": "Hisuian Avalugg",
     "aliases": [],
     "tier": "Bronze",
@@ -2821,6 +3134,19 @@
     "sprite": "images/sprites/champions/Menu CP 0405.png"
   },
   {
+    "name": "Mabosstiff",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Dark"
+    ],
+    "dex": 943,
+    "sprite": "images/sprites/champions/Menu CP 0943.png"
+  },
+  {
     "name": "Machamp",
     "aliases": [],
     "tier": "Bronze",
@@ -2873,6 +3199,19 @@
     ],
     "dex": 766,
     "sprite": "images/sprites/champions/Menu CP 0766.png"
+  },
+  {
+    "name": "Persian",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Normal"
+    ],
+    "dex": 53,
+    "sprite": "images/sprites/champions/Menu CP 0053.png"
   },
   {
     "name": "Pidgeot",
@@ -3063,6 +3402,19 @@
     "sprite": "images/sprites/champions/Menu CP 0618.png"
   },
   {
+    "name": "Swalot",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Poison"
+    ],
+    "dex": 317,
+    "sprite": "images/sprites/champions/Menu CP 0317.png"
+  },
+  {
     "name": "Tauros",
     "aliases": [],
     "tier": "Bronze",
@@ -3074,6 +3426,19 @@
     ],
     "dex": 128,
     "sprite": "images/sprites/champions/Menu CP 0128.png"
+  },
+  {
+    "name": "Thievul",
+    "aliases": [],
+    "tier": "Bronze",
+    "points": "1",
+    "sortPoints": 1,
+    "note": "",
+    "types": [
+      "Dark"
+    ],
+    "dex": 828,
+    "sprite": "images/sprites/champions/Menu CP 0828.png"
   },
   {
     "name": "Torterra",

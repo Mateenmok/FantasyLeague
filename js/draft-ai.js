@@ -17,8 +17,8 @@
     Kingambit: 7, Grimmsnarl: 5, Pelipper: 5, Kangaskhan: 5, Sableye: -18, Sinistcha: -18,
   };
   const PREMIUM_TAILWIND = new Set(["Whimsicott", "Talonflame"]);
-  const RELIABLE_TAILWIND = new Set(["Aerodactyl", "Skarmory", "Noivern", "Altaria", "Corviknight", "Vivillon"]);
-  const RELIABLE_TR = new Set(["Meowstic", "Farigiraf", "Mimikyu", "Oranguru", "Hatterene", "Sinistcha", "Gallade"]);
+  const RELIABLE_TAILWIND = new Set(["Aerodactyl", "Skarmory", "Noivern", "Altaria", "Corviknight", "Vivillon", "Salamence", "Dragonite", "Squawkabilly-Green", "Squawkabilly-Blue", "Squawkabilly-Yellow", "Squawkabilly-White"]);
+  const RELIABLE_TR = new Set(["Musharna", "Farigiraf", "Mimikyu", "Oranguru", "Hatterene", "Meowstic", "Sinistcha", "Gallade", "Mr. Mime", "Indeedee"]);
   const DEDICATED_TR = ["Farigiraf", "Oranguru", "Gallade"];
   const TR_PAYOFF = new Set(["Torkoal", "Crabominable", "Camerupt", "Golurk", "Mawile", "Hatterene", "Sylveon", "Kingambit", "Snorlax", "Mudsdale", "Hisuian Goodra"]);
   const ATTACK_ROLES = new Set(["Heavy Hitter", "Physical Attacker", "Special Powerhouse", "Special Attacker", "Mixed Attacker"]);
@@ -27,8 +27,20 @@
     rain: { setters: ["Pelipper", "Politoed"], roles: ["Rain Setter"], abuserRole: "Rain Abuser" },
     sun: { setters: ["Charizard", "Torkoal", "Ninetales"], roles: ["Sun Setter"], abuserRole: "Sun Abuser" },
     sand: { setters: ["Tyranitar", "Hippowdon", "Sandaconda"], roles: ["Sand Setter"], abuserRole: "Sand Abuser" },
-    snow: { setters: ["Alolan Ninetales", "Abomasnow", "Froslass"], roles: ["Snow Setter"], abuserRole: "Snow Abuser" },
+    snow: { setters: ["Alolan Ninetales", "Abomasnow", "Vanilluxe", "Aurorus"], roles: ["Snow Setter"], abuserRole: "Snow Abuser" },
   };
+  const ELECTRIC_TERRAIN_ABUSERS = new Set(["Ampharos", "Jolteon", "Toxtricity-Amped", "Toxtricity-Low-Key"]);
+  const PSYCHIC_TERRAIN_PREMIUM = new Set(["Alakazam", "Hatterene", "Armarouge"]);
+  const PSYCHIC_TERRAIN_SLIGHT = new Set(["Slowbro", "Galarian Slowbro", "Starmie", "Mr. Mime", "Espeon", "Slowking", "Galarian Slowking", "Gardevoir", "Musharna", "Reuniclus", "Delphox", "Mr. Rime", "Wyrdeer", "Espathra", "Farigiraf", "Meowstic"]);
+  const CONTRARY_PRANKSTER = { Whimsicott: 3, Grimmsnarl: 3, Meowstic: 2, Liepard: 1 };
+  const SOFT_CORE_FAMILIES = [
+    ["Archaludon", ["Pelipper", "Politoed", "Sableye"]], ["Swampert", ["Pelipper", "Politoed"]],
+    ["Tyranitar", ["Excadrill", "Houndstone", "Lycanroc"]], ["Hippowdon", ["Houndstone", "Lycanroc"]],
+    ["Rillaboom", ["Sneasler", "Hawlucha", "Sceptile"]], ["Indeedee", ["Sneasler", "Hawlucha"]],
+    ["Garchomp", ["Rotom-Heat", "Rotom-Wash", "Rotom-Fan", "Rotom-Frost", "Rotom-Mow", "Rotom"]],
+    ["Farigiraf", ["Torkoal", "Hatterene", "Crabominable", "Camerupt"]],
+    ["Torkoal", ["Vileplume", "Venusaur"]],
+  ];
   const SPECIFIC_CORES = {
     rain: {
       setters: ["Pelipper", "Politoed", "Sableye"],
@@ -76,7 +88,11 @@
     ["Rotom-Heat", "Garchomp", 24], ["Rotom-Wash", "Garchomp", 22], ["Garchomp", "Rotom-Heat", 12], ["Garchomp", "Rotom-Wash", 11],
     ["Sneasler", "Rillaboom", 22], ["Rillaboom", "Sneasler", 17], ["Hawlucha", "Rillaboom", 20], ["Rillaboom", "Hawlucha", 15],
     ["Sceptile", "Rillaboom", 12], ["Rillaboom", "Sceptile", 9],
+    ["Sneasler", "Indeedee", 21], ["Indeedee", "Sneasler", 16], ["Hawlucha", "Indeedee", 19], ["Indeedee", "Hawlucha", 15],
+    ["Sneasler", "Raichu", 4], ["Raichu", "Sneasler", 3], ["Hawlucha", "Raichu", 4], ["Raichu", "Hawlucha", 3],
+    ["Sneasler", "Pincurchin", 4], ["Pincurchin", "Sneasler", 3], ["Hawlucha", "Pincurchin", 4], ["Pincurchin", "Hawlucha", 3],
     ["Whimsicott", "Talonflame", -24], ["Talonflame", "Whimsicott", -24],
+    ["Aerodactyl", "Whimsicott", -2], ["Whimsicott", "Aerodactyl", -2],
   ].forEach((pair) => addPair(...pair));
 
   const TYPE_WEAKNESSES = {
@@ -114,6 +130,7 @@
     const points = (pokemon) => Number(pokemon?.sortPoints ?? pokemon?.points ?? 0);
     const roles = (pokemon) => roleSets.get(pokemon?.name) || new Set();
     const pickNames = (team) => team.picks.map((pick) => pick.name);
+    const draftedPickCount = (team) => team.picks.filter((pick) => !pick.mascot).length;
     const teamPoints = (team) => team.picks.reduce((sum, pick) => sum + points(pick), 0);
     const roundForPick = (index) => Math.floor(index / teamCount) + 1;
     const teamForPick = (index) => {
@@ -179,7 +196,7 @@
       }
       if (pokemon.name === "Archaludon" && !["Pelipper", "Politoed", "Sableye"].some((name) => owned.has(name))) {
         const rainPath = ["Pelipper", "Politoed", "Sableye"].some((name) => affordableAfter(team, pokemon, byName.get(name)) && context.available.has(name));
-        if (!rainPath || (isCpu && distance > 2)) return false;
+        if (!rainPath || (isCpu && distance !== 1)) return false;
       }
 
       if (["Torkoal", "Snorlax"].includes(pokemon.name) && !DEDICATED_TR.some((name) => owned.has(name))) {
@@ -189,7 +206,7 @@
       if (pokemon.name === "Mawile" && !DEDICATED_TR.some((name) => owned.has(name))) {
         const paths = DEDICATED_TR.filter((name) => affordableAfter(team, pokemon, byName.get(name)) && context.available.has(name)).length;
         const required = distance >= 20 ? 3 : distance >= 6 ? 2 : 1;
-        if (distance > 10 || paths < required) return false;
+        if (distance > 10 || paths < required || (isCpu && distance !== 1)) return false;
       }
       if (pokemon.name === "Hatterene" && !DEDICATED_TR.some((name) => owned.has(name))) {
         const committed = team.draftStrategy === "specific-core" && team.specificCore === "trickRoom";
@@ -198,16 +215,24 @@
         if (!committed || paths < required) return false;
       }
       if (pokemon.name === "Oranguru" && !team.picks.some((pick) => TR_PAYOFF.has(pick.name))) {
-        const committed = team.draftStrategy === "specific-core" && team.specificCore === "trickRoom" && team.picks.length <= 4;
+        const committed = team.draftStrategy === "specific-core" && team.specificCore === "trickRoom" && draftedPickCount(team) <= 3;
         const payoffLive = [...TR_PAYOFF].some((name) => basicLegal(team, byName.get(name), context));
         if (!committed || !payoffLive) return false;
       }
       if (pokemon.name === "Ninetales" && !team.picks.some((pick) => SPECIFIC_CORES.sun.anchors.includes(pick.name))) {
-        const committed = team.draftStrategy === "specific-core" && team.specificCore === "sun" && team.picks.length <= 3;
+        const committed = team.draftStrategy === "specific-core" && team.specificCore === "sun" && draftedPickCount(team) <= 2;
         const payoffLive = SPECIFIC_CORES.sun.anchors.some((name) => basicLegal(team, byName.get(name), context));
         if (!committed || !payoffLive) return false;
       }
       if (["Houndstone", "Lycanroc"].includes(pokemon.name) && owned.has("Tyranitar") && basicLegal(team, byName.get("Excadrill"), context)) return false;
+      if (pokemon.name === "Houndstone" && !owned.has("Tyranitar") && !owned.has("Hippowdon")) {
+        const sandPath = ["Tyranitar", "Hippowdon"].some((name) => affordableAfter(team, pokemon, byName.get(name)) && context.available.has(name));
+        if (!sandPath || (isCpu && distance > 2)) return false;
+      }
+      if (pokemon.name === "Vileplume" && !WEATHER.sun.setters.some((name) => owned.has(name))) {
+        const sunPath = WEATHER.sun.setters.some((name) => affordableAfter(team, pokemon, byName.get(name)) && context.available.has(name));
+        if (!sunPath || (isCpu && distance > 2)) return false;
+      }
       return true;
     };
 
@@ -242,6 +267,8 @@
       if (owned.has("Archaludon") && !["Pelipper", "Politoed", "Sableye"].some((name) => owned.has(name))) return pickFirst(["Pelipper", "Politoed", "Sableye"], "Archaludon rain partner");
       if (owned.has("Charizard") && !owned.has("Venusaur")) return pickFirst(["Venusaur"], "Charizard + Venusaur core");
       if (owned.has("Tyranitar") && !["Excadrill", "Houndstone", "Lycanroc"].some((name) => owned.has(name))) return pickFirst(["Excadrill", "Houndstone", "Lycanroc"], "Tyranitar sand partner");
+      if (owned.has("Houndstone") && !owned.has("Tyranitar") && !owned.has("Hippowdon")) return pickFirst(["Tyranitar", "Hippowdon"], "Houndstone sand partner");
+      if (owned.has("Vileplume") && !WEATHER.sun.setters.some((name) => owned.has(name))) return pickFirst(WEATHER.sun.setters, "Vileplume sun partner");
 
       const last = [...team.picks].reverse().find((pick) => !pick.mascot);
       if (last && ["Torkoal", "Snorlax", "Mawile", "Hatterene"].includes(last.name) && !DEDICATED_TR.some((name) => owned.has(name))) {
@@ -252,7 +279,7 @@
       return null;
     };
 
-    const stageMultiplier = (team) => team.picks.length <= 3 ? 0.58 : team.picks.length <= 6 ? 0.9 : team.picks.length <= 8 ? 1.08 : 1.24;
+    const stageMultiplier = (team) => draftedPickCount(team) <= 2 ? 0.58 : draftedPickCount(team) <= 5 ? 0.9 : draftedPickCount(team) <= 7 ? 1.08 : 1.24;
     const countRole = (team, role) => team.picks.filter((pick) => hasRole(pick, role)).length;
     const needScore = (team, pokemon) => {
       const candidateRoles = roles(pokemon);
@@ -275,6 +302,20 @@
       const megaCount = team.picks.filter(isMega).length;
       if (isMega(pokemon)) score += megaCount === 0 ? 6 * stage : megaCount === 1 ? 5 * stage : megaCount === 2 ? 1.5 * stage : -12;
       if (candidateRoles.has("Dual Mega")) score += 1.5;
+      return score;
+    };
+
+    const expandedRoleScore = (pokemon) => {
+      const candidateRoles = roles(pokemon);
+      let score = 0;
+      if (PREMIUM_TAILWIND.has(pokemon.name)) score += 9;
+      else if (RELIABLE_TAILWIND.has(pokemon.name) || RELIABLE_TR.has(pokemon.name)) score += 5;
+      for (const [role, value] of [["Fake Out", 3], ["Intimidate", 3], ["Prankster", 3], ["Redirection", 3], ["Support", 3], ["Speedster", 3], ["Terrain Setter", 1.5], ["Terrain Abuser", 0.8], ["Heavy Hitter", 1.2], ["Special Powerhouse", 1.2], ["Dual Mega", 1.5]]) {
+        if (candidateRoles.has(role)) score += value;
+      }
+      if (isBulky(pokemon)) score += 3;
+      if (isMega(pokemon)) score += 2.5;
+      if (weatherTypesFor(pokemon).length) score += 2.5;
       return score;
     };
 
@@ -417,7 +458,48 @@
     const rawSynergy = (team, pokemon) => {
       const owned = new Set(pickNames(team));
       let score = 0;
-      owned.forEach((name) => { score += PAIR_SYNERGY.get(`${pokemon.name}|${name}`) || 0; });
+      const handledPairs = new Set();
+      for (const [anchor, alternatives] of SOFT_CORE_FAMILIES) {
+        const relevant = [];
+        if (pokemon.name === anchor) {
+          alternatives.forEach((name) => { if (owned.has(name)) relevant.push(PAIR_SYNERGY.get(`${pokemon.name}|${name}`) || 0); });
+        } else if (alternatives.includes(pokemon.name) && owned.has(anchor)) {
+          const alreadyFilled = alternatives.some((name) => name !== pokemon.name && owned.has(name));
+          relevant.push(alreadyFilled ? 0 : (PAIR_SYNERGY.get(`${pokemon.name}|${anchor}`) || 0));
+          handledPairs.add(anchor);
+        }
+        if (relevant.length) {
+          score += Math.max(...relevant);
+          alternatives.forEach((name) => handledPairs.add(name));
+          handledPairs.add(anchor);
+        }
+      }
+      owned.forEach((name) => { if (!handledPairs.has(name)) score += PAIR_SYNERGY.get(`${pokemon.name}|${name}`) || 0; });
+
+      if (["Raichu", "Pincurchin"].some((name) => owned.has(name)) && ELECTRIC_TERRAIN_ABUSERS.has(pokemon.name)) score += 16;
+      if (["Raichu", "Pincurchin"].includes(pokemon.name) && [...ELECTRIC_TERRAIN_ABUSERS].some((name) => owned.has(name))) score += 13;
+      if (owned.has("Indeedee") && PSYCHIC_TERRAIN_PREMIUM.has(pokemon.name)) score += 30;
+      else if (owned.has("Indeedee") && PSYCHIC_TERRAIN_SLIGHT.has(pokemon.name)) score += 7;
+      if (pokemon.name === "Indeedee") {
+        if ([...PSYCHIC_TERRAIN_PREMIUM].some((name) => owned.has(name))) score += 24;
+        else if ([...PSYCHIC_TERRAIN_SLIGHT].some((name) => owned.has(name))) score += 6;
+      }
+      if (["Beartic", "Glaceon"].includes(pokemon.name)) {
+        const hasSnow = WEATHER.snow.setters.some((name) => owned.has(name));
+        if (hasSnow) score += pokemon.name === "Beartic" ? 20 : 18;
+      }
+      if (WEATHER.snow.setters.includes(pokemon.name)) {
+        if (owned.has("Beartic")) score += 15;
+        else if (owned.has("Glaceon")) score += 13;
+      }
+      if (["Staraptor", "Malamar"].includes(pokemon.name)) {
+        const strength = Math.max(0, ...Object.entries(CONTRARY_PRANKSTER).filter(([name]) => owned.has(name)).map(([, value]) => value));
+        if (strength) score += pokemon.name === "Staraptor" ? [0, 18, 24, 30][strength] : [0, 8, 11, 14][strength];
+      } else if (CONTRARY_PRANKSTER[pokemon.name]) {
+        const strength = CONTRARY_PRANKSTER[pokemon.name];
+        if (owned.has("Staraptor")) score += [0, 16, 22, 28][strength];
+        else if (owned.has("Malamar")) score += [0, 7, 10, 13][strength];
+      }
       if (TR_PAYOFF.has(pokemon.name) && team.picks.some((pick) => RELIABLE_TR.has(pick.name))) score += 22;
       if (pokemon.name === "Clefable") {
         const hitters = team.picks.filter((pick) => hasRole(pick, "Heavy Hitter") || hasRole(pick, "Special Powerhouse")).length;
@@ -442,8 +524,27 @@
         || (!rosterHasRole(team, "Support") && hasRole(pokemon, "Support"))
         || (team.picks.filter(isBulky).length < 2 && isBulky(pokemon));
       if (foundation) cap += 2;
-      if (team.picks.length <= 3 && !foundation) cap = Math.min(cap, 3);
+      if (draftedPickCount(team) <= 3 && !foundation) cap = Math.min(cap, 3);
       return Math.min(raw, cap);
+    };
+
+    const mascotEarlyFit = (team, pokemon) => {
+      const liveCount = draftedPickCount(team);
+      if (liveCount >= 4) return 0;
+      const mascot = team.picks.find((pick) => pick.mascot);
+      if (!mascot) return 0;
+      const impactRoles = new Set(["Heavy Hitter", "Special Powerhouse", "Speedster", "Support", "Prankster", "Redirection", "Fake Out", "Intimidate", "Mega", "Dual Mega"]);
+      const mascotImpact = [...roles(mascot)].filter((role) => impactRoles.has(role)).length;
+      const mascotPoints = points(mascot);
+      const importance = mascotPoints >= 7 ? 1 : mascotPoints >= 5 ? 0.8 : mascotPoints >= 3 ? 0.5 : mascotPoints <= 2 && mascotImpact <= 1 ? 0.1 : 0.2;
+      const fade = [1, 0.82, 0.55, 0.25][liveCount];
+      const named = Math.max(0, PAIR_SYNERGY.get(`${pokemon.name}|${mascot.name}`) || 0, PAIR_SYNERGY.get(`${mascot.name}|${pokemon.name}`) || 0);
+      const sharedWeaknesses = Object.keys(weaknessProfile(mascot)).filter((type) => weaknessProfile(pokemon)[type]).length;
+      const mascotAttacker = isAttacker(mascot);
+      const roleComplement = mascotAttacker && (hasRole(pokemon, "Support") || hasRole(pokemon, "Fake Out") || hasRole(pokemon, "Intimidate") || hasRole(pokemon, "Redirection"))
+        ? 1.6
+        : !mascotAttacker && isAttacker(pokemon) ? 1.6 : 0;
+      return Math.min(4.25, Math.max(0, (Math.min(2.5, named / 10) + roleComplement - sharedWeaknesses * 0.45) * importance * fade));
     };
 
     const weatherScore = (team, pokemon) => {
@@ -510,7 +611,7 @@
         const owned = new Set(pickNames(team));
         const hasSetter = core.setters.some((name) => owned.has(name));
         const hasAnchor = core.anchors.some((name) => owned.has(name));
-        if (core.setters.includes(pokemon.name)) return !hasSetter && hasAnchor ? (round <= 4 ? 34 : 26) : !hasSetter && team.picks.length <= 3 ? 12 : !hasSetter ? -18 : 4;
+        if (core.setters.includes(pokemon.name)) return !hasSetter && hasAnchor ? (round <= 4 ? 34 : 26) : !hasSetter && draftedPickCount(team) <= 2 ? 12 : !hasSetter ? -18 : 4;
         if (core.anchors.includes(pokemon.name)) return hasSetter ? 26 : 16;
         if (core.support.includes(pokemon.name)) return hasSetter || hasAnchor ? 12 : 5;
         return hasSetter && hasAnchor ? 3 : 0;
@@ -527,12 +628,14 @@
         + timingScore(pokemon, overall)
         + budgetScore(team, pokemon)
         + needScore(team, pokemon)
+        + expandedRoleScore(pokemon)
         + repeatPenalty(team, pokemon)
         + typeDiversity(team, pokemon)
         + weaknessPenalty(team, pokemon)
         + dependencyScore(team, pokemon, context)
         + redundancyScore(team, pokemon)
         + effectiveSynergy(team, pokemon, round)
+        + mascotEarlyFit(team, pokemon)
         + weatherScore(team, pokemon)
         + swampertRisk(team, pokemon, context)
         + turnDistanceScore(team, pokemon, context)
@@ -604,6 +707,28 @@
       return [...new Set(reasons)].slice(0, 3);
     };
 
+    const cpuInterestFor = (userTeam, pokemon, context) => {
+      const untilReturn = Math.min(28, nextPickDistance(userTeam.id, context.pickIndex));
+      const scores = [];
+      const seenTeams = new Set();
+      for (let distance = 1; distance <= untilReturn; distance += 1) {
+        const teamId = teamForPick(context.pickIndex + distance);
+        if (teamId === userTeam.id || seenTeams.has(teamId)) continue;
+        seenTeams.add(teamId);
+        const cpuTeam = context.teams?.[teamId];
+        if (!cpuTeam) continue;
+        const futureContext = { ...context, pickIndex: context.pickIndex + distance };
+        if (isLegal(cpuTeam, pokemon, futureContext, true)) scores.push(scoreCandidate(cpuTeam, pokemon, futureContext, true));
+      }
+      const rawCore = rawSynergy(userTeam, pokemon);
+      const threat = rawCore >= 40 ? 24 : rawCore >= 30 ? 17 : rawCore >= 20 ? 10 : 0;
+      const distanceScale = untilReturn <= 6 ? 0.55 : untilReturn <= 13 ? 0.38 : 0.18;
+      const strongest = scores.length ? Math.max(...scores) : 0;
+      const average = scores.length ? scores.reduce((sum, value) => sum + value, 0) / scores.length : 0;
+      const estimate = strongest * 0.58 + average * 0.42 + threat * distanceScale;
+      return { label: estimate >= 105 ? "High" : estimate >= 78 ? "Medium" : "Low", nearbyTeams: scores.length, estimate: Math.round(estimate) };
+    };
+
     const choose = (team, context, { isCpu = false } = {}) => {
       let legal = legalCandidates(team, context, isCpu);
       if (!legal.length) return { pokemon: null, reasons: [], forcedRule: "No legal pick" };
@@ -620,23 +745,23 @@
         }
       }
 
-      const deadline = hardDeadlinePool(legal, overall);
-      if (deadline?.length) {
-        legal = deadline;
-        forcedRule = overall >= 7 && legal.some((pokemon) => pokemon.name === "Charizard") ? "Charizard market deadline" : "Pick-5 premium market deadline";
-      } else if (overall <= 4) {
-        const elite = namedLegal(legal, OPENING_ELITE);
-        if (elite.length) {
-          legal = elite;
-          forcedRule = "opening elite candidate gate";
-        }
-      }
-
-      if (!forcedRule) {
-        const dependency = forcedDependency(team, legal, context);
-        if (dependency?.pool.length) {
-          legal = dependency.pool;
-          forcedRule = dependency.rule;
+      // Structural obligations always outrank market cleanup. This order prevents a
+      // deadline pick from stranding an earlier rain, sun, sand, or Trick Room commitment.
+      const dependency = forcedDependency(team, legal, context);
+      if (dependency?.pool.length) {
+        legal = dependency.pool;
+        forcedRule = dependency.rule;
+      } else {
+        const deadline = hardDeadlinePool(legal, overall);
+        if (deadline?.length) {
+          legal = deadline;
+          forcedRule = overall >= 7 && legal.some((pokemon) => pokemon.name === "Charizard") ? "Charizard market deadline" : "Pick-5 premium market deadline";
+        } else if (overall <= 4) {
+          const elite = namedLegal(legal, OPENING_ELITE);
+          if (elite.length) {
+            legal = elite;
+            forcedRule = "opening elite candidate gate";
+          }
         }
       }
 
@@ -674,9 +799,121 @@
         pokemon: selected?.pokemon || null,
         score: selected?.score ?? -Infinity,
         reasons: selected ? reasonsFor(team, selected.pokemon, context, forcedRule, scored) : [],
+        cpuInterest: !isCpu && selected ? cpuInterestFor(team, selected.pokemon, context) : null,
         forcedRule,
         candidates: scored,
       };
+    };
+
+    const gradeTeam = (team) => {
+      const owned = new Set(pickNames(team));
+      const has = (role) => rosterHasRole(team, role);
+      const count = (role) => countRole(team, role);
+      const hasPhysical = has("Heavy Hitter") || has("Physical Attacker") || has("Mixed Attacker");
+      const hasSpecial = has("Special Powerhouse") || has("Special Attacker") || has("Mixed Attacker");
+      const hasSpeedPlan = has("Speedster") || team.picks.some((pick) => PREMIUM_TAILWIND.has(pick.name) || RELIABLE_TAILWIND.has(pick.name) || RELIABLE_TR.has(pick.name));
+      const megaCount = team.picks.filter(isMega).length;
+      const tankCount = team.picks.filter(isBulky).length;
+
+      let construction = has("Heavy Hitter") ? 4 : hasPhysical ? 2 : 0;
+      construction += has("Special Powerhouse") ? 4 : hasSpecial ? 2 : 0;
+      construction += has("Speedster") ? 4 : hasSpeedPlan ? 3 : 0;
+      construction += has("Support") ? 3 : (has("Fake Out") || has("Intimidate") || has("Redirection")) ? 1.5 : 0;
+      construction += has("Prankster") || has("Redirection") ? 3 : 0;
+      construction += has("Fake Out") || has("Intimidate") ? 3 : 0;
+      construction += teamWeather(team).size ? 2 : 0;
+      construction += tankCount >= 2 ? 4 : tankCount === 1 ? 2.5 : 0;
+      construction += megaCount >= 2 && megaCount <= 3 ? 3 : megaCount === 1 || megaCount === 4 ? 2 : megaCount >= 5 ? 1 : 0;
+      construction = Math.min(30, construction);
+
+      const pair = (a, b, value) => owned.has(a) && owned.has(b) ? value : 0;
+      let named = pair("Tyranitar", "Excadrill", 4.5) + pair("Pelipper", "Swampert", 4)
+        + ((owned.has("Archaludon") && ["Pelipper", "Politoed", "Sableye"].some((name) => owned.has(name))) ? 4 : 0)
+        + pair("Charizard", "Venusaur", 6) + pair("Torkoal", "Vileplume", 3.5)
+        + pair("Maushold", "Annihilape", 3) + (owned.has("Garchomp") && ["Rotom-Heat", "Rotom-Wash"].some((name) => owned.has(name)) ? 2.5 : 0)
+        + pair("Rillaboom", "Sneasler", 2.5);
+      if (owned.has("Indeedee")) {
+        if (owned.has("Sneasler")) named += 2.25;
+        if (owned.has("Hawlucha")) named += 2;
+        if ([...PSYCHIC_TERRAIN_PREMIUM].some((name) => owned.has(name))) named += 3;
+        else if ([...PSYCHIC_TERRAIN_SLIGHT].some((name) => owned.has(name))) named += 1.15;
+      }
+      if (owned.has("Pelipper") && owned.has("Archaludon") && owned.has("Swampert")) named += 4;
+      named = Math.min(12, named);
+      let complement = 0;
+      if (hasPhysical && hasSpecial) complement += 2;
+      if (has("Speedster") && hasSpeedPlan) complement += 2;
+      if (has("Support") && (has("Heavy Hitter") || has("Special Powerhouse"))) complement += 2;
+      if (has("Redirection") && (has("Heavy Hitter") || has("Special Powerhouse"))) complement += 1;
+      if ((has("Fake Out") || has("Redirection")) && hasSpeedPlan) complement += 1;
+      if (tankCount >= 2 && hasPhysical && hasSpecial) complement += 2;
+      const dependencyIntegrity = 5
+        - (owned.has("Archaludon") && !reliableRainOwned(team, { available: new Set() }) ? 2.5 : 0)
+        - (owned.has("Swampert") && !reliableRainOwned(team, { available: new Set() }) ? 2.5 : 0)
+        - (["Torkoal", "Snorlax", "Mawile"].some((name) => owned.has(name)) && !DEDICATED_TR.some((name) => owned.has(name)) ? 2 : 0)
+        - (owned.has("Vileplume") && !teamWeather(team).has("sun") ? 1.5 : 0)
+        - (owned.has("Houndstone") && !owned.has("Tyranitar") && !owned.has("Hippowdon") ? 1.5 : 0);
+      const synergy = Math.min(25, Math.max(0, named + Math.min(8, complement) + Math.max(0, dependencyIntegrity)));
+
+      const used = teamPoints(team);
+      const budgetValue = used >= 49 ? 4 : used >= 47 ? 3.5 : used >= 45 ? 2.5 : used >= 43 ? 1.5 : 0.5;
+      const impact = (pick) => [...roles(pick)].filter((role) => ["Heavy Hitter", "Special Powerhouse", "Speedster", "Support", "Prankster", "Redirection", "Fake Out", "Intimidate", "Mega", "Dual Mega"].includes(role)).length;
+      const cheapUseful = Math.min(4, team.picks.filter((pick) => points(pick) <= 3 && impact(pick) >= 2).length * 0.8);
+      const premium = team.picks.filter((pick) => points(pick) >= 8);
+      const premiumValue = premium.length ? Math.min(3, premium.reduce((sum, pick) => sum + Math.min(1, impact(pick) / 2), 0)) : 1;
+      const usefulShare = 4 * team.picks.filter((pick) => impact(pick) || isAttacker(pick) || isBulky(pick)).length / Math.max(1, team.picks.length);
+      const value = Math.min(15, budgetValue + cheapUseful + premiumValue + usefulShare);
+
+      const uniqueTypes = new Set(team.picks.flatMap((pick) => pick.types || [])).size;
+      const uniqueTypeScore = uniqueTypes >= 12 ? 4 : uniqueTypes >= 10 ? 3.5 : uniqueTypes >= 8 ? 3 : uniqueTypes >= 6 ? 2 : 1;
+      const weaknessCounts = {};
+      team.picks.map(weaknessProfile).forEach((profile) => Object.keys(profile).forEach((type) => { weaknessCounts[type] = (weaknessCounts[type] || 0) + 1; }));
+      const weaknessCost = Object.values(weaknessCounts).reduce((sum, amount) => sum + (amount >= 4 ? 1.5 : amount === 3 ? 0.75 : 0), 0);
+      const typingCounts = {};
+      team.picks.forEach((pick) => { const key = [...(pick.types || [])].sort().join("|"); typingCounts[key] = (typingCounts[key] || 0) + 1; });
+      const duplicateCost = Object.values(typingCounts).reduce((sum, amount) => sum + Math.max(0, amount - 1) * 1.1, 0);
+      const immunityTypes = { Normal: "Ghost", Ghost: "Normal", Ground: "Electric", Flying: "Ground", Dark: "Psychic", Steel: "Poison", Fairy: "Dragon" };
+      const immunities = new Set(team.picks.flatMap((pick) => (pick.types || []).map((type) => immunityTypes[type]).filter(Boolean))).size;
+      const defense = Math.min(15, uniqueTypeScore + Math.max(0, 5 - weaknessCost) + Math.max(0, 2 - duplicateCost) + (tankCount >= 2 ? 2 : tankCount === 1 ? 1.2 : 0) + (immunities >= 4 ? 2 : immunities >= 2 ? 1.5 : immunities === 1 ? 0.75 : 0));
+
+      const megaFlex = megaCount >= 2 && megaCount <= 3 ? 3.5 : megaCount === 1 ? 2.4 : megaCount === 4 ? 3.2 : megaCount >= 5 ? 2.5 : 0;
+      const speedModes = [has("Speedster"), team.picks.some((pick) => PREMIUM_TAILWIND.has(pick.name) || RELIABLE_TAILWIND.has(pick.name)), team.picks.some((pick) => RELIABLE_TR.has(pick.name))].filter(Boolean).length;
+      const speedFlex = speedModes >= 3 ? 3 : speedModes === 2 ? 2.5 : speedModes === 1 ? 1.5 : 0;
+      const attackFlex = hasPhysical && hasSpecial ? (has("Heavy Hitter") && has("Special Powerhouse") ? 3 : 2) : hasPhysical || hasSpecial ? 1 : 0;
+      const strategicModes = [teamWeather(team).size > 0, team.picks.some((pick) => RELIABLE_TR.has(pick.name)) && team.picks.some((pick) => TR_PAYOFF.has(pick.name)), owned.has("Indeedee") && [...PSYCHIC_TERRAIN_PREMIUM, ...PSYCHIC_TERRAIN_SLIGHT, "Sneasler", "Hawlucha"].some((name) => owned.has(name)), ["Raichu", "Pincurchin"].some((name) => owned.has(name)) && [...ELECTRIC_TERRAIN_ABUSERS].some((name) => owned.has(name))].filter(Boolean).length;
+      const compressed = team.picks.filter((pick) => impact(pick) >= 3).length;
+      const flexibility = Math.min(15, megaFlex + (has("Dual Mega") ? 0.5 : 0) + speedFlex + attackFlex + (strategicModes >= 2 ? 2 : strategicModes === 1 ? 1.2 : 0) + Math.min(3, compressed));
+
+      const flaws = [];
+      let deduction = 0;
+      const flaw = (condition, label, amount) => { if (condition) { flaws.push(label); deduction += amount; } };
+      flaw(!hasPhysical, "No physical offense", 5);
+      flaw(hasPhysical && !has("Heavy Hitter"), "No high-end physical offense", 1.5);
+      flaw(!hasSpecial, "No special offense", 5);
+      flaw(hasSpecial && !has("Special Powerhouse"), "No high-end special offense", 1.5);
+      flaw(!hasSpeedPlan, "No speed-control plan", 4);
+      flaw(!has("Support") && !has("Fake Out") && !has("Intimidate") && !has("Redirection"), "No support or positioning tools", 3);
+      flaw(tankCount === 0, "No reliable bulk", 2);
+      const unsupportedArch = owned.has("Archaludon") && !reliableRainOwned(team, { available: new Set() });
+      const unsupportedSwampert = owned.has("Swampert") && !reliableRainOwned(team, { available: new Set() });
+      const unsupportedSun = owned.has("Vileplume") && !teamWeather(team).has("sun");
+      const unsupportedTr = ["Torkoal", "Snorlax", "Mawile"].some((name) => owned.has(name)) && !DEDICATED_TR.some((name) => owned.has(name));
+      const unsupportedSand = owned.has("Houndstone") && !owned.has("Tyranitar") && !owned.has("Hippowdon");
+      flaw(unsupportedArch, "Archaludon lacks rain", 10); flaw(unsupportedSwampert, "Swampert lacks rain", 10);
+      flaw(unsupportedSun, "Vileplume lacks sun", 6); flaw(unsupportedTr, "Key Trick Room payoff lacks a dedicated setter", 5);
+      flaw(unsupportedSand, "Houndstone lacks sand", 3);
+      flaw(used <= 39, "Ten or more points unused", 5); if (used > 39) flaw(used <= 42, "Eight or more points unused", 3); if (used > 42) flaw(used <= 44, "Six or more points unused", 1.5);
+
+      const categories = { construction, synergy, value, defense, flexibility };
+      let score = construction + synergy + value + defense + flexibility - Math.min(24, deduction);
+      if (deduction >= 8) score = Math.min(score, 69); else if (deduction >= 6) score = Math.min(score, 74); else if (deduction >= 4) score = Math.min(score, 79); else if (deduction >= 2) score = Math.min(score, 84); else if (deduction > 0) score = Math.min(score, 89);
+      if (unsupportedArch || unsupportedSwampert) score = Math.min(score, 58);
+      if (unsupportedSun || unsupportedTr) score = Math.min(score, 62);
+      if (unsupportedSand) score = Math.min(score, 66);
+      if (score >= 90 && (construction < 25 || synergy < 20 || defense < 10 || flexibility < 10)) score = 89;
+      score = Math.max(0, Math.round(score * 10) / 10);
+      const letter = score >= 97 ? "A+" : score >= 94 ? "A" : score >= 90 ? "A-" : score >= 85 ? "B+" : score >= 80 ? "B" : score >= 75 ? "B-" : score >= 71 ? "C+" : score >= 67 ? "C" : score >= 63 ? "C-" : score >= 59 ? "D+" : score >= 55 ? "D" : "F";
+      return { score, letter, categories: Object.fromEntries(Object.entries(categories).map(([key, amount]) => [key, Math.round(amount * 10) / 10])), flaws };
     };
 
     const assignTeamPlans = (teamIds) => {
@@ -703,7 +940,7 @@
       }));
     };
 
-    return { choose, isLegal, legalCandidates, assignTeamPlans, teamForPick, roundForPick, nextPickDistance, points };
+    return { choose, isLegal, legalCandidates, assignTeamPlans, gradeTeam, teamForPick, roundForPick, nextPickDistance, points };
   };
 
   return { create, constants: { OPENING_ELITE, HARD_DEADLINES, PICK_ONE_WEIGHTS, FORM_FAMILIES } };

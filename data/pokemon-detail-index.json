@@ -10,33 +10,14 @@
       "Charizard-Mega-X"
     ]
   },
-  "eternalfloette": {
-    "hasMega": false,
-    "megaForms": []
-  },
   "garchomp": {
     "hasMega": true,
     "megaForms": [
-      "Garchomp-Mega"
-    ]
-  },
-  "metagross": {
-    "hasMega": true,
-    "megaForms": [
-      "Metagross-Mega"
-    ]
-  },
-  "salamence": {
-    "hasMega": true,
-    "megaForms": [
-      "Salamence-Mega"
+      "Garchomp-Mega",
+      "Garchomp-Mega-Z"
     ]
   },
   "sneasler": {
-    "hasMega": false,
-    "megaForms": []
-  },
-  "staraptor": {
     "hasMega": false,
     "megaForms": []
   },
@@ -60,14 +41,6 @@
       "Gengar-Mega"
     ]
   },
-  "gholdengo": {
-    "hasMega": false,
-    "megaForms": []
-  },
-  "grimmsnarl": {
-    "hasMega": false,
-    "megaForms": []
-  },
   "incineroar": {
     "hasMega": false,
     "megaForms": []
@@ -86,9 +59,11 @@
     "hasMega": false,
     "megaForms": []
   },
-  "raichu": {
-    "hasMega": false,
-    "megaForms": []
+  "eternalfloette": {
+    "hasMega": true,
+    "megaForms": [
+      "Floette-Mega"
+    ]
   },
   "rillaboom": {
     "hasMega": false,
@@ -120,9 +95,18 @@
     "hasMega": false,
     "megaForms": []
   },
-  "annihilape": {
-    "hasMega": false,
-    "megaForms": []
+  "metagross": {
+    "hasMega": true,
+    "megaForms": [
+      "Metagross-Mega"
+    ]
+  },
+  "raichu": {
+    "hasMega": true,
+    "megaForms": [
+      "Raichu-Mega-Y",
+      "Raichu-Mega-X"
+    ]
   },
   "blastoise": {
     "hasMega": true,
@@ -130,11 +114,9 @@
       "Blastoise-Mega"
     ]
   },
-  "blaziken": {
-    "hasMega": true,
-    "megaForms": [
-      "Blaziken-Mega"
-    ]
+  "gholdengo": {
+    "hasMega": false,
+    "megaForms": []
   },
   "delphox": {
     "hasMega": true,
@@ -166,21 +148,26 @@
       "Glimmora-Mega"
     ]
   },
+  "salamence": {
+    "hasMega": true,
+    "megaForms": [
+      "Salamence-Mega"
+    ]
+  },
   "lucario": {
     "hasMega": true,
     "megaForms": [
-      "Lucario-Mega"
+      "Lucario-Mega",
+      "Lucario-Mega-Z"
     ]
   },
   "maushold": {
     "hasMega": false,
     "megaForms": []
   },
-  "mawile": {
-    "hasMega": true,
-    "megaForms": [
-      "Mawile-Mega"
-    ]
+  "grimmsnarl": {
+    "hasMega": false,
+    "megaForms": []
   },
   "politoed": {
     "hasMega": false,
@@ -207,7 +194,8 @@
   "absol": {
     "hasMega": true,
     "megaForms": [
-      "Absol-Mega"
+      "Absol-Mega",
+      "Absol-Mega-Z"
     ]
   },
   "aegislash": {
@@ -247,6 +235,10 @@
     "megaForms": [
       "Gyarados-Mega"
     ]
+  },
+  "hatterene": {
+    "hasMega": false,
+    "megaForms": []
   },
   "hisuianarcanine": {
     "hasMega": false,
@@ -304,6 +296,12 @@
       "Aggron-Mega"
     ]
   },
+  "alakazam": {
+    "hasMega": true,
+    "megaForms": [
+      "Alakazam-Mega"
+    ]
+  },
   "arcanine": {
     "hasMega": false,
     "megaForms": []
@@ -332,7 +330,7 @@
     "hasMega": false,
     "megaForms": []
   },
-  "houndstone": {
+  "indeedee": {
     "hasMega": false,
     "megaForms": []
   },
@@ -351,11 +349,13 @@
     "hasMega": false,
     "megaForms": []
   },
-  "palafin": {
-    "hasMega": false,
-    "megaForms": []
+  "staraptor": {
+    "hasMega": true,
+    "megaForms": [
+      "Staraptor-Mega"
+    ]
   },
-  "pyroar": {
+  "annihilape": {
     "hasMega": false,
     "megaForms": []
   },
@@ -369,9 +369,11 @@
       "Sceptile-Mega"
     ]
   },
-  "scrafty": {
-    "hasMega": false,
-    "megaForms": []
+  "baxcalibur": {
+    "hasMega": true,
+    "megaForms": [
+      "Baxcalibur-Mega"
+    ]
   },
   "starmie": {
     "hasMega": true,
@@ -405,6 +407,12 @@
       "Chandelure-Mega"
     ]
   },
+  "golisopod": {
+    "hasMega": true,
+    "megaForms": [
+      "Golisopod-Mega"
+    ]
+  },
   "crabominable": {
     "hasMega": true,
     "megaForms": [
@@ -430,10 +438,6 @@
     "megaForms": [
       "Golurk-Mega"
     ]
-  },
-  "hatterene": {
-    "hasMega": false,
-    "megaForms": []
   },
   "hawlucha": {
     "hasMega": true,
@@ -471,6 +475,10 @@
     "hasMega": false,
     "megaForms": []
   },
+  "palafin": {
+    "hasMega": false,
+    "megaForms": []
+  },
   "rotomfrost": {
     "hasMega": false,
     "megaForms": []
@@ -485,13 +493,11 @@
     "hasMega": false,
     "megaForms": []
   },
-  "vileplume": {
-    "hasMega": false,
-    "megaForms": []
-  },
-  "conkeldurr": {
-    "hasMega": false,
-    "megaForms": []
+  "mawile": {
+    "hasMega": true,
+    "megaForms": [
+      "Mawile-Mega"
+    ]
   },
   "altaria": {
     "hasMega": true,
@@ -529,9 +535,11 @@
       "Chesnaught-Mega"
     ]
   },
-  "dragalge": {
-    "hasMega": false,
-    "megaForms": []
+  "blaziken": {
+    "hasMega": true,
+    "megaForms": [
+      "Blaziken-Mega"
+    ]
   },
   "drampa": {
     "hasMega": true,
@@ -539,11 +547,11 @@
       "Drampa-Mega"
     ]
   },
-  "eelektross": {
+  "pawmot": {
     "hasMega": false,
     "megaForms": []
   },
-  "falinks": {
+  "houndstone": {
     "hasMega": false,
     "megaForms": []
   },
@@ -566,6 +574,12 @@
   "hisuiansamurott": {
     "hasMega": false,
     "megaForms": []
+  },
+  "pyroar": {
+    "hasMega": true,
+    "megaForms": [
+      "Pyroar-Mega"
+    ]
   },
   "kleavor": {
     "hasMega": false,
@@ -615,17 +629,25 @@
     "hasMega": false,
     "megaForms": []
   },
+  "scrafty": {
+    "hasMega": true,
+    "megaForms": [
+      "Scrafty-Mega"
+    ]
+  },
+  "cinderace": {
+    "hasMega": false,
+    "megaForms": []
+  },
   "umbreon": {
     "hasMega": false,
     "megaForms": []
   },
-  "alakazam": {
-    "hasMega": true,
-    "megaForms": [
-      "Alakazam-Mega"
-    ]
-  },
   "alolanraichu": {
+    "hasMega": false,
+    "megaForms": []
+  },
+  "vileplume": {
     "hasMega": false,
     "megaForms": []
   },
@@ -634,6 +656,10 @@
     "megaForms": [
       "Banette-Mega"
     ]
+  },
+  "conkeldurr": {
+    "hasMega": false,
+    "megaForms": []
   },
   "galarianslowbro": {
     "hasMega": false,
@@ -651,9 +677,11 @@
     "hasMega": false,
     "megaForms": []
   },
-  "malamar": {
-    "hasMega": false,
-    "megaForms": []
+  "dragalge": {
+    "hasMega": true,
+    "megaForms": [
+      "Dragalge-Mega"
+    ]
   },
   "medicham": {
     "hasMega": true,
@@ -673,9 +701,17 @@
     "hasMega": false,
     "megaForms": []
   },
-  "overqwil": {
-    "hasMega": false,
-    "megaForms": []
+  "falinks": {
+    "hasMega": true,
+    "megaForms": [
+      "Falinks-Mega"
+    ]
+  },
+  "eelektross": {
+    "hasMega": true,
+    "megaForms": [
+      "Eelektross-Mega"
+    ]
   },
   "rampardos": {
     "hasMega": false,
@@ -689,7 +725,7 @@
     "hasMega": false,
     "megaForms": []
   },
-  "scolipede": {
+  "inteleon": {
     "hasMega": false,
     "megaForms": []
   },
@@ -731,7 +767,7 @@
     "hasMega": false,
     "megaForms": []
   },
-  "barbaracle": {
+  "toxtricitylowkey": {
     "hasMega": false,
     "megaForms": []
   },
@@ -765,6 +801,10 @@
     "hasMega": false,
     "megaForms": []
   },
+  "arboliva": {
+    "hasMega": false,
+    "megaForms": []
+  },
   "heracross": {
     "hasMega": true,
     "megaForms": [
@@ -777,7 +817,27 @@
       "Houndoom-Mega"
     ]
   },
+  "malamar": {
+    "hasMega": true,
+    "megaForms": [
+      "Malamar-Mega"
+    ]
+  },
   "mrrime": {
+    "hasMega": false,
+    "megaForms": []
+  },
+  "overqwil": {
+    "hasMega": false,
+    "megaForms": []
+  },
+  "barbaracle": {
+    "hasMega": true,
+    "megaForms": [
+      "Barbaracle-Mega"
+    ]
+  },
+  "toxtricityamped": {
     "hasMega": false,
     "megaForms": []
   },
@@ -795,9 +855,11 @@
     "hasMega": false,
     "megaForms": []
   },
-  "qwilfish": {
-    "hasMega": false,
-    "megaForms": []
+  "scolipede": {
+    "hasMega": true,
+    "megaForms": [
+      "Scolipede-Mega"
+    ]
   },
   "reuniclus": {
     "hasMega": false,
@@ -807,7 +869,27 @@
     "hasMega": false,
     "megaForms": []
   },
+  "gogoat": {
+    "hasMega": false,
+    "megaForms": []
+  },
   "slowking": {
+    "hasMega": false,
+    "megaForms": []
+  },
+  "persianalola": {
+    "hasMega": false,
+    "megaForms": []
+  },
+  "mrmime": {
+    "hasMega": false,
+    "megaForms": []
+  },
+  "musharna": {
+    "hasMega": false,
+    "megaForms": []
+  },
+  "perrserker": {
     "hasMega": false,
     "megaForms": []
   },
@@ -826,6 +908,10 @@
     ]
   },
   "watchog": {
+    "hasMega": false,
+    "megaForms": []
+  },
+  "pincurchin": {
     "hasMega": false,
     "megaForms": []
   },
@@ -895,6 +981,10 @@
     "hasMega": false,
     "megaForms": []
   },
+  "qwilfish": {
+    "hasMega": false,
+    "megaForms": []
+  },
   "flapple": {
     "hasMega": false,
     "megaForms": []
@@ -933,6 +1023,10 @@
     "hasMega": false,
     "megaForms": []
   },
+  "squawkabillyblue": {
+    "hasMega": false,
+    "megaForms": []
+  },
   "hisuianavalugg": {
     "hasMega": false,
     "megaForms": []
@@ -949,6 +1043,10 @@
     "hasMega": false,
     "megaForms": []
   },
+  "squawkabillywhite": {
+    "hasMega": false,
+    "megaForms": []
+  },
   "machamp": {
     "hasMega": false,
     "megaForms": []
@@ -962,6 +1060,10 @@
     "megaForms": []
   },
   "passimian": {
+    "hasMega": false,
+    "megaForms": []
+  },
+  "squawkabillyyellow": {
     "hasMega": false,
     "megaForms": []
   },
@@ -1023,7 +1125,15 @@
     "hasMega": false,
     "megaForms": []
   },
+  "wigglytuff": {
+    "hasMega": false,
+    "megaForms": []
+  },
   "tauros": {
+    "hasMega": false,
+    "megaForms": []
+  },
+  "grapploct": {
     "hasMega": false,
     "megaForms": []
   },
@@ -1040,6 +1150,34 @@
     "megaForms": []
   },
   "vaporeon": {
+    "hasMega": false,
+    "megaForms": []
+  },
+  "mabosstiff": {
+    "hasMega": false,
+    "megaForms": []
+  },
+  "persian": {
+    "hasMega": false,
+    "megaForms": []
+  },
+  "swalot": {
+    "hasMega": false,
+    "megaForms": []
+  },
+  "sirfetchd": {
+    "hasMega": false,
+    "megaForms": []
+  },
+  "thievul": {
+    "hasMega": false,
+    "megaForms": []
+  },
+  "farfetchd": {
+    "hasMega": false,
+    "megaForms": []
+  },
+  "squawkabillygreen": {
     "hasMega": false,
     "megaForms": []
   }

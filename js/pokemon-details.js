@@ -1,5 +1,5 @@
 (() => {
-  const DETAILS_URL = "data/pokemon-details.json?v=pokemon-details-1";
+  const DETAILS_URL = "data/pokemon-details.json?v=draft-v113";
   const DETAIL_TYPE_COLORS = {
     Bug: "#91a119", Dark: "#50413f", Dragon: "#5060e1", Electric: "#fac000",
     Fairy: "#ef70ef", Fighting: "#ff8000", Fire: "#e62829", Flying: "#81b9ef",

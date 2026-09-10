@@ -38,12 +38,12 @@
     "Special Fortress", "Special Wall", "Bulk City",
   ];
   const ROLE_ORDER = [
-    ...STAT_ROLES,
-    "Support", "Fake Out", "Prankster", "Intimidate", "Redirection",
-    "Priority Tailwind", "Tailwind", "TR Setter", "TR Sweeper",
-    "Rain Setter", "Rain Abuser", "Sun Setter", "Sun Abuser",
-    "Sand Setter", "Sand Abuser", "Snow Setter", "Snow Abuser",
-    "Terrain Setter", "Terrain Abuser", "Mega", "Dual Mega", "Curated Value Pick",
+    "Dual Mega", "Mega", "Prankster", "Fake Out", "Intimidate", "Priority Tailwind", "Tailwind",
+    "TR Setter", "TR Sweeper", "Rain Setter", "Sun Setter", "Sand Setter", "Snow Setter",
+    "Rain Abuser", "Sun Abuser", "Sand Abuser", "Snow Abuser", "Terrain Setter", "Terrain Abuser",
+    "Redirection", "Physical Stronghold", "Physical Tank", "Special Fortress", "Special Wall", "Bulk City",
+    "Support", "Value Pick", "Speedster", "Fast", "Heavy Hitter", "Physical Attacker",
+    "Special Powerhouse", "Special Attacker", "Mixed Attacker",
   ];
   const PHYSICAL_OFFENSE_ROLES = ["Heavy Hitter", "Physical Attacker"];
   const SPECIAL_OFFENSE_ROLES = ["Special Powerhouse", "Special Attacker"];
@@ -58,28 +58,45 @@
 
   const names = (value) => value.split(",").map((name) => name.trim()).filter(Boolean);
   const ROLE_GROUPS = {
-    Support: names("Farigiraf,Grimmsnarl,Incineroar,Pelipper,Raichu,Rillaboom,Sableye,Sinistcha,Whimsicott,Maushold,Politoed,Talonflame,Clefable,Corviknight,Hisuian Arcanine,Milotic,Scrafty,Vivillon,Arcanine,Klefki,Meowstic,Oranguru,Tinkaton,Tsareena,Hatterene,Liepard,Mimikyu,Altaria,Bellibolt,Galarian Slowking,Skarmory,Slowbro,Toxapex,Umbreon,Ninetales,Orthworm,Spiritomb,Alcremie,Cofagrigus,Ditto,Slowking,Wyrdeer,Audino,Aromatisse,Dedenne,Florges,Forretress,Gourgeist,Polteageist,Roserade,Slurpuff"),
-    "Fake Out": names("Blastoise,Grimmsnarl,Incineroar,Kangaskhan,Lopunny,Meowstic,Morpeko,Mr. Rime,Pikachu,Raichu,Alolan Raichu,Rillaboom,Sableye,Salazzle,Scrafty,Simipour,Simisage,Simisear,Sneasler,Tinkaton,Toxicroak,Weavile,Infernape"),
+    Support: names("Musharna,Farfetch'd,Farigiraf,Grimmsnarl,Incineroar,Pelipper,Raichu,Rillaboom,Sableye,Sinistcha,Whimsicott,Maushold,Politoed,Talonflame,Clefable,Corviknight,Hisuian Arcanine,Milotic,Scrafty,Vivillon,Arcanine,Klefki,Meowstic,Oranguru,Tinkaton,Tsareena,Hatterene,Liepard,Mimikyu,Altaria,Bellibolt,Galarian Slowking,Skarmory,Slowbro,Toxapex,Umbreon,Ninetales,Orthworm,Spiritomb,Alcremie,Cofagrigus,Ditto,Slowking,Wyrdeer,Audino,Aromatisse,Dedenne,Florges,Forretress,Gourgeist,Polteageist,Roserade,Slurpuff,Wigglytuff,Persian,Persian-Alola,Mr. Mime,Swalot,Thievul,Perrserker,Pincurchin,Indeedee,Arboliva,Pawmot,Mabosstiff,Squawkabilly-Green,Squawkabilly-Blue,Squawkabilly-Yellow,Squawkabilly-White"),
+    "Fake Out": names("Blastoise,Grimmsnarl,Incineroar,Kangaskhan,Lopunny,Meowstic,Morpeko,Mr. Rime,Pikachu,Raichu,Alolan Raichu,Rillaboom,Sableye,Salazzle,Scrafty,Simipour,Simisage,Simisear,Sneasler,Tinkaton,Toxicroak,Weavile,Infernape,Persian,Persian-Alola,Mr. Mime,Perrserker,Indeedee,Pawmot"),
     Prankster: names("Whimsicott,Grimmsnarl,Sableye,Klefki,Liepard,Meowstic,Banette"),
-    Intimidate: names("Incineroar,Gyarados,Arcanine,Hisuian Arcanine,Scrafty,Overqwil,Qwilfish,Wyrdeer,Luxray,Staraptor,Salamence,Manectric"),
+    Intimidate: names("Incineroar,Gyarados,Arcanine,Hisuian Arcanine,Scrafty,Overqwil,Qwilfish,Wyrdeer,Luxray,Staraptor,Salamence,Manectric,Mabosstiff,Squawkabilly-Green,Squawkabilly-Blue,Squawkabilly-Yellow,Squawkabilly-White"),
     "Priority Tailwind": names("Whimsicott,Talonflame"),
-    Tailwind: names("Aerodactyl,Skarmory,Noivern,Altaria,Corviknight,Vivillon,Salamence,Dragonite"),
-    "TR Setter": names("Farigiraf,Mimikyu,Oranguru,Hatterene,Meowstic,Sinistcha,Gallade"),
-    "TR Sweeper": names("Torkoal,Crabominable,Camerupt,Golurk,Hatterene,Drampa,Mawile,Sylveon,Gardevoir"),
-    Redirection: names("Maushold,Clefable,Ariados,Volcarona,Vivillon,Scovillain,Sinistcha"),
+    Tailwind: names("Aerodactyl,Skarmory,Noivern,Altaria,Corviknight,Vivillon,Salamence,Dragonite,Squawkabilly-Green,Squawkabilly-Blue,Squawkabilly-Yellow,Squawkabilly-White"),
+    "TR Setter": names("Musharna,Farigiraf,Mimikyu,Oranguru,Hatterene,Meowstic,Sinistcha,Gallade,Mr. Mime,Indeedee"),
+    "TR Sweeper": names("Torkoal,Crabominable,Camerupt,Golurk,Hatterene,Drampa,Mawile,Sylveon,Gardevoir,Golisopod,Snorlax"),
+    Redirection: names("Maushold,Clefable,Ariados,Volcarona,Vivillon,Scovillain,Sinistcha,Indeedee"),
     "Rain Setter": names("Pelipper,Politoed"),
-    "Rain Abuser": names("Archaludon,Swampert,Sharpedo,Heliolisk,Toxicroak,Palafin,Basculegion,Starmie,Kingambit"),
+    "Rain Abuser": names("Archaludon,Swampert,Basculegion"),
     "Sun Setter": names("Charizard,Torkoal,Ninetales"),
-    "Sun Abuser": names("Venusaur,Vileplume,Scovillain,Victreebel,Charizard,Torkoal,Houndoom,Pyroar,Meganium"),
+    "Sun Abuser": names("Venusaur,Vileplume,Scovillain,Victreebel,Houndoom"),
     "Sand Setter": names("Tyranitar,Hippowdon,Sandaconda"),
-    "Sand Abuser": names("Excadrill,Houndstone,Lycanroc,Garchomp,Steelix,Heliolisk,Tyranitar"),
-    "Snow Setter": names("Alolan Ninetales,Abomasnow,Froslass"),
-    "Snow Abuser": names("Froslass,Beartic,Vanilluxe,Abomasnow,Alolan Ninetales,Glaceon,Aurorus"),
-    "Terrain Setter": names("Raichu,Rillaboom"),
-    "Terrain Abuser": names("Alakazam,Alolan Raichu,Ampharos,Armarouge,Chimecho,Dedenne,Eelektross,Emolga,Galarian Slowbro,Galarian Slowking,Galarian Stunfisk,Gardevoir,Hatterene,Heliolisk,Jolteon,Luxray,Manectric,Meowstic,Morpeko,Mr. Rime,Pikachu,Raichu,Reuniclus,Rotom,Rotom-Fan,Rotom-Frost,Rotom-Heat,Rotom-Mow,Rotom-Wash,Slowbro,Slowking,Starmie"),
-    "Curated Value Pick": names("Alakazam,Alolan Raichu,Ditto,Espeon,Heracross,Pinsir,Reuniclus,Wyrdeer,Audino,Beedrill,Chimecho,Pidgeot"),
+    "Sand Abuser": names("Excadrill,Houndstone,Lycanroc,Garchomp,Steelix"),
+    "Snow Setter": names("Alolan Ninetales,Abomasnow,Vanilluxe,Aurorus"),
+    "Snow Abuser": names("Beartic,Glaceon"),
+    "Terrain Setter": names("Raichu,Rillaboom,Pincurchin,Indeedee,Arboliva"),
+    "Terrain Abuser": names("Sneasler,Hawlucha,Ampharos,Jolteon,Toxtricity-Amped,Toxtricity-Low-Key,Alakazam,Armarouge,Delphox,Espathra,Espeon,Farigiraf,Galarian Slowbro,Galarian Slowking,Gardevoir,Hatterene,Meowstic,Mr. Rime,Reuniclus,Slowbro,Slowking,Starmie,Wyrdeer,Mr. Mime,Musharna"),
+    "Value Pick": names("Alakazam,Alolan Raichu,Ditto,Espeon,Heracross,Pinsir,Reuniclus,Wyrdeer,Audino,Beedrill,Chimecho,Pidgeot"),
     "Dual Mega": names("Charizard,Raichu,Absol,Garchomp,Lucario"),
-    Mega: names("Venusaur,Charizard,Blastoise,Beedrill,Pidgeot,Raichu,Clefable,Alakazam,Victreebel,Slowbro,Gengar,Kangaskhan,Starmie,Pinsir,Gyarados,Aerodactyl,Dragonite,Meganium,Feraligatr,Ampharos,Steelix,Scizor,Heracross,Skarmory,Houndoom,Tyranitar,Sceptile,Blaziken,Swampert,Gardevoir,Sableye,Mawile,Aggron,Medicham,Manectric,Sharpedo,Camerupt,Altaria,Banette,Chimecho,Absol,Glalie,Salamence,Metagross,Staraptor,Lopunny,Garchomp,Lucario,Abomasnow,Gallade,Froslass,Emboar,Excadrill,Audino,Scolipede,Scrafty,Eelektross,Chandelure,Golurk,Chesnaught,Delphox,Greninja,Pyroar,Eternal Floette,Meowstic,Malamar,Barbaracle,Dragalge,Hawlucha,Crabominable,Drampa,Falinks,Scovillain,Glimmora"),
+    Mega: names("Venusaur,Charizard,Blastoise,Beedrill,Pidgeot,Raichu,Clefable,Alakazam,Victreebel,Slowbro,Gengar,Kangaskhan,Starmie,Pinsir,Gyarados,Aerodactyl,Dragonite,Meganium,Feraligatr,Ampharos,Steelix,Scizor,Heracross,Skarmory,Houndoom,Tyranitar,Sceptile,Blaziken,Swampert,Gardevoir,Sableye,Mawile,Aggron,Medicham,Manectric,Sharpedo,Camerupt,Altaria,Banette,Chimecho,Absol,Glalie,Salamence,Metagross,Staraptor,Lopunny,Garchomp,Lucario,Abomasnow,Gallade,Froslass,Emboar,Excadrill,Audino,Scolipede,Scrafty,Eelektross,Chandelure,Golurk,Chesnaught,Delphox,Greninja,Pyroar,Eternal Floette,Meowstic,Malamar,Barbaracle,Dragalge,Hawlucha,Crabominable,Drampa,Falinks,Scovillain,Glimmora,Golisopod,Baxcalibur"),
+  };
+
+  const STAT_PROFILE_OVERRIDES = {
+    arboliva: { hp: 78, attack: 69, defense: 90, sp_atk: 125, sp_def: 109, speed: 39 },
+    baxcalibur: { hp: 115, attack: 175, defense: 117, sp_atk: 105, sp_def: 101, speed: 87 },
+    golisopod: { hp: 75, attack: 150, defense: 175, sp_atk: 70, sp_def: 120, speed: 40 },
+    indeedee: { hp: 70, attack: 55, defense: 65, sp_atk: 95, sp_def: 105, speed: 85 },
+    inteleon: { hp: 70, attack: 85, defense: 65, sp_atk: 125, sp_def: 65, speed: 120 },
+    mabosstiff: { hp: 80, attack: 120, defense: 90, sp_atk: 60, sp_def: 70, speed: 85 },
+    mrmime: { hp: 40, attack: 45, defense: 65, sp_atk: 100, sp_def: 120, speed: 90 },
+    musharna: { hp: 116, attack: 55, defense: 85, sp_atk: 107, sp_def: 95, speed: 29 },
+    pawmot: { hp: 70, attack: 115, defense: 70, sp_atk: 70, sp_def: 60, speed: 105 },
+    perrserker: { hp: 70, attack: 110, defense: 100, sp_atk: 50, sp_def: 60, speed: 50 },
+    pincurchin: { hp: 48, attack: 101, defense: 95, sp_atk: 91, sp_def: 85, speed: 15 },
+    sirfetchd: { hp: 62, attack: 135, defense: 95, sp_atk: 68, sp_def: 82, speed: 65 },
+    toxtricityamped: { hp: 75, attack: 98, defense: 70, sp_atk: 114, sp_def: 70, speed: 75 },
+    toxtricitylowkey: { hp: 75, attack: 98, defense: 70, sp_atk: 114, sp_def: 70, speed: 75 },
   };
 
   const ROLE_MEMBERSHIP = Object.fromEntries(
@@ -93,6 +110,11 @@
     .normalize("NFKD")
     .replace(/[^a-z0-9]+/g, "")
     .trim();
+  const spriteCandidates = (pokemon) => [pokemon?.sprite].filter(Boolean);
+  const fallbackInitials = (name) => {
+    const initials = String(name || "?").split(/\s+|-/).map((part) => part[0]).join("").slice(0, 3).toUpperCase();
+    return `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" fill="#29303a" stroke="#fff7df" stroke-width="5"/><text x="60" y="70" text-anchor="middle" font-family="sans-serif" font-weight="900" font-size="34" fill="#fff7df">${initials}</text></svg>`)}`;
+  };
   const escapeHtml = (value) => String(value ?? "")
     .replaceAll("&", "&amp;")
     .replaceAll('"', "&quot;")
@@ -133,6 +155,8 @@
   const statRolesFor = (detail) => {
     const roles = new Set();
     const formes = detail?.formes?.filter((forme) => forme.stats) || [];
+    const override = STAT_PROFILE_OVERRIDES[normalize(detail?.name)];
+    if (override) formes.push({ stats: override });
     if (!formes.length) return roles;
 
     const max = (key) => Math.max(...formes.map((forme) => Number(forme.stats[key]) || 0));
@@ -142,10 +166,11 @@
     const defense = max("defense");
     const specialDefense = max("sp_def");
 
-    if (attack >= 120) roles.add("Heavy Hitter");
-    else if (attack >= 100) roles.add("Physical Attacker");
+    const hasPowerAbility = [detail?.abilities, ...formes.map((forme) => forme.abilities)].flat(2).some((ability) => ["Huge Power", "Pure Power"].includes(ability?.name));
+    if (attack >= 120 || hasPowerAbility) roles.add("Heavy Hitter");
+    else if (attack >= 100 && specialAttack - attack < 25) roles.add("Physical Attacker");
     if (specialAttack >= 120) roles.add("Special Powerhouse");
-    else if (specialAttack >= 100) roles.add("Special Attacker");
+    else if (specialAttack >= 100 && attack - specialAttack < 25) roles.add("Special Attacker");
     if (speed >= 120) roles.add("Speedster");
     else if (speed >= 100) roles.add("Fast");
     if (defense >= 120) roles.add("Physical Stronghold");
@@ -172,6 +197,21 @@
     state.roleCache.set(pokemon.name, ordered);
     return ordered;
   };
+
+  document.addEventListener("error", (event) => {
+    const image = event.target.closest?.("img[data-pokemon-sprite]");
+    if (!image || image.dataset.spriteExhausted === "true") return;
+    const pokemon = state.byName.get(image.dataset.pokemonSprite) || { name: image.dataset.pokemonSprite, sprite: image.getAttribute("src") };
+    const sources = spriteCandidates(pokemon);
+    const nextIndex = Number(image.dataset.spriteIndex || 0) + 1;
+    if (nextIndex < sources.length) {
+      image.dataset.spriteIndex = String(nextIndex);
+      image.src = sources[nextIndex];
+    } else {
+      image.dataset.spriteExhausted = "true";
+      image.src = fallbackInitials(pokemon.name);
+    }
+  }, true);
 
   const roleMatches = (pokemon, selected) => {
     if (!selected) return true;
@@ -413,7 +453,9 @@
     card.querySelector(".point-value").textContent = pointValue(pokemon);
     card.querySelector(".pokemon-name").textContent = pokemon.name;
     const sprite = card.querySelector(".pokemon-sprite");
-    sprite.src = pokemon.sprite;
+    sprite.dataset.pokemonSprite = pokemon.name;
+    sprite.dataset.spriteIndex = "0";
+    sprite.src = spriteCandidates(pokemon)[0];
     sprite.alt = `${pokemon.name} menu sprite`;
     if (hasMega) card.querySelector(".mega-mark").hidden = false;
 
@@ -452,7 +494,7 @@
         slots.push(`<div class="roster-slot roster-slot--empty"><span><strong>${index + 1}. Open slot</strong><br><small>Waiting for a pick</small></span></div>`);
         continue;
       }
-      slots.push(`<div class="roster-slot"><img src="${escapeHtml(pick.sprite)}" alt=""><span><strong>${index + 1}. ${escapeHtml(pick.name)}</strong><br><small>${pick.mascot ? "Team mascot" : `Pick #${pick.overall}`}</small></span><span>${pointValue(pick)}</span></div>`);
+      slots.push(`<div class="roster-slot"><img src="${escapeHtml(spriteCandidates(pick)[0])}" data-pokemon-sprite="${escapeHtml(pick.name)}" data-sprite-index="0" alt=""><span><strong>${index + 1}. ${escapeHtml(pick.name)}</strong><br><small>${pick.mascot ? "Team mascot" : `Pick #${pick.overall}`}</small></span><span>${pointValue(pick)}</span></div>`);
     }
     elements.userRoster.innerHTML = slots.join("");
   };
@@ -474,7 +516,7 @@
       const config = TEAM_CONFIG[team.id];
       const roundPick = team.picks.filter((pick) => !pick.mascot)[trackedRound - 1];
       const pickLabel = roundPick
-        ? `<img src="${escapeHtml(roundPick.sprite)}" alt=""><strong title="${escapeHtml(roundPick.name)}">${escapeHtml(roundPick.name)}</strong>`
+        ? `<img src="${escapeHtml(spriteCandidates(roundPick)[0])}" data-pokemon-sprite="${escapeHtml(roundPick.name)}" data-sprite-index="0" alt=""><strong title="${escapeHtml(roundPick.name)}">${escapeHtml(roundPick.name)}</strong>`
         : `<span class="team-round-empty">${team.id === current ? "On clock" : "Waiting"}</span>`;
       return `<article class="team-track-card${team.id === current ? " is-on-clock" : ""}${team.id === state.userTeam ? " is-user-team" : ""}" style="--team-color:${config.color}" aria-label="${escapeHtml(config.name)}, round ${trackedRound}: ${escapeHtml(roundPick?.name || (team.id === current ? "on the clock" : "waiting"))}">
         <span class="team-pick-number">${team.id}</span>
@@ -494,12 +536,14 @@
   };
 
   const renderLeagueRosters = () => {
+    const finished = currentTeamNumber() === null;
     elements.leagueRosters.innerHTML = Object.values(state.teams).map((team) => {
       const config = TEAM_CONFIG[team.id];
+      const grade = finished ? state.ai.gradeTeam(team) : null;
       return `<article class="league-roster-card comic-panel" style="box-shadow:6px 7px 0 ${config.color},11px 12px 0 #000">
-        <h2>${escapeHtml(config.name)}</h2>
+        <div class="league-roster-heading"><h2>${escapeHtml(config.name)}</h2>${grade ? `<span class="draft-grade" title="${escapeHtml(grade.flaws.length ? grade.flaws.join(" · ") : "Coherent, balanced roster")}"><strong>${grade.letter}</strong><small>${grade.score}</small></span>` : `<span class="draft-grade draft-grade--locked">Grades unlock after the draft</span>`}</div>
         <p>${teamPoints(team)} / ${state.pointCap} points · ${team.picks.length} / ${ROSTER_SIZE} Pokémon</p>
-        <div class="league-roster-picks">${team.picks.map((pick) => `<span class="league-roster-pick" title="${escapeHtml(pick.name)} · ${pointValue(pick)} points"><img src="${escapeHtml(pick.sprite)}" alt=""><span>${escapeHtml(pick.name)}</span></span>`).join("")}</div>
+        <div class="league-roster-picks">${team.picks.map((pick) => `<span class="league-roster-pick" title="${escapeHtml(pick.name)} · ${pointValue(pick)} points"><img src="${escapeHtml(spriteCandidates(pick)[0])}" data-pokemon-sprite="${escapeHtml(pick.name)}" data-sprite-index="0" alt=""><span>${escapeHtml(pick.name)}</span></span>`).join("")}</div>
       </article>`;
     }).join("");
   };
@@ -509,6 +553,7 @@
     const useful = choice.reasons || [];
     const pieces = [`adds a ${pointValue(pokemon)}-point ${pokemon.tier.toLowerCase()} pick`];
     if (useful.length) pieces.push(useful.slice(0, 3).join(" + "));
+    if (choice.cpuInterest) pieces.push(`${choice.cpuInterest.label} estimated CPU interest before your return`);
     pieces.push(`${state.pointCap - teamPoints(team) - pointValue(pokemon)} points remain`);
     return pieces.join(" · ");
   };
@@ -534,7 +579,7 @@
 
     elements.recommendationName.textContent = `${pokemon.name} · ${pointValue(pokemon)} PTS`;
     elements.recommendationReason.textContent = recommendationReason(team, choice);
-    elements.recommendationPick.innerHTML = `<img src="${escapeHtml(pokemon.sprite)}" alt=""><button class="comic-button comic-button--primary" type="button">Draft pick</button>`;
+    elements.recommendationPick.innerHTML = `<img src="${escapeHtml(spriteCandidates(pokemon)[0])}" data-pokemon-sprite="${escapeHtml(pokemon.name)}" data-sprite-index="0" alt=""><button class="comic-button comic-button--primary" type="button">Draft pick</button>`;
     elements.recommendationPick.querySelector("button").addEventListener("click", () => makePick(state.userTeam, pokemon.name, false));
   };
 
@@ -617,7 +662,35 @@
     return teams;
   };
 
+  const runDraftRuntimeQA = () => {
+    const failures = [];
+    const expectedRole = (role, names) => {
+      const actual = ROLE_MEMBERSHIP[role] || new Set();
+      if (actual.size !== names.length || names.some((name) => !actual.has(name))) failures.push(`${role} membership is out of sync with v113`);
+    };
+    if (state.catalog.length !== 256) failures.push(`expected 256 draft assets, found ${state.catalog.length}`);
+    for (const [name, expected] of [["Alakazam", 6], ["Armarouge", 7], ["Hatterene", 7], ["Indeedee", 9]]) {
+      if (pointValue(state.byName.get(name)) !== expected) failures.push(`${name} should cost ${expected}`);
+    }
+    if (state.catalog.filter((pokemon) => pokemon.name === "Indeedee").length !== 1) failures.push("Indeedee must be one canonical asset");
+    expectedRole("Rain Abuser", ["Archaludon", "Swampert", "Basculegion"]);
+    expectedRole("Snow Abuser", ["Beartic", "Glaceon"]);
+    expectedRole("Snow Setter", ["Alolan Ninetales", "Abomasnow", "Vanilluxe", "Aurorus"]);
+    Object.values(TEAM_CONFIG).forEach((team) => { if (!state.byName.has(team.mascot)) failures.push(`missing mascot ${team.mascot}`); });
+    state.catalog.forEach((pokemon) => {
+      if (!pokemon.sprite?.startsWith("images/sprites/champions/Menu CP ")) failures.push(`invalid Champions sprite for ${pokemon.name}`);
+    });
+    if (failures.length) throw new Error(`Draft v113 QA failed: ${failures.join("; ")}`);
+  };
+
   const startDraft = () => {
+    try {
+      runDraftRuntimeQA();
+    } catch (error) {
+      console.error(error);
+      window.alert("The mock draft data failed its safety check. Refresh the page and try again.");
+      return;
+    }
     clearTimeout(state.cpuTimer);
     state.started = true;
     state.mode = elements.modeSelect.value;
@@ -739,9 +812,9 @@
     if (pointCapCopy) pointCapCopy.textContent = state.pointCap;
     try {
       const [catalogResponse, detailsResponse, indexResponse] = await Promise.all([
-        fetch("data/pokemon-catalog.json?v=season-1-3"),
-        fetch("data/pokemon-details.json?v=pokemon-details-1"),
-        fetch("data/pokemon-detail-index.json?v=pokemon-details-1"),
+        fetch("data/pokemon-catalog.json?v=draft-v113"),
+        fetch("data/pokemon-details.json?v=draft-v113"),
+        fetch("data/pokemon-detail-index.json?v=draft-v113"),
       ]);
       if (!catalogResponse.ok || !detailsResponse.ok || !indexResponse.ok) throw new Error("Draft data unavailable");
       const [catalog, detailData, detailIndex] = await Promise.all([
