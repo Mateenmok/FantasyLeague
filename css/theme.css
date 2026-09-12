@@ -232,6 +232,13 @@
   box-shadow: 3px 3px 0 #111, 5px 5px 0 #318fc5;
 }
 
+:root[data-theme="dark"] .prep-station-button {
+  background-color: #39758c;
+  background-image: radial-gradient(rgba(210, 241, 255, 0.18) 1px, transparent 1.2px);
+  color: var(--dark-copy);
+  box-shadow: 3px 3px 0 #111, 5px 5px 0 #70e3ff;
+}
+
 :root[data-theme="dark"] .admin-hero {
   background:
     linear-gradient(122deg, transparent 0 58%, rgba(255, 255, 255, 0.3) 58.2% 59.2%, transparent 59.4%),

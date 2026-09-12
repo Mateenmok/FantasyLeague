@@ -218,6 +218,48 @@ a {
   box-shadow: 3px 3px 0 #111;
 }
 
+.prep-station-button {
+  position: absolute;
+  z-index: 2;
+  top: calc(100% + 10px);
+  left: 0;
+  display: inline-grid;
+  grid-template-columns: 28px auto;
+  align-items: center;
+  gap: 5px;
+  min-height: 34px;
+  padding: 2px 8px 2px 3px;
+  transform: rotate(1deg);
+  border: 2px solid #111;
+  border-radius: 7px;
+  background-color: #90d9ef;
+  background-image: radial-gradient(rgba(25, 93, 126, 0.2) 1px, transparent 1.2px);
+  background-size: 6px 6px;
+  color: #101820;
+  font-family: "Jersey 25", Impact, sans-serif;
+  font-size: 15px;
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+  box-shadow: 3px 3px 0 #111;
+  transition: transform 140ms ease, box-shadow 140ms ease;
+}
+
+.prep-station-button:hover,
+.prep-station-button:focus-visible {
+  transform: translateY(-2px) rotate(-1deg);
+  outline: 2px solid var(--paper);
+  outline-offset: 3px;
+  box-shadow: 5px 5px 0 #111, 7px 7px 0 #2b78f6;
+}
+
+.prep-station-button img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
 .admin-controls-button img {
   width: 28px;
   height: 28px;
