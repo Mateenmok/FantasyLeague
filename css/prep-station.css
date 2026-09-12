@@ -375,6 +375,175 @@ body.prep-station-body .guide-shell {
   text-shadow: none !important;
 }
 
+/* The attached Prep Station ships its own late-stage gradients. Override every
+   neutral paper surface here so PokeLeague dark mode stays consistent. */
+:root[data-theme="dark"] body.prep-station-body .workspace-tab strong,
+:root[data-theme="dark"] body.prep-station-body .pretty-pokemon-trigger,
+:root[data-theme="dark"] body.prep-station-body .pretty-pokemon-trigger b,
+:root[data-theme="dark"] body.prep-station-body .mega-pill,
+:root[data-theme="dark"] body.prep-station-body .popular-badge {
+  border-color: #52647c !important;
+  background: #383c43 !important;
+  color: #fff7de !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body .stat-table tbody tr.stat-color-row td {
+  border-bottom-color: color-mix(in srgb, var(--stat-ui-color) 42%, #27303d) !important;
+  background:
+    linear-gradient(90deg,
+      color-mix(in srgb, var(--stat-ui-color) 13%, #30343b) 0%,
+      #2a2e35 58%,
+      #252930 100%) !important;
+  color: #f4f7fb !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body .stat-table tbody tr.stat-color-row td:first-child,
+:root[data-theme="dark"] body.prep-station-body .stat-table tbody tr.stat-color-row .stat-final {
+  color: #ffffff !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body .stat-table tbody tr.stat-color-row input,
+:root[data-theme="dark"] body.prep-station-body .stat-table tbody tr.stat-color-row .stage-btn {
+  border-color: color-mix(in srgb, var(--stat-ui-color) 58%, #536173) !important;
+  background: #171c24 !important;
+  color: #ffffff !important;
+  box-shadow: 2px 2px 0 #090b0e !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body .team-builder-shell {
+  background:
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.045) 1px, transparent 1.4px) 0 0 / 10px 10px,
+    linear-gradient(180deg, #2d3036, #282c33) !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body .team-builder-grid,
+:root[data-theme="dark"] body.prep-station-body .note-sheet-grid {
+  background:
+    radial-gradient(circle at 12% 15%, rgba(54, 214, 96, 0.07), transparent 20%),
+    radial-gradient(circle at 86% 18%, rgba(255, 93, 116, 0.06), transparent 20%),
+    radial-gradient(circle at 52% 82%, rgba(139, 92, 246, 0.08), transparent 24%),
+    #282c33 !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body .team-builder-kicker {
+  background: rgba(20, 27, 36, 0.86) !important;
+  color: #dfffea !important;
+  text-shadow: none !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body .team-builder-count {
+  background: #272d35 !important;
+  color: #8cf1a7 !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body .tb-slot,
+:root[data-theme="dark"] body.prep-station-body .tb-slot.empty,
+:root[data-theme="dark"] body.prep-station-body .tb-slot.filled {
+  background:
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.045) 1px, transparent 1.35px) 0 0 / 10px 10px,
+    linear-gradient(145deg, #343840, #292d34) !important;
+  color: #fff7de !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body .tb-slot-number,
+:root[data-theme="dark"] body.prep-station-body .tb-empty-mark {
+  background: #20252c !important;
+  color: #f5f8fc !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body .tb-empty-add {
+  border-color: #54ae73 !important;
+  background: linear-gradient(180deg, #303941, #252d34) !important;
+  color: #c8f7d5 !important;
+  box-shadow: 4px 4px 0 #1a6f38 !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body .tb-empty-title,
+:root[data-theme="dark"] body.prep-station-body .tb-empty-sub,
+:root[data-theme="dark"] body.prep-station-body .tb-mon-name,
+:root[data-theme="dark"] body.prep-station-body .tb-detail-value,
+:root[data-theme="dark"] body.prep-station-body .tb-move-name {
+  color: #f5f8fc !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body .tb-form-label,
+:root[data-theme="dark"] body.prep-station-body .tb-detail-label,
+:root[data-theme="dark"] body.prep-station-body .tb-detail-sub,
+:root[data-theme="dark"] body.prep-station-body .tb-section-label,
+:root[data-theme="dark"] body.prep-station-body .tb-picker-copy small,
+:root[data-theme="dark"] body.prep-station-body .tb-move-meta {
+  color: #bdc8d5 !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body .tb-card-head {
+  background:
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.08) 1px, transparent 1.4px) 0 0 / 9px 9px,
+    linear-gradient(120deg,
+      color-mix(in srgb, var(--tb-accent) 20%, #30343c),
+      color-mix(in srgb, var(--tb-accent2) 18%, #252932)) !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body .tb-sprite-box,
+:root[data-theme="dark"] body.prep-station-body .tb-detail-box,
+:root[data-theme="dark"] body.prep-station-body .tb-spread-section,
+:root[data-theme="dark"] body.prep-station-body .tb-stats-section,
+:root[data-theme="dark"] body.prep-station-body .tb-moves-section {
+  background: #30343c !important;
+  color: #fff7de !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body .tb-picker-trigger,
+:root[data-theme="dark"] body.prep-station-body .tb-change-pokemon,
+:root[data-theme="dark"] body.prep-station-body .tb-form-picker-trigger,
+:root[data-theme="dark"] body.prep-station-body .tb-move-picker-trigger,
+:root[data-theme="dark"] body.prep-station-body .tb-edit-select,
+:root[data-theme="dark"] body.prep-station-body .tb-sp-input {
+  border-color: #53647a !important;
+  background: #1c222b !important;
+  color: #f5f8fc !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body .tb-picker-chevron,
+:root[data-theme="dark"] body.prep-station-body .tb-item-icon-placeholder {
+  background: #292f38 !important;
+  color: #f5f8fc !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body .tb-sp-cell,
+:root[data-theme="dark"] body.prep-station-body .tb-stat-cell {
+  background: color-mix(in srgb, var(--stat-ui-color) 11%, #292e36) !important;
+  color: #f5f8fc !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body .tb-sp-cell span,
+:root[data-theme="dark"] body.prep-station-body .tb-stat-cell span,
+:root[data-theme="dark"] body.prep-station-body .tb-sp-cell strong,
+:root[data-theme="dark"] body.prep-station-body .tb-stat-cell strong {
+  color: #eef3f9 !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body .tb-move,
+:root[data-theme="dark"] body.prep-station-body .tb-move-edit {
+  background:
+    linear-gradient(110deg,
+      color-mix(in srgb, var(--tb-move-color) 16%, #30343c),
+      #272b32) !important;
+  color: #f5f8fc !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body .note-sheet-shell,
+:root[data-theme="dark"] body.prep-station-body .note-card {
+  background-image: none !important;
+  background-color: #2d3036 !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body .note-card-header {
+  background:
+    linear-gradient(90deg,
+      color-mix(in srgb, var(--note-accent) 22%, #30343c),
+      color-mix(in srgb, var(--note-accent2) 16%, #282c33)) !important;
+}
+
 :root[data-theme="dark"] .site-theme-toggle {
   background: #383c43;
   box-shadow: 4px 5px 0 #111, 7px 8px 0 #f3c93d;
