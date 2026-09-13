@@ -201,7 +201,9 @@
 
       if (["Torkoal", "Snorlax"].includes(pokemon.name) && !DEDICATED_TR.some((name) => owned.has(name))) {
         const setterPath = DEDICATED_TR.some((name) => affordableAfter(team, pokemon, byName.get(name)) && context.available.has(name));
-        if (distance > 2 || !setterPath) return false;
+        // A CPU may only go payoff-first on a true wheel pick. At distance 2 an
+        // intervening team can remove the final setter and strand the roster.
+        if (distance > 2 || !setterPath || (isCpu && distance !== 1)) return false;
       }
       if (pokemon.name === "Mawile" && !DEDICATED_TR.some((name) => owned.has(name))) {
         const paths = DEDICATED_TR.filter((name) => affordableAfter(team, pokemon, byName.get(name)) && context.available.has(name)).length;
@@ -209,18 +211,18 @@
         if (distance > 10 || paths < required || (isCpu && distance !== 1)) return false;
       }
       if (pokemon.name === "Hatterene" && !DEDICATED_TR.some((name) => owned.has(name))) {
-        const committed = team.draftStrategy === "specific-core" && team.specificCore === "trickRoom";
+        const committed = isCpu && team.draftStrategy === "specific-core" && team.specificCore === "trickRoom";
         const paths = DEDICATED_TR.filter((name) => affordableAfter(team, pokemon, byName.get(name)) && context.available.has(name)).length;
         const required = distance >= 20 ? 3 : distance >= 6 ? 2 : 1;
         if (!committed || paths < required) return false;
       }
       if (pokemon.name === "Oranguru" && !team.picks.some((pick) => TR_PAYOFF.has(pick.name))) {
-        const committed = team.draftStrategy === "specific-core" && team.specificCore === "trickRoom" && draftedPickCount(team) <= 3;
+        const committed = isCpu && team.draftStrategy === "specific-core" && team.specificCore === "trickRoom" && draftedPickCount(team) <= 3;
         const payoffLive = [...TR_PAYOFF].some((name) => basicLegal(team, byName.get(name), context));
         if (!committed || !payoffLive) return false;
       }
       if (pokemon.name === "Ninetales" && !team.picks.some((pick) => SPECIFIC_CORES.sun.anchors.includes(pick.name))) {
-        const committed = team.draftStrategy === "specific-core" && team.specificCore === "sun" && draftedPickCount(team) <= 2;
+        const committed = isCpu && team.draftStrategy === "specific-core" && team.specificCore === "sun" && draftedPickCount(team) <= 2;
         const payoffLive = SPECIFIC_CORES.sun.anchors.some((name) => basicLegal(team, byName.get(name), context));
         if (!committed || !payoffLive) return false;
       }
@@ -257,25 +259,67 @@
       return null;
     };
 
-    const forcedDependency = (team, legal, context) => {
+    const forcedDependency = (team, legal, context, isCpu) => {
       const owned = new Set(pickNames(team));
       const pickFirst = (wanted, rule) => {
         const pool = namedLegal(legal, wanted);
         return pool.length ? { pool: [pool[0]], rule } : null;
       };
-      if (owned.has("Swampert") && !reliableRainOwned(team, context)) return pickFirst(["Pelipper", "Politoed", "Sableye"], "Swampert rain partner");
-      if (owned.has("Archaludon") && !["Pelipper", "Politoed", "Sableye"].some((name) => owned.has(name))) return pickFirst(["Pelipper", "Politoed", "Sableye"], "Archaludon rain partner");
-      if (owned.has("Charizard") && !owned.has("Venusaur")) return pickFirst(["Venusaur"], "Charizard + Venusaur core");
-      if (owned.has("Tyranitar") && !["Excadrill", "Houndstone", "Lycanroc"].some((name) => owned.has(name))) return pickFirst(["Excadrill", "Houndstone", "Lycanroc"], "Tyranitar sand partner");
-      if (owned.has("Houndstone") && !owned.has("Tyranitar") && !owned.has("Hippowdon")) return pickFirst(["Tyranitar", "Hippowdon"], "Houndstone sand partner");
-      if (owned.has("Vileplume") && !WEATHER.sun.setters.some((name) => owned.has(name))) return pickFirst(WEATHER.sun.setters, "Vileplume sun partner");
+      const useIfLive = (wanted, rule) => pickFirst(wanted, rule);
+      let required = null;
+      if (owned.has("Swampert") && !reliableRainOwned(team, context)) {
+        required = useIfLive(["Pelipper", "Politoed", "Sableye"], "Swampert rain partner");
+        if (required) return required;
+      }
+      if (owned.has("Archaludon") && !["Pelipper", "Politoed", "Sableye"].some((name) => owned.has(name))) {
+        required = useIfLive(["Pelipper", "Politoed", "Sableye"], "Archaludon rain partner");
+        if (required) return required;
+      }
+      if (owned.has("Charizard") && !owned.has("Venusaur")) {
+        required = useIfLive(["Venusaur"], "Charizard + Venusaur core");
+        if (required) return required;
+      }
+      if (owned.has("Tyranitar") && !["Excadrill", "Houndstone", "Lycanroc"].some((name) => owned.has(name))) {
+        required = useIfLive(["Excadrill", "Houndstone", "Lycanroc"], "Tyranitar sand partner");
+        if (required) return required;
+      }
+      if (owned.has("Houndstone") && !owned.has("Tyranitar") && !owned.has("Hippowdon")) {
+        required = useIfLive(["Tyranitar", "Hippowdon"], "Houndstone sand partner");
+        if (required) return required;
+      }
+      if (owned.has("Vileplume") && !WEATHER.sun.setters.some((name) => owned.has(name))) {
+        required = useIfLive(WEATHER.sun.setters, "Vileplume sun partner");
+        if (required) return required;
+      }
 
       const last = [...team.picks].reverse().find((pick) => !pick.mascot);
       if (last && ["Torkoal", "Snorlax", "Mawile", "Hatterene"].includes(last.name) && !DEDICATED_TR.some((name) => owned.has(name))) {
-        return pickFirst(DEDICATED_TR, `${last.name} Trick Room setter`);
+        required = useIfLive(DEDICATED_TR, `${last.name} Trick Room setter`);
+        if (required) return required;
       }
-      if (last?.name === "Oranguru" && !team.picks.some((pick) => TR_PAYOFF.has(pick.name))) return pickFirst([...TR_PAYOFF], "Oranguru Trick Room payoff");
-      if (last?.name === "Ninetales" && !SPECIFIC_CORES.sun.anchors.some((name) => owned.has(name))) return pickFirst(SPECIFIC_CORES.sun.anchors, "Ninetales sun payoff");
+      if (last?.name === "Oranguru" && !team.picks.some((pick) => TR_PAYOFF.has(pick.name))) {
+        required = useIfLive([...TR_PAYOFF], "Oranguru Trick Room payoff");
+        if (required) return required;
+      }
+      if (last?.name === "Ninetales" && !SPECIFIC_CORES.sun.anchors.some((name) => owned.has(name))) {
+        required = useIfLive(SPECIFIC_CORES.sun.anchors, "Ninetales sun payoff");
+        if (required) return required;
+      }
+
+      // Hidden Specific Core plans belong only to CPU coaches. Once a CPU starts its
+      // assigned engine, the visible structural follow-up must beat market cleanup.
+      if (isCpu && team.draftStrategy === "specific-core") {
+        const core = SPECIFIC_CORES[team.specificCore];
+        if (core) {
+          const hasSetter = core.setters.some((name) => owned.has(name));
+          const hasAnchor = core.anchors.some((name) => owned.has(name));
+          if (hasAnchor && !hasSetter) return pickFirst(core.setters, `${team.specificCore} core setter`);
+          if (hasSetter && !hasAnchor) {
+            const pool = namedLegal(legal, core.anchors);
+            if (pool.length) return { pool, rule: `${team.specificCore} core payoff` };
+          }
+        }
+      }
       return null;
     };
 
@@ -581,6 +625,9 @@
     };
 
     const profileScore = (team, pokemon, isCpu) => {
+      // Coach profiles are hidden CPU personality. They must never change the
+      // player-facing Recommended Pick or its candidate ordering.
+      if (!isCpu) return 0;
       const profile = team.primaryProfile || "balanced";
       let score = 0;
       if (profile === "offense" && isAttacker(pokemon)) score += 7 + (hasRole(pokemon, "Heavy Hitter") || hasRole(pokemon, "Special Powerhouse") ? 2.5 : 0);
@@ -590,7 +637,19 @@
       if (profile === "speed" && (PREMIUM_TAILWIND.has(pokemon.name) || RELIABLE_TAILWIND.has(pokemon.name) || RELIABLE_TR.has(pokemon.name))) score += 9 + (hasRole(pokemon, "Speedster") ? 2 : 0);
       if (profile === "bulk" && isBulky(pokemon)) score += 8;
       if (profile === "weather" && (weatherTypesFor(pokemon).length || Object.values(WEATHER).some((plan) => hasRole(pokemon, plan.abuserRole)))) score += 7;
-      return score * (isCpu ? 1 : 0.75);
+      return score;
+    };
+
+    const opponentCoreSnipeScore = (team, pokemon, context, isCpu) => {
+      if (!isCpu || !context.humanTeamId || team.id === context.humanTeamId) return 0;
+      const humanTeam = context.teams?.[context.humanTeamId];
+      if (!humanTeam) return 0;
+      const synergy = rawSynergy(humanTeam, pokemon);
+      const threat = synergy >= 40 ? 24 : synergy >= 30 ? 17 : synergy >= 20 ? 10 : 0;
+      if (!threat) return 0;
+      const distance = Math.min(28, nextPickDistance(context.humanTeamId, context.pickIndex));
+      const scale = distance <= 6 ? 0.55 : distance <= 13 ? 0.38 : 0.18;
+      return threat * scale;
     };
 
     const strategyScore = (team, pokemon, round, isCpu) => {
@@ -640,7 +699,8 @@
         + swampertRisk(team, pokemon, context)
         + turnDistanceScore(team, pokemon, context)
         + profileScore(team, pokemon, isCpu)
-        + strategyScore(team, pokemon, round, isCpu);
+        + strategyScore(team, pokemon, round, isCpu)
+        + opponentCoreSnipeScore(team, pokemon, context, isCpu);
       if (round === 1) score += ROUND_ONE_PROMINENCE[pokemon.name] || 0;
       return score * (team.aggression || 1);
     };
@@ -685,6 +745,19 @@
       const target = pool.filter((pokemon) => points(pokemon) >= 6 && points(pokemon) <= 8);
       const narrowed = (target.length ? target : pool).filter((pokemon) => !isSupportHeavy(pokemon) && !hasRole(pokemon, "Prankster") && !DEDICATED_TR.includes(pokemon.name) && !weatherTypesFor(pokemon).length);
       return narrowed.length ? narrowed : target.length ? target : pool;
+    };
+
+    const priorityCorePool = (team, pool) => {
+      if (team.draftStrategy !== "specific-core") return pool;
+      const core = SPECIFIC_CORES[team.specificCore];
+      if (!core) return pool;
+      const owned = new Set(pickNames(team));
+      const hasSetter = core.setters.some((name) => owned.has(name));
+      const hasAnchor = core.anchors.some((name) => owned.has(name));
+      if (hasSetter && hasAnchor) return pool;
+      const wanted = hasSetter ? core.anchors : hasAnchor ? core.setters : [...core.anchors, ...core.setters];
+      const coreCandidates = namedLegal(pool, wanted);
+      return coreCandidates.length ? coreCandidates : pool;
     };
 
     const reasonsFor = (team, pokemon, context, forcedRule, scored) => {
@@ -747,7 +820,7 @@
 
       // Structural obligations always outrank market cleanup. This order prevents a
       // deadline pick from stranding an earlier rain, sun, sand, or Trick Room commitment.
-      const dependency = forcedDependency(team, legal, context);
+      const dependency = forcedDependency(team, legal, context, isCpu);
       if (dependency?.pool.length) {
         legal = dependency.pool;
         forcedRule = dependency.rule;
@@ -776,24 +849,24 @@
         }
       }
 
+      // Keep the CPU stack in the v113 order: All-Around opening, market
+      // integrity, Top Heavy tier restriction, then priority-core selection.
+      if (isCpu && !forcedRule) legal = allAroundOpeningPool(team, legal);
       if (!forcedRule) legal = marketPool(team, legal, context, isCpu);
       if (isCpu && team.draftStrategy === "top-heavy" && !forcedRule) {
         const highest = Math.max(...legal.map(points));
         legal = legal.filter((pokemon) => points(pokemon) === highest);
       }
-      if (isCpu && !forcedRule) legal = allAroundOpeningPool(team, legal);
+      if (isCpu && !forcedRule) legal = priorityCorePool(team, legal);
 
       const scored = legal.map((pokemon) => ({ pokemon, score: scoreCandidate(team, pokemon, context, isCpu) }))
         .sort((a, b) => b.score - a.score || points(b.pokemon) - points(a.pokemon) || a.pokemon.name.localeCompare(b.pokemon.name));
       let selected = scored[0];
       if (isCpu && scored.length > 1) {
-        const range = team.draftStrategy === "all-around" ? 18 : 10;
-        const cap = team.draftStrategy === "all-around" ? 10 : 7;
-        const divisor = team.draftStrategy === "all-around" ? 9 : 5.5;
-        const pool = scored.filter((entry) => entry.score >= scored[0].score - range).slice(0, cap);
+        const pool = scored.filter((entry) => entry.score >= scored[0].score - 10).slice(0, 7);
         selected = rng() < (team.chaos ?? 0.1) && pool.length > 2
           ? pool[Math.floor(rng() * pool.length)]
-          : weightedPick(pool, (entry) => Math.exp((entry.score - pool[0].score) / divisor), rng);
+          : weightedPick(pool, (entry) => Math.exp((entry.score - pool[0].score) / 5.5), rng);
       }
       return {
         pokemon: selected?.pokemon || null,

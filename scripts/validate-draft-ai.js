@@ -78,6 +78,7 @@ const sameMembers = (role, expected) => {
   return actual.size === expected.length && expected.every((name) => actual.has(name));
 };
 const catalogDataFailures = [];
+const logicFailures = [];
 if (catalog.length !== 252) catalogDataFailures.push(`Expected 252 board entries, found ${catalog.length}`);
 requiredV113Additions.forEach((name) => { if (!byName.has(name)) catalogDataFailures.push(`Missing ${name}`); });
 removedDuplicateForms.forEach((name) => { if (byName.has(name)) catalogDataFailures.push(`${name} should be consolidated into its base draft asset`); });
@@ -93,6 +94,46 @@ for (const [name, expected] of [["Alakazam", 6], ["Armarouge", 7], ["Hatterene",
 if (!sameMembers("Rain Abuser", ["Archaludon", "Swampert", "Basculegion"])) catalogDataFailures.push("Rain Abuser role is not the strict v113 set");
 if (!sameMembers("Snow Abuser", ["Beartic", "Glaceon"])) catalogDataFailures.push("Snow Abuser role is not the strict v113 set");
 if (!sameMembers("Snow Setter", ["Alolan Ninetales", "Abomasnow", "Vanilluxe", "Aurorus"])) catalogDataFailures.push("Snow Setter role is not the v113 set");
+
+// Recommendations must be based on the visible roster and board, never the
+// randomly assigned CPU coach profile or hidden CPU strategy.
+{
+  const ai = DraftAI.create({ catalog, rolesFor, pointCap: 50, teamCount: 14, rosterSize: 10, rng: seededRandom(113) });
+  const mascot = byName.get("Eelektross");
+  const baseTeam = { id: 8, picks: [{ ...mascot, mascot: true, overall: null }], aggression: 1, chaos: 0.1 };
+  const available = new Set(catalog.map((pokemon) => pokemon.name));
+  available.delete(mascot.name);
+  const context = { available, teams: {}, pickIndex: 42, log: [], humanTeamId: 8 };
+  const offenseTeam = { ...baseTeam, primaryProfile: "offense", draftStrategy: "top-heavy", specificCore: null };
+  const supportTeam = { ...baseTeam, primaryProfile: "support", draftStrategy: "specific-core", specificCore: "trickRoom" };
+  context.teams[8] = offenseTeam;
+  const offense = ai.choose(offenseTeam, context, { isCpu: false });
+  context.teams[8] = supportTeam;
+  const support = ai.choose(supportTeam, context, { isCpu: false });
+  const signature = (choice) => choice.candidates.map(({ pokemon, score }) => `${pokemon.name}:${score.toFixed(5)}`).join("|");
+  if (offense.pokemon?.name !== support.pokemon?.name || signature(offense) !== signature(support)) {
+    logicFailures.push("Human recommendation changed with hidden CPU profile/strategy");
+  }
+}
+
+// A CPU that has begun its assigned Specific Core must finish the engine before
+// returning to generic market/personality selection.
+{
+  const ai = DraftAI.create({ catalog, rolesFor, pointCap: 50, teamCount: 14, rosterSize: 10, rng: seededRandom(114) });
+  const mascot = byName.get("Torterra");
+  const anchor = byName.get("Basculegion");
+  const team = {
+    id: 1, draftStrategy: "specific-core", specificCore: "rain", primaryProfile: "offense",
+    aggression: 1, chaos: 0.1, picks: [{ ...mascot, mascot: true, overall: null }, { ...anchor, mascot: false, overall: 1 }],
+  };
+  const available = new Set(catalog.map((pokemon) => pokemon.name));
+  team.picks.forEach((pokemon) => available.delete(pokemon.name));
+  const context = { available, teams: { 1: team }, pickIndex: 27, log: [{ team: 1, pokemon: anchor, overall: 1 }], humanTeamId: null };
+  const choice = ai.choose(team, context, { isCpu: true });
+  if (choice.pokemon?.name !== "Pelipper" || choice.forcedRule !== "rain core setter") {
+    logicFailures.push(`Specific Core rain follow-up was ${choice.pokemon?.name || "missing"}`);
+  }
+}
 
 for (let mock = 0; mock < requested; mock += 1) {
   const rng = seededRandom(0xFFDA + (seedOffset + mock) * 7919);
@@ -174,7 +215,7 @@ const report = {
   featured: Object.fromEntries(["Basculegion", "Garchomp", "Charizard", "Salamence", "Farigiraf"].map((name) => [name, summaryFor(name)])),
   pickOneDistribution,
   basculegionAvailableEntering: Object.fromEntries(Object.entries(availableEntering).map(([pick, count]) => [pick, Number((count * 100 / requested).toFixed(2))])),
-  violations: { invalidBudgets, incompleteRosters, invalidForms, invalidDependencies, strategyMixFailures, catalogDataFailures: catalogDataFailures.length },
+  violations: { invalidBudgets, incompleteRosters, invalidForms, invalidDependencies, strategyMixFailures, catalogDataFailures: catalogDataFailures.length, logicFailures: logicFailures.length },
   dependencyExamples,
 };
 console.log(JSON.stringify(report, null, 2));
@@ -187,6 +228,7 @@ if (report.featured.Farigiraf.min !== null && report.featured.Farigiraf.min <= 4
 if (availableEntering[6] !== 0) failures.push("Basculegion was available entering Pick 6");
 if (Object.values(report.violations).some(Boolean)) failures.push(`Validation violations: ${JSON.stringify(report.violations)}`);
 if (catalogDataFailures.length) failures.push(...catalogDataFailures);
+if (logicFailures.length) failures.push(...logicFailures);
 if (failures.length) {
   console.error(failures.join("\n"));
   process.exit(1);
