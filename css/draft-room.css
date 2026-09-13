@@ -866,6 +866,9 @@ select:focus { box-shadow: 0 0 0 4px var(--cyan); }
 .live-board-team { display: grid; place-items: center; gap: 2px; padding: 5px 3px; background: color-mix(in srgb, var(--team-color) 25%, #fff); text-align: center; }
 .live-board-team img { width: 44px; height: 44px; border: 2px solid #111; border-radius: 6px; background: #111; object-fit: cover; }
 .live-board-team strong { max-width: 76px; overflow: hidden; font-size: 8px; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
+.team-board-budget { display: grid; gap: 2px; width: 100%; padding: 5px 2px; border-radius: 5px; background: #17202b; color: #fff; text-align: center; line-height: 1.2; white-space: nowrap; }
+.team-board-budget b { font-size: 12px; font-variant-numeric: tabular-nums; }
+.team-board-budget small { color: #d0e9ff; font-size: 10px; font-weight: 700; }
 .live-board-cpu {
   padding: 1px 5px;
   border: 1px solid #111;

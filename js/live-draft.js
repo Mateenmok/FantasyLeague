@@ -405,7 +405,8 @@
     state.participants.forEach((teamId) => {
       const team = TEAM_CONFIG[teamId];
       const cpu = isTestCpuTeam(teamId);
-      pieces.push(`<div class="live-board-team${teamId === onClock ? " is-on-clock" : ""}${cpu ? " is-cpu" : ""}" style="--team-color:${team.color}"><img src="${escapeHtml(team.logo)}" alt=""><strong title="${escapeHtml(team.name)}">${escapeHtml(team.short)}</strong>${cpu ? '<span class="live-board-cpu">CPU</span>' : ""}</div>`);
+      const points = teamPoints(teamId);
+      pieces.push(`<div class="live-board-team${teamId === onClock ? " is-on-clock" : ""}${cpu ? " is-cpu" : ""}" style="--team-color:${team.color}"><img src="${escapeHtml(team.logo)}" alt=""><strong title="${escapeHtml(team.name)}">${escapeHtml(team.short)}</strong><span class="team-board-budget" aria-label="${escapeHtml(team.name)}: ${points} of ${POINT_CAP} points used, ${POINT_CAP - points} points left"><b>${points} / ${POINT_CAP} PTS</b><small>${POINT_CAP - points} left</small></span>${cpu ? '<span class="live-board-cpu">CPU</span>' : ""}</div>`);
     });
 
     for (let row = 0; row < ROSTER_SIZE; row += 1) {

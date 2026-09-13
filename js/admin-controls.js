@@ -325,16 +325,9 @@
 
   const syncDraftPointValues = async () => {
     const migrationKey = window.PokeLeagueState.pointMigrationKey;
-    const pendingLocalOverrides = Object.entries(leagueState.pointOverrides || {})
-      .filter(([, value]) => Number.isInteger(Number(value)) && Number(value) >= 1 && Number(value) <= 10);
-
-    if (!localStorage.getItem(migrationKey) && pendingLocalOverrides.length) {
-      for (const [pokemonName, value] of pendingLocalOverrides) {
-        await window.PokeLeagueState.saveDraftPoint(adminAccessCode, pokemonName, Number(value));
-      }
-    }
-    localStorage.setItem(migrationKey, "1");
+    // The shared pool is authoritative; stale browser overrides must not overwrite it on load.
     useServerPointValues(await window.PokeLeagueState.readDraftPoints(adminAccessCode));
+    localStorage.setItem(migrationKey, "1");
   };
 
   const persistRoster = async (teamId, roster, message) => {
@@ -595,7 +588,7 @@
       const [accountResponse, teamResponse, catalogResponse, savedRosters, savedWaiverSettings, competition] = await Promise.all([
         fetch("data/teams.json?v=teams8", { cache: "no-store" }),
         fetch("data/league-teams.json?v=league-teams2", { cache: "no-store" }),
-        fetch("data/pokemon-catalog.json?v=season-1-3"),
+        fetch("data/pokemon-catalog.json?v=point-values2", { cache: "no-store" }),
         window.PokeLeagueRosters.read(),
         window.PokeLeagueWaivers.readSettings(),
         window.PokeLeagueCompetition.read().catch(() => null),

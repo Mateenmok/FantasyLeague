@@ -1619,9 +1619,9 @@
     "aliases": [
       "Elektross"
     ],
-    "tier": "Silver",
-    "points": "4",
-    "sortPoints": 4,
+    "tier": "Gold",
+    "points": "5",
+    "sortPoints": 5,
     "note": "",
     "types": [
       "Electric"
@@ -1633,8 +1633,8 @@
     "name": "Falinks",
     "aliases": [],
     "tier": "Silver",
-    "points": "4",
-    "sortPoints": 4,
+    "points": "3",
+    "sortPoints": 3,
     "note": "",
     "types": [
       "Fighting"
@@ -2000,8 +2000,8 @@
     "name": "Malamar",
     "aliases": [],
     "tier": "Silver",
-    "points": "3",
-    "sortPoints": 3,
+    "points": "4",
+    "sortPoints": 4,
     "note": "",
     "types": [
       "Dark",

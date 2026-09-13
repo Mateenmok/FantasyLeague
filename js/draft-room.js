@@ -522,6 +522,7 @@
         <div class="team-track-identity">
           <img class="team-track-logo" src="${escapeHtml(config.logo)}" alt="">
           <strong title="${escapeHtml(config.name)}">${escapeHtml(config.short)}</strong>
+          <span class="team-board-budget" aria-label="${escapeHtml(config.name)}: ${teamPoints(team)} of ${state.pointCap} points used, ${state.pointCap - teamPoints(team)} points left"><b>${teamPoints(team)} / ${state.pointCap} PTS</b><small>${state.pointCap - teamPoints(team)} left</small></span>
         </div>
         <div class="team-round-pick${roundPick ? " is-filled" : ""}">
           <span class="team-round-label">R${trackedRound}</span>
@@ -811,7 +812,7 @@
     if (pointCapCopy) pointCapCopy.textContent = state.pointCap;
     try {
       const [catalogResponse, detailsResponse, indexResponse] = await Promise.all([
-        fetch("data/pokemon-catalog.json?v=consolidated-forms1"),
+        fetch("data/pokemon-catalog.json?v=point-values2", { cache: "no-store" }),
         fetch("data/pokemon-details.json?v=consolidated-forms1"),
         fetch("data/pokemon-detail-index.json?v=consolidated-forms1"),
       ]);
