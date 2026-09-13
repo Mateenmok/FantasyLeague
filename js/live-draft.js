@@ -201,7 +201,7 @@
     const payload = state.payload;
     const onClock = expectedTeam();
     if (!payload?.room?.isStarted || payload.room.isPaused || !onClock || state.busy) return false;
-    if (isTestCpuTeam(onClock)) return false;
+    if (isTestCpuTeam(onClock)) return payload.viewer.isAdmin;
     if (payload.viewer.isAdmin) return true;
     return payload.viewer.teamId === onClock && secondsRemaining() > 0;
   };
@@ -271,9 +271,9 @@
 
       const pick = card.querySelector(".draft-pick-button");
       const cpuTurn = isTestCpuTeam(onClock);
-      const adminPick = Boolean(state.payload.viewer.isAdmin && onClock && !cpuTurn);
+      const adminPick = Boolean(state.payload.viewer.isAdmin && onClock);
       pick.dataset.adminPick = String(adminPick);
-      pick.textContent = cpuTurn ? "CPU choosing…" : adminPick && onClock ? `Draft for ${TEAM_CONFIG[onClock].short}` : "Draft";
+      pick.textContent = adminPick ? `Draft for ${TEAM_CONFIG[onClock].short}` : cpuTurn ? "CPU choosing…" : "Draft";
       pick.disabled = !allowed || !affordable;
       pick.title = !affordable ? "This pick would exceed the roster limit or point cap." : "";
       pick.addEventListener("click", () => submitPick(pokemon));
@@ -417,7 +417,7 @@
       elements.adminHint.textContent = beforeSchedule
         ? "The Start button unlocks at the scheduled 7:00 PM ET time. It will not begin automatically."
         : isTestCpuTeam(onClock)
-        ? `${TEAM_CONFIG[onClock].name} is a CPU team. Its legal pick will be made automatically.`
+        ? `${TEAM_CONFIG[onClock].name} will pick automatically; commissioners can also submit its pick below.`
         : state.expired && onClock
         ? `Time expired for ${TEAM_CONFIG[onClock].name}. Choose their Pokémon below.`
         : `Commissioner pick access is locked to the team currently on the clock.`;
