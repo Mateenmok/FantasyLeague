@@ -1,4 +1,10 @@
 (() => {
+  const TEST_DRAFT_ACCOUNTS = {
+    DRAFTTEST1: { id: "pufferz", teamId: "boston-eeltics" },
+    DRAFTTEST2: { id: "kirbbles", teamId: "massachusetts-midnight" },
+    DRAFTTEST3: { id: "neto", teamId: "miami-dragapults" },
+    DRAFTTEST4: { id: "shdwemp", teamId: "north-carolina-ceruledge" },
+  };
   const form = document.querySelector(".access-form");
   const input = document.querySelector("#accessCodeInput");
   const status = document.querySelector("[data-access-status]");
@@ -26,7 +32,7 @@
 
     try {
       const data = await loadAccounts();
-      const account = data.accounts?.[code];
+      const account = data.accounts?.[code] || TEST_DRAFT_ACCOUNTS[code];
       if (!account) {
         status.textContent = "That access code is not on the league list.";
         input.select();

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <link rel="icon" type="image/webp" href="images/favicon.webp">
   <title>Draft Room | PokeLeague</title>
-  <meta name="description" content="Run a Flash Family League mock draft with the official point board, roles, typings, and Pokémon Champions moves.">
+  <meta name="description" content="Join the live Flash Family League draft or run a complete mock draft.">
   <meta property="og:title" content="PokeLeague Draft Room">
   <meta property="og:description" content="Build a roster in the Flash Family League mock draft room.">
   <meta property="og:image" content="https://www.pokeleague.org/images/og.png">
@@ -16,7 +16,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Jersey+25&amp;family=Roboto+Condensed:wght@500;700;900&amp;display=swap" rel="stylesheet">
   <script src="js/theme.js?v=dark-mode3"></script>
   <link rel="stylesheet" href="css/pokemon-details.css?v=pokemon-details-2">
-  <link rel="stylesheet" href="css/draft-room.css?v=draft-room-5">
+  <link rel="stylesheet" href="css/draft-room.css?v=live-draft2">
   <link rel="stylesheet" href="css/theme.css?v=dark-mode5">
 </head>
 <body>
@@ -40,7 +40,30 @@
       <span class="intro-callout" aria-hidden="true">Your move!</span>
     </section>
 
-    <section class="draft-setup comic-panel" data-draft-setup aria-labelledby="setupTitle">
+    <section class="draft-entry comic-panel" data-draft-entry aria-labelledby="draftEntryTitle">
+      <div class="panel-title-row">
+        <div>
+          <p class="panel-kicker">Choose your room</p>
+          <h2 id="draftEntryTitle">Ready to draft?</h2>
+        </div>
+        <span class="setup-rule">Main draft · Sun Sep 13 · 7 PM ET</span>
+      </div>
+      <div class="draft-entry-actions">
+        <button class="draft-entry-card draft-entry-card--live" type="button" data-open-live-draft>
+          <span class="draft-entry-badge">Live</span>
+          <strong>Join Draft Room</strong>
+          <span>Enter the real league draft. Picks become permanent roster additions.</span>
+        </button>
+        <button class="draft-entry-card draft-entry-card--mock" type="button" data-open-mock-draft>
+          <span class="draft-entry-badge">Practice</span>
+          <strong>Mock Draft</strong>
+          <span>Run the existing simulator without changing any league roster.</span>
+        </button>
+      </div>
+      <p class="draft-entry-status" data-draft-entry-status aria-live="polite"></p>
+    </section>
+
+    <section class="draft-setup comic-panel" data-draft-setup aria-labelledby="setupTitle" hidden>
       <div class="panel-title-row">
         <div>
           <p class="panel-kicker">Mock draft setup</p>
@@ -61,6 +84,113 @@
           </select>
         </label>
         <button class="comic-button comic-button--primary" type="button" data-start-draft>Start mock draft</button>
+      </div>
+    </section>
+
+    <section class="live-draft" data-live-draft hidden aria-live="polite">
+      <section class="live-room-hero comic-panel">
+        <div>
+          <p class="panel-kicker" data-live-room-kicker>Official league event</p>
+          <h2 data-live-room-label>Main Draft</h2>
+          <p data-live-room-schedule>Sunday, September 13 · 7:00 PM ET · Commissioner start required</p>
+        </div>
+        <div class="live-room-hero-actions">
+          <span class="live-room-pill" data-live-room-state>Waiting room</span>
+          <button class="comic-button" type="button" data-leave-live-draft>Choose another room</button>
+        </div>
+      </section>
+
+      <section class="live-board-panel comic-panel" aria-labelledby="liveBoardTitle">
+        <div class="panel-title-row live-board-heading">
+          <div>
+            <p class="panel-kicker">Every roster slot</p>
+            <h2 id="liveBoardTitle">League draft grid</h2>
+          </div>
+          <span class="setup-rule">Mascot + 9 live rounds</span>
+        </div>
+        <div class="live-board-scroll" tabindex="0" aria-label="Draft grid">
+          <div class="live-board" data-live-board></div>
+        </div>
+      </section>
+
+      <section class="live-clock-panel comic-panel" aria-labelledby="liveClockTeam">
+        <div class="live-clock-team">
+          <img data-live-clock-logo src="images/favicon.webp" alt="" width="92" height="92">
+          <div>
+            <p class="panel-kicker" data-live-clock-kicker>Waiting for commissioner</p>
+            <h2 id="liveClockTeam" data-live-clock-team>Main Draft</h2>
+            <p data-live-clock-detail>The room opens at the scheduled time.</p>
+          </div>
+        </div>
+        <div class="live-timer" data-live-timer aria-label="Pick timer">1:30</div>
+      </section>
+
+      <section class="live-admin-panel comic-panel" data-live-admin-panel hidden aria-labelledby="liveAdminTitle">
+        <div>
+          <p class="panel-kicker">Commissioner controls</p>
+          <h2 id="liveAdminTitle">Draft desk</h2>
+          <p data-live-admin-hint>Start the room when every manager is ready.</p>
+        </div>
+        <div class="live-admin-actions">
+          <button class="comic-button comic-button--primary" type="button" data-live-start>Start draft</button>
+          <button class="comic-button" type="button" data-live-pause disabled>Pause</button>
+          <button class="comic-button comic-button--danger" type="button" data-live-undo disabled>Undo last pick</button>
+          <label class="live-timer-setting">
+            <span>Pick timer</span>
+            <select data-live-timer-setting>
+              <option value="60">60 seconds</option>
+              <option value="75">75 seconds</option>
+              <option value="90" selected>90 seconds</option>
+              <option value="120">120 seconds</option>
+              <option value="180">180 seconds</option>
+            </select>
+          </label>
+        </div>
+      </section>
+
+      <div class="draft-stats live-draft-stats" aria-label="Live draft status">
+        <div><span>Overall pick</span><strong data-live-overall-pick>1 / 126</strong></div>
+        <div><span>Live round</span><strong data-live-round>1 / 9</strong></div>
+        <div><span>Points used</span><strong data-live-points-used>0 / 50</strong></div>
+        <div><span>Your roster</span><strong data-live-roster-count>1 / 10</strong></div>
+      </div>
+
+      <div class="draft-layout live-draft-layout">
+        <div class="board-column">
+          <section class="draft-filters comic-panel" aria-labelledby="liveFilterTitle">
+            <div class="filter-heading">
+              <div>
+                <p class="panel-kicker">Available Pokémon</p>
+                <h2 id="liveFilterTitle"><span data-live-result-count>0</span> on the board</h2>
+              </div>
+              <button class="clear-filters" type="button" data-live-clear-filters>Clear filters</button>
+            </div>
+            <div class="live-filter-grid">
+              <label><span>Pokémon search</span><input type="search" placeholder="Search by name…" data-live-name-filter autocomplete="off"></label>
+              <label><span>Points</span><select data-live-point-filter><option value="">All points</option></select></label>
+              <label><span>Type</span><select data-live-type-filter><option value="">All types</option></select></label>
+            </div>
+            <p class="filter-note" data-live-pick-help>Select a card when your team is on the clock. Admins may submit the current team’s pick.</p>
+          </section>
+          <div class="pokemon-draft-grid" data-live-pokemon-grid aria-busy="true">
+            <p class="loading-state">Connecting to the live draft…</p>
+          </div>
+          <p class="empty-state" data-live-empty-state hidden>No available Pokémon match these filters.</p>
+        </div>
+
+        <aside class="draft-sidebar">
+          <section class="roster-panel comic-panel">
+            <div class="sidebar-heading">
+              <div><p class="panel-kicker">Your live roster</p><h2 data-live-user-team-name>Your team</h2></div>
+              <span data-live-budget-left>50 left</span>
+            </div>
+            <div class="roster-slots" data-live-user-roster></div>
+          </section>
+          <section class="draft-log-panel comic-panel">
+            <div class="sidebar-heading"><div><p class="panel-kicker">Latest action</p><h2>Live draft log</h2></div></div>
+            <div class="draft-log" data-live-draft-log><p>No live picks yet.</p></div>
+          </section>
+        </aside>
       </div>
     </section>
 
@@ -184,8 +314,10 @@
   </template>
 
   <script src="js/league-state.js?v=league-state-1" defer></script>
+  <script src="js/league-rosters.js?v=live-draft2" defer></script>
   <script src="js/pokemon-details.js?v=consolidated-forms1" defer></script>
   <script src="js/draft-ai.js?v=consolidated-forms1" defer></script>
   <script src="js/draft-room.js?v=consolidated-forms1" defer></script>
+  <script src="js/live-draft.js?v=live-draft2" defer></script>
 </body>
 </html>

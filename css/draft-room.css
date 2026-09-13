@@ -779,6 +779,153 @@ select:focus { box-shadow: 0 0 0 4px var(--cyan); }
 .empty-state { grid-column: 1 / -1; padding: 34px; border: 3px dashed rgba(255,255,255,.4); color: var(--paper); text-align: center; font-weight: 900; }
 .empty-state { margin: 0; }
 
+.draft-entry {
+  padding: clamp(22px, 3vw, 34px);
+  background-color: #fff1c8;
+  box-shadow: 6px 7px 0 var(--gold), 11px 12px 0 #000;
+}
+
+.draft-entry-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 26px;
+}
+
+.draft-entry-card {
+  position: relative;
+  display: grid;
+  align-content: center;
+  min-height: 190px;
+  padding: 30px 24px 24px;
+  overflow: hidden;
+  border: 4px solid #111;
+  border-radius: 12px;
+  color: #111;
+  text-align: left;
+  box-shadow: 5px 6px 0 #111;
+  cursor: pointer;
+}
+
+.draft-entry-card::after {
+  position: absolute;
+  right: -28px;
+  bottom: -54px;
+  width: 180px;
+  height: 180px;
+  border: 4px solid rgba(17, 17, 17, 0.2);
+  border-radius: 50%;
+  content: "";
+}
+
+.draft-entry-card--live { background: linear-gradient(135deg, #7ce4ff, #2b78f6); }
+.draft-entry-card--mock { background: linear-gradient(135deg, #ffe67d, #f49b21); }
+.draft-entry-card:hover,
+.draft-entry-card:focus-visible { transform: translate(-2px, -3px); box-shadow: 8px 9px 0 #111; }
+.draft-entry-card strong { font-family: "Jersey 25", Impact, sans-serif; font-size: clamp(38px, 5vw, 58px); font-weight: 400; line-height: 0.9; text-transform: uppercase; }
+.draft-entry-card > span:last-child { z-index: 1; max-width: 450px; margin-top: 12px; font-size: 14px; font-weight: 900; }
+.draft-entry-badge { position: absolute; left: 18px; top: 14px; padding: 4px 8px; border: 2px solid #111; border-radius: 999px; background: #fff; font-size: 10px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+.draft-entry-status { min-height: 20px; margin: 18px 0 0; color: #594f3b; font-weight: 900; }
+
+.live-draft { display: grid; gap: 20px; }
+.live-room-hero,
+.live-board-panel,
+.live-clock-panel,
+.live-admin-panel { padding: 20px; }
+
+.live-room-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  background-color: #dcecff;
+  box-shadow: 6px 7px 0 var(--blue), 11px 12px 0 #000;
+}
+
+.live-room-hero h2,
+.live-board-panel h2,
+.live-admin-panel h2,
+.live-clock-panel h2 { margin: 0; font-family: "Jersey 25", Impact, sans-serif; font-size: clamp(34px, 5vw, 54px); font-weight: 400; line-height: .9; text-transform: uppercase; }
+.live-room-hero p:last-child { margin: 10px 0 0; color: #4b5360; font-weight: 900; }
+.live-room-hero-actions { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 12px; }
+.live-room-pill { padding: 8px 12px 7px; border: 3px solid #111; border-radius: 999px; background: #fff; color: #111; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
+.live-room-pill.is-live { background: #86ed9c; }
+.live-room-pill.is-paused { background: #ffe071; }
+.live-room-pill.is-complete { background: #b8a9ff; }
+
+.live-board-panel { background-color: #fff1c8; }
+.live-board-heading { margin-bottom: 16px; }
+.live-board-scroll { overflow: auto; padding: 3px 3px 10px; scrollbar-color: #111 rgba(17,17,17,.18); scrollbar-width: thin; }
+.live-board { display: grid; grid-template-columns: 50px repeat(var(--live-team-count, 14), minmax(82px, 1fr)); gap: 4px; min-width: var(--live-board-min, 1260px); }
+.live-board-corner,
+.live-board-team,
+.live-board-round,
+.live-board-cell { min-height: 70px; border: 2px solid #111; border-radius: 7px; }
+.live-board-corner,
+.live-board-round { display: grid; place-items: center; background: #111; color: #fff7de; font-family: "Jersey 25", Impact, sans-serif; font-size: 20px; text-transform: uppercase; }
+.live-board-team { display: grid; place-items: center; gap: 2px; padding: 5px 3px; background: color-mix(in srgb, var(--team-color) 25%, #fff); text-align: center; }
+.live-board-team img { width: 44px; height: 44px; border: 2px solid #111; border-radius: 6px; background: #111; object-fit: cover; }
+.live-board-team strong { max-width: 76px; overflow: hidden; font-size: 8px; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
+.live-board-team.is-on-clock { outline: 4px solid var(--team-color); background: #fff6ad; }
+.live-board-cell { position: relative; display: grid; place-items: center; padding: 3px; background: rgba(255,255,255,.72); }
+.live-board-cell img { width: 46px; height: 46px; object-fit: contain; }
+.live-board-cell strong { max-width: 75px; overflow: hidden; font-size: 8px; text-align: center; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
+.live-board-cell small { position: absolute; left: 3px; top: 2px; color: #676052; font-size: 7px; font-weight: 900; }
+.live-board-cell.is-mascot { background: color-mix(in srgb, var(--team-color) 18%, #fff); }
+.live-board-cell.is-current { outline: 4px solid var(--team-color); background: #fff6ad; }
+
+.live-clock-panel { display: flex; align-items: center; justify-content: space-between; gap: 24px; background-color: #dcecff; box-shadow: 6px 7px 0 var(--cyan), 11px 12px 0 #000; }
+.live-clock-team { display: flex; align-items: center; gap: 16px; }
+.live-clock-team > img { width: 92px; height: 92px; border: 3px solid #111; border-radius: 10px; background: #111; object-fit: cover; }
+.live-clock-team p:last-child { margin: 7px 0 0; color: #4f5863; font-weight: 900; }
+.live-timer { min-width: 158px; padding: 11px 14px 8px; border: 5px solid #111; border-radius: 12px; background: #fff; color: #111; font-family: "Jersey 25", Impact, sans-serif; font-size: clamp(58px, 8vw, 86px); line-height: .8; text-align: center; box-shadow: 5px 5px 0 #111; }
+.live-timer.is-warning { background: #ffe071; }
+.live-timer.is-expired { background: #f4aaa5; animation: liveTimerPulse 900ms steps(2, end) infinite; }
+@keyframes liveTimerPulse { 50% { transform: rotate(-1deg) scale(1.02); } }
+
+.live-admin-panel { display: grid; grid-template-columns: minmax(0, .8fr) minmax(420px, 1.2fr); align-items: end; gap: 20px; background-color: #e9ddff; box-shadow: 6px 7px 0 #7b61e8, 11px 12px 0 #000; }
+.live-admin-panel > div > p:last-child { margin: 9px 0 0; color: #51475f; font-weight: 900; }
+.live-admin-actions { display: flex; align-items: end; justify-content: flex-end; flex-wrap: wrap; gap: 10px; }
+.live-timer-setting { display: grid; gap: 5px; min-width: 145px; color: #51475f; font-size: 10px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+.live-timer-setting select { min-height: 48px; }
+
+.live-filter-grid { display: grid; grid-template-columns: minmax(220px, 1.4fr) repeat(2, minmax(140px, .7fr)); gap: 12px; margin-top: 18px; }
+.live-filter-grid label { display: grid; gap: 6px; color: #514b41; font-size: 11px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+.live-draft .draft-pick-button[data-admin-pick="true"] { background: #83d9fa; }
+.live-draft .draft-card.is-unavailable { filter: grayscale(.55); opacity: .62; }
+
+:root[data-theme="dark"] .draft-entry-card { color: #111; }
+:root[data-theme="dark"] .draft-entry-status,
+:root[data-theme="dark"] .live-room-hero p:last-child,
+:root[data-theme="dark"] .live-clock-team p:last-child,
+:root[data-theme="dark"] .live-admin-panel > div > p:last-child,
+:root[data-theme="dark"] .live-filter-grid label { color: var(--dark-copy-muted); }
+:root[data-theme="dark"] .live-board-team,
+:root[data-theme="dark"] .live-board-cell { background-color: var(--dark-surface-raised); color: var(--dark-copy); }
+:root[data-theme="dark"] .live-board-cell.is-mascot { background-color: color-mix(in srgb, var(--team-color) 23%, var(--dark-surface-raised)); }
+:root[data-theme="dark"] .live-board-team.is-on-clock,
+:root[data-theme="dark"] .live-board-cell.is-current { background-color: #4c4836; }
+:root[data-theme="dark"] .live-board-cell small { color: var(--dark-copy-muted); }
+
+@media (max-width: 860px) {
+  .draft-entry-actions,
+  .live-admin-panel { grid-template-columns: 1fr; }
+  .live-room-hero,
+  .live-clock-panel { align-items: flex-start; flex-direction: column; }
+  .live-room-hero-actions,
+  .live-admin-actions { justify-content: flex-start; }
+  .live-timer { align-self: stretch; }
+  .live-filter-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 520px) {
+  .draft-entry-actions { grid-template-columns: 1fr; }
+  .draft-entry-card { min-height: 165px; }
+  .live-clock-team { align-items: flex-start; }
+  .live-clock-team > img { width: 68px; height: 68px; }
+  .live-admin-actions > * { width: 100%; }
+}
+
 @media (max-width: 1120px) {
   .pokemon-draft-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .filter-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
