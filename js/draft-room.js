@@ -830,6 +830,8 @@
         teamCount: TEAM_COUNT,
         rosterSize: ROSTER_SIZE,
       });
+      window.PokeLeagueDraftAdvisor = { ai: state.ai, rolesFor, pointCap: state.pointCap };
+      window.dispatchEvent(new CustomEvent("pokeleague:draft-advisor-ready"));
       buildMoveIndex();
       elements.start.disabled = false;
     } catch (error) {

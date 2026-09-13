@@ -1,0 +1,35 @@
+insert into public.league_teams (
+  id,
+  league_id,
+  team_number,
+  team_name,
+  owner_name,
+  record,
+  logo_url,
+  team_passcode,
+  team_access_code,
+  is_admin
+) values
+  ('daytona-torterras', 'flash-family-season-1', 1, 'Daytona Torterras', 'FLan', '0-0', 'images/teams/daytona-torterras.webp?v=daytona2', 'DTON', 'MVP', false),
+  ('kansas-krooks', 'flash-family-season-1', 2, 'Kansas Krooks', 'Narcotics', '0-0', 'images/teams/kansas-krooks.webp?v=krooks1', 'KANS', 'PANCHAM', false),
+  ('south-jersey-hounds', 'flash-family-season-1', 3, 'South Jersey Hounds', 'Omen', '0-0', 'images/teams/south-jersey-hounds.webp?v=hounds1', 'SJER', 'REGAL', false),
+  ('chicago-conkquerers', 'flash-family-season-1', 4, 'Chicago Conkquerers', 'Chorizo', '0-0', 'images/teams/chicago-conkquerers.webp?v=conkquerers1', 'CHIC', 'CHITOWN', false),
+  ('las-vegas-gatrs', 'flash-family-season-1', 5, 'Las Vegas Gatrs', 'Lio', '0-0', 'images/teams/las-vegas-gatrs.webp?v=gatrs1', 'VEGS', 'CLOUD', false),
+  ('north-carolina-ceruledge', 'flash-family-season-1', 6, 'North Carolina Ceruledge', 'Shdwemp', '0-0', 'images/teams/north-carolina-ceruledge.webp?v=ceruledge1', 'NCAR', 'NC50', false),
+  ('uconn-arcanines', 'flash-family-season-1', 7, 'UConn Arcanines', 'Pin', '0-0', 'images/teams/uconn-arcanines.webp?v=uconn1', 'UCON', 'LAVOLON', false),
+  ('boston-eeltics', 'flash-family-season-1', 8, 'Boston Eeltics', 'Pufferz', '0-0', 'images/teams/boston-eeltics.webp?v=eeltics1', 'BOST', 'PUFF1', true),
+  ('sunnyshore-city-shelter', 'flash-family-season-1', 9, 'Sunnyshore City Shelter', 'Fear', '0-0', 'images/teams/sunnyshore-city-shelter.png?v=shelter1', 'SHOR', 'FORMIDABLE', false),
+  ('massachusetts-midnight', 'flash-family-season-1', 10, 'Massachusetts Midnight', 'Kirbbles', '0-0', 'images/teams/massachusetts-midnight.webp?v=midnight1', 'MASS', 'MOON4', false),
+  ('miami-dragapults', 'flash-family-season-1', 11, 'Miami Dragapults', 'Neto', '0-0', 'images/teams/miami-dragapults.webp?v=dragapults1', 'MIAM', 'NETO', true),
+  ('san-francisco-soulfire', 'flash-family-season-1', 12, 'San Francisco Soulfire', 'Norforil', '0-0', 'images/teams/san-francisco-soulfire.webp?v=soulfire1', 'SOUL', 'GIANT', false),
+  ('stockholm-spin-cycles', 'flash-family-season-1', 13, 'Stockholm Spin Cycles', 'LetsNot', '0-0', 'images/teams/stockholm-spin-cycles.webp?v=spin-cycles1', 'SPIN', 'SWEDEN', false),
+  ('dallas-disguises', 'flash-family-season-1', 14, 'Dallas Disguises', 'Kilan', '0-0', 'images/teams/dallas-disguises.png?v=disguises1', 'DALL', 'MIMIC', false)
+on conflict (id) do update
+set league_id = excluded.league_id,
+    team_number = excluded.team_number,
+    team_name = excluded.team_name,
+    owner_name = excluded.owner_name,
+    logo_url = excluded.logo_url,
+    team_access_code = excluded.team_access_code,
+    is_admin = excluded.is_admin,
+    updated_at = now();

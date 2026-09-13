@@ -76,6 +76,9 @@
     round: $("[data-live-round]"),
     pointsUsed: $("[data-live-points-used]"),
     rosterCount: $("[data-live-roster-count]"),
+    recommendationName: $("[data-live-recommendation-name]"),
+    recommendationReason: $("[data-live-recommendation-reason]"),
+    recommendationPick: $("[data-live-recommendation-pick]"),
     resultCount: $("[data-live-result-count]"),
     grid: $("[data-live-pokemon-grid]"),
     empty: $("[data-live-empty-state]"),
@@ -184,6 +187,82 @@
   };
 
   const teamPoints = (teamId) => rosterFor(teamId).reduce((total, pokemon) => total + pointValue(pokemon), 0);
+
+  const recommendationContext = () => {
+    const teams = {};
+    const taken = takenSlugs();
+    state.participants.forEach((teamId, index) => {
+      const mascotName = TEAM_CONFIG[teamId].mascot;
+      teams[index + 1] = {
+        id: index + 1,
+        picks: rosterFor(teamId).map((pokemon) => ({
+          ...pokemon,
+          mascot: pokemon.name === mascotName,
+        })),
+      };
+    });
+    return {
+      teams,
+      available: new Set(state.catalog.filter((pokemon) => !taken.has(slugify(pokemon.name))).map((pokemon) => pokemon.name)),
+      pickIndex: state.payload?.picks?.length || 0,
+      log: (state.payload?.picks || []).map((pick) => ({
+        team: state.participants.indexOf(pick.teamId) + 1,
+        pokemon: catalogPokemon(pick.pokemonSlug),
+        overall: pick.overallPick,
+      })).filter((entry) => entry.team > 0 && entry.pokemon),
+      humanTeamId: state.participants.indexOf(expectedTeam()) + 1,
+    };
+  };
+
+  const recommendationForCurrentTeam = () => {
+    const advisor = window.PokeLeagueDraftAdvisor;
+    const onClock = expectedTeam();
+    if (!advisor?.ai || !onClock) return null;
+    const context = recommendationContext();
+    const team = context.teams[context.humanTeamId];
+    if (!team) return null;
+    return { team, choice: advisor.ai.choose(team, context, { isCpu: false }) };
+  };
+
+  const renderRecommendation = () => {
+    const room = state.payload?.room;
+    const onClock = expectedTeam();
+    const allowed = canViewerPick();
+    if (!room?.isStarted || room.isPaused || draftComplete() || !onClock) {
+      elements.recommendationName.textContent = draftComplete() ? "Draft complete!" : room?.isPaused ? "Draft paused" : "Waiting for the draft…";
+      elements.recommendationReason.textContent = draftComplete() ? "Every live roster slot is filled." : "Recommendations update when the next team is on the clock.";
+      elements.recommendationPick.replaceChildren();
+      return;
+    }
+    if (!allowed) {
+      elements.recommendationName.textContent = `Waiting on ${TEAM_CONFIG[onClock].short}…`;
+      elements.recommendationReason.textContent = "Your recommendation will appear as soon as your team is on the clock.";
+      elements.recommendationPick.replaceChildren();
+      return;
+    }
+    const result = recommendationForCurrentTeam();
+    if (!result) {
+      elements.recommendationName.textContent = "Evaluating the board…";
+      elements.recommendationReason.textContent = "The mock-draft recommendation engine is loading.";
+      elements.recommendationPick.replaceChildren();
+      return;
+    }
+    const { team, choice } = result;
+    const pokemon = choice?.pokemon;
+    if (!pokemon) {
+      elements.recommendationName.textContent = "No legal pick available";
+      elements.recommendationReason.textContent = "This roster cannot add another Pokémon within the point cap.";
+      elements.recommendationPick.replaceChildren();
+      return;
+    }
+    const pieces = [`adds a ${pointValue(pokemon)}-point ${pokemon.tier.toLowerCase()} pick`];
+    if (choice.reasons?.length) pieces.push(choice.reasons.slice(0, 3).join(" + "));
+    pieces.push(`${POINT_CAP - team.picks.reduce((sum, pick) => sum + pointValue(pick), 0) - pointValue(pokemon)} points remain`);
+    elements.recommendationName.textContent = `${pokemon.name} · ${pointValue(pokemon)} PTS`;
+    elements.recommendationReason.textContent = pieces.join(" · ");
+    elements.recommendationPick.innerHTML = `<img src="${escapeHtml(pokemonSprite(pokemon))}" alt=""><button class="comic-button comic-button--primary" type="button">Draft pick</button>`;
+    elements.recommendationPick.querySelector("button").addEventListener("click", () => submitPick(pokemon));
+  };
 
   const secondsRemaining = () => {
     const room = state.payload?.room;
@@ -443,6 +522,7 @@
     renderGrid();
     renderRoster();
     renderLog();
+    renderRecommendation();
     renderPokemon();
     scheduleTestCpuPick();
   };
@@ -655,6 +735,9 @@
 
     const currentCode = (localStorage.getItem("pokeleague.accessCode") || "").trim().toUpperCase();
     if (TEST_CODES.has(currentCode)) showEntryStatus("Your DraftTest code opens the private 14-team TEST DRAFT; four teams are human-controlled.");
+    window.addEventListener("pokeleague:draft-advisor-ready", () => {
+      if (state.payload && !elements.live.hidden) renderRecommendation();
+    });
   };
 
   initialize();
