@@ -5,6 +5,7 @@
   const ROSTER_SIZE = 10;
   const LIVE_ROUNDS = 9;
   const POLL_INTERVAL = 2500;
+  const TEST_CPU_DELAY = 1400;
   const TEST_CODES = new Set(["DRAFTTEST1", "DRAFTTEST2", "DRAFTTEST3", "DRAFTTEST4"]);
   const TEST_HUMAN_TEAMS = new Set([
     "boston-eeltics", "massachusetts-midnight",
@@ -102,6 +103,8 @@
     serverOffset: 0,
     pollTimer: null,
     clockTimer: null,
+    cpuTimer: null,
+    cpuPickInFlight: false,
     busy: false,
     expired: false,
     initialized: false,
@@ -198,6 +201,7 @@
     const payload = state.payload;
     const onClock = expectedTeam();
     if (!payload?.room?.isStarted || payload.room.isPaused || !onClock || state.busy) return false;
+    if (isTestCpuTeam(onClock)) return false;
     if (payload.viewer.isAdmin) return true;
     return payload.viewer.teamId === onClock && secondsRemaining() > 0;
   };
@@ -266,9 +270,10 @@
       info.addEventListener("click", () => window.PokemonDetails?.open(pokemon, info));
 
       const pick = card.querySelector(".draft-pick-button");
-      const adminPick = Boolean(state.payload.viewer.isAdmin && onClock);
+      const cpuTurn = isTestCpuTeam(onClock);
+      const adminPick = Boolean(state.payload.viewer.isAdmin && onClock && !cpuTurn);
       pick.dataset.adminPick = String(adminPick);
-      pick.textContent = adminPick && onClock ? `Draft for ${TEAM_CONFIG[onClock].short}` : "Draft";
+      pick.textContent = cpuTurn ? "CPU choosing…" : adminPick && onClock ? `Draft for ${TEAM_CONFIG[onClock].short}` : "Draft";
       pick.disabled = !allowed || !affordable;
       pick.title = !affordable ? "This pick would exceed the roster limit or point cap." : "";
       pick.addEventListener("click", () => submitPick(pokemon));
@@ -398,7 +403,7 @@
       elements.clockTeam.textContent = team.name;
       elements.clockLogo.src = team.logo;
       const cpuTurn = isTestCpuTeam(onClock);
-      elements.clockDetail.textContent = `Round ${currentRound()} · Live pick #${pickNumber}${cpuTurn ? " · CPU slot — admin must submit this pick" : payload.viewer.isAdmin ? " · Commissioner pick access enabled" : ""}`;
+      elements.clockDetail.textContent = `Round ${currentRound()} · Live pick #${pickNumber}${cpuTurn ? " · CPU auto-pick in progress" : payload.viewer.isAdmin ? " · Commissioner pick access enabled" : ""}`;
     }
 
     elements.overall.textContent = complete ? `${totalLivePicks()} / ${totalLivePicks()}` : `${pickNumber} / ${totalLivePicks()}`;
@@ -414,7 +419,7 @@
         : state.expired && onClock
         ? `Time expired for ${TEAM_CONFIG[onClock].name}. Choose their Pokémon below.`
         : isTestCpuTeam(onClock)
-        ? `${TEAM_CONFIG[onClock].name} is a CPU team. Submit its pick below to advance the test draft.`
+        ? `${TEAM_CONFIG[onClock].name} is a CPU team. Its legal pick will be made automatically.`
         : `Commissioner pick access is locked to the team currently on the clock.`;
     }
 
@@ -427,6 +432,8 @@
           ? "The draft is paused. The clock and all picks are frozen."
           : state.expired && !payload.viewer.isAdmin
             ? "Time expired. An admin must make this pick."
+            : isTestCpuTeam(onClock)
+              ? `${TEAM_CONFIG[onClock].name} is choosing automatically.`
             : allowed
               ? payload.viewer.isAdmin
                 ? `Choose a Pokémon for ${TEAM_CONFIG[onClock].name}.`
@@ -437,6 +444,29 @@
     renderRoster();
     renderLog();
     renderPokemon();
+    scheduleTestCpuPick();
+  };
+
+  const scheduleTestCpuPick = () => {
+    clearTimeout(state.cpuTimer);
+    state.cpuTimer = null;
+    const room = state.payload?.room;
+    const onClock = expectedTeam();
+    if (state.roomKey !== "test" || !room?.isStarted || room.isPaused || draftComplete() || !isTestCpuTeam(onClock) || state.cpuPickInFlight) return;
+
+    state.cpuTimer = window.setTimeout(async () => {
+      state.cpuPickInFlight = true;
+      try {
+        await rpc("auto_pick_flash_family_test_draft", { p_access_code: state.accessCode });
+        await refresh(true);
+      } catch (error) {
+        console.warn("Test CPU pick delayed:", error.message);
+        await refresh(false);
+      } finally {
+        state.cpuPickInFlight = false;
+        scheduleTestCpuPick();
+      }
+    }, TEST_CPU_DELAY);
   };
 
   const updateClock = () => {
@@ -524,8 +554,10 @@
   const stopLiveUpdates = () => {
     clearInterval(state.pollTimer);
     clearInterval(state.clockTimer);
+    clearTimeout(state.cpuTimer);
     state.pollTimer = null;
     state.clockTimer = null;
+    state.cpuTimer = null;
   };
 
   const openLive = async () => {
