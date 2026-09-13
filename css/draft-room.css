@@ -866,6 +866,17 @@ select:focus { box-shadow: 0 0 0 4px var(--cyan); }
 .live-board-team { display: grid; place-items: center; gap: 2px; padding: 5px 3px; background: color-mix(in srgb, var(--team-color) 25%, #fff); text-align: center; }
 .live-board-team img { width: 44px; height: 44px; border: 2px solid #111; border-radius: 6px; background: #111; object-fit: cover; }
 .live-board-team strong { max-width: 76px; overflow: hidden; font-size: 8px; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
+.live-board-cpu {
+  padding: 1px 5px;
+  border: 1px solid #111;
+  border-radius: 999px;
+  background: #111;
+  color: #fff7de;
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: .08em;
+  line-height: 1.2;
+}
 .live-board-team.is-on-clock { outline: 4px solid var(--team-color); background: #fff6ad; }
 .live-board-cell { position: relative; display: grid; place-items: center; padding: 3px; background: rgba(255,255,255,.72); }
 .live-board-cell img { width: 46px; height: 46px; object-fit: contain; }
@@ -906,6 +917,7 @@ select:focus { box-shadow: 0 0 0 4px var(--cyan); }
 :root[data-theme="dark"] .live-board-team.is-on-clock,
 :root[data-theme="dark"] .live-board-cell.is-current { background-color: #4c4836; }
 :root[data-theme="dark"] .live-board-cell small { color: var(--dark-copy-muted); }
+:root[data-theme="dark"] .live-board-cpu { border-color: var(--dark-copy); background: var(--dark-copy); color: var(--dark-surface-raised); }
 
 @media (max-width: 860px) {
   .draft-entry-actions,

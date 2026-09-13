@@ -6,6 +6,10 @@
   const LIVE_ROUNDS = 9;
   const POLL_INTERVAL = 2500;
   const TEST_CODES = new Set(["DRAFTTEST1", "DRAFTTEST2", "DRAFTTEST3", "DRAFTTEST4"]);
+  const TEST_HUMAN_TEAMS = new Set([
+    "boston-eeltics", "massachusetts-midnight",
+    "miami-dragapults", "north-carolina-ceruledge",
+  ]);
 
   const TEAM_CONFIG = {
     "daytona-torterras": { name: "Daytona Torterras", short: "Torterras", mascot: "Torterra", color: "#3fa129", logo: "images/teams/daytona-torterras.webp?v=daytona2" },
@@ -30,10 +34,6 @@
     "uconn-arcanines", "boston-eeltics", "sunnyshore-city-shelter",
     "massachusetts-midnight", "miami-dragapults", "san-francisco-soulfire",
     "stockholm-spin-cycles", "dallas-disguises",
-  ];
-  const TEST_ORDER = [
-    "boston-eeltics", "massachusetts-midnight",
-    "miami-dragapults", "north-carolina-ceruledge",
   ];
 
   const TYPE_COLORS = {
@@ -149,7 +149,8 @@
     p_room_key: state.roomKey,
   });
 
-  const participantsForRoom = (roomKey) => roomKey === "test" ? TEST_ORDER : MAIN_ORDER;
+  const participantsForRoom = () => MAIN_ORDER;
+  const isTestCpuTeam = (teamId) => state.roomKey === "test" && !TEST_HUMAN_TEAMS.has(teamId);
   const totalLivePicks = () => state.participants.length * LIVE_ROUNDS;
   const currentRound = () => Math.min(LIVE_ROUNDS, Math.floor((state.payload?.picks?.length || 0) / state.participants.length) + 1);
 
@@ -291,7 +292,8 @@
 
     state.participants.forEach((teamId) => {
       const team = TEAM_CONFIG[teamId];
-      pieces.push(`<div class="live-board-team${teamId === onClock ? " is-on-clock" : ""}" style="--team-color:${team.color}"><img src="${escapeHtml(team.logo)}" alt=""><strong title="${escapeHtml(team.name)}">${escapeHtml(team.short)}</strong></div>`);
+      const cpu = isTestCpuTeam(teamId);
+      pieces.push(`<div class="live-board-team${teamId === onClock ? " is-on-clock" : ""}${cpu ? " is-cpu" : ""}" style="--team-color:${team.color}"><img src="${escapeHtml(team.logo)}" alt=""><strong title="${escapeHtml(team.name)}">${escapeHtml(team.short)}</strong>${cpu ? '<span class="live-board-cpu">CPU</span>' : ""}</div>`);
     });
 
     for (let row = 0; row < ROSTER_SIZE; row += 1) {
@@ -355,9 +357,9 @@
     const beforeSchedule = Boolean(room.scheduledAt && Date.now() + state.serverOffset < Date.parse(room.scheduledAt));
 
     elements.roomLabel.textContent = room.label;
-    elements.roomKicker.textContent = state.roomKey === "test" ? "Private four-team rehearsal" : "Official league event";
+    elements.roomKicker.textContent = state.roomKey === "test" ? "Private full-league rehearsal" : "Official league event";
     elements.roomSchedule.textContent = state.roomKey === "test"
-      ? "Private test room · DraftTest1 controls the rehearsal"
+      ? "14 teams · 4 human managers · 10 admin-controlled CPU teams"
       : "Sunday, September 13 · 7:00 PM ET · Commissioner start required";
     elements.adminPanel.hidden = !payload.viewer.isAdmin;
     elements.timerSetting.value = String(room.pickSeconds);
@@ -386,7 +388,7 @@
       elements.clockTeam.textContent = room.label;
       elements.clockDetail.textContent = state.roomKey === "main"
         ? "Scheduled for 7:00 PM ET. The draft only begins after an admin presses Start."
-        : "DraftTest1 starts the test when all four managers are ready.";
+        : "DraftTest1 or DraftTest3 starts the test when all four managers are ready; the other ten teams are admin-controlled CPUs.";
       elements.clockLogo.src = TEAM_CONFIG[payload.viewer.teamId].logo;
     } else {
       const team = TEAM_CONFIG[onClock];
@@ -395,7 +397,8 @@
         : payload.viewer.teamId === onClock ? "You are on the clock!" : "On the clock";
       elements.clockTeam.textContent = team.name;
       elements.clockLogo.src = team.logo;
-      elements.clockDetail.textContent = `Round ${currentRound()} · Live pick #${pickNumber}${payload.viewer.isAdmin ? " · Commissioner pick access enabled" : ""}`;
+      const cpuTurn = isTestCpuTeam(onClock);
+      elements.clockDetail.textContent = `Round ${currentRound()} · Live pick #${pickNumber}${cpuTurn ? " · CPU slot — admin must submit this pick" : payload.viewer.isAdmin ? " · Commissioner pick access enabled" : ""}`;
     }
 
     elements.overall.textContent = complete ? `${totalLivePicks()} / ${totalLivePicks()}` : `${pickNumber} / ${totalLivePicks()}`;
@@ -410,6 +413,8 @@
         ? "The Start button unlocks at the scheduled 7:00 PM ET time. It will not begin automatically."
         : state.expired && onClock
         ? `Time expired for ${TEAM_CONFIG[onClock].name}. Choose their Pokémon below.`
+        : isTestCpuTeam(onClock)
+        ? `${TEAM_CONFIG[onClock].name} is a CPU team. Submit its pick below to advance the test draft.`
         : `Commissioner pick access is locked to the team currently on the clock.`;
     }
 
@@ -531,7 +536,7 @@
     }
 
     state.roomKey = TEST_CODES.has(state.accessCode) ? "test" : "main";
-    state.participants = participantsForRoom(state.roomKey);
+    state.participants = participantsForRoom();
     showEntryStatus("Connecting to the draft room…");
     elements.openLive.disabled = true;
 
@@ -576,7 +581,7 @@
     stopLiveUpdates();
     elements.live.hidden = true;
     elements.entry.hidden = false;
-    showEntryStatus(state.roomKey === "test" ? "Your DraftTest code opens the private test room." : "");
+    showEntryStatus(state.roomKey === "test" ? "Your DraftTest code opens the private full-league test room." : "");
     window.scrollTo({ top: elements.entry.offsetTop - 18, behavior: "smooth" });
   };
 
@@ -608,7 +613,7 @@
     elements.timerSetting.addEventListener("change", () => controlDraft("set_timer", Number(elements.timerSetting.value)));
 
     const currentCode = (localStorage.getItem("pokeleague.accessCode") || "").trim().toUpperCase();
-    if (TEST_CODES.has(currentCode)) showEntryStatus("Your DraftTest code opens the private four-team TEST DRAFT.");
+    if (TEST_CODES.has(currentCode)) showEntryStatus("Your DraftTest code opens the private 14-team TEST DRAFT; four teams are human-controlled.");
   };
 
   initialize();
