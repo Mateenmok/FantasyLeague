@@ -71,6 +71,7 @@
     start: $("[data-live-start]"),
     pause: $("[data-live-pause]"),
     undo: $("[data-live-undo]"),
+    reset: $("[data-live-reset]"),
     timerSetting: $("[data-live-timer-setting]"),
     overall: $("[data-live-overall-pick]"),
     round: $("[data-live-round]"),
@@ -438,13 +439,12 @@
     const onClock = expectedTeam();
     const complete = draftComplete();
     const pickNumber = payload.picks.length + 1;
-    const beforeSchedule = Boolean(room.scheduledAt && Date.now() + state.serverOffset < Date.parse(room.scheduledAt));
 
     elements.roomLabel.textContent = room.label;
     elements.roomKicker.textContent = state.roomKey === "test" ? "Private full-league rehearsal" : "Official league event";
     elements.roomSchedule.textContent = state.roomKey === "test"
       ? "14 teams · 4 human managers · 10 admin-controlled CPU teams"
-      : "Sunday, September 13 · 7:00 PM ET · Commissioner start required";
+      : "Commissioner-controlled · start whenever your league is ready";
     elements.adminPanel.hidden = !payload.viewer.isAdmin;
     elements.timerSetting.value = String(room.pickSeconds);
 
@@ -471,7 +471,7 @@
       elements.clockKicker.textContent = "Waiting for commissioner";
       elements.clockTeam.textContent = room.label;
       elements.clockDetail.textContent = state.roomKey === "main"
-        ? "Scheduled for 7:00 PM ET. The draft only begins after an admin presses Start."
+        ? "The draft begins whenever an admin presses Start."
         : "DraftTest1 or DraftTest3 starts the test when all four managers are ready; the other ten teams are admin-controlled CPUs.";
       elements.clockLogo.src = TEAM_CONFIG[payload.viewer.teamId].logo;
     } else {
@@ -489,13 +489,12 @@
     elements.round.textContent = `${complete ? LIVE_ROUNDS : currentRound()} / ${LIVE_ROUNDS}`;
 
     if (payload.viewer.isAdmin) {
-      elements.start.textContent = beforeSchedule && !room.isStarted ? "Starts at 7 PM ET" : !room.isStarted ? "Start draft" : room.isPaused ? "Resume draft" : "Draft running";
-      elements.start.disabled = beforeSchedule || complete || (room.isStarted && !room.isPaused) || state.busy;
+      elements.start.textContent = !room.isStarted ? "Start draft" : room.isPaused ? "Resume draft" : "Draft running";
+      elements.start.disabled = complete || (room.isStarted && !room.isPaused) || state.busy;
       elements.pause.disabled = !room.isStarted || room.isPaused || complete || state.busy;
       elements.undo.disabled = !payload.picks.length || state.busy;
-      elements.adminHint.textContent = beforeSchedule
-        ? "The Start button unlocks at the scheduled 7:00 PM ET time. It will not begin automatically."
-        : isTestCpuTeam(onClock)
+      elements.reset.disabled = state.busy;
+      elements.adminHint.textContent = isTestCpuTeam(onClock)
         ? `${TEAM_CONFIG[onClock].name} will pick automatically; commissioners can also submit its pick below.`
         : state.expired && onClock
         ? `Time expired for ${TEAM_CONFIG[onClock].name}. Choose their Pokémon below.`
@@ -730,6 +729,10 @@
     elements.pause.addEventListener("click", () => controlDraft("pause"));
     elements.undo.addEventListener("click", () => {
       if (window.confirm("Undo the most recent live pick? The main-draft Pokémon will also be removed from that team’s permanent roster.")) controlDraft("undo");
+    });
+    elements.reset.addEventListener("click", () => {
+      const label = state.roomKey === "test" ? "TEST DRAFT" : "MAIN DRAFT";
+      if (window.confirm(`Reset the entire ${label}? Every pick will be cleared${state.roomKey === "main" ? " and all main-draft roster additions will be removed" : ""}.`)) controlDraft("reset");
     });
     elements.timerSetting.addEventListener("change", () => controlDraft("set_timer", Number(elements.timerSetting.value)));
 
