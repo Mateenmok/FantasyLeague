@@ -5,7 +5,7 @@
   const ROSTER_SIZE = 10;
   const LIVE_ROUNDS = 9;
   const POLL_INTERVAL = 2500;
-  const TEST_CPU_DELAY = 1400;
+  const TEST_CPU_DELAY = 150;
   const TEST_CODES = new Set(["DRAFTTEST1", "DRAFTTEST2", "DRAFTTEST3", "DRAFTTEST4"]);
   const TEST_HUMAN_TEAMS = new Set([
     "boston-eeltics", "massachusetts-midnight",
@@ -416,10 +416,10 @@
       elements.undo.disabled = !payload.picks.length || state.busy;
       elements.adminHint.textContent = beforeSchedule
         ? "The Start button unlocks at the scheduled 7:00 PM ET time. It will not begin automatically."
-        : state.expired && onClock
-        ? `Time expired for ${TEAM_CONFIG[onClock].name}. Choose their Pokémon below.`
         : isTestCpuTeam(onClock)
         ? `${TEAM_CONFIG[onClock].name} is a CPU team. Its legal pick will be made automatically.`
+        : state.expired && onClock
+        ? `Time expired for ${TEAM_CONFIG[onClock].name}. Choose their Pokémon below.`
         : `Commissioner pick access is locked to the team currently on the clock.`;
     }
 
@@ -430,10 +430,10 @@
         ? "The commissioner must start the room before picks can be submitted."
         : room.isPaused
           ? "The draft is paused. The clock and all picks are frozen."
-          : state.expired && !payload.viewer.isAdmin
-            ? "Time expired. An admin must make this pick."
-            : isTestCpuTeam(onClock)
+          : isTestCpuTeam(onClock)
               ? `${TEAM_CONFIG[onClock].name} is choosing automatically.`
+            : state.expired && !payload.viewer.isAdmin
+              ? "Time expired. An admin must make this pick."
             : allowed
               ? payload.viewer.isAdmin
                 ? `Choose a Pokémon for ${TEAM_CONFIG[onClock].name}.`
@@ -471,6 +471,15 @@
 
   const updateClock = () => {
     if (!state.payload) return;
+    if (state.roomKey === "test" && isTestCpuTeam(expectedTeam())) {
+      elements.timer.textContent = "AUTO";
+      elements.timer.classList.remove("is-warning", "is-expired");
+      if (state.expired) {
+        state.expired = false;
+        renderRoom();
+      }
+      return;
+    }
     const remaining = secondsRemaining();
     const minutes = Math.floor(remaining / 60);
     const seconds = remaining % 60;
