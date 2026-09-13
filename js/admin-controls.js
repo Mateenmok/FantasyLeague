@@ -301,12 +301,40 @@
         <div class="point-row" data-point-row="${escapeHtml(pokemon.name)}">
           <img src="${escapeHtml(pokemon.sprite)}" alt="" loading="lazy">
           <span><strong>${escapeHtml(pokemon.name)}</strong><small>${overridden ? "Custom league value" : "Season default"}</small></span>
-          <input data-point-input type="number" min="1" max="99" value="${pointValue(pokemon)}" aria-label="${escapeHtml(pokemon.name)} points">
+          <input data-point-input type="number" min="1" max="10" value="${pointValue(pokemon)}" aria-label="${escapeHtml(pokemon.name)} points">
           <span class="point-tier">${escapeHtml(pokemon.tier)}</span>
           <button class="admin-row-button" type="button" data-save-points>Save</button>
           <button class="admin-row-button admin-row-button--remove" type="button" data-reset-points ${overridden ? "" : "disabled"}>Reset</button>
         </div>`;
     }).join("") || `<p>No Pokémon match that search.</p>`;
+  };
+
+  const useServerPointValues = (pointMap) => {
+    const overrides = {};
+    baseCatalog.forEach((pokemon) => {
+      const savedValue = Number(pointMap?.[pokemon.name]);
+      const defaultValue = pointValue(pokemon);
+      if (Number.isInteger(savedValue) && savedValue >= 1 && savedValue !== defaultValue) {
+        overrides[pokemon.name] = savedValue;
+      }
+    });
+    leagueState.pointOverrides = overrides;
+    leagueState = window.PokeLeagueState.write(leagueState);
+    catalog = window.PokeLeagueState.applyCatalog(baseCatalog, leagueState);
+  };
+
+  const syncDraftPointValues = async () => {
+    const migrationKey = window.PokeLeagueState.pointMigrationKey;
+    const pendingLocalOverrides = Object.entries(leagueState.pointOverrides || {})
+      .filter(([, value]) => Number.isInteger(Number(value)) && Number(value) >= 1 && Number(value) <= 10);
+
+    if (!localStorage.getItem(migrationKey) && pendingLocalOverrides.length) {
+      for (const [pokemonName, value] of pendingLocalOverrides) {
+        await window.PokeLeagueState.saveDraftPoint(adminAccessCode, pokemonName, Number(value));
+      }
+    }
+    localStorage.setItem(migrationKey, "1");
+    useServerPointValues(await window.PokeLeagueState.readDraftPoints(adminAccessCode));
   };
 
   const persistRoster = async (teamId, roster, message) => {
@@ -519,26 +547,45 @@
       saveState(`${seeds.length}-team playoff bracket saved.`);
     });
     elements.pointSearch.addEventListener("input", renderPointResults);
-    elements.pointResults.addEventListener("click", (event) => {
+    elements.pointResults.addEventListener("click", async (event) => {
       const row = event.target.closest("[data-point-row]");
       if (!row) return;
       const name = row.dataset.pointRow;
       if (event.target.closest("[data-save-points]")) {
         const value = Number($("[data-point-input]", row).value);
-        if (!Number.isInteger(value) || value < 1 || value > 99) {
-          announce("Point values must be whole numbers from 1 to 99.", true);
+        if (!Number.isInteger(value) || value < 1 || value > 10) {
+          announce("Point values must be whole numbers from 1 to 10.", true);
           return;
         }
-        leagueState.pointOverrides[name] = value;
-        saveState(`${name} is now worth ${value} points (${window.PokeLeagueState.tierForPoints(value)}).`);
-        renderPointResults();
-        renderRosterManager();
+        const button = event.target.closest("[data-save-points]");
+        button.disabled = true;
+        try {
+          const saved = await window.PokeLeagueState.saveDraftPoint(adminAccessCode, name, value);
+          if (Number(saved.pointValue) === Number(saved.defaultPointValue)) delete leagueState.pointOverrides[name];
+          else leagueState.pointOverrides[name] = Number(saved.pointValue);
+          saveState(`${name} is now worth ${saved.pointValue} points (${window.PokeLeagueState.tierForPoints(saved.pointValue)}).`);
+          localStorage.setItem(window.PokeLeagueState.pointMigrationKey, "1");
+          renderPointResults();
+          renderRosterManager();
+        } catch (error) {
+          announce(error.message || "That point value could not be saved.", true);
+          button.disabled = false;
+        }
       }
       if (event.target.closest("[data-reset-points]")) {
-        delete leagueState.pointOverrides[name];
-        saveState(`${name} restored to its season default.`);
-        renderPointResults();
-        renderRosterManager();
+        const button = event.target.closest("[data-reset-points]");
+        button.disabled = true;
+        try {
+          await window.PokeLeagueState.saveDraftPoint(adminAccessCode, name, null);
+          delete leagueState.pointOverrides[name];
+          saveState(`${name} restored to its season default.`);
+          localStorage.setItem(window.PokeLeagueState.pointMigrationKey, "1");
+          renderPointResults();
+          renderRosterManager();
+        } catch (error) {
+          announce(error.message || "That point value could not be reset.", true);
+          button.disabled = false;
+        }
       }
     });
   };
@@ -593,6 +640,8 @@
       elements.workspace.hidden = !authorized;
       if (!authorized) return;
       adminAccessCode = String(accessCode).trim().toUpperCase();
+
+      if (adminAccessCode) await syncDraftPointValues();
 
       leagueState.rosters ||= {};
       leagueState.schedules ||= {};

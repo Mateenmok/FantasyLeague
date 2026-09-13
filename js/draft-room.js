@@ -819,7 +819,15 @@
       const [catalog, detailData, detailIndex] = await Promise.all([
         catalogResponse.json(), detailsResponse.json(), indexResponse.json(),
       ]);
-      state.catalog = window.PokeLeagueState?.applyCatalog(catalog, leagueState) || catalog;
+      let syncedCatalog = window.PokeLeagueState?.applyCatalog(catalog, leagueState) || catalog;
+      const accessCode = localStorage.getItem("pokeleague.accessCode") || sessionStorage.getItem("pokeleague.accessCode") || "";
+      try {
+        const pointMap = await window.PokeLeagueState?.readDraftPoints(accessCode);
+        if (pointMap) syncedCatalog = window.PokeLeagueState.applyPointMap(syncedCatalog, pointMap);
+      } catch (error) {
+        console.warn("Using locally saved draft point values:", error.message);
+      }
+      state.catalog = syncedCatalog;
       state.details = detailData.pokemon || {};
       state.detailIndex = detailIndex;
       state.byName = new Map(state.catalog.map((pokemon) => [pokemon.name, pokemon]));

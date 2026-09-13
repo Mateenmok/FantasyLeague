@@ -1,5 +1,8 @@
 (() => {
   const STORAGE_KEY = "pokeleague.leagueState.v1";
+  const POINT_MIGRATION_KEY = "pokeleague.draftPointsMigrated.v1";
+  const SUPABASE_URL = "https://cgvxehwqoviihxndupoj.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_pB_pv3N_-EXLhXBp6OXpkA_U14NjoJu";
   const DEFAULT_STATE = {
     season: 1,
     currentWeek: 0,
@@ -65,6 +68,49 @@
     };
   });
 
+  const responseError = async (response) => {
+    try {
+      const body = await response.json();
+      return body.message || body.hint || `Point-value request failed (${response.status}).`;
+    } catch {
+      return `Point-value request failed (${response.status}).`;
+    }
+  };
+
+  const rpc = async (name, body) => {
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${name}`, {
+      method: "POST",
+      headers: { apikey: SUPABASE_KEY, "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+      cache: "no-store",
+    });
+    if (!response.ok) throw new Error(await responseError(response));
+    if (response.status === 204) return null;
+    const text = await response.text();
+    return text ? JSON.parse(text) : null;
+  };
+
+  const readDraftPoints = async (accessCode) => rpc("read_flash_family_draft_points", {
+    p_access_code: String(accessCode || "").trim().toUpperCase(),
+  });
+
+  const saveDraftPoint = async (accessCode, pokemonName, pointValue = null) => rpc("set_flash_family_draft_point", {
+    p_access_code: String(accessCode || "").trim().toUpperCase(),
+    p_pokemon_name: pokemonName,
+    p_point_value: pointValue,
+  });
+
+  const applyPointMap = (catalog, pointMap = {}) => catalog.map((pokemon) => {
+    const value = Number(pointMap?.[pokemon.name]);
+    if (!Number.isFinite(value) || value < 1) return { ...pokemon };
+    return {
+      ...pokemon,
+      points: String(value),
+      sortPoints: value,
+      tier: tierForPoints(value),
+    };
+  });
+
   const recordsFor = (teams, state = read()) => {
     const records = Object.fromEntries(teams.map((team) => [team.id, { wins: 0, losses: 0, ties: 0 }]));
     Object.values(state.scores || {}).flat().forEach((matchup) => {
@@ -92,6 +138,10 @@
     write,
     tierForPoints,
     applyCatalog,
+    applyPointMap,
+    readDraftPoints,
+    saveDraftPoint,
+    pointMigrationKey: POINT_MIGRATION_KEY,
     recordsFor,
   };
 })();

@@ -99,6 +99,7 @@
     accessCode: "",
     roomKey: "main",
     participants: MAIN_ORDER,
+    baseCatalog: [],
     catalog: [],
     byName: new Map(),
     bySlug: new Map(),
@@ -112,6 +113,7 @@
     busy: false,
     expired: false,
     initialized: false,
+    pointSignature: "",
   };
 
   const slugify = (value) => String(value || "")
@@ -155,6 +157,29 @@
     p_access_code: state.accessCode,
     p_room_key: state.roomKey,
   });
+
+  const syncDraftPoints = async () => {
+    const pointMap = await window.PokeLeagueState.readDraftPoints(state.accessCode);
+    const signature = JSON.stringify(pointMap);
+    if (signature === state.pointSignature) return false;
+
+    state.pointSignature = signature;
+    state.catalog = window.PokeLeagueState.applyPointMap(state.baseCatalog, pointMap);
+    state.byName = new Map(state.catalog.map((pokemon) => [pokemon.name, pokemon]));
+    state.bySlug = new Map(state.catalog.map((pokemon) => [slugify(pokemon.name), pokemon]));
+
+    const advisor = window.PokeLeagueDraftAdvisor;
+    if (advisor?.rolesFor && window.PokeLeagueDraftAI?.create) {
+      advisor.ai = window.PokeLeagueDraftAI.create({
+        catalog: state.catalog,
+        rolesFor: advisor.rolesFor,
+        pointCap: advisor.pointCap || POINT_CAP,
+        teamCount: state.participants.length,
+        rosterSize: ROSTER_SIZE,
+      });
+    }
+    return true;
+  };
 
   const participantsForRoom = () => MAIN_ORDER;
   const isTestCpuTeam = (teamId) => state.roomKey === "test" && !TEST_HUMAN_TEAMS.has(teamId);
@@ -331,7 +356,9 @@
 
     matches.forEach((pokemon) => {
       const card = elements.template.content.firstElementChild.cloneNode(true);
-      const affordable = currentCount < ROSTER_SIZE && currentPoints + pointValue(pokemon) <= POINT_CAP;
+      const remainingSlotsAfterPick = Math.max(0, ROSTER_SIZE - currentCount - 1);
+      const affordable = currentCount < ROSTER_SIZE
+        && currentPoints + pointValue(pokemon) + remainingSlotsAfterPick <= POINT_CAP;
       card.dataset.tier = pokemon.tier;
       card.style.setProperty("--type-one", TYPE_COLORS[pokemon.types[0]] || TYPE_COLORS.Normal);
       card.style.setProperty("--type-two", TYPE_COLORS[pokemon.types[1] || pokemon.types[0]] || TYPE_COLORS.Normal);
@@ -355,7 +382,7 @@
       pick.dataset.adminPick = String(adminPick);
       pick.textContent = adminPick ? `Draft for ${TEAM_CONFIG[onClock].short}` : cpuTurn ? "CPU choosing…" : "Draft";
       pick.disabled = !allowed || !affordable;
-      pick.title = !affordable ? "This pick would exceed the roster limit or point cap." : "";
+      pick.title = !affordable ? "This pick would leave too few points to fill every remaining roster slot." : "";
       pick.addEventListener("click", () => submitPick(pokemon));
       if (!affordable) card.classList.add("is-unavailable");
       fragment.append(card);
@@ -580,12 +607,13 @@
         || !state.payload
         || payload.room.revision !== state.payload.room.revision
         || payload.picks.length !== state.payload.picks.length;
+      const pointsChanged = changed ? await syncDraftPoints() : false;
       state.serverOffset = Date.parse(payload.serverNow) - Date.now();
       state.payload = payload;
       if (state.roomKey === "main" && (changed || force)) {
         state.rosters = await window.PokeLeagueRosters.read();
       }
-      if (changed) renderRoom();
+      if (changed || pointsChanged) renderRoom();
       updateClock();
     } catch (error) {
       if (force) throw error;
@@ -665,7 +693,7 @@
         const response = await fetch("data/pokemon-catalog.json?v=consolidated-forms1", { cache: "no-store" });
         if (!response.ok) throw new Error("The Pokémon draft board is unavailable.");
         const catalog = await response.json();
-        // Live values must match the server-enforced official draft pool exactly.
+        state.baseCatalog = catalog;
         state.catalog = catalog;
         state.byName = new Map(state.catalog.map((pokemon) => [pokemon.name, pokemon]));
         state.bySlug = new Map(state.catalog.map((pokemon) => [slugify(pokemon.name), pokemon]));
