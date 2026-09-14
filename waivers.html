@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="css/pokemon-search.css?v=point-search-11">
   <link rel="stylesheet" href="css/pokemon-details.css?v=pokemon-details-2">
   <link rel="stylesheet" href="css/theme.css?v=dark-mode6">
+  <link rel="stylesheet" href="css/transaction-log.css?v=1">
 </head>
 <body>
   <header class="site-header">
@@ -36,6 +37,16 @@
   </header>
 
   <main class="catalog-shell">
+    <section class="transaction-panel" aria-labelledby="transactionLogTitle">
+      <div class="transaction-heading">
+        <div><p class="transaction-kicker">Around the league</p><h2 id="transactionLogTitle">Transaction log</h2></div>
+        <button class="transaction-button" type="button" data-transaction-open aria-haspopup="dialog">View full log <span aria-hidden="true">↗</span></button>
+      </div>
+      <ol class="transaction-list transaction-preview" data-transaction-preview aria-label="Six latest transactions"></ol>
+      <p class="transaction-status" data-transaction-status role="status">Loading recent moves…</p>
+      <button class="transaction-button" type="button" data-transaction-retry hidden>Retry</button>
+    </section>
+
     <section class="search-intro" aria-labelledby="pageTitle">
       <p class="eyebrow">Waiver wire</p>
       <h1 id="pageTitle">Find your fighter!</h1>
@@ -127,9 +138,22 @@
 
   <p class="waiver-toast" data-waiver-toast role="status" aria-live="polite"></p>
 
+  <dialog class="transaction-dialog" data-transaction-dialog aria-labelledby="transactionHistoryTitle">
+    <div class="transaction-heading">
+      <div><p class="transaction-kicker">Around the league</p><h2 id="transactionHistoryTitle">Full transaction log</h2></div>
+      <button class="transaction-button transaction-close" type="button" data-transaction-close aria-label="Close transaction log" autofocus>×</button>
+    </div>
+    <div class="transaction-scroll" tabindex="0" aria-label="Transaction history">
+      <ol class="transaction-list" data-transaction-history></ol>
+      <p class="transaction-status" data-transaction-history-status role="status"></p>
+      <button class="transaction-button" type="button" data-transaction-more hidden>Load older moves</button>
+    </div>
+  </dialog>
+
   <script src="js/league-state.js?v=league-state-1" defer></script>
   <script src="js/league-rosters.js?v=league-rosters-1" defer></script>
-  <script src="js/league-waivers.js?v=league-waivers-1" defer></script>
+  <script src="js/league-waivers.js?v=transaction-log-1" defer></script>
+  <script src="js/transaction-log.js?v=1" defer></script>
   <script src="js/pokemon-details.js?v=consolidated-forms1" defer></script>
   <script src="js/pokemon-search.js?v=waivers-4" defer></script>
 </body>

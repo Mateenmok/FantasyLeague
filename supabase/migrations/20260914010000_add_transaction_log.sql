@@ -1,0 +1,224 @@
+-- An append-only public feed of completed roster transactions, not draft picks.
+-- Start logging from this migration; historical drops were not recorded.
+create table public.flash_family_transaction_log (
+  id bigint generated always as identity primary key,
+  league_id text not null references public.leagues(id) on delete cascade,
+  team_id text not null,
+  pokemon_slug text not null,
+  action text not null check (action in ('added', 'dropped')),
+  source text not null check (source in ('waiver', 'trade')),
+  created_at timestamptz not null default clock_timestamp()
+);
+create index flash_family_transaction_log_recent_idx
+  on public.flash_family_transaction_log (league_id, id desc);
+alter table public.flash_family_transaction_log enable row level security;
+revoke all on public.flash_family_transaction_log from public, anon, authenticated;
+grant select on public.flash_family_transaction_log to anon, authenticated;
+create policy "Public can read Flash Family transactions"
+  on public.flash_family_transaction_log for select to anon, authenticated
+  using (league_id = 'flash-family-season-1');
+
+create or replace function public.submit_flash_family_waiver(
+  p_access_code text,
+  p_team_id text,
+  p_add_slug text,
+  p_drop_slug text,
+  p_resulting_points integer
+)
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  league_key constant text := 'flash-family-season-1';
+  clean_code text := upper(trim(coalesce(p_access_code, '')));
+  allowed_team text;
+  clean_add text := nullif(lower(trim(coalesce(p_add_slug, ''))), '');
+  clean_drop text := nullif(lower(trim(coalesce(p_drop_slug, ''))), '');
+  window_start timestamptz;
+  window_end timestamptz;
+  point_cap integer;
+  pokemon_cap integer;
+  roster_size integer;
+  replacement_slot integer;
+begin
+  allowed_team := case clean_code
+    when 'PUFF1' then 'boston-eeltics'
+    when 'NETO' then 'miami-dragapults'
+    when 'MOON4' then 'massachusetts-midnight'
+    when 'FORMIDABLE' then 'sunnyshore-city-shelter'
+    when 'NC50' then 'north-carolina-ceruledge'
+    when 'LAVOLON' then 'uconn-arcanines'
+    when 'CLOUD' then 'las-vegas-gatrs'
+    when 'PANCHAM' then 'kansas-krooks'
+    when 'SWEDEN' then 'stockholm-spin-cycles'
+    when 'CHITOWN' then 'chicago-conkquerers'
+    when 'MVP' then 'daytona-torterras'
+    when 'MIMIC' then 'dallas-disguises'
+    when 'REGAL' then 'south-jersey-hounds'
+    when 'GIANT' then 'san-francisco-soulfire'
+    else null
+  end;
+
+  if allowed_team is null or allowed_team <> p_team_id then
+    raise exception 'This access code cannot change that roster';
+  end if;
+
+  select
+    waiver_window_start_at,
+    waiver_window_end_at,
+    roster_point_cap,
+    roster_pokemon_cap
+  into window_start, window_end, point_cap, pokemon_cap
+  from public.leagues
+  where id = league_key
+  for update;
+
+  if not found then
+    raise exception 'Flash Family League was not found';
+  end if;
+
+  if window_start is null or window_end is null or now() < window_start or now() > window_end then
+    raise exception 'The waiver period is currently closed';
+  end if;
+
+  if clean_add is null and clean_drop is null then
+    raise exception 'Choose a Pokemon to add or drop';
+  end if;
+
+  if clean_add is not null and clean_add !~ '^[a-z0-9]+(?:-[a-z0-9]+)*$' then
+    raise exception 'Invalid Pokemon identifier';
+  end if;
+
+  if clean_drop is not null and clean_drop !~ '^[a-z0-9]+(?:-[a-z0-9]+)*$' then
+    raise exception 'Invalid Pokemon identifier';
+  end if;
+
+  if p_resulting_points is null or p_resulting_points < 0 or p_resulting_points > point_cap then
+    raise exception 'This transaction would exceed the team point cap';
+  end if;
+
+  select count(*)
+  into roster_size
+  from public.team_rosters
+  where league_id = league_key and team_id = p_team_id;
+
+  if clean_drop is not null then
+    select slot_number
+    into replacement_slot
+    from public.team_rosters
+    where league_id = league_key
+      and team_id = p_team_id
+      and pokemon_slug = clean_drop
+    for update;
+
+    if replacement_slot is null then
+      raise exception 'The Pokemon selected to drop is not on this roster';
+    end if;
+  end if;
+
+  if clean_add is not null then
+    if clean_add = clean_drop then
+      raise exception 'Choose a different Pokemon to add';
+    end if;
+
+    if exists (
+      select 1
+      from public.team_rosters
+      where league_id = league_key and pokemon_slug = clean_add
+    ) then
+      raise exception 'That Pokemon is already on a league roster';
+    end if;
+
+    if clean_drop is null and roster_size >= pokemon_cap then
+      raise exception 'This roster is full; choose a Pokemon to drop';
+    end if;
+  end if;
+
+  if clean_drop is not null then
+    delete from public.team_rosters
+    where league_id = league_key
+      and team_id = p_team_id
+      and pokemon_slug = clean_drop;
+  end if;
+
+  if clean_add is not null then
+    if replacement_slot is null then
+      select coalesce(max(slot_number), 0) + 1
+      into replacement_slot
+      from public.team_rosters
+      where league_id = league_key and team_id = p_team_id;
+    end if;
+
+    insert into public.team_rosters (league_id, team_id, pokemon_slug, slot_number)
+    values (league_key, p_team_id, clean_add, replacement_slot);
+
+    if exists (select 1 from public.league_teams where id = p_team_id) then
+      insert into public.league_waiver_acquisitions (
+        id,
+        league_id,
+        team_id,
+        pokemon_slug,
+        waiver_window_start_at
+      ) values (
+        md5(clock_timestamp()::text || random()::text || p_team_id || clean_add),
+        league_key,
+        p_team_id,
+        clean_add,
+        window_start
+      );
+    end if;
+  end if;
+  -- Only successful moves reach this point; log and roster commit together.
+  if clean_drop is not null then
+    insert into public.flash_family_transaction_log (league_id, team_id, pokemon_slug, action, source)
+    values (league_key, p_team_id, clean_drop, 'dropped', 'waiver');
+  end if;
+  if clean_add is not null then
+    insert into public.flash_family_transaction_log (league_id, team_id, pokemon_slug, action, source)
+    values (league_key, p_team_id, clean_add, 'added', 'waiver');
+  end if;
+end;
+$$;
+
+revoke all on function public.submit_flash_family_waiver(text, text, text, text, integer) from public;
+grant execute on function public.submit_flash_family_waiver(text, text, text, text, integer) to anon;
+grant execute on function public.submit_flash_family_waiver(text, text, text, text, integer) to authenticated;
+
+-- Record only the exchanged Pokémon when a trade completes. Do not watch raw
+-- roster DELETE/INSERTs: trades rebuild whole rosters, and drafts use them too.
+create function public.log_flash_family_completed_trade()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  pokemon text;
+begin
+  if new.league_id <> 'flash-family-season-1'
+    or new.status <> 'accepted' or old.status = 'accepted' then
+    return new;
+  end if;
+  foreach pokemon in array new.sender_pokemon_slugs loop
+    insert into public.flash_family_transaction_log (league_id, team_id, pokemon_slug, action, source)
+    values
+      (new.league_id, new.sender_team_id, pokemon, 'dropped', 'trade'),
+      (new.league_id, new.receiver_team_id, pokemon, 'added', 'trade');
+  end loop;
+  foreach pokemon in array new.receiver_pokemon_slugs loop
+    insert into public.flash_family_transaction_log (league_id, team_id, pokemon_slug, action, source)
+    values
+      (new.league_id, new.receiver_team_id, pokemon, 'dropped', 'trade'),
+      (new.league_id, new.sender_team_id, pokemon, 'added', 'trade');
+  end loop;
+  return new;
+end;
+$$;
+revoke all on function public.log_flash_family_completed_trade() from public, anon, authenticated;
+create trigger flash_family_trade_transaction_log
+  after update of status on public.flash_family_trades
+  for each row
+  when (new.status = 'accepted' and old.status is distinct from new.status)
+  execute function public.log_flash_family_completed_trade();

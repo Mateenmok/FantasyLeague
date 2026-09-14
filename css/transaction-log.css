@@ -1,0 +1,59 @@
+.transaction-panel,
+.transaction-dialog {
+  --log-surface: #fff7de;
+  --log-copy: #171717;
+  --log-muted: #615b4c;
+  --log-line: rgba(23, 23, 23, .16);
+  --log-add: #21633a;
+  --log-drop: #a33232;
+  color: var(--log-copy);
+  background: var(--log-surface);
+  border: 4px solid #171717;
+  border-radius: 15px;
+  box-shadow: 5px 6px 0 #c1e34d, 9px 10px 0 #000;
+  padding: 18px 22px;
+}
+.transaction-panel { margin-bottom: 42px; }
+.transaction-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.transaction-heading h2 { margin: 0; font-family: "Jersey 25", Impact, sans-serif; font-size: clamp(25px, 3vw, 34px); font-weight: 400; line-height: 1; text-transform: uppercase; }
+.transaction-kicker { margin: 0 0 5px; color: var(--log-muted); font-size: 11px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+.transaction-button { flex-shrink: 0; padding: 9px 12px; border: 2px solid #171717; border-radius: 8px; color: #171717; background: #d8ec88; cursor: pointer; font-size: 14px; font-weight: 900; }
+.transaction-button:hover { background: #c1e34d; }
+.transaction-button:focus-visible, .transaction-scroll:focus-visible { outline: 3px solid #2980ef; outline-offset: 3px; }
+.transaction-button:disabled { cursor: wait; opacity: .65; }
+.transaction-list { list-style: none; padding: 0; margin: 14px 0 0; }
+.transaction-preview { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 28px; }
+.transaction-entry { display: flex; align-items: center; gap: 10px; min-width: 0; padding: 10px 0; border-top: 1px solid var(--log-line); }
+.transaction-entry img { width: 34px; height: 34px; flex-shrink: 0; object-fit: contain; border-radius: 5px; }
+.transaction-entry p { margin: 0; font-size: 15px; line-height: 1.3; overflow-wrap: anywhere; }
+.transaction-entry small { display: block; margin-top: 3px; color: var(--log-muted); font-size: 11px; }
+.transaction-action { font-weight: 900; color: var(--log-add); }
+.transaction-action.is-drop { color: var(--log-drop); }
+.transaction-status { margin: 12px 0 0; font-size: 14px; color: var(--log-muted); }
+.transaction-status:empty { display: none; }
+.transaction-dialog { width: min(760px, calc(100vw - 32px)); max-height: 85vh; max-height: 85dvh; overflow: hidden; }
+.transaction-dialog[open] { display: flex; flex-direction: column; }
+.transaction-dialog::backdrop { background: rgba(0, 0, 0, .75); }
+.transaction-close { font-size: 25px; line-height: 1; min-width: 44px; min-height: 44px; }
+.transaction-scroll { overflow-y: auto; min-height: 0; overscroll-behavior: contain; padding: 0 5px 4px; margin-top: 12px; }
+.transaction-scroll > .transaction-button { margin-top: 16px; }
+:root:has(.transaction-dialog[open]) { overflow: hidden; }
+:root[data-theme="dark"] .transaction-panel,
+:root[data-theme="dark"] .transaction-dialog {
+  --log-surface: var(--dark-surface, #2d3036);
+  --log-copy: #fff;
+  --log-muted: #c9c4b9;
+  --log-line: rgba(255, 255, 255, .16);
+  --log-add: #b6e68a;
+  --log-drop: #ffa6a6;
+}
+@media (max-width: 640px) {
+  .transaction-panel, .transaction-dialog { padding: 14px; }
+  .transaction-preview { grid-template-columns: minmax(0, 1fr); }
+  .transaction-heading { gap: 8px; }
+  .transaction-heading h2 { font-size: 25px; }
+  .transaction-button { padding: 8px; font-size: 12px; }
+  .transaction-entry { padding: 8px 0; }
+  .transaction-entry p { font-size: 14px; }
+  .transaction-entry small { font-size: 10px; }
+}

@@ -64,15 +64,31 @@
     p_point_cap: Number(pointCap),
   });
 
-  const transact = ({ accessCode, teamId, addName = null, dropName = null, resultingPoints }) => (
-    rpc("submit_flash_family_waiver", {
+  const transact = async ({ accessCode, teamId, addName = null, dropName = null, resultingPoints }) => {
+    await rpc("submit_flash_family_waiver", {
       p_access_code: String(accessCode || "").trim().toUpperCase(),
       p_team_id: teamId,
       p_add_slug: addName ? slugify(addName) : null,
       p_drop_slug: dropName ? slugify(dropName) : null,
       p_resulting_points: Number(resultingPoints),
-    })
-  );
+    });
+    window.dispatchEvent(new Event("pokeleague:transaction"));
+  };
 
-  window.PokeLeagueWaivers = { readSettings, setWindow, setSeasonRules, transact, slugify };
+  const readTransactions = async ({ limit = 6, before = null } = {}) => {
+    const query = new URLSearchParams({
+      league_id: `eq.${LEAGUE_ID}`,
+      select: "id,team_id,pokemon_slug,action,source,created_at",
+      order: "id.desc",
+      limit: String(Math.max(1, Math.min(50, Number(limit) || 6))),
+    });
+    if (before !== null && /^\d+$/.test(String(before))) query.set("id", `lt.${before}`);
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/flash_family_transaction_log?${query}`, {
+      headers, cache: "no-store",
+    });
+    if (!response.ok) throw new Error(await responseError(response));
+    return response.json();
+  };
+
+  window.PokeLeagueWaivers = { readSettings, setWindow, setSeasonRules, transact, slugify, readTransactions };
 })();
