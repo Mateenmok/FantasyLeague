@@ -306,6 +306,8 @@ await mapWithConcurrency(catalog, 8, async (catalogPokemon) => {
   index[key] = {
     hasMega: megaForms.length > 0,
     megaForms: megaForms.map((forme) => forme.name),
+    moves: (detail.moves || []).map((move) => move.name),
+    abilities: [...new Set([...(detail.abilities || []), ...(detail.formes || []).flatMap((forme) => forme.abilities || [])].map((ability) => ability.name))],
   };
 });
 

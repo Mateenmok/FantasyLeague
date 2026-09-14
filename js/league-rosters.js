@@ -63,5 +63,24 @@
     if (!response.ok) throw new Error(await responseError(response));
   };
 
-  window.PokeLeagueRosters = { read, replace, namesFromSlugs, slugify };
+  const readNicknames = async () => {
+    const query = new URLSearchParams({ league_id: `eq.${LEAGUE_ID}`, select: "team_id,pokemon_slug,nickname" });
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/flash_family_pokemon_nicknames?${query}`, { headers, cache: "no-store" });
+    if (!response.ok) throw new Error(await responseError(response));
+    return (await response.json()).reduce((result, row) => {
+      (result[row.team_id] ||= {})[row.pokemon_slug] = row.nickname;
+      return result;
+    }, {});
+  };
+
+  const setNickname = async (teamId, pokemonName, nickname, accessCode) => {
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/set_flash_family_pokemon_nickname`, {
+      method: "POST", headers,
+      body: JSON.stringify({ p_access_code: String(accessCode || "").trim().toUpperCase(),
+        p_team_id: teamId, p_pokemon_slug: slugify(pokemonName), p_nickname: nickname }),
+    });
+    if (!response.ok) throw new Error(await responseError(response));
+    return response.json();
+  };
+  window.PokeLeagueRosters = { read, replace, namesFromSlugs, slugify, readNicknames, setNickname };
 })();

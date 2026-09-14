@@ -18,6 +18,11 @@
 }
 
 .compact-pokemon-card[data-tier="Gold"] { --tier-color: #f0c133; }
+.compact-pokemon-card[role="button"] { cursor: pointer; }
+.compact-pokemon-card[role="button"]:hover { filter: brightness(1.06); }
+.compact-pokemon-card[role="button"]:focus-visible { outline: 3px solid #2b78f6; outline-offset: 3px; }
+.compact-nickname { display: block; padding: 2px 4px; font-size: 12px; line-height: 1.2; font-weight: 900; overflow-wrap: anywhere; text-transform: none; }
+.compact-pokemon-card:has(.compact-nickname) { min-height: 220px; }
 .compact-pokemon-card[data-tier="Silver"] { --tier-color: #aeb7c5; }
 .compact-pokemon-card[data-tier="Bronze"] { --tier-color: #cf7439; }
 

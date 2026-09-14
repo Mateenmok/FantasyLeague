@@ -2,7 +2,9 @@
   const gate = document.querySelector("[data-team-gate]");
   const dashboard = document.querySelector("[data-team-dashboard]");
   const editor = document.querySelector("[data-team-editor]");
-  const accessCode = localStorage.getItem("pokeleague.accessCode")?.trim().toUpperCase();
+  const accessCode = (localStorage.getItem("pokeleague.accessCode") || sessionStorage.getItem("pokeleague.accessCode") || "").trim().toUpperCase();
+  let owner;
+  let nicknames = null;
 
   const normalize = (value) => String(value || "")
     .toLowerCase()
@@ -32,6 +34,45 @@
     meta.textContent = `${pokemon.tier} · ${pokemon.points} PTS`;
     copy.append(name, meta);
     card.append(image, copy);
+    const form = document.createElement("form");
+    form.className = "pokemon-nickname-form";
+    const label = document.createElement("label");
+    const input = document.createElement("input");
+    const slug = window.PokeLeagueRosters.slugify(pokemon.name);
+    input.id = `nickname-${slug}`;
+    input.name = "nickname";
+    input.maxLength = 24;
+    input.autocomplete = "off";
+    input.placeholder = "No nickname";
+    input.value = nicknames?.[owner.teamId]?.[slug] || "";
+    input.disabled = nicknames === null;
+    label.htmlFor = input.id;
+    label.textContent = `${pokemon.name}'s nickname`;
+    const controls = document.createElement("div");
+    const save = document.createElement("button");
+    save.type = "submit";
+    save.textContent = "Save";
+    save.disabled = nicknames === null;
+    const status = document.createElement("p");
+    status.setAttribute("role", "status");
+    if (nicknames === null) status.textContent = "Nicknames could not load. Refresh to try again.";
+    controls.append(input, save);
+    form.append(label, controls, status);
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (save.disabled) return;
+      input.disabled = save.disabled = true;
+      status.textContent = "Saving…";
+      try {
+        const saved = await window.PokeLeagueRosters.setNickname(owner.teamId, pokemon.name, input.value, accessCode);
+        (nicknames[owner.teamId] ||= {})[slug] = saved;
+        input.value = saved;
+        status.textContent = saved ? "Saved! Visible in Pick’ems." : "Nickname cleared.";
+      } catch (error) {
+        status.textContent = error.message || "Nickname could not save. Try again.";
+      } finally { input.disabled = save.disabled = false; }
+    });
+    card.append(form);
     return card;
   };
 
@@ -169,13 +210,16 @@
     fetch("data/league-teams.json?v=league-teams2", { cache: "no-store" }),
     fetch("data/pokemon-catalog.json?v=season-1-3"),
     window.PokeLeagueRosters.read().catch(() => null),
+    window.PokeLeagueRosters.readNicknames().catch(() => null),
   ])
-    .then(async ([teamsResponse, leagueTeamsResponse, catalogResponse, savedRosters]) => {
+    .then(async ([teamsResponse, leagueTeamsResponse, catalogResponse, savedRosters, savedNicknames]) => {
+      nicknames = savedNicknames;
       if (!teamsResponse.ok || !leagueTeamsResponse.ok || !catalogResponse.ok) throw new Error("Team unavailable");
       return Promise.all([teamsResponse.json(), leagueTeamsResponse.json(), catalogResponse.json(), savedRosters]);
     })
     .then(([teamData, leagueTeamData, baseCatalog, savedRosters]) => {
       const account = teamData.accounts?.[accessCode];
+      owner = account;
       if (!account) {
         showGate();
         return;

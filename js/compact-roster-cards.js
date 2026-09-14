@@ -26,14 +26,18 @@
       <span>${escapeHtml(type)}</span>
     </span>`;
 
-  const render = (pokemon, detailIndex = {}) => {
+  const pokemonByKey = new Map();
+  const render = (pokemon, detailIndex = {}, nickname = "") => {
+    const key = detailKey(pokemon.name);
+    pokemonByKey.set(key, pokemon);
     const types = Array.isArray(pokemon?.types) && pokemon.types.length ? pokemon.types : ["Normal"];
     const tier = pokemon?.tier || "Bronze";
     const typeOne = TYPE_COLORS[types[0]] || TYPE_COLORS.Normal;
     const typeTwo = TYPE_COLORS[types[1] || types[0]] || TYPE_COLORS.Normal;
     const hasMega = detailIndex?.[detailKey(pokemon?.name)]?.hasMega === true;
     return `
-      <article class="compact-pokemon-card" data-tier="${escapeHtml(tier)}"
+      <article class="compact-pokemon-card" data-tier="${escapeHtml(tier)}" data-roster-pokemon="${escapeHtml(key)}"
+        tabindex="0" role="button" aria-label="View ${escapeHtml(pokemon.name)} moves and abilities"
         style="--type-one:${typeOne};--type-two:${typeTwo}">
         <span class="compact-card-halftone" aria-hidden="true"></span>
         <span class="compact-tier-label"><span aria-hidden="true">${TIER_SYMBOLS[tier] || "●"}</span>${escapeHtml(tier)}</span>
@@ -41,11 +45,21 @@
         ${hasMega ? '<span class="compact-mega-mark" title="Mega Evolution available"><img src="images/icons/mega-evolution-v2.webp?v=mega2" alt=""><span class="visually-hidden">Mega Evolution available</span></span>' : ""}
         <span class="compact-sprite-stage"><img src="${escapeHtml(pokemon?.sprite)}" alt="" loading="lazy" decoding="async"></span>
         <span class="compact-card-copy">
+          ${nickname ? `<span class="compact-nickname">“${escapeHtml(nickname)}”</span>` : ""}
           <strong>${escapeHtml(pokemon?.name)}</strong>
           <span class="compact-type-list">${types.map(renderType).join("")}</span>
         </span>
       </article>`;
   };
 
+  const openCard = (event) => {
+    const card = event.target.closest("[data-roster-pokemon]");
+    if (!card || (event.type === "keydown" && !["Enter", " "].includes(event.key))) return;
+    event.preventDefault();
+    const pokemon = pokemonByKey.get(card.dataset.rosterPokemon);
+    if (pokemon) window.PokemonDetails?.open(pokemon, card);
+  };
+  document.addEventListener("click", openCard);
+  document.addEventListener("keydown", openCard);
   window.PokeLeagueRosterCards = { render, detailKey };
 })();

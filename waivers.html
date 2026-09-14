@@ -19,9 +19,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Jersey+25&amp;family=Roboto+Condensed:wght@500;700;900&amp;display=swap" rel="stylesheet">
   <script src="js/theme.js?v=dark-mode3"></script>
   <link rel="stylesheet" href="css/pokemon-search.css?v=point-search-11">
-  <link rel="stylesheet" href="css/pokemon-details.css?v=pokemon-details-2">
+  <link rel="stylesheet" href="css/pokemon-details.css?v=dex1">
   <link rel="stylesheet" href="css/theme.css?v=dark-mode6">
   <link rel="stylesheet" href="css/transaction-log.css?v=1">
+  <link rel="stylesheet" href="css/pokemon-detail-dex.css?v=dex1">
 </head>
 <body>
   <header class="site-header">
@@ -50,7 +51,7 @@
     <section class="search-intro" aria-labelledby="pageTitle">
       <p class="eyebrow">Waiver wire</p>
       <h1 id="pageTitle">Find your fighter!</h1>
-      <p class="intro-copy">Search waivers by Pokemon, type, tier, or point value.</p>
+      <p class="intro-copy">Search by Pokémon, move, ability, type, tier, or points.</p>
 
       <div class="search-box">
         <span class="search-icon" aria-hidden="true">⌕</span>
@@ -58,7 +59,7 @@
         <input
           id="pokemonSearch"
           type="search"
-          placeholder="Try Gengar, Water, or 7 pts..."
+          placeholder="Try Fake Out, Intimidate, or Gengar…"
           autocomplete="off"
           spellcheck="false"
         >
@@ -106,7 +107,7 @@
       <div id="pokemonGrid" class="pokemon-grid" aria-live="polite" aria-busy="true">
         <p class="loading-state">Loading the roster...</p>
       </div>
-      <p id="emptyState" class="empty-state" hidden>No match! Try another Pokemon, type, or tier.</p>
+      <p id="emptyState" class="empty-state" hidden>No match! Try another Pokémon, move, ability, type, or tier.</p>
     </section>
   </main>
 
@@ -154,7 +155,7 @@
   <script src="js/league-rosters.js?v=league-rosters-1" defer></script>
   <script src="js/league-waivers.js?v=transaction-log-1" defer></script>
   <script src="js/transaction-log.js?v=1" defer></script>
-  <script src="js/pokemon-details.js?v=consolidated-forms1" defer></script>
-  <script src="js/pokemon-search.js?v=waivers-4" defer></script>
+  <script src="js/pokemon-details.js?v=dex1" defer></script>
+  <script src="js/pokemon-search.js?v=move-search1" defer></script>
 </body>
 </html>

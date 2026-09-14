@@ -292,7 +292,10 @@ const matchesSearch = (pokemon, query) => {
   if (!query) return true;
   const searchable = normalize([pokemon.name, ...(pokemon.aliases || []), pokemon.tier,
     pokemon.points, `${pokemon.points} pts`, ...pokemon.types].join(" "));
-  return query.split(/\s+/).every((term) => searchable.includes(term));
+  const detail = detailIndex[normalize(pokemon.name).replaceAll(" ", "")] || {};
+  // Match whole move/ability phrases: Fake Tears + Work Out must not match Fake Out.
+  return query.split(/\s+/).every((term) => searchable.includes(term))
+    || [...(detail.moves || []), ...(detail.abilities || [])].some((name) => normalize(name).includes(query));
 };
 
 const render = () => {
@@ -337,7 +340,7 @@ swapDialog.addEventListener("close", () => { pendingAdd = null; swapOptionsTarge
 
 Promise.all([
   fetch("data/pokemon-catalog.json?v=season-1-3"),
-  fetch("data/pokemon-detail-index.json?v=draft-v113"),
+  fetch("data/pokemon-detail-index.json?v=move-search1"),
   fetch("data/teams.json?v=teams8", { cache: "no-store" }),
   window.PokeLeagueRosters.read(),
   window.PokeLeagueWaivers.readSettings(),

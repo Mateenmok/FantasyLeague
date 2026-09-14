@@ -13,6 +13,7 @@
   let catalog = [];
   let detailIndex = {};
   let rosters = {};
+  let nicknames = {};
   let matchups = [];
   let allMatchups = [];
   let picks = [];
@@ -173,11 +174,13 @@
     }
   };
 
-  const rosterCard = (pokemon) => window.PokeLeagueRosterCards.render(pokemon, detailIndex);
+  const rosterCard = (pokemon, teamId) => window.PokeLeagueRosterCards.render(pokemon, detailIndex,
+    nicknames[teamId]?.[window.PokeLeagueRosters.slugify(pokemon.name)] || "");
 
-  const openMatchup = (displayOrder) => {
+  const openMatchup = async (displayOrder) => {
     const matchup = matchups.find((candidate) => Number(candidate.display_order) === Number(displayOrder));
     if (!matchup) return;
+    nicknames = await window.PokeLeagueRosters.readNicknames().catch(() => nicknames);
     const matchupTeams = [teamFor(matchup.home_team_id), teamFor(matchup.away_team_id)];
     dialogTitle.textContent = `${matchupTeams[0].name} vs ${matchupTeams[1].name}`;
     rosterColumns.innerHTML = matchupTeams.map((team) => {
@@ -185,10 +188,10 @@
       return `
         <section class="matchup-roster-team">
           <header><img src="${escapeHtml(team.logo)}" alt=""><h3>${escapeHtml(team.name)}</h3></header>
-          <div class="matchup-roster-list">${pokemon.length ? pokemon.map(rosterCard).join("") : '<p class="pickems-empty">Roster not filled yet.</p>'}</div>
+          <div class="matchup-roster-list">${pokemon.length ? pokemon.map((pick) => rosterCard(pick, team.id)).join("") : '<p class="pickems-empty">Roster not filled yet.</p>'}</div>
         </section>`;
     }).join('<span class="roster-vs" aria-hidden="true">VS</span>');
-    dialog.showModal();
+    if (!dialog.open) dialog.showModal();
   };
 
   grid.addEventListener("click", (event) => {
@@ -213,13 +216,15 @@
   const initialize = async () => {
     try {
       accessCode = (localStorage.getItem("pokeleague.accessCode") || sessionStorage.getItem("pokeleague.accessCode") || "").trim().toUpperCase();
-      const [teamResponse, accountResponse, catalogResponse, detailResponse, savedRosters] = await Promise.all([
+      const [teamResponse, accountResponse, catalogResponse, detailResponse, savedRosters, savedNicknames] = await Promise.all([
         fetch("data/league-teams.json?v=league-teams2", { cache: "no-store" }),
         fetch("data/teams.json?v=teams8", { cache: "no-store" }),
         fetch("data/pokemon-catalog.json?v=season-1-3"),
         fetch("data/pokemon-detail-index.json?v=draft-v113"),
         window.PokeLeagueRosters.read().catch(() => null),
+        window.PokeLeagueRosters.readNicknames().catch(() => ({})),
       ]);
+      nicknames = savedNicknames;
       if (!teamResponse.ok || !accountResponse.ok || !catalogResponse.ok || !detailResponse.ok) throw new Error("Pick'ems data could not be loaded.");
       const teamData = await teamResponse.json();
       const accountData = await accountResponse.json();

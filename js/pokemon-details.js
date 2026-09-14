@@ -9,6 +9,7 @@
   };
   let detailsPromise;
   let returnFocusTo;
+  let openRequest = 0;
 
   const normalize = (value) => String(value || "")
     .toLowerCase()
@@ -32,6 +33,7 @@
     dialog = document.createElement("dialog");
     dialog.id = "pokemonDetailDialog";
     dialog.className = "pokemon-detail-dialog";
+    dialog.setAttribute("aria-label", "Pokémon details");
     dialog.innerHTML = '<div id="pokemonDetailShell" class="pokemon-detail-shell"></div>';
     document.body.append(dialog);
 
@@ -39,6 +41,7 @@
       if (event.target === dialog) dialog.close();
     });
     dialog.addEventListener("close", () => {
+      openRequest += 1;
       document.body.classList.remove("detail-open");
       returnFocusTo?.focus();
     });
@@ -51,7 +54,7 @@
       detailsPromise = fetch(DETAILS_URL).then((response) => {
         if (!response.ok) throw new Error(`Pokemon details returned ${response.status}`);
         return response.json();
-      });
+      }).catch((error) => { detailsPromise = null; throw error; });
     }
     return detailsPromise;
   };
@@ -76,7 +79,7 @@
     return `
       <div class="detail-stat-grid">
         ${stats.map(([label, value]) => `
-          <div class="detail-stat"><span>${label}</span><strong>${escapeHtml(value)}</strong></div>
+          <div class="detail-stat" style="--stat-fill:${Math.max(0, Math.min(100, Number(value) / 255 * 100))}%"><span>${label}</span><strong>${escapeHtml(value)}</strong></div>
         `).join("")}
       </div>
     `;
@@ -101,25 +104,17 @@
     `;
   };
 
-  const moveMeta = (move) => {
-    const pieces = [move.category];
-    if (move.power) pieces.push(`${move.power} power`);
-    if (move.accuracy) pieces.push(`${move.accuracy}% accuracy`);
-    if (move.pp) pieces.push(`${move.pp} PP`);
-    if (move.priority) pieces.push(`Priority ${move.priority}`);
-    return pieces.filter(Boolean).join(" · ");
-  };
-
   const renderMoves = (moves) => {
     if (!moves.length) return '<p class="detail-no-results">No moves match that search.</p>';
     return moves.map((move) => `
       <article class="detail-move" data-type="${escapeHtml(typeSlug(move.type))}">
-        <div class="detail-move-heading">
-          <h4>${escapeHtml(move.name)}</h4>
-          ${move.type ? `<span class="detail-move-type">${escapeHtml(move.type)}</span>` : ""}
-        </div>
-        ${moveMeta(move) ? `<p class="detail-move-meta">${escapeHtml(moveMeta(move))}</p>` : ""}
-        ${move.description ? `<p>${escapeHtml(clean(move.description))}</p>` : ""}
+        <h4>${escapeHtml(move.name)}</h4>
+        <span class="detail-move-type">${escapeHtml(move.type || "—")}</span>
+        <span class="detail-category" data-category="${move.category === "Physical" ? "physical" : move.category === "Special" ? "special" : "status"}"><span aria-hidden="true">${move.category === "Physical" ? "✹" : move.category === "Special" ? "◉" : "◌"}</span>${escapeHtml(move.category === "Non-Damaging" ? "Status" : move.category || "Status")}</span>
+        <span class="detail-move-number"><small>Power</small><strong>${escapeHtml(move.power ?? "—")}</strong></span>
+        <span class="detail-move-number"><small>Accuracy</small><strong>${move.accuracy == null ? "—" : `${escapeHtml(move.accuracy)}%`}</strong></span>
+        <span class="detail-move-number"><small>PP</small><strong>${escapeHtml(move.pp ?? "—")}</strong></span>
+        <p class="detail-move-description">${escapeHtml(clean(move.description))}${move.priority ? `<span class="detail-priority">Priority ${Number(move.priority) > 0 ? "+" : ""}${escapeHtml(move.priority)}</span>` : ""}</p>
       </article>
     `).join("");
   };
@@ -185,7 +180,7 @@
 
         <section class="detail-panel detail-moves-panel">
           <div class="detail-section-title">
-            <h3>Move List</h3>
+            <h3>Move Dex</h3>
             <span id="detailMoveCount" class="detail-count">${detail.moves.length} moves</span>
           </div>
           <div class="detail-move-tools">
@@ -196,6 +191,8 @@
               <option value="all">All types</option>
               ${moveTypes.map((type) => `<option value="${escapeHtml(typeSlug(type))}">${escapeHtml(type)}</option>`).join("")}
             </select>
+            <label class="visually-hidden" for="detailMoveCategory">Filter moves by category</label>
+            <select id="detailMoveCategory"><option value="all">All categories</option><option value="Physical">Physical</option><option value="Special">Special</option><option value="Non-Damaging">Status</option></select>
           </div>
           <div id="detailMoveList" class="detail-move-list">${renderMoves(detail.moves || [])}</div>
         </section>
@@ -207,6 +204,7 @@
     dialog.querySelector(".detail-close")?.addEventListener("click", () => dialog.close());
     const search = dialog.querySelector("#detailMoveSearch");
     const type = dialog.querySelector("#detailMoveType");
+    const category = dialog.querySelector("#detailMoveCategory");
     const list = dialog.querySelector("#detailMoveList");
     const count = dialog.querySelector("#detailMoveCount");
     const moves = detail.moves || [];
@@ -217,7 +215,8 @@
       const filtered = moves.filter((move) => {
         const searchText = [move.name, move.type, move.category, move.description].join(" ").toLowerCase();
         return (!term || searchText.includes(term))
-          && (selectedType === "all" || typeSlug(move.type) === selectedType);
+          && (selectedType === "all" || typeSlug(move.type) === selectedType)
+          && (category.value === "all" || move.category === category.value);
       });
       list.innerHTML = renderMoves(filtered);
       count.textContent = `${filtered.length} ${filtered.length === 1 ? "move" : "moves"}`;
@@ -225,33 +224,41 @@
 
     search.addEventListener("input", filterMoves);
     type.addEventListener("change", filterMoves);
+    category.addEventListener("change", filterMoves);
   };
 
   const renderLoading = (pokemon) => `
     <div class="detail-loading">
+      <button class="detail-close" type="button" aria-label="Close Pokemon details">×</button>
       <img src="${escapeHtml(pokemon.sprite)}" alt="" width="92" height="92">
       <p>Loading ${escapeHtml(pokemon.name)}...</p>
     </div>
   `;
 
   const open = async (pokemon, trigger) => {
+    const request = ++openRequest;
     const dialog = ensureDialog();
     const shell = dialog.querySelector("#pokemonDetailShell");
     returnFocusTo = trigger;
     dialog.style.setProperty("--detail-type-one", DETAIL_TYPE_COLORS[pokemon.types[0]]);
     dialog.style.setProperty("--detail-type-two", DETAIL_TYPE_COLORS[pokemon.types[1] || pokemon.types[0]]);
     shell.innerHTML = renderLoading(pokemon);
+    dialog.removeAttribute("aria-labelledby");
+    dialog.querySelector(".detail-close").addEventListener("click", () => dialog.close());
     document.body.classList.add("detail-open");
     if (!dialog.open) dialog.showModal();
 
     try {
       const data = await loadDetails();
+      if (request !== openRequest || !dialog.open) return;
       const detail = data.pokemon?.[normalize(pokemon.name)];
       if (!detail) throw new Error(`No details found for ${pokemon.name}`);
       shell.innerHTML = renderDetail(pokemon, detail);
+      dialog.setAttribute("aria-labelledby", "pokemonDetailTitle");
       bindControls(detail, dialog);
       dialog.querySelector(".detail-close")?.focus();
     } catch (error) {
+      if (request !== openRequest || !dialog.open) return;
       console.error(error);
       shell.innerHTML = `
         <div class="detail-error">

@@ -322,6 +322,14 @@
   font-weight: 900;
 }
 
+.pokemon-nickname-form { grid-column: 1 / -1; width: 100%; margin-top: 10px; }
+.pokemon-nickname-form label { display: block; margin-bottom: 5px; font-size: 12px; }
+.pokemon-nickname-form > div { display: flex; gap: 6px; }
+.pokemon-nickname-form input { width: 100%; min-width: 0; padding: 9px; border: 2px solid #171717; border-radius: 6px; background: #fffaf0; color: #171717; font: inherit; font-size: 14px; }
+.pokemon-nickname-form button { padding: 8px 12px; border: 2px solid #171717; border-radius: 6px; background: #a8def0; color: #111; font: inherit; font-weight: 900; cursor: pointer; }
+.pokemon-nickname-form button:disabled { opacity: .6; cursor: wait; }
+.pokemon-nickname-form input:focus-visible, .pokemon-nickname-form button:focus-visible { outline: 3px solid #2980ef; outline-offset: 2px; }
+.pokemon-nickname-form p:empty { display: none; }
 .team-pokemon-card {
   display: grid;
   justify-items: center;
