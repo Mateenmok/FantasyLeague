@@ -93,6 +93,7 @@
   const readDraftPoints = async (accessCode) => rpc("read_flash_family_draft_points", {
     p_access_code: String(accessCode || "").trim().toUpperCase(),
   });
+  const readPointValues = () => rpc("read_flash_family_point_values", {});
 
   const saveDraftPoint = async (accessCode, pokemonName, pointValue = null) => rpc("set_flash_family_draft_point", {
     p_access_code: String(accessCode || "").trim().toUpperCase(),
@@ -140,6 +141,7 @@
     applyCatalog,
     applyPointMap,
     readDraftPoints,
+    readPointValues,
     saveDraftPoint,
     pointMigrationKey: POINT_MIGRATION_KEY,
     recordsFor,

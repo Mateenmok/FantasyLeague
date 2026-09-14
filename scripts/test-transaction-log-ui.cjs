@@ -26,6 +26,7 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     await page.route('**/*', async route => {
       const url = new URL(route.request().url());
       if (url.hostname.endsWith('supabase.co')) {
+        if (url.pathname.endsWith('/read_flash_family_point_values')) return route.fulfill({ json: Object.fromEntries(JSON.parse(fs.readFileSync(path.join(root, 'data/pokemon-catalog.json'))).map(p => [p.name, Number(p.points)])) });
         if (url.pathname.endsWith('/flash_family_transaction_log')) {
           if (failRead) return route.fulfill({ status: 500, json: { message: 'Test offline' } });
           const before = Number((url.searchParams.get('id') || 'lt.Infinity').slice(3));

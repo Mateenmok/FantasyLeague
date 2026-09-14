@@ -257,9 +257,9 @@
       const away = findTeam(matchup.away);
       return `
         <div class="matchup-row score-matchup" data-score-row data-display-order="${index + 1}" data-home="${escapeHtml(matchup.home)}" data-away="${escapeHtml(matchup.away)}">
-          <div class="score-team"><img src="${escapeHtml(home?.logo || "")}" alt=""><span>${escapeHtml(home?.name || matchup.home)}</span><input class="score-input" data-home-score type="number" min="0" step="1" aria-label="${escapeHtml(home?.name)} score" value="${result.homeScore ?? ""}"></div>
+          <div class="score-team"><img src="${escapeHtml(home?.logo || "")}" alt=""><span>${escapeHtml(home?.name || matchup.home)}</span><div class="score-numbers"><label>Games<input class="score-input" data-home-score type="number" min="0" step="1" aria-label="${escapeHtml(home?.name)} score" value="${result.homeScore ?? ""}"></label><label>KOs (optional)<input class="score-input" data-home-kos type="number" min="0" step="1" aria-label="${escapeHtml(home?.name)} KOs" value="${result.homeKOs ?? ""}"></label></div></div>
           <span class="matchup-versus">–</span>
-          <div class="score-team"><img src="${escapeHtml(away?.logo || "")}" alt=""><span>${escapeHtml(away?.name || matchup.away)}</span><input class="score-input" data-away-score type="number" min="0" step="1" aria-label="${escapeHtml(away?.name)} score" value="${result.awayScore ?? ""}"></div>
+          <div class="score-team"><img src="${escapeHtml(away?.logo || "")}" alt=""><span>${escapeHtml(away?.name || matchup.away)}</span><div class="score-numbers"><label>Games<input class="score-input" data-away-score type="number" min="0" step="1" aria-label="${escapeHtml(away?.name)} score" value="${result.awayScore ?? ""}"></label><label>KOs (optional)<input class="score-input" data-away-kos type="number" min="0" step="1" aria-label="${escapeHtml(away?.name)} KOs" value="${result.awayKOs ?? ""}"></label></div></div>
         </div>`;
     }).join("");
   };
@@ -390,10 +390,21 @@
     const week = leagueState.currentWeek + 1;
     elements.advanceWeek.disabled = true;
     try {
+      // Read the saved schedule, including edits made on another admin's device.
+      const savedCompetition = await window.PokeLeagueCompetition.read();
+      if (savedCompetition.currentWeek !== leagueState.currentWeek) {
+        applyCompetition(savedCompetition);
+        saveState("The league week changed on another device. Review the current week before advancing.");
+        setActiveTab("schedule");
+        return;
+      }
       await window.PokeLeagueCompetition.setCurrentWeek(adminAccessCode, week);
+      const competition = await window.PokeLeagueCompetition.read().catch(() => savedCompetition);
+      applyCompetition(competition);
       leagueState.currentWeek = week;
-      if (!leagueState.schedules[week]) leagueState.schedules[week] = defaultSchedule(week);
-      saveState(`Advanced to Week ${week}. Review and save the matchups below.`);
+      saveState(leagueState.schedules[week]?.length
+        ? `Advanced to Week ${week}. Your saved matchups are preserved.`
+        : `Advanced to Week ${week}. No schedule saved yet; review the suggested matchups below.`);
       setActiveTab("schedule");
       $("[data-admin-panel='schedule']")?.scrollIntoView({ behavior: "smooth", block: "start" });
     } catch (error) {
@@ -455,12 +466,22 @@
       for (const row of $$("[data-score-row]", elements.scoreRows)) {
         const homeValue = $("[data-home-score]", row).value;
         const awayValue = $("[data-away-score]", row).value;
-        if (!homeValue && !awayValue) continue;
+        const homeKOs = $("[data-home-kos]", row).value;
+        const awayKOs = $("[data-away-kos]", row).value;
+        if (!homeValue && !awayValue && !homeKOs && !awayKOs) continue;
         if (homeValue === "" || awayValue === "") {
           announce("Enter both scores for a matchup, or leave both blank.", true);
           return;
         }
-        results.push({ displayOrder: Number(row.dataset.displayOrder), home: row.dataset.home, away: row.dataset.away, homeScore: Number(homeValue), awayScore: Number(awayValue) });
+        if ((homeKOs === "") !== (awayKOs === "")) {
+          announce("Enter KOs for both teams, or leave both KO fields blank.", true);
+          return;
+        }
+        if ([homeValue, awayValue, homeKOs, awayKOs].some((value) => value !== "" && (!Number.isInteger(Number(value)) || Number(value) < 0))) {
+          announce("Games and KOs must be non-negative whole numbers.", true);
+          return;
+        }
+        results.push({ displayOrder: Number(row.dataset.displayOrder), home: row.dataset.home, away: row.dataset.away, homeScore: Number(homeValue), awayScore: Number(awayValue), homeKOs: homeKOs === "" ? null : Number(homeKOs), awayKOs: awayKOs === "" ? null : Number(awayKOs) });
       }
       const submit = $("button[type='submit']", elements.scoreForm);
       submit.disabled = true;
@@ -583,6 +604,25 @@
     });
   };
 
+  const applyCompetition = (competition) => {
+    leagueState.currentWeek = competition.currentWeek;
+    leagueState.totalWeeks = competition.totalWeeks;
+    leagueState.pointCap = competition.pointCap;
+    leagueState.playoffs.teamCount = competition.playoffTeamCount;
+    leagueState.schedules = {};
+    leagueState.scores = {};
+    competition.matchups.forEach((matchup) => {
+      (leagueState.schedules[matchup.week] ||= []).push({ home: matchup.home_team_id, away: matchup.away_team_id });
+      if (matchup.home_score != null && matchup.away_score != null) {
+        (leagueState.scores[matchup.week] ||= []).push({
+          displayOrder: matchup.display_order, home: matchup.home_team_id, away: matchup.away_team_id,
+          homeScore: matchup.home_score, awayScore: matchup.away_score,
+          homeKOs: matchup.home_kos, awayKOs: matchup.away_kos,
+        });
+      }
+    });
+  };
+
   const initialize = async () => {
     try {
       const [accountResponse, teamResponse, catalogResponse, savedRosters, savedWaiverSettings, competition] = await Promise.all([
@@ -591,7 +631,7 @@
         fetch("data/pokemon-catalog.json?v=point-values2", { cache: "no-store" }),
         window.PokeLeagueRosters.read(),
         window.PokeLeagueWaivers.readSettings(),
-        window.PokeLeagueCompetition.read().catch(() => null),
+        window.PokeLeagueCompetition.read(),
       ]);
       if (!accountResponse.ok || !teamResponse.ok || !catalogResponse.ok) throw new Error("League data could not be loaded.");
       accounts = (await accountResponse.json()).accounts || {};
@@ -601,26 +641,7 @@
       waiverSettings = savedWaiverSettings;
       leagueState.totalWeeks = savedWaiverSettings.totalWeeks;
       leagueState.pointCap = savedWaiverSettings.pointCap;
-      if (competition) {
-        leagueState.currentWeek = competition.currentWeek;
-        leagueState.totalWeeks = competition.totalWeeks;
-        leagueState.pointCap = competition.pointCap;
-        leagueState.playoffs.teamCount = competition.playoffTeamCount;
-        leagueState.schedules = {};
-        leagueState.scores = {};
-        competition.matchups.forEach((matchup) => {
-          (leagueState.schedules[matchup.week] ||= []).push({ home: matchup.home_team_id, away: matchup.away_team_id });
-          if (matchup.home_score != null && matchup.away_score != null) {
-            (leagueState.scores[matchup.week] ||= []).push({
-              displayOrder: matchup.display_order,
-              home: matchup.home_team_id,
-              away: matchup.away_team_id,
-              homeScore: matchup.home_score,
-              awayScore: matchup.away_score,
-            });
-          }
-        });
-      }
+      applyCompetition(competition);
       window.PokeLeagueState.write(leagueState);
       catalog = window.PokeLeagueState.applyCatalog(baseCatalog, leagueState);
 

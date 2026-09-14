@@ -40,6 +40,7 @@
       wins: 0,
       losses: 0,
       gameWins: 0,
+      differential: 0,
     }]));
 
     Object.values(state.scores || {}).flat().forEach((result) => {
@@ -51,6 +52,13 @@
       if (!Number.isFinite(homeScore) || !Number.isFinite(awayScore)) return;
       home.gameWins += Math.max(0, homeScore);
       away.gameWins += Math.max(0, awayScore);
+      if (result.homeKOs != null && result.awayKOs != null) {
+        const homeKOs = Number(result.homeKOs), awayKOs = Number(result.awayKOs);
+        if (Number.isInteger(homeKOs) && Number.isInteger(awayKOs) && homeKOs >= 0 && awayKOs >= 0) {
+          home.differential += homeKOs - awayKOs;
+          away.differential += awayKOs - homeKOs;
+        }
+      }
       if (homeScore > awayScore) {
         home.wins += 1;
         away.losses += 1;
@@ -85,6 +93,7 @@
           <div><dt>L</dt><dd>${entry.losses}</dd></div>
           <div><dt>GW</dt><dd>${entry.gameWins}</dd></div>
           <div><dt>WinPct</dt><dd>${winPctLabel(entry)}</dd></div>
+          <div title="Reported KOs for minus KOs against"><dt>KO Diff</dt><dd>${entry.differential > 0 ? "+" : ""}${entry.differential}</dd></div>
         </dl>
       </article>`).join("");
   };
@@ -157,6 +166,8 @@
           away: matchup.away_team_id,
           homeScore: matchup.home_score,
           awayScore: matchup.away_score,
+          homeKOs: matchup.home_kos,
+          awayKOs: matchup.away_kos,
         });
       });
     }

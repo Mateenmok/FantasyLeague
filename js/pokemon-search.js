@@ -28,6 +28,7 @@ const toast = document.querySelector("[data-waiver-toast]");
 
 let catalog = [];
 let baseCatalog = [];
+let serverPointMap = {};
 let detailIndex = {};
 let activeTier = "All";
 let account = null;
@@ -185,10 +186,13 @@ const submitTransaction = async ({ addName = null, dropName = null }) => {
   renderRoster();
   render();
   try {
+    await refreshPointValues();
+    const latestPoints = rosterPoints(proposedRoster({ addName, dropName }));
+    if (latestPoints > waiverSettings.pointCap) throw new Error(`That move would exceed the ${waiverSettings.pointCap}-point cap.`);
     await window.PokeLeagueWaivers.transact({
       accessCode: localStorage.getItem("pokeleague.accessCode") || sessionStorage.getItem("pokeleague.accessCode"),
       teamId: account.teamId,
-      addName, dropName, resultingPoints,
+      addName, dropName, resultingPoints: latestPoints,
     });
     await refreshRosters();
     if (swapDialog.open) swapDialog.close();
@@ -338,19 +342,28 @@ swapOptionsTarget.addEventListener("click", (event) => {
 });
 swapDialog.addEventListener("close", () => { pendingAdd = null; swapOptionsTarget.replaceChildren(); });
 
+const refreshPointValues = async () => {
+  serverPointMap = await window.PokeLeagueState.readPointValues();
+  catalog = window.PokeLeagueState.applyPointMap(baseCatalog, serverPointMap);
+  renderRoster();
+  render();
+};
+
 Promise.all([
-  fetch("data/pokemon-catalog.json?v=season-1-3"),
+  fetch("data/pokemon-catalog.json?v=point-values3", { cache: "no-store" }),
   fetch("data/pokemon-detail-index.json?v=move-search1"),
   fetch("data/teams.json?v=teams8", { cache: "no-store" }),
   window.PokeLeagueRosters.read(),
   window.PokeLeagueWaivers.readSettings(),
-]).then(async ([catalogResponse, indexResponse, teamsResponse, savedRosters, settings]) => {
+  window.PokeLeagueState.readPointValues(),
+]).then(async ([catalogResponse, indexResponse, teamsResponse, savedRosters, settings, pointMap]) => {
   if (!catalogResponse.ok || !indexResponse.ok || !teamsResponse.ok) throw new Error("Could not load the Pokemon roster.");
   const [catalogData, indexData, teamData] = await Promise.all([
     catalogResponse.json(), indexResponse.json(), teamsResponse.json(),
   ]);
   baseCatalog = catalogData;
-  catalog = window.PokeLeagueState?.applyCatalog(baseCatalog) || baseCatalog;
+  serverPointMap = pointMap;
+  catalog = window.PokeLeagueState.applyPointMap(baseCatalog, serverPointMap);
   detailIndex = indexData;
   const accounts = teamData.accounts || {};
   teams = Object.values(accounts).map((entry) => ({ id: entry.teamId, name: entry.teamName }));
@@ -373,13 +386,19 @@ Promise.all([
 
 window.addEventListener("pokeleague:statechange", (event) => {
   if (!baseCatalog.length) return;
-  catalog = window.PokeLeagueState?.applyCatalog(baseCatalog, event.detail) || baseCatalog;
+  catalog = window.PokeLeagueState.applyPointMap(baseCatalog, serverPointMap);
   renderRoster();
   render();
 });
 window.addEventListener("storage", (event) => {
   if (event.key !== window.PokeLeagueState?.storageKey || !baseCatalog.length) return;
-  catalog = window.PokeLeagueState.applyCatalog(baseCatalog);
+  catalog = window.PokeLeagueState.applyPointMap(baseCatalog, serverPointMap);
   renderRoster();
   render();
 });
+const refreshVisiblePoints = () => {
+  if (!document.hidden && baseCatalog.length) refreshPointValues().catch(() => announce("Point values could not refresh. Moves will be checked again before saving.", true));
+};
+window.setInterval(refreshVisiblePoints, 15000);
+document.addEventListener("visibilitychange", refreshVisiblePoints);
+window.addEventListener("focus", refreshVisiblePoints);

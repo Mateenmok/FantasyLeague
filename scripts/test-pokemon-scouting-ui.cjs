@@ -26,6 +26,7 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     await page.route('**/*', async route => {
       const url = new URL(route.request().url());
       if (url.hostname.endsWith('supabase.co')) {
+        if (url.pathname.endsWith('/read_flash_family_point_values')) return route.fulfill({ json: Object.fromEntries(catalog.map(p => [p.name, Number(p.points)])) });
         if (url.pathname.endsWith('/team_rosters')) return route.fulfill({ json: rosters });
         if (url.pathname.endsWith('/flash_family_pokemon_nicknames')) return route.fulfill({ json: nicknames });
         if (url.pathname.endsWith('/set_flash_family_pokemon_nickname')) {
