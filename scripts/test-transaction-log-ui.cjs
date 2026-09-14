@@ -22,7 +22,11 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     let nextId = 66;
     let failRead = false;
     let failWrite = false;
-    let rosters = [{ team_id: 'miami-dragapults', pokemon_slug: 'camerupt', slot_number: 1 }];
+    let rosterCap = 10;
+    let rosters = [
+      { team_id: 'miami-dragapults', pokemon_slug: 'dragapult', slot_number: 1 },
+      { team_id: 'miami-dragapults', pokemon_slug: 'camerupt', slot_number: 2 },
+    ];
     await page.route('**/*', async route => {
       const url = new URL(route.request().url());
       if (url.hostname.endsWith('supabase.co')) {
@@ -35,7 +39,7 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
         if (url.pathname.endsWith('/leagues')) return route.fulfill({ json: [{
           waiver_window_start_at: new Date(Date.now() - 86400000).toISOString(),
           waiver_window_end_at: new Date(Date.now() + 86400000).toISOString(),
-          roster_point_cap: 50, roster_pokemon_cap: 10, regular_season_matches: 10,
+          roster_point_cap: 50, roster_pokemon_cap: rosterCap, regular_season_matches: 10,
         }] });
         if (url.pathname.endsWith('/team_rosters')) return route.fulfill({ json: rosters });
         if (url.pathname.endsWith('/submit_flash_family_waiver')) {
@@ -45,7 +49,7 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
             if (!slug) continue;
             entries.unshift({ id: nextId++, team_id: body.p_team_id, pokemon_slug: slug, action, source: 'waiver', created_at: new Date().toISOString() });
             if (action === 'dropped') rosters = rosters.filter(row => row.pokemon_slug !== slug);
-            else rosters.push({ team_id: body.p_team_id, pokemon_slug: slug, slot_number: 2 });
+            else rosters.push({ team_id: body.p_team_id, pokemon_slug: slug, slot_number: 3 });
           }
           return route.fulfill({ status: 204 });
         }
@@ -130,6 +134,17 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     await page.waitForFunction(() => document.querySelector('[data-transaction-history-status]').textContent.startsWith('No transactions'));
     assert.equal(await page.locator('[data-transaction-more]').isVisible(), false);
     assert.deepEqual(errors, []);
+    // Mascots are visibly locked and excluded from the full-roster swap picker.
+    rosterCap = 2;
+    await page.reload();
+    await page.waitForSelector('[data-drop-pokemon="Dragapult"]');
+    assert(await page.locator('[data-drop-pokemon="Dragapult"]').isDisabled());
+    assert.match(await page.locator('[data-drop-pokemon="Dragapult"]').innerText(), /Mascot.*Locked/i);
+    const camerupt = page.locator('.pokemon-card').filter({ has: page.getByRole('heading', { name: 'Camerupt', exact: true }) });
+    await camerupt.locator('.waiver-add-button').click();
+    await page.waitForSelector('[data-waiver-swap-dialog][open]');
+    assert.equal(await page.locator('[data-swap-drop="Dragapult"]').count(), 0);
+    assert.equal(await page.locator('[data-swap-drop="Crabominable"]').count(), 1);
     console.log('PASS: six latest moves, complete paginated history, live add/drop updates, rejected moves, light/dark/mobile, scrollable dialog, focus/ESC, empty/error/retry states. No production writes.');
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exitCode = 1; });

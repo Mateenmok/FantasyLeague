@@ -99,6 +99,19 @@ const migration = name => fs.readFileSync(path.join(root, 'supabase/migrations',
       assert.equal((await rows()).length, all.length, 'Feed must not expose other leagues');
       await db.exec('reset role');
     }
-    console.log('PASS: durable add/drop/swap logs, all owner codes, failed/closed/full/unauthorized moves, atomic rollback, completed trades, no duplicates, pagination, read-only RLS. No production writes.');
+    await db.exec(migration('20260914200000_protect_waiver_mascots.sql'));
+    for (const [code, account] of Object.entries(accounts).filter(([code]) => !code.startsWith('DRAFTTEST'))) {
+      await db.query('delete from team_rosters where team_id = $1', [account.teamId]);
+      await move('mascot-' + account.teamId, null, 5, code, account.teamId);
+      await move('reserve-' + account.teamId, null, 10, code, account.teamId);
+      const before = await rows();
+      await assert.rejects(move(null, 'mascot-' + account.teamId, 5, code, account.teamId), /mascot cannot be dropped/);
+      await assert.rejects(move('replacement-' + account.teamId, 'mascot-' + account.teamId, 10, code, account.teamId), /mascot cannot be dropped/);
+      assert.deepEqual(await rows(), before, 'Rejected mascot moves must not log');
+      assert.equal((await db.query('select count(*)::int as n from team_rosters where team_id = $1', [account.teamId])).rows[0].n, 2);
+      await move('replacement-' + account.teamId, 'reserve-' + account.teamId, 10, code, account.teamId);
+      await move(null, 'replacement-' + account.teamId, 5, code, account.teamId);
+    }
+    console.log('PASS: transaction log regressions plus mascot drops/swaps rejected for all 14 owners; ordinary drops/swaps still work. No production writes.');
   } finally { await db.close(); }
 })().catch(error => { console.error(error); process.exitCode = 1; });

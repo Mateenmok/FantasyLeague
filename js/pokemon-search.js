@@ -43,6 +43,7 @@ const normalize = (value) => String(value || "").toLowerCase().normalize("NFKD")
   .replace(/[^a-z0-9]+/g, " ").trim();
 const pokemonFor = (name) => catalog.find((pokemon) => normalize(pokemon.name) === normalize(name));
 const currentRoster = () => account ? (rosterMap[account.teamId] || []) : [];
+const isMascot = (name) => Boolean(name) && normalize(name) === normalize(currentRoster()[0]);
 const pointsFor = (name) => Number(pokemonFor(name)?.points) || 0;
 const rosterPoints = (names = currentRoster()) => names.reduce((total, name) => total + pointsFor(name), 0);
 
@@ -132,8 +133,9 @@ const renderRoster = () => {
     button.className = "waiver-drop-button";
     button.type = "button";
     button.dataset.dropPokemon = pokemon.name;
-    button.textContent = actionPending ? "Working..." : "Drop";
-    button.disabled = actionPending || !waiverWindow().open;
+    button.textContent = isMascot(name) ? "Mascot · Locked" : actionPending ? "Working..." : "Drop";
+    button.disabled = isMascot(name) || actionPending || !waiverWindow().open;
+    if (isMascot(name)) button.title = "Your team's mascot cannot be dropped.";
     card.append(heading, meta, button);
     fragment.append(card);
   }
@@ -156,6 +158,7 @@ const ownerMap = () => {
 };
 
 const eligibleDrops = (addPokemon) => currentRoster().map((name) => pokemonFor(name)).filter(Boolean)
+  .filter((dropPokemon) => !isMascot(dropPokemon.name))
   .filter((dropPokemon) => rosterPoints() - Number(dropPokemon.points) + Number(addPokemon.points) <= waiverSettings.pointCap);
 
 const proposedRoster = ({ addName = null, dropName = null }) => {
@@ -177,6 +180,7 @@ const submitTransaction = async ({ addName = null, dropName = null }) => {
   if (!account) return announce("Sign in before making a waiver move.", true);
   if (!waiverWindow().open) return announce("Waivers are currently closed.", true);
   if (actionPending) return;
+  if (isMascot(dropName)) return announce("Your team's mascot cannot be dropped.", true);
   const nextRoster = proposedRoster({ addName, dropName });
   const resultingPoints = rosterPoints(nextRoster);
   if (nextRoster.length > waiverSettings.rosterCap) return announce("Your roster is full. Choose a Pokemon to drop.", true);
