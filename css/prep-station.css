@@ -549,6 +549,88 @@ body.prep-station-body .guide-shell {
   box-shadow: 4px 5px 0 #111, 7px 8px 0 #f3c93d;
 }
 
+/* Keep late imported light-theme rules from obscuring calculator/scouting text.
+   Pair foreground and surface overrides; bright action/type badges retain ink. */
+:root[data-theme="dark"] body.prep-station-body :is(
+  .popular-spreads, .popular-body, .popular-row, .move-card, .move-slot,
+  .move-result, .result, .note-pokemon-picker, .tb-header-controls .tb-form-label
+) {
+  background: #202b3b !important;
+  color: #f4f7fb !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body :is(.popular-head, .popular-row:first-child) {
+  background: #2c3b50 !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body :is(
+  .stage-value, .budget-row strong, .result-label, .result-note b,
+  .popular-title, .popular-nature, .move-damage-main, .move-result.has-damage,
+  .note-pokemon-picker strong, .note-stat-cell strong
+) {
+  color: #f4f7fb !important;
+  text-shadow: none !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body :is(
+  .no-mega, .stage-na, .popular-sub, .popular-source, .popular-empty,
+  .popular-loading, .popular-spread-text, .recommend-reason,
+  .move-meta, .damage-compact-part, .damage-compact-sep, .damage-compact-engine,
+  .move-reason, .move-ko, .tb-form-state, .note-pokemon-picker span, .note-stat-cell span,
+  .note-stat-empty, .guide-kicker, .guide-card-kicker, .guide-quick-title
+) {
+  color: #bfccdc !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body :is(.stage-value.positive, .nature-meta-raised, .tb-nature-up, .move-ko.ko) {
+  color: #85eba6 !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body :is(.stage-value.negative, .nature-meta-lowered, .tb-nature-down) {
+  color: #ff9bab !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body :is(.popular-share, .move-damage-percent) {
+  color: #86e6fa !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body .move-ko.possible {
+  color: #ffe08b !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body .note-sheet-header {
+  background: linear-gradient(110deg, #422a3b, #263b49 55%, #352b49) !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body .note-sheet-title-block h2 {
+  color: #f4f7fb !important;
+  text-shadow: none !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body .note-sheet-title-block p {
+  color: #bfccdc !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body .note-stat-cell {
+  background: color-mix(in srgb, var(--note-stat-color) 14%, #202b3b) !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body :is(.picker-close, .move-auto-badge) {
+  background: #2c3b50 !important;
+  color: #f4f7fb !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body .picker-tab,
+:root[data-theme="dark"] body.prep-station-body .guide-action-row .guide-action {
+  color: #080a0d !important;
+  text-shadow: none !important;
+}
+
+:root[data-theme="dark"] body.prep-station-body :is(.note-pokemon-notes, .note-long-field) textarea::placeholder {
+  color: #b3c1d2 !important;
+  opacity: 1;
+}
+
 @media (max-width: 760px) {
   body.prep-station-body > .app {
     width: min(calc(100% - 22px), 1580px);

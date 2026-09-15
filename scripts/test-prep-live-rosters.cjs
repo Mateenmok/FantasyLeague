@@ -55,6 +55,44 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     assert.match(await page.locator('#leftName').innerText(), /Eelektross/i);
     await page.locator('#leftRosterList').screenshot({ path: '/tmp/prep-live-light.png' });
     await page.evaluate(() => document.documentElement.dataset.theme = 'dark');
+    const assertContrast = async (selector) => {
+      const ratios = await page.locator(selector).evaluateAll(elements => elements.map(el => {
+        const channels = color => {
+          const values = (color.match(/[\d.]+/g) || []).map(Number).slice(0, 3);
+          return color.startsWith('color(srgb') ? values : values.map(v => v / 255);
+        };
+        const luminance = color => channels(color).map(v => v <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4).reduce((sum, v, i) => sum + v * [.2126, .7152, .0722][i], 0);
+        let parent = el, bg;
+        while (parent) { bg = getComputedStyle(parent).backgroundColor; if (bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') break; parent = parent.parentElement; }
+        const fg = luminance(getComputedStyle(el).color), back = luminance(bg);
+        return (Math.max(fg, back) + .05) / (Math.min(fg, back) + .05);
+      }));
+      assert(ratios.length && ratios.every(r => r >= 4.5), selector + ' contrast ratios: ' + ratios.join(', '));
+    };
+    {
+      await assertContrast('.stage-value, .budget-row strong, .result-label, .no-mega, .popular-nature, .popular-spread-text, .recommend-reason, .move-result, .move-auto-badge');
+      await page.screenshot({ path: '/tmp/prep-contrast-calculator.png', fullPage: true });
+      await page.locator('#copyToTeamBuilder').click();
+      await page.locator('[data-workspace-page="teambuilder"]').click();
+      await assertContrast('.tb-form-state, .tb-form-label, .tb-nature-up, .tb-nature-down');
+      await page.screenshot({ path: '/tmp/prep-contrast-builder.png', fullPage: true });
+      await page.locator('[data-workspace-page="calculator"]').click();
+      await page.locator('#sendToNoteSheet').click();
+      await page.locator('[data-workspace-page="notesheet"]').click();
+      await assertContrast('.note-stat-cell strong, .note-stat-cell span, .note-pokemon-picker strong, .note-pokemon-picker span');
+      await page.screenshot({ path: '/tmp/prep-contrast-notes.png', fullPage: true });
+      await page.locator('[data-workspace-page="guide"]').click();
+      await assertContrast('.guide-card-kicker');
+      await page.screenshot({ path: '/tmp/prep-contrast-guide.png', fullPage: true });
+      await page.locator('[data-workspace-page="calculator"]').click();
+      await page.locator('#leftNaturePretty').click();
+      await assertContrast('.nature-meta-raised, .nature-meta-lowered, .picker-tab, .picker-close');
+      await page.screenshot({ path: '/tmp/prep-contrast-picker.png', fullPage: false });
+      await page.locator('#pickerClose').click();
+      await page.evaluate(() => document.documentElement.dataset.theme = 'light');
+      assert.equal(await page.locator('.stage-value').first().evaluate(el => getComputedStyle(el).color), 'rgb(10, 13, 16)');
+      await page.evaluate(() => document.documentElement.dataset.theme = 'dark');
+    }
     await page.locator('#rightRosterDock').screenshot({ path: '/tmp/prep-live-dark.png' });
 
     // Live refresh retains the selected teams and calculator selections.
@@ -101,6 +139,6 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     assert.equal(await page.locator('#leftRoster').inputValue(), 'boston-eeltics');
     assert.deepEqual(writes, []);
     assert.deepEqual(errors, []);
-    console.log('PASS: all 14 real teams, own-team default, custom opponent picker, exact rosters without fillers, calculator selection, regional names, empty/unavailable data, refresh, retry, dark/mobile. No production writes.');
+    console.log('PASS: all 14 real teams, exact live rosters, calculator selection, regional names, refresh/retry, dark/mobile, repaired text contrast >= 4.5:1, and light-mode preservation. No production writes.');
   } finally { await browser.close(); }
 })().catch(e => { console.error(e); process.exitCode = 1; });
