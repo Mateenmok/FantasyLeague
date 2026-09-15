@@ -56,6 +56,7 @@
   let selectedTeamId = "boston-eeltics";
   let adminAccessCode = "";
   let rosterWritePending = false;
+  let gameLineupDrafts = {};
   let statusTimer;
 
   const findTeam = (teamId) => teams.find((team) => team.id === teamId);
@@ -251,8 +252,10 @@
     const week = leagueState.currentWeek;
     const schedule = leagueState.schedules?.[week] || defaultSchedule(week);
     const savedScores = leagueState.scores?.[week] || [];
+    gameLineupDrafts = {};
     elements.scoreRows.innerHTML = schedule.map((matchup, index) => {
       const result = savedScores.find((score) => score.home === matchup.home && score.away === matchup.away) || {};
+      gameLineupDrafts[index + 1] = structuredClone(result.gameLineups || []);
       const home = findTeam(matchup.home);
       const away = findTeam(matchup.away);
       return `
@@ -260,8 +263,22 @@
           <div class="score-team"><img src="${escapeHtml(home?.logo || "")}" alt=""><span>${escapeHtml(home?.name || matchup.home)}</span><div class="score-numbers"><label>Games<input class="score-input" data-home-score type="number" min="0" step="1" aria-label="${escapeHtml(home?.name)} score" value="${result.homeScore ?? ""}"></label><label>KOs (optional)<input class="score-input" data-home-kos type="number" min="0" step="1" aria-label="${escapeHtml(home?.name)} KOs" value="${result.homeKOs ?? ""}"></label></div></div>
           <span class="matchup-versus">–</span>
           <div class="score-team"><img src="${escapeHtml(away?.logo || "")}" alt=""><span>${escapeHtml(away?.name || matchup.away)}</span><div class="score-numbers"><label>Games<input class="score-input" data-away-score type="number" min="0" step="1" aria-label="${escapeHtml(away?.name)} score" value="${result.awayScore ?? ""}"></label><label>KOs (optional)<input class="score-input" data-away-kos type="number" min="0" step="1" aria-label="${escapeHtml(away?.name)} KOs" value="${result.awayKOs ?? ""}"></label></div></div>
+          <div class="score-game-details" data-game-buttons></div>
         </div>`;
     }).join("");
+    $$("[data-score-row]",elements.scoreRows).forEach(renderGameButtons);
+  };
+
+  const gameCount = row => {
+    const home=$("[data-home-score]",row).value, away=$("[data-away-score]",row).value;
+    return home===""||away==="" ? 3 : Math.max(0,Math.min(100,Number(home)+Number(away)));
+  };
+  const renderGameButtons = row => {
+    const games=gameLineupDrafts[row.dataset.displayOrder]||[];
+    $("[data-game-buttons]",row).innerHTML='<span>Optional game lineups · saved with weekly scores</span>'+Array.from({length:gameCount(row)},(_,i)=>{
+      const g=games.find(entry=>entry.game===i+1);
+      return `<button type="button" data-edit-game="${i+1}">Edit Game ${i+1}${g?` · ${g.home.length}/4 vs ${g.away.length}/4`:''}</button>`;
+    }).join('');
   };
 
   const playoffTeamIds = () => {
@@ -468,7 +485,12 @@
         const awayValue = $("[data-away-score]", row).value;
         const homeKOs = $("[data-home-kos]", row).value;
         const awayKOs = $("[data-away-kos]", row).value;
-        if (!homeValue && !awayValue && !homeKOs && !awayKOs) continue;
+        if (!homeValue && !awayValue && !homeKOs && !awayKOs) {
+          if ((gameLineupDrafts[row.dataset.displayOrder]||[]).some(g=>g.home.length||g.away.length)) {
+            announce("Enter the game count for matchups with lineup details before saving.",true);return;
+          }
+          continue;
+        }
         if (homeValue === "" || awayValue === "") {
           announce("Enter both scores for a matchup, or leave both blank.", true);
           return;
@@ -481,19 +503,33 @@
           announce("Games and KOs must be non-negative whole numbers.", true);
           return;
         }
-        results.push({ displayOrder: Number(row.dataset.displayOrder), home: row.dataset.home, away: row.dataset.away, homeScore: Number(homeValue), awayScore: Number(awayValue), homeKOs: homeKOs === "" ? null : Number(homeKOs), awayKOs: awayKOs === "" ? null : Number(awayKOs) });
+        results.push({ displayOrder: Number(row.dataset.displayOrder), home: row.dataset.home, away: row.dataset.away, homeScore: Number(homeValue), awayScore: Number(awayValue), homeKOs: homeKOs === "" ? null : Number(homeKOs), awayKOs: awayKOs === "" ? null : Number(awayKOs), gameLineups:(gameLineupDrafts[row.dataset.displayOrder]||[]).filter(g=>g.game<=Number(homeValue)+Number(awayValue)) });
       }
       const submit = $("button[type='submit']", elements.scoreForm);
       submit.disabled = true;
       try {
         await window.PokeLeagueCompetition.saveScores(adminAccessCode, leagueState.currentWeek, results);
         leagueState.scores[leagueState.currentWeek] = results;
+        gameLineupDrafts = Object.fromEntries(results.map(result=>[result.displayOrder,structuredClone(result.gameLineups)]));
         saveState(`Week ${leagueState.currentWeek} scores saved.`);
       } catch (error) {
         announce(error.message || "Scores could not be saved.", true);
       } finally {
         submit.disabled = false;
       }
+    });
+    elements.scoreRows.addEventListener('input',event=>{
+      if(event.target.matches('[data-home-score],[data-away-score]'))renderGameButtons(event.target.closest('[data-score-row]'));
+    });
+    elements.scoreRows.addEventListener('click',event=>{
+      const button=event.target.closest('[data-edit-game]');if(!button)return;
+      const row=button.closest('[data-score-row]'),game=Number(button.dataset.editGame),key=row.dataset.displayOrder;
+      const rosters=Object.fromEntries([row.dataset.home,row.dataset.away].map(id=>[id,rosterFor(id).map(window.PokeLeagueGameLineups.slug)]));
+      window.PokeLeagueGameLineups.edit({game,home:findTeam(row.dataset.home),away:findTeam(row.dataset.away),catalog,rosters,
+        lineup:gameLineupDrafts[key]?.find(g=>g.game===game),onApply:lineup=>{
+          gameLineupDrafts[key]=(gameLineupDrafts[key]||[]).filter(g=>g.game!==game).concat(lineup);renderGameButtons(row);
+          requestAnimationFrame(()=>row.querySelector(`[data-edit-game="${game}"]`)?.focus());
+        }});
     });
     elements.seasonForm.addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -618,6 +654,7 @@
           displayOrder: matchup.display_order, home: matchup.home_team_id, away: matchup.away_team_id,
           homeScore: matchup.home_score, awayScore: matchup.away_score,
           homeKOs: matchup.home_kos, awayKOs: matchup.away_kos,
+          gameLineups: matchup.game_lineups || [],
         });
       }
     });

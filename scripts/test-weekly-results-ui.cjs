@@ -27,18 +27,19 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
       if (url.hostname.endsWith('supabase.co')) {
         const endpoint = url.pathname.split('/').pop();
         if (['read_flash_family_point_values','read_flash_family_draft_points'].includes(endpoint)) return route.fulfill({ json: points });
-        if (['team_rosters','flash_family_transaction_log','flash_family_pickems'].includes(endpoint)) return route.fulfill({ json: [] });
+        if (endpoint==='team_rosters') return route.fulfill({json:teams.flatMap(t=>catalog.slice(0,6).map((p,i)=>({team_id:t.id,pokemon_slug:p.name.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,''),slot_number:i+1})))});
+        if (['flash_family_transaction_log','flash_family_pickems'].includes(endpoint)) return route.fulfill({ json: [] });
         if (endpoint === 'leagues') return route.fulfill({ json: [{ current_matchup_number: week, regular_season_matches: 10, roster_point_cap: 50, roster_pokemon_cap: 10, playoff_team_count: 8, waiver_window_start_at: new Date(Date.now()-86400000).toISOString(), waiver_window_end_at: new Date(Date.now()+86400000).toISOString() }] });
         if (endpoint === 'flash_family_matchups') return route.fulfill({ json: matchups });
         if (endpoint === 'set_flash_family_current_week') { week = route.request().postDataJSON().p_week; return route.fulfill({ status: 204 }); }
         if (endpoint === 'save_flash_family_week_schedule') { scheduleWrites++; throw new Error('Advancing must not save/regenerate a schedule'); }
-        if (endpoint === 'save_flash_family_week_results') {
+        if (endpoint === 'save_flash_family_week_reports') {
           resultWrites++;
           const b = route.request().postDataJSON();
           matchups = matchups.map(m => {
             if (m.week !== b.p_week) return m;
-            const i = b.p_display_orders.indexOf(m.display_order);
-            return { ...m, home_score: b.p_home_scores[i] ?? null, away_score: b.p_away_scores[i] ?? null, home_kos: b.p_home_kos[i] ?? null, away_kos: b.p_away_kos[i] ?? null };
+            const r = b.p_results.find(r=>r.displayOrder===m.display_order);
+            return { ...m, home_score: r?.homeScore ?? null, away_score: r?.awayScore ?? null, home_kos: r?.homeKOs ?? null, away_kos: r?.awayKOs ?? null,game_lineups:r?.gameLineups||[] };
           });
           return route.fulfill({ status: 204 });
         }
@@ -81,13 +82,37 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     await page.getByRole('button', { name: 'Save Scores', exact: true }).click();
     assert.equal(resultWrites, 0, 'Partial KO pair must not save');
     await row.locator('[data-away-kos]').fill('2');
+    assert.equal(await row.locator('[data-edit-game]').count(),2,'A 2–0 match has two game editors');
+    await row.locator('[data-edit-game="1"]').click();
+    const modal=page.locator('.game-lineup-dialog');
+    for(let i=0;i<4;i++)await page.locator('[data-game-side="home"]').nth(i).check();
+    assert(await page.locator('[data-game-side="home"]').nth(4).isDisabled(),'Fifth Pokemon disabled');
+    for(let i=0;i<2;i++)await page.locator('[data-game-side="away"]').nth(i).check();
+    await modal.screenshot({path:'/tmp/game-lineups-editor-light.png'});
+    await page.evaluate(()=>document.documentElement.dataset.theme='dark');
+    await modal.screenshot({path:'/tmp/game-lineups-editor-dark.png'});
+    await page.setViewportSize({width:390,height:844});
+    assert(await modal.evaluate(el=>el.scrollWidth<=el.clientWidth+1));
+    await modal.screenshot({path:'/tmp/game-lineups-editor-mobile.png'});
+    await page.locator('.game-lineup-apply').click();
+    assert.equal(resultWrites,0,'Applying details must not independently save the report');
+    await row.locator('[data-edit-game="2"]').click();
+    await page.locator('[data-game-side="away"]').nth(2).check();
+    await page.locator('.game-lineup-apply').click();
+    await page.setViewportSize({width:1440,height:1000});
     await page.getByRole('button', { name: 'Save Scores', exact: true }).click();
     await page.waitForFunction(() => document.querySelector('[data-admin-status]').textContent.includes('scores saved'));
     assert.equal(matchups[0].home_kos, 8);
+    assert.equal(matchups[0].game_lineups[0].home.length,4);
+    assert.equal(matchups[0].game_lineups[0].away.length,2);
+    assert.equal(matchups[0].game_lineups[1].home.length,0,'Zero revealed Pokemon allowed');
     await page.reload();
     await page.locator('[data-admin-tab="scores"]').click();
     assert.equal(await row.locator('[data-home-kos]').inputValue(), '8');
     assert.equal(await row.locator('[data-away-kos]').inputValue(), '2');
+    await row.locator('[data-edit-game="1"]').click();
+    assert.equal(await page.locator('[data-game-side="home"]:checked').count(),4,'Saved lineups reload');
+    await page.keyboard.press('Escape');
     await row.screenshot({ path: '/tmp/pokeleague-ko-admin-light.png' });
     await page.evaluate(() => document.documentElement.dataset.theme = 'dark');
     await row.screenshot({ path: '/tmp/pokeleague-ko-admin-dark.png' });
@@ -96,6 +121,23 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     assert(await row.evaluate(el => el.scrollWidth <= el.clientWidth+1));
 
     await page.setViewportSize({ width: 1440, height: 1000 });
+    await page.goto('http://127.0.0.1:8014/league-history.html');
+    await page.waitForFunction(()=>document.querySelector('[data-history-status]').textContent.length>0);
+    assert.deepEqual(errors,[]);
+    await page.locator('[data-history-week-next]').click();
+    await page.locator('[data-game-matchup="1:1"]').click();
+    assert.equal(await page.locator('.game-lineup-history').count(),2);
+    assert.equal(await page.locator('.game-lineup-history').first().locator('.game-lineup-mon').count(),6);
+    assert.match(await modal.innerText(),/Remaining Pokémon unrevealed or not recorded/);
+    assert.match(await modal.innerText(),/No Pokémon reported/);
+    await page.evaluate(()=>document.documentElement.dataset.theme='dark');
+    await modal.screenshot({path:'/tmp/game-lineups-history-dark.png'});
+    await page.setViewportSize({width:390,height:844});assert(await modal.evaluate(el=>el.scrollWidth<=el.clientWidth+1));
+    await modal.screenshot({path:'/tmp/game-lineups-history-mobile.png'});
+    await page.keyboard.press('Escape');
+    await page.locator('[data-history-team-filter]').selectOption(matchups[0].home_team_id);
+    await page.locator('[data-game-matchup="1:1"]').click();assert.equal(await page.locator('.game-lineup-history').count(),2);await page.keyboard.press('Escape');
+    await page.setViewportSize({width:1440,height:1000});
     await page.goto('http://127.0.0.1:8014/standings.html');
     await page.locator('.standing-card').first().waitFor();
     const home = page.locator('.standing-card').filter({ has: page.locator(`[data-open-team="${matchups[0].home_team_id}"]`) });
@@ -117,6 +159,6 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     await home.waitFor();
     assert.equal(await diff(home).innerText(), '-4', 'Cleared KO values stop contributing');
     assert.deepEqual(errors, []);
-    console.log('PASS: FLash, authoritative/live-refresh points, preserved Week 1 schedule including cross-admin edits, optional KO input validation/reload, signed cumulative differential, light/dark/mobile. No production writes.');
+    console.log('PASS: optional 0–4 per-game lineups, atomic report payload/reload/history/team filter, light/dark/mobile, plus FLash, points, schedules, KOs and standings regressions. No production writes.');
   } finally { await browser.close(); }
 })().catch(e => { console.error(e); process.exitCode=1; });

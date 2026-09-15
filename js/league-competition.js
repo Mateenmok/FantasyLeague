@@ -32,7 +32,7 @@
     });
     const matchupQuery = new URLSearchParams({
       league_id: `eq.${LEAGUE_ID}`,
-      select: "week,display_order,home_team_id,away_team_id,home_score,away_score,home_kos,away_kos",
+      select: "week,display_order,home_team_id,away_team_id,home_score,away_score,home_kos,away_kos,game_lineups",
       order: "week.asc,display_order.asc",
     });
     const [leagueRows, matchups] = await Promise.all([
@@ -79,14 +79,10 @@
     p_away_team_ids: matchups.map((matchup) => matchup.away),
   });
 
-  const saveScores = (accessCode, week, results) => rpc("save_flash_family_week_results", {
+  const saveScores = (accessCode, week, results) => rpc("save_flash_family_week_reports", {
     p_access_code: String(accessCode || "").trim().toUpperCase(),
     p_week: week,
-    p_display_orders: results.map((result) => result.displayOrder),
-    p_home_scores: results.map((result) => result.homeScore),
-    p_away_scores: results.map((result) => result.awayScore),
-    p_home_kos: results.map((result) => result.homeKOs ?? null),
-    p_away_kos: results.map((result) => result.awayKOs ?? null),
+    p_results: results,
   });
 
   const setCurrentWeek = (accessCode, week) => rpc("set_flash_family_current_week", {

@@ -39,7 +39,7 @@
     const home = teamFor(matchup.home_team_id);
     const away = teamFor(matchup.away_team_id);
     return `
-      <article class="history-score-card">
+      <button type="button" class="history-score-card" data-game-matchup="${matchup.week}:${matchup.display_order}" aria-label="View game details: ${escapeHtml(home.name)} versus ${escapeHtml(away.name)}">
         ${showWeek ? `<span class="history-score-week">Week ${escapeHtml(matchup.week)}</span>` : ""}
         <div class="history-score-team">
           <img src="${escapeHtml(home.logo)}" alt="" loading="lazy">
@@ -50,7 +50,8 @@
           <img src="${escapeHtml(away.logo)}" alt="" loading="lazy">
           <strong>${escapeHtml(away.name)}</strong>
         </div>
-      </article>`;
+        <span class="history-game-hint">View game lineups →</span>
+      </button>`;
   };
 
   const renderScores = () => {
@@ -133,6 +134,11 @@
   previousButton.addEventListener("click", () => { selectedWeek = Math.max(0, selectedWeek - 1); renderScores(); });
   nextButton.addEventListener("click", () => { selectedWeek = Math.min(currentWeek, selectedWeek + 1); renderScores(); });
   teamFilter.addEventListener("change", renderScores);
+  scoreGrid.addEventListener('click',event=>{
+    const button=event.target.closest('[data-game-matchup]');if(!button)return;
+    const matchup=matchups.find(m=>`${m.week}:${m.display_order}`===button.dataset.gameMatchup);if(!matchup)return;
+    window.PokeLeagueGameLineups.view({matchup,home:teamFor(matchup.home_team_id),away:teamFor(matchup.away_team_id),catalog});
+  });
 
   Promise.all([
     fetch("data/league-teams.json?v=league-teams2", { cache: "no-store" }),
