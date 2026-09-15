@@ -25,6 +25,8 @@
   <script src="js/home-status.js?v=league-status9" defer></script>
   <link rel="stylesheet" href="css/survivor.css?v=survivor1">
   <script src="js/survivor.js?v=survivor1" defer></script>
+  <link rel="stylesheet" href="css/opening-night.css?v=opening1">
+  <script src="js/opening-night.js?v=opening1" defer></script>
 </head>
 <body>
   <div class="home-silhouettes" aria-hidden="true">
@@ -68,6 +70,29 @@
         <p>Pick a panel and jump into the action.</p>
       </section>
 
+      <div class="opening-night-layout">
+      <aside class="opening-night" data-opening-night hidden aria-labelledby="openingNightTitle" data-deadline="2026-09-18T21:30:00-04:00">
+        <p class="opening-night-kicker">Season 1 · The first showdown</p>
+        <h2 id="openingNightTitle">Opening<br><span>Night</span></h2>
+        <p class="opening-night-countdown-label">The countdown is on</p>
+        <div class="opening-night-clock" role="timer" aria-live="off" data-opening-clock>
+          <span><strong data-opening-days>00</strong><small>days</small></span>
+          <span><strong data-opening-hours>00</strong><small>hours</small></span>
+          <span><strong data-opening-minutes>00</strong><small>minutes</small></span>
+        </div>
+        <p class="opening-night-date"><time datetime="2026-09-18T21:30:00-04:00">Friday, Sept 18<br><strong>9:30 PM Eastern</strong></time></p>
+        <div class="opening-night-matchup">
+          <div class="opening-night-team opening-night-team--boston">
+            <img src="images/teams/boston-eeltics.webp?v=eeltics1" alt="Boston Eeltics logo" width="150" height="150">
+            <h3>Boston<br>Eeltics</h3>
+          </div>
+          <span class="opening-night-vs" aria-label="versus">VS</span>
+          <div class="opening-night-team opening-night-team--miami">
+            <img src="images/teams/miami-dragapults.webp?v=dragapults1" alt="Miami Dragapults logo" width="150" height="150">
+            <h3>Miami<br>Dragapults</h3>
+          </div>
+        </div>
+      </aside>
       <nav class="league-menu" aria-label="League pages">
         <a class="league-button league-button--my-team" href="my-team.html">
           <span class="button-burst" aria-hidden="true">Squad up!</span>
@@ -151,6 +176,7 @@
           <span class="button-arrow" aria-hidden="true">→</span>
         </a>
       </nav>
+      </div>
     </main>
   </div>
   <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch to dark mode" title="Switch to dark mode">
