@@ -1,0 +1,57 @@
+.survivor-title-line{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.survivor-launch{display:inline-grid;place-items:center;flex:0 0 auto;width:84px;height:50px;padding:2px;border:3px solid #111;border-radius:12px;background:#1c2422;box-shadow:3px 3px 0 #659e4b;cursor:pointer}
+.survivor-launch img{display:block;width:100%;height:100%;object-fit:contain}
+.survivor-launch:hover{transform:rotate(-4deg) scale(1.06)}
+.survivor-launch:focus-visible,.survivor-dialog button:focus-visible,.survivor-dialog select:focus-visible{outline:3px solid #2c94d6;outline-offset:3px}
+.survivor-card-link{position:absolute;inset:0;z-index:3;border-radius:8px}
+.survivor-card-link:focus-visible{outline:4px solid #287bf1;outline-offset:-5px}
+.survivor-card .button-copy{pointer-events:none;z-index:4}
+.survivor-card .button-burst,.survivor-card>img,.survivor-card .button-arrow{pointer-events:none}
+.survivor-card .survivor-launch{pointer-events:auto}
+.survivor-dialog{--sv-bg:#fff7de;--sv-panel:#fffdf5;--sv-ink:#19211d;--sv-muted:#505b4e;--sv-line:#25362a;--sv-accent:#d8efba;width:min(1080px,calc(100% - 26px));max-height:92dvh;padding:0;border:4px solid #111;border-radius:18px;background:var(--sv-bg);color:var(--sv-ink);box-shadow:8px 9px 0 #639f4b,14px 15px 0 #000;font-family:"Roboto Condensed",Arial,sans-serif;overflow:auto}
+.survivor-dialog::backdrop{background:rgba(0,0,0,.78);backdrop-filter:blur(4px)}
+.survivor-dialog *{box-sizing:border-box}
+.survivor-dialog [hidden]{display:none!important}
+.survivor-dialog button,.survivor-dialog select{font:inherit}
+.survivor-close{position:sticky;top:12px;float:right;z-index:5;margin:12px 12px -56px 0;width:40px;height:40px;border:3px solid #111;border-radius:9px;background:#f0c857;color:#111;font-size:26px!important;cursor:pointer}
+.survivor-hero{display:flex;align-items:center;gap:20px;padding:24px 65px 24px 24px;background:linear-gradient(120deg,#193c30,#234b5d);border-bottom:4px solid #111;color:#fff7de}
+.survivor-hero img{width:160px;max-width:30%;height:auto}
+.survivor-hero h2{margin:0;font:clamp(30px,4vw,48px)/1 "Jersey 25",Impact,sans-serif}
+.survivor-hero p{margin:8px 0 0;line-height:1.4;color:#dfeddc}
+.survivor-body{padding:22px}
+.survivor-rules{margin:0 0 16px;color:var(--sv-muted);font-size:14px;line-height:1.5}
+.survivor-topline{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+.survivor-dialog h3{margin:8px 0;font:30px/1 "Jersey 25",Impact,sans-serif}
+.survivor-deadline,.survivor-identity{font-size:14px;font-weight:700;color:var(--sv-muted)}
+.survivor-status{min-height:24px;line-height:1.4;margin:12px 0;color:var(--sv-muted)}
+.survivor-status.is-error{color:#ab263a}
+.survivor-summary{padding:14px;border:2px solid var(--sv-line);border-radius:10px;background:var(--sv-accent);line-height:1.5}
+.survivor-used{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;font-size:12px}
+.survivor-used span{padding:4px 7px;border:1px solid var(--sv-line);border-radius:20px;background:var(--sv-panel)}
+.survivor-matches{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0}
+.survivor-match{display:grid;grid-template-columns:minmax(0,1fr) 25px minmax(0,1fr);align-items:center;gap:6px;padding:12px;border:2px solid var(--sv-line);border-radius:13px;background:var(--sv-panel)}
+.survivor-versus{text-align:center;font-weight:900;font-size:12px;color:var(--sv-muted)}
+.survivor-team{display:grid;justify-items:center;gap:6px;align-content:start;padding:10px 4px;border:2px solid transparent;border-radius:10px;background:transparent;color:var(--sv-ink);cursor:pointer;min-width:0}
+.survivor-team img{width:85px;height:85px;max-width:100%;object-fit:contain}
+.survivor-team strong{font-size:14px;line-height:1.2;overflow-wrap:anywhere}
+.survivor-team small{font-size:12px;color:var(--sv-muted)}
+.survivor-team[aria-pressed=true]{border-color:#4f9036;background:var(--sv-accent)}
+.survivor-team:disabled{cursor:not-allowed;opacity:.6}
+.survivor-save,.survivor-retry{padding:10px 18px;border:3px solid #111;border-radius:10px;background:#d8efba;color:#182513;font-weight:900!important;cursor:pointer;box-shadow:3px 4px 0 #4f9036}
+.survivor-save:disabled{cursor:not-allowed;opacity:.55;box-shadow:none}
+.survivor-contestants{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 24px}
+.survivor-person{padding:9px 12px;border:2px solid var(--sv-line);border-radius:10px;background:var(--sv-panel);font-weight:700}
+.survivor-history-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.survivor-history-heading select{padding:8px;border:2px solid var(--sv-line);border-radius:8px;background:var(--sv-panel);color:var(--sv-ink)}
+.survivor-history{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:12px 0}
+.survivor-result{display:grid;grid-template-columns:42px 1fr 30px;gap:10px;align-items:center;padding:10px;border:2px solid var(--sv-line);border-radius:10px;background:var(--sv-panel)}
+.survivor-result img{width:42px;height:42px;object-fit:contain}
+.survivor-result strong,.survivor-result small{display:block;overflow-wrap:anywhere}
+.survivor-result small{color:var(--sv-muted);margin-top:3px;line-height:1.35}
+.survivor-mark{font-size:27px;text-align:center;color:#237839}
+.survivor-mark.is-out{color:#b22e40}
+.survivor-empty{grid-column:1/-1;color:var(--sv-muted);line-height:1.5}
+:root[data-theme=dark] .survivor-dialog{--sv-bg:#171e22;--sv-panel:#29333c;--sv-ink:#f7f6ec;--sv-muted:#c2ced3;--sv-line:#5a7066;--sv-accent:#304d3b}
+:root[data-theme=dark] .survivor-mark{color:#9cebb1}
+:root[data-theme=dark] .survivor-mark.is-out,:root[data-theme=dark] .survivor-status.is-error{color:#ff9eaa}
+@media(max-width:650px){.survivor-body{padding:14px}.survivor-hero{padding:20px 52px 18px 16px;gap:10px}.survivor-hero img{width:88px}.survivor-matches,.survivor-history{grid-template-columns:1fr}.survivor-launch{width:68px;height:42px}.survivor-team img{width:78px;height:78px}}

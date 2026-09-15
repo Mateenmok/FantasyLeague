@@ -23,6 +23,8 @@
   <script src="js/league-state.js?v=league-state-1" defer></script>
   <script src="js/league-competition.js?v=competition1" defer></script>
   <script src="js/home-status.js?v=league-status9" defer></script>
+  <link rel="stylesheet" href="css/survivor.css?v=survivor1">
+  <script src="js/survivor.js?v=survivor1" defer></script>
 </head>
 <body>
   <div class="home-silhouettes" aria-hidden="true">
@@ -107,16 +109,17 @@
           <img src="images/navigation/waivers-victreebel.png?v=vbell3" alt="" width="190" height="190">
           <span class="button-arrow" aria-hidden="true">→</span>
         </a>
-        <a class="league-button league-button--pickems" href="pickems.html">
+        <div class="league-button league-button--pickems survivor-card">
+          <a class="survivor-card-link" href="pickems.html" aria-label="Open Pick'ems"></a>
           <span class="button-burst" aria-hidden="true">Call it!</span>
           <span class="button-copy">
             <span class="button-kicker">Weekly predictions</span>
-            <strong>Pick'ems</strong>
+            <span class="survivor-title-line"><strong>Pick'ems</strong><button class="survivor-launch" type="button" data-survivor-open aria-label="Open PokeLeague Survivor" title="PokeLeague Survivor"><img src="images/navigation/survivor.png" alt="" width="90" height="51"></button></span>
             <span>Pick every matchup, compare rosters &amp; chase the leaderboard</span>
           </span>
           <img src="images/navigation/pickems-metagross.png?v=metagross1" alt="" width="300" height="168">
           <span class="button-arrow" aria-hidden="true">→</span>
-        </a>
+        </div>
         <a class="league-button league-button--rosters" href="rosters.html">
           <span class="button-burst" aria-hidden="true">Scout!</span>
           <span class="button-copy">
