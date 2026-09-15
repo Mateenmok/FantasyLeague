@@ -9390,7 +9390,7 @@ body.theme-dark .note-sheet-title-block p,body.theme-dark .note-meta-field>span,
       <section class="roster-dock edge-roster-dock" id="leftRosterDock">
         <div class="edge-roster-banner">
           <div class="edge-roster-team-kicker">YOUR TEAM</div>
-          <div class="edge-roster-team-name" id="leftRosterTeamName">TEAM 1</div>
+          <div class="edge-roster-team-name" id="leftRosterTeamName">YOUR TEAM</div>
           <div class="edge-roster-speed-title">
             <span>SPEED TIERS</span>
             <small>FASTEST → SLOWEST</small>
@@ -9398,10 +9398,8 @@ body.theme-dark .note-sheet-title-block p,body.theme-dark .note-meta-field>span,
         </div>
 
         <div class="roster-select-row edge-roster-select">
-          <select id="leftRoster">
+          <select id="leftRoster" aria-label="Your league team">
             <option value="">Free Pick</option>
-            <option value="team1" selected>Team 1</option>
-            <option value="team2">Team 2</option>
           </select>
           <div class="roster-team-summary" id="leftRosterSummary"></div>
         </div>
@@ -9412,7 +9410,7 @@ body.theme-dark .note-sheet-title-block p,body.theme-dark .note-meta-field>span,
         </div>
 
         <div class="roster-list edge-roster-list" id="leftRosterList">
-          <div class="roster-loading">Loading Team 1…</div>
+          <div class="roster-loading">Loading league rosters…</div>
         </div>
       </section>
     </aside>
@@ -9882,7 +9880,7 @@ body.theme-dark .note-sheet-title-block p,body.theme-dark .note-meta-field>span,
       <section class="roster-dock edge-roster-dock opponent-roster" id="rightRosterDock">
         <div class="edge-roster-banner">
           <div class="edge-roster-team-kicker">OPPONENT</div>
-          <div class="edge-roster-team-name" id="rightRosterTeamName">TEAM 2</div>
+          <div class="edge-roster-team-name" id="rightRosterTeamName">OPPONENT</div>
           <div class="edge-roster-speed-title">
             <span>SPEED TIERS</span>
             <small>FASTEST → SLOWEST</small>
@@ -9890,10 +9888,8 @@ body.theme-dark .note-sheet-title-block p,body.theme-dark .note-meta-field>span,
         </div>
 
         <div class="roster-select-row edge-roster-select">
-          <select id="rightRoster">
+          <select id="rightRoster" aria-label="Opponent league team">
             <option value="">Free Pick</option>
-            <option value="team1">Team 1</option>
-            <option value="team2" selected>Team 2</option>
           </select>
           <div class="roster-team-summary" id="rightRosterSummary"></div>
         </div>
@@ -9904,7 +9900,7 @@ body.theme-dark .note-sheet-title-block p,body.theme-dark .note-meta-field>span,
         </div>
 
         <div class="roster-list edge-roster-list" id="rightRosterList">
-          <div class="roster-loading">Loading Team 2…</div>
+          <div class="roster-loading">Loading league rosters…</div>
         </div>
       </section>
     </aside>
@@ -10091,6 +10087,8 @@ body.theme-dark .note-sheet-title-block p,body.theme-dark .note-meta-field>span,
     </section>
   </div>
 
+<script src="js/league-rosters.js?v=prep-live1"></script>
+<script src="js/prep-league-rosters.js?v=prep-live1"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/nerd-of-now/NCP-VGC-Damage-Calculator@main/script_res/pokedex.js"></script>
 <script src="https://unpkg.com/@smogon/calc/dist/data/production.min.js"></script>
@@ -10881,7 +10879,7 @@ function selectOptionsFromNative(selectId,kind){
         const def=rosterDef(o.value);
         if(def){
           label=def.label;
-          meta="10 Pokémon • Mega-aware Speed tiers • instant selection";
+          meta=def.preferred.length+" Pokémon • live league roster • instant selection";
           tag="";
           icon="team";
           accentColor=def.color;
@@ -11169,30 +11167,32 @@ function initializePrettyPickers(){
 let DATA={...FALLBACK_DATA};
 let BASE_NAMES=[];
 
-/* ----------------------------------------------------------
-   TEST DRAFT LEAGUE ROSTERS
-   Replace these two arrays with real league roster data later.
-   ---------------------------------------------------------- */
-const TEST_ROSTERS={
-  team1:{
-    label:"Team 1",
-    color:"#36d660",
-    soft:"#dff8e7",
-    preferred:[
-      "Sneasler","Aerodactyl","Infernape","Garchomp","Staraptor",
-      "Arcanine-Hisui","Krookodile","Archaludon","Eelektross","Torterra"
-    ]
-  },
-  team2:{
-    label:"Team 2",
-    color:"#ff3b4f",
-    soft:"#ffe0e4",
-    preferred:[
-      "Gengar","Charizard","Kommo-o","Lycanroc-Midday","Leafeon",
-      "Luxray","Aegislash","Ampharos","Alcremie","Abomasnow"
-    ]
+// Live, read-only roster snapshots; never fill empty slots with demo Pokémon.
+let LEAGUE_ROSTERS={};
+let leagueRostersLoaded=false, leagueRostersLoading=false, leagueRostersError="";
+
+async function refreshLeagueRosters(){
+  if(leagueRostersLoading)return;
+  leagueRostersLoading=true;
+  try{
+    const snapshot=await window.PokeLeaguePrepRosters.read();
+    LEAGUE_ROSTERS=snapshot.teams;
+    for(const side of ["left","right"]){
+      const select=$id(side+"Roster");
+      const selected=leagueRostersLoaded ? select.value : side==="left" ? snapshot.ownTeamId : "";
+      select.replaceChildren(new Option("Free Pick",""));
+      Object.entries(LEAGUE_ROSTERS).forEach(([id,team])=>select.add(new Option(team.label,id)));
+      select.value=LEAGUE_ROSTERS[selected] ? selected : "";
+    }
+    leagueRostersLoaded=true;
+    leagueRostersError="";
+  }catch(error){
+    leagueRostersError=leagueRostersLoaded ? "Roster refresh failed; showing last loaded roster." : "League rosters could not load.";
+  }finally{
+    leagueRostersLoading=false;
+    renderAllRosterDocks();
   }
-};
+}
 
 let leftBaseName="", rightBaseName="";
 let leftFormName="", rightFormName="";
@@ -11228,7 +11228,7 @@ let latestBenchmark=null;
 
 
 function rosterDef(key){
-  return TEST_ROSTERS[key]||null;
+  return LEAGUE_ROSTERS[key]||null;
 }
 
 function rosterSelectedKey(side){
@@ -11240,6 +11240,12 @@ function rosterResolveName(candidate){
 
   if(BASE_NAMES.includes(candidate))return candidate;
 
+  const regional=candidate.replace(/^(Hisuian|Alolan|Galarian|Paldean) (.+)$/i,(_,region,name)=>name+"-"+({hisuian:"Hisui",alolan:"Alola",galarian:"Galar",paldean:"Paldea"}[region.toLowerCase()]));
+  if(BASE_NAMES.includes(regional))return regional;
+
+  const leagueAlias={"Eternal Floette":"Floette-Eternal","Tauros-Aqua":"Tauros-Paldea-Aqua","Tauros-Combat":"Tauros-Paldea-Combat","Tauros-Blaze":"Tauros-Paldea-Blaze"}[candidate];
+  if(leagueAlias && BASE_NAMES.includes(leagueAlias))return leagueAlias;
+
   const target=usageSpreadKey(candidate);
   const normalized=BASE_NAMES.find(n=>usageSpreadKey(n)===target);
   if(normalized)return normalized;
@@ -11250,19 +11256,6 @@ function rosterResolveName(candidate){
   return null;
 }
 
-function rosterFallbackPool(rosterKey){
-  const pool=BASE_NAMES.filter(name=>
-    name &&
-    !/^Mega\s/.test(name) &&
-    !/^Aegislash-(?:Shield|Blade)$/.test(name) &&
-    name!=="Morpeko-Hangry"
-  );
-
-  /* Deterministic offset keeps Team 1 / Team 2 fallback lists different. */
-  const offset=rosterKey==="team2" ? 9 : 0;
-  return pool.slice(offset).concat(pool.slice(0,offset));
-}
-
 function resolvedRosterPokemon(rosterKey){
   const def=rosterDef(rosterKey);
   if(!def)return [];
@@ -11270,8 +11263,7 @@ function resolvedRosterPokemon(rosterKey){
   const out=[];
   const seen=new Set();
   const add=name=>{
-    const resolved=rosterResolveName(name);
-    if(!resolved)return;
+    const resolved=rosterResolveName(name)||name;
     const key=usageSpreadKey(resolved);
     if(seen.has(key))return;
     seen.add(key);
@@ -11279,11 +11271,7 @@ function resolvedRosterPokemon(rosterKey){
   };
 
   def.preferred.forEach(add);
-  rosterFallbackPool(rosterKey).forEach(name=>{
-    if(out.length<10)add(name);
-  });
-
-  return out.slice(0,10);
+  return out;
 }
 
 function rosterBaseSpeed(name){
@@ -11364,7 +11352,9 @@ function renderRosterDock(side){
     dock.style.setProperty("--roster-soft","#eef0f2");
     if(teamNameEl)teamNameEl.textContent="FREE PICK";
     summary.textContent="Full Pokémon list only";
-    list.innerHTML='<div class="roster-empty">No roster pinned. Use the Pokémon picker below, or choose Team 1 / Team 2 here.</div>';
+    list.innerHTML='<div class="roster-empty"></div>';
+    list.firstElementChild.textContent=leagueRostersError || (!leagueRostersLoaded ? "Loading league rosters…" : "Choose a league team above to pin its real roster, or use Free Pick.");
+    if(leagueRostersError)appendRosterRetry(list);
     syncPrettyButton(side+"Roster");
     return;
   }
@@ -11393,10 +11383,30 @@ function renderRosterDock(side){
 
   summary.textContent=def.label+" • "+mons.length+" Pokémon • fastest available Speed";
   list.innerHTML="";
+  if(leagueRostersError){
+    const notice=document.createElement("div");
+    notice.className="roster-empty";
+    notice.textContent=leagueRostersError;
+    list.appendChild(notice);
+    appendRosterRetry(list);
+  }
+  if(!mons.length){
+    const empty=document.createElement("div");
+    empty.className="roster-empty";
+    empty.textContent="No Pokémon on this team's roster yet.";
+    list.appendChild(empty);
+  }
 
   mons.forEach((entry,index)=>{
     const name=entry.name;
     const primaryName=entry.primaryName||name;
+    if(!rosterResolveName(name)){
+      const unavailable=document.createElement("div");
+      unavailable.className="roster-empty";
+      unavailable.textContent=name+" — calculator data unavailable";
+      list.appendChild(unavailable);
+      return;
+    }
     const types=rosterTypes(primaryName);
     const row=document.createElement("button");
     row.type="button";
@@ -11432,7 +11442,9 @@ function renderRosterDock(side){
     img.style.visibility="hidden";
     spriteBox.appendChild(img);
 
-    resolveSpriteURL(primaryName).then(url=>{
+    const originalName=def.preferred.find(candidate=>(rosterResolveName(candidate)||candidate)===name);
+    const localSprite=primaryName===name ? def.sprites?.[originalName] : null;
+    (localSprite ? Promise.resolve(localSprite) : resolveSpriteURL(primaryName)).then(url=>{
       if(url){
         img.onload=()=>{img.style.visibility="visible"};
         img.onerror=()=>{
@@ -11600,6 +11612,15 @@ function renderRosterDock(side){
 function renderAllRosterDocks(){
   renderRosterDock("left");
   renderRosterDock("right");
+}
+
+function appendRosterRetry(list){
+  const retry=document.createElement("button");
+  retry.type="button";
+  retry.className="small-btn";
+  retry.textContent="Retry league rosters";
+  retry.addEventListener("click",refreshLeagueRosters);
+  list.appendChild(retry);
 }
 
 /* Top-three observed SP+nature combinations by usage share.
@@ -19321,6 +19342,10 @@ renderTeamBuilder();
 refreshFieldUI();
 resetOptimizationResult("Select both Pokémon");
 initializeData();
+refreshLeagueRosters();
+window.addEventListener("focus",refreshLeagueRosters);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)refreshLeagueRosters();});
+window.setInterval(()=>{if(!document.hidden)refreshLeagueRosters();},30000);
 })();
 </script>
 
