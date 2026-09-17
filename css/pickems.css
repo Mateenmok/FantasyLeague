@@ -215,6 +215,10 @@
 .matchup-team:focus-visible:not(:disabled) { background: #d0eaf4; transform: translate(-1px, -1px); }
 .matchup-team:disabled { cursor: default; opacity: .76; }
 .matchup-team.is-picked { background: #baddea; box-shadow: 4px 4px 0 #386f8b, 7px 7px 0 #111; opacity: 1; }
+.matchup-team .matchup-vote-share { display:block; margin:8px 0 4px; color:#224f65; font-size:13px; }
+.matchup-vote-share b { font-size:24px; font-variant-numeric:tabular-nums; }
+.matchup-vote-share small { display:block; margin-top:2px; font-size:11px; }
+:root[data-theme="dark"] .matchup-team .matchup-vote-share { color:#bfeaf7; }
 
 .matchup-team img {
   align-self: center;

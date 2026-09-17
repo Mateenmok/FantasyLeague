@@ -101,12 +101,25 @@
       const complete = matchupComplete(matchup);
       const locked = pickemsLocked();
       const result = complete ? `${matchup.home_score} – ${matchup.away_score}` : "VS";
+      const matchupVotes = picks.filter(pick => Number(pick.week) === week
+        && Number(pick.display_order) === Number(matchup.display_order)
+        && [home.id, away.id].includes(pick.picked_team_id));
+      const homeVotes = matchupVotes.filter(pick => pick.picked_team_id === home.id).length;
+      const totalVotes = matchupVotes.length;
+      const homePercent = totalVotes ? Math.round(homeVotes / totalVotes * 100) : 0;
+      const voteShare = teamId => {
+        if (!serverBacked) return 'Votes unavailable';
+        const count = teamId === home.id ? homeVotes : totalVotes - homeVotes;
+        const percent = totalVotes ? (teamId === home.id ? homePercent : 100 - homePercent) : 0;
+        return `<b>${percent}%</b> ${totalVotes ? 'of votes' : '· No votes yet'}<small>${count} of ${totalVotes} vote${totalVotes === 1 ? '' : 's'}</small>`;
+      };
       const teamButton = (team) => `
         <button class="matchup-team${selected === team.id ? " is-picked" : ""}" type="button"
           data-pick-team="${escapeHtml(team.id)}" data-display-order="${matchup.display_order}"
           aria-pressed="${selected === team.id}" ${!account || complete || locked ? "disabled" : ""}>
           <img src="${escapeHtml(team.logo)}" alt="" loading="lazy">
           <strong>${escapeHtml(team.name)}</strong>
+          <span class="matchup-vote-share">${voteShare(team.id)}</span>
           <span>${selected === team.id ? "Your pick" : locked ? "Picks locked" : "Pick winner"}</span>
         </button>`;
       return `
