@@ -420,7 +420,7 @@
       applyCompetition(competition);
       leagueState.currentWeek = week;
       saveState(leagueState.schedules[week]?.length
-        ? `Advanced to Week ${week}. Your saved matchups are preserved.`
+        ? `Advanced to Week ${week}. Saved matchups, Pick’ems, and Survivor entries are preserved.`
         : `Advanced to Week ${week}. No schedule saved yet; review the suggested matchups below.`);
       setActiveTab("schedule");
       $("[data-admin-panel='schedule']")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -435,8 +435,8 @@
     if (leagueState.currentWeek === 0) return;
     const reopenedWeek = leagueState.currentWeek - 1;
     const warning = reopenedWeek > 0
-      ? `Return to Week ${reopenedWeek}? Its saved scores will be cleared so they can be corrected.`
-      : "Return to Week 0?";
+      ? `Return to Week ${reopenedWeek}? Its saved scores will be cleared so they can be corrected. Pick’ems and Survivor entries will be kept.`
+      : "Return to Week 0? Pick’ems and Survivor entries will be kept.";
     if (!window.confirm(warning)) return;
     elements.previousWeek.disabled = true;
     elements.advanceWeek.disabled = true;
