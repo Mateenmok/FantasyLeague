@@ -275,7 +275,7 @@
   };
   const renderGameButtons = row => {
     const games=gameLineupDrafts[row.dataset.displayOrder]||[];
-    $("[data-game-buttons]",row).innerHTML='<span>Optional game lineups · saved with weekly scores</span>'+Array.from({length:gameCount(row)},(_,i)=>{
+    $("[data-game-buttons]",row).innerHTML='<span>Optional game winners & lineups · saved with weekly scores</span>'+Array.from({length:gameCount(row)},(_,i)=>{
       const g=games.find(entry=>entry.game===i+1);
       return `<button type="button" data-edit-game="${i+1}">Edit Game ${i+1}${g?` · ${g.home.length}/4 vs ${g.away.length}/4`:''}</button>`;
     }).join('');
@@ -486,8 +486,8 @@
         const homeKOs = $("[data-home-kos]", row).value;
         const awayKOs = $("[data-away-kos]", row).value;
         if (!homeValue && !awayValue && !homeKOs && !awayKOs) {
-          if ((gameLineupDrafts[row.dataset.displayOrder]||[]).some(g=>g.home.length||g.away.length)) {
-            announce("Enter the game count for matchups with lineup details before saving.",true);return;
+          if ((gameLineupDrafts[row.dataset.displayOrder]||[]).some(g=>g.home.length||g.away.length||g.winnerTeamId)) {
+            announce("Enter the game count for matchups with game details before saving.",true);return;
           }
           continue;
         }
@@ -503,7 +503,12 @@
           announce("Games and KOs must be non-negative whole numbers.", true);
           return;
         }
-        results.push({ displayOrder: Number(row.dataset.displayOrder), home: row.dataset.home, away: row.dataset.away, homeScore: Number(homeValue), awayScore: Number(awayValue), homeKOs: homeKOs === "" ? null : Number(homeKOs), awayKOs: awayKOs === "" ? null : Number(awayKOs), gameLineups:(gameLineupDrafts[row.dataset.displayOrder]||[]).filter(g=>g.game<=Number(homeValue)+Number(awayValue)) });
+        const gameLineups=(gameLineupDrafts[row.dataset.displayOrder]||[]).filter(g=>g.game<=Number(homeValue)+Number(awayValue));
+        if (gameLineups.filter(g=>g.winnerTeamId===row.dataset.home).length>Number(homeValue)
+          || gameLineups.filter(g=>g.winnerTeamId===row.dataset.away).length>Number(awayValue)) {
+          announce("Game winners must match the reported score. Check the winners in Edit Game.",true);return;
+        }
+        results.push({ displayOrder: Number(row.dataset.displayOrder), home: row.dataset.home, away: row.dataset.away, homeScore: Number(homeValue), awayScore: Number(awayValue), homeKOs: homeKOs === "" ? null : Number(homeKOs), awayKOs: awayKOs === "" ? null : Number(awayKOs), gameLineups });
       }
       const submit = $("button[type='submit']", elements.scoreForm);
       submit.disabled = true;

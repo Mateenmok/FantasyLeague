@@ -14,6 +14,7 @@ const sql=name=>fs.readFileSync(path.join(__dirname,'../supabase/migrations',nam
    create table flash_family_draft_pool(pokemon_name text,point_value int);
    create table team_rosters(league_id text,team_id text,pokemon_slug text);`);
   for(const file of ['20260907070000_add_flash_family_pickems.sql','20260907101000_correct_flash_family_week_rewind.sql','20260914190000_add_weekly_kos_and_shared_points.sql','20260915120000_add_game_lineups.sql'])await db.exec(sql(file));
+  await db.exec(sql('20260919060000_add_reported_game_winners.sql'));
   const first=async()=>(await db.query('select * from flash_family_matchups where week=1 and display_order=1')).rows[0];
   const m=await first();
   for(const team of [m.home_team_id,m.away_team_id])for(const slug of ['one','two','three','four','five'])await db.query('insert into team_rosters values($1,$2,$3)',['flash-family-season-1',team,slug]);
@@ -22,6 +23,16 @@ const sql=name=>fs.readFileSync(path.join(__dirname,'../supabase/migrations',nam
   await db.exec('set role anon');
   await assert.rejects(save(result,'NC50'),/Admin/);
   await save();assert.deepEqual((await first()).game_lineups,result.gameLineups);assert.equal((await first()).home_kos,8);
+  const winnerReport={...result,gameLineups:result.gameLineups.map(g=>({...g,winnerTeamId:m.home_team_id}))};
+  await save(winnerReport);
+  assert.deepEqual((await first()).game_lineups,winnerReport.gameLineups,'Explicit winners persist');
+  for(const winnerTeamId of ['not-in-matchup',42,m.away_team_id]){
+    await assert.rejects(save({...result,gameLineups:[{game:1,home:[],away:[],winnerTeamId}]}),/winner|score/);
+    assert.deepEqual((await first()).game_lineups,winnerReport.gameLineups,'Invalid winners cannot change reports');
+  }
+  await save({...result,gameLineups:[{game:1,home:[],away:[],winnerTeamId:null}]});
+  assert.equal((await first()).game_lineups[0].winnerTeamId,null,'Winner can be cleared without selecting Pokemon');
+  await save();
   const snapshot=await first();
   const invalid=[{...result,home:'wrong'}, {...result,gameLineups:[{game:3,home:[],away:[]}]},
    {...result,gameLineups:[{game:1,home:['one','two','three','four','five'],away:[]}]},

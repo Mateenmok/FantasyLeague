@@ -85,6 +85,8 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     assert.equal(await row.locator('[data-edit-game]').count(),2,'A 2–0 match has two game editors');
     await row.locator('[data-edit-game="1"]').click();
     const modal=page.locator('.game-lineup-dialog');
+    assert.equal(await page.locator('[data-game-winner]').inputValue(),'','No inferred game winner');
+    await page.locator('[data-game-winner]').selectOption(matchups[0].home_team_id);
     for(let i=0;i<4;i++)await page.locator('[data-game-side="home"]').nth(i).check();
     assert(await page.locator('[data-game-side="home"]').nth(4).isDisabled(),'Fifth Pokemon disabled');
     for(let i=0;i<2;i++)await page.locator('[data-game-side="away"]').nth(i).check();
@@ -103,6 +105,8 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     await page.getByRole('button', { name: 'Save Scores', exact: true }).click();
     await page.waitForFunction(() => document.querySelector('[data-admin-status]').textContent.includes('scores saved'));
     assert.equal(matchups[0].home_kos, 8);
+    assert.equal(matchups[0].game_lineups[0].winnerTeamId,matchups[0].home_team_id);
+    assert.equal(matchups[0].game_lineups[1].winnerTeamId,null,'Unreported winners stay unknown');
     assert.equal(matchups[0].game_lineups[0].home.length,4);
     assert.equal(matchups[0].game_lineups[0].away.length,2);
     assert.equal(matchups[0].game_lineups[1].home.length,0,'Zero revealed Pokemon allowed');
@@ -112,6 +116,7 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     assert.equal(await row.locator('[data-away-kos]').inputValue(), '2');
     await row.locator('[data-edit-game="1"]').click();
     assert.equal(await page.locator('[data-game-side="home"]:checked').count(),4,'Saved lineups reload');
+    assert.equal(await page.locator('[data-game-winner]').inputValue(),matchups[0].home_team_id,'Saved winner reloads');
     await page.keyboard.press('Escape');
     await row.screenshot({ path: '/tmp/pokeleague-ko-admin-light.png' });
     await page.evaluate(() => document.documentElement.dataset.theme = 'dark');
@@ -127,6 +132,9 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     await page.locator('[data-history-week-next]').click();
     await page.locator('[data-game-matchup="1:1"]').click();
     assert.equal(await page.locator('.game-lineup-history').count(),2);
+    assert.equal(await page.locator('.game-winner-result.is-reported').count(),1);
+    assert.match(await page.locator('.game-winner-result').first().innerText(),/Winner:/);
+    assert.equal(await page.locator('.game-winner-result').nth(1).innerText(),'Winner not reported');
     assert.equal(await page.locator('.game-lineup-history').first().locator('.game-lineup-mon').count(),6);
     assert.match(await modal.innerText(),/Remaining Pokémon unrevealed or not recorded/);
     assert.match(await modal.innerText(),/No Pokémon reported/);

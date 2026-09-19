@@ -20,6 +20,10 @@
 .game-lineup-note{color:var(--gl-muted);font-size:13px}
 .game-lineup-brought{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
 .game-lineup-history{padding:14px 0;border-top:2px solid var(--gl-border)}
+.game-winner-field{display:grid;gap:8px;font-weight:700;color:var(--gl-ink)}
+.game-winner-field select{width:100%;min-width:0;padding:12px;border:2px solid var(--gl-border);border-radius:8px;background:var(--gl-panel);color:var(--gl-ink);font:inherit}
+.game-winner-result{margin:8px 0 14px;color:var(--gl-muted);overflow-wrap:anywhere}
+.game-winner-result.is-reported{padding:9px 12px;border:2px solid var(--gl-border);border-radius:8px;background:#67acbd25;color:var(--gl-ink);font-weight:700}
 .score-game-details{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .score-game-details>span{flex-basis:100%;font-size:13px}
 .score-game-details button{padding:8px 12px;border:2px solid #111;border-radius:8px;background:#97dbe1;color:#102023;font:700 15px 'Roboto Condensed',sans-serif;cursor:pointer}
