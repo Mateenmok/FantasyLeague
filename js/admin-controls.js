@@ -275,7 +275,7 @@
   };
   const renderGameButtons = row => {
     const games=gameLineupDrafts[row.dataset.displayOrder]||[];
-    $("[data-game-buttons]",row).innerHTML='<span>Optional game winners & lineups · saved with weekly scores</span>'+Array.from({length:gameCount(row)},(_,i)=>{
+    $("[data-game-buttons]",row).innerHTML='<span>Save Scores first · then save winners, lineups & survival inside each game</span>'+Array.from({length:gameCount(row)},(_,i)=>{
       const g=games.find(entry=>entry.game===i+1);
       return `<button type="button" data-edit-game="${i+1}">Edit Game ${i+1}${g?` · ${g.home.length}/4 vs ${g.away.length}/4`:''}</button>`;
     }).join('');
@@ -531,8 +531,17 @@
       const row=button.closest('[data-score-row]'),game=Number(button.dataset.editGame),key=row.dataset.displayOrder;
       const rosters=Object.fromEntries([row.dataset.home,row.dataset.away].map(id=>[id,rosterFor(id).map(window.PokeLeagueGameLineups.slug)]));
       window.PokeLeagueGameLineups.edit({game,home:findTeam(row.dataset.home),away:findTeam(row.dataset.away),catalog,rosters,
-        lineup:gameLineupDrafts[key]?.find(g=>g.game===game),onApply:lineup=>{
-          gameLineupDrafts[key]=(gameLineupDrafts[key]||[]).filter(g=>g.game!==game).concat(lineup);renderGameButtons(row);
+        lineup:gameLineupDrafts[key]?.find(g=>g.game===game),onApply:async lineup=>{
+          const saved=(leagueState.scores[leagueState.currentWeek]||[]).find(r=>r.displayOrder===Number(key));
+          if(!saved||$("[data-home-score]",row).value===""||$("[data-away-score]",row).value===""
+            ||saved.homeScore!==Number($("[data-home-score]",row).value)||saved.awayScore!==Number($("[data-away-score]",row).value)){
+            throw new Error('Save Scores to publish the match score first, then save this game’s details.');
+          }
+          const stored=await window.PokeLeagueGameReports.save(adminAccessCode,leagueState.currentWeek,Number(key),row.dataset.home,row.dataset.away,lineup,
+            saved.gameLineups?.find(g=>g.game===game),saved.homeScore,saved.awayScore);
+          saved.gameLineups=(saved.gameLineups||[]).filter(g=>g.game!==game).concat(stored);
+          gameLineupDrafts[key]=(gameLineupDrafts[key]||[]).filter(g=>g.game!==game).concat(stored);renderGameButtons(row);
+          saveState(`Game ${game} details saved to the league.`);
           requestAnimationFrame(()=>row.querySelector(`[data-edit-game="${game}"]`)?.focus());
         }});
     });

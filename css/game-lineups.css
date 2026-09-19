@@ -11,12 +11,23 @@
 .game-lineup-sides{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
 .game-lineup-sides>section{min-width:0;padding:12px;border:2px solid var(--gl-border);border-radius:12px;background:var(--gl-panel)}
 .game-lineup-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.game-lineup-option{min-width:0}
 .game-lineup-options label{display:flex;align-items:center;gap:6px;cursor:pointer;padding:7px;border:2px solid var(--gl-border);border-radius:10px;min-width:0}
 .game-lineup-options label:has(:checked){border-color:#31869b;background:#67acbd30}
 .game-lineup-options label:has(:disabled){opacity:.5;cursor:not-allowed}
 .game-lineup-options input{accent-color:#26768c;width:17px;height:17px;flex:0 0 auto}
 .game-lineup-mon{display:flex;align-items:center;flex-direction:column;gap:5px;min-width:0;font-size:14px;text-align:center;overflow-wrap:anywhere}
 .game-lineup-mon img{width:60px;height:60px;object-fit:contain;max-width:100%}
+.game-lineup-portrait{display:flex;align-items:center;justify-content:center;width:66px;max-width:100%;aspect-ratio:1;border:3px solid transparent;border-radius:50%;flex:none}
+.game-lineup-portrait img{width:100%;height:100%;min-width:0}
+.game-lineup-mon.is-survived .game-lineup-portrait{border-color:#248844;background:#41c76a22}
+.game-lineup-mon.is-fainted .game-lineup-portrait{border-color:#c83737;background:#ef444422}
+.game-survival-label{color:var(--gl-muted);font-size:12px}
+.game-lineup-save-status.is-error{padding:10px;border:2px solid #c83737;border-radius:8px;color:var(--gl-ink);background:#ef44441a}
+.game-lineup-options .game-survival-field{display:grid;gap:4px;margin-top:4px;padding:5px;border:0;cursor:default;font-size:12px;color:var(--gl-muted)}
+.game-lineup-options .game-survival-field[hidden]{display:none}
+.game-lineup-options .game-survival-field:has(:disabled){opacity:1;cursor:default}
+.game-survival-field select{width:100%;min-width:0;font:inherit;padding:6px 2px;border:1px solid var(--gl-border);border-radius:6px;background:var(--gl-panel);color:var(--gl-ink);opacity:1}
 .game-lineup-note{color:var(--gl-muted);font-size:13px}
 .game-lineup-brought{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
 .game-lineup-history{padding:14px 0;border-top:2px solid var(--gl-border)}
@@ -31,4 +42,6 @@
 .history-game-hint{grid-column:1/-1;text-align:center;font-size:13px;color:inherit}
 .game-lineup-dialog :focus-visible,.score-game-details button:focus-visible,.history-score-card[data-game-matchup]:focus-visible{outline:3px solid #e7a923;outline-offset:3px}
 :root[data-theme=dark] .game-lineup-dialog{--gl-bg:#192128;--gl-panel:#2b3740;--gl-ink:#f8f7eb;--gl-muted:#c4d0d4;--gl-border:#657f89}
+:root[data-theme=dark] .game-lineup-mon.is-survived .game-lineup-portrait{border-color:#65e58b}
+:root[data-theme=dark] .game-lineup-mon.is-fainted .game-lineup-portrait{border-color:#ff7878}
 @media(max-width:650px){.game-lineup-sides{grid-template-columns:1fr}.game-lineup-dialog h2{font-size:26px}.game-lineup-body{padding:12px}.game-lineup-mon img{width:54px;height:54px}}

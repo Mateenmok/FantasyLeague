@@ -19,7 +19,7 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
       localStorage.setItem('pokeleague.accessCode', 'NETO');
       if (!localStorage.getItem('pokeleague.leagueState.v1')) localStorage.setItem('pokeleague.leagueState.v1', JSON.stringify({ currentWeek: 0, pointOverrides: { Malamar: 3 } }));
     });
-    let week = 0, resultWrites = 0, scheduleWrites = 0;
+    let week = 0, resultWrites = 0, scheduleWrites = 0, gameWrites = 0, failGameSave = false;
     let matchups = Array.from({ length: 7 }, (_, i) => ({ week: 1, display_order: i+1,
       home_team_id: teams[i].id, away_team_id: teams[i+7].id, home_score: null, away_score: null, home_kos: null, away_kos: null }));
     await page.route('**/*', async route => {
@@ -33,6 +33,13 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
         if (endpoint === 'flash_family_matchups') return route.fulfill({ json: matchups });
         if (endpoint === 'set_flash_family_current_week') { week = route.request().postDataJSON().p_week; return route.fulfill({ status: 204 }); }
         if (endpoint === 'save_flash_family_week_schedule') { scheduleWrites++; throw new Error('Advancing must not save/regenerate a schedule'); }
+        if (endpoint === 'save_flash_family_game_details') {
+          if(failGameSave)return route.fulfill({status:500,json:{message:'Temporary save failure. Please try again.'}});
+          const b=route.request().postDataJSON(),match=matchups.find(m=>m.week===b.p_week&&m.display_order===b.p_display_order);
+          assert.deepEqual(b.p_expected_game,(match.game_lineups||[]).find(g=>g.game===b.p_game.game)||null);
+          match.game_lineups=(match.game_lineups||[]).filter(g=>g.game!==b.p_game.game).concat(b.p_game);gameWrites++;
+          return route.fulfill({json:b.p_game});
+        }
         if (endpoint === 'save_flash_family_week_reports') {
           resultWrites++;
           const b = route.request().postDataJSON();
@@ -82,6 +89,8 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     await page.getByRole('button', { name: 'Save Scores', exact: true }).click();
     assert.equal(resultWrites, 0, 'Partial KO pair must not save');
     await row.locator('[data-away-kos]').fill('2');
+    await page.getByRole('button', { name: 'Save Scores', exact: true }).click();
+    await page.waitForFunction(() => document.querySelector('[data-admin-status]').textContent.includes('scores saved'));
     assert.equal(await row.locator('[data-edit-game]').count(),2,'A 2–0 match has two game editors');
     await row.locator('[data-edit-game="1"]').click();
     const modal=page.locator('.game-lineup-dialog');
@@ -90,22 +99,47 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     for(let i=0;i<4;i++)await page.locator('[data-game-side="home"]').nth(i).check();
     assert(await page.locator('[data-game-side="home"]').nth(4).isDisabled(),'Fifth Pokemon disabled');
     for(let i=0;i<2;i++)await page.locator('[data-game-side="away"]').nth(i).check();
+    const homeSurvival=page.locator('[data-game-survival-side="home"]'),awaySurvival=page.locator('[data-game-survival-side="away"]');
+    assert(await awaySurvival.first().isDisabled(),'Losing-side survival set automatically');
+    assert.equal(await awaySurvival.first().inputValue(),'false');
+    await homeSurvival.nth(0).selectOption('true');
+    await homeSurvival.nth(1).selectOption('false');
+    assert.equal(await modal.locator('.is-survived').count(),1);
+    assert.equal(await modal.locator('.is-fainted').count(),3);
+    // Winner correction makes the new losing side red and clears stale markers.
+    await page.locator('[data-game-winner]').selectOption(matchups[0].away_team_id);
+    assert.equal(await modal.locator('.is-fainted').count(),4);
+    assert.equal(await awaySurvival.first().inputValue(),'');
+    await page.locator('[data-game-winner]').selectOption(matchups[0].home_team_id);
+    await homeSurvival.nth(0).selectOption('true');
+    await homeSurvival.nth(1).selectOption('false');
     await modal.screenshot({path:'/tmp/game-lineups-editor-light.png'});
     await page.evaluate(()=>document.documentElement.dataset.theme='dark');
     await modal.screenshot({path:'/tmp/game-lineups-editor-dark.png'});
     await page.setViewportSize({width:390,height:844});
     assert(await modal.evaluate(el=>el.scrollWidth<=el.clientWidth+1));
     await modal.screenshot({path:'/tmp/game-lineups-editor-mobile.png'});
+    failGameSave=true;
     await page.locator('.game-lineup-apply').click();
-    assert.equal(resultWrites,0,'Applying details must not independently save the report');
+    await page.locator('.game-lineup-save-status.is-error').waitFor();
+    assert(await modal.isVisible(),'Failed save keeps editor open');
+    assert.equal(await homeSurvival.first().inputValue(),'true','Failed save retains inputs');
+    failGameSave=false;
+    await page.locator('.game-lineup-apply').click();
+    await modal.waitFor({state:'hidden'});
+    assert.equal(gameWrites,1,'Game details save immediately to the server');
+    assert.equal(resultWrites,1,'Game saving must not rewrite weekly scores');
     await row.locator('[data-edit-game="2"]').click();
     await page.locator('[data-game-side="away"]').nth(2).check();
     await page.locator('.game-lineup-apply').click();
+    await modal.waitFor({state:'hidden'});
     await page.setViewportSize({width:1440,height:1000});
-    await page.getByRole('button', { name: 'Save Scores', exact: true }).click();
-    await page.waitForFunction(() => document.querySelector('[data-admin-status]').textContent.includes('scores saved'));
+    assert.equal(resultWrites,1,'No second Save Scores required');
+    assert.equal(gameWrites,2);
     assert.equal(matchups[0].home_kos, 8);
     assert.equal(matchups[0].game_lineups[0].winnerTeamId,matchups[0].home_team_id);
+    assert.deepEqual(Object.values(matchups[0].game_lineups[0].survival.home),[true,false]);
+    assert.deepEqual(Object.values(matchups[0].game_lineups[0].survival.away),[false,false]);
     assert.equal(matchups[0].game_lineups[1].winnerTeamId,null,'Unreported winners stay unknown');
     assert.equal(matchups[0].game_lineups[0].home.length,4);
     assert.equal(matchups[0].game_lineups[0].away.length,2);
@@ -117,6 +151,8 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     await row.locator('[data-edit-game="1"]').click();
     assert.equal(await page.locator('[data-game-side="home"]:checked').count(),4,'Saved lineups reload');
     assert.equal(await page.locator('[data-game-winner]').inputValue(),matchups[0].home_team_id,'Saved winner reloads');
+    assert.equal(await homeSurvival.first().inputValue(),'true','Survival reloads');
+    assert.equal(await awaySurvival.first().inputValue(),'false','Automatic fainted state reloads');
     await page.keyboard.press('Escape');
     await row.screenshot({ path: '/tmp/pokeleague-ko-admin-light.png' });
     await page.evaluate(() => document.documentElement.dataset.theme = 'dark');
@@ -135,6 +171,9 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     assert.equal(await page.locator('.game-winner-result.is-reported').count(),1);
     assert.match(await page.locator('.game-winner-result').first().innerText(),/Winner:/);
     assert.equal(await page.locator('.game-winner-result').nth(1).innerText(),'Winner not reported');
+    assert.equal(await modal.locator('.is-survived').count(),1,'Green survivor ring in history');
+    assert.equal(await modal.locator('.is-fainted').count(),3,'Red fainted rings in history');
+    assert.equal(await modal.locator('.game-survival-label').filter({hasText:'Not reported'}).count(),3,'Unreported Pokemon stay neutral');
     assert.equal(await page.locator('.game-lineup-history').first().locator('.game-lineup-mon').count(),6);
     assert.match(await modal.innerText(),/Remaining Pokémon unrevealed or not recorded/);
     assert.match(await modal.innerText(),/No Pokémon reported/);
