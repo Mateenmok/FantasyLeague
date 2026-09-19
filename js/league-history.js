@@ -153,6 +153,7 @@
     catalog = window.PokeLeagueState.applyCatalog(baseCatalog);
     const fallback = window.PokeLeagueState.read();
     currentWeek = Math.max(0, Number(competition?.currentWeek ?? fallback.currentWeek) || 0);
+    selectedWeek = currentWeek;
     matchups = competition?.matchups || Object.entries(fallback.schedules || {}).flatMap(([week, games]) => (games || []).map((game, index) => ({
       week: Number(week),
       display_order: index + 1,

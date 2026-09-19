@@ -168,6 +168,20 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     await page.goto('http://127.0.0.1:8014/league-history.html');
     await page.waitForFunction(()=>document.querySelector('[data-history-status]').textContent.length>0);
     assert.deepEqual(errors,[]);
+    assert.equal(await page.locator('[data-history-week]').textContent(),'Week 1','History opens to the live season week');
+    assert.equal(await page.locator('[data-game-matchup]').count(),7);
+    const grid=page.locator('[data-history-scores]'),cards=page.locator('[data-game-matchup]');
+    const gridBox=await grid.boundingBox(),firstBox=await cards.first().boundingBox(),lastBox=await cards.last().boundingBox();
+    assert(Math.abs(lastBox.x+lastBox.width/2-gridBox.x-gridBox.width/2)<1,'Odd final matchup centered');
+    assert(Math.abs(lastBox.width-firstBox.width)<1,'Final matchup keeps the same compact width');
+    await grid.screenshot({path:'/tmp/history-centered-desktop.png'});
+    await page.setViewportSize({width:390,height:844});
+    assert(await grid.evaluate(el=>el.scrollWidth<=el.clientWidth+1));
+    assert(Math.abs((await cards.last().boundingBox()).width-(await grid.boundingBox()).width)<1,'Mobile cards retain full width');
+    await cards.last().screenshot({path:'/tmp/history-centered-mobile.png'});
+    await page.setViewportSize({width:1440,height:1000});
+    await page.locator('[data-history-week-prev]').click();
+    assert.equal(await page.locator('[data-history-week]').textContent(),'Week 0','Earlier weeks remain browsable');
     await page.locator('[data-history-week-next]').click();
     await page.locator('[data-game-matchup="1:1"]').click();
     assert.equal(await page.locator('.game-lineup-history').count(),2);
@@ -228,6 +242,11 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     await page.reload();
     await home.waitFor();
     assert.equal(await diff(home).innerText(), '-4', 'Cleared KO values stop contributing');
+    for(const current of [0,2]){
+      week=current;await page.goto('http://127.0.0.1:8014/league-history.html');
+      await page.waitForFunction(()=>document.querySelector('[data-history-status]').textContent.length>0);
+      assert.equal(await page.locator('[data-history-week]').textContent(),`Week ${current}`,'Opening week follows season progress, including preseason');
+    }
     assert.deepEqual(errors, []);
     console.log('PASS: optional 0–4 per-game lineups, atomic report payload/reload/history/team filter, light/dark/mobile, plus FLash, points, schedules, KOs and standings regressions. No production writes.');
   } finally { await browser.close(); }
