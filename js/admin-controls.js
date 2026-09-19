@@ -686,6 +686,7 @@
       ]);
       if (!accountResponse.ok || !teamResponse.ok || !catalogResponse.ok) throw new Error("League data could not be loaded.");
       accounts = (await accountResponse.json()).accounts || {};
+      window.PokeLeagueGameLineups.setTeamThemes(accounts);
       teams = (await teamResponse.json()).teams || [];
       baseCatalog = await catalogResponse.json();
       leagueState.rosters = window.PokeLeagueRosters.namesFromSlugs(savedRosters, baseCatalog, teams.map((team) => team.id));

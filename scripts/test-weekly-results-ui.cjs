@@ -96,6 +96,8 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     const modal=page.locator('.game-lineup-dialog');
     assert.equal(await page.locator('[data-game-winner]').inputValue(),'','No inferred game winner');
     await page.locator('[data-game-winner]').selectOption(matchups[0].home_team_id);
+    assert.equal(await modal.locator('[data-game-panel="home"].is-game-winner').count(),1);
+    assert.equal(await modal.locator('[data-game-panel="away"].is-game-winner').count(),0);
     for(let i=0;i<4;i++)await page.locator('[data-game-side="home"]').nth(i).check();
     assert(await page.locator('[data-game-side="home"]').nth(4).isDisabled(),'Fifth Pokemon disabled');
     for(let i=0;i<2;i++)await page.locator('[data-game-side="away"]').nth(i).check();
@@ -108,6 +110,7 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     assert.equal(await modal.locator('.is-fainted').count(),3);
     // Winner correction makes the new losing side red and clears stale markers.
     await page.locator('[data-game-winner]').selectOption(matchups[0].away_team_id);
+    assert.equal(await modal.locator('[data-game-panel="away"].is-game-winner').count(),1,'Highlight follows the game winner');
     assert.equal(await modal.locator('.is-fainted').count(),4);
     assert.equal(await awaySurvival.first().inputValue(),'');
     await page.locator('[data-game-winner]').selectOption(matchups[0].home_team_id);
@@ -171,6 +174,8 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     assert.equal(await page.locator('.game-winner-result.is-reported').count(),1);
     assert.match(await page.locator('.game-winner-result').first().innerText(),/Winner:/);
     assert.equal(await page.locator('.game-winner-result').nth(1).innerText(),'Winner not reported');
+    assert.equal(await page.locator('.game-lineup-history').first().locator('.is-game-winner').count(),1);
+    assert.equal(await page.locator('.game-lineup-history').nth(1).locator('.is-game-winner').count(),0,'Unknown winner is not highlighted');
     assert.equal(await modal.locator('.is-survived').count(),1,'Green survivor ring in history');
     assert.equal(await modal.locator('.is-fainted').count(),3,'Red fainted rings in history');
     assert.equal(await modal.locator('.game-survival-label').filter({hasText:'Not reported'}).count(),3,'Unreported Pokemon stay neutral');
@@ -184,6 +189,24 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     await page.keyboard.press('Escape');
     await page.locator('[data-history-team-filter]').selectOption(matchups[0].home_team_id);
     await page.locator('[data-game-matchup="1:1"]').click();assert.equal(await page.locator('.game-lineup-history').count(),2);await page.keyboard.press('Escape');
+    const palettes=Object.fromEntries(Object.values(read('data/teams.json').accounts).map(a=>[a.teamId,a.theme]));
+    const boston=teams.find(t=>t.id==='boston-eeltics'),miami=teams.find(t=>t.id==='miami-dragapults');
+    const sample=catalog.slice(0,2),ids=sample.map(p=>p.name.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,''));
+    const gameFixture={week:1,home_score:2,away_score:1,game_lineups:[miami.id,boston.id,miami.id].map((winnerTeamId,i)=>({game:i+1,home:ids,away:ids,winnerTeamId,survival:{home:{[ids[0]]:true},away:{[ids[0]]:true}}}))};
+    await page.evaluate(({matchup,home,away,catalog})=>window.PokeLeagueGameLineups.view({matchup,home,away,catalog}),{matchup:gameFixture,home:miami,away:boston,catalog:sample});
+    const winningPanels=modal.locator('.game-lineup-sides>.is-game-winner');
+    assert.deepEqual(await winningPanels.evaluateAll(els=>els.map(el=>el.dataset.gameTeam)),[miami.id,boston.id,miami.id],'Each game highlights its own winner, not the match winner');
+    for(const theme of ['light','dark']){
+      await page.evaluate(theme=>document.documentElement.dataset.theme=theme,theme);
+      await page.setViewportSize({width:1440,height:1000});
+      assert.deepEqual(await winningPanels.evaluateAll(els=>els.map(el=>el.style.getPropertyValue('--game-team-accent'))),[palettes[miami.id].accent,palettes[boston.id].accent,palettes[miami.id].accent]);
+      assert(await winningPanels.first().evaluate(el=>getComputedStyle(el).backgroundImage.includes('linear-gradient')));
+      await modal.screenshot({path:`/tmp/game-winner-gradient-${theme}.png`});
+    }
+    await page.setViewportSize({width:390,height:844});
+    assert(await modal.evaluate(el=>el.scrollWidth<=el.clientWidth+1));
+    await modal.screenshot({path:'/tmp/game-winner-gradient-mobile.png'});
+    await page.keyboard.press('Escape');
     await page.setViewportSize({width:1440,height:1000});
     await page.goto('http://127.0.0.1:8014/standings.html');
     await page.locator('.standing-card').first().waitFor();

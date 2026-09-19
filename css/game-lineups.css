@@ -10,6 +10,11 @@
 .game-lineup-body{padding:18px;line-height:1.4}
 .game-lineup-sides{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
 .game-lineup-sides>section{min-width:0;padding:12px;border:2px solid var(--gl-border);border-radius:12px;background:var(--gl-panel)}
+.game-lineup-sides>.is-game-winner{position:relative;overflow:hidden;border-color:var(--game-team-accent);background:linear-gradient(125deg,color-mix(in srgb,var(--game-team-deep) 18%,var(--gl-panel)),color-mix(in srgb,var(--game-team-accent) 35%,var(--gl-panel)));box-shadow:0 3px 12px color-mix(in srgb,var(--game-team-accent) 20%,transparent)}
+.game-lineup-sides>.is-game-winner::before{content:"";position:absolute;inset:0 0 auto;height:5px;background:linear-gradient(100deg,var(--game-team-deep),var(--game-team-accent));pointer-events:none}
+.game-team-heading{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.game-winner-tag{padding:3px 8px;border:1px solid var(--game-team-accent);border-radius:20px;background:var(--gl-panel);color:var(--gl-ink);font-size:12px;font-weight:700;white-space:nowrap}
+.game-winner-tag[hidden]{display:none}
 .game-lineup-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .game-lineup-option{min-width:0}
 .game-lineup-options label{display:flex;align-items:center;gap:6px;cursor:pointer;padding:7px;border:2px solid var(--gl-border);border-radius:10px;min-width:0}
@@ -34,7 +39,7 @@
 .game-winner-field{display:grid;gap:8px;font-weight:700;color:var(--gl-ink)}
 .game-winner-field select{width:100%;min-width:0;padding:12px;border:2px solid var(--gl-border);border-radius:8px;background:var(--gl-panel);color:var(--gl-ink);font:inherit}
 .game-winner-result{margin:8px 0 14px;color:var(--gl-muted);overflow-wrap:anywhere}
-.game-winner-result.is-reported{padding:9px 12px;border:2px solid var(--gl-border);border-radius:8px;background:#67acbd25;color:var(--gl-ink);font-weight:700}
+.game-winner-result.is-reported{padding:9px 12px;border:2px solid var(--game-team-accent);border-radius:8px;background:linear-gradient(110deg,color-mix(in srgb,var(--game-team-deep) 15%,var(--gl-panel)),color-mix(in srgb,var(--game-team-accent) 28%,var(--gl-panel)));color:var(--gl-ink);font-weight:700}
 .score-game-details{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .score-game-details>span{flex-basis:100%;font-size:13px}
 .score-game-details button{padding:8px 12px;border:2px solid #111;border-radius:8px;background:#97dbe1;color:#102023;font:700 15px 'Roboto Condensed',sans-serif;cursor:pointer}
@@ -44,4 +49,5 @@
 :root[data-theme=dark] .game-lineup-dialog{--gl-bg:#192128;--gl-panel:#2b3740;--gl-ink:#f8f7eb;--gl-muted:#c4d0d4;--gl-border:#657f89}
 :root[data-theme=dark] .game-lineup-mon.is-survived .game-lineup-portrait{border-color:#65e58b}
 :root[data-theme=dark] .game-lineup-mon.is-fainted .game-lineup-portrait{border-color:#ff7878}
+:root[data-theme=dark] .game-lineup-sides>.is-game-winner{background:linear-gradient(125deg,color-mix(in srgb,var(--game-team-deep) 42%,var(--gl-panel)),color-mix(in srgb,var(--game-team-accent) 24%,var(--gl-panel)))}
 @media(max-width:650px){.game-lineup-sides{grid-template-columns:1fr}.game-lineup-dialog h2{font-size:26px}.game-lineup-body{padding:12px}.game-lineup-mon img{width:54px;height:54px}}

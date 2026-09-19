@@ -14,6 +14,14 @@
   dialog.addEventListener('close',()=>{document.body.style.overflow=overflowBefore||'';focusBefore?.focus();});
   dialog.addEventListener('cancel',event=>{if(dialog.dataset.saving==='true')event.preventDefault();});
   const pokemon=(id,catalog)=>catalog.find(p=>slug(p.name)===id)||{name:id,sprite:'images/favicon.webp'};
+  let teamThemes={};
+  const setTeamThemes=accounts=>{
+    teamThemes=Object.fromEntries(Object.values(accounts||{}).filter(account=>account.teamId&&account.theme).map(account=>[account.teamId,account.theme]));
+  };
+  const winnerStyle=team=>{
+    const theme=teamThemes[team.id]||{},color=(value,fallback)=>/^#[0-9a-f]{6}$/i.test(value||'')?value:fallback;
+    return `--game-team-deep:${color(theme.deep,'#26768c')};--game-team-accent:${color(theme.accent,'#97dbe1')}`;
+  };
   const survivalStatus=(game,side,teamId,id)=>{
     if(game.winnerTeamId&&game.winnerTeamId!==teamId)return false;
     const value=game.survival?.[side]?.[id];
@@ -31,11 +39,13 @@
     show(`Edit Game ${game}`,`<label class="game-winner-field">Game ${game} winner<select data-game-winner><option value="">Winner not reported</option>${[home,away].map(t=>`<option value="${esc(t.id)}" ${lineup?.winnerTeamId===t.id?'selected':''}>${esc(t.name)}</option>`).join('')}</select></label><p>Select up to four Pokémon per side. Leave unrevealed Pokémon unselected — even zero is fine.</p><div class="game-lineup-sides">${['home','away'].map(side=>{
       const t=side==='home'?home:away;
       const ids=[...new Set([...(rosters[t.id]||[]),...choices[side]])];
-      return `<section><h3>${esc(t.name)} <small data-game-count="${side}"></small></h3><div class="game-lineup-options">${ids.map(id=>`<div class="game-lineup-option"><label><input type="checkbox" data-game-side="${side}" value="${esc(id)}" ${choices[side].includes(id)?'checked':''}>${badge(id,catalog)}</label><label class="game-survival-field" hidden>Survival<select data-game-survival-side="${side}" data-pokemon="${esc(id)}" aria-label="${esc(t.name)} — ${esc(pokemon(id,catalog).name)} survival"><option value="">Not reported</option><option value="true">Survived · Green</option><option value="false">Fainted · Red</option></select></label></div>`).join('')||'<p>No roster available.</p>'}</div></section>`;
+      return `<section data-game-panel="${side}" style="${winnerStyle(t)}"><h3 class="game-team-heading"><span>${esc(t.name)} <small data-game-count="${side}"></small></span><span class="game-winner-tag" hidden>★ Winner</span></h3><div class="game-lineup-options">${ids.map(id=>`<div class="game-lineup-option"><label><input type="checkbox" data-game-side="${side}" value="${esc(id)}" ${choices[side].includes(id)?'checked':''}>${badge(id,catalog)}</label><label class="game-survival-field" hidden>Survival<select data-game-survival-side="${side}" data-pokemon="${esc(id)}" aria-label="${esc(t.name)} — ${esc(pokemon(id,catalog).name)} survival"><option value="">Not reported</option><option value="true">Survived · Green</option><option value="false">Fainted · Red</option></select></label></div>`).join('')||'<p>No roster available.</p>'}</div></section>`;
     }).join('')}</div><p class="game-lineup-note">Green = survived · Red = fainted. The losing side is automatically red. Changing the winner resets survival markers; unreported statuses stay unmarked.</p><p class="game-lineup-note">Save Scores first to record the match score. Then save each game's details here directly — no second Save Scores click needed.</p><p class="game-lineup-save-status" role="status" aria-live="polite"></p><button class="game-lineup-apply" type="button">Save game details</button>`);
     const winner=dialog.querySelector('[data-game-winner]');
     const update=()=>{
       for(const side of ['home','away']){
+        const panel=dialog.querySelector(`[data-game-panel="${side}"]`),isWinner=winner.value===teams[side].id;
+        panel.classList.toggle('is-game-winner',isWinner);panel.querySelector('.game-winner-tag').hidden=!isWinner;
         dialog.querySelector(`[data-game-count="${side}"]`).textContent=`${choices[side].length}/4`;
         dialog.querySelectorAll(`[data-game-side="${side}"]`).forEach(input=>{input.disabled=choices[side].length>=4&&!input.checked;});
         dialog.querySelectorAll(`[data-game-survival-side="${side}"]`).forEach(select=>{
@@ -81,8 +91,11 @@
     show(`Week ${matchup.week} · ${home.name} vs ${away.name}`,`<p>${matchup.home_score==null||matchup.away_score==null?'Scores pending':`Final score: ${matchup.home_score}–${matchup.away_score}`}</p>${count?Array.from({length:count},(_,i)=>{
       const g=games.find(entry=>entry.game===i+1)||{home:[],away:[]};
       const winner=[home,away].find(t=>t.id===g.winnerTeamId);
-      return `<section class="game-lineup-history"><h3>Game ${i+1}</h3><p class="game-winner-result ${winner?'is-reported':''}">${winner?`★ Winner: ${esc(winner.name)}`:'Winner not reported'}</p><div class="game-lineup-sides">${['home','away'].map(side=>`<section><h4>${esc((side==='home'?home:away).name)}</h4><div class="game-lineup-brought">${g[side].map(id=>badge(id,catalog,survivalStatus(g,side,(side==='home'?home:away).id,id),true)).join('')}</div><p class="game-lineup-note">${g[side].length?`${g[side].length}/4 Pokémon reported${g[side].length<4?' · Remaining Pokémon unrevealed or not recorded':''}`:'No Pokémon reported'}</p></section>`).join('')}</div></section>`;
+      return `<section class="game-lineup-history"><h3>Game ${i+1}</h3><p class="game-winner-result ${winner?'is-reported':''}" ${winner?`style="${winnerStyle(winner)}"`:''}>${winner?`★ Winner: ${esc(winner.name)}`:'Winner not reported'}</p><div class="game-lineup-sides">${['home','away'].map(side=>{
+        const team=side==='home'?home:away,isWinner=winner?.id===team.id;
+        return `<section data-game-team="${esc(team.id)}" class="${isWinner?'is-game-winner':''}" ${isWinner?`style="${winnerStyle(team)}"`:''}><h4 class="game-team-heading"><span>${esc(team.name)}</span>${isWinner?'<span class="game-winner-tag">★ Winner</span>':''}</h4><div class="game-lineup-brought">${g[side].map(id=>badge(id,catalog,survivalStatus(g,side,team.id,id),true)).join('')}</div><p class="game-lineup-note">${g[side].length?`${g[side].length}/4 Pokémon reported${g[side].length<4?' · Remaining Pokémon unrevealed or not recorded':''}`:'No Pokémon reported'}</p></section>`;
+      }).join('')}</div></section>`;
     }).join(''):'<p>Game details will appear once scores and optional lineups are reported.</p>'}`);
   };
-  window.PokeLeagueGameLineups={edit,view,slug};
+  window.PokeLeagueGameLineups={edit,view,slug,setTeamThemes};
 })();

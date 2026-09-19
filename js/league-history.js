@@ -144,10 +144,12 @@
     fetch("data/league-teams.json?v=league-teams2", { cache: "no-store" }),
     fetch("data/pokemon-catalog.json?v=season-1-3"),
     window.PokeLeagueCompetition.read().catch(() => null),
-  ]).then(async ([teamResponse, catalogResponse, competition]) => {
+    fetch("data/teams.json?v=teams8", { cache: "no-store" }).then(response=>response.ok?response.json():{}).catch(()=>({})),
+  ]).then(async ([teamResponse, catalogResponse, competition, accountData]) => {
     if (!teamResponse.ok || !catalogResponse.ok) throw new Error("League history could not be loaded.");
     const [teamData, baseCatalog] = await Promise.all([teamResponse.json(), catalogResponse.json()]);
     teams = teamData.teams || [];
+    window.PokeLeagueGameLineups.setTeamThemes(accountData.accounts);
     catalog = window.PokeLeagueState.applyCatalog(baseCatalog);
     const fallback = window.PokeLeagueState.read();
     currentWeek = Math.max(0, Number(competition?.currentWeek ?? fallback.currentWeek) || 0);
