@@ -70,9 +70,8 @@
 
     return Object.values(records).sort((a, b) => (
       winPct(b) - winPct(a)
+      || b.differential - a.differential
       || b.gameWins - a.gameWins
-      || b.wins - a.wins
-      || a.losses - b.losses
       || a.originalIndex - b.originalIndex
     ));
   };
