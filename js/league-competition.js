@@ -72,6 +72,8 @@
     p_picked_team_id: teamId,
   });
 
+  const readLeaderboard = () => rpc("read_flash_family_pickem_leaderboard", {});
+
   const saveSchedule = (accessCode, week, matchups) => rpc("save_flash_family_week_schedule", {
     p_access_code: String(accessCode || "").trim().toUpperCase(),
     p_week: week,
@@ -94,5 +96,5 @@
     p_access_code: String(accessCode || "").trim().toUpperCase(),
   });
 
-  window.PokeLeagueCompetition = { read, readPicks, submitPick, saveSchedule, saveScores, setCurrentWeek, rewindWeek };
+  window.PokeLeagueCompetition = { read, readPicks, readLeaderboard, submitPick, saveSchedule, saveScores, setCurrentWeek, rewindWeek };
 })();

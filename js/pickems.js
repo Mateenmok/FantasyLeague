@@ -17,6 +17,7 @@
   let matchups = [];
   let allMatchups = [];
   let picks = [];
+  let leaderboardRows = null;
   let account = null;
   let accessCode = "";
   let week = 1;
@@ -84,10 +85,6 @@
       announce("Pick'ems are locked because the waiver period has closed.", true);
     }, Math.min(remaining + 100, 2147483000));
   };
-  const matchupWinner = (matchup) => {
-    if (!matchupComplete(matchup) || Number(matchup.home_score) === Number(matchup.away_score)) return null;
-    return Number(matchup.home_score) > Number(matchup.away_score) ? matchup.home_team_id : matchup.away_team_id;
-  };
 
   const renderMatchups = () => {
     if (!matchups.length) {
@@ -136,25 +133,26 @@
   };
 
   const renderLeaderboard = () => {
-    const entrants = new Map();
-    picks.forEach((pick) => {
-      const entry = entrants.get(pick.account_id) || { username: pick.username, correct: 0, scored: 0, picks: 0 };
-      entry.picks += 1;
-      const matchup = allMatchups.find((candidate) => Number(candidate.week) === Number(pick.week) && Number(candidate.display_order) === Number(pick.display_order));
-      const winner = matchup && matchupWinner(matchup);
-      if (winner) {
-        entry.scored += 1;
-        if (winner === pick.picked_team_id) entry.correct += 1;
-      }
-      entrants.set(pick.account_id, entry);
-    });
-    const rows = [...entrants.values()].sort((a, b) => b.correct - a.correct || b.scored - a.scored || a.username.localeCompare(b.username));
+    if (!Array.isArray(leaderboardRows)) {
+      leaderboard.innerHTML = '<p class="pickems-empty">Leaderboard temporarily unavailable. Refresh to try again.</p>';
+      return;
+    }
+    const rows = [...leaderboardRows].sort((a, b) => b.correct - a.correct || b.scored - a.scored || a.username.localeCompare(b.username));
     leaderboard.innerHTML = rows.length ? rows.map((entry, index) => `
       <article class="leaderboard-row">
         <span class="leaderboard-place">${index + 1}</span>
         <span class="leaderboard-user"><strong>${escapeHtml(entry.username)}</strong><small>${entry.picks} prediction${entry.picks === 1 ? "" : "s"} submitted</small></span>
         <span class="leaderboard-score"><strong>${entry.correct}</strong><small>correct</small></span>
       </article>`).join("") : '<p class="pickems-empty">No predictions have been submitted yet. Make the first picks!</p>';
+  };
+
+  const refreshLeaderboard = async () => {
+    try {
+      leaderboardRows = await window.PokeLeagueCompetition.readLeaderboard();
+    } catch {
+      leaderboardRows = null;
+    }
+    renderLeaderboard();
   };
 
   const announce = (message, isError = false) => {
@@ -179,7 +177,7 @@
       }
       announce(`${teamFor(teamId).name} locked in for Match ${displayOrder}.`);
       renderMatchups();
-      renderLeaderboard();
+      await refreshLeaderboard();
     } catch (error) {
       announce(error.message || "That pick could not be saved.", true);
     } finally {
@@ -276,7 +274,7 @@
           ? "Select a team to lock in your prediction. Picks close with waivers."
           : "You can browse matchups, but must sign in to submit predictions.", pickemsLocked());
       renderMatchups();
-      renderLeaderboard();
+      await refreshLeaderboard();
     } catch (error) {
       announce(error.message || "Pick'ems could not be loaded.", true);
       grid.innerHTML = '<p class="pickems-empty">The weekly card is unavailable.</p>';
