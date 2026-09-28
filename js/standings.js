@@ -40,6 +40,7 @@
       wins: 0,
       losses: 0,
       gameWins: 0,
+      gameLosses: 0,
       differential: 0,
     }]));
 
@@ -52,6 +53,8 @@
       if (!Number.isFinite(homeScore) || !Number.isFinite(awayScore)) return;
       home.gameWins += Math.max(0, homeScore);
       away.gameWins += Math.max(0, awayScore);
+      home.gameLosses += Math.max(0, awayScore);
+      away.gameLosses += Math.max(0, homeScore);
       if (result.homeKOs != null && result.awayKOs != null) {
         const homeKOs = Number(result.homeKOs), awayKOs = Number(result.awayKOs);
         if (Number.isInteger(homeKOs) && Number.isInteger(awayKOs) && homeKOs >= 0 && awayKOs >= 0) {
@@ -70,8 +73,9 @@
 
     return Object.values(records).sort((a, b) => (
       winPct(b) - winPct(a)
-      || b.differential - a.differential
       || b.gameWins - a.gameWins
+      || b.differential - a.differential
+      || a.gameLosses - b.gameLosses
       || a.originalIndex - b.originalIndex
     ));
   };

@@ -38,9 +38,15 @@ async function order(matchups) {
   let result = await order([match(a, 2, 0, 8, 0), match(a, 2, 0, 8, 0), match(a, 0, 2, 0, 2), match(b, 1, 0, 2, 1)]);
   assert(result.indexOf(b) < result.indexOf(a), 'Win% beats total wins, KO differential and GW');
   result = await order([match(a, 3, 0, 6, 5), match(b, 2, 0, 8, 0)]);
-  assert(result.indexOf(b) < result.indexOf(a), 'KO differential breaks equal Win% before GW');
-  result = await order([match(a, 1, 0, 4, 2), match(b, 2, 0, 8, 6)]);
-  assert(result.indexOf(b) < result.indexOf(a), 'GW breaks equal Win% and KO differential');
+  assert(result.indexOf(a) < result.indexOf(b), 'GW breaks equal Win% before KO differential');
+  result = await order([match(a, 2, 0, 8, 6), match(b, 2, 1, 8, 2)]);
+  assert(result.indexOf(b) < result.indexOf(a), 'KO differential breaks equal Win% and GW before games lost');
+  result = await order([match(a, 2, 1, 8, 2), match(b, 2, 0, 8, 2)]);
+  assert(result.indexOf(b) < result.indexOf(a), 'Fewer individual games lost breaks equal Win%, GW and KO Diff');
+  result = await order([{...match(a, 1, 2, 2, 8),home_team_id:opponent,away_team_id:a},match(b, 2, 0, 8, 2)]);
+  assert(result.indexOf(b) < result.indexOf(a), 'Away teams get games lost from the home score');
+  result = await order([match(a, 2, 1),{...match(a, 0, 2),week:2},match(b, 2, 0),{...match(b, 0, 2),week:2},match(b, 100, null)]);
+  assert(result.indexOf(b) < result.indexOf(a), 'Games lost accumulate across weeks; incomplete reports are ignored');
   result = await order([match(a, 2, 0, 6, 4), match(b, 1, 0, 2, 1), match(b, 1, 0, 2, 1)]);
   assert(result.indexOf(a) < result.indexOf(b), 'Full ties retain original order, with no extra wins/losses tiebreaker');
   result = await order([match(a, 0, 2, 1, 7), match(b, 0, 2, 2, 3)]);
@@ -48,5 +54,5 @@ async function order(matchups) {
   result = await order([match(a, 1, 0), match(b, 2, 0)]);
   assert(result.indexOf(b) < result.indexOf(a), 'Missing KO reports add no invented differential');
   assert.deepEqual(await order([]), teams.map(team => team.id), 'Preseason remains stable');
-  console.log('PASS: Win% → KO Diff → GW; stable full ties, negative/missing KOs, all 14 teams, and matching playoff seeds.');
+  console.log('PASS: Win% → GW → KO Diff → fewest games lost; home/away and multi-week totals, stable full ties, negative/missing KOs, and matching playoff seeds.');
 })().catch(error => {console.error(error); process.exitCode = 1;});
