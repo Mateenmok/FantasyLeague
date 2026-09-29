@@ -35,6 +35,7 @@ let account = null;
 let teams = [];
 let rosterMap = {};
 let waiverSettings = { startAt: null, endAt: null, pointCap: 50, rosterCap: 10, totalWeeks: 10 };
+let weeklyPickupUsed = null;
 let actionPending = false;
 let pendingAdd = null;
 let toastTimer = null;
@@ -98,7 +99,10 @@ const orbFor = (pokemon, className) => {
 const renderWindow = () => {
   const state = waiverWindow();
   windowStatusTarget.textContent = state.status;
-  windowCopyTarget.textContent = state.copy;
+  const usage = !account ? "One waiver pickup per team per week."
+    : weeklyPickupUsed === null ? "Weekly pickup allowance unavailable; refresh to try again."
+    : `Week ${waiverSettings.currentWeek}: ${weeklyPickupUsed ? 1 : 0}/1 waiver pickups used. Add + drop counts as one pickup.`;
+  windowCopyTarget.textContent = `${state.copy} ${usage}`;
   windowBanner.classList.toggle("is-open", state.open);
   windowBanner.classList.toggle("is-closed", !state.open);
   budgetTarget.textContent = `${rosterPoints()} / ${waiverSettings.pointCap} points`;
@@ -176,10 +180,23 @@ const refreshRosters = async () => {
   window.PokeLeagueState.write({ ...state, rosters: rosterMap });
 };
 
+const refreshWaiverUsage = async () => {
+  if (!account) return;
+  try {
+    waiverSettings = await window.PokeLeagueWaivers.readSettings();
+    weeklyPickupUsed = await window.PokeLeagueWaivers.readWeeklyUsage(account.teamId, waiverSettings.currentWeek);
+  } catch {
+    weeklyPickupUsed = null;
+  }
+};
+
 const submitTransaction = async ({ addName = null, dropName = null }) => {
   if (!account) return announce("Sign in before making a waiver move.", true);
   if (!waiverWindow().open) return announce("Waivers are currently closed.", true);
   if (actionPending) return;
+  if (addName && weeklyPickupUsed !== false) return announce(weeklyPickupUsed
+    ? "Your team has already used its one waiver pickup for this week."
+    : "Your weekly pickup allowance could not be checked. Please refresh.", true);
   if (isMascot(dropName)) return announce("Your team's mascot cannot be dropped.", true);
   const nextRoster = proposedRoster({ addName, dropName });
   const resultingPoints = rosterPoints(nextRoster);
@@ -198,6 +215,7 @@ const submitTransaction = async ({ addName = null, dropName = null }) => {
       teamId: account.teamId,
       addName, dropName, resultingPoints: latestPoints,
     });
+    if (addName) weeklyPickupUsed = true;
     await refreshRosters();
     if (swapDialog.open) swapDialog.close();
     announce(addName && dropName ? `${addName} added and ${dropName} dropped.`
@@ -205,6 +223,7 @@ const submitTransaction = async ({ addName = null, dropName = null }) => {
   } catch (error) {
     announce(error.message || "The waiver move could not be completed.", true);
   } finally {
+    await refreshWaiverUsage();
     actionPending = false;
     renderRoster();
     render();
@@ -274,9 +293,10 @@ const cardFor = (pokemon) => {
   const canAddDirectly = roster.length < waiverSettings.rosterCap
     && rosterPoints() + Number(pokemon.points) <= waiverSettings.pointCap;
   const canSwap = eligibleDrops(pokemon).length > 0;
-  const actionsAvailable = Boolean(account) && waiverWindow().open && !actionPending;
+  const actionsAvailable = Boolean(account) && waiverWindow().open && !actionPending && weeklyPickupUsed === false;
   addButton.disabled = !actionsAvailable || (!canAddDirectly && !canSwap);
   addButton.textContent = actionPending ? "Working..." : !account ? "Sign in" : !waiverWindow().open ? "Closed"
+    : weeklyPickupUsed === true ? "Weekly limit reached" : weeklyPickupUsed === null ? "Allowance unavailable"
     : canAddDirectly ? "Add" : canSwap ? "Add + drop" : roster.length >= waiverSettings.rosterCap ? "Roster full" : "Over cap";
   addButton.addEventListener("click", (event) => {
     event.stopPropagation();
@@ -376,6 +396,7 @@ Promise.all([
   ).trim().toUpperCase();
   account = accounts[accessCode] || null;
   waiverSettings = settings;
+  await refreshWaiverUsage();
   rosterMap = window.PokeLeagueRosters.namesFromSlugs(savedRosters, catalog, teams.map((team) => team.id));
   const state = window.PokeLeagueState.read();
   window.PokeLeagueState.write({ ...state, pointCap: settings.pointCap, totalWeeks: settings.totalWeeks, rosters: rosterMap });
@@ -401,7 +422,11 @@ window.addEventListener("storage", (event) => {
   render();
 });
 const refreshVisiblePoints = () => {
-  if (!document.hidden && baseCatalog.length) refreshPointValues().catch(() => announce("Point values could not refresh. Moves will be checked again before saving.", true));
+  if (!document.hidden && baseCatalog.length && !actionPending) {
+    Promise.all([refreshPointValues(), refreshWaiverUsage()])
+      .catch(() => announce("Point values could not refresh. Moves will be checked again before saving.", true))
+      .finally(() => { renderRoster(); render(); });
+  }
 };
 window.setInterval(refreshVisiblePoints, 15000);
 document.addEventListener("visibilitychange", refreshVisiblePoints);

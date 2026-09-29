@@ -34,7 +34,7 @@
   const readSettings = async () => {
     const query = new URLSearchParams({
       id: `eq.${LEAGUE_ID}`,
-      select: "waiver_window_start_at,waiver_window_end_at,roster_point_cap,roster_pokemon_cap,regular_season_matches",
+      select: "waiver_window_start_at,waiver_window_end_at,roster_point_cap,roster_pokemon_cap,regular_season_matches,current_matchup_number",
     });
     const response = await fetch(`${SUPABASE_URL}/rest/v1/leagues?${query}`, {
       headers,
@@ -49,6 +49,7 @@
       pointCap: Number(settings.roster_point_cap) || 50,
       rosterCap: Number(settings.roster_pokemon_cap) || 10,
       totalWeeks: Number(settings.regular_season_matches) || 10,
+      currentWeek: Number(settings.current_matchup_number) || 0,
     };
   };
 
@@ -75,6 +76,18 @@
     window.dispatchEvent(new Event("pokeleague:transaction"));
   };
 
+  const readWeeklyUsage = async (teamId, week) => {
+    const query = new URLSearchParams({
+      league_id: `eq.${LEAGUE_ID}`, team_id: `eq.${teamId}`, week: `eq.${week}`,
+      select: "week", limit: "1",
+    });
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/flash_family_weekly_waiver_usage?${query}`, {
+      headers, cache: "no-store",
+    });
+    if (!response.ok) throw new Error(await responseError(response));
+    return (await response.json()).length > 0;
+  };
+
   const readTransactions = async ({ limit = 6, before = null } = {}) => {
     const query = new URLSearchParams({
       league_id: `eq.${LEAGUE_ID}`,
@@ -90,5 +103,5 @@
     return response.json();
   };
 
-  window.PokeLeagueWaivers = { readSettings, setWindow, setSeasonRules, transact, slugify, readTransactions };
+  window.PokeLeagueWaivers = { readSettings, setWindow, setSeasonRules, transact, slugify, readTransactions, readWeeklyUsage };
 })();

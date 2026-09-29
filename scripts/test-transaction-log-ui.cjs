@@ -23,6 +23,8 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     let failRead = false;
     let failWrite = false;
     let rosterCap = 10;
+    let activeWeek = 2;
+    const usedWeeks = new Set();
     let rosters = [
       { team_id: 'miami-dragapults', pokemon_slug: 'dragapult', slot_number: 1 },
       { team_id: 'miami-dragapults', pokemon_slug: 'camerupt', slot_number: 2 },
@@ -37,14 +39,21 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
           return route.fulfill({ json: entries.filter(row => row.id < before).slice(0, Number(url.searchParams.get('limit'))) });
         }
         if (url.pathname.endsWith('/leagues')) return route.fulfill({ json: [{
+          current_matchup_number: activeWeek,
           waiver_window_start_at: new Date(Date.now() - 86400000).toISOString(),
           waiver_window_end_at: new Date(Date.now() + 86400000).toISOString(),
           roster_point_cap: 50, roster_pokemon_cap: rosterCap, regular_season_matches: 10,
         }] });
+        if (url.pathname.endsWith('/flash_family_weekly_waiver_usage')) {
+          const week = Number(url.searchParams.get('week').slice(3));
+          return route.fulfill({ json: usedWeeks.has(week) ? [{ week }] : [] });
+        }
         if (url.pathname.endsWith('/team_rosters')) return route.fulfill({ json: rosters });
         if (url.pathname.endsWith('/submit_flash_family_waiver')) {
           if (failWrite) return route.fulfill({ status: 400, json: { message: 'Test rejected move' } });
           const body = route.request().postDataJSON();
+          if (body.p_add_slug && usedWeeks.has(activeWeek)) return route.fulfill({ status: 400, json: { message: 'Your team has already used its one waiver pickup for this week' } });
+          if (body.p_add_slug) usedWeeks.add(activeWeek);
           for (const [slug, action] of [[body.p_drop_slug, 'dropped'], [body.p_add_slug, 'added']]) {
             if (!slug) continue;
             entries.unshift({ id: nextId++, team_id: body.p_team_id, pokemon_slug: slug, action, source: 'waiver', created_at: new Date().toISOString() });
@@ -89,6 +98,12 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     await crab.locator('.waiver-add-button').click();
     await page.waitForFunction(() => document.querySelector('[data-waiver-toast]').textContent.includes('Crabominable added'));
     assert.equal(entries[0].id, 66);
+    await page.waitForFunction(() => document.querySelector('[data-waiver-window-copy]').textContent.includes('1/1 waiver pickups used'));
+    assert(await page.locator('.waiver-add-button').first().isDisabled());
+    assert.match(await page.locator('.waiver-add-button').first().innerText(), /Weekly limit reached/i);
+    await page.reload();
+    await page.waitForFunction(() => document.querySelector('[data-waiver-window-copy]').textContent.includes('1/1 waiver pickups used'));
+    assert(await page.locator('.waiver-add-button').first().isDisabled(), 'Refresh cannot reset weekly usage');
     page.once('dialog', prompt => prompt.accept());
     await page.locator('[data-drop-pokemon="Camerupt"]').click();
     await page.waitForFunction(() => document.querySelector('[data-transaction-preview] li').textContent.includes('dropped Camerupt'));
@@ -136,6 +151,7 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     assert.deepEqual(errors, []);
     // Mascots are visibly locked and excluded from the full-roster swap picker.
     rosterCap = 2;
+    activeWeek = 3;
     await page.reload();
     await page.waitForSelector('[data-drop-pokemon="Dragapult"]');
     assert(await page.locator('[data-drop-pokemon="Dragapult"]').isDisabled());
@@ -145,6 +161,9 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     await page.waitForSelector('[data-waiver-swap-dialog][open]');
     assert.equal(await page.locator('[data-swap-drop="Dragapult"]').count(), 0);
     assert.equal(await page.locator('[data-swap-drop="Crabominable"]').count(), 1);
+    await page.locator('[data-swap-drop="Crabominable"]').click();
+    await page.waitForFunction(() => document.querySelector('[data-waiver-window-copy]').textContent.includes('Week 3: 1/1'));
+    assert(await page.locator('.waiver-add-button').first().isDisabled(), 'One swap consumes the new week allowance');
     console.log('PASS: six latest moves, complete paginated history, live add/drop updates, rejected moves, light/dark/mobile, scrollable dialog, focus/ESC, empty/error/retry states. No production writes.');
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exitCode = 1; });
