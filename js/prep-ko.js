@@ -54,7 +54,7 @@
         else add(next,remaining,state.used,state.p);
       }
       states=next;
-      if(ko>1e-12){
+      if(ko>0){
         const chance=Math.min(1,ko);
         const count=turn===1?"OHKO":turn+"HKO";
         const guaranteed=states.size===0;

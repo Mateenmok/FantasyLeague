@@ -19,6 +19,7 @@ check({damage:rolls(150),sturdy:true},2);
 check({damage:[rolls(150),rolls(150)],sturdy:true},1);
 check({hp:40,damage:rolls(40),sitrus:true},1);
 check({damage:rolls(20),rollsForState:state=>rolls(state.hp===100?20:50)},3);
+check({hp:10,maxHP:10,damage:Array.from({length:10},()=>[...Array(15).fill(0),1])},1,16**-10);
 // Independent enumeration for 2–5 hits: preserve every equally likely branch.
 for(let hits=2;hits<=5;hits++){
   for(const hp of [70,100,145,200]){
