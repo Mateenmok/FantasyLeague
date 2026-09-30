@@ -6,6 +6,47 @@
   --prep-cyan: #70e3ff;
 }
 
+/* Repair v3: KO row directly beneath the primary percentage; no clipped text. */
+body.prep-station-body .move-slot .move-result.has-damage {
+  display: grid !important;
+  grid-template-rows: auto minmax(2.5em, auto) 1fr !important;
+  align-content: start !important;
+  gap: 6px !important;
+  min-height: 150px !important;
+  height: auto !important;
+  min-width: 0 !important;
+  overflow: visible !important;
+  container-type: inline-size;
+}
+body.prep-station-body .move-slot .move-damage-main.move-percent-only {
+  font-size: clamp(14px, 9cqi, 25px) !important;
+  line-height: 1.25 !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  font-variant-numeric: tabular-nums;
+}
+body.prep-station-body .move-slot .move-ko {
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1.3 !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+}
+body.prep-station-body .move-slot .damage-meta-compact {
+  min-width: 0 !important;
+  align-self: start;
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+}
+body.prep-station-body .damage-compact-item {
+  white-space: normal !important;
+}
+body.prep-station-body .damage-compact-engine {
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+  flex-basis: 100%;
+}
+
 html {
   min-width: 320px;
   min-height: 100%;

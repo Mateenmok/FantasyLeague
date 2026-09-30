@@ -1,0 +1,99 @@
+PREP STATION — REPAIR HANDOFF V3
+2026-09-30
+
+Root causes and changes
+
+1. The page loaded the Smogon data bundle, but not Pokemon/Move/calculate.
+   Most calculations therefore silently took the approximation path.
+   js/vendor/prep-calc.js now bundles @smogon/calc 0.12.0 with its Champions
+   data and mechanics. It also exposes upstream Speed and end-of-turn helpers.
+   Their mechanics were not rewritten. MIT attribution is beside the bundle.
+
+2. prep-station.html: syncAbilityWeather tracks form/ability transitions.
+   Automatic and manual weather feed FIELD_STATE. Rerenders do not reapply
+   an unchanged setter over manual weather. Both effective-Speed functions
+   now use the upstream helper, including weather, Tailwind, status and items.
+   exactDamage keeps full engine results, actual move type/power and rolls.
+   Fixed damage and current Mega forms no longer bypass the working engine.
+   Canonical engine mappings cover all 353 entries in the current Pokédex
+   plus the existing M-C overlay. Intimidate/seeds are not double-applied.
+
+3. js/prep-ko.js uses weighted per-hit roll distributions, not endpoints or
+   average damage. It tracks current HP, one-use resist berries, Sitrus only
+   after a surviving hit, Sturdy/Focus Sash, and recovery between attacks.
+   End-of-turn effects come from Smogon. HP-sensitive move/ability rolls are
+   recalculated when HP changes. Optimizer KO/survival checks use the same
+   one-attack outcome instead of assuming healing berries are extra starting HP.
+   A fallback approximation, if needed, is explicitly labeled Approx.
+
+4. css/prep-station.css preserves the site's palette and layout but reserves
+   a KO row immediately under the primary damage percentage. Metadata wraps
+   without clipping the percentage or the engine label.
+
+5. sendRightPokemonToNoteSheet still sends unknown sets with blank fields.
+   A Mega's guaranteed stone and single known ability are the only exception.
+   Note Sheet exact-load guards remain intact. Unknown abilities also remain
+   unknown inside the engine instead of silently receiving a species default.
+   Builder's select helper now permits deliberate empty values.
+
+6. setSpriteElement is shared across calculator, Builder, notes and rails.
+   Cached failures retry named-form alternatives instead of showing Substitute.
+   Gender/regional/Mega aliases are corrected; timeouts avoid stuck probes.
+   The 353 current supported entries were checked for a working static asset:
+   342 resolve via Showdown; 11 newer Megas have verified direct PokeAPI HOME
+   overrides, avoiding a long sequence of 404s before their existing fallback.
+   Preloading remains enabled. No generated or animated artwork was added.
+
+7. rosterPrimaryDisplay uses the faster Mega by default. Explicit form choices
+   are remembered per side and update the name, sprite, base-Speed number and
+   sort order together. Rail dimensions and internal scrolling are unchanged.
+
+Deliberately preserved
+
+Site shell/navigation, league accounts and roster database, current Champions
+learnset authority, usage-ranking sources, Pokemon/form catalog, Builder card
+Ability/Nature layout, How-to page, existing optimizer priority, SP input focus
+handling, Note Sheet storage keys, Mega-stone lock, and Aegislash Shield default.
+Unrelated pending Pick'ems/deadline edits are not part of this repair.
+
+Verification
+
+- scripts/test-prep-ko.cjs: exact independently enumerated 2–5-hit probabilities,
+  duplicate-roll weights, current HP, healing timing, one-use resist berries,
+  Leftovers, Sturdy, and HP-sensitive roll changes.
+- scripts/test-prep-repair.cjs: real bundled engine plus current official
+  Champions learnsets; automatic/manual weather and Mega transitions; four
+  weather Speed abilities and Tailwind stacking; weather damage, Weather Ball
+  type/power, Sand Rock SpD; Final Gambit legality/current HP/optimizer;
+  fixed/variable multihit controls; Note exact blanks/status transfer;
+  Mega scouting defaults; faster-Mega/explicit-form rails; failed cached sprite
+  retry; Builder Nature/SP/item/status transfer; Trick Room and neutral-outs­peed;
+  minimum-needed KO/survival investment; damage layout at 1600/1100/390px.
+- scripts/test-prep-live-rosters.cjs: existing 14-team live-roster fixture suite,
+  regional aliases, refresh/retry, dark text contrast, light mode and mobile.
+- Browser suites intercept every request and perform no production writes.
+- Existing live species/items/moves endpoints and static sprite URLs respond.
+- git diff --check passed. Narrow damage screenshots were visually inspected.
+
+Limits
+
+The referenced FFDL_SP_Optimizer_v120.html was not attached or present in
+Downloads, so this is a repair against the written v3 requirements, not a
+byte-for-byte comparison with that reference.
+KO odds are conditional on the selected hits landing at the selected setup;
+they are not accuracy odds or a simulation of later opponent choices, switching,
+recoil, or every evolving turn-by-turn stat interaction. Those combinations were
+not exhaustively tested. Sprite URL checks do not replace visually inspecting
+every artwork. Usage/learnset/artwork feeds outside the bundled engine still
+depend on their existing external providers.
+
+Rebuilding the engine
+
+npm install --prefix /tmp/pokeleague-prep-repair @smogon/calc@0.12.0 esbuild@0.25.10
+NODE_PATH=/tmp/pokeleague-prep-repair/node_modules node scripts/build-prep-calc.cjs
+
+Browser tests require PLAYWRIGHT_PATH and BROWSER_PATH. The repair test uses
+PREP_LEARNSETS (default /private/tmp/pokeleague-prep-repair/champions-learnsets.ts)
+from Smogon's pokemon-showdown/data/mods/champions/learnsets.ts.
+Optional PREP_POKEDEX points at the existing NCP pokedex.js source, with
+NODE_PATH pointing to the temporary @smogon/calc install.
