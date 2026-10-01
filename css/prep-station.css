@@ -672,6 +672,29 @@ body.prep-station-body .guide-shell {
   opacity: 1;
 }
 
+body.prep-station-body .move-stack-control {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 5px !important;
+}
+
+body.prep-station-body .move-stack-control .move-hit-label {
+  grid-column: 1 / -1;
+}
+
+body.prep-station-body .move-stack-control .move-hit-select {
+  width: 100% !important;
+  min-width: 0 !important;
+  padding-inline: 4px !important;
+  font-variant-numeric: tabular-nums;
+}
+
+body.prep-station-body .move-stack-control .move-stack-power {
+  min-width: 0 !important;
+  padding-inline: 4px !important;
+  font-variant-numeric: tabular-nums;
+}
+
 @media (max-width: 760px) {
   body.prep-station-body > .app {
     width: min(calc(100% - 22px), 1580px);

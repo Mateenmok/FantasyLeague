@@ -165,6 +165,76 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     assert.equal(await run('moveMultiHitProfile("Rock Blast","left").defaultHits'),5);
     await run('ensureBuilderSelectValue($id("leftAbility"),"");ensureBuilderSelectValue($id("leftItem"),"Loaded Dice")');
     assert.equal(await run('moveMultiHitProfile("Rock Blast","left").min'),4);
+    // Stack counters change base power (not number of hits) on either side.
+    await weather('');
+    await select('left','Annihilape','Defiant');
+    await select('right','Charizard','Blaze');
+    await run('ensureTransferredCalculatorMoveValue($id("leftMove1"),"Rage Fist");updateAllDamage()');
+    const rage=page.getByRole('spinbutton',{name:'Rage Fist stacks'});
+    let previousDamage=0;
+    for(let stacks=0;stacks<=6;stacks++){
+      await rage.fill(String(stacks));
+      const damage=await run('calculateMoveDamage("left","Rage Fist")');
+      assert.equal(damage.power,50+50*stacks);
+      assert.equal(damage.hits,1);
+      assert(damage.max>previousDamage,'Rage Fist damage rises with stacks');
+      previousDamage=damage.max;
+      assert.match(await page.locator('#leftMoveResult1 .move-meta').innerText(),new RegExp((50+50*stacks)+' BP'));
+    }
+    await rage.fill('9');
+    await rage.blur();
+    assert.equal(await rage.inputValue(),'6','Rage Fist clamps at six stacks');
+    assert.equal(await run('calculateMoveDamage("left","Rage Fist").power'),350);
+    assert.equal(await run('calculateMoveDamage("left","Rage Fist").inputs.move.clone().bp'),350,'Power override survives engine cloning for KO rolls');
+    assert.equal(await run('fallbackDamage("left","Rage Fist").power'),350,'Fallback also uses stacks');
+    const benchmarkPower=await run('evaluateDamageWithLeftBuild("left","Rage Fist",zeroSPSpread(),"serious").damage.power');
+    assert.equal(benchmarkPower,350,'Optimizer evaluates the selected stack count');
+    await run('$id("optFocus").value="guaranteed_ko";refreshDamageBenchmarkUI();$id("damageBenchmarkMove").value="Rage Fist";optimize()');
+    assert.equal(await run('leftSP.atk'),0,'High-stack existing KO needs no extra Attack SP');
+    assert.equal(await rage.inputValue(),'6','Optimization preserves stacks');
+    await page.selectOption('#leftMove1','Shadow Claw');
+    assert.equal(await page.locator('#leftMoveHits1').isVisible(),false,'Unrelated moves hide stack control');
+    await page.selectOption('#leftMove1','Rage Fist');
+    assert.equal(await rage.inputValue(),'6','Reselecting the move preserves this Pokémon’s count');
+    await run('setNoteSheetPokemon(5,"Annihilape");NOTE_SHEET_STATE.slots[5].moves=["Rage Fist","","",""];loadNoteSheetSlotToCalculator(5)');
+    assert.equal(await page.locator('#rightMoveHits1 input').inputValue(),'0','Note Sheet load starts fresh battle counters');
+    await page.locator('#rightMoveHits1 input').fill('1');
+    assert.equal(await run('calculateMoveDamage("right","Rage Fist").power'),100);
+    assert.equal(await run('calculateMoveDamage("left","Rage Fist").power'),350,'Sides have independent counts');
+    await select('left','Basculegion','Adaptability');
+    await select('right','Charizard','Blaze');
+    await run('ensureTransferredCalculatorMoveValue($id("leftMove1"),"Last Respects");updateAllDamage()');
+    const respects=page.getByRole('spinbutton',{name:'Last Respects stacks'});
+    for(const count of [0,1,2,3,5,10]){
+      await respects.fill(String(count));
+      assert.equal(await run('calculateMoveDamage("left","Last Respects").power'),50+50*count);
+      assert.equal(await run('calculateMoveDamage("left","Last Respects").hits'),1);
+    }
+    await respects.fill('-2');
+    await respects.blur();
+    assert.equal(await respects.inputValue(),'0','Negative stacks are rejected');
+    await respects.fill('101');
+    await respects.blur();
+    assert.equal(await respects.inputValue(),'100','Last Respects bounds the fainting counter');
+    await respects.fill('');
+    await respects.pressSequentially('10');
+    assert.equal(await respects.inputValue(),'10','Rerenders retain focus for multi-digit stack entry');
+    await respects.fill('3');
+    await page.selectOption('#leftNature','adamant');
+    assert.equal(await respects.inputValue(),'3','Rerenders preserve stacks');
+    await page.evaluate(()=>document.documentElement.dataset.theme='dark');
+    for(const width of [1600,390]){
+      await page.setViewportSize({width,height:1100});
+      assert.equal(await page.locator('#leftMoveHits1').evaluate(el=>el.scrollWidth>el.clientWidth+1),false,'Stacks fit at '+width);
+      await page.locator('#leftMoveHits1').screenshot({path:'/tmp/prep-last-respects-'+width+'.png'});
+    }
+    await page.setViewportSize({width:1600,height:1100});
+    await select('left','Annihilape','Defiant');
+    assert.equal(await run('selectedMoveStacks("left","Rage Fist")'),0,'Changing Pokémon resets stale stacks');
+    await run('MOVE_STACK_SELECTION.right.ragefist=4;clearSide("right")');
+    assert.equal(await run('selectedMoveStacks("right","Rage Fist")'),0,'Clearing a side resets stacks');
+    await run('MOVE_STACK_SELECTION.left.ragefist=6;MOVE_STACK_SELECTION.right.lastrespects=3;resetExample()');
+    assert.equal(await run('selectedMoveStacks("left","Rage Fist")+selectedMoveStacks("right","Last Respects")'),0,'Reset clears both sides');
     // Ordinary sends reveal only species/form; Mega sends reveal only guaranteed information.
     await select('right','Charizard','Blaze','Life Orb');
     await run('NOTE_SHEET_STATE.slots=Array.from({length:6},emptyNoteSheetSlot);sendRightPokemonToNoteSheet()');
@@ -265,6 +335,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     }
     assert.deepEqual(errors,[]);
     assert.deepEqual(writes,[]);
+    console.log('PASS: Last Respects/Rage Fist stack controls, power and damage scaling, KO/optimizer integration, independent sides, input bounds, multi-digit entry, reset behavior and mobile/dark layout.');
     console.log('PASS: real engine, weather Speed display and optimizer parity on both sides, SP edits, weather suppression and modifier stacking, Weather Ball, Sand bulk, legal/status moves, Final Gambit, multihit controls, exact Note transfers, direct/form-picker/persisted Mega note defaults, rail overrides, sprite aliases, dark/mobile damage layout; no production writes.');
   }finally{await browser.close();}
 })().catch(error=>{console.error(error);process.exitCode=1;});

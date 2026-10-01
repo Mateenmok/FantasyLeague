@@ -14293,6 +14293,46 @@ function fallbackAbilityDamageModifier(attackerSide,defenderSide,moveName,info,e
   return mod;
 }
 const MOVE_HIT_SELECTION={left:{},right:{}};
+const MOVE_STACK_SELECTION={left:{},right:{}};
+// Mechanics: https://github.com/smogon/pokemon-showdown/blob/master/data/moves.ts
+const MOVE_STACK_PROFILES={
+  lastrespects:{label:"FAINTED ALLIES",max:100,help:"Count team faintings, including any after reviving. Each adds 50 base power."},
+  ragefist:{label:"HITS TAKEN",max:6,help:"Count hits taken by this Pokémon. Each adds 50 base power; 6 or more reaches the 350 BP cap."}
+};
+function selectedMoveStacks(side,moveName){
+  const key=moveLookupKey(moveName),profile=MOVE_STACK_PROFILES[key];
+  return profile?Math.floor(clamp(MOVE_STACK_SELECTION[side]?.[key]??0,0,profile.max,0)):0;
+}
+function stackedMovePower(side,moveName){
+  if(!MOVE_STACK_PROFILES[moveLookupKey(moveName)])return null;
+  return 50+50*selectedMoveStacks(side,moveName);
+}
+function refreshMoveStackControl(host,side,moveName){
+  const key=moveLookupKey(moveName),profile=MOVE_STACK_PROFILES[key];
+  host.hidden=false;
+  host.classList.add("move-stack-control");
+  if(host.dataset.stackMove!==key){
+    host.dataset.stackMove=key;
+    host.innerHTML='<label class="move-hit-label" for="'+host.id+'Stacks">'+profile.label+'</label>'+
+      '<input class="move-hit-select" id="'+host.id+'Stacks" type="number" min="0" max="'+profile.max+'" step="1" aria-label="'+moveName+' stacks">'+
+      '<strong class="move-stack-power" aria-live="polite"></strong>';
+    const input=host.querySelector("input");
+    input.title=profile.help;
+    const sync=normalize=>{
+      MOVE_STACK_SELECTION[side][key]=Math.floor(clamp(input.value,0,profile.max,0));
+      if(normalize)input.value=String(selectedMoveStacks(side,moveName));
+      resetOptimizationResult();
+      updateAllDamage();
+      updateBenchmark();
+    };
+    input.addEventListener("input",()=>sync(false));
+    input.addEventListener("change",()=>sync(true));
+  }
+  const input=host.querySelector("input");
+  // Damage rerenders must not steal focus while a two-digit count is typed.
+  if(document.activeElement!==input)input.value=String(selectedMoveStacks(side,moveName));
+  host.querySelector(".move-stack-power").textContent=stackedMovePower(side,moveName)+" BP";
+}
 
 /* Standard Showdown metadata is preferred. These fallbacks keep the UI correct
    even if the metadata request is temporarily unavailable. */
@@ -14405,6 +14445,12 @@ function refreshMoveHitControl(side,index){
   }
 
   const moveName=moveSelect.value||"";
+  if(MOVE_STACK_PROFILES[moveLookupKey(moveName)]){
+    refreshMoveStackControl(host,side,moveName);
+    return;
+  }
+  delete host.dataset.stackMove;
+  host.classList.remove("move-stack-control");
   const profile=moveMultiHitProfile(moveName,side);
   if(!moveName || !profile.isMulti){host.hidden=true;host.innerHTML="";return;}
 
@@ -14470,7 +14516,7 @@ function fallbackDamage(attackerSide,moveName){
 
   const atk=Math.max(1,battleStat(attackerSide,attackerName,attackKey,attackerSP[attackKey]||0));
   let def=Math.max(1,battleStat(defenderSide,defenderName,defenseKey,defenderSP[defenseKey]||0));
-  const power=Math.max(1,Number(info.power)||1);
+  const power=stackedMovePower(attackerSide,moveName)??Math.max(1,Number(info.power)||1);
   const level=50;
   const effectiveType=effectiveMoveType(attackerSide,info);
 
@@ -14562,6 +14608,7 @@ function fallbackDamage(attackerSide,moveName){
   return {
     min,max,
     engine:"M-C Approx",
+    power,
     effectiveness,
     info,
     effectiveType,
@@ -14630,11 +14677,15 @@ function exactDamage(attackerSide,moveName,options={}){
     const gen=calc.Generations.get(0);
     const hits=selectedMoveHitCountForName(attackerSide,moveName);
     const dragonDartsPerTarget=moveLookupKey(moveName)==="dragondarts";
+    const stackPower=stackedMovePower(attackerSide,moveName);
+    const overrides={};
+    if(dragonDartsPerTarget)Object.assign(overrides,{multihit:1,smartTarget:false});
+    if(stackPower!==null)overrides.basePower=stackPower;
     const move=new calc.Move(gen,moveName,{
       hits,
       ability:selectedAbility(attackerSide)||undefined,
       item:selectedItem(attackerSide)||undefined,
-      overrides:dragonDartsPerTarget?{multihit:1,smartTarget:false}:undefined
+      overrides
     });
 
     /* Pokémon Champions VGC is doubles. Passing a Doubles Field makes
@@ -14836,6 +14887,7 @@ function renderMoveDamage(side,index){
   const attackerName=side==="left"?leftFormName:rightFormName;
   const defenderName=side==="left"?rightFormName:leftFormName;
   const moveName=select.value;
+  refreshMoveHitControl(side,index);
 
   result.className="move-result";
   result.style.removeProperty("--move-color");
@@ -14853,7 +14905,6 @@ function renderMoveDamage(side,index){
     return;
   }
 
-  refreshMoveHitControl(side,index);
   const info=moveInfo(moveName);
   const renderedType=effectiveMoveType(side,info);
   const moveColor=PICKER_TYPE_COLORS[renderedType||info?.type]||"#6fd7f4";
@@ -16222,6 +16273,7 @@ function renderStatTable(side){
 function renderSide(side){renderIdentity(side);populateSetOptions(side,{preserve:true});renderStatTable(side);refreshBattleStateUI(side);renderPopularSpreads(side)}
 
 function clearSide(side){
+  MOVE_STACK_SELECTION[side]={};
   NOTE_SHEET_CALC_EXACT[side]=null;
   MOVE_AUTO_STATE[side]=true;
   SET_AUTO_STATE[side]={ability:true,item:true};
@@ -16241,6 +16293,7 @@ function clearSide(side){
 
 function chooseBase(side,value){
   const name=validBaseInput(value);if(!name)return false;
+  MOVE_STACK_SELECTION[side]={};
   NOTE_SHEET_CALC_EXACT[side]=null;
   MOVE_AUTO_STATE[side]=true;
   SET_AUTO_STATE[side]={ability:true,item:true};
@@ -18923,6 +18976,7 @@ function loadNoteSheetSlotToCalculator(index){
     : (groupedRepresentativeForm(base)||base);
 
   switchWorkspacePage("calculator");
+  MOVE_STACK_SELECTION.right={};
 
   /* Exact live-scout transfer: do NOT run chooseBase/setActiveForm because those
      intentionally auto-fill competitive defaults. Only the Note Sheet's recorded
@@ -19356,6 +19410,8 @@ function bindEvents(){
 }
 
 function resetExample(){
+  MOVE_STACK_SELECTION.left={};
+  MOVE_STACK_SELECTION.right={};
   WEATHER_SELECTION.left=WEATHER_SELECTION.right="";
   autoWeatherOwner="";
   ROSTER_FORM_SELECTION.left.clear();
@@ -20557,7 +20613,7 @@ body.theme-dark .move-hit-control strong,body.theme-dark .move-hit-select{backgr
 }
 </style>
 
-<link rel="stylesheet" href="css/prep-station.css?v=prep-repair3">
+<link rel="stylesheet" href="css/prep-station.css?v=move-stacks1">
 
 <script>
 (() => {
