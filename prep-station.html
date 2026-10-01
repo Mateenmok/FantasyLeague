@@ -11929,6 +11929,11 @@ function effectiveBattleStat(side,name,key,sp){
   if(key==="spe")return effectiveSpeedForNature(side,name,sp,$id(side+"Nature")?.value||"serious");
   return Math.floor(battleStat(side,name,key,sp));
 }
+function displayedCalculatorStat(side,name,key,sp){
+  // Keep species base stats unchanged; Final Speed matches the optimizer's
+  // current battle conditions, including weather, ability, item and status.
+  return key==="spe"?effectiveBattleStat(side,name,key,sp):finalStat(side,name,key,sp);
+}
 function stageText(value){
   const v=clamp(value,-6,6,0);
   return v>0 ? "+"+v : String(v);
@@ -12093,8 +12098,9 @@ function syncAbilityWeather(side){
   }else if(autoWeatherOwner===side){
     FIELD_STATE.weather=WEATHER_SETTERS[selectedAbility(otherSide(side))]||"";
     autoWeatherOwner=FIELD_STATE.weather?otherSide(side):"";
-  }else return;
+  }
   refreshFieldUI();
+  // A weather-suppressing ability changing also affects the other side's Speed.
   for(const target of ["left","right"])renderStatTable(target);
 }
 
@@ -12899,6 +12905,7 @@ function populateSetOptions(side,{preserve=false}={}){
     itemEl.appendChild(new Option("Select Pokémon first",""));
     abilityEl.disabled=true;
     itemEl.disabled=true;
+    syncAbilityWeather(side);
     return;
   }
 
@@ -13023,6 +13030,7 @@ async function loadSetData(){
     populateSetOptions("right",{preserve:true});
     updateAllDamage();
     renderTeamBuilder();
+    renderNoteSheet();
   }catch(err){
     console.warn("Live Champions ability/item source failed; using embedded Regulation M-C overlay",err);
     CHAMPION_SPECIES={...MC_SET_SPECIES_OVERLAY};
@@ -13034,6 +13042,7 @@ async function loadSetData(){
     populateSetOptions("right",{preserve:true});
     updateAllDamage();
     renderTeamBuilder();
+    renderNoteSheet();
   }
 }
 
@@ -16200,7 +16209,7 @@ function renderStatTable(side){
       '<td>'+statBase(name,key)+'</td>'+
       '<td><input type="number" min="0" max="32" data-side="'+side+'" data-stat="'+key+'" value="'+spread[key]+'"></td>'+
       '<td>'+stageHTML+'</td>'+
-      '<td class="stat-final">'+finalStat(side,name,key,spread[key])+'</td>';
+      '<td class="stat-final"'+(key==="spe"?' title="Effective Speed under the current battle conditions"':'')+'>'+displayedCalculatorStat(side,name,key,spread[key])+'</td>';
     body.appendChild(tr);
   });
 
@@ -16210,7 +16219,7 @@ function renderStatTable(side){
   $id(side+"Meter").style.width=Math.min(100,used/66*100)+"%";
   if(typeof updateAllDamage==="function")updateAllDamage();
 }
-function renderSide(side){renderIdentity(side);renderStatTable(side);populateSetOptions(side,{preserve:true});refreshBattleStateUI(side);renderPopularSpreads(side)}
+function renderSide(side){renderIdentity(side);populateSetOptions(side,{preserve:true});renderStatTable(side);refreshBattleStateUI(side);renderPopularSpreads(side)}
 
 function clearSide(side){
   NOTE_SHEET_CALC_EXACT[side]=null;
@@ -18628,6 +18637,20 @@ let NOTE_SHEET_STATE=loadNoteSheetState();
 function saveNoteSheetState(){
   try{localStorage.setItem(NOTE_SHEET_STORAGE_KEY,JSON.stringify(NOTE_SHEET_STATE));}catch(err){}
 }
+function applyNoteSheetMegaDefaults(slot){
+  if(!slot?.baseName)return false;
+  const form=slot.formName||slot.baseName;
+  const species=championsSpeciesEntry(form);
+  if(!species?.isMega)return false;
+  const item=requiredMegaItem(form);
+  const abilities=legalAbilitiesFor(form);
+  let changed=false;
+  // Only fill facts guaranteed by the selected Mega form. Never invent moves
+  // or overwrite existing scouting notes/custom observations.
+  if(!slot.item && item){slot.item=item;changed=true;}
+  if(!slot.ability && abilities.length===1){slot.ability=abilities[0];changed=true;}
+  return changed;
+}
 function noteSheetFilledCount(){
   return NOTE_SHEET_STATE.slots.filter(slot=>slot?.baseName).length;
 }
@@ -18765,6 +18788,12 @@ function hydrateNoteSheetImages(root){
 function renderNoteSheet(){
   const grid=$id("noteSheetGrid");
   if(!grid)return;
+  // Covers direct picks, form switches, saved notes and delayed metadata loads.
+  let filledMegaDefaults=false;
+  NOTE_SHEET_STATE.slots.forEach(slot=>{
+    if(applyNoteSheetMegaDefaults(slot))filledMegaDefaults=true;
+  });
+  if(filledMegaDefaults)saveNoteSheetState();
   grid.innerHTML=NOTE_SHEET_STATE.slots.map(noteSheetCardHTML).join("");
   const filled=noteSheetFilledCount();
   if($id("noteSheetCount"))$id("noteSheetCount").textContent=filled+" / 6";
@@ -18867,12 +18896,9 @@ function sendRightPokemonToNoteSheet(){
   NOTE_SHEET_STATE.slots[index]={
     ...emptyNoteSheetSlot(),
     baseName:rightBaseName,
-    formName:rightFormName,
-    // Only guaranteed information is revealed by a Mega transformation.
-    item:requiredMegaItem(rightFormName)||"",
-    ability:requiredMegaItem(rightFormName) && legalAbilitiesFor(rightFormName).length===1
-      ? legalAbilitiesFor(rightFormName)[0] : ""
+    formName:rightFormName
   };
+  applyNoteSheetMegaDefaults(NOTE_SHEET_STATE.slots[index]);
   saveNoteSheetState();
   renderNoteSheet();
   showNoteSheetToast((builderDisplayNameForForm(rightBaseName,rightFormName)||rightFormName)+" added to Note Sheet Slot "+(index+1)+".");
@@ -18881,6 +18907,7 @@ function sendRightPokemonToNoteSheet(){
 function loadNoteSheetSlotToCalculator(index){
   const slot=NOTE_SHEET_STATE.slots[index];
   if(!slot?.baseName)return;
+  if(applyNoteSheetMegaDefaults(slot))saveNoteSheetState();
 
   const base=validBaseInput(slot.baseName)||slot.baseName;
   if(!base || !BASE_NAMES.includes(base)){
@@ -19166,7 +19193,7 @@ function bindEvents(){
     const body=$id(side+"Stats");
     const row=body?.querySelector('tr[data-stat-key="'+key+'"]');
     const finalCell=row?.querySelector(".stat-final");
-    if(finalCell && name)finalCell.textContent=finalStat(side,name,key,spread[key]||0);
+    if(finalCell && name)finalCell.textContent=displayedCalculatorStat(side,name,key,spread[key]||0);
 
     const used=name?totalSP(spread):0;
     if($id(side+"BudgetText"))$id(side+"BudgetText").textContent=used+" / 66";

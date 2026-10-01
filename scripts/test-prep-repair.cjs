@@ -62,7 +62,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     const run=code=>page.evaluate(code=>window.__prepTest(code),code);
     await page.waitForFunction(()=>window.__prepTest?.('damageDataLoaded && setDataLoaded'));
     const select=async(side,name,ability='',item='')=>run(`
-      chooseBase("${side}",${JSON.stringify(name)});
+      if(!chooseBase("${side}",${JSON.stringify(name)}))throw new Error("Test Pokémon unavailable: "+${JSON.stringify(name)});
       SET_AUTO_STATE.${side}={ability:false,item:false}; SET_USAGE_REQUEST_TOKEN.${side}++;
       MOVE_AUTO_STATE.${side}=false; MOVE_USAGE_REQUEST_TOKEN.${side}++;
       ensureBuilderSelectValue($id("${side}Ability"),${JSON.stringify(ability)});
@@ -85,17 +85,47 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
       assert.equal(await run('FIELD_STATE.weather'),w);
     }
     await select('right','Snorlax','Immunity');
-    for(const [mon,ability,w] of [['Victreebel','Chlorophyll','Sun'],['Kingdra','Swift Swim','Rain'],['Excadrill','Sand Rush','Sand'],['Beartic','Slush Rush','Snow']]){
+    for(const [mon,ability,w] of [['Victreebel','Chlorophyll','Sun'],['Beartic','Swift Swim','Rain'],['Excadrill','Sand Rush','Sand'],['Beartic','Slush Rush','Snow']]){
       await select('left',mon,ability);
       await weather('');
       const normal=await run('currentSpeed("left")');
       await weather(w);
       assert.equal(await run('currentSpeed("left")'),normal*2,ability);
       assert.equal(await run('effectiveSpeedForNature("left",leftFormName,0,"serious")'),normal*2);
+      assert.equal(Number(await page.locator('#leftStats [data-stat-key="spe"] .stat-final').innerText()),normal*2,'Displayed Speed includes '+ability);
+      assert.equal(Number(await page.locator('#leftStats [data-stat-key="spe"] td').nth(1).innerText()),await run('statBase(leftFormName,"spe")'),'Species base Speed stays unchanged');
+      const speedSP=page.locator('#leftStats input[data-stat="spe"]');
+      await speedSP.fill('12');
+      assert.equal(Number(await page.locator('#leftStats [data-stat-key="spe"] .stat-final').innerText()),await run('currentSpeed("left")'),'Editing SP retains weather-adjusted Speed');
+      await speedSP.fill('0');
+      await weather('');
+      assert.equal(Number(await page.locator('#leftStats [data-stat-key="spe"] .stat-final').innerText()),normal,'Removing weather restores displayed Speed');
+      await weather(w);
       await run('FIELD_STATE.left.tailwind=true');
       assert.equal(await run('currentSpeed("left")'),normal*4,'Tailwind stacks once');
       await run('FIELD_STATE.left.tailwind=false');
     }
+    await select('left','Victreebel','Chlorophyll');
+    await select('right','Charizard','Blaze');
+    await run('setActiveForm("right","Mega Charizard Y")');
+    assert.equal(Number(await page.locator('#leftStats [data-stat-key="spe"] .stat-final').innerText()),180,'Opposing Drought updates displayed Speed immediately');
+    await select('right','Altaria','Cloud Nine');
+    await weather('Sun');
+    assert.equal(Number(await page.locator('#leftStats [data-stat-key="spe"] .stat-final').innerText()),90,'Cloud Nine suppresses displayed weather boost');
+    await run('clearSide("right")');
+    assert.equal(Number(await page.locator('#leftStats [data-stat-key="spe"] .stat-final').innerText()),180,'Removing Cloud Nine restores displayed weather boost');
+    await select('right','Beartic','Swift Swim');
+    await weather('Rain');
+    assert.equal(Number(await page.locator('#rightStats [data-stat-key="spe"] .stat-final').innerText()),await run('currentSpeed("right")'),'Opponent displayed Speed matches optimizer');
+    await page.locator('#rightStats input[data-stat="spe"]').fill('12');
+    assert.equal(Number(await page.locator('#rightStats [data-stat-key="spe"] .stat-final').innerText()),await run('currentSpeed("right")'),'Opponent SP updates effective Speed');
+    await page.selectOption('#rightItem','Choice Scarf');
+    await page.selectOption('#rightStatus','par');
+    await page.locator('[data-field-side="right"][data-field-key="tailwind"]').click();
+    assert.equal(Number(await page.locator('#rightStats [data-stat-key="spe"] .stat-final').innerText()),await run('currentSpeed("right")'),'Displayed Speed stacks Scarf, paralysis, Tailwind and rain once');
+    await page.evaluate(()=>document.documentElement.dataset.theme='dark');
+    await page.locator('#rightStats').screenshot({path:'/tmp/prep-effective-speed.png'});
+    await page.locator('[data-field-side="right"][data-field-key="tailwind"]').click();
     await select('left','Charizard','Blaze');
     await select('right','Snorlax','Immunity');
     await weather('');
@@ -143,6 +173,31 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     await run('setActiveForm("right","Mega Charizard Y");sendRightPokemonToNoteSheet()');
     assert.equal(await run('NOTE_SHEET_STATE.slots[1].ability'),'Drought');
     assert.equal(await run('NOTE_SHEET_STATE.slots[1].item'),'Charizardite Y');
+    // Direct Note Sheet selection, form changes, and saved notes use the same defaults.
+    await run('setNoteSheetPokemon(2,"Charizard");openNoteSheetPicker(2,"form")');
+    await page.locator('#pickerList .picker-option').filter({hasText:'Mega Charizard Y'}).click();
+    assert.equal(await run('NOTE_SHEET_STATE.slots[2].ability'),'Drought');
+    assert.equal(await run('NOTE_SHEET_STATE.slots[2].item'),'Charizardite Y');
+    await page.locator('#noteSheetGrid [data-note-index="2"].note-card').screenshot({path:'/tmp/prep-mega-note.png'});
+    await run('openNoteSheetPicker(2,"form")');
+    await page.locator('#pickerList .picker-option').filter({hasText:'Mega Charizard X'}).click();
+    assert.equal(await run('NOTE_SHEET_STATE.slots[2].ability'),'Tough Claws');
+    assert.equal(await run('NOTE_SHEET_STATE.slots[2].item'),'Charizardite X');
+    await run('openNoteSheetPicker(2,"form")');
+    await page.locator('#pickerList .picker-option').filter({hasText:'Base Form'}).click();
+    assert.equal(await run('NOTE_SHEET_STATE.slots[2].ability'),'','Returning to base form does not guess an ability');
+    assert.equal(await run('NOTE_SHEET_STATE.slots[2].item'),'','Returning to base form clears Mega stone');
+    await run('setNoteSheetPokemon(3,"Swampert","Mega Swampert")');
+    assert.equal(await run('NOTE_SHEET_STATE.slots[3].ability'),'Swift Swim');
+    assert.equal(await run('NOTE_SHEET_STATE.slots[3].item'),'Swampertite');
+    await run('NOTE_SHEET_STATE.slots[3].moves=["Protect","","",""];NOTE_SHEET_STATE.slots[3].notes="Keep my scouting notes";NOTE_SHEET_STATE.slots[3].item="";NOTE_SHEET_STATE.slots[3].ability="";saveNoteSheetState()');
+    await page.reload();
+    await page.waitForFunction(()=>window.__prepTest?.('damageDataLoaded && setDataLoaded'));
+    assert.equal(await run('NOTE_SHEET_STATE.slots[3].ability'),'Swift Swim','Existing saved Mega gets its ability');
+    assert.equal(await run('NOTE_SHEET_STATE.slots[3].item'),'Swampertite','Existing saved Mega gets its stone');
+    assert.equal(await run('NOTE_SHEET_STATE.slots[3].moves[0]'),'Protect');
+    assert.equal(await run('NOTE_SHEET_STATE.slots[3].notes'),'Keep my scouting notes');
+    assert.equal(await run('JSON.parse(localStorage.getItem(NOTE_SHEET_STORAGE_KEY)).slots[3].ability'),'Swift Swim','Backfilled Mega defaults persist');
     await run('NOTE_SHEET_STATE.slots[0].moves=["Protect","","",""];loadNoteSheetSlotToCalculator(0)');
     await run('populateSetOptions("right",{preserve:true});populateMoves("right")');
     assert.equal(await run('selectedAbility("right")'),'');
@@ -210,6 +265,6 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     }
     assert.deepEqual(errors,[]);
     assert.deepEqual(writes,[]);
-    console.log('PASS: real engine, automatic/manual weather, weather Speed/stacking, Weather Ball, Sand bulk, legal/status moves, Final Gambit, multihit controls, exact Note transfers, Mega defaults/rail overrides, sprite aliases, dark/mobile damage layout; no production writes.');
+    console.log('PASS: real engine, weather Speed display and optimizer parity on both sides, SP edits, weather suppression and modifier stacking, Weather Ball, Sand bulk, legal/status moves, Final Gambit, multihit controls, exact Note transfers, direct/form-picker/persisted Mega note defaults, rail overrides, sprite aliases, dark/mobile damage layout; no production writes.');
   }finally{await browser.close();}
 })().catch(error=>{console.error(error);process.exitCode=1;});
