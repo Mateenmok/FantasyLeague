@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="icon" type="image/webp" href="images/favicon.webp">
+  <title>Stat Tracker · MVP Watch | PokeLeague</title>
+  <meta name="description" content="Every Pokémon, every contribution. The live FFDL Season 1 stat tracker and MVP race, inside PokeLeague.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jersey+25&amp;family=Roboto+Condensed:wght@500;700;900&amp;display=swap" rel="stylesheet">
+  <script src="js/theme.js?v=dark-mode3"></script>
+  <link rel="stylesheet" href="css/home.css?v=league-home-18">
+  <link rel="stylesheet" href="css/theme.css?v=dark-mode6">
+  <link rel="stylesheet" href="css/stat-tracker.css?v=mvp1">
+  <script src="js/league-rosters.js?v=league-rosters-1" defer></script>
+  <script src="js/stat-tracker.js?v=mvp1" defer></script>
+</head>
+<body>
+  <div class="home-silhouettes" aria-hidden="true"><span class="home-silhouette home-silhouette--swampert"></span><span class="home-silhouette home-silhouette--blaziken"></span></div>
+  <div class="home-shell tracker-shell">
+    <header class="home-header">
+      <a class="title-link" href="home.html"><span aria-hidden="true">←</span> League Home</a>
+      <a class="home-brand" href="home.html" aria-label="PokeLeague home"><img src="images/favicon.webp" alt="" width="50" height="50"><span>PokeLeague</span></a>
+      <span class="season-mark">Season 1</span>
+    </header>
+    <main data-stat-tracker>
+      <section class="tracker-hero" aria-labelledby="trackerTitle">
+        <div><p class="mvp-kicker">Flash Family League · Season 1</p><h1 id="trackerTitle">MVP Watch <span>&amp; Stat Tracker</span></h1><p>Every Pokémon. Every contribution. The race to the top.</p></div>
+        <span class="tracker-hero-seal" aria-hidden="true">★<small>MAKE AN<br>IMPACT</small></span>
+      </section>
+      <section class="tracker-board" aria-labelledby="trackerViewTitle">
+        <header class="tracker-toolbar">
+          <div><h2 id="trackerViewTitle" data-stat-view-title>All Pokemon</h2><p data-stat-sync aria-live="polite">Syncing with the league tracker…</p></div>
+          <label>Tracker view<select data-stat-view aria-label="Tracker view"></select></label>
+          <button type="button" class="tracker-refresh" data-stat-refresh>↻ Refresh</button>
+        </header>
+        <div class="tracker-filters" data-stat-filters>
+          <label>Find a Pokémon<input type="search" data-stat-search placeholder="Pokémon, nickname or team…" autocomplete="off"></label>
+          <label>Roster status<select data-stat-roster-status><option value="">Active &amp; dropped</option><option>Active</option><option>Dropped</option></select></label>
+          <p>IMP = Impact Score<br><span>Stats refresh automatically every minute.</span></p>
+        </div>
+        <p class="tracker-count" data-stat-count aria-live="polite">Loading season stats…</p>
+        <div class="tracker-table-scroll" data-stat-table tabindex="0" role="region" aria-label="Pokémon stats. Scroll horizontally for more columns.">
+          <table class="tracker-table"><caption class="tracker-sr-only">Season 1 Pokémon stats. Column buttons sort the table.</caption><thead></thead><tbody></tbody></table>
+        </div>
+        <div class="stat-guide" data-stat-guide hidden></div>
+        <p class="tracker-footnote">Synced from the FFDL Season 1 Stat Tracker. Scores and formulas stay managed in the original sheet; this view is read-only. Google may take a moment to publish recent edits.</p>
+      </section>
+    </main>
+  </div>
+  <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch to dark mode" title="Switch to dark mode"><img src="images/navigation/dark-mode-litwick.webp?v=dark-mode1" alt="" width="48" height="48"></button>
+</body>
+</html>

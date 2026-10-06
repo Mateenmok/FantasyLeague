@@ -27,6 +27,9 @@
   <script src="js/survivor.js?v=survivor1" defer></script>
   <link rel="stylesheet" href="css/opening-night.css?v=opening1">
   <script src="js/opening-night.js?v=opening1" defer></script>
+  <link rel="stylesheet" href="css/stat-tracker.css?v=mvp1">
+  <script src="js/league-rosters.js?v=league-rosters-1" defer></script>
+  <script src="js/stat-tracker.js?v=mvp1" defer></script>
 </head>
 <body>
   <div class="home-silhouettes" aria-hidden="true">
@@ -71,6 +74,15 @@
       </section>
 
       <div class="opening-night-layout">
+      <div class="home-sidebar">
+      <aside class="mvp-watch" data-mvp-watch aria-labelledby="mvpTitle">
+        <a class="mvp-watch-link" href="stat-tracker.html">
+          <div class="mvp-heading"><span class="mvp-kicker">The season's standouts</span><h2 id="mvpTitle">MVP <span>Watch</span></h2><p>Top 5 · Impact Score</p></div>
+          <ol class="mvp-rows" data-mvp-rows><li class="tracker-empty">Loading the leaderboard…</li></ol>
+          <span class="mvp-open">Full stat tracker <span aria-hidden="true">↗</span></span>
+        </a>
+        <p class="mvp-sync" data-mvp-sync aria-live="polite">Syncing with the league tracker…</p>
+      </aside>
       <aside class="opening-night" data-opening-night hidden aria-labelledby="openingNightTitle" data-deadline="2026-09-18T21:30:00-04:00">
         <p class="opening-night-kicker">Season 1 · The first showdown</p>
         <h2 id="openingNightTitle">Opening<br><span>Night</span></h2>
@@ -93,6 +105,7 @@
           </div>
         </div>
       </aside>
+      </div>
       <nav class="league-menu" aria-label="League pages">
         <a class="league-button league-button--my-team" href="my-team.html">
           <span class="button-burst" aria-hidden="true">Squad up!</span>

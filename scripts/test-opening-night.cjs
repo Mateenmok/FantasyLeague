@@ -45,10 +45,10 @@ const mime={'.html':'text/html','.css':'text/css','.js':'text/javascript','.webp
   assert(await panel.isVisible(),'Still visible one second before opening');
   await page.clock.fastForward(1000);
   assert(!await panel.isVisible(),'Disappears at 9:30 p.m. Eastern');
-  assert((await page.locator('.home-shell').boundingBox()).width<=1180,'Original layout restored');
+  assert(await page.locator('[data-mvp-watch]').isVisible(),'MVP Watch remains after countdown expires');
   await page.reload();assert(!await panel.isVisible(),'No stale banner after reload');
   assert.equal(await page.locator('.league-menu>.league-button').count(),8);
   assert.deepEqual(errors,[]);
-  console.log('PASS: EDT deadline, countdown/minute changes, exact expiry and reload, restored layout, both logos, eight buttons, left-side desktop, mobile and dark mode.');
+  console.log('PASS: EDT deadline, countdown/minute changes, exact expiry and reload, MVP Watch preserved, both logos, eight buttons, left-side desktop, mobile and dark mode.');
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});
