@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Friday Night PokeLeague | PokeLeague</title><link rel="icon" type="image/webp" href="images/favicon.webp">
+  <link href="https://fonts.googleapis.com/css2?family=Jersey+25&amp;family=Roboto+Condensed:wght@500;700;900&amp;display=swap" rel="stylesheet">
+  <script src="js/theme.js?v=dark-mode3"></script><link rel="stylesheet" href="css/home.css?v=league-home-18"><link rel="stylesheet" href="css/theme.css?v=dark-mode6"><link rel="stylesheet" href="css/stat-tracker.css?v=mvp1"><link rel="stylesheet" href="css/fnpl.css?v=fnpl1"><script src="js/fnpl.js?v=fnpl1" defer></script>
+</head>
+<body>
+  <div class="home-shell fnpl-shell">
+    <header class="home-header"><a class="title-link" href="home.html">← League Home</a><a class="home-brand" href="home.html"><img src="images/favicon.webp" alt="" width="50" height="50"><span>PokeLeague</span></a><span class="season-mark">Friday Nights</span></header>
+    <main class="fnpl-page" data-fnpl-page>
+      <h1>Friday Night PokeLeague</h1><p class="fnpl-page-intro">Your league. Under the Friday night lights.</p>
+      <div class="fnpl-page-grid">
+        <section class="fnpl-hero" data-fnpl-hero aria-label="First matchup"><span class="fnpl-pending">Loading Friday’s lineup…</span></section>
+        <section class="fnpl-schedule" aria-label="FNPL schedule">
+          <div class="fnpl-toolbar"><label>Season week<select data-fnpl-week aria-label="Season week" disabled><option>Loading…</option></select></label><button type="button" data-fnpl-refresh>Refresh</button></div>
+          <p>All start times are Eastern local time.</p><ol class="fnpl-lineup" data-fnpl-lineup></ol><p class="fnpl-feedback" data-fnpl-feedback role="status"></p>
+        </section>
+      </div>
+    </main>
+  </div>
+  <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch to dark mode"><img src="images/navigation/dark-mode-litwick.webp?v=dark-mode1" alt="" width="48" height="48"></button>
+</body>
+</html>

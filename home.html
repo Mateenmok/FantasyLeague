@@ -34,6 +34,8 @@
   <script src="js/guest-access.js?v=guest1" defer></script>
   <link rel="stylesheet" href="css/twitch-live.css?v=twitch1">
   <script src="js/twitch-live.js?v=twitch1" defer></script>
+  <link rel="stylesheet" href="css/fnpl.css?v=fnpl1">
+  <script src="js/fnpl.js?v=fnpl1" defer></script>
 </head>
 <body>
   <aside class="twitch-live" data-twitch-live hidden aria-label="League members live on Twitch">
@@ -88,6 +90,10 @@
 
       <div class="opening-night-layout">
       <div class="home-sidebar">
+      <a class="fnpl-home" href="fnpl.html" data-fnpl-home aria-label="Friday Night PokeLeague — view the schedule">
+        <span class="fnpl-sign" role="img" aria-label="Friday Night PokeLeague"><img src="images/navigation/friday-night-pokeleague.png" alt="" width="1672" height="941"></span>
+        <span class="fnpl-pending">Loading Friday’s lineup…</span>
+      </a>
       <aside class="mvp-watch" data-mvp-watch aria-labelledby="mvpTitle">
         <a class="mvp-watch-link" href="stat-tracker.html">
           <div class="mvp-heading"><span class="mvp-kicker">The season's standouts</span><h2 id="mvpTitle">MVP <span>Watch</span></h2><p>Top 5 · Impact Score</p></div>

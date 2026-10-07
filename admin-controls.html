@@ -21,6 +21,10 @@
   <script src="js/game-reports.js?v=game-survival1" defer></script>
   <script src="js/league-competition.js?v=lineups1" defer></script>
   <script src="js/admin-controls.js?v=winner-gradient1" defer></script>
+  <link rel="stylesheet" href="css/stat-tracker.css?v=mvp1">
+  <link rel="stylesheet" href="css/fnpl.css?v=fnpl1">
+  <script src="js/fnpl.js?v=fnpl1" defer></script>
+  <script src="js/fnpl-admin.js?v=fnpl1" defer></script>
 </head>
 <body>
   <div class="home-silhouettes" aria-hidden="true">
@@ -80,6 +84,7 @@
           <button class="is-active" type="button" data-admin-tab="rosters">Manage Rosters</button>
           <button type="button" data-admin-tab="scores" data-score-tab>Input Scores</button>
           <button type="button" data-admin-tab="schedule">Schedule</button>
+          <button type="button" data-admin-tab="fnpl">Friday Night PokeLeague</button>
           <button type="button" data-admin-tab="season">Season Settings</button>
           <button type="button" data-admin-tab="waivers">Waiver Period</button>
           <button type="button" data-admin-tab="playoffs">Playoffs</button>
@@ -138,6 +143,21 @@
             <div class="matchup-rows" data-schedule-rows></div>
             <button class="admin-button admin-button--primary" type="submit">Save Week Schedule</button>
           </form>
+        </section>
+
+        <section class="admin-tool" data-admin-panel="fnpl" hidden>
+          <div class="admin-section-heading"><div><p class="admin-kicker">Under the Friday night lights</p><h2>Friday Night PokeLeague</h2></div><p>Choose existing weekly matchups, then drag them into time-slot order.</p></div>
+          <section class="admin-panel matchup-form fnpl-admin" data-fnpl-admin>
+            <form data-fnpl-form>
+              <fieldset data-fnpl-fields disabled>
+                <div class="fnpl-admin-top"><label>Season week<select data-fnpl-admin-week aria-label="FNPL season week"></select></label><label>Event date<input type="date" data-fnpl-event-date required aria-label="FNPL event date"></label><button type="button" data-fnpl-reload>Reload saved lineup</button></div>
+                <p class="fnpl-admin-note">Times are Eastern local time (daylight saving adjusts automatically). Click a slot, then a matchup. Drag matchup cards—or use Earlier / Later—to change their order without changing slot times.</p>
+                <div class="fnpl-admin-grid"><section><h3>Time slots</h3><ol class="fnpl-edit-slots" data-fnpl-slots></ol></section><section><h3>This week’s matchups</h3><div class="fnpl-matchup-pool" data-fnpl-matchups></div></section></div>
+                <div class="fnpl-admin-actions"><button type="button" data-fnpl-add>＋ Add time slot</button><button class="fnpl-primary" type="submit">Save FNPL lineup</button><a href="fnpl.html" class="admin-button">View public schedule ↗</a></div>
+              </fieldset>
+            </form>
+            <p class="fnpl-feedback" data-fnpl-admin-status role="status">Loading FNPL settings…</p>
+          </section>
         </section>
 
         <section class="admin-tool" data-admin-panel="season" hidden>
