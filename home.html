@@ -32,8 +32,18 @@
   <script src="js/stat-tracker.js?v=mvp1" defer></script>
   <link rel="stylesheet" href="css/guest-access.css?v=guest1">
   <script src="js/guest-access.js?v=guest1" defer></script>
+  <link rel="stylesheet" href="css/twitch-live.css?v=twitch1">
+  <script src="js/twitch-live.js?v=twitch1" defer></script>
 </head>
 <body>
+  <aside class="twitch-live" data-twitch-live hidden aria-label="League members live on Twitch">
+    <button class="twitch-toggle" type="button" data-twitch-toggle aria-expanded="false" aria-controls="twitchStreams">
+      <span class="twitch-dot" aria-hidden="true"></span><strong>Live Now</strong>
+      <span class="twitch-count" data-twitch-count>0</span><span class="twitch-chevron" aria-hidden="true">⌃</span>
+    </button>
+    <ul id="twitchStreams" class="twitch-streams" data-twitch-streams hidden></ul>
+    <p class="twitch-updated" data-twitch-updated hidden></p>
+  </aside>
   <div class="home-silhouettes" aria-hidden="true">
     <span class="home-silhouette home-silhouette--swampert"></span>
     <span class="home-silhouette home-silhouette--blaziken"></span>

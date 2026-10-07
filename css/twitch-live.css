@@ -1,0 +1,33 @@
+/* A small live-only dock, above (never over) the bottom-left theme toggle. */
+.twitch-live {
+  --live-paper: #fff7de; --live-raised: #fffdf3; --live-ink: #17262c; --live-muted: #53616a;
+  position: fixed; z-index: 19;
+  left: max(16px, env(safe-area-inset-left)); bottom: calc(max(16px, env(safe-area-inset-bottom)) + 82px);
+  width: 296px; max-width: calc(100vw - 32px);
+  border: 3px solid #111; border-radius: 12px;
+  background: var(--live-paper); color: var(--live-ink);
+  box-shadow: 4px 5px 0 #a970ff, 7px 8px 0 #111;
+  font-family: 'Roboto Condensed', Arial, sans-serif;
+}
+.twitch-live[hidden], .twitch-live [hidden] { display: none !important; }
+:root[data-theme="dark"] .twitch-live { --live-paper: #252830; --live-raised: #343842; --live-ink: #fff7de; --live-muted: #d3d2df; }
+.twitch-toggle { display: flex; align-items: center; gap: 9px; width: 100%; border: 0; border-radius: 8px; background: transparent; color: inherit; padding: 12px 14px; cursor: pointer; text-align: left; }
+.twitch-toggle strong { font: 28px/.9 'Jersey 25', Impact, sans-serif; text-transform: uppercase; }
+.twitch-dot { width: 9px; height: 9px; border-radius: 50%; background: #d62348; box-shadow: 0 0 0 4px #d6234822; flex: none; }
+.twitch-count { display: grid; place-items: center; min-width: 23px; height: 23px; padding: 2px 6px; border-radius: 5px; background: #6441a5; color: #fff; font-size: 13px; font-weight: 900; }
+.twitch-chevron { margin-left: auto; font-size: 18px; transform: rotate(180deg); }
+.is-collapsed .twitch-chevron { transform: none; }
+.twitch-streams { display: grid; gap: 8px; list-style: none; margin: 0; padding: 0 10px 4px; max-height: min(440px, calc(100dvh - 220px)); overflow-y: auto; overscroll-behavior: contain; }
+.twitch-stream { position: relative; display: grid; grid-template-columns: 46px minmax(0,1fr); gap: 9px; align-items: center; min-width: 0; padding: 11px 8px; color: var(--live-ink); text-decoration: none; border: 2px solid transparent; border-radius: 8px; background: linear-gradient(var(--live-raised), var(--live-raised)) padding-box, linear-gradient(135deg, var(--stream-accent), var(--stream-highlight), var(--stream-deep)) border-box; }
+.twitch-stream:hover { background: linear-gradient(color-mix(in srgb,var(--stream-accent) 18%,var(--live-raised)),var(--live-raised)) padding-box, linear-gradient(135deg,var(--stream-accent),var(--stream-highlight)) border-box; }
+.twitch-stream img { display: block; width: 46px; height: 46px; object-fit: contain; border-radius: 5px; }
+.twitch-stream-copy { display: block; min-width: 0; }
+.twitch-stream-copy strong { display: block; font: 23px/1 'Jersey 25', Impact, sans-serif; padding-right: 36px; overflow-wrap: anywhere; }
+.twitch-stream-copy small { display: block; font-size: 10px; line-height: 1.3; color: var(--live-muted); margin-top: 3px; }
+.twitch-stream-title { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 12px; margin-top: 7px; }
+.twitch-stream-meta { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.twitch-live-badge { position: absolute; top: 10px; right: 8px; padding: 3px 4px; border-radius: 3px; background: #b91c38; color: #fff; font-size: 9px; font-weight: 900; letter-spacing: .05em; }
+.twitch-updated { padding: 7px 14px 10px; margin: 0; color: var(--live-muted); font-size: 10px; }
+.twitch-live :is(a,button):focus-visible { outline: 3px solid #a970ff; outline-offset: 2px; }
+.twitch-live.is-collapsed { width: 196px; }
+@media(max-width:600px) { .twitch-live { bottom: calc(max(16px, env(safe-area-inset-bottom)) + 74px); width: 288px; }.twitch-toggle strong { font-size: 25px; } }
