@@ -168,9 +168,11 @@
     if (button) button.disabled = true;
     try {
       if (serverBacked) {
-        await window.PokeLeagueCompetition.submitPick(accessCode, week, Number(displayOrder), teamId);
+        const api = account.isGuest ? window.PokeLeagueGuest : window.PokeLeagueCompetition;
+        await api.submitPick(accessCode, week, Number(displayOrder), teamId);
         picks = await window.PokeLeagueCompetition.readPicks();
       } else {
+        if (account.isGuest) throw new Error("The league connection is unavailable. Your pick was not saved. Please retry.");
         picks = picks.filter((pick) => !(Number(pick.week) === week && Number(pick.display_order) === Number(displayOrder) && pick.account_id === account.id));
         picks.push({ week, display_order: Number(displayOrder), account_id: account.id, username: account.accountName, picked_team_id: teamId });
         localStorage.setItem(localPicksKey(), JSON.stringify(picks));
@@ -182,6 +184,7 @@
       announce(error.message || "That pick could not be saved.", true);
     } finally {
       grid.removeAttribute("aria-busy");
+      renderMatchups();
     }
   };
 
@@ -242,7 +245,7 @@
       const baseCatalog = await catalogResponse.json();
       detailIndex = await detailResponse.json();
       teams = teamData.teams || [];
-      account = accountData.accounts?.[accessCode] || null;
+      account = accountData.accounts?.[accessCode] || await window.PokeLeagueGuest?.read(accessCode).catch(() => null) || null;
       catalog = window.PokeLeagueState.applyCatalog(baseCatalog);
       rosters = savedRosters ? window.PokeLeagueRosters.namesFromSlugs(savedRosters, catalog, teams.map((team) => team.id)) : {};
 

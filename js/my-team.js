@@ -217,10 +217,18 @@
       if (!teamsResponse.ok || !leagueTeamsResponse.ok || !catalogResponse.ok) throw new Error("Team unavailable");
       return Promise.all([teamsResponse.json(), leagueTeamsResponse.json(), catalogResponse.json(), savedRosters]);
     })
-    .then(([teamData, leagueTeamData, baseCatalog, savedRosters]) => {
+    .then(async ([teamData, leagueTeamData, baseCatalog, savedRosters]) => {
       const account = teamData.accounts?.[accessCode];
       owner = account;
       if (!account) {
+        const guest = await window.PokeLeagueGuest?.current().catch(() => null);
+        if (guest) {
+          gate.querySelector("h1").textContent = `Welcome, ${guest.accountName}`;
+          gate.querySelector(".team-eyebrow").textContent = "Guest clubhouse";
+          gate.querySelector("p:not(.team-eyebrow)").textContent = "You can explore every team and submit Pick’ems. Guest accounts do not own a team or make roster moves.";
+          gate.querySelector("a").href = "rosters.html";
+          gate.querySelector("a").textContent = "Explore league rosters";
+        }
         showGate();
         return;
       }

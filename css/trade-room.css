@@ -27,6 +27,7 @@
 .trade-hero p:last-child { max-width: 650px; margin: 18px 0 0; color: #54483d; font-weight: 900; }
 
 .trade-workspace { display: grid; gap: 24px; }
+.trade-workspace[hidden], .trade-gate[hidden] { display: none; }
 .trade-week-bar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; overflow: hidden; background: #111; }
 .trade-week-bar > div { padding: 14px 18px; background: #fff7de; }
 .trade-week-bar span,

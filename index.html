@@ -18,7 +18,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jersey+25&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/landing-access.css?v=figma-v2-7">
-  <script src="js/access.js?v=live-draft2" defer></script>
+  <link rel="stylesheet" href="css/guest-access.css?v=guest1">
+  <script src="js/guest-access.js?v=guest1" defer></script>
+  <script src="js/access.js?v=guest1" defer></script>
 </head>
 <body class="access-page">
   <main class="landing-viewport">
@@ -63,5 +65,18 @@
     </div>
   </main>
 
+  <dialog class="guest-dialog" data-guest-dialog aria-labelledby="guestTitle">
+    <form data-guest-form>
+      <p class="guest-kicker">Welcome to the league</p>
+      <h2 id="guestTitle">Create your guest pass</h2>
+      <p>Browse the league and make Pick’ems predictions. Guest accounts do not have a team or roster-management access.</p>
+      <label for="guestNickname">Choose a nickname</label>
+      <input id="guestNickname" name="nickname" type="text" minlength="3" maxlength="24" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Your guest nickname" aria-describedby="guestHelp">
+      <p id="guestHelp" class="guest-help">Use 3–24 letters, numbers, spaces, underscores or hyphens. Your nickname becomes your access code for future visits.</p>
+      <p class="guest-warning">Your nickname appears on Pick’ems. Anyone who knows it can sign into this guest account.</p>
+      <p class="guest-status" data-guest-status role="status" aria-live="polite"></p>
+      <div class="guest-actions"><button type="button" data-guest-cancel>Cancel</button><button type="submit">Create &amp; enter</button></div>
+    </form>
+  </dialog>
 </body>
 </html>

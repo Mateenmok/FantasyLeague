@@ -823,7 +823,8 @@
       let syncedCatalog = window.PokeLeagueState?.applyCatalog(catalog, leagueState) || catalog;
       const accessCode = localStorage.getItem("pokeleague.accessCode") || sessionStorage.getItem("pokeleague.accessCode") || "";
       try {
-        const pointMap = await window.PokeLeagueState?.readDraftPoints(accessCode);
+        const guest = await window.PokeLeagueGuest?.current().catch(() => null);
+        const pointMap = await (guest ? window.PokeLeagueState.readPointValues() : window.PokeLeagueState?.readDraftPoints(accessCode));
         if (pointMap) syncedCatalog = window.PokeLeagueState.applyPointMap(syncedCatalog, pointMap);
       } catch (error) {
         console.warn("Using locally saved draft point values:", error.message);

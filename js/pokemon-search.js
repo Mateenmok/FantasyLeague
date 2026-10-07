@@ -32,6 +32,7 @@ let serverPointMap = {};
 let detailIndex = {};
 let activeTier = "All";
 let account = null;
+let guestAccount = null;
 let teams = [];
 let rosterMap = {};
 let waiverSettings = { startAt: null, endAt: null, pointCap: 50, rosterCap: 10, totalWeeks: 10 };
@@ -111,14 +112,14 @@ const renderWindow = () => {
 const renderRoster = () => {
   renderWindow();
   const names = currentRoster();
-  teamNameTarget.textContent = account?.teamName || "Sign in required";
+  teamNameTarget.textContent = account?.teamName || (guestAccount ? `${guestAccount.accountName} · Guest` : "Sign in required");
   rosterCountTarget.textContent = `${names.length} / ${waiverSettings.rosterCap} Pokemon`;
   const fragment = document.createDocumentFragment();
 
   if (!account) {
     const empty = document.createElement("p");
     empty.className = "waiver-roster-empty";
-    empty.textContent = "Sign in from the title screen to manage your team's roster.";
+    empty.textContent = guestAccount ? "Guest view: browse Pokémon and transactions. Only team managers can add or drop Pokémon." : "Sign in from the title screen to manage your team's roster.";
     rosterTarget.replaceChildren(empty);
     return;
   }
@@ -295,7 +296,7 @@ const cardFor = (pokemon) => {
   const canSwap = eligibleDrops(pokemon).length > 0;
   const actionsAvailable = Boolean(account) && waiverWindow().open && !actionPending && weeklyPickupUsed === false;
   addButton.disabled = !actionsAvailable || (!canAddDirectly && !canSwap);
-  addButton.textContent = actionPending ? "Working..." : !account ? "Sign in" : !waiverWindow().open ? "Closed"
+  addButton.textContent = actionPending ? "Working..." : !account ? (guestAccount ? "View only" : "Sign in") : !waiverWindow().open ? "Closed"
     : weeklyPickupUsed === true ? "Weekly limit reached" : weeklyPickupUsed === null ? "Allowance unavailable"
     : canAddDirectly ? "Add" : canSwap ? "Add + drop" : roster.length >= waiverSettings.rosterCap ? "Roster full" : "Over cap";
   addButton.addEventListener("click", (event) => {
@@ -395,6 +396,7 @@ Promise.all([
     localStorage.getItem("pokeleague.accessCode") || sessionStorage.getItem("pokeleague.accessCode") || "",
   ).trim().toUpperCase();
   account = accounts[accessCode] || null;
+  if (!account) guestAccount = await window.PokeLeagueGuest?.read(accessCode).catch(() => null);
   waiverSettings = settings;
   await refreshWaiverUsage();
   rosterMap = window.PokeLeagueRosters.namesFromSlugs(savedRosters, catalog, teams.map((team) => team.id));

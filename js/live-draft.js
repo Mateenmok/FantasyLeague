@@ -153,13 +153,13 @@
     return text ? JSON.parse(text) : null;
   };
 
-  const readDraft = () => rpc("read_flash_family_live_draft", {
+  const readDraft = () => state.guest ? rpc("read_flash_family_guest_draft", { p_access_code: state.accessCode }) : rpc("read_flash_family_live_draft", {
     p_access_code: state.accessCode,
     p_room_key: state.roomKey,
   });
 
   const syncDraftPoints = async () => {
-    const pointMap = await window.PokeLeagueState.readDraftPoints(state.accessCode);
+    const pointMap = await (state.guest ? window.PokeLeagueState.readPointValues() : window.PokeLeagueState.readDraftPoints(state.accessCode));
     const signature = JSON.stringify(pointMap);
     if (signature === state.pointSignature) return false;
 
@@ -262,7 +262,9 @@
     }
     if (!allowed) {
       elements.recommendationName.textContent = `Waiting on ${TEAM_CONFIG[onClock].short}…`;
-      elements.recommendationReason.textContent = "Your recommendation will appear as soon as your team is on the clock.";
+      elements.recommendationReason.textContent = state.payload.viewer.isGuest
+        ? "Spectator view — follow each team's picks on the live board."
+        : "Your recommendation will appear as soon as your team is on the clock.";
       elements.recommendationPick.replaceChildren();
       return;
     }
@@ -305,7 +307,7 @@
   const canViewerPick = () => {
     const payload = state.payload;
     const onClock = expectedTeam();
-    if (!payload?.room?.isStarted || payload.room.isPaused || !onClock || state.busy) return false;
+    if (payload?.viewer?.isGuest || !payload?.room?.isStarted || payload.room.isPaused || !onClock || state.busy) return false;
     if (isTestCpuTeam(onClock)) return payload.viewer.isAdmin;
     if (payload.viewer.isAdmin) return true;
     return payload.viewer.teamId === onClock && secondsRemaining() > 0;
@@ -429,6 +431,14 @@
   };
 
   const renderRoster = () => {
+    if (state.payload.viewer.isGuest) {
+      elements.userTeamName.textContent = "Guest spectator";
+      elements.budgetLeft.textContent = "View only";
+      elements.pointsUsed.textContent = "—";
+      elements.rosterCount.textContent = "—";
+      elements.userRoster.innerHTML = '<p class="roster-slot roster-slot--empty">Follow every pick on the board. Guest accounts do not draft or own a roster.</p>';
+      return;
+    }
     const teamId = state.payload.viewer.teamId;
     const team = TEAM_CONFIG[teamId];
     const roster = rosterFor(teamId);
@@ -501,7 +511,7 @@
       elements.clockDetail.textContent = state.roomKey === "main"
         ? "The draft begins whenever an admin presses Start."
         : "DraftTest1 or DraftTest3 starts the test when all four managers are ready; the other ten teams are admin-controlled CPUs.";
-      elements.clockLogo.src = TEAM_CONFIG[payload.viewer.teamId].logo;
+      elements.clockLogo.src = TEAM_CONFIG[payload.viewer.teamId]?.logo || "images/favicon.webp";
     } else {
       const team = TEAM_CONFIG[onClock];
       elements.clockKicker.textContent = room.isPaused
@@ -690,6 +700,7 @@
     elements.openLive.disabled = true;
 
     try {
+      state.guest = await window.PokeLeagueGuest?.read(state.accessCode).catch(() => null);
       if (!state.initialized) {
         const response = await fetch("data/pokemon-catalog.json?v=consolidated-forms1", { cache: "no-store" });
         if (!response.ok) throw new Error("The Pokémon draft board is unavailable.");

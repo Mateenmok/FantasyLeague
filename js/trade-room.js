@@ -221,7 +221,17 @@
 
       gate.hidden = Boolean(account);
       workspace.hidden = !account;
-      if (!account) return;
+      if (!account) {
+        const guest = await window.PokeLeagueGuest?.current().catch(() => null);
+        if (guest) {
+          gate.querySelector(".trade-kicker").textContent = "Guest view";
+          gate.querySelector("h2").textContent = "Follow the league's roster moves";
+          gate.querySelector("p:not(.trade-kicker)").textContent = "Guest accounts cannot propose or accept trades. Browse all rosters or see completed moves in the transaction log on Waivers.";
+          gate.querySelector("a").href = "waivers.html";
+          gate.querySelector("a").textContent = "View transactions & waivers";
+        }
+        return;
+      }
 
       partnerSelect.innerHTML = teams.filter((team) => team.id !== account.teamId).map((team) => (
         `<option value="${escapeHtml(team.id)}">${escapeHtml(team.name)}</option>`
