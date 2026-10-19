@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Matchup Lab | PokeLeague PREP</title>
+  <link rel="icon" type="image/webp" href="images/favicon.webp">
+  <link href="https://fonts.googleapis.com/css2?family=Jersey+25&family=Roboto+Condensed:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <script src="js/theme.js?v=dark-mode3"></script>
+  <link rel="stylesheet" href="css/matchup-prep.css?v=prep1">
+  <script src="js/matchup-speed-model.js?v=prep1" defer></script>
+  <script src="js/matchup-prep.js?v=prep1" defer></script>
+</head>
+<body>
+  <div class="aero-landscape" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="prep-shell">
+    <header class="prep-header">
+      <a class="prep-brand" href="index.html"><img src="images/favicon.webp" width="42" height="42" alt=""><span>PokeLeague <small>MATCHUP LAB</small></span></a>
+      <div class="prep-header-actions"><span class="prep-access-tag">PREP / READ ONLY</span><button class="glass-button theme-button" data-theme-toggle aria-pressed="false" aria-label="Switch to dark mode">◐ <span>Theme</span></button><button class="glass-button" data-prep-exit hidden>Exit</button></div>
+    </header>
+    <section class="prep-gate glass-panel" data-prep-gate>
+      <p class="eyebrow">A different kind of prep</p><h1>Welcome to Matchup Lab.</h1>
+      <p>Enter PREP to explore live rosters and compare Pokémon by base Speed.</p>
+      <form data-prep-gate-form><label for="prepCode">Access code</label><div><input id="prepCode" autocomplete="off" required placeholder="PREP"><button class="aero-button" type="submit">Enter the lab →</button></div><p data-gate-status role="status"></p></form>
+      <a href="index.html">Back to league sign-in</a>
+    </section>
+    <main data-prep-app hidden>
+      <div class="prep-sync"><span data-prep-status role="status">Connecting to the league…</span><button class="glass-button" data-prep-refresh>↻ Refresh rosters</button></div>
+      <section data-prep-menu>
+        <div class="prep-hero">
+          <div><p class="eyebrow"><span class="live-dot"></span> LIVE ROSTERS. CLEARER MATCHUPS.</p><h1>Find your<br><em>speed advantage.</em></h1><p class="hero-copy">Two teams. One speed ladder.<br>See who sets the pace before the battle begins.</p></div>
+          <div class="aero-orb" aria-hidden="true"><div class="orb-ring"><img src="images/navigation/prep-station-town-map.png" alt=""><span>SCOUT. COMPARE. PREP.</span></div><i></i></div>
+        </div>
+        <section class="matchup-menu glass-panel" aria-labelledby="matchupMenuTitle">
+          <div class="section-heading"><div><p class="eyebrow">THE WEEKLY LINEUP</p><h2 id="matchupMenuTitle">Pick a matchup</h2></div><label class="week-field">Season week<select data-prep-week aria-label="Season week" disabled><option>Loading…</option></select></label></div>
+          <div class="matchup-grid" data-prep-matchups aria-live="polite"><p class="empty-state">Loading the league’s matchups…</p></div>
+        </section>
+        <section class="custom-matchup glass-panel" aria-labelledby="customTitle">
+          <div><p class="eyebrow">YOUR OWN HEAD-TO-HEAD</p><h2 id="customTitle">Any two teams.</h2><p>Explore a matchup beyond this week’s schedule.</p></div>
+          <form data-prep-custom><label>First team<select data-custom-home required disabled></select></label><span class="custom-vs" aria-hidden="true">VS</span><label>Second team<select data-custom-away required disabled></select></label><button class="aero-button" type="submit" disabled>Compare →</button><p data-custom-status role="status"></p></form>
+        </section>
+      </section>
+      <section data-prep-detail hidden>
+        <button class="glass-button back-button" data-prep-back>← All matchups</button>
+        <div class="comparison-hero glass-panel" data-prep-comparison></div>
+        <div class="speed-summary" data-prep-summary></div>
+        <div class="speed-layout">
+          <section class="speed-panel glass-panel" aria-labelledby="baseSpeedTitle"><div class="section-heading"><div><p class="eyebrow">BOTH ROSTERS · FASTEST FIRST</p><h2 id="baseSpeedTitle">The speed ladder</h2></div><span class="section-count" data-base-count></span></div><p class="speed-note">Base Speed only. Equal values are ties; items, EVs, natures, abilities, and weather are not applied.</p><ol class="speed-list" data-prep-base></ol></section>
+          <aside class="mega-panel glass-panel" aria-labelledby="megaSpeedTitle"><div class="section-heading"><div><p class="eyebrow">A SEPARATE EVOLUTION</p><h2 id="megaSpeedTitle"><img src="images/icons/mega-evolution-v2.webp" alt="" width="28" height="28"> Mega forms</h2></div><span class="section-count" data-mega-count></span></div><p class="speed-note">Available Mega forms from these rosters, ranked by their own base Speed. These are options, not extra roster slots.</p><ol class="speed-list mega-list" data-prep-mega></ol></aside>
+        </div>
+      </section>
+      <footer class="prep-footer"><span>POKELEAGUE / MATCHUP LAB</span><span>Live rosters · Static Champions sprites · Separate from Prep Station</span></footer>
+    </main>
+    <noscript><p class="glass-panel">Enable JavaScript to load the live matchup viewer.</p></noscript>
+  </div>
+</body>
+</html>

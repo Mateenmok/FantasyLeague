@@ -51,6 +51,12 @@
     if (form.getAttribute("aria-busy") === "true") return;
     const code = window.PokeLeagueGuest.normalize(input.value);
     if (!code) return;
+    if (code === "PREP") {
+      // This read-only tool has its own session, not a team or admin identity.
+      sessionStorage.setItem("pokeleague.matchupPrep", "PREP");
+      window.location.assign("matchup-prep.html");
+      return;
+    }
     if (code === "GUEST1") {
       guestForm.querySelector("[data-guest-status]").textContent = "";
       guestDialog.showModal();
