@@ -1,5 +1,6 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const M=require('../js/matchup-speed-model.js');
+const N=require('../js/matchup-notes.js');
 const root=path.resolve(__dirname,'..'),read=file=>JSON.parse(fs.readFileSync(path.join(root,file),'utf8'));
 const index=read('data/matchup-speed-index.json');
 assert.deepEqual(index,M.buildIndex(read('data/pokemon-catalog.json'),read('data/pokemon-details.json')),'Generated speeds remain in sync with the league source');
@@ -15,7 +16,23 @@ assert.equal(result.mega[0].name,'Mega Garchomp Z');assert.equal(result.mega[0].
 assert.equal(result.mega.filter(p=>p.name.startsWith('Mega Charizard')).length,2);
 const ties=result.base.filter(p=>p.speed===100);assert.equal(ties.length,2);assert(ties.every(p=>p.tied&&p.rank===3));
 for(const rows of [result.base,result.mega])for(let i=1;i<rows.length;i++)assert((rows[i-1].speed??-1)>=(rows[i].speed??-1));
-assert.deepEqual(M.compare(['one','two'],{},index),{base:[],mega:[]});
+assert.deepEqual(M.compare(['one','two'],{},index),{base:[],mega:[],all:[]});
+assert.equal(result.all.length,result.base.length+result.mega.length);
+assert.equal(result.all[0].name,'Mega Garchomp Z');
+assert(result.all.every((row,i)=>i===0||(result.all[i-1].speed??-1)>=(row.speed??-1)));
+assert.equal(new Set(result.all.map(row=>row.formId)).size,result.all.length);
+const notes=N.empty(),attacker=result.base.find(row=>row.name==='Dragapult'),target=result.base.find(row=>row.name==='Salamence');
+assert(N.connect(notes,attacker,target,'ohko'));assert.equal(notes.lines.length,1);
+assert(N.connect(notes,attacker,target,'twohit'));assert.equal(notes.lines.length,1);assert.equal(notes.lines[0].threat,'twohit');
+assert(N.connect(notes,target,attacker,'safe'));assert.equal(notes.lines.length,2);
+assert(!N.connect(notes,attacker,attacker,'ohko'));assert(!N.connect(notes,attacker,target,'bad'));
+notes.roles[attacker.id]='support';notes.forms[result.base.find(row=>row.name==='Garchomp').id]='Mega Garchomp Z';
+assert.deepEqual(N.normalize(JSON.parse(JSON.stringify(notes))),notes);
+assert.equal(N.storageKey(['one','two']),N.storageKey(['two','one']));
+const sides=N.selectedRows(result,['one','two'],notes.forms);
+assert.deepEqual(sides.map(rows=>rows.length),[4,3]);assert.equal(sides[0][0].name,'Mega Garchomp Z');
+assert.equal(N.selectedRows(result,['one'],{'one:garchomp':'Not a real form'})[0].find(row=>row.id==='one:garchomp').name,'Garchomp');
+assert.deepEqual(N.normalize({roles:{bad:'evil'},forms:{bad:42},lines:[{from:'one:x',to:'one:y',threat:'ohko'},{from:'one:x',to:'two:y',threat:'unknown'}]}),N.empty());
 assert.equal(M.compare(['one','one'],{one:['dragapult','dragapult']},index).base.length,1);
 for(const pokemon of index){assert(Number.isInteger(pokemon.speed));assert(fs.existsSync(path.join(root,pokemon.sprite)));assert(!/\.gif/i.test(pokemon.sprite));}
 
@@ -45,6 +62,6 @@ async function checkAccess(inputCode){
       await assert.rejects(db.query("insert into flash_family_guest_accounts(nickname) values('PREP')"),/guest_prep_code_reserved/);
     }finally{await db.close();}
   }
-  console.log('PASS: 252 synchronized base speeds, 82 separate Mega forms, ties, regional forms, empty/unknown rosters, static sprites and PREP routing/session isolation.');
+  console.log('PASS: synchronized base/Mega speeds in one ranking, ties, regional forms, empty/unknown rosters, static sprites, ten-slot form selection, role notes, directed/updated connections and PREP session isolation.');
   console.log(process.env.PGLITE_PATH?'PASS: PREP guest-code reservation and existing guest registration.':'SKIP: Database checks (set PGLITE_PATH to run).');
 })().catch(error=>{console.error(error);process.exitCode=1;});

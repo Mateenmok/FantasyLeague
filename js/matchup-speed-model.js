@@ -32,13 +32,14 @@
     [...new Set(teamIds)].forEach(teamId => {
       [...new Set(rosters[teamId] || [])].forEach(slug => {
         const pokemon = lookup.get(key(slug));
-        const row = {teamId,name:pokemon?.name || slug.replace(/-/g,' '),speed:pokemon?.speed ?? null,
+        const id = teamId+':'+key(pokemon?.name || slug);
+        const row = {id,formId:id+':'+key(pokemon?.name || slug),teamId,name:pokemon?.name || slug.replace(/-/g,' '),speed:pokemon?.speed ?? null,
           types:pokemon?.types || [],sprite:pokemon?.sprite || '',baseName:pokemon?.name || slug};
         base.push(row);
-        (pokemon?.megas || []).forEach(form => mega.push({...row,...form,isMega:true}));
+        (pokemon?.megas || []).forEach(form => mega.push({...row,...form,formId:id+':'+key(form.name),isMega:true}));
       });
     });
-    return {base:ranked(base),mega:ranked(mega)};
+    return {base:ranked(base),mega:ranked(mega),all:ranked([...base,...mega])};
   };
   const model = {key,isMega,buildIndex,ranked,compare};
   if(typeof module !== 'undefined') module.exports=model;
