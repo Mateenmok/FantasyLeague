@@ -53,23 +53,23 @@
     $('[data-prep-custom]').querySelectorAll('select,button').forEach(el=>el.disabled=false);
   };
   const roleControl=row=>`<select class="role-select" data-role-select="${escape(row.id)}" aria-label="Highlight ${escape(row.name)} (${escape(team(row.teamId).name)})"><option value="">No highlight</option>${Object.entries(N.roles).map(([key,role])=>`<option value="${key}"${notes.roles[row.id]===key?' selected':''}>${escape(role.label)}</option>`).join('')}</select>`;
-  const rowMarkup=(row,max)=>{
+  const rowMarkup=row=>{
     const owner=team(row.teamId),accent=color(owner.accent);
     const portrait=row.sprite?`<img src="${escape(row.sprite)}" alt="" width="64" height="64" loading="lazy">`:'<span aria-hidden="true">?</span>';
     const sigil=row.isMega?'<img class="mega-sigil" src="images/icons/mega-evolution-v2.webp" alt="Mega Evolution" width="20" height="20">':'';
-    return `<li class="speed-row" style="--team-accent:${accent};--speed-fill:${row.speed==null?0:Math.max(3,row.speed/max*100)}%" data-speed="${row.speed??''}" data-note-id="${escape(row.id)}" data-role="${escape(notes.roles[row.id]||'')}">
-      <span class="speed-rank" aria-label="${row.rank==null?'Unranked':`${row.tied?'Tied ':''}rank ${row.rank}`}">${row.rank==null?'—':String(row.rank).padStart(2,'0')}</span>
+    return `<li class="speed-row" style="--team-accent:${accent}" data-speed="${row.speed??''}" data-note-id="${escape(row.id)}" data-role="${escape(notes.roles[row.id]||'')}">
       <span class="speed-sprite">${portrait}${sigil}</span>
       <span class="speed-identity"><strong>${escape(row.name)}</strong><span class="row-owner"><i aria-hidden="true"></i>${escape(owner.name)}</span>
-        <span class="row-types">${row.types.map(type=>escape(type)).join(' / ')}${row.isMega?' <span class="tie-badge">MEGA</span>':''}${row.tied?' <span class="tie-badge">SPEED TIE</span>':''}</span>${roleControl(row)}
+        <span class="row-types">${row.types.map(type=>escape(type)).join(' / ')}${row.isMega?' <span class="tie-badge">MEGA</span>':''}</span>
       </span>
-      <span class="speed-value"><b>${row.speed??'—'}</b><small>${row.speed==null?'Unavailable':'BASE SPE'}</small></span>
-      <span class="speed-meter" aria-hidden="true"><i></i></span></li>`;
+      <span class="speed-value" aria-label="Base Speed ${row.speed??'unavailable'}"><b>${row.speed??'—'}</b><small>SPE</small></span>
+      ${roleControl(row)}</li>`;
   };
   const renderSpeed=()=>{
     $('[data-base-count]').textContent=result.all.length;
-    const max=Math.max(1,...result.all.map(row=>row.speed||0));
-    $('[data-prep-base]').innerHTML=result.all.map(row=>rowMarkup(row,max)).join('')||'<li class="empty-state">These teams have no saved roster Pokémon yet.</li>';
+    $('[data-prep-base]').innerHTML=result.all.length?M.speedTiers(result.all).map(tier=>`<section class="speed-tier" data-speed-tier="${tier.id}" aria-labelledby="tier-${tier.id}">
+      <header class="speed-tier-heading"><h3 id="tier-${tier.id}" aria-label="Base Speed ${tier.description}">${tier.label}</h3><span>${tier.rows.length} ${tier.rows.length===1?'form':'forms'}</span></header>
+      ${tier.rows.length?`<ul class="speed-tier-list">${tier.rows.map(rowMarkup).join('')}</ul>`:'<p class="tier-empty">No Pokémon in this tier.</p>'}</section>`).join(''):'<p class="empty-state">These teams have no saved roster Pokémon yet.</p>';
   };
   const activeRows=()=>N.selectedRows(result,getPair(),notes.forms);
   const currentLineRows=()=>{

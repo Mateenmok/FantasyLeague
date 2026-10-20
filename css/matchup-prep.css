@@ -17,7 +17,7 @@
 .role-key:before{content:'';display:inline-block;width:10px;height:10px;border-radius:4px;margin-right:5px;background:var(--role-color);vertical-align:-1px}
 .support,[data-role=support]{--role-color:#2da86a}.sweeper,[data-role=sweeper]{--role-color:#e45159}.balance,[data-role=balance]{--role-color:#3895ed}
 .notes-status{margin:14px 0 0;color:var(--muted);font-size:11px;line-height:1.5}
-.combined-speed{max-width:900px;margin:auto}
+.combined-speed{margin:auto}
 .role-select{padding:5px 8px;border-radius:7px;font-size:11px;min-height:30px;margin-top:7px;max-width:100%}
 .speed-row[data-role]:not([data-role=""]),.board-card[data-role]:not([data-role=""]){background:linear-gradient(105deg,color-mix(in srgb,var(--role-color) 25%,var(--raised)),var(--raised));border-color:var(--role-color);box-shadow:inset 0 0 0 1px var(--role-color)}
 .speed-row[data-role]:not([data-role=""]) .role-select,.board-card[data-role]:not([data-role=""]) .role-select{border:2px solid var(--role-color);font-weight:700}
@@ -69,3 +69,37 @@
 @media(max-width:850px){.board-columns{gap:90px}.board-card{padding:10px}.board-mon{gap:5px}.team-column h3{font-size:22px}.matchup-board-panel{padding:18px}}
 @media(max-width:820px){.board-swipe-hint{display:block}}
 @media(max-width:650px){.scouting-tools{padding:17px 14px}.role-legend{gap:8px;font-size:11px}.role-legend>span:first-child{flex-basis:100%}.matchup-board-panel{padding:17px 12px}.line-actions .glass-button{padding:7px 9px}.threat-palette{gap:6px}.threat-button{font-size:11px;padding:8px}.threat-button[aria-pressed=true]{padding:7px}.connection-item{padding:9px 7px}.connection-item b{font-size:12px}.connection-item button{padding:6px 8px}.view-switch button{flex:1}.speed-row .role-select{font-size:10px}.combined-speed .speed-row{min-height:132px}}
+
+/* Compact speed bands keep both teams and all forms in one scan-friendly ladder. */
+.speed-tiers{display:grid;gap:14px}
+.speed-tier{display:grid;grid-template-columns:88px minmax(0,1fr);gap:14px;padding-top:14px;border-top:1px solid var(--line);align-items:start}
+.speed-tier-heading{padding:12px 4px;text-align:center;border:1px solid var(--edge);border-radius:12px;background:linear-gradient(150deg,#43bdce25,#4687ca15)}
+.speed-tier-heading h3{font:30px/1 'Jersey 25',sans-serif;color:var(--blue);margin:0;white-space:nowrap}
+.speed-tier-heading>span{display:block;font-size:10px;color:var(--muted);margin-top:5px}
+.speed-tier-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:8px;list-style:none;margin:0;padding:0}
+.speed-tier .speed-row{grid-template-columns:36px minmax(0,1fr) 28px;gap:5px;padding:9px 8px 8px;min-height:0;height:100%;align-content:start;align-items:center;border-left-width:3px}
+.speed-tier .speed-sprite{height:44px}
+.speed-tier .speed-sprite>img:not(.mega-sigil){width:40px;height:40px}
+.speed-tier .speed-sprite .mega-sigil{width:15px;height:15px;right:-3px}
+.speed-tier .speed-identity>strong{font-size:19px;line-height:1.05}
+.speed-tier .row-owner{font-size:10px;margin-top:4px}
+.speed-tier .row-types{font-size:8px;margin-top:3px}
+.speed-tier .speed-value b{font-size:26px}
+.speed-tier .speed-value small{font-size:7px;margin-top:1px}
+.speed-tier .role-select{grid-column:1/-1;width:100%;margin-top:2px;min-height:28px;padding:4px 7px;font-size:10px}
+.tier-empty{color:var(--muted);font-size:12px;margin:0;padding:22px 12px}
+@media(max-width:750px){
+  .speed-tier{grid-template-columns:minmax(0,1fr);gap:10px}
+  .speed-tier-heading{display:flex;gap:10px;align-items:center;justify-self:start;padding:6px 12px}
+  .speed-tier-heading h3{font-size:28px}.speed-tier-heading>span{margin:0}
+  .speed-tier-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:450px){
+  .speed-tier .speed-row{grid-template-columns:minmax(0,1fr) 30px;padding:8px 7px;gap:5px}
+  .speed-tier .speed-sprite{grid-column:1;grid-row:1;justify-self:start}
+  .speed-tier .speed-value{grid-column:2;grid-row:1}
+  .speed-tier .speed-identity{grid-column:1/-1;align-self:start}
+  .speed-tier .speed-identity>strong{font-size:20px}
+  .speed-tier .row-owner{min-height:27px}
+  .speed-tier .role-select{align-self:end}
+}

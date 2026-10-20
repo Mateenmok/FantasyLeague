@@ -25,6 +25,20 @@
       return {...row,rank,tied:row.speed != null && counts.get(row.speed)>1};
     });
   };
+  const speedTiers = rows => {
+    const tiers = [
+      {id:'100-plus',label:'100+',description:'100 or higher',min:100,rows:[]},
+      {id:'80-99',label:'80–99',description:'80 through 99',min:80,rows:[]},
+      {id:'60-79',label:'60–79',description:'60 through 79',min:60,rows:[]},
+      {id:'59-minus',label:'59−',description:'59 or lower',min:0,rows:[]},
+    ];
+    const unknown={id:'unknown',label:'—',description:'Speed unavailable',rows:[]};
+    ranked(rows).forEach(row => {
+      const tier=Number.isFinite(row.speed)?tiers.find(tier=>row.speed>=tier.min):null;
+      (tier || unknown).rows.push(row);
+    });
+    return unknown.rows.length?[...tiers,unknown]:tiers;
+  };
   const compare = (teamIds, rosters, index) => {
     const lookup = new Map();
     index.forEach(pokemon => [pokemon.name,...pokemon.aliases].forEach(name => lookup.set(key(name),pokemon)));
@@ -41,7 +55,7 @@
     });
     return {base:ranked(base),mega:ranked(mega),all:ranked([...base,...mega])};
   };
-  const model = {key,isMega,buildIndex,ranked,compare};
+  const model = {key,isMega,buildIndex,ranked,speedTiers,compare};
   if(typeof module !== 'undefined') module.exports=model;
   if(typeof window !== 'undefined') window.PokeLeagueSpeed=model;
 })();

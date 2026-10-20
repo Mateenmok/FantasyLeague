@@ -21,6 +21,15 @@ assert.equal(result.all.length,result.base.length+result.mega.length);
 assert.equal(result.all[0].name,'Mega Garchomp Z');
 assert(result.all.every((row,i)=>i===0||(result.all[i-1].speed??-1)>=(row.speed??-1)));
 assert.equal(new Set(result.all.map(row=>row.formId)).size,result.all.length);
+const boundaryRows=[0,59,60,79,80,99,100,180,null].map((speed,i)=>({name:'Test '+i,teamId:'one',speed}));
+const tierInput=JSON.stringify(boundaryRows),tiers=M.speedTiers(boundaryRows);
+assert.equal(JSON.stringify(boundaryRows),tierInput,'Tier grouping does not mutate its input');
+assert.deepEqual(tiers.map(tier=>tier.id),['100-plus','80-99','60-79','59-minus','unknown']);
+assert.deepEqual(tiers.map(tier=>tier.rows.map(row=>row.speed)),[[180,100],[99,80],[79,60],[59,0],[null]]);
+assert.equal(M.speedTiers([]).length,4,'Empty speed bands remain visible without an unnecessary unknown band');
+const rosterTiers=M.speedTiers(result.all),tierRows=rosterTiers.flatMap(tier=>tier.rows);
+assert.deepEqual(tierRows,result.all,'Every base/Mega form appears exactly once, still fastest first');
+assert(rosterTiers[0].rows.some(row=>row.isMega)&&rosterTiers[0].rows.some(row=>!row.isMega));
 const notes=N.empty(),attacker=result.base.find(row=>row.name==='Dragapult'),target=result.base.find(row=>row.name==='Salamence');
 assert(N.connect(notes,attacker,target,'ohko'));assert.equal(notes.lines.length,1);
 assert(N.connect(notes,attacker,target,'twohit'));assert.equal(notes.lines.length,1);assert.equal(notes.lines[0].threat,'twohit');
@@ -62,6 +71,6 @@ async function checkAccess(inputCode){
       await assert.rejects(db.query("insert into flash_family_guest_accounts(nickname) values('PREP')"),/guest_prep_code_reserved/);
     }finally{await db.close();}
   }
-  console.log('PASS: synchronized base/Mega speeds in one ranking, ties, regional forms, empty/unknown rosters, static sprites, ten-slot form selection, role notes, directed/updated connections and PREP session isolation.');
+  console.log('PASS: synchronized base/Mega speed tiers, exact tier boundaries, ties, regional forms, empty/unknown rosters, static sprites, ten-slot form selection, role notes, directed/updated connections and PREP session isolation.');
   console.log(process.env.PGLITE_PATH?'PASS: PREP guest-code reservation and existing guest registration.':'SKIP: Database checks (set PGLITE_PATH to run).');
 })().catch(error=>{console.error(error);process.exitCode=1;});
