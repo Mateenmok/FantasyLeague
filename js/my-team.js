@@ -79,7 +79,8 @@
   const renderRoster = (roster, catalog) => {
     const target = document.querySelector("[data-team-roster]");
     const count = document.querySelector("[data-roster-count]");
-    const pokemon = roster
+    const pokemon = window.PokeLeagueRosters.orderForDisplay(roster,
+      (name) => catalog.find((candidate) => normalize(candidate.name) === normalize(name))?.points)
       .map((entry) => catalog.find((candidate) => normalize(candidate.name) === normalize(entry)))
       .filter(Boolean);
 

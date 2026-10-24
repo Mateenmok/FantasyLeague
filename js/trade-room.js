@@ -91,8 +91,8 @@
   };
 
   const renderBuilder = () => {
-    const senderRoster = rosters[myTeamId()] || [];
-    const receiverRoster = rosters[partnerId()] || [];
+    const senderRoster = window.PokeLeagueRosters.orderForDisplay(rosters[myTeamId()], pointsFor);
+    const receiverRoster = window.PokeLeagueRosters.orderForDisplay(rosters[partnerId()], pointsFor);
     senderRosterTarget.innerHTML = senderRoster.length
       ? senderRoster.map((slug) => pokemonButton(slug, "sender")).join("")
       : '<p class="trade-empty">Your roster has no Pokémon to offer yet.</p>';

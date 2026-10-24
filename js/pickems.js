@@ -198,7 +198,9 @@
     const matchupTeams = [teamFor(matchup.home_team_id), teamFor(matchup.away_team_id)];
     dialogTitle.textContent = `${matchupTeams[0].name} vs ${matchupTeams[1].name}`;
     rosterColumns.innerHTML = matchupTeams.map((team) => {
-      const pokemon = (rosters[team.id] || []).map((name) => catalog.find((candidate) => normalize(candidate.name) === normalize(name))).filter(Boolean);
+      const findPokemon = (name) => catalog.find((candidate) => normalize(candidate.name) === normalize(name));
+      const pokemon = window.PokeLeagueRosters.orderForDisplay(rosters[team.id], (name) => findPokemon(name)?.points)
+        .map(findPokemon).filter(Boolean);
       return `
         <section class="matchup-roster-team">
           <header><img src="${escapeHtml(team.logo)}" alt=""><h3>${escapeHtml(team.name)}</h3></header>

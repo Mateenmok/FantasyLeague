@@ -39,7 +39,8 @@
       const pointCap = Number(competition?.pointCap || state.pointCap) || 50;
       const cards = teams.map((team, index) => {
         const account = owners.get(team.id);
-        const pokemon = (rosters[team.id] || [])
+        const pokemon = window.PokeLeagueRosters.orderForDisplay(rosters[team.id],
+          (name) => pointsFor(catalog.find((candidate) => normalize(candidate.name) === normalize(name))))
           .map((name) => catalog.find((candidate) => normalize(candidate.name) === normalize(name)))
           .filter(Boolean);
         const points = pokemon.reduce((total, pick) => total + pointsFor(pick), 0);

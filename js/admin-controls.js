@@ -165,7 +165,7 @@
     const team = findTeam(selectedTeamId) || teams[0];
     if (!team) return;
     selectedTeamId = team.id;
-    const roster = rosterFor(team.id);
+    const roster = window.PokeLeagueRosters.orderForDisplay(rosterFor(team.id), (name) => pointValue(findPokemon(name)));
     elements.selectedTeamLogo.src = team.logo;
     elements.selectedTeamName.textContent = team.name;
     elements.selectedTeamBudget.textContent = `${rosterPoints(team.id)} / ${leagueState.pointCap} points · ${roster.length} / 10 Pokémon`;
@@ -529,7 +529,7 @@
     elements.scoreRows.addEventListener('click',event=>{
       const button=event.target.closest('[data-edit-game]');if(!button)return;
       const row=button.closest('[data-score-row]'),game=Number(button.dataset.editGame),key=row.dataset.displayOrder;
-      const rosters=Object.fromEntries([row.dataset.home,row.dataset.away].map(id=>[id,rosterFor(id).map(window.PokeLeagueGameLineups.slug)]));
+      const rosters=Object.fromEntries([row.dataset.home,row.dataset.away].map(id=>[id,window.PokeLeagueRosters.orderForDisplay(rosterFor(id),(name)=>pointValue(findPokemon(name))).map(window.PokeLeagueGameLineups.slug)]));
       window.PokeLeagueGameLineups.edit({game,home:findTeam(row.dataset.home),away:findTeam(row.dataset.away),catalog,rosters,
         lineup:gameLineupDrafts[key]?.find(g=>g.game===game),onApply:async lineup=>{
           const saved=(leagueState.scores[leagueState.currentWeek]||[]).find(r=>r.displayOrder===Number(key));

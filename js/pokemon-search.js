@@ -111,7 +111,7 @@ const renderWindow = () => {
 
 const renderRoster = () => {
   renderWindow();
-  const names = currentRoster();
+  const names = window.PokeLeagueRosters.orderForDisplay(currentRoster(), pointsFor);
   teamNameTarget.textContent = account?.teamName || (guestAccount ? `${guestAccount.accountName} · Guest` : "Sign in required");
   rosterCountTarget.textContent = `${names.length} / ${waiverSettings.rosterCap} Pokemon`;
   const fragment = document.createDocumentFragment();
@@ -162,7 +162,7 @@ const ownerMap = () => {
   return owners;
 };
 
-const eligibleDrops = (addPokemon) => currentRoster().map((name) => pokemonFor(name)).filter(Boolean)
+const eligibleDrops = (addPokemon) => window.PokeLeagueRosters.orderForDisplay(currentRoster(), pointsFor).map((name) => pokemonFor(name)).filter(Boolean)
   .filter((dropPokemon) => !isMascot(dropPokemon.name))
   .filter((dropPokemon) => rosterPoints() - Number(dropPokemon.points) + Number(addPokemon.points) <= waiverSettings.pointCap);
 

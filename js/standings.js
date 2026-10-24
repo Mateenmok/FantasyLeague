@@ -116,7 +116,8 @@
     const entry = standings.find((candidate) => candidate.team.id === teamId);
     if (!entry) return;
     const names = rosters[teamId] || [];
-    const pokemon = names
+    const pokemon = window.PokeLeagueRosters.orderForDisplay(names,
+      (name) => catalog.find((candidate) => normalize(candidate.name) === normalize(name))?.points)
       .map((name) => catalog.find((candidate) => normalize(candidate.name) === normalize(name)))
       .filter(Boolean);
 

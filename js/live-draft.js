@@ -441,7 +441,7 @@
     }
     const teamId = state.payload.viewer.teamId;
     const team = TEAM_CONFIG[teamId];
-    const roster = rosterFor(teamId);
+    const roster = window.PokeLeagueRosters.orderForDisplay(rosterFor(teamId), pointValue);
     elements.userTeamName.textContent = team.name;
     elements.budgetLeft.textContent = `${POINT_CAP - teamPoints(teamId)} left`;
     elements.pointsUsed.textContent = `${teamPoints(teamId)} / ${POINT_CAP}`;

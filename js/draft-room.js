@@ -484,11 +484,12 @@
 
   const renderRoster = () => {
     const team = state.teams[state.userTeam];
+    const roster = window.PokeLeagueRosters.orderForDisplay(team.picks, pointValue);
     elements.userTeamName.textContent = TEAM_CONFIG[state.userTeam].name;
     elements.budgetLeft.textContent = `${state.pointCap - teamPoints(team)} left`;
     const slots = [];
     for (let index = 0; index < ROSTER_SIZE; index += 1) {
-      const pick = team.picks[index];
+      const pick = roster[index];
       if (!pick) {
         slots.push(`<div class="roster-slot roster-slot--empty"><span><strong>${index + 1}. Open slot</strong><br><small>Waiting for a pick</small></span></div>`);
         continue;
@@ -543,7 +544,7 @@
       return `<article class="league-roster-card comic-panel" style="box-shadow:6px 7px 0 ${config.color},11px 12px 0 #000">
         <div class="league-roster-heading"><h2>${escapeHtml(config.name)}</h2>${grade ? `<span class="draft-grade" title="${escapeHtml(grade.flaws.length ? grade.flaws.join(" · ") : "Coherent, balanced roster")}"><strong>${grade.letter}</strong><small>${grade.score}</small></span>` : `<span class="draft-grade draft-grade--locked">Grades unlock after the draft</span>`}</div>
         <p>${teamPoints(team)} / ${state.pointCap} points · ${team.picks.length} / ${ROSTER_SIZE} Pokémon</p>
-        <div class="league-roster-picks">${team.picks.map((pick) => `<span class="league-roster-pick" title="${escapeHtml(pick.name)} · ${pointValue(pick)} points"><img src="${escapeHtml(spriteCandidates(pick)[0])}" data-pokemon-sprite="${escapeHtml(pick.name)}" data-sprite-index="0" alt=""><span>${escapeHtml(pick.name)}</span></span>`).join("")}</div>
+        <div class="league-roster-picks">${window.PokeLeagueRosters.orderForDisplay(team.picks, pointValue).map((pick) => `<span class="league-roster-pick" title="${escapeHtml(pick.name)} · ${pointValue(pick)} points"><img src="${escapeHtml(spriteCandidates(pick)[0])}" data-pokemon-sprite="${escapeHtml(pick.name)}" data-sprite-index="0" alt=""><span>${escapeHtml(pick.name)}</span></span>`).join("")}</div>
       </article>`;
     }).join("");
   };

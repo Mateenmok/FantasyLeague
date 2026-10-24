@@ -14,6 +14,7 @@
     const accounts = accountsData.accounts || {};
     const code = String(localStorage.getItem("pokeleague.accessCode") || sessionStorage.getItem("pokeleague.accessCode") || "").trim().toUpperCase();
     const names = new Map(catalog.map(p => [window.PokeLeagueRosters.slugify(p.name), p.name]));
+    const points = new Map(catalog.map(p => [window.PokeLeagueRosters.slugify(p.name), p.points]));
     const sprites = Object.fromEntries(catalog.map(p => [p.name, p.sprite]));
     const teams = Object.fromEntries(league.teams.map(team => {
       const account = Object.values(accounts).find(a => a.teamId === team.id);
@@ -22,7 +23,7 @@
         color: account?.theme?.accent || "#6fd7f4",
         soft: account?.theme?.surface || "#e8f3ff",
         sprites,
-        preferred: (rosters[team.id] || []).map(slug => names.get(slug) || slug),
+        preferred: window.PokeLeagueRosters.orderForDisplay(rosters[team.id], slug => points.get(slug)).map(slug => names.get(slug) || slug),
       }];
     }));
     return { teams, ownTeamId: accounts[code]?.teamId || "" };

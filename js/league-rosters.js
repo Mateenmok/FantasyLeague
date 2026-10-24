@@ -50,6 +50,17 @@
     return normalized;
   };
 
+  // Slot one is the mascot. Sort only a display copy so saved slots and draft
+  // pick history keep their original order. Equal point values keep slot order.
+  const orderForDisplay = (roster, pointsFor = (pokemon) => pokemon?.sortPoints ?? pokemon?.points) => {
+    if (!Array.isArray(roster) || !roster.length) return [];
+    const points = (entry) => {
+      const value = Number(pointsFor(entry));
+      return Number.isFinite(value) ? value : 0;
+    };
+    return [roster[0], ...roster.slice(1).sort((a, b) => points(b) - points(a))];
+  };
+
   const replace = async (teamId, pokemonNames, accessCode) => {
     const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/replace_flash_family_roster`, {
       method: "POST",
@@ -82,5 +93,5 @@
     if (!response.ok) throw new Error(await responseError(response));
     return response.json();
   };
-  window.PokeLeagueRosters = { read, replace, namesFromSlugs, slugify, readNicknames, setNickname };
+  window.PokeLeagueRosters = { read, replace, namesFromSlugs, orderForDisplay, slugify, readNicknames, setNickname };
 })();
