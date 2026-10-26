@@ -36,7 +36,7 @@ let guestAccount = null;
 let teams = [];
 let rosterMap = {};
 let waiverSettings = { startAt: null, endAt: null, pointCap: 50, rosterCap: 10, totalWeeks: 10 };
-let weeklyPickupUsed = null;
+let weeklyAllowance = null;
 let actionPending = false;
 let pendingAdd = null;
 let toastTimer = null;
@@ -100,9 +100,9 @@ const orbFor = (pokemon, className) => {
 const renderWindow = () => {
   const state = waiverWindow();
   windowStatusTarget.textContent = state.status;
-  const usage = !account ? "One waiver pickup per team per week."
-    : weeklyPickupUsed === null ? "Weekly pickup allowance unavailable; refresh to try again."
-    : `Week ${waiverSettings.currentWeek}: ${weeklyPickupUsed ? 1 : 0}/1 waiver pickups used. Add + drop counts as one pickup.`;
+  const usage = !account ? "Sign in to see your weekly waiver allowance."
+    : weeklyAllowance === null ? "Weekly pickup allowance unavailable; refresh to try again."
+    : `Week ${waiverSettings.currentWeek}: ${weeklyAllowance.used}/${weeklyAllowance.limit} waiver pickups used. Add + drop counts as one pickup.`;
   windowCopyTarget.textContent = `${state.copy} ${usage}`;
   windowBanner.classList.toggle("is-open", state.open);
   windowBanner.classList.toggle("is-closed", !state.open);
@@ -185,9 +185,9 @@ const refreshWaiverUsage = async () => {
   if (!account) return;
   try {
     waiverSettings = await window.PokeLeagueWaivers.readSettings();
-    weeklyPickupUsed = await window.PokeLeagueWaivers.readWeeklyUsage(account.teamId, waiverSettings.currentWeek);
+    weeklyAllowance = await window.PokeLeagueWaivers.readWeeklyAllowance(account.teamId, waiverSettings.currentWeek);
   } catch {
-    weeklyPickupUsed = null;
+    weeklyAllowance = null;
   }
 };
 
@@ -195,8 +195,8 @@ const submitTransaction = async ({ addName = null, dropName = null }) => {
   if (!account) return announce("Sign in before making a waiver move.", true);
   if (!waiverWindow().open) return announce("Waivers are currently closed.", true);
   if (actionPending) return;
-  if (addName && weeklyPickupUsed !== false) return announce(weeklyPickupUsed
-    ? "Your team has already used its one waiver pickup for this week."
+  if (addName && (!weeklyAllowance || weeklyAllowance.used >= weeklyAllowance.limit)) return announce(weeklyAllowance
+    ? `Your team has used all ${weeklyAllowance.limit} waiver pickups allowed for this week.`
     : "Your weekly pickup allowance could not be checked. Please refresh.", true);
   if (isMascot(dropName)) return announce("Your team's mascot cannot be dropped.", true);
   const nextRoster = proposedRoster({ addName, dropName });
@@ -216,7 +216,7 @@ const submitTransaction = async ({ addName = null, dropName = null }) => {
       teamId: account.teamId,
       addName, dropName, resultingPoints: latestPoints,
     });
-    if (addName) weeklyPickupUsed = true;
+    if (addName && weeklyAllowance) weeklyAllowance.used += 1;
     await refreshRosters();
     if (swapDialog.open) swapDialog.close();
     announce(addName && dropName ? `${addName} added and ${dropName} dropped.`
@@ -294,10 +294,11 @@ const cardFor = (pokemon) => {
   const canAddDirectly = roster.length < waiverSettings.rosterCap
     && rosterPoints() + Number(pokemon.points) <= waiverSettings.pointCap;
   const canSwap = eligibleDrops(pokemon).length > 0;
-  const actionsAvailable = Boolean(account) && waiverWindow().open && !actionPending && weeklyPickupUsed === false;
+  const actionsAvailable = Boolean(account) && waiverWindow().open && !actionPending
+    && weeklyAllowance !== null && weeklyAllowance.used < weeklyAllowance.limit;
   addButton.disabled = !actionsAvailable || (!canAddDirectly && !canSwap);
   addButton.textContent = actionPending ? "Working..." : !account ? (guestAccount ? "View only" : "Sign in") : !waiverWindow().open ? "Closed"
-    : weeklyPickupUsed === true ? "Weekly limit reached" : weeklyPickupUsed === null ? "Allowance unavailable"
+    : weeklyAllowance === null ? "Allowance unavailable" : weeklyAllowance.used >= weeklyAllowance.limit ? "Weekly limit reached"
     : canAddDirectly ? "Add" : canSwap ? "Add + drop" : roster.length >= waiverSettings.rosterCap ? "Roster full" : "Over cap";
   addButton.addEventListener("click", (event) => {
     event.stopPropagation();

@@ -88,6 +88,23 @@
     return (await response.json()).length > 0;
   };
 
+  const readWeeklyAllowance = async (teamId, week) => {
+    const read = async (table, select) => {
+      const query = new URLSearchParams({
+        league_id: `eq.${LEAGUE_ID}`, team_id: `eq.${teamId}`, week: `eq.${week}`,
+        select, limit: "1",
+      });
+      const response = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${query}`, { headers, cache: "no-store" });
+      if (!response.ok) throw new Error(await responseError(response));
+      return (await response.json())[0];
+    };
+    const [usage, allowance] = await Promise.all([
+      read("flash_family_weekly_waiver_usage", "pickup_count"),
+      read("flash_family_weekly_waiver_allowances", "pickup_limit"),
+    ]);
+    return { used: Number(usage?.pickup_count) || 0, limit: Number(allowance?.pickup_limit) || 1 };
+  };
+
   const readTransactions = async ({ limit = 6, before = null } = {}) => {
     const query = new URLSearchParams({
       league_id: `eq.${LEAGUE_ID}`,
@@ -103,5 +120,5 @@
     return response.json();
   };
 
-  window.PokeLeagueWaivers = { readSettings, setWindow, setSeasonRules, transact, slugify, readTransactions, readWeeklyUsage };
+  window.PokeLeagueWaivers = { readSettings, setWindow, setSeasonRules, transact, slugify, readTransactions, readWeeklyUsage, readWeeklyAllowance };
 })();
