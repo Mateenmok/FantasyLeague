@@ -69,7 +69,7 @@ async function enter(code) {
   }
   const page = source('season-2/index.html');
   assert.match(page, /<main[^>]*aria-label="Season 2 workspace"/);
-  assert.deepEqual([...page.matchAll(/<script src="([^"]+)"/g)].map(match => match[1]), ['workspace.js?v=1', 'profile.js?v=editor1', 'trainer-colors.js?v=editor1', 'intro.js?v=arceus1']);
+  assert.deepEqual([...page.matchAll(/<script src="([^"]+)"/g)].map(match => match[1]), ['workspace.js?v=1', 'profile.js?v=studio2', 'trainer-colors.js?v=studio2', 'intro.js?v=studio2']);
   console.log('PASS: Season1 routes to the isolated Season 2 workspace; ongoing league identity/data and existing access routes remain intact.');
 
   const { PGlite } = require(process.env.PGLITE_PATH || '@electric-sql/pglite');

@@ -7,12 +7,26 @@
     { id: 'nate', label: 'Trainer icon 4', color: '#84c7ff' },
     { id: 'rosa', label: 'Trainer icon 5', color: '#e6a7ed' },
   ].map(trainer => Object.freeze(trainer)));
-  const PARTS = Object.freeze(['hair', 'skin', 'cap', 'top', 'bottoms']);
+  const PARTS = Object.freeze(['hair', 'skin', 'cap', 'capTrim', 'top', 'sleeves', 'bottoms', 'bag', 'shoes', 'soles']);
+  const HAIRSTYLES = Object.freeze(['original', 'swept', 'choppy', 'braid']);
+  const PATTERNS = Object.freeze(['stripes', 'check', 'dots', 'diagonal']);
+  const FABRICS = Object.freeze(['cap', 'top', 'sleeves', 'bottoms', 'bag', 'shoes']);
+  const validColor = value => typeof value === 'string' && /^#[0-9a-f]{6}$/i.test(value);
   function normalizeAppearance(value) {
     const appearance = {};
     if (!value || typeof value !== 'object') return appearance;
     for (const part of PARTS) {
-      if (typeof value[part] === 'string' && /^#[0-9a-f]{6}$/i.test(value[part])) appearance[part] = value[part].toLowerCase();
+      if (validColor(value[part])) appearance[part] = value[part].toLowerCase();
+    }
+    if (HAIRSTYLES.includes(value.hairstyle) && value.hairstyle !== 'original') appearance.hairstyle = value.hairstyle;
+    if (value.patterns && typeof value.patterns === 'object') {
+      const patterns = {};
+      for (const part of FABRICS) {
+        const pattern = value.patterns[part];
+        if (!pattern || !PATTERNS.includes(pattern.kind) || !validColor(pattern.color)) continue;
+        patterns[part] = { kind: pattern.kind, color: pattern.color.toLowerCase(), scale: [2,3,4].includes(pattern.scale) ? pattern.scale : 3 };
+      }
+      if (Object.keys(patterns).length) appearance.patterns = patterns;
     }
     return appearance;
   }
@@ -23,7 +37,13 @@
     if (!value || !TRAINERS.some(trainer => trainer.id === value.trainerId)) return null;
     const name = normalizeName(value.name);
     if (!name || name.length > 20) return null;
-    return { version: 2, trainerId: value.trainerId, name, appearance: normalizeAppearance(value.appearance) };
+    const appearance = normalizeAppearance(value.appearance);
+    // Older palettes colored sleeves and headwear together. Preserve that saved look.
+    if (Number(value.version || 3) < 3) {
+      if (appearance.top) appearance.sleeves = appearance.top;
+      if (appearance.cap && value.trainerId === 'leaf') appearance.capTrim = appearance.cap;
+    }
+    return { version: 3, trainerId: value.trainerId, name, appearance };
   }
   function read(storage) {
     try { return validate(JSON.parse(storage.getItem(STORAGE_KEY))); }
@@ -37,5 +57,5 @@
       return { ok: true, profile };
     } catch { return { ok: false, reason: 'storage' }; }
   }
-  window.PokeLeagueSeasonTwoProfile = Object.freeze({ TRAINERS, PARTS, STORAGE_KEY, normalizeName, normalizeAppearance, validate, read, save });
+  window.PokeLeagueSeasonTwoProfile = Object.freeze({ TRAINERS, PARTS, HAIRSTYLES, PATTERNS, FABRICS, STORAGE_KEY, normalizeName, normalizeAppearance, validate, read, save });
 })();

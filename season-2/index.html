@@ -12,10 +12,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="images/highlands-dawn.png">
-  <link rel="stylesheet" href="intro.css?v=arceus1">
-  <script src="profile.js?v=editor1" defer></script>
-  <script src="trainer-colors.js?v=editor1" defer></script>
-  <script src="intro.js?v=arceus1" defer></script>
+  <link rel="stylesheet" href="intro.css?v=studio2">
+  <link rel="stylesheet" href="studio.css?v=studio2">
+  <script src="profile.js?v=studio2" defer></script>
+  <script src="trainer-colors.js?v=studio2" defer></script>
+  <script src="intro.js?v=studio2" defer></script>
 </head>
 <body>
   <div class="ambient-light" aria-hidden="true"></div>
@@ -42,25 +43,52 @@
           </fieldset>
         </section>
         <section class="pane customize-pane" data-pane="customize" aria-labelledby="customizeHeading" hidden>
-          <div class="editor-preview">
-            <span class="editor-badge">TRAINER STUDIO</span>
-            <figure class="chosen-portrait"><div class="portrait-halo" aria-hidden="true"></div><img data-editor-sprite src="images/trainers/red.png" width="80" height="80" alt="Your customized trainer"><span class="platform" aria-hidden="true"></span></figure>
-            <p class="editor-preview-name" data-editor-name>YOUR TRAINER</p>
-            <button type="button" class="editor-link" data-change-icon>← Change icon</button>
+          <div class="studio-heading">
+            <div><p class="eyebrow">YOUR TRAINER · YOUR SIGNATURE</p><h1 id="customizeHeading" tabindex="-1">Make it yours.</h1></div>
+            <div class="history-tools" role="group" aria-label="Edit history"><button type="button" data-undo disabled aria-label="Undo" title="Undo (Ctrl or Command Z)">↶ <span>Undo</span></button><button type="button" data-redo disabled aria-label="Redo" title="Redo (Ctrl or Command Shift Z)">↷ <span>Redo</span></button><button type="button" data-reset-colors disabled>Reset look</button></div>
           </div>
-          <div class="editor-controls"><p class="eyebrow">A LOOK THAT’S ALL YOU</p><h1 id="customizeHeading" tabindex="-1">Make it yours.</h1><p class="editor-help">Choose a part, then give it a new color.</p>
-            <div class="part-picker" role="group" aria-label="Part to customize">
-              <button type="button" data-part="hair" aria-pressed="true"><span data-part-chip="hair" aria-hidden="true"></span>Hair</button>
-              <button type="button" data-part="skin" aria-pressed="false"><span data-part-chip="skin" aria-hidden="true"></span>Skin</button>
-              <button type="button" data-part="cap" aria-pressed="false"><span data-part-chip="cap" aria-hidden="true"></span>Cap</button>
-              <button type="button" data-part="top" aria-pressed="false"><span data-part-chip="top" aria-hidden="true"></span>Top</button>
-              <button type="button" data-part="bottoms" aria-pressed="false"><span data-part-chip="bottoms" aria-hidden="true"></span>Bottoms</button>
+          <div class="studio-body">
+            <div class="editor-preview">
+              <div class="preview-stage" data-preview-stage data-zoom="4"><span class="preview-caption" data-preview-caption>Your look</span><figure class="chosen-portrait"><img data-editor-sprite src="images/trainers/red.png" width="80" height="80" alt="Your customized trainer"></figure><span class="preview-ground" aria-hidden="true"></span></div>
+              <p class="editor-preview-name" data-editor-name>YOUR TRAINER</p>
+              <button type="button" class="editor-link" data-change-icon>← Change trainer icon</button>
+              <div class="preview-tools" role="group" aria-label="Preview controls"><button type="button" data-zoom-out aria-label="Zoom out">−</button><span data-zoom-label>4×</span><button type="button" data-zoom-in aria-label="Zoom in">+</button><span class="tool-divider"></span><button type="button" data-grid aria-pressed="false">Grid</button><button type="button" data-compare aria-pressed="false">Original</button></div>
+              <p class="preview-note">Every detail stays with your trainer card.</p>
+              <a class="export-button" data-export aria-disabled="true" download="pokeleague-trainer.png">↓ Download sprite</a>
             </div>
-            <div class="palette-heading"><h2 data-color-heading>Hair color</h2><button type="button" class="editor-link" data-reset-part>Reset hair</button></div>
-            <div class="color-swatches" role="group" aria-label="Hair colors" data-swatches></div>
-            <div class="custom-color-row"><label for="customColor"><input id="customColor" type="color" value="#604840" aria-label="Custom hair color"><span>Custom color</span></label><span class="color-value" data-color-value>#604840</span></div>
-            <div class="editor-bottom"><span data-color-state>Original colors</span><button type="button" class="editor-link" data-reset-colors>Reset all colors</button></div>
-            <p class="editor-status" data-editor-status role="status"></p>
+            <nav class="part-picker" aria-label="Part to customize">
+              <p class="section-label">APPEARANCE</p>
+              <button type="button" data-part="hair" aria-pressed="true"><span class="part-symbol" aria-hidden="true">✦</span><span>Hair</span><i data-part-chip="hair" aria-hidden="true"></i></button>
+              <button type="button" data-part="skin" aria-pressed="false"><span class="part-symbol" aria-hidden="true">◐</span><span>Skin</span><i data-part-chip="skin" aria-hidden="true"></i></button>
+              <p class="section-label">WARDROBE</p>
+              <button type="button" data-part="cap" aria-pressed="false"><span class="part-symbol" aria-hidden="true">⌒</span><span>Headwear</span><i data-part-chip="cap" aria-hidden="true"></i></button>
+              <button type="button" data-part="top" aria-pressed="false"><span class="part-symbol" aria-hidden="true">♧</span><span>Top</span><i data-part-chip="top" aria-hidden="true"></i></button>
+              <button type="button" data-part="bottoms" aria-pressed="false"><span class="part-symbol" aria-hidden="true">Ⅱ</span><span>Bottoms</span><i data-part-chip="bottoms" aria-hidden="true"></i></button>
+              <button type="button" data-part="shoes" aria-pressed="false"><span class="part-symbol" aria-hidden="true">⌞</span><span>Footwear</span><i data-part-chip="shoes" aria-hidden="true"></i></button>
+              <button type="button" data-part="bag" aria-pressed="false"><span class="part-symbol" aria-hidden="true">▱</span><span>Bag & straps</span><i data-part-chip="bag" aria-hidden="true"></i></button>
+            </nav>
+            <div class="editor-controls">
+              <div class="detail-heading"><span class="section-label">CUSTOMIZE</span><h2 data-detail-heading>Hair</h2><p data-detail-help>Give your trainer a signature silhouette.</p></div>
+              <div class="detail-parts" role="group" aria-label="Detail to color" data-detail-parts hidden></div>
+              <fieldset class="hair-options" data-hair-options><legend>Hairstyle</legend><div class="hair-style-grid">
+                <button type="button" data-hairstyle="original" aria-pressed="true"><span class="hair-thumbnail"><img data-style-preview="original" alt=""></span><span>Original</span></button>
+                <button type="button" data-hairstyle="swept" aria-pressed="false"><span class="hair-thumbnail"><img data-style-preview="swept" alt=""></span><span>Side-swept</span></button>
+                <button type="button" data-hairstyle="choppy" aria-pressed="false"><span class="hair-thumbnail"><img data-style-preview="choppy" alt=""></span><span>Choppy fringe</span></button>
+                <button type="button" data-hairstyle="braid" aria-pressed="false"><span class="hair-thumbnail"><img data-style-preview="braid" alt=""></span><span>Side braid</span></button>
+              </div><p class="detail-hint">Styled to fit your trainer’s original headwear.</p></fieldset>
+              <div class="palette-heading"><h3 data-color-heading>Hair color</h3><button type="button" class="editor-link" data-reset-part>Reset hair</button></div>
+              <div class="color-swatches" role="group" aria-label="Hair colors" data-swatches></div>
+              <div class="custom-color-row"><label for="customColor"><input id="customColor" type="color" value="#604840" aria-label="Custom hair color"><span>Custom color</span></label><span class="color-value" data-color-value>#604840</span></div>
+              <fieldset class="pattern-options" data-pattern-options hidden><legend>Fabric pattern</legend><div class="pattern-grid">
+                <button type="button" data-pattern="plain" aria-pressed="true"><span class="pattern-sample" data-texture="plain"></span><span>Plain</span></button>
+                <button type="button" data-pattern="stripes" aria-pressed="false"><span class="pattern-sample" data-texture="stripes"></span><span>Stripes</span></button>
+                <button type="button" data-pattern="check" aria-pressed="false"><span class="pattern-sample" data-texture="check"></span><span>Check</span></button>
+                <button type="button" data-pattern="dots" aria-pressed="false"><span class="pattern-sample" data-texture="dots"></span><span>Dots</span></button>
+                <button type="button" data-pattern="diagonal" aria-pressed="false"><span class="pattern-sample" data-texture="diagonal"></span><span>Diagonal</span></button>
+              </div><div class="pattern-settings" data-pattern-settings hidden><label class="accent-color-label">Pattern color<input type="color" data-pattern-color value="#f3e9d2" aria-label="Pattern color"></label><label>Pattern size<select data-pattern-scale aria-label="Pattern size"><option value="2">Fine</option><option value="3">Medium</option><option value="4">Bold</option></select></label></div><p class="detail-hint">Patterns follow the fabric and keep the original shading.</p></fieldset>
+              <div class="editor-bottom"><span data-color-state>Original look</span><span data-edit-feedback role="status" aria-live="polite"></span></div>
+              <p class="editor-status" data-editor-status role="status"></p>
+            </div>
           </div>
         </section>
         <section class="pane name-pane" data-pane="name" aria-labelledby="nameHeading" hidden>

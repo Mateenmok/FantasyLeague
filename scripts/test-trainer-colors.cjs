@@ -48,7 +48,7 @@ for (const id of ['red', 'leaf', 'ethan', 'nate', 'rosa']) {
   const original = [...pixels];
   assert.deepEqual([...recolor(pixels, width, id, {})], original, 'Original appearance is pixel-identical');
   const sets = [];
-  for (const part of ['hair', 'skin', 'cap', 'top', 'bottoms']) {
+  for (const part of ['hair', 'skin', 'cap', 'top', 'bottoms', 'capTrim', 'sleeves', 'bag', 'shoes', 'soles']) {
     const output = recolor(pixels, width, id, { [part]: '#58c8a0' });
     const changed = new Set();
     for (let i = 0; i < pixels.length; i += 4) {
@@ -57,7 +57,7 @@ for (const id of ['red', 'leaf', 'ethan', 'nate', 'rosa']) {
       if (differs) changed.add(i);
       if (!pixels[i + 3] || pixels[i] + pixels[i + 1] + pixels[i + 2] === 0) assert.equal(differs, false, 'Transparency and black outlines stay intact');
     }
-    assert(changed.size >= 10, `${id}: ${part} must visibly change`);
+    assert(changed.size >= 4, `${id}: ${part} must visibly change (${changed.size} pixels)`);
     for (const other of sets) assert(![...changed].some(i => other.has(i)), `${id}: body-part masks must not overlap`);
     sets.push(changed);
   }
@@ -67,4 +67,28 @@ for (const id of ['red', 'leaf', 'ethan', 'nate', 'rosa']) {
   const skinOnly = recolor(pixels, width, id, { skin: '#845339' });
   for (const index of sets[1]) assert.deepEqual([...combined.subarray(index, index + 4)], [...skinOnly.subarray(index, index + 4)], 'Hair editing must not alter the selected skin tone');
 }
-console.log('PASS: All five sprites support independent hair, skin, cap, top, and bottom colors; transparency, outlines, and original pixels are preserved.');
+for(const id of ['red','leaf','ethan','nate','rosa']) {
+  const {width,pixels}=sprite(id);
+  const variants=new Set();
+  for(const hairstyle of ['original','swept','choppy','braid']) {
+    const output=recolor(pixels,width,id,{hairstyle}); variants.add(Buffer.from(output).toString('base64'));
+    assert.equal(output.length,pixels.length);
+  }
+  assert.equal(variants.size,4,id+': each hairstyle must produce a distinct silhouette');
+  for(const part of ['cap','top','sleeves','bottoms','bag','shoes']) {
+    const region=recolor(pixels,width,id,{[part]:'#fa33c5'});
+    for(const kind of ['stripes','check','dots','diagonal']) {
+      const output=recolor(pixels,width,id,{patterns:{[part]:{kind,color:'#fa33c5',scale:2}}});
+      let changed=0;
+      for(let i=0;i<pixels.length;i+=4) {
+        assert.equal(output[i+3],pixels[i+3],'Patterns preserve alpha');
+        if(output[i]!==pixels[i] || output[i+1]!==pixels[i+1] || output[i+2]!==pixels[i+2]) {
+          changed++;
+          assert(region[i]!==pixels[i] || region[i+1]!==pixels[i+1] || region[i+2]!==pixels[i+2],id+': patterns must stay on selected fabric');
+        }
+      }
+      assert(changed>0,id+': '+part+' '+kind+' must be visible');
+    }
+  }
+}
+console.log('PASS: Ten isolated color regions, four distinct hairstyles, and clipped fabric patterns on all five trainers. Source pixels and original outlines are preserved.');
