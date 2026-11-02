@@ -5,16 +5,66 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/webp" href="../images/favicon.webp">
-  <title>Season 2 Workspace | PokeLeague</title>
+  <meta name="theme-color" content="#091622">
+  <title>Your next chapter | PokeLeague Season 2</title>
   <script src="workspace.js?v=1"></script>
-  <style>
-    :root { color-scheme: light; background: #fff8e6; }
-    :root[data-theme="dark"] { color-scheme: dark; background: #181d26; }
-    body { margin: 0; }
-    main { min-height: 100vh; min-height: 100dvh; }
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jersey+25&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="intro.css?v=intro1">
+  <script src="profile.js?v=intro1" defer></script>
+  <script src="intro.js?v=intro1" defer></script>
 </head>
 <body>
-  <main aria-label="Season 2 workspace"></main>
+  <div class="ambient-light" aria-hidden="true"></div>
+  <header class="page-header">
+    <a class="wordmark" href="../index.html" aria-label="PokeLeague access"><span class="pokeball" aria-hidden="true"></span>POKÉLEAGUE<span class="season-tag">SEASON 02</span></a>
+    <a class="exit-link" href="../index.html">Back to access <span aria-hidden="true">↗</span></a>
+  </header>
+  <main class="intro" aria-label="Season 2 workspace" data-step="welcome">
+    <div class="intro-topline"><span><i aria-hidden="true"></i> A NEW ADVENTURE</span><span class="preview-label">SEASON 2 PREVIEW</span></div>
+    <section class="game-window" aria-label="Trainer introduction">
+      <div class="scene">
+        <div class="scene-sky" aria-hidden="true"></div><div class="scene-grid" aria-hidden="true"></div>
+        <div class="scene-orb orb-one" aria-hidden="true"></div><div class="scene-orb orb-two" aria-hidden="true"></div>
+        <section class="pane welcome-pane" data-pane="welcome" aria-labelledby="welcomeHeading">
+          <div class="welcome-copy"><p class="eyebrow">THE WORLD OF POKÉLEAGUE</p><h1 id="welcomeHeading" tabindex="-1">A new season.<br><span>A new story.</span></h1><p class="scene-description">Every great adventure begins with a trainer.<br>This one begins with you.</p></div>
+          <figure class="professor"><div class="portrait-halo" aria-hidden="true"></div><img src="images/trainers/juniper.png" width="80" height="80" alt="Professor Juniper" fetchpriority="high"><figcaption>PROFESSOR JUNIPER</figcaption><span class="platform" aria-hidden="true"></span></figure>
+          <span class="scene-corner" aria-hidden="true">PL / 002</span>
+        </section>
+        <section class="pane trainer-pane" data-pane="trainer" aria-labelledby="trainerHeading" hidden>
+          <div class="step-heading"><p class="eyebrow">YOUR ADVENTURE. YOUR LOOK.</p><h1 id="trainerHeading" tabindex="-1">Choose your trainer.</h1><p>Five familiar faces. Which one is you?</p></div>
+          <fieldset class="trainer-options"><legend class="sr-only">Choose one of five trainer icons</legend>
+            <label class="trainer-option" style="--trainer-color:#fb8b7f"><input type="radio" name="trainer" value="red" aria-label="Red"><span class="trainer-tile"><span class="trainer-number">01</span><span class="selection-mark" aria-hidden="true">✓</span><img src="images/trainers/red.png" width="80" height="80" alt=""><span class="trainer-label">Red</span><span class="trainer-caption">KANTO</span></span></label>
+            <label class="trainer-option" style="--trainer-color:#a7dfa1"><input type="radio" name="trainer" value="leaf" aria-label="Leaf"><span class="trainer-tile"><span class="trainer-number">02</span><span class="selection-mark" aria-hidden="true">✓</span><img src="images/trainers/leaf.png" width="80" height="80" alt=""><span class="trainer-label">Leaf</span><span class="trainer-caption">KANTO</span></span></label>
+            <label class="trainer-option" style="--trainer-color:#f4cb74"><input type="radio" name="trainer" value="ethan" aria-label="Ethan"><span class="trainer-tile"><span class="trainer-number">03</span><span class="selection-mark" aria-hidden="true">✓</span><img src="images/trainers/ethan.png" width="80" height="80" alt=""><span class="trainer-label">Ethan</span><span class="trainer-caption">JOHTO</span></span></label>
+            <label class="trainer-option" style="--trainer-color:#84c7ff"><input type="radio" name="trainer" value="nate" aria-label="Nate"><span class="trainer-tile"><span class="trainer-number">04</span><span class="selection-mark" aria-hidden="true">✓</span><img src="images/trainers/nate.png" width="80" height="80" alt=""><span class="trainer-label">Nate</span><span class="trainer-caption">UNOVA</span></span></label>
+            <label class="trainer-option" style="--trainer-color:#e6a7ed"><input type="radio" name="trainer" value="rosa" aria-label="Rosa"><span class="trainer-tile"><span class="trainer-number">05</span><span class="selection-mark" aria-hidden="true">✓</span><img src="images/trainers/rosa.png" width="80" height="80" alt=""><span class="trainer-label">Rosa</span><span class="trainer-caption">UNOVA</span></span></label>
+          </fieldset>
+        </section>
+        <section class="pane name-pane" data-pane="name" aria-labelledby="nameHeading" hidden>
+          <figure class="chosen-portrait"><div class="portrait-halo" aria-hidden="true"></div><img data-chosen-sprite src="images/trainers/red.png" width="80" height="80" alt="Your selected trainer"><span class="platform" aria-hidden="true"></span><figcaption data-chosen-label>YOUR TRAINER</figcaption></figure>
+          <div class="name-content"><p class="eyebrow">LET’S MAKE IT OFFICIAL</p><h1 id="nameHeading" tabindex="-1">What’s your name?</h1><p class="scene-description">The name your next chapter begins with.</p>
+            <form id="nameForm" novalidate>
+              <label for="trainerName">TRAINER NAME</label>
+              <div class="name-input-wrap"><input id="trainerName" name="trainerName" type="text" maxlength="20" autocomplete="nickname" autocapitalize="none" spellcheck="false" placeholder="Your name" aria-describedby="nameHelp nameError" required><span class="input-cursor" aria-hidden="true">▾</span></div>
+              <div class="input-help"><span id="nameHelp">1–20 characters. Make it yours.</span><span id="nameCount">0 / 20</span></div>
+              <p class="error-message" id="nameError" role="alert"></p>
+            </form>
+          </div>
+        </section>
+        <section class="pane complete-pane" data-pane="complete" aria-labelledby="completeHeading" hidden>
+          <div class="complete-copy"><p class="eyebrow">YOUR NEXT CHAPTER</p><h1 id="completeHeading" tabindex="-1">Welcome to<br><span>Season 2.</span></h1><p class="scene-description" data-greeting>Your adventure is just getting started.</p><span class="ready-stamp"><i aria-hidden="true"></i> TRAINER READY</span></div>
+          <article class="trainer-pass" aria-label="Your Season 2 trainer card"><div class="pass-header"><span class="pokeball" aria-hidden="true"></span>POKÉLEAGUE<span>02</span></div><div class="pass-body"><div class="pass-photo"><img data-card-sprite src="images/trainers/red.png" width="80" height="80" alt="Your selected trainer"></div><div class="pass-details"><span class="pass-label">TRAINER NAME</span><strong data-card-name>Trainer</strong><span class="pass-label">TRAINER ICON</span><span data-card-trainer>Red</span></div></div><div class="pass-footer"><span>SEASON TWO / A NEW BEGINNING</span><span class="pass-bars" aria-hidden="true"></span></div></article>
+        </section>
+      </div>
+      <div class="dialogue-box">
+        <div class="dialogue-copy"><span class="speaker">PROFESSOR JUNIPER</span><p class="dialogue-text"><span data-dialogue-visual aria-hidden="true"></span><span data-dialogue-accessible class="sr-only" role="status" aria-live="polite"></span></p></div>
+        <div class="dialogue-actions"><button class="back-button" type="button" data-back hidden>← Back</button><button class="primary-button" type="button" data-next>Let’s begin <span aria-hidden="true">▶</span></button><button class="primary-button" type="submit" form="nameForm" data-confirm hidden>Confirm name <span aria-hidden="true">▶</span></button><button class="primary-button" type="button" data-edit hidden>Edit trainer <span aria-hidden="true">↗</span></button></div>
+      </div>
+    </section>
+    <footer class="intro-footer"><ol class="steps" aria-label="Setup progress"><li data-progress="welcome" aria-current="step"><span>01</span> Welcome</li><li data-progress="trainer"><span>02</span> Trainer</li><li data-progress="name"><span>03</span> Name</li></ol><button type="button" class="replay-button" data-replay hidden>↻ Replay intro</button><span class="footer-note" data-save-note>Your story starts here.</span></footer>
+    <noscript><p class="noscript-message">Turn on JavaScript to choose a trainer and create your Season 2 profile.</p></noscript>
+  </main>
 </body>
 </html>

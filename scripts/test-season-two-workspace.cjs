@@ -61,16 +61,16 @@ async function enter(code) {
     vm.runInNewContext(source('season-2/workspace.js'), {
       sessionStorage: storage(session), localStorage: storage(local), document: { documentElement: { dataset } },
       window: { location: { replace: url => { redirected = url; } } },
-      fetch: () => { throw new Error('The blank workspace must not load live league data'); },
+      fetch: () => { throw new Error('The workspace must not load live league data'); },
     });
     assert.equal(redirected, admitted ? undefined : '../index.html');
     if (admitted) assert.equal(dataset.theme, 'dark');
     assert.equal(local.get('pokeleague.accessCode'), 'NETO');
   }
   const page = source('season-2/index.html');
-  assert.match(page, /<main aria-label="Season 2 workspace"><\/main>/);
-  assert.deepEqual([...page.matchAll(/<script src="([^"]+)"/g)].map(match => match[1]), ['workspace.js?v=1']);
-  console.log('PASS: Season1 routes to a blank Season 2 workspace; ongoing league identity/data and existing access routes remain intact.');
+  assert.match(page, /<main[^>]*aria-label="Season 2 workspace"/);
+  assert.deepEqual([...page.matchAll(/<script src="([^"]+)"/g)].map(match => match[1]), ['workspace.js?v=1', 'profile.js?v=intro1', 'intro.js?v=intro1']);
+  console.log('PASS: Season1 routes to the isolated Season 2 workspace; ongoing league identity/data and existing access routes remain intact.');
 
   const { PGlite } = require(process.env.PGLITE_PATH || '@electric-sql/pglite');
   const db = new PGlite();
