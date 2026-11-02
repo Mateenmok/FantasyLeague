@@ -28,6 +28,16 @@ assert.equal(model.save(storage, { trainerId: 'unknown', name: 'Trainer' }).ok, 
 assert.equal(model.read(storage).name, 'New Trainer', 'Invalid edits do not replace a saved draft');
 assert.equal(model.save(storage, { trainerId: 'rosa', name: 'Éloïse ★' }).ok, true);
 assert.equal(model.read(storage).name, 'Éloïse ★');
+values.set(model.STORAGE_KEY, JSON.stringify({ version: 1, trainerId: 'nate', name: 'Pufferz' }));
+assert.equal(model.read(storage).version, 2);
+assert.equal(model.read(storage).name, 'Pufferz', 'Existing draft names survive the editor update');
+assert.equal(Object.keys(model.read(storage).appearance).length, 0);
+const custom = { hair: '#ABCDEF', skin: '#845339', cap: '#5b9cdc', top: '#4fbebc', bottoms: '#394154' };
+assert.equal(model.save(storage, { trainerId: 'rosa', name: 'Pufferz', appearance: custom }).ok, true);
+for (const part of model.PARTS) assert.equal(model.read(storage).appearance[part], custom[part].toLowerCase());
+const sanitized = model.normalizeAppearance({ hair: 'url(https://example.com)', skin: '#123', cap: '#ff00aa', unknown: '#000000' });
+assert.deepEqual(Object.keys(sanitized), ['cap']);
+assert.equal(model.read(storage).trainerId, 'rosa');
 for (const [key, value] of original) assert.equal(values.get(key), value, 'Season 1 identity and data must not change');
 assert.equal(values.size, original.length + 1, 'Only the Season 2 profile key is written');
 for (const raw of ['oops', 'null', '[]', '{"trainerId":"bad","name":"Trainer"}', '{"trainerId":"red","name":""}']) {
@@ -37,4 +47,4 @@ for (const raw of ['oops', 'null', '[]', '{"trainerId":"bad","name":"Trainer"}',
 assert.equal(model.read(undefined), null);
 assert.equal(model.save(undefined, { trainerId: 'red', name: 'Trainer' }).reason, 'storage');
 assert.equal(model.read({ getItem() { throw new Error('Storage blocked'); } }), null);
-console.log('PASS: Five trainer choices, validated names, save/reload, corrupt/blocked storage, and Season 1 isolation.');
+console.log('PASS: Five icons, name and color persistence, old-profile migration, invalid color rejection, blocked storage, and Season 1 isolation.');

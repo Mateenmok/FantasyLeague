@@ -11,9 +11,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jersey+25&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="intro.css?v=intro1">
-  <script src="profile.js?v=intro1" defer></script>
-  <script src="intro.js?v=intro1" defer></script>
+  <link rel="stylesheet" href="intro.css?v=editor1">
+  <script src="profile.js?v=editor1" defer></script>
+  <script src="trainer-colors.js?v=editor1" defer></script>
+  <script src="intro.js?v=editor1" defer></script>
 </head>
 <body>
   <div class="ambient-light" aria-hidden="true"></div>
@@ -33,14 +34,36 @@
           <span class="scene-corner" aria-hidden="true">PL / 002</span>
         </section>
         <section class="pane trainer-pane" data-pane="trainer" aria-labelledby="trainerHeading" hidden>
-          <div class="step-heading"><p class="eyebrow">YOUR ADVENTURE. YOUR LOOK.</p><h1 id="trainerHeading" tabindex="-1">Choose your trainer.</h1><p>Five familiar faces. Which one is you?</p></div>
+          <div class="step-heading"><p class="eyebrow">YOUR ADVENTURE. YOUR LOOK.</p><h1 id="trainerHeading" tabindex="-1">Choose your trainer.</h1><p>Pick a starting look. Make it your own next.</p></div>
           <fieldset class="trainer-options"><legend class="sr-only">Choose one of five trainer icons</legend>
-            <label class="trainer-option" style="--trainer-color:#fb8b7f"><input type="radio" name="trainer" value="red" aria-label="Red"><span class="trainer-tile"><span class="trainer-number">01</span><span class="selection-mark" aria-hidden="true">✓</span><img src="images/trainers/red.png" width="80" height="80" alt=""><span class="trainer-label">Red</span><span class="trainer-caption">KANTO</span></span></label>
-            <label class="trainer-option" style="--trainer-color:#a7dfa1"><input type="radio" name="trainer" value="leaf" aria-label="Leaf"><span class="trainer-tile"><span class="trainer-number">02</span><span class="selection-mark" aria-hidden="true">✓</span><img src="images/trainers/leaf.png" width="80" height="80" alt=""><span class="trainer-label">Leaf</span><span class="trainer-caption">KANTO</span></span></label>
-            <label class="trainer-option" style="--trainer-color:#f4cb74"><input type="radio" name="trainer" value="ethan" aria-label="Ethan"><span class="trainer-tile"><span class="trainer-number">03</span><span class="selection-mark" aria-hidden="true">✓</span><img src="images/trainers/ethan.png" width="80" height="80" alt=""><span class="trainer-label">Ethan</span><span class="trainer-caption">JOHTO</span></span></label>
-            <label class="trainer-option" style="--trainer-color:#84c7ff"><input type="radio" name="trainer" value="nate" aria-label="Nate"><span class="trainer-tile"><span class="trainer-number">04</span><span class="selection-mark" aria-hidden="true">✓</span><img src="images/trainers/nate.png" width="80" height="80" alt=""><span class="trainer-label">Nate</span><span class="trainer-caption">UNOVA</span></span></label>
-            <label class="trainer-option" style="--trainer-color:#e6a7ed"><input type="radio" name="trainer" value="rosa" aria-label="Rosa"><span class="trainer-tile"><span class="trainer-number">05</span><span class="selection-mark" aria-hidden="true">✓</span><img src="images/trainers/rosa.png" width="80" height="80" alt=""><span class="trainer-label">Rosa</span><span class="trainer-caption">UNOVA</span></span></label>
+            <label class="trainer-option" style="--trainer-color:#fb8b7f"><input type="radio" name="trainer" value="red" aria-label="Trainer icon 1"><span class="trainer-tile"><span class="trainer-number">01</span><span class="selection-mark" aria-hidden="true">✓</span><img src="images/trainers/red.png" width="80" height="80" alt=""></span></label>
+            <label class="trainer-option" style="--trainer-color:#a7dfa1"><input type="radio" name="trainer" value="leaf" aria-label="Trainer icon 2"><span class="trainer-tile"><span class="trainer-number">02</span><span class="selection-mark" aria-hidden="true">✓</span><img src="images/trainers/leaf.png" width="80" height="80" alt=""></span></label>
+            <label class="trainer-option" style="--trainer-color:#f4cb74"><input type="radio" name="trainer" value="ethan" aria-label="Trainer icon 3"><span class="trainer-tile"><span class="trainer-number">03</span><span class="selection-mark" aria-hidden="true">✓</span><img src="images/trainers/ethan.png" width="80" height="80" alt=""></span></label>
+            <label class="trainer-option" style="--trainer-color:#84c7ff"><input type="radio" name="trainer" value="nate" aria-label="Trainer icon 4"><span class="trainer-tile"><span class="trainer-number">04</span><span class="selection-mark" aria-hidden="true">✓</span><img src="images/trainers/nate.png" width="80" height="80" alt=""></span></label>
+            <label class="trainer-option" style="--trainer-color:#e6a7ed"><input type="radio" name="trainer" value="rosa" aria-label="Trainer icon 5"><span class="trainer-tile"><span class="trainer-number">05</span><span class="selection-mark" aria-hidden="true">✓</span><img src="images/trainers/rosa.png" width="80" height="80" alt=""></span></label>
           </fieldset>
+        </section>
+        <section class="pane customize-pane" data-pane="customize" aria-labelledby="customizeHeading" hidden>
+          <div class="editor-preview">
+            <span class="editor-badge">TRAINER STUDIO</span>
+            <figure class="chosen-portrait"><div class="portrait-halo" aria-hidden="true"></div><img data-editor-sprite src="images/trainers/red.png" width="80" height="80" alt="Your customized trainer"><span class="platform" aria-hidden="true"></span></figure>
+            <p class="editor-preview-name" data-editor-name>YOUR TRAINER</p>
+            <button type="button" class="editor-link" data-change-icon>← Change icon</button>
+          </div>
+          <div class="editor-controls"><p class="eyebrow">A LOOK THAT’S ALL YOU</p><h1 id="customizeHeading" tabindex="-1">Make it yours.</h1><p class="editor-help">Choose a part, then give it a new color.</p>
+            <div class="part-picker" role="group" aria-label="Part to customize">
+              <button type="button" data-part="hair" aria-pressed="true"><span data-part-chip="hair" aria-hidden="true"></span>Hair</button>
+              <button type="button" data-part="skin" aria-pressed="false"><span data-part-chip="skin" aria-hidden="true"></span>Skin</button>
+              <button type="button" data-part="cap" aria-pressed="false"><span data-part-chip="cap" aria-hidden="true"></span>Cap</button>
+              <button type="button" data-part="top" aria-pressed="false"><span data-part-chip="top" aria-hidden="true"></span>Top</button>
+              <button type="button" data-part="bottoms" aria-pressed="false"><span data-part-chip="bottoms" aria-hidden="true"></span>Bottoms</button>
+            </div>
+            <div class="palette-heading"><h2 data-color-heading>Hair color</h2><button type="button" class="editor-link" data-reset-part>Reset hair</button></div>
+            <div class="color-swatches" role="group" aria-label="Hair colors" data-swatches></div>
+            <div class="custom-color-row"><label for="customColor"><input id="customColor" type="color" value="#604840" aria-label="Custom hair color"><span>Custom color</span></label><span class="color-value" data-color-value>#604840</span></div>
+            <div class="editor-bottom"><span data-color-state>Original colors</span><button type="button" class="editor-link" data-reset-colors>Reset all colors</button></div>
+            <p class="editor-status" data-editor-status role="status"></p>
+          </div>
         </section>
         <section class="pane name-pane" data-pane="name" aria-labelledby="nameHeading" hidden>
           <figure class="chosen-portrait"><div class="portrait-halo" aria-hidden="true"></div><img data-chosen-sprite src="images/trainers/red.png" width="80" height="80" alt="Your selected trainer"><span class="platform" aria-hidden="true"></span><figcaption data-chosen-label>YOUR TRAINER</figcaption></figure>
@@ -55,7 +78,7 @@
         </section>
         <section class="pane complete-pane" data-pane="complete" aria-labelledby="completeHeading" hidden>
           <div class="complete-copy"><p class="eyebrow">YOUR NEXT CHAPTER</p><h1 id="completeHeading" tabindex="-1">Welcome to<br><span>Season 2.</span></h1><p class="scene-description" data-greeting>Your adventure is just getting started.</p><span class="ready-stamp"><i aria-hidden="true"></i> TRAINER READY</span></div>
-          <article class="trainer-pass" aria-label="Your Season 2 trainer card"><div class="pass-header"><span class="pokeball" aria-hidden="true"></span>POKÉLEAGUE<span>02</span></div><div class="pass-body"><div class="pass-photo"><img data-card-sprite src="images/trainers/red.png" width="80" height="80" alt="Your selected trainer"></div><div class="pass-details"><span class="pass-label">TRAINER NAME</span><strong data-card-name>Trainer</strong><span class="pass-label">TRAINER ICON</span><span data-card-trainer>Red</span></div></div><div class="pass-footer"><span>SEASON TWO / A NEW BEGINNING</span><span class="pass-bars" aria-hidden="true"></span></div></article>
+          <article class="trainer-pass" aria-label="Your Season 2 trainer card"><div class="pass-header"><span class="pokeball" aria-hidden="true"></span>POKÉLEAGUE<span>02</span></div><div class="pass-body"><div class="pass-photo"><img data-card-sprite src="images/trainers/red.png" width="80" height="80" alt="Your selected trainer"></div><div class="pass-details"><span class="pass-label">TRAINER NAME</span><strong data-card-name>Trainer</strong><span class="pass-label">LEAGUE</span><span>Season 2</span></div></div><div class="pass-footer"><span>SEASON TWO / A NEW BEGINNING</span><span class="pass-bars" aria-hidden="true"></span></div></article>
         </section>
       </div>
       <div class="dialogue-box">
@@ -63,7 +86,7 @@
         <div class="dialogue-actions"><button class="back-button" type="button" data-back hidden>← Back</button><button class="primary-button" type="button" data-next>Let’s begin <span aria-hidden="true">▶</span></button><button class="primary-button" type="submit" form="nameForm" data-confirm hidden>Confirm name <span aria-hidden="true">▶</span></button><button class="primary-button" type="button" data-edit hidden>Edit trainer <span aria-hidden="true">↗</span></button></div>
       </div>
     </section>
-    <footer class="intro-footer"><ol class="steps" aria-label="Setup progress"><li data-progress="welcome" aria-current="step"><span>01</span> Welcome</li><li data-progress="trainer"><span>02</span> Trainer</li><li data-progress="name"><span>03</span> Name</li></ol><button type="button" class="replay-button" data-replay hidden>↻ Replay intro</button><span class="footer-note" data-save-note>Your story starts here.</span></footer>
+    <footer class="intro-footer"><ol class="steps" aria-label="Setup progress"><li data-progress="welcome" aria-current="step"><span>01</span> Welcome</li><li data-progress="trainer"><span>02</span> Trainer</li><li data-progress="customize"><span>03</span> Style</li><li data-progress="name"><span>04</span> Name</li></ol><button type="button" class="replay-button" data-replay hidden>↻ Replay intro</button><span class="footer-note" data-save-note>Your story starts here.</span></footer>
     <noscript><p class="noscript-message">Turn on JavaScript to choose a trainer and create your Season 2 profile.</p></noscript>
   </main>
 </body>

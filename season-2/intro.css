@@ -181,3 +181,76 @@ h1 { font-family: var(--pixel); font-weight: 400; font-size: clamp(44px, 5vw, 68
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
+
+/* Season 2 trainer studio. These controls only affect the local draft profile. */
+.trainer-tile { min-height: 210px; justify-content: center; }
+.trainer-tile img { width: 168px; height: 168px; }
+.customize-pane { display: grid; grid-template-columns: .85fr 1.15fr; align-items: center; gap: 40px; padding: 30px 40px; }
+.editor-preview { text-align: center; min-width: 0; }
+.editor-badge { display: inline-block; font-size: 8px; letter-spacing: 2px; border: 1px solid #54778b; color: #bbd7df; padding: 7px 11px; }
+.editor-preview .chosen-portrait img { width: 280px; height: 280px; max-width: 100%; object-fit: contain; animation: none; }
+.editor-preview .platform { bottom: 3px; }
+.editor-preview-name { font-family: var(--pixel); font-size: 24px; color: var(--cream); margin: 14px 0 5px; overflow-wrap: anywhere; }
+.editor-link { border: 0; background: none; padding: 7px 0; color: var(--cyan); font-size: 10px; }
+.editor-link:hover { text-decoration: underline; }
+.editor-link:disabled { color: #91a2ab; opacity: .75; text-decoration: none; }
+.editor-controls { min-width: 0; }
+.editor-controls .eyebrow { margin-bottom: 11px; }
+.editor-controls h1 { font-size: 46px; }
+.editor-help { font-size: 11px; line-height: 1.6; color: #bad0da; margin: 12px 0 20px; }
+.part-picker { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 7px; }
+.part-picker button { display: grid; justify-items: center; gap: 8px; border: 1px solid #4d6b7d; border-radius: 4px; background: #122d40; color: #bed1dd; padding: 11px 2px; font-size: 10px; }
+.part-picker button[aria-pressed="true"] { border-color: var(--cyan); background: #254a5a; color: var(--cream); box-shadow: 0 3px 0 #447b89; }
+.part-picker button:hover { background: #254252; }
+.part-picker span { width: 14px; height: 14px; border-radius: 3px; border: 1px solid #fff8; box-shadow: 1px 2px 0 #0005; }
+.palette-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 20px; margin-bottom: 9px; }
+.palette-heading h2 { font-family: var(--pixel); font-size: 23px; font-weight: 400; margin: 0; }
+.color-swatches { display: grid; grid-template-columns: repeat(8, minmax(0,1fr)); gap: 8px; }
+.color-swatch { aspect-ratio: 1; border-radius: 4px; border: 2px solid #d7e6e245; background: var(--swatch); position: relative; min-width: 0; padding: 0; box-shadow: 0 3px 0 #030e1880; }
+.color-swatch:hover { transform: translateY(-2px); }
+.color-swatch[aria-pressed="true"] { outline: 2px solid var(--cream); outline-offset: 3px; }
+.color-swatch[aria-pressed="true"]::after { content: '✓'; position: absolute; right: -4px; bottom: -4px; border: 1px solid var(--ink); background: var(--cream); color: var(--ink); border-radius: 50%; width: 16px; height: 16px; font-size: 11px; display: grid; place-items: center; }
+.custom-color-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; border: 1px solid #476579; border-radius: 4px; padding: 8px 10px; margin-top: 16px; background: #0c2332; }
+.custom-color-row label { display: flex; gap: 10px; align-items: center; color: #e1eff0; font-size: 11px; cursor: pointer; }
+#customColor { width: 30px; height: 28px; border: 1px solid #7d9eac; border-radius: 4px; padding: 2px; background: transparent; cursor: pointer; }
+#customColor:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+.color-value { font-family: var(--body); font-size: 10px; color: #9cbbcc; letter-spacing: .5px; }
+.editor-bottom { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 12px; font-size: 9px; color: #9cb9c9; }
+.editor-status { font-size: 11px; line-height: 1.5; color: #ffc9bd; margin: 7px 0 0; }
+.editor-status:empty { display: none; }
+.chosen-portrait figcaption { overflow-wrap: anywhere; text-align: center; max-width: 100%; }
+@media (max-width: 900px) {
+  .customize-pane { gap: 24px; padding: 28px 24px; grid-template-columns: .75fr 1.25fr; }
+  .editor-preview .chosen-portrait img { width: 240px; height: 240px; }
+  .editor-controls h1 { font-size: 40px; }
+  .trainer-tile { min-height: 190px; }
+  .trainer-tile img { width: 132px; height: 132px; }
+}
+@media (max-width: 600px) {
+  .trainer-tile { min-height: 126px; padding-top: 24px; }
+  .trainer-tile img { width: 88px; height: 88px; }
+  .customize-pane { display: flex; flex-direction: column; gap: 22px; padding: 22px 16px; }
+  .editor-preview { display: grid; grid-template-columns: 140px 1fr; align-items: center; width: 100%; column-gap: 8px; }
+  .editor-preview .chosen-portrait { grid-column: 1; grid-row: 1 / span 3; }
+  .editor-preview .chosen-portrait img { width: 144px; height: 144px; }
+  .editor-preview .portrait-halo { width: 180px; height: 180px; }
+  .editor-preview .platform { width: 120px; height: 25px; }
+  .editor-badge { grid-column: 2; grid-row: 1; align-self: end; font-size: 7px; letter-spacing: 1px; padding: 6px; }
+  .editor-preview-name { grid-column: 2; grid-row: 2; margin: 10px 0 0; font-size: 22px; }
+  .editor-preview > .editor-link { grid-column: 2; grid-row: 3; align-self: start; }
+  .editor-controls { width: 100%; }
+  .editor-controls h1 { font-size: 36px; }
+  .editor-help { margin: 10px 0 16px; font-size: 10px; }
+  .part-picker { gap: 5px; }
+  .part-picker button { padding: 9px 1px; font-size: 9px; }
+  .color-swatches { gap: 7px; }
+  .palette-heading { margin-top: 15px; }
+  .custom-color-row { margin-top: 13px; }
+  .steps { flex-wrap: wrap; gap: 12px; }
+}
+@media (max-width: 360px) {
+  .editor-preview { grid-template-columns: 120px 1fr; }
+  .editor-preview .chosen-portrait img { width: 128px; height: 128px; }
+  .color-swatches { gap: 5px; }
+  .editor-link { font-size: 9px; }
+}
