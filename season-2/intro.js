@@ -118,12 +118,6 @@
     step = nextStep;
     root.dataset.step = step;
     root.querySelectorAll('[data-pane]').forEach(pane => { pane.hidden = pane.dataset.pane !== step; });
-    root.querySelectorAll('[data-progress]').forEach(item => {
-      const index = order.indexOf(item.dataset.progress);
-      item.classList.toggle('is-done', index < order.indexOf(step));
-      if (item.dataset.progress === step) item.setAttribute('aria-current', 'step');
-      else item.removeAttribute('aria-current');
-    });
     back.hidden = !['trainer', 'customize', 'name'].includes(step);
     next.hidden = !['welcome', 'trainer', 'customize'].includes(step);
     next.disabled = (step === 'trainer' && !trainerId) || (step === 'customize' && !previewReady);
