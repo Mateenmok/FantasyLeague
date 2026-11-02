@@ -51,6 +51,12 @@
     if (form.getAttribute("aria-busy") === "true") return;
     const code = window.PokeLeagueGuest.normalize(input.value);
     if (!code) return;
+    if (code === "SEASON1") {
+      // Season 2 development has a separate session from the active league.
+      sessionStorage.setItem("pokeleague.season2Workspace", "SEASON1");
+      window.location.assign("season-2/index.html");
+      return;
+    }
     if (code === "PREP") {
       // This read-only tool has its own session, not a team or admin identity.
       sessionStorage.setItem("pokeleague.matchupPrep", "PREP");
