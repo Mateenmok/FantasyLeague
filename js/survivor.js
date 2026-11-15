@@ -13,7 +13,9 @@
   dialog.setAttribute('aria-labelledby','survivorTitle');
   dialog.innerHTML = `<button class="survivor-close" type="button" aria-label="Close Survivor">×</button>
     <header class="survivor-hero"><img src="images/navigation/survivor.png" alt="" width="160" height="90"><div><h2 id="survivorTitle">PokeLeague Survivor</h2><p>One pick. One life. Outlast the league.</p></div></header>
-    <div class="survivor-body"><p class="survivor-rules">Pick one winning team each week. You may change your pick before it locks, but can never reuse a team from an earlier week. An incorrect or missed pick eliminates you; you can keep playing for fun. Picks lock with Pick’ems when waivers close, or when scoring begins. Public picks are revealed once all results are in or the league advances.</p>
+    <div class="survivor-body"><div data-sv-main>
+    <button class="omen-launch" type="button" data-omen-open aria-controls="survivorOmen" disabled><img src="images/navigation/omen-meter.png" alt=""><span><strong>The Omen Meter</strong><small>Who faded Omen the least?</small></span><span class="omen-launch-arrow" aria-hidden="true">↗</span></button>
+    <p class="survivor-rules">Pick one winning team each week. You may change your pick before it locks, but can never reuse a team from an earlier week. An incorrect or missed pick eliminates you; you can keep playing for fun. Picks lock with Pick’ems when waivers close, or when scoring begins. Public picks are revealed once all results are in or the league advances.</p>
     <div class="survivor-topline"><h3 data-sv-week>Weekly pick</h3><span class="survivor-identity" data-sv-identity></span></div>
     <div class="survivor-deadline" data-sv-deadline></div><p class="survivor-status" data-sv-status role="status" aria-live="polite">Loading Survivor…</p>
     <button class="survivor-retry" type="button" hidden>Retry</button>
@@ -21,16 +23,59 @@
     <div data-sv-content hidden><div class="survivor-summary" data-sv-summary></div><div class="survivor-used" data-sv-used></div>
     <div class="survivor-matches" data-sv-matches></div><button class="survivor-save" type="button" disabled>Save Survivor pick</button>
     <h3 data-sv-remaining>Remaining contestants</h3><div class="survivor-contestants" data-sv-contestants></div>
-    <div class="survivor-history-heading"><h3>Revealed picks</h3><label>Week <select data-sv-history-week aria-label="Survivor history week"></select></label></div><div class="survivor-history" data-sv-history></div></div></div>`;
+    <div class="survivor-history-heading"><h3>Revealed picks</h3><label>Week <select data-sv-history-week aria-label="Survivor history week"></select></label></div><div class="survivor-history" data-sv-history></div></div></div>
+    <section class="omen-panel" id="survivorOmen" data-sv-omen hidden aria-labelledby="omenTitle">
+      <button class="omen-back" type="button" data-omen-back>← Back to Survivor</button>
+      <header class="omen-heading"><img src="images/navigation/omen-meter.png" alt="Purple hooded Omen artwork"><div><p class="omen-eyebrow">The Omen Meter</p><h3 id="omenTitle" tabindex="-1">Who faded Omen the least?</h3><p>How often did each person pick a team facing the South Jersey Hounds?</p></div></header>
+      <p class="omen-method">Against-Hounds picks ÷ total Survivor picks. Lowest percentage first. Missed weeks don’t count.</p>
+      <p class="omen-status" data-omen-status role="status" aria-live="polite"></p><button class="omen-back" type="button" data-omen-retry hidden>Try again</button>
+      <ol class="omen-list" data-omen-list aria-label="Survivor picks against the South Jersey Hounds"></ol>
+      <p class="omen-footnote">Based on revealed picks from Weeks 1–8, including picks made after elimination.</p>
+    </section></div>`;
   document.body.append(dialog);
   const $ = selector => dialog.querySelector(selector);
   let state, teams = [], accounts = {}, selected = '', historyWeek = '', loading = false, saving = false, timer, trigger, previousOverflow, receivedAt;
+  let omenOpen = false, omenMatchups = null, omenLoading = false;
   const team = id => teams.find(t => t.id === id) || { id, name:id || 'No pick', logo:'' };
   const locked = () => !state || state.locked || (state.deadline && Date.parse(state.server_now) + Date.now() - receivedAt >= Date.parse(state.deadline));
   const seasonComplete = () => Boolean(state?.season_complete || Number(state?.current_week) > 8);
   const readyMatch = m => Boolean(m.home_team_id && m.away_team_id && m.home_team_id !== m.away_team_id);
   const selectedReady = () => state?.matchups.some(m => readyMatch(m) && [m.home_team_id,m.away_team_id].includes(selected));
   const announce = (message,error=false) => { $('[data-sv-status]').textContent=message; $('[data-sv-status]').classList.toggle('is-error',error); };
+  const renderOmen = () => {
+    if (!state || !omenMatchups) return;
+    const rows = window.PokeLeagueOmen.rows(state, omenMatchups);
+    $('[data-omen-list]').innerHTML = rows.map(row => {
+      const percent = row.percentage === null ? '—' : `${new Intl.NumberFormat(undefined,{maximumFractionDigits:1}).format(row.percentage)}%`;
+      const account = accounts[row.accountId], owner = account ? team(account.teamId) : null;
+      return `<li class="omen-row${row.rank===1?' is-lowest':''}"><span class="omen-rank">${row.rank===null?'—':`#${row.rank}`}</span><div class="omen-person"><strong>${esc(row.username)}</strong>${owner?`<small>${esc(owner.name)}</small>`:''}<div class="omen-track" aria-hidden="true"><span style="width:${row.percentage ?? 0}%"></span></div></div><div class="omen-value"><strong>${percent}</strong><small>${row.total?`${row.against} of ${row.total} picks`:'No picks'}</small></div></li>`;
+    }).join('');
+    $('[data-omen-status]').textContent = rows.length ? '' : 'No revealed Survivor picks yet.';
+  };
+  const refreshOmen = async () => {
+    if (omenLoading) return;
+    omenLoading = true;
+    $('[data-omen-retry]').hidden = true;
+    if (!omenMatchups) $('[data-omen-status]').textContent = 'Reading the Survivor picks…';
+    try {
+      const query = new URLSearchParams({league_id:'eq.flash-family-season-1',select:'week,home_team_id,away_team_id',week:'lte.8',order:'week.asc,display_order.asc'});
+      const response = await fetch(`${base.replace('rpc/','flash_family_matchups')}?${query}`, {headers,cache:'no-store'});
+      if (!response.ok) throw new Error('The Omen Meter could not load. Please try again.');
+      omenMatchups = await response.json();
+      renderOmen();
+    } catch(error) {
+      $('[data-omen-status]').textContent = error.message || 'The Omen Meter could not load. Please try again.';
+      $('[data-omen-retry]').hidden = false;
+    } finally { omenLoading = false; }
+  };
+  const showOmen = open => {
+    omenOpen = open;
+    $('[data-sv-main]').hidden = open;
+    $('[data-sv-omen]').hidden = !open;
+    dialog.scrollTop = 0;
+    if (open) { $('#omenTitle').focus(); renderOmen(); refreshOmen(); }
+    else $('[data-omen-open]').focus();
+  };
   const renderFinale = () => {
     const winners = state.results_complete && Array.isArray(state.winners) ? state.winners : [];
     $('[data-sv-finale]').innerHTML = `<span class="survivor-finale-crown" aria-hidden="true">♛</span><p class="survivor-finale-season">SEASON 1 · FINAL RESULTS</p><h3 id="survivorFinaleTitle">${!state.results_complete?'Final results pending':winners.length>1?'Survivor winners':winners.length===1?'Survivor winner':'No survivors this season'}</h3><p>${!state.results_complete?'Survivor has ended. The winners will appear when the remaining regular-season results are reported.':winners.length?'Outwitted. Outplayed. Outlasted.':'Every contestant was eliminated before the finish.'}</p><div class="survivor-winners">${winners.map(w=>{
@@ -49,6 +94,8 @@
   };
   const render = () => {
     if(!state)return;
+    $('[data-omen-open]').disabled = false;
+    if (omenOpen) renderOmen();
     const ended=seasonComplete();
     $('[data-sv-finale]').hidden=!ended;
     $('[data-sv-content]').hidden=ended;
@@ -85,16 +132,20 @@
       const changed=!state||state.week!==snapshot.week||state.account_id!==snapshot.account_id;
       state=snapshot;receivedAt=Date.now();
       if(changed)selected=state.own_picks.find(p=>p.week===state.week)?.picked_team_id||'';
-      render();announce(seasonComplete()?'':locked()?'Picks are locked. Results will appear after the week ends.':'Choose one team, then save your pick.');return true;
+      render();announce(seasonComplete()?'':locked()?'Picks are locked. Results will appear after the week ends.':'Choose one team, then save your pick.');if(omenOpen)refreshOmen();return true;
     } catch(error){announce(error.message,true);$('.survivor-retry').hidden=false;return false;} finally{loading=false;}
   };
   document.querySelectorAll('[data-survivor-open]').forEach(button=>button.addEventListener('click',()=>{
-    trigger=button;previousOverflow=document.body.style.overflow;document.body.style.overflow='hidden';dialog.showModal();refresh();
+    omenOpen=false;$('[data-sv-main]').hidden=false;$('[data-sv-omen]').hidden=true;
+    trigger=button;previousOverflow=document.body.style.overflow;document.body.style.overflow='hidden';dialog.showModal();dialog.scrollTop=0;refresh();
     timer=setInterval(()=>{if(!document.hidden){if(state)render();refresh();}},15000);
   }));
   $('.survivor-close').addEventListener('click',()=>dialog.close());
   dialog.addEventListener('close',()=>{clearInterval(timer);document.body.style.overflow=previousOverflow||'';trigger?.focus();});
   $('.survivor-retry').addEventListener('click',refresh);
+  $('[data-omen-open]').addEventListener('click',()=>{if(state)showOmen(true);});
+  $('[data-omen-back]').addEventListener('click',()=>showOmen(false));
+  $('[data-omen-retry]').addEventListener('click',refreshOmen);
   $('[data-sv-history-week]').addEventListener('change',event=>{historyWeek=event.target.value;renderHistory();});
   $('[data-sv-matches]').addEventListener('click',event=>{const button=event.target.closest('[data-sv-team]');if(!button||button.disabled)return;selected=button.dataset.svTeam;render();});
   $('.survivor-save').addEventListener('click',async()=>{

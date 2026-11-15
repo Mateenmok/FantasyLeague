@@ -62,7 +62,36 @@
 .survivor-winner strong{font:34px/1.1 "Jersey 25",Impact,sans-serif;overflow-wrap:anywhere}
 .survivor-winner small,.survivor-winner>span:not(.survivor-winner-mark){color:var(--sv-muted)}
 .survivor-winner-mark{font-size:70px;color:#ba8b20}
+.survivor-status:empty,.omen-status:empty{display:none}
+.omen-launch{display:flex;align-items:center;gap:16px;width:min(100%,580px);margin:0 auto 20px;padding:10px 16px 10px 10px;text-align:left;border:2px solid #83d4d3;border-radius:12px;background:linear-gradient(115deg,#153238,#3b3264);color:#f5fffb;box-shadow:4px 4px 0 #7771aa;cursor:pointer}
+.omen-launch:disabled{opacity:.65;cursor:wait}
+.omen-launch img{width:92px;height:69px;object-fit:contain;border-radius:6px}
+.omen-launch strong{display:block;font:30px/1.05 "Jersey 25",Impact,sans-serif}
+.omen-launch small{display:block;margin-top:5px;color:#d0e7eb;font-size:14px}
+.omen-launch-arrow{margin-left:auto;font-size:30px;color:#abedec}
+.omen-launch:hover:not(:disabled){border-color:#c3ffff;box-shadow:4px 4px 0 #a59cdd}
+.omen-back{border:1px solid var(--sv-line);border-radius:8px;padding:8px 12px;background:var(--sv-panel);color:var(--sv-ink);font-weight:700!important;cursor:pointer}
+.omen-heading{display:flex;align-items:center;gap:22px;margin:20px 0 16px;padding:18px;border:2px solid #787194;border-radius:12px;background:linear-gradient(110deg,#1b3439,#353052);color:#f5fffb}
+.omen-heading img{flex:0 0 auto;width:160px;height:120px;object-fit:contain;border-radius:6px}
+.omen-heading h3{font-size:clamp(30px,4vw,42px);color:#fff;line-height:1.05;margin:5px 0 9px}
+.omen-heading p{margin:0;line-height:1.4;color:#dae6ec}
+.omen-heading .omen-eyebrow{font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#b1f2f0}
+.omen-method,.omen-footnote{color:var(--sv-muted);font-size:14px;line-height:1.5}
+.omen-method{margin:0 0 16px}.omen-footnote{margin:16px 0 0}
+.omen-status{color:var(--sv-muted);line-height:1.5}
+.omen-list{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.omen-row{display:grid;grid-template-columns:42px minmax(0,1fr) 108px;align-items:center;gap:14px;padding:12px 16px;border:2px solid var(--sv-line);border-radius:10px;background:var(--sv-panel);color:var(--sv-ink)}
+.omen-row.is-lowest{border-color:#558b88;background:linear-gradient(100deg,var(--sv-accent),var(--sv-panel))}
+.omen-rank{color:var(--sv-muted);font-size:18px;font-weight:900}
+.omen-person strong{display:block;font-size:19px;overflow-wrap:anywhere;line-height:1.15}
+.omen-person small,.omen-value small{display:block;margin-top:4px;color:var(--sv-muted);font-size:12px}
+.omen-value{text-align:right;font-variant-numeric:tabular-nums}
+.omen-value strong{font:34px/1 "Jersey 25",Impact,sans-serif;color:#62509b}
+.omen-track{height:5px;margin-top:9px;border-radius:3px;background:color-mix(in srgb,var(--sv-ink) 13%,transparent);overflow:hidden}
+.omen-track span{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#4eaba7,#8c73c4)}
 :root[data-theme=dark] .survivor-dialog{--sv-bg:#171e22;--sv-panel:#29333c;--sv-ink:#f7f6ec;--sv-muted:#c2ced3;--sv-line:#5a7066;--sv-accent:#304d3b}
+:root[data-theme=dark] .omen-value strong{color:#c9baff}
 :root[data-theme=dark] .survivor-mark{color:#9cebb1}
 :root[data-theme=dark] .survivor-mark.is-out,:root[data-theme=dark] .survivor-status.is-error{color:#ff9eaa}
 @media(max-width:650px){.survivor-body{padding:14px}.survivor-hero{padding:20px 52px 18px 16px;gap:10px}.survivor-hero img{width:88px}.survivor-matches,.survivor-history{grid-template-columns:1fr}.survivor-launch{width:68px;height:42px}.survivor-team img{width:78px;height:78px}}
+@media(max-width:650px){.omen-launch{gap:10px;padding:8px}.omen-launch img{width:68px;height:51px}.omen-launch strong{font-size:26px}.omen-launch small{font-size:12px}.omen-heading{gap:12px;padding:12px;align-items:flex-start}.omen-heading img{width:80px;height:60px}.omen-heading h3{font-size:29px}.omen-heading p{font-size:13px}.omen-heading .omen-eyebrow{font-size:10px}.omen-row{grid-template-columns:28px minmax(0,1fr) 82px;gap:8px;padding:11px 9px}.omen-person strong{font-size:17px}.omen-rank{font-size:15px}.omen-value strong{font-size:29px}}
