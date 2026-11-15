@@ -3,10 +3,16 @@
   const POINT_MIGRATION_KEY = "pokeleague.draftPointsMigrated.v1";
   const SUPABASE_URL = "https://cgvxehwqoviihxndupoj.supabase.co";
   const SUPABASE_KEY = "sb_publishable_pB_pv3N_-EXLhXBp6OXpkA_U14NjoJu";
+  const regularSeasonWeeks = 8;
+  const lastWeek = 11;
+  const weekLabel = (week) => ({ 9: "Round 1", 10: "Round 2", 11: "Championship" })[Number(week)] || `Week ${Math.max(0, Number(week) || 0)}`;
+  const isPlayoffWeek = (week) => Number(week) > regularSeasonWeeks && Number(week) <= lastWeek;
+  const matchupCount = (week) => isPlayoffWeek(week) ? ({ 9: 4, 10: 2, 11: 1 })[Number(week)] : 7;
+  const matchupReady = (matchup) => Boolean(matchup?.home_team_id && matchup?.away_team_id && matchup.home_team_id !== matchup.away_team_id);
   const DEFAULT_STATE = {
     season: 1,
     currentWeek: 0,
-    totalWeeks: 10,
+    totalWeeks: lastWeek,
     pointCap: 50,
     rosters: {},
     schedules: {},
@@ -22,7 +28,7 @@
     ...saved,
     season: Number.isInteger(Number(saved.season)) ? Number(saved.season) : DEFAULT_STATE.season,
     currentWeek: Number.isInteger(Number(saved.currentWeek)) ? Math.max(0, Number(saved.currentWeek)) : DEFAULT_STATE.currentWeek,
-    totalWeeks: Number.isInteger(Number(saved.totalWeeks)) ? Math.max(1, Number(saved.totalWeeks)) : DEFAULT_STATE.totalWeeks,
+    totalWeeks: lastWeek,
     pointCap: Number.isFinite(Number(saved.pointCap)) ? Math.max(1, Number(saved.pointCap)) : DEFAULT_STATE.pointCap,
     rosters: saved.rosters && typeof saved.rosters === "object" ? saved.rosters : {},
     schedules: saved.schedules && typeof saved.schedules === "object" ? saved.schedules : {},
@@ -133,6 +139,12 @@
   };
 
   window.PokeLeagueState = {
+    regularSeasonWeeks,
+    lastWeek,
+    weekLabel,
+    isPlayoffWeek,
+    matchupCount,
+    matchupReady,
     storageKey: STORAGE_KEY,
     defaults: clone(DEFAULT_STATE),
     read,

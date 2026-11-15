@@ -117,14 +117,14 @@
         : `<span class="trade-offer-status">${escapeHtml(trade.status)}</span>`;
       return `<article class="trade-offer">
         <div class="trade-offer-team"><img src="${escapeHtml(otherTeam?.logo || "images/favicon.webp")}" alt=""><strong>${escapeHtml(otherTeam?.name || "League team")}</strong></div>
-        <div class="trade-offer-copy"><small>${incoming ? "Incoming offer" : "Sent offer"} · Week ${trade.week}</small><span>You send: ${escapeHtml(sendNames)}</span><span>You receive: ${escapeHtml(receiveNames)}</span></div>
+        <div class="trade-offer-copy"><small>${incoming ? "Incoming offer" : "Sent offer"} · ${window.PokeLeagueState.weekLabel(trade.week)}</small><span>You send: ${escapeHtml(sendNames)}</span><span>You receive: ${escapeHtml(receiveNames)}</span></div>
         <div class="trade-offer-actions">${actions}</div>
       </article>`;
     }).join("") : '<p class="trade-empty">No trade offers for this week yet.</p>';
   };
 
   const renderStatus = () => {
-    weekTarget.textContent = currentWeek;
+    weekTarget.textContent = window.PokeLeagueState.weekLabel(currentWeek);
     teamTarget.textContent = account.teamName;
     limitTarget.textContent = completedThisWeek() ? "1 / 1 used" : "0 / 1 used";
     if (completedThisWeek()) announce("Your team has completed its one trade for this week. New offers unlock next week.");

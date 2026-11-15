@@ -11,20 +11,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Jersey+25&amp;family=Roboto+Condensed:wght@500;700;900&amp;display=swap" rel="stylesheet">
   <script src="js/theme.js?v=dark-mode3"></script>
   <link rel="stylesheet" href="css/home.css?v=league-home-10">
-  <link rel="stylesheet" href="css/admin-controls.css?v=weekly-kos1">
+  <link rel="stylesheet" href="css/admin-controls.css?v=playoffs1">
   <link rel="stylesheet" href="css/theme.css?v=dark-mode6">
-  <script src="js/league-state.js?v=draft-points1" defer></script>
+  <script src="js/league-state.js?v=playoffs1" defer></script>
   <script src="js/league-rosters.js?v=roster-order1" defer></script>
-  <script src="js/league-waivers.js?v=league-waivers-1" defer></script>
+  <script src="js/league-waivers.js?v=playoffs1" defer></script>
   <link rel="stylesheet" href="css/game-lineups.css?v=winner-gradient1">
-  <script src="js/game-lineups.js?v=winner-gradient1" defer></script>
+  <script src="js/game-lineups.js?v=playoffs1" defer></script>
   <script src="js/game-reports.js?v=game-survival1" defer></script>
-  <script src="js/league-competition.js?v=lineups1" defer></script>
-  <script src="js/admin-controls.js?v=roster-order1" defer></script>
+  <script src="js/league-competition.js?v=playoffs1" defer></script>
+  <script src="js/admin-controls.js?v=playoffs1" defer></script>
   <link rel="stylesheet" href="css/stat-tracker.css?v=mvp1">
   <link rel="stylesheet" href="css/fnpl.css?v=fnpl1">
-  <script src="js/fnpl.js?v=fnpl1" defer></script>
-  <script src="js/fnpl-admin.js?v=fnpl1" defer></script>
+  <script src="js/fnpl.js?v=playoffs1" defer></script>
+  <script src="js/fnpl-admin.js?v=playoffs1" defer></script>
 </head>
 <body>
   <div class="home-silhouettes" aria-hidden="true">
@@ -64,18 +64,18 @@
             <p>Manage every roster, matchup, score, and season rule from one board.</p>
             <div class="admin-week-actions">
               <button class="admin-button admin-button--previous" type="button" data-previous-week disabled>
-                Back to Week <span data-previous-week-number>0</span>
+                Back to <span data-previous-week-number>Week 0</span>
               </button>
               <button class="admin-button admin-button--advance" type="button" data-advance-week>
-                Advance to Week <span data-next-week>1</span>
+                <span data-advance-label>Advance to</span> <span data-next-week>Week 1</span>
               </button>
             </div>
           </div>
           <img class="admin-mew admin-theme-art--light" src="images/navigation/mew-admin.png?v=mew-admin1" alt="" width="190" height="190">
           <img class="admin-mew admin-theme-art--dark" src="images/navigation/shiny-mew-admin.webp?v=shiny-mew1" alt="" width="190" height="190">
           <div class="admin-hero-stats" aria-label="League status">
-            <div><span>Current week</span><strong data-current-week>0</strong></div>
-            <div><span>Season length</span><strong><span data-total-weeks>10</span> weeks</strong></div>
+            <div><span>Current stage</span><strong data-current-week>Week 0</strong></div>
+            <div><span>Season format</span><strong><span data-total-weeks>8</span> weeks + 3 playoff rounds</strong></div>
             <div><span>Point cap</span><strong data-point-cap>50</strong></div>
           </div>
         </section>
@@ -136,12 +136,12 @@
 
         <section class="admin-tool" data-admin-panel="schedule" hidden>
           <div class="admin-section-heading">
-            <div><p class="admin-kicker">Weekly pairings</p><h2>Week <span data-schedule-week>0</span> Schedule</h2></div>
-            <p>Each team must appear exactly once across the seven matchups.</p>
+            <div><p class="admin-kicker">League pairings</p><h2><span data-schedule-week>Week 0</span> Schedule</h2></div>
+            <p data-schedule-help>Each team must appear exactly once across the seven matchups.</p>
           </div>
           <form class="admin-panel matchup-form" data-schedule-form>
             <div class="matchup-rows" data-schedule-rows></div>
-            <button class="admin-button admin-button--primary" type="submit">Save Week Schedule</button>
+            <button class="admin-button admin-button--primary" type="submit">Save Schedule</button>
           </form>
         </section>
 
@@ -163,13 +163,13 @@
         <section class="admin-tool" data-admin-panel="season" hidden>
           <div class="admin-section-heading">
             <div><p class="admin-kicker">League rules</p><h2>Season Settings</h2></div>
-            <p>Change the regular-season length and roster point budget.</p>
+            <p>Eight regular-season weeks, followed by Round 1, Round 2, and Championship. Adjust the roster point budget below.</p>
           </div>
           <form class="settings-grid" data-season-form>
             <label class="admin-panel setting-card" for="seasonWeeks">
               <span>Regular-season weeks</span>
-              <input id="seasonWeeks" data-season-weeks type="number" min="1" max="52" required>
-              <small>Cannot be shorter than the current week.</small>
+              <input id="seasonWeeks" data-season-weeks type="number" value="8" readonly>
+              <small>Playoffs begin after Week 8.</small>
             </label>
             <label class="admin-panel setting-card" for="seasonPointCap">
               <span>Team point cap</span>
@@ -202,16 +202,14 @@
         <section class="admin-tool" data-admin-panel="playoffs" hidden>
           <div class="admin-section-heading">
             <div><p class="admin-kicker">Postseason builder</p><h2>Set Playoffs</h2></div>
-            <p>Choose the field size and assign every seed. The first-round bracket updates below.</p>
+            <p>Eight teams, four opening matches. Either side can stay TBD while seeding is decided. Saved pairings are shared across the league.</p>
           </div>
           <form class="admin-panel playoff-form" data-playoff-form>
-            <label for="playoffCount">Teams in playoffs</label>
-            <select id="playoffCount" data-playoff-count>
-              <option value="2">2 teams</option><option value="4">4 teams</option><option value="6">6 teams</option>
-              <option value="8">8 teams</option><option value="10">10 teams</option><option value="12">12 teams</option><option value="14">14 teams</option>
+            <label for="playoffRound">Playoff round</label>
+            <select id="playoffRound" data-playoff-round>
+              <option value="9">Round 1 · 4 matches</option><option value="10">Round 2 · 2 matches</option><option value="11">Championship · 1 match</option>
             </select>
-            <div class="playoff-seeds" data-playoff-seeds></div>
-            <div class="bracket-preview" data-bracket-preview></div>
+            <div class="matchup-rows" data-playoff-rows></div>
             <button class="admin-button admin-button--primary" type="submit">Save Playoff Bracket</button>
           </form>
         </section>
@@ -229,6 +227,16 @@
         </section>
 
         <p class="admin-status" data-admin-status role="status" aria-live="polite"></p>
+        <dialog class="playoff-advance-dialog admin-panel" data-playoff-advance aria-labelledby="playoffAdvanceTitle">
+          <form data-playoff-advance-form>
+            <div class="playoff-dialog-heading"><div><p class="admin-kicker">Set the next round</p><h2 id="playoffAdvanceTitle" data-playoff-advance-title>Round 1</h2></div><button type="button" class="admin-row-button" data-playoff-cancel aria-label="Close playoff setup">×</button></div>
+            <p>Choose the matchups you know. Leave any team or opponent as <strong>TBD</strong> and fill it in later from Schedule or Playoffs.</p>
+            <div class="matchup-rows" data-playoff-advance-rows></div>
+            <fieldset class="playoff-waivers"><legend>Waivers</legend><label class="playoff-waiver-toggle"><input type="checkbox" data-playoff-open-waivers> Open waivers now</label><label data-playoff-waiver-end-field hidden>Waivers close (your local time)<input type="datetime-local" data-playoff-waiver-end></label><p>Incomplete matchups do not prevent waivers from opening.</p></fieldset>
+            <p class="playoff-advance-status" data-playoff-advance-status role="status" aria-live="polite"></p>
+            <div class="playoff-dialog-actions"><button class="admin-button" type="button" data-playoff-cancel>Cancel</button><button class="admin-button admin-button--primary" type="submit" data-playoff-confirm>Save &amp; advance to Round 1</button></div>
+          </form>
+        </dialog>
       </section>
     </main>
   </div>

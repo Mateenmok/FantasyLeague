@@ -43,7 +43,8 @@
     if (!league) throw new Error("Flash Family League was not found.");
     return {
       currentWeek: Number(league.current_matchup_number) || 0,
-      totalWeeks: Number(league.regular_season_matches) || 10,
+      totalWeeks: window.PokeLeagueState?.lastWeek || 11,
+      regularSeasonWeeks: window.PokeLeagueState?.regularSeasonWeeks || 8,
       pointCap: Number(league.roster_point_cap) || 50,
       playoffTeamCount: Number(league.playoff_team_count) || 8,
       pickemsLockAt: league.waiver_window_end_at,
@@ -92,9 +93,17 @@
     p_week: week,
   });
 
+  const advancePlayoffRound = (accessCode, expectedWeek, matchups, waiverEndAt = null) => rpc("advance_flash_family_playoff_round", {
+    p_access_code: String(accessCode || "").trim().toUpperCase(),
+    p_expected_week: expectedWeek,
+    p_home_team_ids: matchups.map(matchup => matchup.home || null),
+    p_away_team_ids: matchups.map(matchup => matchup.away || null),
+    p_waiver_window_end_at: waiverEndAt,
+  });
+
   const rewindWeek = (accessCode) => rpc("rewind_flash_family_current_week", {
     p_access_code: String(accessCode || "").trim().toUpperCase(),
   });
 
-  window.PokeLeagueCompetition = { read, readPicks, readLeaderboard, submitPick, saveSchedule, saveScores, setCurrentWeek, rewindWeek };
+  window.PokeLeagueCompetition = { read, readPicks, readLeaderboard, submitPick, saveSchedule, saveScores, setCurrentWeek, advancePlayoffRound, rewindWeek };
 })();

@@ -29,9 +29,10 @@
     .replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;").replaceAll("'", "&#039;");
   const normalize = (value) => String(value || "").toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, "");
-  const teamFor = (teamId) => teams.find((team) => team.id === teamId);
+  const teamFor = (teamId) => teams.find((team) => team.id === teamId) || { id: null, name: "TBD", logo: "images/favicon.webp" };
 
   const defaultSchedule = (number) => {
+    if (window.PokeLeagueState.isPlayoffWeek(number)) return [];
     const ids = teams.map((team) => team.id);
     if (!ids.length) return [];
     const rotating = ids.slice(1);
@@ -96,6 +97,7 @@
       const away = teamFor(matchup.away_team_id);
       const selected = currentPick(matchup.display_order)?.picked_team_id;
       const complete = matchupComplete(matchup);
+      const ready = window.PokeLeagueState.matchupReady(matchup) && home.id && away.id;
       const locked = pickemsLocked();
       const result = complete ? `${matchup.home_score} – ${matchup.away_score}` : "VS";
       const matchupVotes = picks.filter(pick => Number(pick.week) === week
@@ -113,11 +115,11 @@
       const teamButton = (team) => `
         <button class="matchup-team${selected === team.id ? " is-picked" : ""}" type="button"
           data-pick-team="${escapeHtml(team.id)}" data-display-order="${matchup.display_order}"
-          aria-pressed="${selected === team.id}" ${!account || complete || locked ? "disabled" : ""}>
+          aria-pressed="${selected === team.id}" ${!account || complete || locked || !ready ? "disabled" : ""}>
           <img src="${escapeHtml(team.logo)}" alt="" loading="lazy">
           <strong>${escapeHtml(team.name)}</strong>
-          <span class="matchup-vote-share">${voteShare(team.id)}</span>
-          <span>${selected === team.id ? "Your pick" : locked ? "Picks locked" : "Pick winner"}</span>
+          <span class="matchup-vote-share">${ready ? voteShare(team.id) : "Matchup pending"}</span>
+          <span>${!ready ? "Waiting for opponent" : selected === team.id ? "Your pick" : locked ? "Picks locked" : "Pick winner"}</span>
         </button>`;
       return `
         <article class="pickem-matchup" data-open-matchup="${matchup.display_order}" tabindex="0" role="button" aria-label="View ${escapeHtml(home.name)} versus ${escapeHtml(away.name)} rosters">
@@ -162,6 +164,8 @@
 
   const submitPick = async (displayOrder, teamId) => {
     if (!account) return announce("Sign in with a league access code to make picks.", true);
+    const matchup = matchups.find((candidate) => Number(candidate.display_order) === Number(displayOrder));
+    if (!window.PokeLeagueState.matchupReady(matchup) || ![matchup.home_team_id, matchup.away_team_id].includes(teamId)) return announce("Both teams must be announced before you can pick this matchup.", true);
     if (pickemsLocked()) return announce("Pick'ems are locked because the waiver period has closed.", true);
     const button = grid.querySelector(`[data-display-order="${displayOrder}"][data-pick-team="${CSS.escape(teamId)}"]`);
     grid.setAttribute("aria-busy", "true");
@@ -204,7 +208,7 @@
       return `
         <section class="matchup-roster-team">
           <header><img src="${escapeHtml(team.logo)}" alt=""><h3>${escapeHtml(team.name)}</h3></header>
-          <div class="matchup-roster-list">${pokemon.length ? pokemon.map((pick) => rosterCard(pick, team.id)).join("") : '<p class="pickems-empty">Roster not filled yet.</p>'}</div>
+          <div class="matchup-roster-list">${pokemon.length ? pokemon.map((pick) => rosterCard(pick, team.id)).join("") : `<p class="pickems-empty">${team.id ? "Roster not filled yet." : "Opponent to be announced."}</p>`}</div>
         </section>`;
     }).join('<span class="roster-vs" aria-hidden="true">VS</span>');
     if (!dialog.open) dialog.showModal();
@@ -269,7 +273,7 @@
         matchups = defaultSchedule(week);
         allMatchups = [...allMatchups, ...matchups];
       }
-      weekTarget.textContent = week;
+      weekTarget.textContent = window.PokeLeagueState.weekLabel(week);
       identity.textContent = account ? `Picking as ${account.accountName}` : "Sign in to make picks";
       renderDeadline();
       scheduleLockRefresh();

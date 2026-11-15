@@ -88,7 +88,7 @@
   const view=({matchup,home,away,catalog})=>{
     const count=Number(matchup.home_score||0)+Number(matchup.away_score||0);
     const games=matchup.game_lineups||[];
-    show(`Week ${matchup.week} · ${home.name} vs ${away.name}`,`<p>${matchup.home_score==null||matchup.away_score==null?'Scores pending':`Final score: ${matchup.home_score}–${matchup.away_score}`}</p>${count?Array.from({length:count},(_,i)=>{
+    show(`${window.PokeLeagueState.weekLabel(matchup.week)} · ${home.name} vs ${away.name}`,`<p>${matchup.home_score==null||matchup.away_score==null?'Scores pending':`Final score: ${matchup.home_score}–${matchup.away_score}`}</p>${count?Array.from({length:count},(_,i)=>{
       const g=games.find(entry=>entry.game===i+1)||{home:[],away:[]};
       const winner=[home,away].find(t=>t.id===g.winnerTeamId);
       return `<section class="game-lineup-history"><h3>Game ${i+1}</h3><p class="game-winner-result ${winner?'is-reported':''}" ${winner?`style="${winnerStyle(winner)}"`:''}>${winner?`★ Winner: ${esc(winner.name)}`:'Winner not reported'}</p><div class="game-lineup-sides">${['home','away'].map(side=>{

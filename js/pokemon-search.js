@@ -102,7 +102,7 @@ const renderWindow = () => {
   windowStatusTarget.textContent = state.status;
   const usage = !account ? "Sign in to see your weekly waiver allowance."
     : weeklyAllowance === null ? "Weekly pickup allowance unavailable; refresh to try again."
-    : `Week ${waiverSettings.currentWeek}: ${weeklyAllowance.used}/${weeklyAllowance.limit} waiver pickups used. Add + drop counts as one pickup.`;
+    : `${window.PokeLeagueState.weekLabel(waiverSettings.currentWeek)}: ${weeklyAllowance.used}/${weeklyAllowance.limit} waiver pickups used. Add + drop counts as one pickup.`;
   windowCopyTarget.textContent = `${state.copy} ${usage}`;
   windowBanner.classList.toggle("is-open", state.open);
   windowBanner.classList.toggle("is-closed", !state.open);

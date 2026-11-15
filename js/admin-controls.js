@@ -39,9 +39,15 @@
     waiverWindowEnd: $("[data-waiver-window-end]"),
     waiverWindowPreview: $("[data-waiver-window-preview]"),
     playoffForm: $("[data-playoff-form]"),
-    playoffCount: $("[data-playoff-count]"),
-    playoffSeeds: $("[data-playoff-seeds]"),
-    bracketPreview: $("[data-bracket-preview]"),
+    playoffRound: $("[data-playoff-round]"),
+    playoffRows: $("[data-playoff-rows]"),
+    playoffAdvance: $("[data-playoff-advance]"),
+    playoffAdvanceForm: $("[data-playoff-advance-form]"),
+    playoffAdvanceRows: $("[data-playoff-advance-rows]"),
+    playoffAdvanceStatus: $("[data-playoff-advance-status]"),
+    playoffConfirm: $("[data-playoff-confirm]"),
+    playoffOpenWaivers: $("[data-playoff-open-waivers]"),
+    playoffWaiverEnd: $("[data-playoff-waiver-end]"),
     pointSearch: $("[data-point-search]"),
     pointResults: $("[data-point-results]"),
     status: $("[data-admin-status]"),
@@ -58,6 +64,10 @@
   let rosterWritePending = false;
   let gameLineupDrafts = {};
   let statusTimer;
+  let advancePending = false;
+  let playoffExpectedWeek = null;
+  const phase = window.PokeLeagueState;
+  const weekLabel = phase.weekLabel;
 
   const findTeam = (teamId) => teams.find((team) => team.id === teamId);
   const findPokemon = (name) => catalog.find((pokemon) => pokemon.name === name);
@@ -107,20 +117,19 @@
 
   const renderStatus = () => {
     elements.season.textContent = leagueState.season;
-    elements.currentWeek.textContent = leagueState.currentWeek;
-    elements.nextWeek.textContent = Math.min(leagueState.currentWeek + 1, leagueState.totalWeeks);
-    elements.totalWeeks.textContent = leagueState.totalWeeks;
+    elements.currentWeek.textContent = weekLabel(leagueState.currentWeek);
+    const complete = leagueState.currentWeek >= phase.lastWeek;
+    elements.nextWeek.textContent = complete ? "Season Complete" : weekLabel(leagueState.currentWeek + 1);
+    $("[data-advance-label]").textContent = complete ? "" : "Advance to";
+    elements.totalWeeks.textContent = phase.regularSeasonWeeks;
     elements.pointCap.textContent = leagueState.pointCap;
-    elements.seasonWeeks.value = leagueState.totalWeeks;
+    elements.seasonWeeks.value = phase.regularSeasonWeeks;
     elements.seasonPointCap.value = leagueState.pointCap;
-    elements.advanceWeek.disabled = leagueState.currentWeek >= leagueState.totalWeeks;
-    elements.previousWeek.disabled = leagueState.currentWeek === 0;
-    elements.previousWeek.title = leagueState.currentWeek === 0 ? "Already at Week 0" : `Return to Week ${leagueState.currentWeek - 1} and clear its saved scores`;
-    elements.advanceWeek.lastChild.textContent = leagueState.currentWeek >= leagueState.totalWeeks ? " Season Complete" : "";
-    const nextWeekNode = $("[data-next-week]", elements.advanceWeek);
-    if (nextWeekNode) nextWeekNode.textContent = Math.min(leagueState.currentWeek + 1, leagueState.totalWeeks);
+    elements.advanceWeek.disabled = complete || advancePending;
+    elements.previousWeek.disabled = leagueState.currentWeek === 0 || advancePending;
+    elements.previousWeek.title = leagueState.currentWeek === 0 ? "Already at Week 0" : `Return to ${weekLabel(leagueState.currentWeek - 1)} and clear its saved scores`;
     const previousWeekNode = $("[data-previous-week-number]", elements.previousWeek);
-    if (previousWeekNode) previousWeekNode.textContent = Math.max(0, leagueState.currentWeek - 1);
+    if (previousWeekNode) previousWeekNode.textContent = weekLabel(Math.max(0, leagueState.currentWeek - 1));
     elements.scoreTab.disabled = leagueState.currentWeek === 0;
     elements.scoreTab.title = leagueState.currentWeek === 0 ? "Scores unlock in Week 1" : "";
   };
@@ -140,7 +149,7 @@
     if (name === "points") renderPointResults();
   };
 
-  const teamOptions = (selectedId) => teams.map((team) => (
+  const teamOptions = (selectedId, allowBlank = false) => (allowBlank ? `<option value=""${!selectedId ? " selected" : ""}>TBD — choose later</option>` : "") + teams.map((team) => (
     `<option value="${escapeHtml(team.id)}"${team.id === selectedId ? " selected" : ""}>${escapeHtml(team.name)}</option>`
   )).join("");
 
@@ -219,6 +228,7 @@
   };
 
   const defaultSchedule = (week) => {
+    if (phase.isPlayoffWeek(week)) return Array.from({ length: phase.matchupCount(week) }, () => ({ home: null, away: null }));
     if (!teams.length) return [];
     const ids = teams.map((team) => team.id);
     const fixed = ids[0];
@@ -234,14 +244,32 @@
 
   const renderSchedule = () => {
     const week = scheduleWeek();
-    elements.scheduleWeek.textContent = week;
+    elements.scheduleWeek.textContent = weekLabel(week);
+    $("[data-schedule-help]").textContent = phase.isPlayoffWeek(week)
+      ? "Leave either side TBD until the opponent is known. Each selected team can appear only once in this round."
+      : "Each team must appear exactly once across the seven matchups.";
     const matchups = leagueState.schedules?.[week] || defaultSchedule(week);
-    elements.scheduleRows.innerHTML = matchups.map((matchup, index) => `
+    renderMatchupRows(elements.scheduleRows, matchups, phase.isPlayoffWeek(week));
+  };
+
+  const renderMatchupRows = (container, matchups, allowBlank = true) => {
+    container.innerHTML = matchups.map((matchup, index) => `
       <div class="matchup-row" data-schedule-row>
-        <div class="matchup-field"><label>Matchup ${index + 1} · Home</label><select data-home-team>${teamOptions(matchup.home)}</select></div>
+        <div class="matchup-field"><label>Matchup ${index + 1} · Home<select data-home-team aria-label="Matchup ${index + 1} home team">${teamOptions(matchup.home, allowBlank)}</select></label></div>
         <span class="matchup-versus">VS</span>
-        <div class="matchup-field"><label>Away</label><select data-away-team>${teamOptions(matchup.away)}</select></div>
+        <div class="matchup-field"><label>Away<select data-away-team aria-label="Matchup ${index + 1} away team">${teamOptions(matchup.away, allowBlank)}</select></label></div>
       </div>`).join("");
+  };
+
+  const readMatchupRows = container => $$("[data-schedule-row]", container).map(row => ({
+    home: $("[data-home-team]", row).value || null,
+    away: $("[data-away-team]", row).value || null,
+  }));
+  const validateMatchups = (week, matchups) => {
+    const participants = matchups.flatMap(matchup => [matchup.home, matchup.away]).filter(Boolean);
+    if (matchups.length !== phase.matchupCount(week)) throw new Error(`Choose ${phase.matchupCount(week)} matchups for ${weekLabel(week)}.`);
+    if (participants.some(id => !findTeam(id)) || new Set(participants).size !== participants.length) throw new Error("Each selected team can appear only once. A team cannot play itself.");
+    if (!phase.isPlayoffWeek(week) && participants.length !== teams.length) throw new Error("Every team must appear exactly once across the seven matchups.");
   };
 
   const renderScores = () => {
@@ -258,6 +286,7 @@
       gameLineupDrafts[index + 1] = structuredClone(result.gameLineups || []);
       const home = findTeam(matchup.home);
       const away = findTeam(matchup.away);
+      if (!home || !away) return `<div class="matchup-row score-matchup score-matchup--pending"><strong>${escapeHtml(home?.name || "TBD")}</strong><span class="matchup-versus">VS</span><strong>${escapeHtml(away?.name || "TBD")}</strong><p class="score-game-details">Choose both teams in Schedule before reporting scores.</p></div>`;
       return `
         <div class="matchup-row score-matchup" data-score-row data-display-order="${index + 1}" data-home="${escapeHtml(matchup.home)}" data-away="${escapeHtml(matchup.away)}">
           <div class="score-team"><img src="${escapeHtml(home?.logo || "")}" alt=""><span>${escapeHtml(home?.name || matchup.home)}</span><div class="score-numbers"><label>Games<input class="score-input" data-home-score type="number" min="0" step="1" aria-label="${escapeHtml(home?.name)} score" value="${result.homeScore ?? ""}"></label><label>KOs (optional)<input class="score-input" data-home-kos type="number" min="0" step="1" aria-label="${escapeHtml(home?.name)} KOs" value="${result.homeKOs ?? ""}"></label></div></div>
@@ -281,33 +310,9 @@
     }).join('');
   };
 
-  const playoffTeamIds = () => {
-    const count = Number(elements.playoffCount.value) || 8;
-    const saved = Array.isArray(leagueState.playoffs?.seeds) ? leagueState.playoffs.seeds : [];
-    return Array.from({ length: count }, (_, index) => saved[index] || teams[index]?.id || "");
-  };
-
-  const renderBracket = () => {
-    const seeds = $$("[data-seed-team]", elements.playoffSeeds).map((select) => select.value);
-    const games = [];
-    for (let index = 0; index < Math.ceil(seeds.length / 2); index += 1) {
-      const topSeed = index;
-      const bottomSeed = seeds.length - 1 - index;
-      if (topSeed >= bottomSeed) break;
-      const first = findTeam(seeds[topSeed]);
-      const second = findTeam(seeds[bottomSeed]);
-      games.push(`<div class="bracket-game"><span>Game ${index + 1}</span><br>#${topSeed + 1} ${escapeHtml(first?.name || "TBD")} vs #${bottomSeed + 1} ${escapeHtml(second?.name || "TBD")}</div>`);
-    }
-    elements.bracketPreview.innerHTML = games.join("");
-  };
-
   const renderPlayoffs = () => {
-    elements.playoffCount.value = String(leagueState.playoffs?.teamCount || 8);
-    const seeds = playoffTeamIds();
-    elements.playoffSeeds.innerHTML = seeds.map((teamId, index) => `
-      <label class="seed-row"><strong>#${index + 1}</strong><select data-seed-team>${teamOptions(teamId)}</select></label>
-    `).join("");
-    renderBracket();
+    const week = Number(elements.playoffRound.value);
+    renderMatchupRows(elements.playoffRows, leagueState.schedules[week] || defaultSchedule(week));
   };
 
   const renderPointResults = () => {
@@ -381,31 +386,43 @@
     }
   };
 
-  const saveSchedule = async () => {
-    const matchups = $$("[data-schedule-row]", elements.scheduleRows).map((row) => ({
-      home: $("[data-home-team]", row).value,
-      away: $("[data-away-team]", row).value,
-    }));
-    const participants = matchups.flatMap((matchup) => [matchup.home, matchup.away]);
-    if (matchups.some((matchup) => matchup.home === matchup.away) || new Set(participants).size !== teams.length || participants.length !== teams.length) {
-      announce("Every team must appear exactly once, with no team playing itself.", true);
-      return false;
-    }
+  const saveSchedule = async (week = scheduleWeek(), container = elements.scheduleRows) => {
+    const matchups = readMatchupRows(container);
+    const submit = container.closest("form").querySelector("button[type='submit']");
+    if (submit.disabled) return false;
     try {
-      await window.PokeLeagueCompetition.saveSchedule(adminAccessCode, scheduleWeek(), matchups);
-      leagueState.schedules[scheduleWeek()] = matchups;
-      saveState(`Week ${scheduleWeek()} schedule saved.`);
+      validateMatchups(week, matchups);
+      submit.disabled = true;
+      await window.PokeLeagueCompetition.saveSchedule(adminAccessCode, week, matchups);
+      leagueState.schedules[week] = matchups;
+      saveState(`${weekLabel(week)} schedule saved.`);
       return true;
     } catch (error) {
       announce(error.message || "The schedule could not be saved.", true);
       return false;
+    } finally {
+      submit.disabled = false;
     }
   };
 
+  const openPlayoffAdvance = week => {
+    playoffExpectedWeek = leagueState.currentWeek;
+    $("[data-playoff-advance-title]").textContent = weekLabel(week);
+    elements.playoffConfirm.textContent = `Save & advance to ${weekLabel(week)}`;
+    elements.playoffAdvanceStatus.textContent = "";
+    elements.playoffOpenWaivers.checked = false;
+    elements.playoffWaiverEnd.value = "";
+    elements.playoffWaiverEnd.required = false;
+    $("[data-playoff-waiver-end-field]").hidden = true;
+    renderMatchupRows(elements.playoffAdvanceRows, leagueState.schedules[week] || defaultSchedule(week));
+    elements.playoffAdvance.showModal();
+  };
+
   const advanceWeek = async () => {
-    if (leagueState.currentWeek >= leagueState.totalWeeks) return;
+    if (advancePending || leagueState.currentWeek >= phase.lastWeek) return;
     const week = leagueState.currentWeek + 1;
-    elements.advanceWeek.disabled = true;
+    advancePending = true;
+    renderStatus();
     try {
       // Read the saved schedule, including edits made on another admin's device.
       const savedCompetition = await window.PokeLeagueCompetition.read();
@@ -415,19 +432,67 @@
         setActiveTab("schedule");
         return;
       }
+      applyCompetition(savedCompetition);
+      if (phase.isPlayoffWeek(week)) {
+        openPlayoffAdvance(week);
+        return;
+      }
       await window.PokeLeagueCompetition.setCurrentWeek(adminAccessCode, week);
       const competition = await window.PokeLeagueCompetition.read().catch(() => savedCompetition);
       applyCompetition(competition);
       leagueState.currentWeek = week;
       saveState(leagueState.schedules[week]?.length
-        ? `Advanced to Week ${week}. Saved matchups, Pick’ems, and Survivor entries are preserved.`
-        : `Advanced to Week ${week}. No schedule saved yet; review the suggested matchups below.`);
+        ? `Advanced to ${weekLabel(week)}. Saved matchups, Pick’ems, and Survivor entries are preserved.`
+        : `Advanced to ${weekLabel(week)}. No schedule saved yet; review the suggested matchups below.`);
       setActiveTab("schedule");
       $("[data-admin-panel='schedule']")?.scrollIntoView({ behavior: "smooth", block: "start" });
     } catch (error) {
       announce(error.message || "The league week could not be advanced.", true);
     } finally {
-      elements.advanceWeek.disabled = leagueState.currentWeek >= leagueState.totalWeeks;
+      advancePending = false;
+      renderStatus();
+    }
+  };
+
+  const confirmPlayoffAdvance = async event => {
+    event.preventDefault();
+    if (advancePending || playoffExpectedWeek === null) return;
+    const week = playoffExpectedWeek + 1;
+    const matchups = readMatchupRows(elements.playoffAdvanceRows);
+    try {
+      validateMatchups(week, matchups);
+      const waiverEnd = elements.playoffOpenWaivers.checked ? new Date(elements.playoffWaiverEnd.value) : null;
+      if (waiverEnd && (!Number.isFinite(waiverEnd.getTime()) || waiverEnd.getTime() <= Date.now())) throw new Error("Choose a future closing time to open waivers now.");
+      advancePending = true;
+      renderStatus();
+      elements.playoffConfirm.disabled = true;
+      $$("[data-playoff-cancel]").forEach(button => { button.disabled = true; });
+      elements.playoffAdvanceStatus.textContent = "Saving the bracket and advancing…";
+      await window.PokeLeagueCompetition.advancePlayoffRound(adminAccessCode, playoffExpectedWeek, matchups, waiverEnd?.toISOString() || null);
+      leagueState.currentWeek = week;
+      leagueState.schedules[week] = matchups;
+      if (waiverEnd) {
+        waiverSettings.startAt = new Date().toISOString();
+        waiverSettings.endAt = waiverEnd.toISOString();
+      }
+      // The atomic write has succeeded. A failed follow-up read must not invite a second advance.
+      const refreshed = await Promise.allSettled([window.PokeLeagueCompetition.read(), window.PokeLeagueWaivers.readSettings()]);
+      if (refreshed[0].status === "fulfilled") applyCompetition(refreshed[0].value);
+      if (refreshed[1].status === "fulfilled") waiverSettings = refreshed[1].value;
+      elements.playoffAdvance.close();
+      playoffExpectedWeek = null;
+      elements.playoffRound.value = String(week);
+      saveState(`Advanced to ${weekLabel(week)}.${waiverEnd ? " Waivers are open." : ""} You can fill in TBD opponents later.`);
+      renderWaiverSettings();
+      setActiveTab("schedule");
+      $("[data-admin-panel='schedule']")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    } catch (error) {
+      elements.playoffAdvanceStatus.textContent = error.message || "The round could not be advanced. Your selections are still here.";
+    } finally {
+      advancePending = false;
+      elements.playoffConfirm.disabled = false;
+      $$("[data-playoff-cancel]").forEach(button => { button.disabled = false; });
+      renderStatus();
     }
   };
 
@@ -435,7 +500,7 @@
     if (leagueState.currentWeek === 0) return;
     const reopenedWeek = leagueState.currentWeek - 1;
     const warning = reopenedWeek > 0
-      ? `Return to Week ${reopenedWeek}? Its saved scores will be cleared so they can be corrected. Pick’ems and Survivor entries will be kept.`
+      ? `Return to ${weekLabel(reopenedWeek)}? Its saved scores will be cleared so they can be corrected. Pick’ems and Survivor entries will be kept.`
       : "Return to Week 0? Pick’ems and Survivor entries will be kept.";
     if (!window.confirm(warning)) return;
     elements.previousWeek.disabled = true;
@@ -445,7 +510,7 @@
       leagueState.currentWeek = Number(previousWeek);
       if (reopenedWeek > 0) delete leagueState.scores[reopenedWeek];
       saveState(reopenedWeek > 0
-        ? `Returned to Week ${previousWeek}. Week ${reopenedWeek} scores were cleared for correction.`
+        ? `Returned to ${weekLabel(previousWeek)}. Its scores were cleared for correction.`
         : "Returned to Week 0.");
       renderScores();
       renderSchedule();
@@ -460,6 +525,14 @@
     elements.tabs.forEach((tab) => tab.addEventListener("click", () => setActiveTab(tab.dataset.adminTab)));
     elements.previousWeek.addEventListener("click", returnToPreviousWeek);
     elements.advanceWeek.addEventListener("click", advanceWeek);
+    elements.playoffAdvanceForm.addEventListener("submit", confirmPlayoffAdvance);
+    $$("[data-playoff-cancel]").forEach(button => button.addEventListener("click", () => { if (!advancePending) elements.playoffAdvance.close(); }));
+    elements.playoffAdvance.addEventListener("cancel", event => { if (advancePending) event.preventDefault(); });
+    elements.playoffOpenWaivers.addEventListener("change", () => {
+      const open = elements.playoffOpenWaivers.checked;
+      $("[data-playoff-waiver-end-field]").hidden = !open;
+      elements.playoffWaiverEnd.required = open;
+    });
     elements.rosterTeams.addEventListener("click", (event) => {
       const button = event.target.closest("[data-team-id]");
       if (!button) return;
@@ -516,7 +589,7 @@
         await window.PokeLeagueCompetition.saveScores(adminAccessCode, leagueState.currentWeek, results);
         leagueState.scores[leagueState.currentWeek] = results;
         gameLineupDrafts = Object.fromEntries(results.map(result=>[result.displayOrder,structuredClone(result.gameLineups)]));
-        saveState(`Week ${leagueState.currentWeek} scores saved.`);
+        saveState(`${weekLabel(leagueState.currentWeek)} scores saved.`);
       } catch (error) {
         announce(error.message || "Scores could not be saved.", true);
       } finally {
@@ -549,17 +622,17 @@
       event.preventDefault();
       const totalWeeks = Number(elements.seasonWeeks.value);
       const pointCap = Number(elements.seasonPointCap.value);
-      if (!Number.isInteger(totalWeeks) || totalWeeks < Math.max(1, leagueState.currentWeek) || !Number.isFinite(pointCap) || pointCap < 1) {
-        announce("Enter a valid season length and point cap. Season length cannot be before the current week.", true);
+      if (totalWeeks !== phase.regularSeasonWeeks || !Number.isFinite(pointCap) || pointCap < 1) {
+        announce("The regular season is eight weeks. Enter a valid point cap.", true);
         return;
       }
       const submit = $("button[type='submit']", elements.seasonForm);
       submit.disabled = true;
       try {
         await window.PokeLeagueWaivers.setSeasonRules(adminAccessCode, totalWeeks, pointCap);
-        leagueState.totalWeeks = totalWeeks;
+        leagueState.totalWeeks = phase.lastWeek;
         leagueState.pointCap = pointCap;
-        waiverSettings.totalWeeks = totalWeeks;
+        waiverSettings.totalWeeks = phase.lastWeek;
         waiverSettings.pointCap = pointCap;
         saveState("Season rules saved. Draft and roster budgets are updated.");
         renderRosterManager();
@@ -591,24 +664,10 @@
         submit.disabled = false;
       }
     });
-    elements.playoffCount.addEventListener("change", () => {
-      const count = Number(elements.playoffCount.value);
-      const existing = $$("[data-seed-team]", elements.playoffSeeds).map((select) => select.value);
-      elements.playoffSeeds.innerHTML = Array.from({ length: count }, (_, index) => `
-        <label class="seed-row"><strong>#${index + 1}</strong><select data-seed-team>${teamOptions(existing[index] || teams[index]?.id)}</select></label>
-      `).join("");
-      renderBracket();
-    });
-    elements.playoffSeeds.addEventListener("change", renderBracket);
-    elements.playoffForm.addEventListener("submit", (event) => {
+    elements.playoffRound.addEventListener("change", renderPlayoffs);
+    elements.playoffForm.addEventListener("submit", async (event) => {
       event.preventDefault();
-      const seeds = $$("[data-seed-team]", elements.playoffSeeds).map((select) => select.value);
-      if (new Set(seeds).size !== seeds.length) {
-        announce("Each playoff seed must be assigned to a different team.", true);
-        return;
-      }
-      leagueState.playoffs = { teamCount: seeds.length, seeds };
-      saveState(`${seeds.length}-team playoff bracket saved.`);
+      await saveSchedule(Number(elements.playoffRound.value), elements.playoffRows);
     });
     elements.pointSearch.addEventListener("input", renderPointResults);
     elements.pointResults.addEventListener("click", async (event) => {

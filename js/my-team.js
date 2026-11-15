@@ -212,13 +212,14 @@
     fetch("data/pokemon-catalog.json?v=season-1-3"),
     window.PokeLeagueRosters.read().catch(() => null),
     window.PokeLeagueRosters.readNicknames().catch(() => null),
+    window.PokeLeagueCompetition.read().catch(() => null),
   ])
-    .then(async ([teamsResponse, leagueTeamsResponse, catalogResponse, savedRosters, savedNicknames]) => {
+    .then(async ([teamsResponse, leagueTeamsResponse, catalogResponse, savedRosters, savedNicknames, competition]) => {
       nicknames = savedNicknames;
       if (!teamsResponse.ok || !leagueTeamsResponse.ok || !catalogResponse.ok) throw new Error("Team unavailable");
-      return Promise.all([teamsResponse.json(), leagueTeamsResponse.json(), catalogResponse.json(), savedRosters]);
+      return Promise.all([teamsResponse.json(), leagueTeamsResponse.json(), catalogResponse.json(), savedRosters, competition]);
     })
-    .then(async ([teamData, leagueTeamData, baseCatalog, savedRosters]) => {
+    .then(async ([teamData, leagueTeamData, baseCatalog, savedRosters, competition]) => {
       const account = teamData.accounts?.[accessCode];
       owner = account;
       if (!account) {
@@ -235,6 +236,11 @@
       }
 
       const leagueState = window.PokeLeagueState?.read();
+      if (competition && leagueState) {
+        leagueState.currentWeek = competition.currentWeek;
+        leagueState.schedules = {};
+        competition.matchups.forEach((matchup) => (leagueState.schedules[matchup.week] ||= []).push({home:matchup.home_team_id,away:matchup.away_team_id}));
+      }
       const catalog = window.PokeLeagueState?.applyCatalog(baseCatalog, leagueState) || baseCatalog;
       const leagueTeams = leagueTeamData.teams || [];
       const permanentRosters = savedRosters
@@ -254,10 +260,10 @@
       ));
       const opponentId = matchup ? (matchup.home === account.teamId ? matchup.away : matchup.home) : null;
       const opponent = leagueTeams.find((team) => team.id === opponentId);
-      const opponentName = opponent?.name || account.weeklyMatchup?.opponent || "Schedule pending";
+      const opponentName = opponent?.name || (matchup ? "TBD" : "Schedule pending");
       document.querySelector("[data-team-season]").textContent = leagueState?.season || 1;
       document.querySelector("[data-record-season]").textContent = leagueState?.season || 1;
-      document.querySelector("[data-matchup-week]").textContent = currentWeek;
+      document.querySelector("[data-matchup-week]").textContent = window.PokeLeagueState.weekLabel(currentWeek);
       document.querySelector("[data-matchup-opponent]").textContent = opponentName;
       document.querySelector("[data-matchup-note]").textContent = opponent
         ? "Your next battle is set."

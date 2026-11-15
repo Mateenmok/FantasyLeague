@@ -6,8 +6,8 @@
   const showStatus = ({ season, currentWeek }) => {
     if (!Number.isInteger(Number(season)) || !Number.isInteger(Number(currentWeek))) return;
     seasonTarget.textContent = String(season);
-    weekTarget.textContent = String(currentWeek);
-    document.title = `Week ${currentWeek} | Flash Family League`;
+    weekTarget.textContent = window.PokeLeagueState.weekLabel(currentWeek);
+    document.title = `${window.PokeLeagueState.weekLabel(currentWeek)} | Flash Family League`;
   };
 
   const localState = window.PokeLeagueState?.read();

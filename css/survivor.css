@@ -51,6 +51,17 @@
 .survivor-mark{font-size:27px;text-align:center;color:#237839}
 .survivor-mark.is-out{color:#b22e40}
 .survivor-empty{grid-column:1/-1;color:var(--sv-muted);line-height:1.5}
+.survivor-finale{text-align:center;padding:12px 12px 28px}
+.survivor-finale-crown{display:block;color:#ba8b20;font-size:64px;line-height:1;text-shadow:2px 2px 0 var(--sv-line)}
+.survivor-finale-season{font-size:12px;font-weight:900;letter-spacing:.16em;color:var(--sv-muted)}
+.survivor-finale h3{font-size:clamp(32px,5vw,48px)}
+.survivor-finale>p{line-height:1.5}
+.survivor-winners{display:flex;justify-content:center;flex-wrap:wrap;gap:18px;margin-top:24px}
+.survivor-winner{display:flex;flex-direction:column;align-items:center;gap:9px;flex:0 1 270px;padding:24px 18px;border:3px solid var(--sv-line);border-radius:14px;background:linear-gradient(145deg,var(--sv-accent),var(--sv-panel));box-shadow:5px 6px 0 #ba8b20}
+.survivor-winner img{width:120px;height:120px;object-fit:contain}
+.survivor-winner strong{font:34px/1.1 "Jersey 25",Impact,sans-serif;overflow-wrap:anywhere}
+.survivor-winner small,.survivor-winner>span:not(.survivor-winner-mark){color:var(--sv-muted)}
+.survivor-winner-mark{font-size:70px;color:#ba8b20}
 :root[data-theme=dark] .survivor-dialog{--sv-bg:#171e22;--sv-panel:#29333c;--sv-ink:#f7f6ec;--sv-muted:#c2ced3;--sv-line:#5a7066;--sv-accent:#304d3b}
 :root[data-theme=dark] .survivor-mark{color:#9cebb1}
 :root[data-theme=dark] .survivor-mark.is-out,:root[data-theme=dark] .survivor-status.is-error{color:#ff9eaa}

@@ -28,7 +28,7 @@
     if(!response.ok) throw new Error(data.message || 'FNPL could not be loaded. Please retry.');
     return data;
   };
-  const read=()=>rpc('read_flash_family_fnpl');
+  const read=async()=>({...(await rpc('read_flash_family_fnpl')),totalWeeks:window.PokeLeagueState.lastWeek});
   const save=(code,week,date,slots,revision)=>rpc('save_flash_family_fnpl',{p_access_code:code,p_week:week,p_event_date:date,p_slots:slots,p_expected_revision:revision});
   const teams=async()=>{
     const response=await fetch('data/teams.json?v=teams8',{cache:'no-store'});
@@ -62,12 +62,12 @@
     const week=selectedWeek ?? Math.max(1,data.currentWeek);
     const event=data.events.find(e=>e.week===week);
     first=event?.slots.find(slot=>slot.valid) || null;
-    const hero=`${sign()}<span class="fnpl-eyebrow">Week ${week} · Friday Night PokeLeague</span>${first?`${matchup(first,map)}<span class="fnpl-count-label" data-fnpl-count-label>First match starts in</span>${clockMarkup()}<span class="fnpl-date">${escape(dateLabel(event.eventDate))} · ${timeLabel(first.time)} Eastern</span>`:'<span class="fnpl-pending">Lineup coming soon</span><span class="fnpl-date">The Friday night stage is getting set.</span>'}`;
+    const hero=`${sign()}<span class="fnpl-eyebrow">${window.PokeLeagueState.weekLabel(week)} · Friday Night PokeLeague</span>${first?`${matchup(first,map)}<span class="fnpl-count-label" data-fnpl-count-label>First match starts in</span>${clockMarkup()}<span class="fnpl-date">${escape(dateLabel(event.eventDate))} · ${timeLabel(first.time)} Eastern</span>`:'<span class="fnpl-pending">Lineup coming soon</span><span class="fnpl-date">The Friday night stage is getting set.</span>'}`;
     if(home) home.innerHTML=`${hero}<span class="fnpl-open">View the night’s lineup <b aria-hidden="true">↗</b></span>`;
     if(page){
       page.querySelector('[data-fnpl-hero]').innerHTML=hero;
       weekSelect.disabled=false;
-      weekSelect.innerHTML=Array.from({length:Math.max(1,data.totalWeeks)},(_,i)=>`<option value="${i+1}"${i+1===week?' selected':''}>Week ${i+1}</option>`).join('');
+      weekSelect.innerHTML=Array.from({length:Math.max(1,data.totalWeeks)},(_,i)=>`<option value="${i+1}"${i+1===week?' selected':''}>${window.PokeLeagueState.weekLabel(i+1)}</option>`).join('');
       page.querySelector('[data-fnpl-lineup]').innerHTML=event?.slots.length?event.slots.map((slot,i)=>`<li class="fnpl-slot"><div class="fnpl-slot-heading"><span>Slot ${i+1}</span><time datetime="${escape(slot.startsAt)}">${timeLabel(slot.time)} <small>Eastern</small></time></div>${slot.valid?matchup(slot,map):'<p class="fnpl-pending">Matchup to be announced</p>'}</li>`).join(''):'<li class="fnpl-empty">No time slots have been announced for this week yet.</li>';
       page.querySelector('[data-fnpl-feedback]').textContent='';
     }

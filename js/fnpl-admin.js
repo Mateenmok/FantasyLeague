@@ -5,7 +5,7 @@
   let data,teams,week,slots=[],revision=0,selected=0,dirty=false,busy=false,dragIndex=null,pointerDrag=null,code='';
   const feedback=(message,error=false)=>{ $('[data-fnpl-admin-status]').textContent=message;$('[data-fnpl-admin-status]').classList.toggle('is-error',error); };
   const markDirty=()=>{dirty=true;feedback('Unsaved changes — save to publish this lineup.');};
-  const matches=()=>data.matchups.filter(m=>m.week===week);
+  const matches=()=>data.matchups.filter(m=>m.week===week && window.PokeLeagueState.matchupReady(m));
   const assignment=m=>({displayOrder:m.display_order,homeTeamId:m.home_team_id,awayTeamId:m.away_team_id});
   const empty=()=>({displayOrder:null,homeTeamId:null,awayTeamId:null});
   const name=id=>teams[id]?.teamName || id;
@@ -33,7 +33,7 @@
     try{
       const [next,nextTeams]=await Promise.all([F.read(),F.teams()]);data=next;teams=nextTeams;
       week=Math.min(week || Math.max(1,data.currentWeek),data.totalWeeks);
-      $('[data-fnpl-admin-week]').innerHTML=Array.from({length:data.totalWeeks},(_,i)=>`<option value="${i+1}"${week===i+1?' selected':''}>Week ${i+1}</option>`).join('');
+      $('[data-fnpl-admin-week]').innerHTML=Array.from({length:data.totalWeeks},(_,i)=>`<option value="${i+1}"${week===i+1?' selected':''}>${window.PokeLeagueState.weekLabel(i+1)}</option>`).join('');
       chooseWeek();
     }catch(error){feedback(error.message,true);}
     finally{busy=false;$('[data-fnpl-fields]').disabled=false;}

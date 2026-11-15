@@ -39,12 +39,12 @@
     const scheduledWeeks=data.matchups.map(m=>m.week);
     const last=Math.max(data.totalWeeks,data.currentWeek,...scheduledWeeks,1);
     week=week??Math.max(1,data.currentWeek);
-    $('[data-prep-week]').innerHTML=Array.from({length:last},(_,i)=>`<option value="${i+1}"${i+1===week?' selected':''}>Week ${i+1}${i+1===data.currentWeek?' · Current':''}</option>`).join('');
+    $('[data-prep-week]').innerHTML=Array.from({length:last},(_,i)=>`<option value="${i+1}"${i+1===week?' selected':''}>${window.PokeLeagueState.weekLabel(i+1)}${i+1===data.currentWeek?' · Current':''}</option>`).join('');
     $('[data-prep-week]').disabled=false;
     const matches=data.matchups.filter(m=>m.week===week);
     $('[data-prep-matchups]').innerHTML=matches.map((m,i)=>{
-      const home=team(m.home_team_id),away=team(m.away_team_id);if(!home||!away)return '';
-      return `<button class="matchup-tile" data-home="${escape(home.id)}" data-away="${escape(away.id)}" aria-label="Compare ${escape(home.name)} and ${escape(away.name)}"><span class="tile-kicker">MATCH ${String(i+1).padStart(2,'0')} <span>WEEK ${week}</span></span><span class="tile-teams">${teamArt(home)}<span class="versus">VS</span>${teamArt(away)}</span><span class="tile-footer">Compare speeds <b aria-hidden="true">↗</b></span></button>`;
+      const home=team(m.home_team_id),away=team(m.away_team_id),ready=Boolean(home&&away);
+      return `<button class="matchup-tile" data-home="${escape(home?.id||'')}" data-away="${escape(away?.id||'')}" ${ready?'':'disabled'} aria-label="${ready?'Compare':'Pending matchup:'} ${escape(home?.name||'TBD')} and ${escape(away?.name||'TBD')}"><span class="tile-kicker">MATCH ${String(i+1).padStart(2,'0')} <span>${window.PokeLeagueState.weekLabel(week)}</span></span><span class="tile-teams">${home?teamArt(home):'<span class="match-team"><strong>TBD</strong></span>'}<span class="versus">VS</span>${away?teamArt(away):'<span class="match-team"><strong>TBD</strong></span>'}</span><span class="tile-footer">${ready?'Compare speeds <b aria-hidden="true">↗</b>':'Waiting for opponent'}</span></button>`;
     }).join('')||'<p class="empty-state">No matchups are scheduled for this week yet. You can still compare any two teams below.</p>';
     const options=data.teams.map(t=>`<option value="${escape(t.id)}">${escape(t.name)}</option>`).join('');
     $('[data-custom-home]').innerHTML=options;$('[data-custom-away]').innerHTML=options;
@@ -149,7 +149,7 @@
       if(!leagues[0])throw new Error('The league is unavailable. Please retry.');
       const owners=Object.values(accounts.accounts||{});
       data={teams:leagueTeams.teams.map(t=>({...t,accent:owners.find(a=>a.teamId===t.id)?.theme?.accent})),index,matchups,
-        currentWeek:Number(leagues[0].current_matchup_number)||0,totalWeeks:Number(leagues[0].regular_season_matches)||1,
+        currentWeek:Number(leagues[0].current_matchup_number)||0,totalWeeks:window.PokeLeagueState.lastWeek,
         rosters:rows.reduce((map,row)=>{(map[row.team_id]||=[]).push(row.pokemon_slug);return map;},{})};
       loadedAt=Date.now();renderMenu();renderRoute();
       $('[data-prep-status]').textContent=`Live rosters · Updated ${new Intl.DateTimeFormat('en-US',{hour:'numeric',minute:'2-digit'}).format(new Date(loadedAt))}`;

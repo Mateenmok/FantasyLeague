@@ -28,7 +28,7 @@
     .replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;").replaceAll("'", "&#039;");
   const normalize = (value) => String(value || "").toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, "");
-  const teamFor = (teamId) => teams.find((team) => team.id === teamId) || { id: teamId, name: "Unknown team", logo: "images/favicon.webp" };
+  const teamFor = (teamId) => teams.find((team) => team.id === teamId) || { id: teamId, name: teamId ? "Unknown team" : "TBD", logo: "images/favicon.webp" };
 
   const scoreLabel = (matchup) => {
     if (matchup.home_score == null || matchup.away_score == null) return '<span class="history-pending">Pending</span>';
@@ -40,7 +40,7 @@
     const away = teamFor(matchup.away_team_id);
     return `
       <button type="button" class="history-score-card" data-game-matchup="${matchup.week}:${matchup.display_order}" aria-label="View game details: ${escapeHtml(home.name)} versus ${escapeHtml(away.name)}">
-        ${showWeek ? `<span class="history-score-week">Week ${escapeHtml(matchup.week)}</span>` : ""}
+        ${showWeek ? `<span class="history-score-week">${escapeHtml(window.PokeLeagueState.weekLabel(matchup.week))}</span>` : ""}
         <div class="history-score-team">
           <img src="${escapeHtml(home.logo)}" alt="" loading="lazy">
           <strong>${escapeHtml(home.name)}</strong>
@@ -63,7 +63,7 @@
 
     weekBar.classList.toggle("is-team-history", Boolean(selectedTeam));
     weekMode.textContent = selectedTeam ? "Complete team history" : "League week";
-    weekTarget.textContent = selectedTeam ? "All weeks" : `Week ${selectedWeek}`;
+    weekTarget.textContent = selectedTeam ? "All weeks" : window.PokeLeagueState.weekLabel(selectedWeek);
     previousButton.disabled = Boolean(selectedTeam) || selectedWeek <= 0;
     nextButton.disabled = Boolean(selectedTeam) || selectedWeek >= currentWeek;
 
@@ -72,7 +72,7 @@
         ? `${team.name} does not have any recorded Season 1 matchups yet.`
         : selectedWeek === 0
           ? "Week 0 is the preseason. Scores will appear here when league play begins."
-          : `Week ${selectedWeek} does not have any scheduled matchups yet.`;
+          : `${window.PokeLeagueState.weekLabel(selectedWeek)} does not have any scheduled matchups yet.`;
       status.textContent = copy;
       scoreGrid.innerHTML = `<div class="history-empty"><strong>${selectedWeek === 0 && !selectedTeam ? "Preseason" : "No games yet"}</strong><span>${escapeHtml(copy)}</span></div>`;
       return;
@@ -80,7 +80,7 @@
 
     status.textContent = selectedTeam
       ? `Showing every Season 1 matchup for ${team.name}.`
-      : `Showing ${visible.length} matchup${visible.length === 1 ? "" : "s"} from Week ${selectedWeek}.`;
+      : `Showing ${visible.length} matchup${visible.length === 1 ? "" : "s"} from ${window.PokeLeagueState.weekLabel(selectedWeek)}.`;
     scoreGrid.innerHTML = visible.map((matchup) => matchupCard(matchup, Boolean(selectedTeam))).join("");
   };
 

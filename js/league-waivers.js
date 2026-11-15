@@ -48,7 +48,8 @@
       endAt: settings.waiver_window_end_at,
       pointCap: Number(settings.roster_point_cap) || 50,
       rosterCap: Number(settings.roster_pokemon_cap) || 10,
-      totalWeeks: Number(settings.regular_season_matches) || 10,
+      totalWeeks: window.PokeLeagueState?.lastWeek || 11,
+      regularSeasonWeeks: window.PokeLeagueState?.regularSeasonWeeks || 8,
       currentWeek: Number(settings.current_matchup_number) || 0,
     };
   };
